@@ -66,6 +66,22 @@
     <EnableXlfLocalization>false</EnableXlfLocalization>
   </PropertyGroup>
 
+  <!-- Stark -->
+  <PropertyGroup Condition="'$(Stark)' == 'true'">
+    <!-- TODO: Enable source link at some point -->
+    <EnableSourceLink>false</EnableSourceLink> 
+    <EnableXlfLocalization>false</EnableXlfLocalization>
+
+    <!-- Override settings -->
+    <RepositoryUrl>https://github.com/stark-platform/stark-lang</RepositoryUrl>
+    <PackageLicenseUrl>$(RepositoryUrl)/blob/master/License.txt</PackageLicenseUrl>
+    <RepositoryRawUrl>https://raw.githubusercontent.com/stark-platform/stark-lang</RepositoryRawUrl>
+    <PackageProjectUrl>https://github.com/stark-platform/stark-lang</PackageProjectUrl>
+    <PackageTags>Stark CodeAnalysis Compiler Parser Scanner Lexer Emit CodeGeneration Metadata IL Compilation Scripting Syntax Semantics</PackageTags>
+    <VSSDKTargetPlatformRegRootSuffix>StarkDev</VSSDKTargetPlatformRegRootSuffix>
+
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsTestProject)' == 'true'" >
     <!--
       Choose default target frameworks to use for testing on Mono and Core.

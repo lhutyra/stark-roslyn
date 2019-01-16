@@ -21,6 +21,17 @@
       Do not install this package manually, it will be added as a prerequisite by other packages that require it.
     </PackageDescription>
   </PropertyGroup>
+
+  <!--Stark-->
+  <PropertyGroup Condition="'$(Stark)' == 'true'">
+    <AssemblyName>StarkPlatform.CodeAnalysis</AssemblyName>
+    <PackageId>StarkPlatform.CodeAnalysis.Common</PackageId>
+    <PackageDescription>
+      A shared package used by the Stark Compiler Platform ("Stark").
+      Do not install this package manually, it will be added as a prerequisite by other packages that require it.
+    </PackageDescription>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'" />
   <ItemGroup>
@@ -63,6 +74,11 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
+  </ItemGroup>
+  <!--Stark-->
+  <ItemGroup Condition="'$(Stark)' == 'true'">
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark" />
+    <InternalsVisibleTo Include="starkc"/>
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp" />

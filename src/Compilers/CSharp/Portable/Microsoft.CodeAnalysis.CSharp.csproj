@@ -18,6 +18,16 @@
       .NET Compiler Platform ("Roslyn") support for C#, Microsoft.CodeAnalysis.CSharp.dll.
     </PackageDescription>
   </PropertyGroup>
+
+  <!--Stark-->
+  <PropertyGroup Condition="'$(Stark)' == 'true'">
+    <AssemblyName>StarkPlatform.CodeAnalysis.Stark</AssemblyName>
+    <PackageId>$(AssemblyName)</PackageId>
+    <PackageDescription>
+      Stark Compiler Platform support for Stark, StarkPlatform.CodeAnalysis.Stark.dll.
+    </PackageDescription>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'" />
   <ItemGroup>
@@ -49,6 +59,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CSharpResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Stark)' == 'true'">
+    <InternalsVisibleTo Include="starkc"/>
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator.ExpressionCompiler" />
