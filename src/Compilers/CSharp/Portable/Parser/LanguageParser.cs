@@ -6248,6 +6248,82 @@ tryAgain:
                     throw ExceptionUtilities.UnexpectedValue(mode);
             }
 
+            // Syntax in Stark for arrays: []type instead of type[]
+#if STARK
+            // Now check for arrays.
+            SyntaxListBuilder<ArrayRankSpecifierSyntax> ranks = default;
+
+            var tryArray = this.IsPossibleRankAndDimensionSpecifier();
+            if (tryArray)
+            {
+                ranks = _pool.Allocate<ArrayRankSpecifierSyntax>();
+            }
+            try
+            {
+                if (tryArray)
+                {
+                    while (this.IsPossibleRankAndDimensionSpecifier())
+                    {
+                        bool unused;
+                        var rank = this.ParseArrayRankSpecifier(mode == ParseTypeMode.ArrayCreation, expectSizes, questionTokenModeOpt: mode, out unused);
+                        ranks.Add(rank);
+                        expectSizes = false;
+                    }
+                }
+
+                var type = this.ParseUnderlyingType(parentIsParameter: mode == ParseTypeMode.Parameter, options: nameOptions);
+                Debug.Assert(type != null);
+
+                if (this.CurrentToken.Kind == SyntaxKind.QuestionToken &&
+                    // we do not permit nullable types in a declaration pattern
+                    (mode != ParseTypeMode.AfterIs && mode != ParseTypeMode.DefinitePattern || !IsTrueIdentifier(this.PeekToken(1))))
+                {
+                    var question = EatNullableQualifierIfApplicable(mode);
+                    if (question != null)
+                    {
+                        type = _syntaxFactory.NullableType(type, question);
+                    }
+                }
+
+                switch (mode)
+                {
+                    case ParseTypeMode.AfterIs:
+                    case ParseTypeMode.DefinitePattern:
+                    case ParseTypeMode.AfterTupleComma:
+                    case ParseTypeMode.FirstElementOfPossibleTupleLiteral:
+                        // these contexts do not permit a pointer type except as an element type of an array.
+                        if (PointerTypeModsFollowedByRankAndDimensionSpecifier())
+                        {
+                            type = this.ParsePointerTypeMods(type);
+                        }
+                        break;
+                    case ParseTypeMode.Normal:
+                    case ParseTypeMode.Parameter:
+                    case ParseTypeMode.AfterOut:
+                    case ParseTypeMode.ArrayCreation:
+                    case ParseTypeMode.AsExpression:
+                        type = this.ParsePointerTypeMods(type);
+                        break;
+                }
+
+                if (tryArray)
+                {
+                    type = _syntaxFactory.ArrayType(ranks, type);
+                }
+
+                Debug.Assert(type != null);
+                return type;
+            }
+            finally
+            {
+                if (tryArray)
+                {
+                    _pool.Free(ranks);
+                }
+            }
+
+
+#else
             var type = this.ParseUnderlyingType(parentIsParameter: mode == ParseTypeMode.Parameter, options: nameOptions);
             Debug.Assert(type != null);
 
@@ -6307,6 +6383,7 @@ tryAgain:
 
             Debug.Assert(type != null);
             return type;
+#endif
         }
 
         private SyntaxToken EatNullableQualifierIfApplicable(ParseTypeMode mode)
@@ -10456,10 +10533,13 @@ tryAgain:
             {
                 return this.ParseAnonymousTypeExpression();
             }
+            // TODO: reverse the way we parse implicit typed arrays
+#if !STARK
             else if (this.IsImplicitlyTypedArray())
             {
                 return this.ParseImplicitlyTypedArrayCreation();
             }
+#endif
             else
             {
                 // assume object creation as default case
@@ -10638,6 +10718,9 @@ tryAgain:
 
         private bool IsPossibleArrayCreationExpression()
         {
+#if STARK
+            return this.CurrentToken.Kind == SyntaxKind.OpenBracketToken;
+#else
             // previous token should be NewKeyword
 
             var resetPoint = this.GetResetPoint();
@@ -10651,6 +10734,7 @@ tryAgain:
                 this.Reset(ref resetPoint);
                 this.Release(ref resetPoint);
             }
+#endif
         }
 
         private InitializerExpressionSyntax ParseObjectOrCollectionInitializer()

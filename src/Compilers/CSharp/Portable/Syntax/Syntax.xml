@@ -172,14 +172,14 @@
   </Node>
   <Node Name="ArrayTypeSyntax" Base="TypeSyntax">
     <Kind Name="ArrayType"/>
+    <Field Name="RankSpecifiers" Type="SyntaxList&lt;ArrayRankSpecifierSyntax&gt;">
+        <PropertyComment>
+            <summary>SyntaxList of ArrayRankSpecifierSyntax nodes representing the list of rank specifiers for the array.</summary>
+        </PropertyComment>
+    </Field>
     <Field Name="ElementType" Type="TypeSyntax">
       <PropertyComment>
         <summary>TypeSyntax node representing the type of the element of the array.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="RankSpecifiers" Type="SyntaxList&lt;ArrayRankSpecifierSyntax&gt;">
-      <PropertyComment>
-        <summary>SyntaxList of ArrayRankSpecifierSyntax nodes representing the list of rank specifiers for the array.</summary>
       </PropertyComment>
     </Field>
     <TypeComment>

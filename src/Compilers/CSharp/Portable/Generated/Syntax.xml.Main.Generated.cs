@@ -2647,9 +2647,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     public override SyntaxNode VisitArrayType(ArrayTypeSyntax node)
     {
-      var elementType = (TypeSyntax)this.Visit(node.ElementType);
       var rankSpecifiers = this.VisitList(node.RankSpecifiers);
-      return node.Update(elementType, rankSpecifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(rankSpecifiers, elementType);
     }
 
     public override SyntaxNode VisitArrayRankSpecifier(ArrayRankSpecifierSyntax node)
@@ -4606,18 +4606,18 @@ namespace Microsoft.CodeAnalysis.CSharp
 
 
     /// <summary>Creates a new ArrayTypeSyntax instance.</summary>
-    public static ArrayTypeSyntax ArrayType(TypeSyntax elementType, SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers)
+    public static ArrayTypeSyntax ArrayType(SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers, TypeSyntax elementType)
     {
       if (elementType == null)
         throw new ArgumentNullException(nameof(elementType));
-      return (ArrayTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.ArrayType(elementType == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)elementType.Green, rankSpecifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrayRankSpecifierSyntax>()).CreateRed();
+      return (ArrayTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.ArrayType(rankSpecifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrayRankSpecifierSyntax>(), elementType == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)elementType.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new ArrayTypeSyntax instance.</summary>
     public static ArrayTypeSyntax ArrayType(TypeSyntax elementType)
     {
-      return SyntaxFactory.ArrayType(elementType, default(SyntaxList<ArrayRankSpecifierSyntax>));
+      return SyntaxFactory.ArrayType(default(SyntaxList<ArrayRankSpecifierSyntax>), elementType);
     }
 
     /// <summary>Creates a new ArrayRankSpecifierSyntax instance.</summary>

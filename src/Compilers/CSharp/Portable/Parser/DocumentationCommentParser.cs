@@ -1422,7 +1422,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                         }
                     }
 
-                    type = SyntaxFactory.ArrayType(type, rankList);
+                    type = SyntaxFactory.ArrayType(rankList, type);
                 }
                 finally
                 {

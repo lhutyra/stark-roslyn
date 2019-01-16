@@ -858,62 +858,62 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   /// <summary>Class which represents the syntax node for the array type.</summary>
   internal sealed partial class ArrayTypeSyntax : TypeSyntax
   {
-    internal readonly TypeSyntax elementType;
     internal readonly GreenNode rankSpecifiers;
+    internal readonly TypeSyntax elementType;
 
-    internal ArrayTypeSyntax(SyntaxKind kind, TypeSyntax elementType, GreenNode rankSpecifiers, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ArrayTypeSyntax(SyntaxKind kind, GreenNode rankSpecifiers, TypeSyntax elementType, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(elementType);
-        this.elementType = elementType;
         if (rankSpecifiers != null)
         {
             this.AdjustFlagsAndWidth(rankSpecifiers);
             this.rankSpecifiers = rankSpecifiers;
         }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
     }
 
 
-    internal ArrayTypeSyntax(SyntaxKind kind, TypeSyntax elementType, GreenNode rankSpecifiers, SyntaxFactoryContext context)
+    internal ArrayTypeSyntax(SyntaxKind kind, GreenNode rankSpecifiers, TypeSyntax elementType, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(elementType);
-        this.elementType = elementType;
         if (rankSpecifiers != null)
         {
             this.AdjustFlagsAndWidth(rankSpecifiers);
             this.rankSpecifiers = rankSpecifiers;
         }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
     }
 
 
-    internal ArrayTypeSyntax(SyntaxKind kind, TypeSyntax elementType, GreenNode rankSpecifiers)
+    internal ArrayTypeSyntax(SyntaxKind kind, GreenNode rankSpecifiers, TypeSyntax elementType)
         : base(kind)
     {
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(elementType);
-        this.elementType = elementType;
         if (rankSpecifiers != null)
         {
             this.AdjustFlagsAndWidth(rankSpecifiers);
             this.rankSpecifiers = rankSpecifiers;
         }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
     }
 
-    /// <summary>TypeSyntax node representing the type of the element of the array.</summary>
-    public TypeSyntax ElementType { get { return this.elementType; } }
     /// <summary>SyntaxList of ArrayRankSpecifierSyntax nodes representing the list of rank specifiers for the array.</summary>
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> RankSpecifiers { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax>(this.rankSpecifiers); } }
+    /// <summary>TypeSyntax node representing the type of the element of the array.</summary>
+    public TypeSyntax ElementType { get { return this.elementType; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.elementType;
-            case 1: return this.rankSpecifiers;
+            case 0: return this.rankSpecifiers;
+            case 1: return this.elementType;
             default: return null;
         }
     }
@@ -933,11 +933,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitArrayType(this);
     }
 
-    public ArrayTypeSyntax Update(TypeSyntax elementType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers)
+    public ArrayTypeSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers, TypeSyntax elementType)
     {
-        if (elementType != this.ElementType || rankSpecifiers != this.RankSpecifiers)
+        if (rankSpecifiers != this.RankSpecifiers || elementType != this.ElementType)
         {
-            var newNode = SyntaxFactory.ArrayType(elementType, rankSpecifiers);
+            var newNode = SyntaxFactory.ArrayType(rankSpecifiers, elementType);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -952,37 +952,37 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ArrayTypeSyntax(this.Kind, this.elementType, this.rankSpecifiers, diagnostics, GetAnnotations());
+         return new ArrayTypeSyntax(this.Kind, this.rankSpecifiers, this.elementType, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ArrayTypeSyntax(this.Kind, this.elementType, this.rankSpecifiers, GetDiagnostics(), annotations);
+         return new ArrayTypeSyntax(this.Kind, this.rankSpecifiers, this.elementType, GetDiagnostics(), annotations);
     }
 
     internal ArrayTypeSyntax(ObjectReader reader)
         : base(reader)
     {
       this.SlotCount = 2;
-      var elementType = (TypeSyntax)reader.ReadValue();
-      if (elementType != null)
-      {
-         AdjustFlagsAndWidth(elementType);
-         this.elementType = elementType;
-      }
       var rankSpecifiers = (GreenNode)reader.ReadValue();
       if (rankSpecifiers != null)
       {
          AdjustFlagsAndWidth(rankSpecifiers);
          this.rankSpecifiers = rankSpecifiers;
       }
+      var elementType = (TypeSyntax)reader.ReadValue();
+      if (elementType != null)
+      {
+         AdjustFlagsAndWidth(elementType);
+         this.elementType = elementType;
+      }
     }
 
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
-      writer.WriteValue(this.elementType);
       writer.WriteValue(this.rankSpecifiers);
+      writer.WriteValue(this.elementType);
     }
 
     static ArrayTypeSyntax()
@@ -37750,9 +37750,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     public override CSharpSyntaxNode VisitArrayType(ArrayTypeSyntax node)
     {
-      var elementType = (TypeSyntax)this.Visit(node.ElementType);
       var rankSpecifiers = this.VisitList(node.RankSpecifiers);
-      return node.Update(elementType, rankSpecifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(rankSpecifiers, elementType);
     }
 
     public override CSharpSyntaxNode VisitArrayRankSpecifier(ArrayRankSpecifierSyntax node)
@@ -39759,7 +39759,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ArrayTypeSyntax ArrayType(TypeSyntax elementType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers)
+    public ArrayTypeSyntax ArrayType(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers, TypeSyntax elementType)
     {
 #if DEBUG
       if (elementType == null)
@@ -39767,10 +39767,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ArrayType, elementType, rankSpecifiers.Node, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ArrayType, rankSpecifiers.Node, elementType, this.context, out hash);
       if (cached != null) return (ArrayTypeSyntax)cached;
 
-      var result = new ArrayTypeSyntax(SyntaxKind.ArrayType, elementType, rankSpecifiers.Node, this.context);
+      var result = new ArrayTypeSyntax(SyntaxKind.ArrayType, rankSpecifiers.Node, elementType, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -47090,7 +47090,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ArrayTypeSyntax ArrayType(TypeSyntax elementType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers)
+    public static ArrayTypeSyntax ArrayType(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers, TypeSyntax elementType)
     {
 #if DEBUG
       if (elementType == null)
@@ -47098,10 +47098,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ArrayType, elementType, rankSpecifiers.Node, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ArrayType, rankSpecifiers.Node, elementType, out hash);
       if (cached != null) return (ArrayTypeSyntax)cached;
 
-      var result = new ArrayTypeSyntax(SyntaxKind.ArrayType, elementType, rankSpecifiers.Node);
+      var result = new ArrayTypeSyntax(SyntaxKind.ArrayType, rankSpecifiers.Node, elementType);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);

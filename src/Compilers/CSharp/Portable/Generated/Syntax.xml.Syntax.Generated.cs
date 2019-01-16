@@ -533,21 +533,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
   /// <summary>Class which represents the syntax node for the array type.</summary>
   public sealed partial class ArrayTypeSyntax : TypeSyntax
   {
-    private TypeSyntax elementType;
     private SyntaxNode rankSpecifiers;
+    private TypeSyntax elementType;
 
     internal ArrayTypeSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
-    }
-
-    /// <summary>TypeSyntax node representing the type of the element of the array.</summary>
-    public TypeSyntax ElementType 
-    {
-        get
-        {
-            return this.GetRedAtZero(ref this.elementType);
-        }
     }
 
     /// <summary>SyntaxList of ArrayRankSpecifierSyntax nodes representing the list of rank specifiers for the array.</summary>
@@ -555,7 +546,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         get
         {
-            return new SyntaxList<ArrayRankSpecifierSyntax>(this.GetRed(ref this.rankSpecifiers, 1));
+            return new SyntaxList<ArrayRankSpecifierSyntax>(this.GetRed(ref this.rankSpecifiers, 0));
+        }
+    }
+
+    /// <summary>TypeSyntax node representing the type of the element of the array.</summary>
+    public TypeSyntax ElementType 
+    {
+        get
+        {
+            return this.GetRed(ref this.elementType, 1);
         }
     }
 
@@ -563,8 +563,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 0: return this.GetRedAtZero(ref this.elementType);
-            case 1: return this.GetRed(ref this.rankSpecifiers, 1);
+            case 0: return this.GetRedAtZero(ref this.rankSpecifiers);
+            case 1: return this.GetRed(ref this.elementType, 1);
             default: return null;
         }
     }
@@ -572,8 +572,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 0: return this.elementType;
-            case 1: return this.rankSpecifiers;
+            case 0: return this.rankSpecifiers;
+            case 1: return this.elementType;
             default: return null;
         }
     }
@@ -588,11 +588,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitArrayType(this);
     }
 
-    public ArrayTypeSyntax Update(TypeSyntax elementType, SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers)
+    public ArrayTypeSyntax Update(SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers, TypeSyntax elementType)
     {
-        if (elementType != this.ElementType || rankSpecifiers != this.RankSpecifiers)
+        if (rankSpecifiers != this.RankSpecifiers || elementType != this.ElementType)
         {
-            var newNode = SyntaxFactory.ArrayType(elementType, rankSpecifiers);
+            var newNode = SyntaxFactory.ArrayType(rankSpecifiers, elementType);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -602,14 +602,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public ArrayTypeSyntax WithElementType(TypeSyntax elementType)
-    {
-        return this.Update(elementType, this.RankSpecifiers);
-    }
-
     public ArrayTypeSyntax WithRankSpecifiers(SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers)
     {
-        return this.Update(this.ElementType, rankSpecifiers);
+        return this.Update(rankSpecifiers, this.ElementType);
+    }
+
+    public ArrayTypeSyntax WithElementType(TypeSyntax elementType)
+    {
+        return this.Update(this.RankSpecifiers, elementType);
     }
 
     public ArrayTypeSyntax AddRankSpecifiers(params ArrayRankSpecifierSyntax[] items)
