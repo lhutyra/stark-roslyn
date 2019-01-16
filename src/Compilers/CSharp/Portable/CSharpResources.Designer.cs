@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class CSharpResources {
@@ -97,7 +97,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compilation (C#): .
+        ///   Looks up a localized string similar to Compilation (Stark): .
         /// </summary>
         internal static string CompilationC {
             get {
@@ -2815,7 +2815,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The RequiredAttribute attribute is not permitted on C# types.
+        ///   Looks up a localized string similar to The RequiredAttribute attribute is not permitted on Stark types.
         /// </summary>
         internal static string ERR_CantUseRequiredAttribute {
             get {
@@ -4750,7 +4750,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 1. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 1. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion1 {
             get {
@@ -4759,7 +4759,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 2. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 2. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion2 {
             get {
@@ -4768,7 +4768,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 3. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 3. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion3 {
             get {
@@ -4777,7 +4777,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 4. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 4. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion4 {
             get {
@@ -4786,7 +4786,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 5. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 5. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion5 {
             get {
@@ -4795,7 +4795,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 6. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 6. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion6 {
             get {
@@ -4804,7 +4804,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 7.0. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 7.0. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion7 {
             get {
@@ -4813,7 +4813,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 7.1. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 7.1. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion7_1 {
             get {
@@ -4822,7 +4822,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 7.2. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 7.2. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion7_2 {
             get {
@@ -4831,7 +4831,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 7.3. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 7.3. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion7_3 {
             get {
@@ -4840,7 +4840,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 8.0. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 8.0. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion8 {
             get {
@@ -4849,7 +4849,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in C# 8.0. Please use language version {1} or greater..
+        ///   Looks up a localized string similar to Feature &apos;{0}&apos; is not available in Stark 8.0. Please use language version {1} or greater..
         /// </summary>
         internal static string ERR_FeatureNotAvailableInVersion8_0 {
             get {
@@ -7648,7 +7648,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid &apos;{0}&apos; value: &apos;{1}&apos; for C# {2}. Please use language version {3} or greater..
+        ///   Looks up a localized string similar to Invalid &apos;{0}&apos; value: &apos;{1}&apos; for Stark {2}. Please use language version {3} or greater..
         /// </summary>
         internal static string ERR_NullableOptionNotAvailable {
             get {
@@ -8224,7 +8224,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An expression of type &apos;{0}&apos; cannot be handled by a pattern of type &apos;{1}&apos; in C# {2}. Please use language version {3} or greater..
+        ///   Looks up a localized string similar to An expression of type &apos;{0}&apos; cannot be handled by a pattern of type &apos;{1}&apos; in Stark {2}. Please use language version {3} or greater..
         /// </summary>
         internal static string ERR_PatternWrongGenericTypeInVersion {
             get {
@@ -9745,7 +9745,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System.Void cannot be used from C# -- use typeof(void) to get the void type object.
+        ///   Looks up a localized string similar to System.Void cannot be used from Stark -- use typeof(void) to get the void type object.
         /// </summary>
         internal static string ERR_SystemVoid {
             get {
@@ -10384,7 +10384,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A switch expression or case label must be a bool, char, string, integral, enum, or corresponding nullable type in C# 6 and earlier..
+        ///   Looks up a localized string similar to A switch expression or case label must be a bool, char, string, integral, enum, or corresponding nullable type in Stark 6 and earlier..
         /// </summary>
         internal static string ERR_V6SwitchGoverningTypeValueExpected {
             get {
@@ -10771,7 +10771,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is not a valid C# compound assignment operation.
+        ///   Looks up a localized string similar to {0} is not a valid Stark compound assignment operation.
         /// </summary>
         internal static string ICompoundAssignmentOperationIsNotCSharpCompoundAssignment {
             get {
@@ -10780,7 +10780,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is not a valid C# conversion expression.
+        ///   Looks up a localized string similar to {0} is not a valid Stark conversion expression.
         /// </summary>
         internal static string IConversionExpressionIsNotCSharpConversion {
             get {
@@ -10853,7 +10853,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///                             Visual C# Compiler Options
+        ///                             Stark Compiler Options
         ///
         ///                       - OUTPUT FILES -
         ///-out:&lt;file&gt;                   Specify output file name (default: base name of
@@ -10862,7 +10862,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         ///                              form: -t:exe)
         ///-target:winexe                Build a Windows executable (Short form:
         ///                              -t:winexe)
-        ///-target:library               B [rest of string was truncated]&quot;;.
+        ///-target:library               Build [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IDS_CSCHelp {
             get {
@@ -11717,7 +11717,9 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright (C) Microsoft Corporation. All rights reserved..
+        ///   Looks up a localized string similar to Copyright (C) Microsoft Corporation. All rights reserved.
+        ///Copyright (C) The Stark Platform Project. All rights reserved.
+        ///.
         /// </summary>
         internal static string IDS_LogoLine2 {
             get {
@@ -11933,7 +11935,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Microsoft (R) Visual C# Compiler.
+        ///   Looks up a localized string similar to Stark Compiler.
         /// </summary>
         internal static string IDS_ToolName {
             get {
@@ -12095,7 +12097,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not a C# symbol..
+        ///   Looks up a localized string similar to Not a Stark symbol..
         /// </summary>
         internal static string NotACSharpSymbol {
             get {
@@ -14718,9 +14720,9 @@ namespace Microsoft.CodeAnalysis.CSharp {
         /// <summary>
         ///   Looks up a localized string similar to This warning can be generated when two interface methods are differentiated only by whether a particular parameter is marked with ref or with out. It is best to change your code to avoid this warning because it is not obvious or guaranteed which method is called at runtime.
         ///
-        ///Although C# distinguishes between out and ref, the CLR sees them as the same. When deciding which method implements the interface, the CLR just picks one.
+        ///Although Stark distinguishes between out and ref, the CLR sees them as the same. When deciding which method implements the interface, the CLR just picks one.
         ///
-        ///Give the compiler some way to differentiate the methods. For example, you ca [rest of string was truncated]&quot;;.
+        ///Give the compiler some way to differentiate the methods. For example, you [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string WRN_MultipleRuntimeImplementationMatches_Description {
             get {
