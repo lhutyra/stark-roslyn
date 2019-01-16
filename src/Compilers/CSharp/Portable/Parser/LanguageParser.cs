@@ -3836,6 +3836,51 @@ tryAgain:
             return true;
         }
 
+#if STARK
+        private ParameterSyntax ParseParameter(SyntaxListBuilder<AttributeListSyntax> attributes, SyntaxListBuilder modifiers)
+        {
+            if (this.IsIncrementalAndFactoryContextMatches && CanReuseParameter(this.CurrentNode as CSharp.Syntax.ParameterSyntax, attributes, modifiers))
+            {
+                return (ParameterSyntax)this.EatNode();
+            }
+
+            this.ParseAttributeDeclarations(attributes);
+            this.ParseParameterModifiers(modifiers);
+
+            TypeSyntax type;
+            SyntaxToken name;
+            name = this.ParseIdentifierToken();
+            var colon = ExpectColon();
+            type = this.ParseType(mode: ParseTypeMode.Parameter);
+
+            EqualsValueClauseSyntax def = null;
+            if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
+            {
+                var equals = this.EatToken(SyntaxKind.EqualsToken);
+                var value = this.ParseExpressionCore();
+                def = _syntaxFactory.EqualsValueClause(equals, value: value);
+                def = CheckFeatureAvailability(def, MessageID.IDS_FeatureOptionalParameter);
+            }
+            return _syntaxFactory.Parameter(attributes, modifiers.ToList(), name, colon, type, def);
+        }
+
+        private SyntaxToken ExpectColon()
+        {
+            SyntaxToken colonToken;
+            if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
+            {
+                colonToken = this.EatToken(SyntaxKind.ColonToken);
+            }
+            else
+            {
+                colonToken = this.EatToken();
+                colonToken = this.AddError(colonToken, ErrorCode.ERR_ColonExpected);
+            }
+
+            return colonToken;
+        }
+#else
+
         private ParameterSyntax ParseParameter(
             SyntaxListBuilder<AttributeListSyntax> attributes,
             SyntaxListBuilder modifiers)
@@ -3883,6 +3928,7 @@ tryAgain:
 
             return _syntaxFactory.Parameter(attributes, modifiers.ToList(), type, name, def);
         }
+#endif
 
         private static bool IsParameterModifier(SyntaxKind kind)
         {
@@ -11323,6 +11369,10 @@ tryAgain:
             // give the "params unexpected" error at semantic analysis time.
             bool hasModifier = IsParameterModifier(this.CurrentToken.Kind);
 
+#if STARK
+            SyntaxToken paramName = this.ParseIdentifierToken();
+#endif
+
             TypeSyntax paramType = null;
             SyntaxListBuilder modifiers = _pool.Allocate();
 
@@ -11335,9 +11385,12 @@ tryAgain:
 
                 paramType = ParseType(ParseTypeMode.Parameter);
             }
-
+#if STARK
+            var parameter = _syntaxFactory.Parameter(default(SyntaxList<AttributeListSyntax>), modifiers.ToList(), paramName, paramType, null);
+#else
             SyntaxToken paramName = this.ParseIdentifierToken();
             var parameter = _syntaxFactory.Parameter(default(SyntaxList<AttributeListSyntax>), modifiers.ToList(), paramType, paramName, null);
+#endif
             _pool.Free(modifiers);
             return parameter;
         }

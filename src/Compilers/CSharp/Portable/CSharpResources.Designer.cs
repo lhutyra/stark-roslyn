@@ -2968,6 +2968,15 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to : expected.
+        /// </summary>
+        internal static string ERR_ColonExpected {
+            get {
+                return ResourceManager.GetString("ERR_ColonExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos;: a class with the ComImport attribute cannot specify a base class.
         /// </summary>
         internal static string ERR_ComImportWithBase {

@@ -28474,14 +28474,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   {
     internal readonly GreenNode attributeLists;
     internal readonly GreenNode modifiers;
-    internal readonly TypeSyntax type;
     internal readonly SyntaxToken identifier;
+    internal readonly SyntaxToken colonToken;
+    internal readonly TypeSyntax type;
     internal readonly EqualsValueClauseSyntax @default;
 
-    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, SyntaxToken identifier, EqualsValueClauseSyntax @default, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 5;
+        this.SlotCount = 6;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -28492,13 +28493,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
+        this.AdjustFlagsAndWidth(identifier);
+        this.identifier = identifier;
+        this.AdjustFlagsAndWidth(colonToken);
+        this.colonToken = colonToken;
         if (type != null)
         {
             this.AdjustFlagsAndWidth(type);
             this.type = type;
         }
-        this.AdjustFlagsAndWidth(identifier);
-        this.identifier = identifier;
         if (@default != null)
         {
             this.AdjustFlagsAndWidth(@default);
@@ -28507,11 +28510,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
 
-    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, SyntaxToken identifier, EqualsValueClauseSyntax @default, SyntaxFactoryContext context)
+    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 5;
+        this.SlotCount = 6;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -28522,13 +28525,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
+        this.AdjustFlagsAndWidth(identifier);
+        this.identifier = identifier;
+        this.AdjustFlagsAndWidth(colonToken);
+        this.colonToken = colonToken;
         if (type != null)
         {
             this.AdjustFlagsAndWidth(type);
             this.type = type;
         }
-        this.AdjustFlagsAndWidth(identifier);
-        this.identifier = identifier;
         if (@default != null)
         {
             this.AdjustFlagsAndWidth(@default);
@@ -28537,10 +28542,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
 
-    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, SyntaxToken identifier, EqualsValueClauseSyntax @default)
+    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
         : base(kind)
     {
-        this.SlotCount = 5;
+        this.SlotCount = 6;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -28551,13 +28556,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
+        this.AdjustFlagsAndWidth(identifier);
+        this.identifier = identifier;
+        this.AdjustFlagsAndWidth(colonToken);
+        this.colonToken = colonToken;
         if (type != null)
         {
             this.AdjustFlagsAndWidth(type);
             this.type = type;
         }
-        this.AdjustFlagsAndWidth(identifier);
-        this.identifier = identifier;
         if (@default != null)
         {
             this.AdjustFlagsAndWidth(@default);
@@ -28569,9 +28576,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> AttributeLists { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax>(this.attributeLists); } }
     /// <summary>Gets the modifier list.</summary>
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
-    public TypeSyntax Type { get { return this.type; } }
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
+    /// <summary>Gets the colon token.</summary>
+    public SyntaxToken ColonToken { get { return this.colonToken; } }
+    public TypeSyntax Type { get { return this.type; } }
     public EqualsValueClauseSyntax Default { get { return this.@default; } }
 
     internal override GreenNode GetSlot(int index)
@@ -28580,9 +28589,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             case 0: return this.attributeLists;
             case 1: return this.modifiers;
-            case 2: return this.type;
-            case 3: return this.identifier;
-            case 4: return this.@default;
+            case 2: return this.identifier;
+            case 3: return this.colonToken;
+            case 4: return this.type;
+            case 5: return this.@default;
             default: return null;
         }
     }
@@ -28602,11 +28612,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitParameter(this);
     }
 
-    public ParameterSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, SyntaxToken identifier, EqualsValueClauseSyntax @default)
+    public ParameterSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type || identifier != this.Identifier || @default != this.Default)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || @default != this.Default)
         {
-            var newNode = SyntaxFactory.Parameter(attributeLists, modifiers, type, identifier, @default);
+            var newNode = SyntaxFactory.Parameter(attributeLists, modifiers, identifier, colonToken, type, @default);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -28621,18 +28631,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ParameterSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.identifier, this.@default, diagnostics, GetAnnotations());
+         return new ParameterSyntax(this.Kind, this.attributeLists, this.modifiers, this.identifier, this.colonToken, this.type, this.@default, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ParameterSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.identifier, this.@default, GetDiagnostics(), annotations);
+         return new ParameterSyntax(this.Kind, this.attributeLists, this.modifiers, this.identifier, this.colonToken, this.type, this.@default, GetDiagnostics(), annotations);
     }
 
     internal ParameterSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 5;
+      this.SlotCount = 6;
       var attributeLists = (GreenNode)reader.ReadValue();
       if (attributeLists != null)
       {
@@ -28645,17 +28655,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(modifiers);
          this.modifiers = modifiers;
       }
-      var type = (TypeSyntax)reader.ReadValue();
-      if (type != null)
-      {
-         AdjustFlagsAndWidth(type);
-         this.type = type;
-      }
       var identifier = (SyntaxToken)reader.ReadValue();
       if (identifier != null)
       {
          AdjustFlagsAndWidth(identifier);
          this.identifier = identifier;
+      }
+      var colonToken = (SyntaxToken)reader.ReadValue();
+      if (colonToken != null)
+      {
+         AdjustFlagsAndWidth(colonToken);
+         this.colonToken = colonToken;
+      }
+      var type = (TypeSyntax)reader.ReadValue();
+      if (type != null)
+      {
+         AdjustFlagsAndWidth(type);
+         this.type = type;
       }
       var @default = (EqualsValueClauseSyntax)reader.ReadValue();
       if (@default != null)
@@ -28670,8 +28686,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       base.WriteTo(writer);
       writer.WriteValue(this.attributeLists);
       writer.WriteValue(this.modifiers);
-      writer.WriteValue(this.type);
       writer.WriteValue(this.identifier);
+      writer.WriteValue(this.colonToken);
+      writer.WriteValue(this.type);
       writer.WriteValue(this.@default);
     }
 
@@ -39187,10 +39204,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     {
       var attributeLists = this.VisitList(node.AttributeLists);
       var modifiers = this.VisitList(node.Modifiers);
-      var type = (TypeSyntax)this.Visit(node.Type);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
+      var colonToken = (SyntaxToken)this.Visit(node.ColonToken);
+      var type = (TypeSyntax)this.Visit(node.Type);
       var @default = (EqualsValueClauseSyntax)this.Visit(node.Default);
-      return node.Update(attributeLists, modifiers, type, identifier, @default);
+      return node.Update(attributeLists, modifiers, identifier, colonToken, type, @default);
     }
 
     public override CSharpSyntaxNode VisitIncompleteMember(IncompleteMemberSyntax node)
@@ -45359,7 +45377,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ParameterSyntax Parameter(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, SyntaxToken identifier, EqualsValueClauseSyntax @default)
+    public ParameterSyntax Parameter(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
 #if DEBUG
       if (identifier == null)
@@ -45372,9 +45390,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
+      if (colonToken == null)
+        throw new ArgumentNullException(nameof(colonToken));
+      switch (colonToken.Kind)
+      {
+        case SyntaxKind.ColonToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(colonToken));
+      }
 #endif
 
-      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, modifiers.Node, type, identifier, @default, this.context);
+      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, modifiers.Node, identifier, colonToken, type, @default, this.context);
     }
 
     public IncompleteMemberSyntax IncompleteMember(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type)
@@ -52690,7 +52717,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ParameterSyntax Parameter(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, SyntaxToken identifier, EqualsValueClauseSyntax @default)
+    public static ParameterSyntax Parameter(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
 #if DEBUG
       if (identifier == null)
@@ -52703,9 +52730,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
+      if (colonToken == null)
+        throw new ArgumentNullException(nameof(colonToken));
+      switch (colonToken.Kind)
+      {
+        case SyntaxKind.ColonToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(colonToken));
+      }
 #endif
 
-      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, modifiers.Node, type, identifier, @default);
+      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, modifiers.Node, identifier, colonToken, type, @default);
     }
 
     public static IncompleteMemberSyntax IncompleteMember(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type)

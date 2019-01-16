@@ -2246,6 +2246,9 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_SemicolonExpected" xml:space="preserve">
     <value>; expected</value>
   </data>
+  <data name="ERR_ColonExpected" xml:space="preserve">
+    <value>: expected</value>
+  </data>
   <data name="ERR_SyntaxError" xml:space="preserve">
     <value>Syntax error, '{0}' expected</value>
   </data>
