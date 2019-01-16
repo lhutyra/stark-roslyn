@@ -159,6 +159,9 @@ namespace Microsoft.CodeAnalysis.CSharp
         OperatorKeyword = 8382,
         ExplicitKeyword = 8383,
         ImplicitKeyword = 8384,
+#if STARK
+        FuncKeyword = 8390,
+#endif
 
         // contextual keywords
         YieldKeyword = 8405,
