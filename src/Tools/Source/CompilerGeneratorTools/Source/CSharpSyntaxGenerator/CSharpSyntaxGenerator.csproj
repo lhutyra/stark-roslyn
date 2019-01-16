@@ -17,6 +17,7 @@
   <ItemGroup>
     <Content Include="..\..\..\..\..\Compilers\CSharp\Portable\Syntax\Syntax.xml">
       <Link>Syntax.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 </Project>
