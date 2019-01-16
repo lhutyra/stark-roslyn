@@ -5942,6 +5942,55 @@ tryAgain:
             return ScanType(forPattern ? ParseTypeMode.DefinitePattern : ParseTypeMode.Normal, out lastTokenOfType);
         }
 
+#if STARK
+        private ScanTypeFlags ScanType(ParseTypeMode mode, out SyntaxToken lastTokenOfType)
+        {
+            ScanTypeFlags result;
+
+            // We might start with a by ref
+            if (this.CurrentToken.Kind == SyntaxKind.RefKeyword)
+            {
+                // in a ref local or ref return, we treat "ref" and "ref readonly" as part of the type
+                this.EatToken();
+
+                if (this.CurrentToken.Kind == SyntaxKind.ReadOnlyKeyword)
+                {
+                    this.EatToken();
+                }
+            }
+
+            // Finally, check for array types.
+            while (this.CurrentToken.Kind == SyntaxKind.OpenBracketToken)
+            {
+                this.EatToken();
+
+                // In stark, we don't allow multi-dimensional arrays
+                if (this.CurrentToken.Kind != SyntaxKind.CloseBracketToken)
+                {
+                    lastTokenOfType = null;
+                    return ScanTypeFlags.NotType;
+                }
+
+                lastTokenOfType = this.EatToken();
+            }
+
+            result = this.ScanNonArrayType(mode, out lastTokenOfType);
+            if (result == ScanTypeFlags.NotType)
+            {
+                return result;
+            }
+
+            if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+            {
+                lastTokenOfType = this.EatToken();
+            }
+
+            result = ScanTypeFlags.MustBeType;
+
+            return result;
+        }
+#else
+
         private ScanTypeFlags ScanType(ParseTypeMode mode, out SyntaxToken lastTokenOfType)
         {
             ScanTypeFlags result = this.ScanNonArrayType(mode, out lastTokenOfType);
@@ -5977,6 +6026,7 @@ tryAgain:
 
             return result;
         }
+#endif
 
         private void ScanNamedTypePart()
         {
@@ -6003,16 +6053,21 @@ tryAgain:
             }
         }
 
+        // Not used in both Stark and C#
+#if !STARK
         private ScanTypeFlags ScanNonArrayType()
         {
             SyntaxToken lastTokenOfType;
             return ScanNonArrayType(ParseTypeMode.Normal, out lastTokenOfType);
         }
+#endif
 
         private ScanTypeFlags ScanNonArrayType(ParseTypeMode mode, out SyntaxToken lastTokenOfType)
         {
             ScanTypeFlags result;
 
+            // In Stark the ref is coming before the array
+#if !STARK
             if (this.CurrentToken.Kind == SyntaxKind.RefKeyword)
             {
                 // in a ref local or ref return, we treat "ref" and "ref readonly" as part of the type
@@ -6023,6 +6078,7 @@ tryAgain:
                     this.EatToken();
                 }
             }
+#endif
 
             if (this.CurrentToken.Kind == SyntaxKind.IdentifierToken)
             {
