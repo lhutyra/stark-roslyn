@@ -758,6 +758,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     break;
 
                 case '@':
+                    TextWindow.AdvanceChar();
+                    info.Kind = SyntaxKind.AtToken;
+                    break;
+
+                case '`':
+                {
+                    if (!this.ScanIdentifierOrKeyword(ref info))
+                    {
+                        TextWindow.AdvanceChar();
+                        info.Text = TextWindow.GetText(intern: true);
+                        this.AddError(ErrorCode.ERR_ExpectedVerbatimLiteral);
+                    }
+                    break;
+                }
+
+                case '\\':
+                { 
                     if (TextWindow.PeekChar(1) == '"')
                     {
                         this.ScanVerbatimStringLiteral(ref info);
@@ -766,16 +783,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     {
                         this.ScanInterpolatedStringLiteral(isVerbatim: true, ref info);
                         CheckFeatureAvailability(MessageID.IDS_FeatureAltInterpolatedVerbatimStrings);
-                        break;
                     }
-                    else if (!this.ScanIdentifierOrKeyword(ref info))
+                    else
                     {
-                        TextWindow.AdvanceChar();
-                        info.Text = TextWindow.GetText(intern: true);
-                        this.AddError(ErrorCode.ERR_ExpectedVerbatimLiteral);
-                    }
+                        // Could be unicode escape. Try that.
+                        character = TextWindow.PeekCharOrUnicodeEscape(out surrogateCharacter);
 
+                        isEscaped = true;
+                        if (SyntaxFacts.IsIdentifierStartCharacter(character))
+                        {
+                            goto case 'a';
+                        }
+                        goto default;
+                    }
                     break;
+                }
+
 
                 case '$':
                     if (TextWindow.PeekChar(1) == '"')
@@ -784,7 +807,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                         CheckFeatureAvailability(MessageID.IDS_FeatureInterpolatedStrings);
                         break;
                     }
-                    else if (TextWindow.PeekChar(1) == '@' && TextWindow.PeekChar(2) == '"')
+                    else if (TextWindow.PeekChar(1) == '\\' && TextWindow.PeekChar(2) == '"')
                     {
                         this.ScanInterpolatedStringLiteral(isVerbatim: true, ref info);
                         CheckFeatureAvailability(MessageID.IDS_FeatureInterpolatedStrings);
@@ -869,19 +892,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     this.ScanNumericLiteral(ref info);
                     break;
 
-                case '\\':
-                    {
-                        // Could be unicode escape. Try that.
-                        character = TextWindow.PeekCharOrUnicodeEscape(out surrogateCharacter);
-
-                        isEscaped = true;
-                        if (SyntaxFacts.IsIdentifierStartCharacter(character))
-                        {
-                            goto case 'a';
-                        }
-
-                        goto default;
-                    }
 
                 case SlidingTextWindow.InvalidCharacter:
                     if (!TextWindow.IsReallyAtEnd())
@@ -1504,7 +1514,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         // and max positions and use those for quick checks internally.
         //
         // Note: it is critical that this method must only be called from a 
-        // code path that checked for IsIdentifierStartChar or '@' first. 
+        // code path that checked for IsIdentifierStartChar or '\\' first. 
         private bool ScanIdentifier_FastPath(ref TokenInfo info)
         {
             if ((_mode & LexerMode.MaskLexMode) == LexerMode.DebuggerSyntax)
@@ -1658,7 +1668,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                         currentOffset++;
                         continue;
 
-                    // case '@':  verbatim identifiers are handled in the slow path
+                    // case '`':  verbatim identifiers are handled in the slow path
                     // case '\\': unicode escapes are handled in the slow path
                     default:
                         // Any other character is something we cannot handle.  i.e.
@@ -1674,7 +1684,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             int start = TextWindow.Position;
             this.ResetIdentBuffer();
 
-            info.IsVerbatim = TextWindow.PeekChar() == '@';
+            info.IsVerbatim = TextWindow.PeekChar() == '`';
             if (info.IsVerbatim)
             {
                 TextWindow.AdvanceChar();

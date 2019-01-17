@@ -258,7 +258,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <param name="attributeMatchesOpt">If specified, only load attributes that match this predicate, and any diagnostics produced will be dropped.</param>
         /// <returns>Flag indicating whether lazyCustomAttributes were stored on this thread. Caller should check for this flag and perform NotePartComplete if true.</returns>
         internal bool LoadAndValidateAttributes(
-            OneOrMany<SyntaxList<AttributeListSyntax>> attributesSyntaxLists,
+            OneOrMany<SyntaxList<AttributeSyntax>> attributesSyntaxLists,
             ref CustomAttributesBag<CSharpAttributeData> lazyCustomAttributesBag,
             AttributeLocation symbolPart = AttributeLocation.None,
             bool earlyDecodingOnly = false,
@@ -383,7 +383,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// It should not perform any bind operations as it can lead to an attribute binding cycle.
         /// </remarks>
         private ImmutableArray<AttributeSyntax> GetAttributesToBind(
-            OneOrMany<SyntaxList<AttributeListSyntax>> attributeDeclarationSyntaxLists,
+            OneOrMany<SyntaxList<AttributeSyntax>> attributeDeclarationSyntaxLists,
             AttributeLocation symbolPart,
             DiagnosticBag diagnostics,
             CSharpCompilation compilation,
@@ -403,10 +403,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                 if (attributeDeclarationSyntaxList.Any())
                 {
                     int prevCount = attributesToBindCount;
-                    foreach (var attributeDeclarationSyntax in attributeDeclarationSyntaxList)
+                    foreach (var attribute in attributeDeclarationSyntaxList)
                     {
                         // We bind the attribute only if it has a matching target for the given ownerSymbol and attributeLocation.
-                        if (MatchAttributeTarget(attributeTarget, symbolPart, attributeDeclarationSyntax.Target, diagnostics))
+                        if (MatchAttributeTarget(attributeTarget, symbolPart, attribute.Target, diagnostics))
                         {
                             if (syntaxBuilder == null)
                             {
@@ -414,22 +414,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                                 bindersBuilder = new ArrayBuilder<Binder>();
                             }
 
-                            var attributesToBind = attributeDeclarationSyntax.Attributes;
-                            if (attributeMatchesOpt is null)
+                            if (attributeMatchesOpt is null || attributeMatchesOpt(attribute))
                             {
-                                syntaxBuilder.AddRange(attributesToBind);
-                                attributesToBindCount += attributesToBind.Count;
-                            }
-                            else
-                            {
-                                foreach (var attribute in attributesToBind)
-                                {
-                                    if (attributeMatchesOpt(attribute))
-                                    {
-                                        syntaxBuilder.Add(attribute);
-                                        attributesToBindCount++;
-                                    }
-                                }
+                                syntaxBuilder.Add(attribute);
+                                attributesToBindCount++;
                             }
                         }
                     }

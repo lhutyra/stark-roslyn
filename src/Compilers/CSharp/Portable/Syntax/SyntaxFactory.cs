@@ -316,12 +316,12 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <param name="trailing">A list of trivia immediately following the token.</param>
         public static SyntaxToken VerbatimIdentifier(SyntaxTriviaList leading, string text, string valueText, SyntaxTriviaList trailing)
         {
-            if (text.StartsWith("@", StringComparison.Ordinal))
+            if (text.StartsWith("`", StringComparison.Ordinal))
             {
                 throw new ArgumentException("text should not start with an @ character.");
             }
 
-            return new SyntaxToken(Syntax.InternalSyntax.SyntaxFactory.Identifier(SyntaxKind.IdentifierName, leading.Node, "@" + text, valueText, trailing.Node));
+            return new SyntaxToken(Syntax.InternalSyntax.SyntaxFactory.Identifier(SyntaxKind.IdentifierName, leading.Node, "`" + text, valueText, trailing.Node));
         }
 
         /// <summary>
@@ -2412,7 +2412,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
 
         public static PropertyDeclarationSyntax PropertyDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken propToken,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,
@@ -2436,7 +2436,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
 
         public static ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken implicitOrExplicitKeyword,
             SyntaxToken operatorKeyword,
@@ -2458,7 +2458,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
 
         public static OperatorDeclarationSyntax OperatorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             TypeSyntax returnType,
             SyntaxToken operatorKeyword,
@@ -2503,13 +2503,13 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
 
         // backwards compatibility for extended API
-        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, BlockSyntax body)
+        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, BlockSyntax body)
                 => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, body, default(ArrowExpressionClauseSyntax));
-        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, BlockSyntax body, SyntaxToken semicolonToken)
+        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, BlockSyntax body, SyntaxToken semicolonToken)
                 => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, keyword, body, default(ArrowExpressionClauseSyntax), semicolonToken);
-        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, ArrowExpressionClauseSyntax expressionBody)
+        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, ArrowExpressionClauseSyntax expressionBody)
                 => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, default(BlockSyntax), expressionBody);
-        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+        public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
                 => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, keyword, default(BlockSyntax), expressionBody, semicolonToken);
 
         /// <summary>Creates a new PragmaWarningDirectiveTriviaSyntax instance.</summary>

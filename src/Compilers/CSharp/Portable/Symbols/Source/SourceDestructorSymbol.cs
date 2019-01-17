@@ -137,16 +137,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             // destructors can't have return type attributes
             return OneOrMany.Create(this.GetSyntax().AttributeLists);
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetReturnTypeAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetReturnTypeAttributeDeclarations()
         {
             // destructors can't have return type attributes
-            return OneOrMany.Create(default(SyntaxList<AttributeListSyntax>));
+            return OneOrMany.Create(default(SyntaxList<AttributeSyntax>));
         }
 
         internal sealed override bool IsMetadataVirtual(bool ignoreInterfaceImplementationChanges = false)

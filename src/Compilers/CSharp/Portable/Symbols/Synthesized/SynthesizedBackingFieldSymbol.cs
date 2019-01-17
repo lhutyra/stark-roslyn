@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         internal override Location ErrorLocation
             => _property.Location;
 
-        protected override SyntaxList<AttributeListSyntax> AttributeDeclarationSyntaxList
+        protected override SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList
             => _property.CSharpSyntaxNode.AttributeLists;
 
         public override Symbol AssociatedSymbol

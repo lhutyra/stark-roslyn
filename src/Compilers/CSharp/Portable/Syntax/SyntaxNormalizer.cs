@@ -211,13 +211,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                         || nextToken.Kind() == SyntaxKind.OpenBraceToken
                         || nextToken.Kind() == SyntaxKind.WhereKeyword) ? 1 : 0;
 
-                case SyntaxKind.CloseBracketToken:
-                    if (currentToken.Parent is AttributeListSyntax && !(currentToken.Parent.Parent is ParameterSyntax))
-                    {
-                        return 1;
-                    }
-                    break;
-
                 case SyntaxKind.SemicolonToken:
                     return LineBreaksAfterSemicolon(currentToken, nextToken);
 
@@ -253,8 +246,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                 case SyntaxKind.ElseKeyword:
                 case SyntaxKind.FinallyKeyword:
                     return 1;
-                case SyntaxKind.OpenBracketToken:
-                    return (nextToken.Parent is AttributeListSyntax && !(nextToken.Parent.Parent is ParameterSyntax)) ? 1 : 0;
+                case SyntaxKind.AtToken:
+                    return (nextToken.Parent is AttributeSyntax && !(nextToken.Parent.Parent is ParameterSyntax)) ? 1 : 0;
                 case SyntaxKind.WhereKeyword:
                     return currentToken.Parent is TypeParameterListSyntax ? 1 : 0;
             }

@@ -65,7 +65,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             //  [SomeAttribute] [|public MyCtorName(params int[] values)|] { ... }
-            return CreateSpan(constructorSyntax.Modifiers, constructorSyntax.Identifier, constructorSyntax.ParameterList.CloseParenToken);
+            return CreateSpan(constructorSyntax.Modifiers, constructorSyntax.ConstructorKeyword, constructorSyntax.ParameterList.CloseParenToken);
         }
 
         private static TextSpan CreateSpan(SyntaxTokenList startOpt, SyntaxNodeOrToken startFallbackOpt, SyntaxNodeOrToken endOpt)

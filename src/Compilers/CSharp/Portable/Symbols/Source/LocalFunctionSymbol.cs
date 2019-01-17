@@ -385,7 +385,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             return true;
         }
 
-        private static void ReportAttributesDisallowed(SyntaxList<AttributeListSyntax> attributes, DiagnosticBag diagnostics)
+        private static void ReportAttributesDisallowed(SyntaxList<AttributeSyntax> attributes, DiagnosticBag diagnostics)
         {
             foreach (var attrList in attributes)
             {

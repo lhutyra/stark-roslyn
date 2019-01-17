@@ -39,6 +39,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         HashToken = 8220,
         SlashToken = 8221,
         DotDotToken = 8222,
+        AtToken = 8223,
 
         // additional xml tokens
         SlashGreaterThanToken = 8232, // xml empty element end
@@ -161,6 +162,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         ImplicitKeyword = 8384,
 #if STARK
         FuncKeyword = 8390,
+        ConstructorKeyword = 8391,
 #endif
 
         // contextual keywords

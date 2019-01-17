@@ -32,7 +32,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     public partial class SyntaxFactory
     {
         public static IndexerDeclarationSyntax IndexerDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             TypeSyntax type,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,

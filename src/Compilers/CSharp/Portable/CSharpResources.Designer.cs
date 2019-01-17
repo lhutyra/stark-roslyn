@@ -9547,7 +9547,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: static constructor cannot have an explicit &apos;this&apos; or &apos;base&apos; constructor call.
+        ///   Looks up a localized string similar to &apos;static constructor cannot have an explicit &apos;this&apos; or &apos;base&apos; constructor call.
         /// </summary>
         internal static string ERR_StaticConstructorWithExplicitConstructorCall {
             get {

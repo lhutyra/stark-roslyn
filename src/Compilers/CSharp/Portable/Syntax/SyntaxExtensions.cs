@@ -261,7 +261,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static IndexerDeclarationSyntax Update(
             this IndexerDeclarationSyntax syntax,
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             TypeSyntax type,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,
@@ -283,7 +283,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static OperatorDeclarationSyntax Update(
             this OperatorDeclarationSyntax syntax,
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             TypeSyntax returnType,
             SyntaxToken operatorKeyword,
@@ -306,7 +306,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static MethodDeclarationSyntax Update(
             this MethodDeclarationSyntax syntax,
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken funcKeyword,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,

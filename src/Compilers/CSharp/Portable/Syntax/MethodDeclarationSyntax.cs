@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     public partial class SyntaxFactory
     {
         public static MethodDeclarationSyntax MethodDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken funcKeyword,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,

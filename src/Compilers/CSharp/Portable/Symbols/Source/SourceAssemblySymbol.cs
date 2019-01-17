@@ -1451,9 +1451,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             return (CommonAssemblyWellKnownAttributeData)attributesBag.DecodedWellKnownAttributeData;
         }
 
-        internal ImmutableArray<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal ImmutableArray<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
-            var builder = ArrayBuilder<SyntaxList<AttributeListSyntax>>.GetInstance();
+            var builder = ArrayBuilder<SyntaxList<AttributeSyntax>>.GetInstance();
             var declarations = DeclaringCompilation.MergedRootDeclaration.Declarations;
             foreach (RootSingleNamespaceDeclaration rootNs in declarations)
             {

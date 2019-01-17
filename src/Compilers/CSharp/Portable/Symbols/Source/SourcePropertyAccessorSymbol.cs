@@ -479,7 +479,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             var syntax = this.GetSyntax();
             switch (syntax.Kind())

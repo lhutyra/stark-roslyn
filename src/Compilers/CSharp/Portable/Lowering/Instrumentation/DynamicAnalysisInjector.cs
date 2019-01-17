@@ -612,7 +612,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 case SyntaxKind.ConstructorDeclaration:
                     ConstructorDeclarationSyntax constructorSyntax = (ConstructorDeclarationSyntax)syntax;
-                    return SkipAttributes(syntax, constructorSyntax.AttributeLists, constructorSyntax.Modifiers, constructorSyntax.Identifier, null);
+                    return SkipAttributes(syntax, constructorSyntax.AttributeLists, constructorSyntax.Modifiers, constructorSyntax.ConstructorKeyword, null);
 
                 case SyntaxKind.OperatorDeclaration:
                     OperatorDeclarationSyntax operatorSyntax = (OperatorDeclarationSyntax)syntax;
@@ -622,7 +622,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return syntax.Span;
         }
 
-        private static Text.TextSpan SkipAttributes(SyntaxNode syntax, SyntaxList<AttributeListSyntax> attributes, SyntaxTokenList modifiers, SyntaxToken keyword, TypeSyntax type)
+        private static Text.TextSpan SkipAttributes(SyntaxNode syntax, SyntaxList<AttributeSyntax> attributes, SyntaxTokenList modifiers, SyntaxToken keyword, TypeSyntax type)
         {
             Text.TextSpan originalSpan = syntax.Span;
             if (attributes.Count > 0)

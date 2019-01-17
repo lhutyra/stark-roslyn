@@ -31,7 +31,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         private readonly TextKeyedCache<SyntaxTrivia> _triviaMap;
         private readonly TextKeyedCache<SyntaxToken> _tokenMap;
         private readonly CachingIdentityFactory<string, SyntaxKind> _keywordKindMap;
-        internal const int MaxKeywordLength = 10;
+        internal const int MaxKeywordLength = 11; // <- for constructor (longest keyword)
 
         internal LexerCache()
         {

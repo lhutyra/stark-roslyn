@@ -109,7 +109,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return _explicitInterfaceImplementations; }
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             return OneOrMany.Create(GetSyntax().AttributeLists);
         }

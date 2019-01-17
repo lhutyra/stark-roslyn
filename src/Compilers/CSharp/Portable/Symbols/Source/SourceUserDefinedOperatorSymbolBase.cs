@@ -633,7 +633,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return _isExpressionBodied; }
         }
 
-        internal sealed override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal sealed override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             return OneOrMany.Create(this.GetSyntax().AttributeLists);
         }

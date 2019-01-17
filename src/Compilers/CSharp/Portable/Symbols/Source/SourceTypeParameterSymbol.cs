@@ -108,11 +108,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             return (bounds != null) ? bounds.DeducedBaseType : this.GetDefaultBaseType();
         }
 
-        internal ImmutableArray<SyntaxList<AttributeListSyntax>> MergedAttributeDeclarationSyntaxLists
+        internal ImmutableArray<SyntaxList<AttributeSyntax>> MergedAttributeDeclarationSyntaxLists
         {
             get
             {
-                var mergedAttributesBuilder = ArrayBuilder<SyntaxList<AttributeListSyntax>>.GetInstance();
+                var mergedAttributesBuilder = ArrayBuilder<SyntaxList<AttributeSyntax>>.GetInstance();
 
                 foreach (var syntaxRef in _syntaxRefs)
                 {

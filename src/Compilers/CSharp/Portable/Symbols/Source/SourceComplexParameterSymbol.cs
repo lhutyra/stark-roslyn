@@ -323,19 +323,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        internal sealed override SyntaxList<AttributeListSyntax> AttributeDeclarationList
+        internal sealed override SyntaxList<AttributeSyntax> AttributeDeclarationList
         {
             get
             {
                 var syntax = this.CSharpSyntaxNode;
-                return (syntax != null) ? syntax.AttributeLists : default(SyntaxList<AttributeListSyntax>);
+                return (syntax != null) ? syntax.AttributeLists : default(SyntaxList<AttributeSyntax>);
             }
         }
 
         /// <summary>
         /// Gets the syntax list of custom attributes that declares attributes for this parameter symbol.
         /// </summary>
-        internal virtual OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal virtual OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             // C# spec:
             // The attributes on the parameters of the resulting method declaration
@@ -343,7 +343,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             // and the implementing partial method declaration in unspecified order.
             // Duplicates are not removed.
 
-            SyntaxList<AttributeListSyntax> attributes = AttributeDeclarationList;
+            SyntaxList<AttributeSyntax> attributes = AttributeDeclarationList;
 
             var sourceMethod = this.ContainingSymbol as SourceOrdinaryMethodSymbol;
             if ((object)sourceMethod == null)
@@ -351,7 +351,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 return OneOrMany.Create(attributes);
             }
 
-            SyntaxList<AttributeListSyntax> otherAttributes;
+            SyntaxList<AttributeSyntax> otherAttributes;
 
             // if this is a definition get the implementation and vice versa
             SourceOrdinaryMethodSymbol otherPart = sourceMethod.OtherPartOfPartial;
@@ -361,14 +361,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
             else
             {
-                otherAttributes = default(SyntaxList<AttributeListSyntax>);
+                otherAttributes = default(SyntaxList<AttributeSyntax>);
             }
 
-            if (attributes.Equals(default(SyntaxList<AttributeListSyntax>)))
+            if (attributes.Equals(default(SyntaxList<AttributeSyntax>)))
             {
                 return OneOrMany.Create(otherAttributes);
             }
-            else if (otherAttributes.Equals(default(SyntaxList<AttributeListSyntax>)))
+            else if (otherAttributes.Equals(default(SyntaxList<AttributeSyntax>)))
             {
                 return OneOrMany.Create(attributes);
             }
@@ -805,7 +805,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             if ((object)impl == null) return false;
             var paramList =
                 node     // AttributeSyntax
-                .Parent  // AttributeListSyntax
+                .Parent  // AttributeSyntax
                 .Parent  // ParameterSyntax
                 .Parent as ParameterListSyntax; // ParameterListSyntax
             if (paramList == null) return false;

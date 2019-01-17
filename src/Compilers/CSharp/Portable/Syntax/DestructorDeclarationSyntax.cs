@@ -9,7 +9,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     public partial class DestructorDeclarationSyntax
     {
         public DestructorDeclarationSyntax Update(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken tildeToken,
             SyntaxToken identifier,
@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     public partial class SyntaxFactory
     {
         public static DestructorDeclarationSyntax DestructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 default(SyntaxToken));
 
         public static DestructorDeclarationSyntax DestructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken tildeToken,
             SyntaxToken identifier,
@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 semicolonToken);
 
         public static DestructorDeclarationSyntax DestructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
@@ -83,7 +83,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 default(SyntaxToken));
 
         public static DestructorDeclarationSyntax DestructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken tildeToken,
             SyntaxToken identifier,

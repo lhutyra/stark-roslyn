@@ -4384,7 +4384,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AsyncKeyword, this.Parameter, this.ArrowToken, body);
     }
 
-    public SimpleLambdaExpressionSyntax AddParameterAttributeLists(params AttributeListSyntax[] items)
+    public SimpleLambdaExpressionSyntax AddParameterAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithParameter(this.Parameter.WithAttributeLists(this.Parameter.AttributeLists.AddRange(items)));
     }
@@ -12559,11 +12559,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 2));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 2));
         }
     }
 
@@ -12613,7 +12613,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitCompilationUnit(this);
     }
 
-    public CompilationUnitSyntax Update(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<AttributeListSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken endOfFileToken)
+    public CompilationUnitSyntax Update(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken endOfFileToken)
     {
         if (externs != this.Externs || usings != this.Usings || attributeLists != this.AttributeLists || members != this.Members || endOfFileToken != this.EndOfFileToken)
         {
@@ -12637,7 +12637,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.Externs, usings, this.AttributeLists, this.Members, this.EndOfFileToken);
     }
 
-    public CompilationUnitSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public CompilationUnitSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(this.Externs, this.Usings, attributeLists, this.Members, this.EndOfFileToken);
     }
@@ -12662,7 +12662,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.WithUsings(this.Usings.AddRange(items));
     }
 
-    public CompilationUnitSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public CompilationUnitSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -13068,120 +13068,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
   }
 
-  /// <summary>Class representing one or more attributes applied to a language construct.</summary>
-  public sealed partial class AttributeListSyntax : CSharpSyntaxNode
-  {
-    private AttributeTargetSpecifierSyntax target;
-    private SyntaxNode attributes;
-
-    internal AttributeListSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
-        : base(green, parent, position)
-    {
-    }
-
-    /// <summary>Gets the open bracket token.</summary>
-    public SyntaxToken OpenBracketToken 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeListSyntax)this.Green).openBracketToken, this.Position, 0); }
-    }
-
-    /// <summary>Gets the optional construct targeted by the attribute.</summary>
-    public AttributeTargetSpecifierSyntax Target 
-    {
-        get
-        {
-            return this.GetRed(ref this.target, 1);
-        }
-    }
-
-    /// <summary>Gets the attribute declaration list.</summary>
-    public SeparatedSyntaxList<AttributeSyntax> Attributes 
-    {
-        get
-        {
-            var red = this.GetRed(ref this.attributes, 2);
-            if (red != null)
-                return new SeparatedSyntaxList<AttributeSyntax>(red, this.GetChildIndex(2));
-
-            return default(SeparatedSyntaxList<AttributeSyntax>);
-        }
-    }
-
-    /// <summary>Gets the close bracket token.</summary>
-    public SyntaxToken CloseBracketToken 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeListSyntax)this.Green).closeBracketToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
-    }
-
-    internal override SyntaxNode GetNodeSlot(int index)
-    {
-        switch (index)
-        {
-            case 1: return this.GetRed(ref this.target, 1);
-            case 2: return this.GetRed(ref this.attributes, 2);
-            default: return null;
-        }
-    }
-    internal override SyntaxNode GetCachedSlot(int index)
-    {
-        switch (index)
-        {
-            case 1: return this.target;
-            case 2: return this.attributes;
-            default: return null;
-        }
-    }
-
-    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
-    {
-        return visitor.VisitAttributeList(this);
-    }
-
-    public override void Accept(CSharpSyntaxVisitor visitor)
-    {
-        visitor.VisitAttributeList(this);
-    }
-
-    public AttributeListSyntax Update(SyntaxToken openBracketToken, AttributeTargetSpecifierSyntax target, SeparatedSyntaxList<AttributeSyntax> attributes, SyntaxToken closeBracketToken)
-    {
-        if (openBracketToken != this.OpenBracketToken || target != this.Target || attributes != this.Attributes || closeBracketToken != this.CloseBracketToken)
-        {
-            var newNode = SyntaxFactory.AttributeList(openBracketToken, target, attributes, closeBracketToken);
-            var annotations = this.GetAnnotations();
-            if (annotations != null && annotations.Length > 0)
-               return newNode.WithAnnotations(annotations);
-            return newNode;
-        }
-
-        return this;
-    }
-
-    public AttributeListSyntax WithOpenBracketToken(SyntaxToken openBracketToken)
-    {
-        return this.Update(openBracketToken, this.Target, this.Attributes, this.CloseBracketToken);
-    }
-
-    public AttributeListSyntax WithTarget(AttributeTargetSpecifierSyntax target)
-    {
-        return this.Update(this.OpenBracketToken, target, this.Attributes, this.CloseBracketToken);
-    }
-
-    public AttributeListSyntax WithAttributes(SeparatedSyntaxList<AttributeSyntax> attributes)
-    {
-        return this.Update(this.OpenBracketToken, this.Target, attributes, this.CloseBracketToken);
-    }
-
-    public AttributeListSyntax WithCloseBracketToken(SyntaxToken closeBracketToken)
-    {
-        return this.Update(this.OpenBracketToken, this.Target, this.Attributes, closeBracketToken);
-    }
-
-    public AttributeListSyntax AddAttributes(params AttributeSyntax[] items)
-    {
-        return this.WithAttributes(this.Attributes.AddRange(items));
-    }
-  }
-
   /// <summary>Class representing what language construct an attribute targets.</summary>
   public sealed partial class AttributeTargetSpecifierSyntax : CSharpSyntaxNode
   {
@@ -13255,6 +13141,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
   /// <summary>Attribute syntax.</summary>
   public sealed partial class AttributeSyntax : CSharpSyntaxNode
   {
+    private AttributeTargetSpecifierSyntax target;
     private NameSyntax name;
     private AttributeArgumentListSyntax argumentList;
 
@@ -13263,12 +13150,27 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
+    /// <summary>Gets the at token.</summary>
+    public SyntaxToken AtToken 
+    {
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax)this.Green).atToken, this.Position, 0); }
+    }
+
+    /// <summary>Gets the optional construct targeted by the attribute.</summary>
+    public AttributeTargetSpecifierSyntax Target 
+    {
+        get
+        {
+            return this.GetRed(ref this.target, 1);
+        }
+    }
+
     /// <summary>Gets the name.</summary>
     public NameSyntax Name 
     {
         get
         {
-            return this.GetRedAtZero(ref this.name);
+            return this.GetRed(ref this.name, 2);
         }
     }
 
@@ -13276,7 +13178,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         get
         {
-            return this.GetRed(ref this.argumentList, 1);
+            return this.GetRed(ref this.argumentList, 3);
         }
     }
 
@@ -13284,8 +13186,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 0: return this.GetRedAtZero(ref this.name);
-            case 1: return this.GetRed(ref this.argumentList, 1);
+            case 1: return this.GetRed(ref this.target, 1);
+            case 2: return this.GetRed(ref this.name, 2);
+            case 3: return this.GetRed(ref this.argumentList, 3);
             default: return null;
         }
     }
@@ -13293,8 +13196,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 0: return this.name;
-            case 1: return this.argumentList;
+            case 1: return this.target;
+            case 2: return this.name;
+            case 3: return this.argumentList;
             default: return null;
         }
     }
@@ -13309,11 +13213,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitAttribute(this);
     }
 
-    public AttributeSyntax Update(NameSyntax name, AttributeArgumentListSyntax argumentList)
+    public AttributeSyntax Update(SyntaxToken atToken, AttributeTargetSpecifierSyntax target, NameSyntax name, AttributeArgumentListSyntax argumentList)
     {
-        if (name != this.Name || argumentList != this.ArgumentList)
+        if (atToken != this.AtToken || target != this.Target || name != this.Name || argumentList != this.ArgumentList)
         {
-            var newNode = SyntaxFactory.Attribute(name, argumentList);
+            var newNode = SyntaxFactory.Attribute(atToken, target, name, argumentList);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -13323,14 +13227,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
+    public AttributeSyntax WithAtToken(SyntaxToken atToken)
+    {
+        return this.Update(atToken, this.Target, this.Name, this.ArgumentList);
+    }
+
+    public AttributeSyntax WithTarget(AttributeTargetSpecifierSyntax target)
+    {
+        return this.Update(this.AtToken, target, this.Name, this.ArgumentList);
+    }
+
     public AttributeSyntax WithName(NameSyntax name)
     {
-        return this.Update(name, this.ArgumentList);
+        return this.Update(this.AtToken, this.Target, name, this.ArgumentList);
     }
 
     public AttributeSyntax WithArgumentList(AttributeArgumentListSyntax argumentList)
     {
-        return this.Update(this.Name, argumentList);
+        return this.Update(this.AtToken, this.Target, this.Name, argumentList);
     }
 
     public AttributeSyntax AddArgumentListArguments(params AttributeArgumentSyntax[] items)
@@ -13719,11 +13633,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -13772,7 +13686,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitTypeParameter(this);
     }
 
-    public TypeParameterSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxToken varianceKeyword, SyntaxToken identifier)
+    public TypeParameterSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxToken varianceKeyword, SyntaxToken identifier)
     {
         if (attributeLists != this.AttributeLists || varianceKeyword != this.VarianceKeyword || identifier != this.Identifier)
         {
@@ -13786,7 +13700,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public TypeParameterSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public TypeParameterSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.VarianceKeyword, this.Identifier);
     }
@@ -13801,7 +13715,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AttributeLists, this.VarianceKeyword, identifier);
     }
 
-    public TypeParameterSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public TypeParameterSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -13816,12 +13730,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public abstract SyntaxList<AttributeListSyntax> AttributeLists { get; }
-    public BaseTypeDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
-    internal abstract BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists);
+    public abstract SyntaxList<AttributeSyntax> AttributeLists { get; }
+    public BaseTypeDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
+    internal abstract BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists);
 
-    public BaseTypeDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items) => AddAttributeListsCore(items);
-    internal abstract BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items);
+    public BaseTypeDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items) => AddAttributeListsCore(items);
+    internal abstract BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items);
 
     /// <summary>Gets the modifier list.</summary>
     public abstract SyntaxTokenList Modifiers { get; }
@@ -13896,7 +13810,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     public TypeDeclarationSyntax AddMembers(params MemberDeclarationSyntax[] items) => AddMembersCore(items);
     internal abstract TypeDeclarationSyntax AddMembersCore(params MemberDeclarationSyntax[] items);
 
-    public new TypeDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists) => (TypeDeclarationSyntax)WithAttributeListsCore(attributeLists);
+    public new TypeDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists) => (TypeDeclarationSyntax)WithAttributeListsCore(attributeLists);
     public new TypeDeclarationSyntax WithModifiers(SyntaxTokenList modifiers) => (TypeDeclarationSyntax)WithModifiersCore(modifiers);
     public new TypeDeclarationSyntax WithIdentifier(SyntaxToken identifier) => (TypeDeclarationSyntax)WithIdentifierCore(identifier);
     public new TypeDeclarationSyntax WithBaseList(BaseListSyntax baseList) => (TypeDeclarationSyntax)WithBaseListCore(baseList);
@@ -13904,7 +13818,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     public new TypeDeclarationSyntax WithCloseBraceToken(SyntaxToken closeBraceToken) => (TypeDeclarationSyntax)WithCloseBraceTokenCore(closeBraceToken);
     public new TypeDeclarationSyntax WithSemicolonToken(SyntaxToken semicolonToken) => (TypeDeclarationSyntax)WithSemicolonTokenCore(semicolonToken);
 
-    public new TypeDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items) => (TypeDeclarationSyntax)AddAttributeListsCore(items);
+    public new TypeDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items) => (TypeDeclarationSyntax)AddAttributeListsCore(items);
 
     public new TypeDeclarationSyntax AddModifiers(params SyntaxToken[] items) => (TypeDeclarationSyntax)AddModifiersCore(items);
 
@@ -13925,11 +13839,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -14045,7 +13959,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitClassDeclaration(this);
     }
 
-    public ClassDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public ClassDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
         {
@@ -14059,8 +13973,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new ClassDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new ClassDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.BaseList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.SemicolonToken);
     }
@@ -14124,9 +14038,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.BaseList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, semicolonToken);
     }
-    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new ClassDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new ClassDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -14178,11 +14092,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -14298,7 +14212,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitStructDeclaration(this);
     }
 
-    public StructDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public StructDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
         {
@@ -14312,8 +14226,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new StructDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new StructDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.BaseList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.SemicolonToken);
     }
@@ -14377,9 +14291,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.BaseList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, semicolonToken);
     }
-    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new StructDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new StructDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -14431,11 +14345,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -14551,7 +14465,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitInterfaceDeclaration(this);
     }
 
-    public InterfaceDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public InterfaceDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
         {
@@ -14565,8 +14479,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new InterfaceDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new InterfaceDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.BaseList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.SemicolonToken);
     }
@@ -14630,9 +14544,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.BaseList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, semicolonToken);
     }
-    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new InterfaceDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new InterfaceDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -14682,11 +14596,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -14788,7 +14702,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitEnumDeclaration(this);
     }
 
-    public EnumDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public EnumDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || enumKeyword != this.EnumKeyword || identifier != this.Identifier || baseList != this.BaseList || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
         {
@@ -14802,8 +14716,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new EnumDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new EnumDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.EnumKeyword, this.Identifier, this.BaseList, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.SemicolonToken);
     }
@@ -14853,9 +14767,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.EnumKeyword, this.Identifier, this.BaseList, this.OpenBraceToken, this.Members, this.CloseBraceToken, semicolonToken);
     }
-    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new EnumDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new EnumDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -14894,11 +14808,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -15003,7 +14917,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitDelegateDeclaration(this);
     }
 
-    public DelegateDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken semicolonToken)
+    public DelegateDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || delegateKeyword != this.DelegateKeyword || returnType != this.ReturnType || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || constraintClauses != this.ConstraintClauses || semicolonToken != this.SemicolonToken)
         {
@@ -15017,7 +14931,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public DelegateDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public DelegateDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.DelegateKeyword, this.ReturnType, this.Identifier, this.TypeParameterList, this.ParameterList, this.ConstraintClauses, this.SemicolonToken);
     }
@@ -15062,7 +14976,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AttributeLists, this.Modifiers, this.DelegateKeyword, this.ReturnType, this.Identifier, this.TypeParameterList, this.ParameterList, this.ConstraintClauses, semicolonToken);
     }
 
-    public DelegateDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public DelegateDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -15100,11 +15014,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -15151,7 +15065,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitEnumMemberDeclaration(this);
     }
 
-    public EnumMemberDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxToken identifier, EqualsValueClauseSyntax equalsValue)
+    public EnumMemberDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, EqualsValueClauseSyntax equalsValue)
     {
         if (attributeLists != this.AttributeLists || identifier != this.Identifier || equalsValue != this.EqualsValue)
         {
@@ -15165,7 +15079,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public EnumMemberDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public EnumMemberDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Identifier, this.EqualsValue);
     }
@@ -15180,7 +15094,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AttributeLists, this.Identifier, equalsValue);
     }
 
-    public EnumMemberDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public EnumMemberDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -15704,12 +15618,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public abstract SyntaxList<AttributeListSyntax> AttributeLists { get; }
-    public BaseFieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
-    internal abstract BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists);
+    public abstract SyntaxList<AttributeSyntax> AttributeLists { get; }
+    public BaseFieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
+    internal abstract BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists);
 
-    public BaseFieldDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items) => AddAttributeListsCore(items);
-    internal abstract BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items);
+    public BaseFieldDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items) => AddAttributeListsCore(items);
+    internal abstract BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items);
 
     /// <summary>Gets the modifier list.</summary>
     public abstract SyntaxTokenList Modifiers { get; }
@@ -15742,11 +15656,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -15805,7 +15719,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitFieldDeclaration(this);
     }
 
-    public FieldDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public FieldDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || declaration != this.Declaration || semicolonToken != this.SemicolonToken)
         {
@@ -15819,8 +15733,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new FieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new FieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Declaration, this.SemicolonToken);
     }
@@ -15842,9 +15756,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.Declaration, semicolonToken);
     }
-    internal override BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new FieldDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new FieldDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -15873,11 +15787,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -15941,7 +15855,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitEventFieldDeclaration(this);
     }
 
-    public EventFieldDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public EventFieldDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || eventKeyword != this.EventKeyword || declaration != this.Declaration || semicolonToken != this.SemicolonToken)
         {
@@ -15955,8 +15869,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new EventFieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new EventFieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.EventKeyword, this.Declaration, this.SemicolonToken);
     }
@@ -15983,9 +15897,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.EventKeyword, this.Declaration, semicolonToken);
     }
-    internal override BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new EventFieldDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new EventFieldDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -16086,12 +16000,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public abstract SyntaxList<AttributeListSyntax> AttributeLists { get; }
-    public BaseMethodDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
-    internal abstract BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists);
+    public abstract SyntaxList<AttributeSyntax> AttributeLists { get; }
+    public BaseMethodDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
+    internal abstract BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists);
 
-    public BaseMethodDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items) => AddAttributeListsCore(items);
-    internal abstract BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items);
+    public BaseMethodDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items) => AddAttributeListsCore(items);
+    internal abstract BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items);
 
     /// <summary>Gets the modifier list.</summary>
     public abstract SyntaxTokenList Modifiers { get; }
@@ -16143,11 +16057,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -16300,7 +16214,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitMethodDeclaration(this);
     }
 
-    public MethodDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public MethodDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || returnToken != this.ReturnToken || returnType != this.ReturnType || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
@@ -16314,8 +16228,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new MethodDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new MethodDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.FuncKeyword, this.ExplicitInterfaceSpecifier, this.Identifier, this.TypeParameterList, this.ParameterList, this.ReturnToken, this.ReturnType, this.ConstraintClauses, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
@@ -16384,9 +16298,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.ExplicitInterfaceSpecifier, this.Identifier, this.TypeParameterList, this.ParameterList, this.ReturnToken, this.ReturnType, this.ConstraintClauses, this.Body, this.ExpressionBody, semicolonToken);
     }
-    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new MethodDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new MethodDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -16436,11 +16350,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -16548,7 +16462,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitOperatorDeclaration(this);
     }
 
-    public OperatorDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public OperatorDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || returnType != this.ReturnType || operatorKeyword != this.OperatorKeyword || operatorToken != this.OperatorToken || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
@@ -16562,8 +16476,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new OperatorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new OperatorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.ReturnType, this.OperatorKeyword, this.OperatorToken, this.ParameterList, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
@@ -16612,9 +16526,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.ReturnType, this.OperatorKeyword, this.OperatorToken, this.ParameterList, this.Body, this.ExpressionBody, semicolonToken);
     }
-    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new OperatorDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new OperatorDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -16653,11 +16567,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -16766,7 +16680,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitConversionOperatorDeclaration(this);
     }
 
-    public ConversionOperatorDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public ConversionOperatorDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || implicitOrExplicitKeyword != this.ImplicitOrExplicitKeyword || operatorKeyword != this.OperatorKeyword || type != this.Type || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
@@ -16780,8 +16694,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new ConversionOperatorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new ConversionOperatorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.ImplicitOrExplicitKeyword, this.OperatorKeyword, this.Type, this.ParameterList, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
@@ -16830,9 +16744,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.ImplicitOrExplicitKeyword, this.OperatorKeyword, this.Type, this.ParameterList, this.Body, this.ExpressionBody, semicolonToken);
     }
-    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new ConversionOperatorDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new ConversionOperatorDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -16871,11 +16785,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -16891,10 +16805,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    /// <summary>Gets the identifier.</summary>
-    public SyntaxToken Identifier 
+    /// <summary>Gets the constructor keyword.</summary>
+    public SyntaxToken ConstructorKeyword 
     {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ConstructorDeclarationSyntax)this.Green).identifier, this.GetChildPosition(2), this.GetChildIndex(2)); }
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ConstructorDeclarationSyntax)this.Green).constructorKeyword, this.GetChildPosition(2), this.GetChildIndex(2)); }
     }
 
     public override ParameterListSyntax ParameterList 
@@ -16977,11 +16891,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitConstructorDeclaration(this);
     }
 
-    public ConstructorDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public ConstructorDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || identifier != this.Identifier || parameterList != this.ParameterList || initializer != this.Initializer || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || constructorKeyword != this.ConstructorKeyword || parameterList != this.ParameterList || initializer != this.Initializer || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
-            var newNode = SyntaxFactory.ConstructorDeclaration(attributeLists, modifiers, identifier, parameterList, initializer, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.ConstructorDeclaration(attributeLists, modifiers, constructorKeyword, parameterList, initializer, body, expressionBody, semicolonToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -16991,54 +16905,54 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new ConstructorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new ConstructorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
-        return this.Update(attributeLists, this.Modifiers, this.Identifier, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
+        return this.Update(attributeLists, this.Modifiers, this.ConstructorKeyword, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
 
     internal override BaseMethodDeclarationSyntax WithModifiersCore(SyntaxTokenList modifiers) => WithModifiers(modifiers);
     public new ConstructorDeclarationSyntax WithModifiers(SyntaxTokenList modifiers)
     {
-        return this.Update(this.AttributeLists, modifiers, this.Identifier, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
+        return this.Update(this.AttributeLists, modifiers, this.ConstructorKeyword, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
 
-    public ConstructorDeclarationSyntax WithIdentifier(SyntaxToken identifier)
+    public ConstructorDeclarationSyntax WithConstructorKeyword(SyntaxToken constructorKeyword)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, identifier, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, constructorKeyword, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
 
     internal override BaseMethodDeclarationSyntax WithParameterListCore(ParameterListSyntax parameterList) => WithParameterList(parameterList);
     public new ConstructorDeclarationSyntax WithParameterList(ParameterListSyntax parameterList)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, parameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.ConstructorKeyword, parameterList, this.Initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
 
     public ConstructorDeclarationSyntax WithInitializer(ConstructorInitializerSyntax initializer)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ParameterList, initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.ConstructorKeyword, this.ParameterList, initializer, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
 
     internal override BaseMethodDeclarationSyntax WithBodyCore(BlockSyntax body) => WithBody(body);
     public new ConstructorDeclarationSyntax WithBody(BlockSyntax body)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ParameterList, this.Initializer, body, this.ExpressionBody, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.ConstructorKeyword, this.ParameterList, this.Initializer, body, this.ExpressionBody, this.SemicolonToken);
     }
 
     internal override BaseMethodDeclarationSyntax WithExpressionBodyCore(ArrowExpressionClauseSyntax expressionBody) => WithExpressionBody(expressionBody);
     public new ConstructorDeclarationSyntax WithExpressionBody(ArrowExpressionClauseSyntax expressionBody)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ParameterList, this.Initializer, this.Body, expressionBody, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.ConstructorKeyword, this.ParameterList, this.Initializer, this.Body, expressionBody, this.SemicolonToken);
     }
 
     internal override BaseMethodDeclarationSyntax WithSemicolonTokenCore(SyntaxToken semicolonToken) => WithSemicolonToken(semicolonToken);
     public new ConstructorDeclarationSyntax WithSemicolonToken(SyntaxToken semicolonToken)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, semicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.ConstructorKeyword, this.ParameterList, this.Initializer, this.Body, this.ExpressionBody, semicolonToken);
     }
-    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new ConstructorDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new ConstructorDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -17168,11 +17082,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -17270,7 +17184,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitDestructorDeclaration(this);
     }
 
-    public DestructorDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public DestructorDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || tildeToken != this.TildeToken || identifier != this.Identifier || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
@@ -17284,8 +17198,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new DestructorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BaseMethodDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new DestructorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.TildeToken, this.Identifier, this.ParameterList, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
@@ -17329,9 +17243,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.TildeToken, this.Identifier, this.ParameterList, this.Body, this.ExpressionBody, semicolonToken);
     }
-    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BaseMethodDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new DestructorDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new DestructorDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -17365,12 +17279,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public abstract SyntaxList<AttributeListSyntax> AttributeLists { get; }
-    public BasePropertyDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
-    internal abstract BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists);
+    public abstract SyntaxList<AttributeSyntax> AttributeLists { get; }
+    public BasePropertyDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeListsCore(attributeLists);
+    internal abstract BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists);
 
-    public BasePropertyDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items) => AddAttributeListsCore(items);
-    internal abstract BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items);
+    public BasePropertyDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items) => AddAttributeListsCore(items);
+    internal abstract BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items);
 
     /// <summary>Gets the modifier list.</summary>
     public abstract SyntaxTokenList Modifiers { get; }
@@ -17412,11 +17326,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -17539,7 +17453,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitPropertyDeclaration(this);
     }
 
-    public PropertyDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public PropertyDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || returnToken != this.ReturnToken || type != this.Type || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || initializer != this.Initializer || semicolonToken != this.SemicolonToken)
         {
@@ -17553,8 +17467,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new PropertyDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new PropertyDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.FuncKeyword, this.ExplicitInterfaceSpecifier, this.Identifier, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.Initializer, this.SemicolonToken);
     }
@@ -17612,9 +17526,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.ExplicitInterfaceSpecifier, this.Identifier, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.Initializer, semicolonToken);
     }
-    internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new PropertyDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new PropertyDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -17720,11 +17634,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -17808,7 +17722,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitEventDeclaration(this);
     }
 
-    public EventDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList)
+    public EventDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || eventKeyword != this.EventKeyword || type != this.Type || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || accessorList != this.AccessorList)
         {
@@ -17822,8 +17736,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new EventDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new EventDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.EventKeyword, this.Type, this.ExplicitInterfaceSpecifier, this.Identifier, this.AccessorList);
     }
@@ -17861,9 +17775,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.EventKeyword, this.Type, this.ExplicitInterfaceSpecifier, this.Identifier, accessorList);
     }
-    internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new EventDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new EventDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -17895,11 +17809,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
     }
 
-    public override SyntaxList<AttributeListSyntax> AttributeLists 
+    public override SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -18010,7 +17924,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitIndexerDeclaration(this);
     }
 
-    public IndexerDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public IndexerDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || thisKeyword != this.ThisKeyword || parameterList != this.ParameterList || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
@@ -18024,8 +17938,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeListSyntax> attributeLists) => WithAttributeLists(attributeLists);
-    public new IndexerDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new IndexerDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, this.SemicolonToken);
     }
@@ -18073,9 +17987,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, semicolonToken);
     }
-    internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeListSyntax[] items) => AddAttributeLists(items);
+    internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
-    public new IndexerDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public new IndexerDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -18200,11 +18114,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -18289,7 +18203,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitAccessorDeclaration(this);
     }
 
-    public AccessorDeclarationSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public AccessorDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
@@ -18303,7 +18217,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public AccessorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public AccessorDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Keyword, this.Body, this.ExpressionBody, this.SemicolonToken);
     }
@@ -18333,7 +18247,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Body, this.ExpressionBody, semicolonToken);
     }
 
-    public AccessorDeclarationSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public AccessorDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -18576,11 +18490,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -18663,7 +18577,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitParameter(this);
     }
 
-    public ParameterSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public ParameterSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || @default != this.Default)
         {
@@ -18677,7 +18591,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public ParameterSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public ParameterSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Identifier, this.ColonToken, this.Type, this.Default);
     }
@@ -18707,7 +18621,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ColonToken, this.Type, @default);
     }
 
-    public ParameterSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public ParameterSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }
@@ -18729,11 +18643,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
-    public SyntaxList<AttributeListSyntax> AttributeLists 
+    public SyntaxList<AttributeSyntax> AttributeLists 
     {
         get
         {
-            return new SyntaxList<AttributeListSyntax>(this.GetRed(ref this.attributeLists, 0));
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
         }
     }
 
@@ -18787,7 +18701,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitIncompleteMember(this);
     }
 
-    public IncompleteMemberSyntax Update(SyntaxList<AttributeListSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type)
+    public IncompleteMemberSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type)
         {
@@ -18801,7 +18715,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public IncompleteMemberSyntax WithAttributeLists(SyntaxList<AttributeListSyntax> attributeLists)
+    public IncompleteMemberSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
         return this.Update(attributeLists, this.Modifiers, this.Type);
     }
@@ -18816,7 +18730,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.AttributeLists, this.Modifiers, type);
     }
 
-    public IncompleteMemberSyntax AddAttributeLists(params AttributeListSyntax[] items)
+    public IncompleteMemberSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
     }

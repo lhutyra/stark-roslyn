@@ -271,15 +271,9 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
         }
 
-        private static IEnumerable<SyntaxNode> GetAttributes(SyntaxList<AttributeListSyntax> attributeLists)
-        {
-            foreach (var attributeList in attributeLists)
-            {
-                foreach (var attribute in attributeList.Attributes)
-                {
-                    yield return attribute;
-                }
-            }
+        private static IEnumerable<SyntaxNode> GetAttributes(SyntaxList<AttributeSyntax> attributeLists)
+        {            
+            return attributeLists;
         }
 
         private static IEnumerable<SyntaxNode> GetParameterListInitializersAndAttributes(BaseParameterListSyntax parameterList) =>

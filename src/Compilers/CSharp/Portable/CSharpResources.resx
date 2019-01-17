@@ -1476,7 +1476,7 @@ If such a class is used as a base class and if the deriving class defines a dest
     <value>'{0}' is abstract but it is contained in non-abstract class '{1}'</value>
   </data>
   <data name="ERR_StaticConstructorWithExplicitConstructorCall" xml:space="preserve">
-    <value>'{0}': static constructor cannot have an explicit 'this' or 'base' constructor call</value>
+    <value>'static constructor cannot have an explicit 'this' or 'base' constructor call</value>
   </data>
   <data name="ERR_StaticConstructorWithAccessModifiers" xml:space="preserve">
     <value>'{0}': access modifiers are not allowed on static constructors</value>

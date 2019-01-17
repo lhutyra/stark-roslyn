@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             DiagnosticBag diagnostics)
         {
             var methodKind = syntax.Modifiers.Any(SyntaxKind.StaticKeyword) ? MethodKind.StaticConstructor : MethodKind.Constructor;
-            return new SourceConstructorSymbol(containingType, syntax.Identifier.GetLocation(), syntax, methodKind, diagnostics);
+            return new SourceConstructorSymbol(containingType, syntax.ConstructorKeyword.GetLocation(), syntax, methodKind, diagnostics);
         }
 
         private SourceConstructorSymbol(
@@ -35,12 +35,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             bool modifierErrors;
             var declarationModifiers = this.MakeModifiers(syntax.Modifiers, methodKind, location, diagnostics, out modifierErrors);
             this.MakeFlags(methodKind, declarationModifiers, returnsVoid: true, isExtensionMethod: false);
-
-            if (syntax.Identifier.ValueText != containingType.Name)
-            {
-                // This is probably a method declaration with the type missing.
-                diagnostics.Add(ErrorCode.ERR_MemberNeedsType, location);
-            }
 
             bool hasBlockBody = syntax.Body != null;
             _isExpressionBodied = !hasBlockBody && syntax.ExpressionBody != null;
@@ -235,15 +229,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return this.IsStatic ? WellKnownMemberNames.StaticConstructorName : WellKnownMemberNames.InstanceConstructorName; }
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             return OneOrMany.Create(((ConstructorDeclarationSyntax)this.SyntaxNode).AttributeLists);
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetReturnTypeAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetReturnTypeAttributeDeclarations()
         {
             // constructors can't have return type attributes
-            return OneOrMany.Create(default(SyntaxList<AttributeListSyntax>));
+            return OneOrMany.Create(default(SyntaxList<AttributeSyntax>));
         }
 
         protected override IAttributeTargetSymbol AttributeOwner

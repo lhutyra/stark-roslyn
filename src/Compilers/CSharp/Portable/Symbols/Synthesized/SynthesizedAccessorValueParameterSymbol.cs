@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return (SourceMemberMethodSymbol)this.ContainingSymbol; }
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             // Bind the attributes on the accessor's attribute syntax list with "param" target specifier.
             var accessor = (SourceMemberMethodSymbol)this.ContainingSymbol;

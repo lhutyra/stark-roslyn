@@ -81,7 +81,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        protected override SyntaxList<AttributeListSyntax> AttributeDeclarationSyntaxList
+        protected override SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     return this.SyntaxNode.AttributeLists;
                 }
 
-                return default(SyntaxList<AttributeListSyntax>);
+                return default(SyntaxList<AttributeSyntax>);
             }
         }
 

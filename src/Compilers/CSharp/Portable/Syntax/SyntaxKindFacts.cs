@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static IEnumerable<SyntaxKind> GetReservedKeywordKinds()
         {
-            for (int i = (int)SyntaxKind.BoolKeyword; i <= (int)SyntaxKind.ImplicitKeyword; i++)
+            for (int i = (int)SyntaxKind.BoolKeyword; i <= (int)SyntaxKind.ConstructorKeyword; i++)
             {
                 yield return (SyntaxKind)i;
             }
@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static bool IsReservedKeyword(SyntaxKind kind)
         {
-            return kind >= SyntaxKind.BoolKeyword && kind <= SyntaxKind.ImplicitKeyword;
+            return kind >= SyntaxKind.BoolKeyword && kind <= SyntaxKind.ConstructorKeyword;
         }
 
         public static bool IsAttributeTargetSpecifier(SyntaxKind kind)
@@ -970,6 +970,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.ExplicitKeyword;
                 case "func":
                     return SyntaxKind.FuncKeyword;
+                case "constructor":
+                    return SyntaxKind.ConstructorKeyword;
                 default:
                     return SyntaxKind.None;
             }
@@ -1229,6 +1231,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (kind)
             {
+                case SyntaxKind.AtToken:
+                    return "@";
                 case SyntaxKind.TildeToken:
                     return "~";
                 case SyntaxKind.ExclamationToken:
@@ -1637,6 +1641,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "var";
                 case SyntaxKind.FuncKeyword:
                     return "func";
+                case SyntaxKind.ConstructorKeyword:
+                    return "constructor";
                 default:
                     return string.Empty;
             }

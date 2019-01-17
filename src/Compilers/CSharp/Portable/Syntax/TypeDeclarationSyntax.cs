@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             return TypeDeclaration(
                 kind,
-                default(SyntaxList<AttributeListSyntax>),
+                default(SyntaxList<AttributeSyntax>),
                 default(SyntaxTokenList),
                 SyntaxFactory.Token(GetTypeDeclarationKeywordKind(kind)),
                 identifier,
@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return SyntaxFactory.TypeDeclaration(kind, SyntaxFactory.Identifier(identifier));
         }
 
-        public static TypeDeclarationSyntax TypeDeclaration(SyntaxKind kind, SyntaxList<AttributeListSyntax> attributes, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+        public static TypeDeclarationSyntax TypeDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributes, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
         {
             switch (kind)
             {

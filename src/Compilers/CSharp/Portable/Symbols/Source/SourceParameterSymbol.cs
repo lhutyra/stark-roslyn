@@ -177,7 +177,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         /// </summary>
         internal abstract bool HasDefaultArgumentSyntax { get; }
 
-        internal abstract SyntaxList<AttributeListSyntax> AttributeDeclarationList { get; }
+        internal abstract SyntaxList<AttributeSyntax> AttributeDeclarationList { get; }
 
         internal abstract CustomAttributesBag<CSharpAttributeData> GetAttributesBag();
 

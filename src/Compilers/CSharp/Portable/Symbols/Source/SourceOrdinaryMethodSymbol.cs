@@ -712,7 +712,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             if ((object)this.SourcePartialImplementation != null)
             {
@@ -724,7 +724,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        private SyntaxList<AttributeListSyntax> AttributeDeclarationSyntaxList
+        private SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList
         {
             get
             {
@@ -734,7 +734,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     return this.GetSyntax().AttributeLists;
                 }
 
-                return default(SyntaxList<AttributeListSyntax>);
+                return default(SyntaxList<AttributeSyntax>);
             }
         }
 

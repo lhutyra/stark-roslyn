@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
@@ -93,7 +94,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
             return firstExcluded.Kind() == SyntaxKind.None || position < firstExcluded.SpanStart;
         }
 
-        internal static bool IsInAttributeSpecification(int position, SyntaxList<AttributeListSyntax> attributesSyntaxList)
+        internal static bool IsInAttributeSpecification(int position, SyntaxList<AttributeSyntax> attributesSyntaxList)
         {
             int count = attributesSyntaxList.Count;
             if (count == 0)
@@ -101,8 +102,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                 return false;
             }
 
-            var startToken = attributesSyntaxList[0].OpenBracketToken;
-            var endToken = attributesSyntaxList[count - 1].CloseBracketToken;
+            var startToken = attributesSyntaxList[0].AtToken;
+            var endToken = attributesSyntaxList[count - 1].ArgumentList.CloseParenToken;
             return IsBetweenTokens(position, startToken, endToken);
         }
 

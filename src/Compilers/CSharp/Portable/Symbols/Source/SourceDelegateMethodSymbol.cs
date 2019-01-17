@@ -180,7 +180,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return System.Reflection.MethodImplAttributes.Runtime; }
         }
 
-        internal sealed override OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal sealed override OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
             // TODO: This implementation looks strange. It might make sense for the Invoke method, but
             //       not for constructor and other methods.
@@ -217,10 +217,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 get { return RefKind.None; }
             }
 
-            internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetReturnTypeAttributeDeclarations()
+            internal override OneOrMany<SyntaxList<AttributeSyntax>> GetReturnTypeAttributeDeclarations()
             {
                 // Constructors don't have return type attributes
-                return OneOrMany.Create(default(SyntaxList<AttributeListSyntax>));
+                return OneOrMany.Create(default(SyntaxList<AttributeSyntax>));
             }
 
             internal override LexicalSortKey GetLexicalSortKey()
@@ -362,12 +362,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 get { return RefKind.None; }
             }
 
-            internal override OneOrMany<SyntaxList<AttributeListSyntax>> GetReturnTypeAttributeDeclarations()
+            internal override OneOrMany<SyntaxList<AttributeSyntax>> GetReturnTypeAttributeDeclarations()
             {
                 // BeginInvoke method doesn't have return type attributes
                 // because it doesn't inherit Delegate declaration's return type.
                 // It has a special return type: SpecialType.System.IAsyncResult.
-                return OneOrMany.Create(default(SyntaxList<AttributeListSyntax>));
+                return OneOrMany.Create(default(SyntaxList<AttributeSyntax>));
             }
         }
 

@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         /// <summary>
         /// Gets the syntax list of custom attributes applied on the symbol.
         /// </summary>
-        protected abstract SyntaxList<AttributeListSyntax> AttributeDeclarationSyntaxList { get; }
+        protected abstract SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList { get; }
 
         protected abstract IAttributeTargetSymbol AttributeOwner { get; }
 

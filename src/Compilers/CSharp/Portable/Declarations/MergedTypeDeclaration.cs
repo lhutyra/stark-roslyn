@@ -40,9 +40,9 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
         }
 
-        public ImmutableArray<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        public ImmutableArray<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
-            var attributeSyntaxListBuilder = ArrayBuilder<SyntaxList<AttributeListSyntax>>.GetInstance();
+            var attributeSyntaxListBuilder = ArrayBuilder<SyntaxList<AttributeSyntax>>.GetInstance();
 
             foreach (var decl in _declarations)
             {
@@ -53,7 +53,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 var syntaxRef = decl.SyntaxReference;
                 var typeDecl = syntaxRef.GetSyntax();
-                SyntaxList<AttributeListSyntax> attributesSyntaxList;
+                SyntaxList<AttributeSyntax> attributesSyntaxList;
                 switch (typeDecl.Kind())
                 {
                     case SyntaxKind.ClassDeclaration:

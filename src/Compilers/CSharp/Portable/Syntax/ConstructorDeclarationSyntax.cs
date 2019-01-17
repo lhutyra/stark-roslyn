@@ -9,7 +9,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     public partial class ConstructorDeclarationSyntax
     {
         public ConstructorDeclarationSyntax Update(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
@@ -33,7 +33,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     public partial class SyntaxFactory
     {
         public static ConstructorDeclarationSyntax ConstructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
@@ -50,7 +50,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 default(SyntaxToken));
 
         public static ConstructorDeclarationSyntax ConstructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 semicolonToken);
 
         public static ConstructorDeclarationSyntax ConstructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 default(SyntaxToken));
 
         public static ConstructorDeclarationSyntax ConstructorDeclaration(
-            SyntaxList<AttributeListSyntax> attributeLists,
+            SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,

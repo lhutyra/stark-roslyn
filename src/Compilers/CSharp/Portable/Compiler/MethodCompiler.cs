@@ -1596,8 +1596,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 {
                     diagnostics.Add(
                         ErrorCode.ERR_StaticConstructorWithExplicitConstructorCall,
-                        constructorSyntax.Initializer.ThisOrBaseKeyword.GetLocation(),
-                        constructorSyntax.Identifier.ValueText);
+                        constructorSyntax.Initializer.ThisOrBaseKeyword.GetLocation());
                 }
 
                 ExecutableCodeBinder bodyBinder = sourceMethod.TryGetBodyBinder();

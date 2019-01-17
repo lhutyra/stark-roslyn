@@ -877,15 +877,15 @@ done:
         /// <summary>
         /// Gets the syntax list of custom attributes that declares attributes for this method symbol.
         /// </summary>
-        internal virtual OneOrMany<SyntaxList<AttributeListSyntax>> GetAttributeDeclarations()
+        internal virtual OneOrMany<SyntaxList<AttributeSyntax>> GetAttributeDeclarations()
         {
-            return OneOrMany.Create(default(SyntaxList<AttributeListSyntax>));
+            return OneOrMany.Create(default(SyntaxList<AttributeSyntax>));
         }
 
         /// <summary>
         /// Gets the syntax list of custom attributes that declares attributes for return type of this method.
         /// </summary>
-        internal virtual OneOrMany<SyntaxList<AttributeListSyntax>> GetReturnTypeAttributeDeclarations()
+        internal virtual OneOrMany<SyntaxList<AttributeSyntax>> GetReturnTypeAttributeDeclarations()
         {
             // Usually the same list as other attributes applied on the method, but e.g.
             // constructors and destructors do not allow return-type attributes, so this is empty.

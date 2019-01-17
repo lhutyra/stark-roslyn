@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             _builder.Length = 0;
 
-            if (TextWindow.PeekChar() == '@' && TextWindow.PeekChar(1) == '"')
+            if (TextWindow.PeekChar() == '\\' && TextWindow.PeekChar(1) == '"')
             {
                 TextWindow.AdvanceChar(2);
                 bool done = false;
@@ -321,8 +321,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 if (isVerbatim)
                 {
                     Debug.Assert(
-                        (lexer.TextWindow.PeekChar() == '@' && lexer.TextWindow.PeekChar(1) == '$') ||
-                        (lexer.TextWindow.PeekChar() == '$' && lexer.TextWindow.PeekChar(1) == '@'));
+                        (lexer.TextWindow.PeekChar() == '\\' && lexer.TextWindow.PeekChar(1) == '$') ||
+                        (lexer.TextWindow.PeekChar() == '$' && lexer.TextWindow.PeekChar(1) == '\\'));
 
                     // @$ or $@
                     lexer.TextWindow.AdvanceChar();
@@ -538,9 +538,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                             lexer.TextWindow.AdvanceChar();
                             continue;
                         case '$':
-                            if (lexer.TextWindow.PeekChar(1) == '"' || lexer.TextWindow.PeekChar(1) == '@' && lexer.TextWindow.PeekChar(2) == '"')
+                            if (lexer.TextWindow.PeekChar(1) == '"' || lexer.TextWindow.PeekChar(1) == '\\' && lexer.TextWindow.PeekChar(2) == '"')
                             {
-                                bool isVerbatimSubstring = lexer.TextWindow.PeekChar(1) == '@';
+                                bool isVerbatimSubstring = lexer.TextWindow.PeekChar(1) == '\\';
                                 var interpolations = default(ArrayBuilder<Interpolation>);
                                 var info = default(TokenInfo);
                                 bool wasVerbatim = this.isVerbatim;
@@ -591,7 +591,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                             // handle string or character literal inside an expression hole.
                             ScanInterpolatedStringLiteralNestedString();
                             continue;
-                        case '@':
+                        case '\\':
                             if (lexer.TextWindow.PeekChar(1) == '"')
                             {
                                 // check for verbatim string inside an expression hole.

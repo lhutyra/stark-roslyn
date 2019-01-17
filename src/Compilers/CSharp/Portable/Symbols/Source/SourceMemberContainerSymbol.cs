@@ -1629,15 +1629,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 return;
             }
 
-            // If method1 is a constructor only because its return type is missing, then
-            // we've already produced a diagnostic for the missing return type and we suppress the
-            // diagnostic about duplicate signature.
-            if (method1.MethodKind == MethodKind.Constructor &&
-                ((ConstructorDeclarationSyntax)method1.SyntaxRef.GetSyntax()).Identifier.ValueText != this.Name)
-            {
-                return;
-            }
-
             Debug.Assert(method1.ParameterCount == method2.ParameterCount);
 
             for (int i = 0; i < method1.ParameterCount; i++)
@@ -3018,7 +3009,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                             if (IsImplicitClass && reportMisplacedGlobalCode)
                             {
                                 diagnostics.Add(ErrorCode.ERR_NamespaceUnexpected,
-                                    new SourceLocation(constructorSyntax.Identifier));
+                                    new SourceLocation(constructorSyntax.ConstructorKeyword));
                             }
 
                             var constructor = SourceConstructorSymbol.CreateConstructorSymbol(this, constructorSyntax, diagnostics);

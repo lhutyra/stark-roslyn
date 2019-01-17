@@ -120,7 +120,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         /// <summary>
         /// Gets the syntax list of custom attributes applied on the event symbol.
         /// </summary>
-        internal SyntaxList<AttributeListSyntax> AttributeDeclarationSyntaxList
+        internal SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     }
                 }
 
-                return default(SyntaxList<AttributeListSyntax>);
+                return default(SyntaxList<AttributeSyntax>);
             }
         }
 

@@ -334,7 +334,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             return (BaseFieldDeclarationSyntax)declarator.Parent.Parent;
         }
 
-        protected override SyntaxList<AttributeListSyntax> AttributeDeclarationSyntaxList
+        protected override SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList
         {
             get
             {
@@ -343,7 +343,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     return GetFieldDeclaration(this.SyntaxNode).AttributeLists;
                 }
 
-                return default(SyntaxList<AttributeListSyntax>);
+                return default(SyntaxList<AttributeSyntax>);
             }
         }
 

@@ -97,9 +97,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return false; }
         }
 
-        internal override SyntaxList<AttributeListSyntax> AttributeDeclarationList
+        internal override SyntaxList<AttributeSyntax> AttributeDeclarationList
         {
-            get { return default(SyntaxList<AttributeListSyntax>); }
+            get { return default(SyntaxList<AttributeSyntax>); }
         }
 
         internal override CustomAttributesBag<CSharpAttributeData> GetAttributesBag()
