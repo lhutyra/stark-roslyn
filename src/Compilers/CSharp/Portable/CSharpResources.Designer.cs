@@ -6676,6 +6676,15 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The -&gt; must be present to specify a return type.
+        /// </summary>
+        internal static string ERR_MinusGreaterThanExpectedForReturnType {
+            get {
+                return ResourceManager.GetString("ERR_MinusGreaterThanExpectedForReturnType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Branches of a ref ternary operator cannot refer to variables with incompatible declaration scopes.
         /// </summary>
         internal static string ERR_MismatchedRefEscapeInTernary {
@@ -11726,9 +11735,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright (C) Microsoft Corporation. All rights reserved.
-        ///Copyright (C) The Stark Platform Project. All rights reserved.
-        ///.
+        ///   Looks up a localized string similar to Copyright (C) The Stark Team. All rights reserved..
         /// </summary>
         internal static string IDS_LogoLine2 {
             get {

@@ -2414,20 +2414,25 @@ namespace Microsoft.CodeAnalysis.CSharp
         public static PropertyDeclarationSyntax PropertyDeclaration(
             SyntaxList<AttributeListSyntax> attributeLists,
             SyntaxTokenList modifiers,
-            TypeSyntax type,
+            SyntaxToken propToken,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,
             SyntaxToken identifier,
+            SyntaxToken minusGreaterThanToken,
+            TypeSyntax type,
             AccessorListSyntax accessorList)
         {
             return SyntaxFactory.PropertyDeclaration(
                 attributeLists,
                 modifiers,
-                type,
+                propToken,
                 explicitInterfaceSpecifier,
                 identifier,
+                minusGreaterThanToken,
+                type,
                 accessorList,
                 default(ArrowExpressionClauseSyntax),
-                default(EqualsValueClauseSyntax));
+                default(EqualsValueClauseSyntax),
+                default(SyntaxToken));
         }
 
         public static ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(

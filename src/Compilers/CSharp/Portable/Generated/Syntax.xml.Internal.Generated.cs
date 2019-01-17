@@ -25176,20 +25176,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   {
     internal readonly GreenNode attributeLists;
     internal readonly GreenNode modifiers;
-    internal readonly TypeSyntax returnType;
+    internal readonly SyntaxToken funcKeyword;
     internal readonly ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier;
     internal readonly SyntaxToken identifier;
     internal readonly TypeParameterListSyntax typeParameterList;
     internal readonly ParameterListSyntax parameterList;
+    internal readonly SyntaxToken returnToken;
+    internal readonly TypeSyntax returnType;
     internal readonly GreenNode constraintClauses;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
     internal readonly SyntaxToken semicolonToken;
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 11;
+        this.SlotCount = 13;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -25200,8 +25202,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
-        this.AdjustFlagsAndWidth(returnType);
-        this.returnType = returnType;
+        this.AdjustFlagsAndWidth(funcKeyword);
+        this.funcKeyword = funcKeyword;
         if (explicitInterfaceSpecifier != null)
         {
             this.AdjustFlagsAndWidth(explicitInterfaceSpecifier);
@@ -25216,6 +25218,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(parameterList);
         this.parameterList = parameterList;
+        if (returnToken != null)
+        {
+            this.AdjustFlagsAndWidth(returnToken);
+            this.returnToken = returnToken;
+        }
+        if (returnType != null)
+        {
+            this.AdjustFlagsAndWidth(returnType);
+            this.returnType = returnType;
+        }
         if (constraintClauses != null)
         {
             this.AdjustFlagsAndWidth(constraintClauses);
@@ -25239,11 +25251,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 11;
+        this.SlotCount = 13;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -25254,8 +25266,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
-        this.AdjustFlagsAndWidth(returnType);
-        this.returnType = returnType;
+        this.AdjustFlagsAndWidth(funcKeyword);
+        this.funcKeyword = funcKeyword;
         if (explicitInterfaceSpecifier != null)
         {
             this.AdjustFlagsAndWidth(explicitInterfaceSpecifier);
@@ -25270,6 +25282,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(parameterList);
         this.parameterList = parameterList;
+        if (returnToken != null)
+        {
+            this.AdjustFlagsAndWidth(returnToken);
+            this.returnToken = returnToken;
+        }
+        if (returnType != null)
+        {
+            this.AdjustFlagsAndWidth(returnType);
+            this.returnType = returnType;
+        }
         if (constraintClauses != null)
         {
             this.AdjustFlagsAndWidth(constraintClauses);
@@ -25293,10 +25315,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
         : base(kind)
     {
-        this.SlotCount = 11;
+        this.SlotCount = 13;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -25307,8 +25329,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
-        this.AdjustFlagsAndWidth(returnType);
-        this.returnType = returnType;
+        this.AdjustFlagsAndWidth(funcKeyword);
+        this.funcKeyword = funcKeyword;
         if (explicitInterfaceSpecifier != null)
         {
             this.AdjustFlagsAndWidth(explicitInterfaceSpecifier);
@@ -25323,6 +25345,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(parameterList);
         this.parameterList = parameterList;
+        if (returnToken != null)
+        {
+            this.AdjustFlagsAndWidth(returnToken);
+            this.returnToken = returnToken;
+        }
+        if (returnType != null)
+        {
+            this.AdjustFlagsAndWidth(returnType);
+            this.returnType = returnType;
+        }
         if (constraintClauses != null)
         {
             this.AdjustFlagsAndWidth(constraintClauses);
@@ -25347,13 +25379,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> AttributeLists { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax>(this.attributeLists); } }
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
-    /// <summary>Gets the return type syntax.</summary>
-    public TypeSyntax ReturnType { get { return this.returnType; } }
+    /// <summary>Gets the func keyword.</summary>
+    public SyntaxToken FuncKeyword { get { return this.funcKeyword; } }
     public ExplicitInterfaceSpecifierSyntax ExplicitInterfaceSpecifier { get { return this.explicitInterfaceSpecifier; } }
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
     public TypeParameterListSyntax TypeParameterList { get { return this.typeParameterList; } }
     public override ParameterListSyntax ParameterList { get { return this.parameterList; } }
+    /// <summary>Gets the arrow token.</summary>
+    public SyntaxToken ReturnToken { get { return this.returnToken; } }
+    /// <summary>Gets the return type syntax.</summary>
+    public TypeSyntax ReturnType { get { return this.returnType; } }
     /// <summary>Gets the constraint clause list.</summary>
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> ConstraintClauses { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax>(this.constraintClauses); } }
     public override BlockSyntax Body { get { return this.body; } }
@@ -25367,15 +25403,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             case 0: return this.attributeLists;
             case 1: return this.modifiers;
-            case 2: return this.returnType;
+            case 2: return this.funcKeyword;
             case 3: return this.explicitInterfaceSpecifier;
             case 4: return this.identifier;
             case 5: return this.typeParameterList;
             case 6: return this.parameterList;
-            case 7: return this.constraintClauses;
-            case 8: return this.body;
-            case 9: return this.expressionBody;
-            case 10: return this.semicolonToken;
+            case 7: return this.returnToken;
+            case 8: return this.returnType;
+            case 9: return this.constraintClauses;
+            case 10: return this.body;
+            case 11: return this.expressionBody;
+            case 12: return this.semicolonToken;
             default: return null;
         }
     }
@@ -25395,11 +25433,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitMethodDeclaration(this);
     }
 
-    public MethodDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public MethodDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || returnType != this.ReturnType || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || returnToken != this.ReturnToken || returnType != this.ReturnType || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
         {
-            var newNode = SyntaxFactory.MethodDeclaration(attributeLists, modifiers, returnType, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, constraintClauses, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, body, expressionBody, semicolonToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -25414,18 +25452,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.returnType, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.returnType, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
     }
 
     internal MethodDeclarationSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 11;
+      this.SlotCount = 13;
       var attributeLists = (GreenNode)reader.ReadValue();
       if (attributeLists != null)
       {
@@ -25438,11 +25476,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(modifiers);
          this.modifiers = modifiers;
       }
-      var returnType = (TypeSyntax)reader.ReadValue();
-      if (returnType != null)
+      var funcKeyword = (SyntaxToken)reader.ReadValue();
+      if (funcKeyword != null)
       {
-         AdjustFlagsAndWidth(returnType);
-         this.returnType = returnType;
+         AdjustFlagsAndWidth(funcKeyword);
+         this.funcKeyword = funcKeyword;
       }
       var explicitInterfaceSpecifier = (ExplicitInterfaceSpecifierSyntax)reader.ReadValue();
       if (explicitInterfaceSpecifier != null)
@@ -25467,6 +25505,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       {
          AdjustFlagsAndWidth(parameterList);
          this.parameterList = parameterList;
+      }
+      var returnToken = (SyntaxToken)reader.ReadValue();
+      if (returnToken != null)
+      {
+         AdjustFlagsAndWidth(returnToken);
+         this.returnToken = returnToken;
+      }
+      var returnType = (TypeSyntax)reader.ReadValue();
+      if (returnType != null)
+      {
+         AdjustFlagsAndWidth(returnType);
+         this.returnType = returnType;
       }
       var constraintClauses = (GreenNode)reader.ReadValue();
       if (constraintClauses != null)
@@ -25499,11 +25549,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       base.WriteTo(writer);
       writer.WriteValue(this.attributeLists);
       writer.WriteValue(this.modifiers);
-      writer.WriteValue(this.returnType);
+      writer.WriteValue(this.funcKeyword);
       writer.WriteValue(this.explicitInterfaceSpecifier);
       writer.WriteValue(this.identifier);
       writer.WriteValue(this.typeParameterList);
       writer.WriteValue(this.parameterList);
+      writer.WriteValue(this.returnToken);
+      writer.WriteValue(this.returnType);
       writer.WriteValue(this.constraintClauses);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
@@ -26812,18 +26864,20 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   {
     internal readonly GreenNode attributeLists;
     internal readonly GreenNode modifiers;
-    internal readonly TypeSyntax type;
+    internal readonly SyntaxToken funcKeyword;
     internal readonly ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier;
     internal readonly SyntaxToken identifier;
+    internal readonly SyntaxToken returnToken;
+    internal readonly TypeSyntax type;
     internal readonly AccessorListSyntax accessorList;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
     internal readonly EqualsValueClauseSyntax initializer;
     internal readonly SyntaxToken semicolonToken;
 
-    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 9;
+        this.SlotCount = 11;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -26834,8 +26888,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
+        this.AdjustFlagsAndWidth(funcKeyword);
+        this.funcKeyword = funcKeyword;
         if (explicitInterfaceSpecifier != null)
         {
             this.AdjustFlagsAndWidth(explicitInterfaceSpecifier);
@@ -26843,6 +26897,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
+        this.AdjustFlagsAndWidth(returnToken);
+        this.returnToken = returnToken;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
         if (accessorList != null)
         {
             this.AdjustFlagsAndWidth(accessorList);
@@ -26866,11 +26924,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
 
-    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 9;
+        this.SlotCount = 11;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -26881,8 +26939,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
+        this.AdjustFlagsAndWidth(funcKeyword);
+        this.funcKeyword = funcKeyword;
         if (explicitInterfaceSpecifier != null)
         {
             this.AdjustFlagsAndWidth(explicitInterfaceSpecifier);
@@ -26890,6 +26948,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
+        this.AdjustFlagsAndWidth(returnToken);
+        this.returnToken = returnToken;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
         if (accessorList != null)
         {
             this.AdjustFlagsAndWidth(accessorList);
@@ -26913,10 +26975,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
 
-    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
         : base(kind)
     {
-        this.SlotCount = 9;
+        this.SlotCount = 11;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -26927,8 +26989,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(modifiers);
             this.modifiers = modifiers;
         }
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
+        this.AdjustFlagsAndWidth(funcKeyword);
+        this.funcKeyword = funcKeyword;
         if (explicitInterfaceSpecifier != null)
         {
             this.AdjustFlagsAndWidth(explicitInterfaceSpecifier);
@@ -26936,6 +26998,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
+        this.AdjustFlagsAndWidth(returnToken);
+        this.returnToken = returnToken;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
         if (accessorList != null)
         {
             this.AdjustFlagsAndWidth(accessorList);
@@ -26960,10 +27026,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> AttributeLists { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax>(this.attributeLists); } }
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
-    public override TypeSyntax Type { get { return this.type; } }
+    /// <summary>Gets the func keyword.</summary>
+    public SyntaxToken FuncKeyword { get { return this.funcKeyword; } }
     public override ExplicitInterfaceSpecifierSyntax ExplicitInterfaceSpecifier { get { return this.explicitInterfaceSpecifier; } }
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
+    /// <summary>Gets the return type token.</summary>
+    public SyntaxToken ReturnToken { get { return this.returnToken; } }
+    public override TypeSyntax Type { get { return this.type; } }
     public override AccessorListSyntax AccessorList { get { return this.accessorList; } }
     public ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     public EqualsValueClauseSyntax Initializer { get { return this.initializer; } }
@@ -26975,13 +27045,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             case 0: return this.attributeLists;
             case 1: return this.modifiers;
-            case 2: return this.type;
+            case 2: return this.funcKeyword;
             case 3: return this.explicitInterfaceSpecifier;
             case 4: return this.identifier;
-            case 5: return this.accessorList;
-            case 6: return this.expressionBody;
-            case 7: return this.initializer;
-            case 8: return this.semicolonToken;
+            case 5: return this.returnToken;
+            case 6: return this.type;
+            case 7: return this.accessorList;
+            case 8: return this.expressionBody;
+            case 9: return this.initializer;
+            case 10: return this.semicolonToken;
             default: return null;
         }
     }
@@ -27001,11 +27073,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitPropertyDeclaration(this);
     }
 
-    public PropertyDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public PropertyDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || initializer != this.Initializer || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || returnToken != this.ReturnToken || type != this.Type || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || initializer != this.Initializer || semicolonToken != this.SemicolonToken)
         {
-            var newNode = SyntaxFactory.PropertyDeclaration(attributeLists, modifiers, type, explicitInterfaceSpecifier, identifier, accessorList, expressionBody, initializer, semicolonToken);
+            var newNode = SyntaxFactory.PropertyDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -27020,18 +27092,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.explicitInterfaceSpecifier, this.identifier, this.accessorList, this.expressionBody, this.initializer, this.semicolonToken, diagnostics, GetAnnotations());
+         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.returnToken, this.type, this.accessorList, this.expressionBody, this.initializer, this.semicolonToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.explicitInterfaceSpecifier, this.identifier, this.accessorList, this.expressionBody, this.initializer, this.semicolonToken, GetDiagnostics(), annotations);
+         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.returnToken, this.type, this.accessorList, this.expressionBody, this.initializer, this.semicolonToken, GetDiagnostics(), annotations);
     }
 
     internal PropertyDeclarationSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 9;
+      this.SlotCount = 11;
       var attributeLists = (GreenNode)reader.ReadValue();
       if (attributeLists != null)
       {
@@ -27044,11 +27116,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(modifiers);
          this.modifiers = modifiers;
       }
-      var type = (TypeSyntax)reader.ReadValue();
-      if (type != null)
+      var funcKeyword = (SyntaxToken)reader.ReadValue();
+      if (funcKeyword != null)
       {
-         AdjustFlagsAndWidth(type);
-         this.type = type;
+         AdjustFlagsAndWidth(funcKeyword);
+         this.funcKeyword = funcKeyword;
       }
       var explicitInterfaceSpecifier = (ExplicitInterfaceSpecifierSyntax)reader.ReadValue();
       if (explicitInterfaceSpecifier != null)
@@ -27061,6 +27133,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       {
          AdjustFlagsAndWidth(identifier);
          this.identifier = identifier;
+      }
+      var returnToken = (SyntaxToken)reader.ReadValue();
+      if (returnToken != null)
+      {
+         AdjustFlagsAndWidth(returnToken);
+         this.returnToken = returnToken;
+      }
+      var type = (TypeSyntax)reader.ReadValue();
+      if (type != null)
+      {
+         AdjustFlagsAndWidth(type);
+         this.type = type;
       }
       var accessorList = (AccessorListSyntax)reader.ReadValue();
       if (accessorList != null)
@@ -27093,9 +27177,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       base.WriteTo(writer);
       writer.WriteValue(this.attributeLists);
       writer.WriteValue(this.modifiers);
-      writer.WriteValue(this.type);
+      writer.WriteValue(this.funcKeyword);
       writer.WriteValue(this.explicitInterfaceSpecifier);
       writer.WriteValue(this.identifier);
+      writer.WriteValue(this.returnToken);
+      writer.WriteValue(this.type);
       writer.WriteValue(this.accessorList);
       writer.WriteValue(this.expressionBody);
       writer.WriteValue(this.initializer);
@@ -28495,8 +28581,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(colonToken);
-        this.colonToken = colonToken;
+        if (colonToken != null)
+        {
+            this.AdjustFlagsAndWidth(colonToken);
+            this.colonToken = colonToken;
+        }
         if (type != null)
         {
             this.AdjustFlagsAndWidth(type);
@@ -28527,8 +28616,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(colonToken);
-        this.colonToken = colonToken;
+        if (colonToken != null)
+        {
+            this.AdjustFlagsAndWidth(colonToken);
+            this.colonToken = colonToken;
+        }
         if (type != null)
         {
             this.AdjustFlagsAndWidth(type);
@@ -28558,8 +28650,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(colonToken);
-        this.colonToken = colonToken;
+        if (colonToken != null)
+        {
+            this.AdjustFlagsAndWidth(colonToken);
+            this.colonToken = colonToken;
+        }
         if (type != null)
         {
             this.AdjustFlagsAndWidth(type);
@@ -39044,16 +39139,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     {
       var attributeLists = this.VisitList(node.AttributeLists);
       var modifiers = this.VisitList(node.Modifiers);
-      var returnType = (TypeSyntax)this.Visit(node.ReturnType);
+      var funcKeyword = (SyntaxToken)this.Visit(node.FuncKeyword);
       var explicitInterfaceSpecifier = (ExplicitInterfaceSpecifierSyntax)this.Visit(node.ExplicitInterfaceSpecifier);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
       var typeParameterList = (TypeParameterListSyntax)this.Visit(node.TypeParameterList);
       var parameterList = (ParameterListSyntax)this.Visit(node.ParameterList);
+      var returnToken = (SyntaxToken)this.Visit(node.ReturnToken);
+      var returnType = (TypeSyntax)this.Visit(node.ReturnType);
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
       var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, returnType, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, constraintClauses, body, expressionBody, semicolonToken);
+      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, body, expressionBody, semicolonToken);
     }
 
     public override CSharpSyntaxNode VisitOperatorDeclaration(OperatorDeclarationSyntax node)
@@ -39122,14 +39219,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     {
       var attributeLists = this.VisitList(node.AttributeLists);
       var modifiers = this.VisitList(node.Modifiers);
-      var type = (TypeSyntax)this.Visit(node.Type);
+      var funcKeyword = (SyntaxToken)this.Visit(node.FuncKeyword);
       var explicitInterfaceSpecifier = (ExplicitInterfaceSpecifierSyntax)this.Visit(node.ExplicitInterfaceSpecifier);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
+      var returnToken = (SyntaxToken)this.Visit(node.ReturnToken);
+      var type = (TypeSyntax)this.Visit(node.Type);
       var accessorList = (AccessorListSyntax)this.Visit(node.AccessorList);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
       var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, type, explicitInterfaceSpecifier, identifier, accessorList, expressionBody, initializer, semicolonToken);
+      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken);
     }
 
     public override CSharpSyntaxNode VisitArrowExpressionClause(ArrowExpressionClauseSyntax node)
@@ -44852,11 +44951,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
 #if DEBUG
-      if (returnType == null)
-        throw new ArgumentNullException(nameof(returnType));
+      if (funcKeyword == null)
+        throw new ArgumentNullException(nameof(funcKeyword));
+      switch (funcKeyword.Kind)
+      {
+        case SyntaxKind.FuncKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(funcKeyword));
+      }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
       switch (identifier.Kind)
@@ -44868,6 +44974,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
+      if (returnToken != null)
+      {
+      switch (returnToken.Kind)
+      {
+        case SyntaxKind.MinusGreaterThanToken:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(returnToken));
+      }
+      }
       if (semicolonToken != null)
       {
       switch (semicolonToken.Kind)
@@ -44881,7 +44998,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
 #endif
 
-      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, returnType, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, constraintClauses.Node, body, expressionBody, semicolonToken, this.context);
+      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, body, expressionBody, semicolonToken, this.context);
     }
 
     public OperatorDeclarationSyntax OperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
@@ -45105,11 +45222,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new DestructorDeclarationSyntax(SyntaxKind.DestructorDeclaration, attributeLists.Node, modifiers.Node, tildeToken, identifier, parameterList, body, expressionBody, semicolonToken, this.context);
     }
 
-    public PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
     {
 #if DEBUG
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
+      if (funcKeyword == null)
+        throw new ArgumentNullException(nameof(funcKeyword));
+      switch (funcKeyword.Kind)
+      {
+        case SyntaxKind.FuncKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(funcKeyword));
+      }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
       switch (identifier.Kind)
@@ -45119,6 +45243,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
+      if (returnToken == null)
+        throw new ArgumentNullException(nameof(returnToken));
+      switch (returnToken.Kind)
+      {
+        case SyntaxKind.MinusGreaterThanToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(returnToken));
+      }
+      if (type == null)
+        throw new ArgumentNullException(nameof(type));
       if (semicolonToken != null)
       {
       switch (semicolonToken.Kind)
@@ -45132,7 +45267,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
 #endif
 
-      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, type, explicitInterfaceSpecifier, identifier, accessorList, expressionBody, initializer, semicolonToken, this.context);
+      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken, this.context);
     }
 
     public ArrowExpressionClauseSyntax ArrowExpressionClause(SyntaxToken arrowToken, ExpressionSyntax expression)
@@ -45390,14 +45525,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      if (colonToken == null)
-        throw new ArgumentNullException(nameof(colonToken));
+      if (colonToken != null)
+      {
       switch (colonToken.Kind)
       {
         case SyntaxKind.ColonToken:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(colonToken));
+      }
       }
 #endif
 
@@ -52192,11 +52329,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
     {
 #if DEBUG
-      if (returnType == null)
-        throw new ArgumentNullException(nameof(returnType));
+      if (funcKeyword == null)
+        throw new ArgumentNullException(nameof(funcKeyword));
+      switch (funcKeyword.Kind)
+      {
+        case SyntaxKind.FuncKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(funcKeyword));
+      }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
       switch (identifier.Kind)
@@ -52208,6 +52352,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
+      if (returnToken != null)
+      {
+      switch (returnToken.Kind)
+      {
+        case SyntaxKind.MinusGreaterThanToken:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(returnToken));
+      }
+      }
       if (semicolonToken != null)
       {
       switch (semicolonToken.Kind)
@@ -52221,7 +52376,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
 #endif
 
-      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, returnType, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, constraintClauses.Node, body, expressionBody, semicolonToken);
+      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, body, expressionBody, semicolonToken);
     }
 
     public static OperatorDeclarationSyntax OperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
@@ -52445,11 +52600,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new DestructorDeclarationSyntax(SyntaxKind.DestructorDeclaration, attributeLists.Node, modifiers.Node, tildeToken, identifier, parameterList, body, expressionBody, semicolonToken);
     }
 
-    public static PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public static PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeListSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
     {
 #if DEBUG
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
+      if (funcKeyword == null)
+        throw new ArgumentNullException(nameof(funcKeyword));
+      switch (funcKeyword.Kind)
+      {
+        case SyntaxKind.FuncKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(funcKeyword));
+      }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
       switch (identifier.Kind)
@@ -52459,6 +52621,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
+      if (returnToken == null)
+        throw new ArgumentNullException(nameof(returnToken));
+      switch (returnToken.Kind)
+      {
+        case SyntaxKind.MinusGreaterThanToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(returnToken));
+      }
+      if (type == null)
+        throw new ArgumentNullException(nameof(type));
       if (semicolonToken != null)
       {
       switch (semicolonToken.Kind)
@@ -52472,7 +52645,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
 #endif
 
-      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, type, explicitInterfaceSpecifier, identifier, accessorList, expressionBody, initializer, semicolonToken);
+      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken);
     }
 
     public static ArrowExpressionClauseSyntax ArrowExpressionClause(SyntaxToken arrowToken, ExpressionSyntax expression)
@@ -52730,14 +52903,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      if (colonToken == null)
-        throw new ArgumentNullException(nameof(colonToken));
+      if (colonToken != null)
+      {
       switch (colonToken.Kind)
       {
         case SyntaxKind.ColonToken:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(colonToken));
+      }
       }
 #endif
 

@@ -2405,6 +2405,7 @@ Microsoft.CodeAnalysis.CSharp.SyntaxKind.ImplicitArrayCreationExpression = 8652 
 Microsoft.CodeAnalysis.CSharp.SyntaxKind.ImplicitElementAccess = 8656 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind
 Microsoft.CodeAnalysis.CSharp.SyntaxKind.ImplicitKeyword = 8384 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind
 Microsoft.CodeAnalysis.CSharp.SyntaxKind.FuncKeyword = 8390 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind
+Microsoft.CodeAnalysis.CSharp.SyntaxKind.PropKeyword = 8391 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind
 Microsoft.CodeAnalysis.CSharp.SyntaxKind.ImplicitStackAllocArrayCreationExpression = 9053 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind
 Microsoft.CodeAnalysis.CSharp.SyntaxKind.IncompleteMember = 8916 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind
 Microsoft.CodeAnalysis.CSharp.SyntaxKind.IndexerDeclaration = 8894 -> Microsoft.CodeAnalysis.CSharp.SyntaxKind

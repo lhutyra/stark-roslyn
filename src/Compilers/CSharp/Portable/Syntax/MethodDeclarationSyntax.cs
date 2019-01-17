@@ -25,16 +25,18 @@ namespace Microsoft.CodeAnalysis.CSharp
         public static MethodDeclarationSyntax MethodDeclaration(
             SyntaxList<AttributeListSyntax> attributeLists,
             SyntaxTokenList modifiers,
-            TypeSyntax returnType,
+            SyntaxToken funcKeyword,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,
             SyntaxToken identifier,
+            SyntaxToken minusGreaterThanToken,
+            TypeSyntax returnType,
             TypeParameterListSyntax typeParameterList,
             ParameterListSyntax parameterList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses,
             BlockSyntax body,
             SyntaxToken semicolonToken)
         {
-            return SyntaxFactory.MethodDeclaration(attributeLists, modifiers, returnType, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, constraintClauses, body, null, default(SyntaxToken));
+            return SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, minusGreaterThanToken, returnType, constraintClauses, body, null, semicolonToken);
         }
     }
 }

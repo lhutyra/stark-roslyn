@@ -4,6 +4,7 @@
   <Import Project="eng\targets\Settings.props" />
   <PropertyGroup>
     <Stark>true</Stark>
+    <UseRoslynAnalyzers>false</UseRoslynAnalyzers>
     <DefineConstants>STARK</DefineConstants>
   </PropertyGroup>  
 </Project>

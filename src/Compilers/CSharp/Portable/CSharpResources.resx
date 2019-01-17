@@ -885,6 +885,9 @@
   <data name="ERR_PtrExpected" xml:space="preserve">
     <value>The * or -&gt; operator must be applied to a pointer</value>
   </data>
+  <data name="ERR_MinusGreaterThanExpectedForReturnType" xml:space="preserve">
+    <value>The -&gt; must be present to specify a return type</value>
+  </data>
   <data name="ERR_PtrIndexSingle" xml:space="preserve">
     <value>A pointer must be indexed by only one value</value>
   </data>
@@ -4528,9 +4531,7 @@ To remove the warning, you can use /reference instead (set the Embed Interop Typ
     <value>{0} version {1}</value>
   </data>
   <data name="IDS_LogoLine2" xml:space="preserve">
-    <value>Copyright (C) Microsoft Corporation. All rights reserved.
-Copyright (C) The Stark Platform Project. All rights reserved.
-</value>
+    <value>Copyright (C) The Stark Team. All rights reserved.</value>
   </data>
   <data name="IDS_LangVersions" xml:space="preserve">
     <value>Supported language versions:</value>

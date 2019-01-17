@@ -593,6 +593,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         ERR_IndexedPropertyMustHaveAllOptionalParams = 857,
         //ERR_FusionConfigFileNameTooLong = 858,    unused in Roslyn. We give ERR_CantReadConfigFile now.
         // unused 859-1000
+        ERR_MinusGreaterThanExpectedForReturnType = 999,
         ERR_ColonExpected = 1000,
         ERR_IdentifierExpected = 1001,
         ERR_SemicolonExpected = 1002,

@@ -968,6 +968,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.ImplicitKeyword;
                 case "explicit":
                     return SyntaxKind.ExplicitKeyword;
+                case "func":
+                    return SyntaxKind.FuncKeyword;
                 default:
                     return SyntaxKind.None;
             }
@@ -1115,8 +1117,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.AwaitKeyword:
                 case SyntaxKind.WhenKeyword:
                 case SyntaxKind.UnderscoreToken:
-                case SyntaxKind.VarKeyword:
-                case SyntaxKind.FuncKeyword:
                     return true;
                 default:
                     return false;
@@ -1635,6 +1635,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "_";
                 case SyntaxKind.VarKeyword:
                     return "var";
+                case SyntaxKind.FuncKeyword:
+                    return "func";
                 default:
                     return string.Empty;
             }
