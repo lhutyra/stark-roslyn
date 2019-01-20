@@ -622,7 +622,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             // all parameters can be passed by ref/out or assigned to
             // except "in" parameters, which are readonly
-            if (parameterSymbol.RefKind == RefKind.In && RequiresAssignableVariable(valueKind))
+            // Or when the type itself is readonly
+            if ((parameterSymbol.RefKind == RefKind.In || (checkingReceiver && parameter.Type.IsReadOnly)) && RequiresAssignableVariable(valueKind))
             {
                 ReportReadOnlyError(parameterSymbol, node, valueKind, checkingReceiver, diagnostics);
                 return false;
