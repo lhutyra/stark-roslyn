@@ -6426,24 +6426,21 @@ class B2 : IB
                  // (34,40): error CS1519: Invalid token ';' in class, struct, or interface member declaration
                  //     event System.Action<string?>? IB.E3; // 2
                  Diagnostic(ErrorCode.ERR_InvalidMemberDecl, ";").WithArguments(";").WithLocation(34, 40),
-                 // (34,40): error CS1519: Invalid token ';' in class, struct, or interface member declaration
+                 // (34,38): error CS0065: 'B2.IB.E3': event property must have both add and remove accessors
                  //     event System.Action<string?>? IB.E3; // 2
-                 Diagnostic(ErrorCode.ERR_InvalidMemberDecl, ";").WithArguments(";").WithLocation(34, 40),
-                 // (34,38): error CS0539: 'B2.' in explicit interface declaration is not a member of interface
-                 //     event System.Action<string?>? IB.E3; // 2
-                 Diagnostic(ErrorCode.ERR_InterfaceMemberNotFound, "").WithArguments("B2.").WithLocation(34, 38),
-                 // (34,38): error CS0065: 'B2.': event property must have both add and remove accessors
-                 //     event System.Action<string?>? IB.E3; // 2
-                 Diagnostic(ErrorCode.ERR_EventNeedsBothAccessors, "").WithArguments("B2.").WithLocation(34, 38),
-                 // (30,12): error CS0535: 'B2' does not implement interface member 'IB.E3'
+                 Diagnostic(ErrorCode.ERR_EventNeedsBothAccessors, "E3").WithArguments("B2.IB.E3").WithLocation(34, 38),
+                 // (30,12): error CS0535: 'B2' does not implement interface member 'IB.E3.remove'
                  // class B2 : IB
-                 Diagnostic(ErrorCode.ERR_UnimplementedInterfaceMember, "IB").WithArguments("B2", "IB.E3").WithLocation(30, 12),
-                 // (18,37): warning CS8615: Nullability of reference types in type doesn't match implemented member 'event Action<string> IA.E1'.
-                 //     event System.Action<string?> IA.E1 {add {} remove{}}
-                 Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeOnExplicitImplementation, "E1").WithArguments("event Action<string> IA.E1").WithLocation(18, 37),
+                 Diagnostic(ErrorCode.ERR_UnimplementedInterfaceMember, "IB").WithArguments("B2", "IB.E3.remove").WithLocation(30, 12),
+                 // (30,12): error CS0535: 'B2' does not implement interface member 'IB.E3.add'
+                 // class B2 : IB
+                 Diagnostic(ErrorCode.ERR_UnimplementedInterfaceMember, "IB").WithArguments("B2", "IB.E3.add").WithLocation(30, 12),
                  // (19,36): warning CS8615: Nullability of reference types in type doesn't match implemented member 'event Action<string>? IA.E2'.
                  //     event System.Action<string> IA.E2 {add {} remove{}}
-                 Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeOnExplicitImplementation, "E2").WithArguments("event Action<string>? IA.E2").WithLocation(19, 36)
+                 Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeOnExplicitImplementation, "E2").WithArguments("event Action<string>? IA.E2").WithLocation(19, 36),
+                 // (18,37): warning CS8615: Nullability of reference types in type doesn't match implemented member 'event Action<string> IA.E1'.
+                 //     event System.Action<string?> IA.E1 {add {} remove{}}
+                 Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeOnExplicitImplementation, "E1").WithArguments("event Action<string> IA.E1").WithLocation(18, 37)
                 );
 
             var ia = compilation.GetTypeByMetadataName("IA");
@@ -38972,7 +38969,7 @@ class C
 
         [Fact]
         [WorkItem(32338, "https://github.com/dotnet/roslyn/issues/32338")]
-        public void CopyStructUnconstrainedFieldNullability()
+        public void CopyStructUnconstrainedFieldNullability_01()
         {
             var source =
 @"#pragma warning disable 649
@@ -38982,19 +38979,102 @@ struct S<T>
 }
 class Program
 {
-    static void M<T>(S<T> s)
+    static void M<T>(T t)
     {
-        if (s.F == null) return;
-        var t = s;
-        t.F.ToString();
+        var x = new S<T>() { F = t };
+        var y = x;
+        y.F.ToString(); // 1
+        if (t == null) return;
+        x = new S<T>() { F = t };
+        var z = x;
+        z.F.ToString();
     }
 }";
             var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
-            // https://github.com/dotnet/roslyn/issues/32338: Should not report a warning.
             comp.VerifyDiagnostics(
                 // (12,9): warning CS8602: Possible dereference of a null reference.
-                //         t.F.ToString();
-                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "t.F").WithLocation(12, 9));
+                //         y.F.ToString(); // 1
+                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "y.F").WithLocation(12, 9));
+        }
+
+        [Fact]
+        [WorkItem(32338, "https://github.com/dotnet/roslyn/issues/32338")]
+        public void CopyStructUnconstrainedFieldNullability_02()
+        {
+            var source =
+@"#pragma warning disable 649
+struct S<T>
+{
+    internal T F;
+}
+class Program
+{
+    static void M<T>(S<T> x)
+    {
+        var y = x;
+        y.F.ToString(); // 1
+        if (x.F == null) return;
+        var z = x;
+        z.F.ToString();
+    }
+}";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            comp.VerifyDiagnostics(
+                // (11,9): warning CS8602: Possible dereference of a null reference.
+                //         y.F.ToString(); // 1
+                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "y.F").WithLocation(11, 9));
+        }
+
+        [Fact]
+        [WorkItem(32338, "https://github.com/dotnet/roslyn/issues/32338")]
+        public void CopyTupleUnconstrainedElementNullability_01()
+        {
+            var source =
+@"class Program
+{
+    static void M<T, U>(T t, U u)
+    {
+        var x = (t, u);
+        var y = x;
+        y.Item1.ToString(); // 1
+        if (t == null) return;
+        x = (t, u);
+        var z = x;
+        z.Item1.ToString();
+    }
+}";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            // https://github.com/dotnet/roslyn/issues/29970: Should not report warning for `z.Item1`.
+            comp.VerifyDiagnostics(
+                // (7,9): warning CS8602: Possible dereference of a null reference.
+                //         y.Item1.ToString(); // 1
+                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "y.Item1").WithLocation(7, 9),
+                // (11,9): warning CS8602: Possible dereference of a null reference.
+                //         z.Item1.ToString();
+                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "z.Item1").WithLocation(11, 9));
+        }
+
+        [Fact]
+        [WorkItem(32338, "https://github.com/dotnet/roslyn/issues/32338")]
+        public void CopyTupleUnconstrainedElementNullability_02()
+        {
+            var source =
+@"class Program
+{
+    static void M<T, U>((T, U) x)
+    {
+        var y = x;
+        y.Item1.ToString(); // 1
+        if (x.Item1 == null) return;
+        var z = x;
+        z.Item1.ToString();
+    }
+}";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            comp.VerifyDiagnostics(
+                // (6,9): warning CS8602: Possible dereference of a null reference.
+                //         y.Item1.ToString(); // 1
+                Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "y.Item1").WithLocation(6, 9));
         }
 
         [Fact]
@@ -40467,7 +40547,6 @@ class Program
     }
 }";
             var comp = CreateCompilation(new[] { source }, options: WithNonNullTypesTrue());
-            // Should there be a warning for // 4?
             comp.VerifyDiagnostics(
                 // (10,36): warning CS8601: Possible null reference assignment.
                 //         c1 = new C<object>() { F = x1 }; // 1
@@ -40481,6 +40560,9 @@ class Program
                 // (17,31): warning CS8625: Cannot convert null literal to non-nullable reference or unconstrained type parameter.
                 //         c2 = new C<T>() { F = default }; // 3
                 Diagnostic(ErrorCode.WRN_NullAsNonNullable, "default").WithLocation(17, 31),
+                // (18,31): warning CS8601: Possible null reference assignment.
+                //         c2 = new C<T>() { F = c2.F }; // 4
+                Diagnostic(ErrorCode.WRN_NullReferenceAssignment, "c2.F").WithLocation(18, 31),
                 // (19,9): warning CS8602: Possible dereference of a null reference.
                 //         c2.F.ToString(); // 5
                 Diagnostic(ErrorCode.WRN_NullReferenceReceiver, "c2.F").WithLocation(19, 9));
@@ -53056,27 +53138,27 @@ class D
 }";
             var comp = CreateCompilation(new[] { source }, references: new[] { ref0 });
             comp.GetDiagnostics().Where(d => d.Code != (int)ErrorCode.WRN_UninitializedNonNullableField).Verify(
-                // (4,24): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
-                // class B1<T> where T : A? { }
-                Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(4, 24),
                 // (15,9): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
                 //     B1<A?> F3; // 2
                 Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(15, 9),
+                // (4,24): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
+                // class B1<T> where T : A? { }
+                Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(4, 24),
                 // (17,9): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
                 //     B2<A?> F5; // 3
                 Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(17, 9),
                 // (19,9): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
                 //     B3<A?> F7; // 4
                 Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(19, 9),
+                // (35,12): warning CS8631: The type 'A?' cannot be used as type parameter 'T' in the generic type or method 'B4<T>'. Nullability of type argument 'A?' doesn't match constraint type 'A'.
+                //     B4<A?> G9; // 7
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "G9").WithArguments("B4<T>", "A", "T", "A?").WithLocation(35, 12),
                 // (21,9): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
                 //     B4<A?> F9; // 5 and 6
                 Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(21, 9),
                 // (13,9): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
                 //     B0<A?> F1; // 1
-                Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(13, 9),
-                // (35,8): warning CS8631: The type 'A?' cannot be used as type parameter 'T' in the generic type or method 'B4<T>'. Nullability of type argument 'A?' doesn't match constraint type 'A'.
-                //     B4<A?> G9; // 7
-                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "A?").WithArguments("B4<T>", "A", "T", "A?").WithLocation(35, 8)
+                Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(13, 9)
                 );
         }
 
@@ -53148,15 +53230,15 @@ class D
                 // (13,16): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' context.
                 //     B0<A<object?>> F1; // 1
                 Diagnostic(ErrorCode.WRN_MissingNonNullTypesContextForAnnotation, "?").WithLocation(13, 16),
-                // (30,8): warning CS8631: The type 'A<object>' cannot be used as type parameter 'T' in the generic type or method 'B1<T>'. Nullability of type argument 'A<object>' doesn't match constraint type 'A<object?>'.
+                // (30,19): warning CS8631: The type 'A<object>' cannot be used as type parameter 'T' in the generic type or method 'B1<T>'. Nullability of type argument 'A<object>' doesn't match constraint type 'A<object?>'.
                 //     B1<A<object>> G4; // 7
-                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "A<object>").WithArguments("B1<T>", "A<object?>", "T", "A<object>").WithLocation(30, 8),
-                // (34,8): warning CS8631: The type 'A<object>' cannot be used as type parameter 'T' in the generic type or method 'B3<T>'. Nullability of type argument 'A<object>' doesn't match constraint type 'A<object?>'.
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "G4").WithArguments("B1<T>", "A<object?>", "T", "A<object>").WithLocation(30, 19),
+                // (34,19): warning CS8631: The type 'A<object>' cannot be used as type parameter 'T' in the generic type or method 'B3<T>'. Nullability of type argument 'A<object>' doesn't match constraint type 'A<object?>'.
                 //     B3<A<object>> G8; // 8
-                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "A<object>").WithArguments("B3<T>", "A<object?>", "T", "A<object>").WithLocation(34, 8),
-                // (35,8): warning CS8631: The type 'A<object?>' cannot be used as type parameter 'T' in the generic type or method 'B4<T>'. Nullability of type argument 'A<object?>' doesn't match constraint type 'A<object>'.
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "G8").WithArguments("B3<T>", "A<object?>", "T", "A<object>").WithLocation(34, 19),
+                // (35,20): warning CS8631: The type 'A<object?>' cannot be used as type parameter 'T' in the generic type or method 'B4<T>'. Nullability of type argument 'A<object?>' doesn't match constraint type 'A<object>'.
                 //     B4<A<object?>> G9; // 9
-                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "A<object?>").WithArguments("B4<T>", "A<object>", "T", "A<object?>").WithLocation(35, 8)
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInTypeParameterConstraint, "G9").WithArguments("B4<T>", "A<object>", "T", "A<object?>").WithLocation(35, 20)
                 );
         }
 
@@ -72263,6 +72345,145 @@ class Program
                 //         F(b => { if (b) return (default, x); return (x, y); })/*T:(T?, object?)*/;
                 Diagnostic(ErrorCode.WRN_NullabilityMismatchInAssignment, "(default, x)").WithArguments("(T?, object? x)", "(T? x, object y)").WithLocation(12, 32));
             comp.VerifyTypes();
+        }
+
+        [Fact]
+        [WorkItem(31862, "https://github.com/dotnet/roslyn/issues/31862")]
+        public void Issue31862_01()
+        {
+            var source =
+@"
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Working<T> : IEnumerable<IEquatable<T>>
+{
+    public IEnumerator<IEquatable<T>> GetEnumerator() => null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+
+public class Broken<T> : IEnumerable<IEquatable<T>>
+{
+    IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator() => null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            comp.VerifyDiagnostics(
+                // (8,58): warning CS8603: Possible null reference return.
+                //     public IEnumerator<IEquatable<T>> GetEnumerator() => null;
+                Diagnostic(ErrorCode.WRN_NullReferenceReturn, "null").WithLocation(8, 58),
+                // (15,78): warning CS8603: Possible null reference return.
+                //     IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator() => null;
+                Diagnostic(ErrorCode.WRN_NullReferenceReturn, "null").WithLocation(15, 78)
+                );
+        }
+
+        [Fact]
+        [WorkItem(31862, "https://github.com/dotnet/roslyn/issues/31862")]
+        public void Issue31862_02()
+        {
+            var source =
+@"
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Working<T> : IEnumerable<IEquatable<T>>
+{
+    public IEnumerator<IEquatable<T>?> GetEnumerator() => throw null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+
+public class Broken<T> : IEnumerable<IEquatable<T>>
+{
+    IEnumerator<IEquatable<T>?> IEnumerable<IEquatable<T>>.GetEnumerator() => throw null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            comp.VerifyDiagnostics(
+                // (8,40): warning CS8613: Nullability of reference types in return type doesn't match implicitly implemented member 'IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()'.
+                //     public IEnumerator<IEquatable<T>?> GetEnumerator() => throw null;
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInReturnTypeOnImplicitImplementation, "GetEnumerator").WithArguments("IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()").WithLocation(8, 40),
+                // (15,60): warning CS8616: Nullability of reference types in return type doesn't match implemented member 'IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()'.
+                //     IEnumerator<IEquatable<T>?> IEnumerable<IEquatable<T>>.GetEnumerator() => throw null;
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInReturnTypeOnExplicitImplementation, "GetEnumerator").WithArguments("IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()").WithLocation(15, 60)
+                );
+        }
+
+        [Fact]
+        [WorkItem(31862, "https://github.com/dotnet/roslyn/issues/31862")]
+        public void Issue31862_03()
+        {
+            var source =
+@"
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Working<T> : IEnumerable<IEquatable<T>>
+{
+    public IEnumerator<IEquatable<T?>> GetEnumerator() => throw null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+
+public class Broken<T> : IEnumerable<IEquatable<T>>
+{
+    IEnumerator<IEquatable<T?>> IEnumerable<IEquatable<T>>.GetEnumerator() => throw null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            comp.VerifyDiagnostics(
+                // (8,35): error CS8627: A nullable type parameter must be known to be a value type or non-nullable reference type. Consider adding a 'class', 'struct', or type constraint.
+                //     public IEnumerator<IEquatable<T?>> GetEnumerator() => throw null;
+                Diagnostic(ErrorCode.ERR_NullableUnconstrainedTypeParameter, "T?").WithLocation(8, 35),
+                // (8,40): warning CS8613: Nullability of reference types in return type doesn't match implicitly implemented member 'IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()'.
+                //     public IEnumerator<IEquatable<T?>> GetEnumerator() => throw null;
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInReturnTypeOnImplicitImplementation, "GetEnumerator").WithArguments("IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()").WithLocation(8, 40),
+                // (15,28): error CS8627: A nullable type parameter must be known to be a value type or non-nullable reference type. Consider adding a 'class', 'struct', or type constraint.
+                //     IEnumerator<IEquatable<T?>> IEnumerable<IEquatable<T>>.GetEnumerator() => throw null;
+                Diagnostic(ErrorCode.ERR_NullableUnconstrainedTypeParameter, "T?").WithLocation(15, 28),
+                // (15,60): warning CS8616: Nullability of reference types in return type doesn't match implemented member 'IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()'.
+                //     IEnumerator<IEquatable<T?>> IEnumerable<IEquatable<T>>.GetEnumerator() => throw null;
+                Diagnostic(ErrorCode.WRN_NullabilityMismatchInReturnTypeOnExplicitImplementation, "GetEnumerator").WithArguments("IEnumerator<IEquatable<T>> IEnumerable<IEquatable<T>>.GetEnumerator()").WithLocation(15, 60)
+                );
+        }
+
+        [Fact]
+        [WorkItem(31862, "https://github.com/dotnet/roslyn/issues/31862")]
+        public void Issue31862_04()
+        {
+            var source =
+@"
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Working<T> : IEnumerable<IEquatable<T>>
+{
+    public IEnumerator<IEquatable<T>>? GetEnumerator() => throw null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+
+public class Broken<T> : IEnumerable<IEquatable<T>>
+{
+    IEnumerator<IEquatable<T>>? IEnumerable<IEquatable<T>>.GetEnumerator() => throw null;
+
+    IEnumerator IEnumerable.GetEnumerator() => throw null;
+}
+";
+            var comp = CreateCompilation(source, options: WithNonNullTypesTrue());
+            comp.VerifyDiagnostics();
         }
     }
 }
