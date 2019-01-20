@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.DiaSymReader.Native" Version="$(MicrosoftDiaSymReaderNativeVersion)" Condition="'$(DotNetBuildFromSource)' != 'true'" />
     <PackageReference Include="System.IO.Pipes.AccessControl" Version="$(SystemIOPipesAccessControlVersion)" Condition="'$(TargetFramework)' == 'netcoreapp2.1'" />
-    <PackageReference Include="Microsoft.DiaSymReader.Native" Version="$(MicrosoftDiaSymReaderNativeVersion)"/>
+    <PackageReference Include="Microsoft.DiaSymReader.Native" Version="$(MicrosoftDiaSymReaderNativeVersion)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\NamedPipeUtil.cs" />
@@ -46,6 +46,7 @@
     <Compile Include="..\..\Shared\ExitingTraceListener.cs">
       <Link>ExitingTraceListener.cs</Link>
     </Compile>
+    <Compile Include="..\..\Shared\RuntimeHostInfo.cs" Link="RuntimeHostInfo.cs" />
     <Compile Include="..\..\Shared\Skc.cs">
       <Link>Skc.cs</Link>
     </Compile>
