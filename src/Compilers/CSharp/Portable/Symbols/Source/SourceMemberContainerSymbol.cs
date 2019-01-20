@@ -37,7 +37,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             private const int DeclarationModifiersSize = 24;
             private const int DeclarationModifiersMask = (1 << DeclarationModifiersSize) - 1;
 
-            private int _flags;
+            private readonly int _flags;
 
             // More flags.
             //  012345 6 789A BC D
@@ -50,10 +50,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             // d = FieldDefinitionsNoted. 1 bit
             private const int SpecialTypeOffset = 0;
             private const int SpecialTypeSize = 6;
+            private const int SpecialTypeMask = (1 << SpecialTypeSize) - 1;
 
             private const int FlattenedMembersIsSortedOffset = SpecialTypeSize;
             private const int FlattenedMembersIsSortedSize = 1;
-            private const int FlattenedMembersIsSortedBit = 1 << 0;
+            private const int FlattenedMembersIsSortedBit = 1 << FlattenedMembersIsSortedOffset;
 
             private const int TypeKindOffset = FlattenedMembersIsSortedOffset + FlattenedMembersIsSortedSize;
             private const int TypeKindSize = 4;
@@ -65,7 +66,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             private const int FieldDefinitionsNotedOffset = IsManagedTypeOffset + IsManagedTypeSize;
             private const int FieldDefinitionsNotedSize = 1;
 
-            private const int SpecialTypeMask = (1 << SpecialTypeSize) - 1;
             private const int IsManagedTypeMask = (1 << IsManagedTypeSize) - 1;
 
             private const int FieldDefinitionsNotedBit = 1 << FieldDefinitionsNotedOffset;
