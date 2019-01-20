@@ -73,6 +73,11 @@ namespace Microsoft.CodeAnalysis
             DefaultVisit(symbol);
         }
 
+        public virtual void VisitExtendedType(IExtendedTypeSymbol symbol)
+        {
+            DefaultVisit(symbol);
+        }
+
         public virtual void VisitNamespace(INamespaceSymbol symbol)
         {
             DefaultVisit(symbol);

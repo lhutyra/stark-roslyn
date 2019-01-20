@@ -110,5 +110,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         internal override ImmutableArray<TypeSymbolWithAnnotations> TypeArgumentsNoUseSiteDiagnostics => _underlyingType.TypeArgumentsNoUseSiteDiagnostics;
 
         public override NamedTypeSymbol ConstructedFrom => _underlyingType.ConstructedFrom;
+
+        public override void Accept(SymbolVisitor visitor)
+        {
+            visitor.VisitExtendedType(this);
+        }
+
+        internal override string GetDebuggerDisplay()
+        {
+            return "Extended" + base.GetDebuggerDisplay();
+        }      
     }
 }

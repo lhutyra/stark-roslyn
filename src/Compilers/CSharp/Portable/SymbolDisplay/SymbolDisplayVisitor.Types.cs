@@ -285,6 +285,23 @@ namespace Microsoft.CodeAnalysis.CSharp
             AddNameAndTypeArgumentsOrParameters(symbol);
         }
 
+        public override void VisitExtendedType(IExtendedTypeSymbol symbol)
+        {
+            if ((symbol.AccessModifiers & TypeAccessModifiers.ReadOnly) != 0)
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "readonly"));
+                AddSpace();
+            }
+
+            if ((symbol.AccessModifiers & TypeAccessModifiers.Transient) != 0)
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "transient"));
+                AddSpace();
+            }
+
+            symbol.ElementType.Accept(this.NotFirstVisitor);
+        }
+
         private void AddNameAndTypeArgumentsOrParameters(INamedTypeSymbol symbol)
         {
             if (symbol.IsAnonymousType)
