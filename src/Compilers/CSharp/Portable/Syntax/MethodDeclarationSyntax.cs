@@ -15,6 +15,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                 return this.TypeParameterList == null ? 0 : this.TypeParameterList.Parameters.Count;
             }
         }
+
+        public TypeAccessModifiers GetAccessModifiers()
+        {
+            var modifiers = TypeAccessModifiers.None;
+            foreach (var modifier in this.Modifiers)
+            {
+                var kind = modifier.Kind();
+                if (kind == SyntaxKind.ReadOnlyKeyword) modifiers |= TypeAccessModifiers.ReadOnly;
+                if (kind == SyntaxKind.TransientKeyword) modifiers |= TypeAccessModifiers.Transient;
+            }
+
+            return modifiers;
+        }
     }
 }
 

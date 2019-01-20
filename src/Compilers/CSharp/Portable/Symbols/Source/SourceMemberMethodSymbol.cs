@@ -21,9 +21,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         // The flags type is used to compact many different bits of information.
         protected struct Flags
         {
-            // We currently pack everything into a 32 bit int with the following layout:
+            // We currently pack everything into a 64 bit int with the following layout:
             //
-            // |   |s|r|q|z|xxxxxxxxxxxxxxxxxxxxxxx|wwwww|
+            //                        8 7 6 5 43210
+            // _flags:  |  |xxxxxxxxxxxxxxxxxxxxxxx|
+            // _flags2: |          |v|s|r|q|z|wwwww|
             // 
             // w = method kind.  5 bits.
             //
@@ -36,41 +38,43 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             // r = isMetadataVirtual. 1 bit. (At least as true as isMetadataVirtualIgnoringInterfaceChanges.)
             //
             // s = isMetadataVirtualLocked. 1 bit.
+            //
+            // v = isReturnVoid. 1 bit.
+
+            private const int DeclarationModifiersOffset = 0;
+            private const int DeclarationModifiersSize = 24;
+            private const int DeclarationModifiersMask = (1 << DeclarationModifiersSize) - 1;
 
             private const int MethodKindOffset = 0;
-            private const int DeclarationModifiersOffset = 5;
-
             private const int MethodKindMask = 0x1F;
-            private const int DeclarationModifiersMask = 0x7FFFFF;
-
-            private const int ReturnsVoidBit = 1 << 27;
-            private const int IsExtensionMethodBit = 1 << 28;
-            private const int IsMetadataVirtualIgnoringInterfaceChangesBit = 1 << 29;
-            private const int IsMetadataVirtualBit = 1 << 30;
-            private const int IsMetadataVirtualLockedBit = 1 << 31;
+            private const int IsExtensionMethodBit = 1 << 5;
+            private const int IsMetadataVirtualIgnoringInterfaceChangesBit = 1 << 6;
+            private const int IsMetadataVirtualBit = 1 << 7;
+            private const int IsMetadataVirtualLockedBit = 1 << 8;
+            private const int IsReturnVoidBit = 1 << 9;
 
             private int _flags;
-            private bool _returnsVoid;
+            private int _flags2;                 
 
             public bool ReturnsVoid
             {
-                get { return _returnsVoid; }
-                set { _returnsVoid = value; }
+                get => (_flags2 & IsReturnVoidBit) != 0;
+                set => _flags2 = (_flags2 & ~IsReturnVoidBit) | (value ? IsReturnVoidBit : 0);
             }
 
             public MethodKind MethodKind
             {
-                get { return (MethodKind)((_flags >> MethodKindOffset) & MethodKindMask); }
+                get { return (MethodKind)((_flags2 >> MethodKindOffset) & MethodKindMask); }
             }
 
             public bool IsExtensionMethod
             {
-                get { return (_flags & IsExtensionMethodBit) != 0; }
+                get { return (_flags2 & IsExtensionMethodBit) != 0; }
             }
 
             public bool IsMetadataVirtualLocked
             {
-                get { return (_flags & IsMetadataVirtualLockedBit) != 0; }
+                get { return (_flags2 & IsMetadataVirtualLockedBit) != 0; }
             }
 
             public DeclarationModifiers DeclarationModifiers
@@ -117,9 +121,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 int isExtensionMethodInt = isExtensionMethod ? IsExtensionMethodBit : 0;
                 int isMetadataVirtualIgnoringInterfaceImplementationChangesInt = isMetadataVirtual ? IsMetadataVirtualIgnoringInterfaceChangesBit : 0;
                 int isMetadataVirtualInt = isMetadataVirtual ? IsMetadataVirtualBit : 0;
+                int isReturnVoid = returnsVoid ? IsReturnVoidBit : 0;
 
-                _flags = methodKindInt | declarationModifiersInt | isExtensionMethodInt | isMetadataVirtualIgnoringInterfaceImplementationChangesInt | isMetadataVirtualInt;
-                _returnsVoid = returnsVoid;
+                _flags = declarationModifiersInt;
+                _flags2 = methodKindInt | isExtensionMethodInt | isMetadataVirtualIgnoringInterfaceImplementationChangesInt | isMetadataVirtualInt | isReturnVoid;
             }
 
             public bool IsMetadataVirtual(bool ignoreInterfaceImplementationChanges = false)
@@ -127,15 +132,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 // This flag is immutable, so there's no reason to set a lock bit, as we do below.
                 if (ignoreInterfaceImplementationChanges)
                 {
-                    return (_flags & IsMetadataVirtualIgnoringInterfaceChangesBit) != 0;
+                    return (_flags2 & IsMetadataVirtualIgnoringInterfaceChangesBit) != 0;
                 }
 
                 if (!IsMetadataVirtualLocked)
                 {
-                    ThreadSafeFlagOperations.Set(ref _flags, IsMetadataVirtualLockedBit);
+                    ThreadSafeFlagOperations.Set(ref _flags2, IsMetadataVirtualLockedBit);
                 }
 
-                return (_flags & IsMetadataVirtualBit) != 0;
+                return (_flags2 & IsMetadataVirtualBit) != 0;
             }
 
             public void EnsureMetadataVirtual()
@@ -146,9 +151,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 // ignoreInterfaceImplementationChanges: true, but you must be conscious that seeing "false" may not
                 // reflect the final, emitted modifier.
                 Debug.Assert(!IsMetadataVirtualLocked);
-                if ((_flags & IsMetadataVirtualBit) == 0)
+                if ((_flags2 & IsMetadataVirtualBit) == 0)
                 {
-                    ThreadSafeFlagOperations.Set(ref _flags, IsMetadataVirtualBit);
+                    ThreadSafeFlagOperations.Set(ref _flags2, IsMetadataVirtualBit);
                 }
             }
         }

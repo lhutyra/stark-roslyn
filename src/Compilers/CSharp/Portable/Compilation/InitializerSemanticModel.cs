@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         internal static InitializerSemanticModel Create(SyntaxTreeSemanticModel containingSemanticModel, CSharpSyntaxNode syntax, FieldSymbol fieldSymbol, Binder rootBinder)
         {
             Debug.Assert(containingSemanticModel != null);
-            Debug.Assert(syntax.IsKind(SyntaxKind.VariableDeclarator) || syntax.IsKind(SyntaxKind.EnumMemberDeclaration));
+            Debug.Assert(syntax.IsKind(SyntaxKind.VariableDeclaration) || syntax.IsKind(SyntaxKind.EnumMemberDeclaration));
             return new InitializerSemanticModel(syntax, fieldSymbol, rootBinder, containingSemanticModel);
         }
 
@@ -84,8 +84,8 @@ namespace Microsoft.CodeAnalysis.CSharp
             CSharpSyntaxNode rootSyntax = this.Root;
             switch (rootSyntax.Kind())
             {
-                case SyntaxKind.VariableDeclarator:
-                    rootSyntax = ((VariableDeclaratorSyntax)rootSyntax).Initializer.Value;
+                case SyntaxKind.VariableDeclaration:
+                    rootSyntax = ((VariableDeclarationSyntax)rootSyntax).Initializer.Value;
                     break;
 
                 case SyntaxKind.Parameter:
@@ -127,8 +127,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     equalsValue = (EqualsValueClauseSyntax)node;
                     break;
 
-                case SyntaxKind.VariableDeclarator:
-                    equalsValue = ((VariableDeclaratorSyntax)node).Initializer;
+                case SyntaxKind.VariableDeclaration:
+                    equalsValue = ((VariableDeclarationSyntax)node).Initializer;
                     break;
 
                 case SyntaxKind.PropertyDeclaration:

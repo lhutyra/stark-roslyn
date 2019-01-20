@@ -12,7 +12,7 @@ namespace Microsoft.CodeAnalysis
     /// This interface is reserved for implementation by its associated APIs. We reserve the right to
     /// change it in the future.
     /// </remarks>
-    public interface IArrayTypeSymbol : ITypeSymbol
+    public interface IArrayTypeSymbol : ITypeWithElementTypeSymbol
     {
         /// <summary>
         /// Gets the number of dimensions of this array. A regular single-dimensional array
@@ -41,11 +41,6 @@ namespace Microsoft.CodeAnalysis
         /// The most common case is none of the dimensions have the size specified - an empty array is returned.
         /// </summary>
         ImmutableArray<int> Sizes { get; }
-
-        /// <summary>
-        /// Gets the type of the elements stored in the array.
-        /// </summary>
-        ITypeSymbol ElementType { get; }
 
         /// <summary>
         /// Custom modifiers associated with the array type, or an empty array if there are none.

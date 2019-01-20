@@ -217,13 +217,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                             {
                                 kind = LocalDeclarationKind.RegularVariable;
                             }
-                            foreach (var vdecl in decl.Declaration.Variables)
                             {
-                                var localSymbol = MakeLocal(decl.Declaration, vdecl, kind, localDeclarationBinder);
+                                var localSymbol = MakeLocal(decl.Declaration, kind, localDeclarationBinder);
                                 locals.Add(localSymbol);
 
                                 // also gather expression-declared variables from the bracketed argument lists and the initializers
-                                ExpressionVariableFinder.FindExpressionVariables(this, locals, vdecl, localDeclarationBinder);
+                                ExpressionVariableFinder.FindExpressionVariables(this, locals, decl.Declaration, localDeclarationBinder);
                             }
 
                         }
@@ -291,16 +290,16 @@ namespace Microsoft.CodeAnalysis.CSharp
             return ImmutableArray<LocalFunctionSymbol>.Empty;
         }
 
-        protected SourceLocalSymbol MakeLocal(VariableDeclarationSyntax declaration, VariableDeclaratorSyntax declarator, LocalDeclarationKind kind, Binder initializerBinderOpt = null)
+        protected SourceLocalSymbol MakeLocal(VariableDeclarationSyntax declaration, LocalDeclarationKind kind, Binder initializerBinderOpt = null)
         {
             return SourceLocalSymbol.MakeLocal(
                 this.ContainingMemberOrLambda,
                 this,
                 true,
                 declaration.Type,
-                declarator.Identifier,
+                declaration.Identifier,
                 kind,
-                declarator.Initializer,
+                declaration.Initializer,
                 initializerBinderOpt);
         }
 

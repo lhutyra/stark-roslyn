@@ -545,11 +545,11 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case BoundKind.UsingStatement:
                     {
                         BoundUsingStatement usingStatement = (BoundUsingStatement)statement;
-                        syntaxForSpan = ((BoundNode)usingStatement.ExpressionOpt ?? usingStatement.DeclarationsOpt).Syntax;
+                        syntaxForSpan = ((BoundNode)usingStatement.ExpressionOpt ?? usingStatement.DeclarationOpt).Syntax;
                         break;
                     }
                 case BoundKind.FixedStatement:
-                    syntaxForSpan = ((BoundFixedStatement)statement).Declarations.Syntax;
+                    syntaxForSpan = ((BoundFixedStatement)statement).Declaration.Syntax;
                     break;
                 case BoundKind.LockStatement:
                     syntaxForSpan = ((BoundLockStatement)statement).Argument.Syntax;

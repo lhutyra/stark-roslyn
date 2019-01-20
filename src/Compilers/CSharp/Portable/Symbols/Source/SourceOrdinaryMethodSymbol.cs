@@ -61,6 +61,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 ? MethodKind.Ordinary
                 : MethodKind.ExplicitInterfaceImplementation;
 
+            // If the method has a type access, we are changing the containing type to reflect the access restriction
+            var typeAccessModifiers = syntax.GetAccessModifiers();
+            if (typeAccessModifiers != TypeAccessModifiers.None)
+            {
+                // TODO: we should be able to cache these symbols 
+                containingType = new ExtendedNamedTypeSymbol(TypeSymbolWithAnnotations.Create(false, containingType), typeAccessModifiers);
+            }
+
             return new SourceOrdinaryMethodSymbol(containingType, explicitInterfaceType, name, location, syntax, methodKind, diagnostics);
         }
 
@@ -465,7 +473,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         protected override void MethodChecks(DiagnosticBag diagnostics)
         {
             var syntax = GetSyntax();
-            var withTypeParametersBinder = this.DeclaringCompilation.GetBinderFactory(syntax.SyntaxTree).GetBinder(syntax.ReturnType, syntax, this);
+            var withTypeParametersBinder = this.DeclaringCompilation.GetBinderFactory(syntax.SyntaxTree).GetBinder(syntax.ParameterList, syntax, this);
             MethodChecks(syntax, withTypeParametersBinder, diagnostics);
         }
 
@@ -749,7 +757,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             var defaultAccess = isInterface ? DeclarationModifiers.Public : DeclarationModifiers.Private;
 
             // Check that the set of modifiers is allowed
-            var allowedModifiers = DeclarationModifiers.Partial | DeclarationModifiers.Unsafe;
+            var allowedModifiers = DeclarationModifiers.Partial | DeclarationModifiers.Unsafe | DeclarationModifiers.ReadOnly | DeclarationModifiers.Transient;
 
             if (methodKind != MethodKind.ExplicitInterfaceImplementation)
             {
@@ -1009,7 +1017,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         internal override void AfterAddingTypeMembersChecks(ConversionsBase conversions, DiagnosticBag diagnostics)
         {
-            var location = GetSyntax().ReturnType.Location;
+            var location = GetSyntax().FuncKeyword.GetLocation();
 
             Debug.Assert(location != null);
 

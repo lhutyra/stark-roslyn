@@ -342,7 +342,7 @@ namespace Microsoft.CodeAnalysis.Operations
 
         protected override IOperation CreateExceptionDeclarationOrExpression()
         {
-            return _operationFactory.CreateVariableDeclarator((BoundLocal)_catchBlock.ExceptionSourceOpt);
+            return _operationFactory.CreateVariableDeclaration((BoundLocal)_catchBlock.ExceptionSourceOpt);
         }
 
         protected override IOperation CreateFilter()
@@ -575,7 +575,7 @@ namespace Microsoft.CodeAnalysis.Operations
 
         protected override IVariableDeclarationGroupOperation CreateVariables()
         {
-            return (IVariableDeclarationGroupOperation)_operationFactory.Create(_fixedStatement.Declarations);
+            return (IVariableDeclarationGroupOperation)_operationFactory.Create(_fixedStatement.Declaration);
         }
 
         protected override IOperation CreateBody()
@@ -1358,7 +1358,7 @@ namespace Microsoft.CodeAnalysis.Operations
 
         protected override IOperation CreateResources()
         {
-            return _operationFactory.Create((BoundNode)_usingStatement.DeclarationsOpt ?? _usingStatement.ExpressionOpt);
+            return _operationFactory.Create((BoundNode)_usingStatement.DeclarationOpt ?? _usingStatement.ExpressionOpt);
         }
 
         protected override IOperation CreateBody()
@@ -1367,12 +1367,12 @@ namespace Microsoft.CodeAnalysis.Operations
         }
     }
 
-    internal sealed class CSharpLazyVariableDeclaratorOperation : LazyVariableDeclaratorOperation
+    internal sealed class CSharpLazyVariableDeclarationOperation : LazyVariableDeclarationOperation
     {
         private readonly CSharpOperationFactory _operationFactory;
         private readonly BoundLocalDeclaration _localDeclaration;
 
-        internal CSharpLazyVariableDeclaratorOperation(CSharpOperationFactory operationFactory, BoundLocalDeclaration localDeclaration, ILocalSymbol symbol, SemanticModel semanticModel, SyntaxNode syntax, ITypeSymbol type, Optional<object> constantValue, bool isImplicit) :
+        internal CSharpLazyVariableDeclarationOperation(CSharpOperationFactory operationFactory, BoundLocalDeclaration localDeclaration, ILocalSymbol symbol, SemanticModel semanticModel, SyntaxNode syntax, ITypeSymbol type, Optional<object> constantValue, bool isImplicit) :
             base(symbol, semanticModel, syntax, type, constantValue, isImplicit)
         {
             _operationFactory = operationFactory;
@@ -1381,38 +1381,15 @@ namespace Microsoft.CodeAnalysis.Operations
 
         protected override IVariableInitializerOperation CreateInitializer()
         {
-            return _operationFactory.CreateVariableDeclaratorInitializer(_localDeclaration, Syntax);
+            return _operationFactory.CreateVariableDeclarationInitializer(_localDeclaration, Syntax);
         }
 
         protected override ImmutableArray<IOperation> CreateIgnoredArguments()
         {
-            return _operationFactory.CreateFromArray<BoundExpression, IOperation>(_localDeclaration.ArgumentsOpt);
+            return ImmutableArray<IOperation>.Empty;
         }
     }
-
-    internal sealed class CSharpLazyVariableDeclarationOperation : LazyVariableDeclarationOperation
-    {
-        private readonly CSharpOperationFactory _operationFactory;
-        private readonly BoundNode _localDeclaration;
-
-        internal CSharpLazyVariableDeclarationOperation(CSharpOperationFactory operationFactory, BoundNode localDeclaration, SemanticModel semanticModel, SyntaxNode syntax, ITypeSymbol type, Optional<object> constantValue, bool isImplicit) :
-            base(semanticModel, syntax, type, constantValue, isImplicit)
-        {
-            _operationFactory = operationFactory;
-            _localDeclaration = localDeclaration;
-        }
-
-        protected override ImmutableArray<IVariableDeclaratorOperation> CreateDeclarators()
-        {
-            return _operationFactory.CreateVariableDeclarator(_localDeclaration, Syntax);
-        }
-
-        protected override IVariableInitializerOperation CreateInitializer()
-        {
-            return null;
-        }
-    }
-
+    
     internal sealed class CSharpLazyWhileLoopOperation : LazyWhileLoopOperation
     {
         private readonly CSharpOperationFactory _operationFactory;

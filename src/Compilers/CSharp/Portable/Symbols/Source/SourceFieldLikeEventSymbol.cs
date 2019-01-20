@@ -23,7 +23,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         private readonly SynthesizedFieldLikeEventAccessorSymbol _addMethod;
         private readonly SynthesizedFieldLikeEventAccessorSymbol _removeMethod;
 
-        internal SourceFieldLikeEventSymbol(SourceMemberContainerTypeSymbol containingType, Binder binder, SyntaxTokenList modifiers, VariableDeclaratorSyntax declaratorSyntax, DiagnosticBag diagnostics)
+        internal SourceFieldLikeEventSymbol(SourceMemberContainerTypeSymbol containingType, Binder binder, SyntaxTokenList modifiers, VariableDeclarationSyntax declaratorSyntax, DiagnosticBag diagnostics)
             : base(containingType, declaratorSyntax, modifiers, null, declaratorSyntax.Identifier, diagnostics)
         {
             _name = declaratorSyntax.Identifier.ValueText;
@@ -87,11 +87,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             _addMethod = new SynthesizedFieldLikeEventAccessorSymbol(this, isAdder: true);
             _removeMethod = new SynthesizedFieldLikeEventAccessorSymbol(this, isAdder: false);
 
-            if (declarationSyntax.Variables[0] == declaratorSyntax)
-            {
-                // Don't report these diagnostics for every declarator in this declaration.
-                diagnostics.AddRange(declaratorDiagnostics);
-            }
+            // Don't report these diagnostics for every declarator in this declaration.
+            diagnostics.AddRange(declaratorDiagnostics);
 
             declaratorDiagnostics.Free();
         }
@@ -145,7 +142,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return ImmutableArray<EventSymbol>.Empty; }
         }
 
-        private SourceEventFieldSymbol MakeAssociatedField(VariableDeclaratorSyntax declaratorSyntax)
+        private SourceEventFieldSymbol MakeAssociatedField(VariableDeclarationSyntax declaratorSyntax)
         {
             DiagnosticBag discardedDiagnostics = DiagnosticBag.GetInstance();
             var field = new SourceEventFieldSymbol(this, declaratorSyntax, discardedDiagnostics);

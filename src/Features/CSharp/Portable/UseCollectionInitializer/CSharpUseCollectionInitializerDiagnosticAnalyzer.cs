@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseCollectionInitializer
             MemberAccessExpressionSyntax,
             InvocationExpressionSyntax,
             ExpressionStatementSyntax,
-            VariableDeclaratorSyntax>
+            VariableDeclarationSyntax>
     {
         protected override bool AreCollectionInitializersSupported(SyntaxNodeAnalysisContext context)
             => ((CSharpParseOptions)context.Node.SyntaxTree.Options).LanguageVersion >= LanguageVersion.CSharp3;

@@ -399,7 +399,6 @@ Done:
         {
             return StaticCast<INamedTypeSymbol>.From(this.GetTypeMembers(name, arity));
         }
-
         #endregion
     }
 }

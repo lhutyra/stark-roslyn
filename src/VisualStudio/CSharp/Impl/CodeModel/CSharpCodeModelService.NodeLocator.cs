@@ -66,8 +66,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                         return GetStartPoint(text, (UsingDirectiveSyntax)node, part);
                     case SyntaxKind.EnumMemberDeclaration:
                         return GetStartPoint(text, (EnumMemberDeclarationSyntax)node, part);
-                    case SyntaxKind.VariableDeclarator:
-                        return GetStartPoint(text, (VariableDeclaratorSyntax)node, part);
+                    case SyntaxKind.VariableDeclaration:
+                        return GetStartPoint(text, (VariableDeclarationSyntax)node, part);
                     case SyntaxKind.Parameter:
                         return GetStartPoint(text, (ParameterSyntax)node, part);
                     default:
@@ -114,8 +114,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                         return GetEndPoint(text, (UsingDirectiveSyntax)node, part);
                     case SyntaxKind.EnumMemberDeclaration:
                         return GetEndPoint(text, (EnumMemberDeclarationSyntax)node, part);
-                    case SyntaxKind.VariableDeclarator:
-                        return GetEndPoint(text, (VariableDeclaratorSyntax)node, part);
+                    case SyntaxKind.VariableDeclaration:
+                        return GetEndPoint(text, (VariableDeclarationSyntax)node, part);
                     case SyntaxKind.Parameter:
                         return GetEndPoint(text, (ParameterSyntax)node, part);
                     default:
@@ -658,7 +658,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 return new VirtualTreePoint(node.SyntaxTree, text, startPosition);
             }
 
-            private VirtualTreePoint GetStartPoint(SourceText text, VariableDeclaratorSyntax node, EnvDTE.vsCMPart part)
+            private VirtualTreePoint GetStartPoint(SourceText text, VariableDeclarationSyntax node, EnvDTE.vsCMPart part)
             {
                 var field = node.FirstAncestorOrSelf<BaseFieldDeclarationSyntax>();
                 int startPosition;
@@ -1229,7 +1229,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 return new VirtualTreePoint(node.SyntaxTree, text, endPosition);
             }
 
-            private VirtualTreePoint GetEndPoint(SourceText text, VariableDeclaratorSyntax node, EnvDTE.vsCMPart part)
+            private VirtualTreePoint GetEndPoint(SourceText text, VariableDeclarationSyntax node, EnvDTE.vsCMPart part)
             {
                 var field = node.FirstAncestorOrSelf<BaseFieldDeclarationSyntax>();
                 int endPosition;

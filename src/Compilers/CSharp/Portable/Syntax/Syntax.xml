@@ -205,20 +205,39 @@
       </PropertyComment>
     </Field>
   </Node>
+  <Node Name="ExtendedTypeSyntax" Base="TypeSyntax">
+      <Kind Name="ExtendedType"/>
+      <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;">
+          <PropertyComment>
+              <summary>Gets the modifier list.</summary>
+          </PropertyComment>
+      </Field>
+      <Field Name="ElementType" Type="TypeSyntax">
+          <PropertyComment>
+              <summary>The ElementType for which the modifiers are applied (e.g readonly, transient...).</summary>
+          </PropertyComment>
+      </Field>
+      <TypeComment>
+          <summary>Class which represents the syntax node for a readonly/transient type.</summary>
+      </TypeComment>
+      <FactoryComment>
+          <summary>Creates a ExtendedTypeSyntax node.</summary>
+      </FactoryComment>
+  </Node>
   <Node Name="PointerTypeSyntax" Base="TypeSyntax">
     <Kind Name="PointerType"/>
-    <Field Name="ElementType" Type="TypeSyntax">
-      <PropertyComment>
-        <summary>TypeSyntax node that represents the element type of the pointer.</summary>
-      </PropertyComment>
-    </Field>
     <Field Name="AsteriskToken" Type="SyntaxToken">
-      <Kind Name="AsteriskToken"/>
-      <PropertyComment>
-        <summary>SyntaxToken representing the asterisk.</summary>
-      </PropertyComment>
+        <Kind Name="AsteriskToken"/>
+        <PropertyComment>
+            <summary>SyntaxToken representing the asterisk.</summary>
+        </PropertyComment>
     </Field>
-    <TypeComment>
+    <Field Name="ElementType" Type="TypeSyntax">
+          <PropertyComment>
+              <summary>TypeSyntax node that represents the element type of the pointer.</summary>
+          </PropertyComment>
+      </Field>
+      <TypeComment>
       <summary>Class which represents the syntax node for pointer type.</summary>
     </TypeComment>
     <FactoryComment>
@@ -306,12 +325,6 @@
     <Kind Name="RefType"/>
     <Field Name="RefKeyword" Type="SyntaxToken">
       <Kind Name="RefKeyword"/>
-    </Field>
-    <Field Name="ReadOnlyKeyword" Type="SyntaxToken" Optional="true">
-      <Kind Name="ReadOnlyKeyword"/>
-      <PropertyComment>
-        <summary>Gets the optional "readonly" keyword.</summary>
-      </PropertyComment>
     </Field>
     <Field Name="Type" Type="TypeSyntax"/>
   </Node>
@@ -1943,12 +1956,7 @@
       <Kind Name="AwaitKeyword"/>
     </Field>
     <Field Name="UsingKeyword" Type="SyntaxToken" Optional="true">
-      <Kind Name="UsingKeyword"/>
-    </Field>
-    <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;">
-      <PropertyComment>
-        <summary>Gets the modifier list.</summary>
-      </PropertyComment>
+        <Kind Name="UsingKeyword"/>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax"/>
     <Field Name="SemicolonToken" Type="SyntaxToken">
@@ -1958,19 +1966,27 @@
 
   <Node Name="VariableDeclarationSyntax" Base="CSharpSyntaxNode">
     <Kind Name="VariableDeclaration"/>
-    <Field Name="Type" Type="TypeSyntax"/>
-    <Field Name="Variables" Type="SeparatedSyntaxList&lt;VariableDeclaratorSyntax&gt;"/>
-  </Node>
-
-  <Node Name="VariableDeclaratorSyntax" Base="CSharpSyntaxNode">
-    <Kind Name="VariableDeclarator"/>
-    <Field Name="Identifier" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>Gets the identifier.</summary>
-      </PropertyComment>
-      <Kind Name="IdentifierToken"/>
+    <Field Name="VariableKeyword" Type="SyntaxToken">
+        <PropertyComment>
+            <summary>Gets the variable keyword.</summary>
+        </PropertyComment>
+        <Kind Name="VarKeyword"/>
+        <Kind Name="ValKeyword"/>
+        <Kind Name="ConstKeyword"/>
     </Field>
-    <Field Name="ArgumentList" Type="BracketedArgumentListSyntax" Optional="true"/>
+    <Field Name="Identifier" Type="SyntaxToken">
+        <PropertyComment>
+            <summary>Gets the identifier.</summary>
+        </PropertyComment>
+        <Kind Name="IdentifierToken"/>
+    </Field>
+    <Field Name="ColonToken" Type="SyntaxToken" Optional="true">
+        <PropertyComment>
+            <summary>Gets the colon token.</summary>
+        </PropertyComment>
+        <Kind Name="ColonToken"/>
+    </Field>
+    <Field Name="Type" Type="TypeSyntax" Optional="true"/>
     <Field Name="Initializer" Type="EqualsValueClauseSyntax" Optional="true"/>
   </Node>
   <Node Name="EqualsValueClauseSyntax" Base="CSharpSyntaxNode">

@@ -859,7 +859,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             if (collectionExprType.IsDynamic())
             {
                 builder.ElementType = TypeSymbolWithAnnotations.Create(
-                    ((_syntax as ForEachStatementSyntax)?.Type.IsVar == true) ?
+                    (((_syntax as ForEachStatementSyntax)?.Type).IsNullWithNoType() == true) ?
                         (TypeSymbol)DynamicTypeSymbol.Instance :
                         GetSpecialType(SpecialType.System_Object, diagnostics, _syntax));
             }

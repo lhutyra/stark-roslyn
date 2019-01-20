@@ -116,7 +116,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 SyntaxFactory.VariableDeclaration(
                     (TypeSyntax)type,
                     SyntaxFactory.SingletonSeparatedList(
-                        SyntaxFactory.VariableDeclarator(
+                        SyntaxFactory.VariableDeclaration(
                             name.ToIdentifierToken(),
                             default,
                             initializer != null ? SyntaxFactory.EqualsValueClause((ExpressionSyntax)initializer) : null))));
@@ -457,7 +457,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 SyntaxFactory.VariableDeclaration(
                     (TypeSyntax)type,
                     SyntaxFactory.SingletonSeparatedList(
-                        SyntaxFactory.VariableDeclarator(name))));
+                        SyntaxFactory.VariableDeclaration(name))));
         }
 
         public override SyntaxNode CustomEventDeclaration(
@@ -682,7 +682,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                     break;
 
                 case SyntaxKind.VariableDeclaration:
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     node = this.AsIsolatedDeclaration(node);
                     break;
             }
@@ -1456,7 +1456,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                     return true;
 
                 case SyntaxKind.VariableDeclaration:
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     var declarationKind = this.GetDeclarationKind(declaration);
                     return declarationKind == DeclarationKind.Field || declarationKind == DeclarationKind.Event;
 
@@ -1665,7 +1665,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 case SyntaxKind.LocalDeclarationStatement:
                     return ((LocalDeclarationStatementSyntax)declaration).Modifiers;
                 case SyntaxKind.VariableDeclaration:
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     if (declaration.Parent != null)
                     {
                         return GetModifierTokens(declaration.Parent);
@@ -2155,7 +2155,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         }
                     }
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     {
                         var vd = declaration.Parent as VariableDeclarationSyntax;
 
@@ -2263,8 +2263,8 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         return vd.Variables[0].Identifier.ValueText;
                     }
                     break;
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)declaration).Identifier.ValueText;
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)declaration).Identifier.ValueText;
                 case SyntaxKind.TypeParameter:
                     return ((TypeParameterSyntax)declaration).Identifier.ValueText;
                 case SyntaxKind.AttributeList:
@@ -2355,8 +2355,8 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         return ReplaceWithTrivia(declaration, vd.Variables[0].Identifier, id);
                     }
                     break;
-                case SyntaxKind.VariableDeclarator:
-                    return ReplaceWithTrivia(declaration, ((VariableDeclaratorSyntax)declaration).Identifier, id);
+                case SyntaxKind.VariableDeclaration:
+                    return ReplaceWithTrivia(declaration, ((VariableDeclarationSyntax)declaration).Identifier, id);
             }
 
             return declaration;
@@ -2386,7 +2386,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                     return ((LocalDeclarationStatementSyntax)declaration).Declaration.Type;
                 case SyntaxKind.VariableDeclaration:
                     return ((VariableDeclarationSyntax)declaration).Type;
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     if (declaration.Parent != null)
                     {
                         return this.GetType(declaration.Parent);
@@ -2458,8 +2458,8 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         }
                         break;
 
-                    case SyntaxKind.VariableDeclarator:
-                        var v = (VariableDeclaratorSyntax)declaration;
+                    case SyntaxKind.VariableDeclaration:
+                        var v = (VariableDeclarationSyntax)declaration;
                         if (v.Parent != null && v.Parent.Parent != null)
                         {
                             return this.ClearTrivia(WithVariable(v.Parent.Parent, v));
@@ -2480,7 +2480,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
             return declaration;
         }
 
-        private static SyntaxNode WithVariable(SyntaxNode declaration, VariableDeclaratorSyntax variable)
+        private static SyntaxNode WithVariable(SyntaxNode declaration, VariableDeclarationSyntax variable)
         {
             var vd = GetVariableDeclaration(declaration);
             if (vd != null)
@@ -2538,7 +2538,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         return vd;
                     }
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                 case SyntaxKind.Attribute:
                     if (declaration.Parent != null)
                     {
@@ -2844,8 +2844,8 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         return vd.Variables[0].Initializer;
                     }
                     break;
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)declaration).Initializer;
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)declaration).Initializer;
                 case SyntaxKind.Parameter:
                     return ((ParameterSyntax)declaration).Default;
             }
@@ -2881,8 +2881,8 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                         return ReplaceWithTrivia(declaration, vd.Variables[0], vd.Variables[0].WithInitializer(eq));
                     }
                     break;
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)declaration).WithInitializer(eq);
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)declaration).WithInitializer(eq);
                 case SyntaxKind.Parameter:
                     return ((ParameterSyntax)declaration).WithDefault(eq);
             }
@@ -3264,7 +3264,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 switch (kind)
                 {
                     case SyntaxKind.Attribute:
-                    case SyntaxKind.VariableDeclarator:
+                    case SyntaxKind.VariableDeclaration:
                         return AreSimilarExceptForSubDeclarations(decl1.Parent, decl2.Parent);
                 }
             }
@@ -3490,7 +3490,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                     }
                     break;
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     var full = GetFullDeclaration(declaration);
                     if (full != declaration && GetDeclarationCount(full) == 1)
                     {
@@ -4077,7 +4077,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
         }
 
         internal override SyntaxNode WithInitializer(SyntaxNode variableDeclarator, SyntaxNode initializer)
-            => ((VariableDeclaratorSyntax)variableDeclarator).WithInitializer((EqualsValueClauseSyntax)initializer);
+            => ((VariableDeclarationSyntax)variableDeclarator).WithInitializer((EqualsValueClauseSyntax)initializer);
 
         internal override SyntaxNode EqualsValueClause(SyntaxToken operatorToken, SyntaxNode value)
             => SyntaxFactory.EqualsValueClause(operatorToken, (ExpressionSyntax)value);
@@ -4087,7 +4087,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
             return SyntaxFactory.VariableDeclaration(
                 type == null ? SyntaxFactory.IdentifierName("var") : (TypeSyntax)type,
                     SyntaxFactory.SingletonSeparatedList(
-                        SyntaxFactory.VariableDeclarator(
+                        SyntaxFactory.VariableDeclaration(
                             name, argumentList: null,
                             expression == null ? null : SyntaxFactory.EqualsValueClause((ExpressionSyntax)expression))));
         }

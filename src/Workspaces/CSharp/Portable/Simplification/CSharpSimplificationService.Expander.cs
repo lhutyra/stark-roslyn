@@ -447,7 +447,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Simplification
                 _cancellationToken.ThrowIfCancellationRequested();
 
                 // if this is "var", then do not process further
-                if (originalSimpleName.IsVar)
+                if (originalSimpleName.IsNullWithNoType())
                 {
                     return rewrittenSimpleName;
                 }

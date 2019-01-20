@@ -375,7 +375,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             ref bool hasErrors)
         {
             Debug.Assert(inputType != (object)null);
-            Debug.Assert(!typeSyntax.IsVar); // if the syntax had `var`, it would have been parsed as a var pattern.
+            Debug.Assert(!typeSyntax.IsNullWithNoType()); // if the syntax had `var`, it would have been parsed as a var pattern.
             TypeSymbolWithAnnotations declType = BindType(typeSyntax, diagnostics, out AliasSymbol aliasOpt);
             Debug.Assert(!declType.IsNull);
             BoundTypeExpression boundDeclType = new BoundTypeExpression(typeSyntax, aliasOpt, inferredType: false, type: declType.TypeSymbol);

@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         TMemberAccessExpressionSyntax,
         TInvocationExpressionSyntax,
         TExpressionStatementSyntax,
-        TVariableDeclaratorSyntax>
+        TVariableDeclarationSyntax>
         : AbstractBuiltInCodeStyleDiagnosticAnalyzer
         where TSyntaxKind : struct
         where TExpressionSyntax : SyntaxNode
@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         where TMemberAccessExpressionSyntax : TExpressionSyntax
         where TInvocationExpressionSyntax : TExpressionSyntax
         where TExpressionStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
     {
         public override bool OpenFileOnly(Workspace workspace) => false;
         public override DiagnosticAnalyzerCategory GetAnalyzerCategory()
@@ -92,7 +92,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
                 return;
             }
 
-            var matches = ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclaratorSyntax>.Analyze(
+            var matches = ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclarationSyntax>.Analyze(
                 semanticModel, GetSyntaxFactsService(), objectCreationExpression, cancellationToken);
 
             if (matches == null || matches.Value.Length == 0)

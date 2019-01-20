@@ -83,13 +83,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case BoundKind.LabeledStatement:
                     var labelStatement = (BoundLabeledStatement)node;
                     return MakeLabeledStatement(labelStatement, VisitPossibleUsingDeclaration(labelStatement.Body, statements, statementIndex, out replacedLocalDeclarations));
-                case BoundKind.UsingLocalDeclarations:
+                case BoundKind.UsingLocalDeclaration:
                     // visit everything after this node 
                     ArrayBuilder<BoundStatement> builder = ArrayBuilder<BoundStatement>.GetInstance();
                     VisitStatementSubList(builder, statements, statementIndex + 1);
                     // make a using declaration with the visited statements as its body
                     replacedLocalDeclarations = true;
-                    return MakeLocalUsingDeclarationStatement((BoundUsingLocalDeclarations)node, builder.ToImmutableAndFree());
+                    return MakeLocalUsingDeclarationStatement((BoundUsingLocalDeclaration)node, builder.ToImmutableAndFree());
                 default:
                     replacedLocalDeclarations = false;
                     return (BoundStatement)Visit(node);

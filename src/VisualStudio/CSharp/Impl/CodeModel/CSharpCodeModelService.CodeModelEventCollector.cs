@@ -347,17 +347,17 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 return same;
             }
 
-            private bool CompareVariableDeclarators(
-                VariableDeclaratorSyntax oldVariableDeclarator,
-                VariableDeclaratorSyntax newVariableDeclarator,
+            private bool CompareVariableDeclarations(
+                VariableDeclarationSyntax oldVariableDeclaration,
+                VariableDeclarationSyntax newVariableDeclaration,
                 SyntaxNode newNodeParent,
                 CodeModelEventQueue eventQueue)
             {
-                Debug.Assert(oldVariableDeclarator != null && newVariableDeclarator != null);
+                Debug.Assert(oldVariableDeclaration != null && newVariableDeclaration != null);
 
-                if (!StringComparer.Ordinal.Equals(CodeModelService.GetName(oldVariableDeclarator), CodeModelService.GetName(newVariableDeclarator)))
+                if (!StringComparer.Ordinal.Equals(CodeModelService.GetName(oldVariableDeclaration), CodeModelService.GetName(newVariableDeclaration)))
                 {
-                    EnqueueChangeEvent(newVariableDeclarator, newNodeParent, CodeModelEventType.Rename, eventQueue);
+                    EnqueueChangeEvent(newVariableDeclaration, newNodeParent, CodeModelEventType.Rename, eventQueue);
                     return false;
                 }
 
@@ -374,7 +374,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
 
                 bool same = true;
                 same &= CompareChildren(
-                    CompareVariableDeclarators,
+                    CompareVariableDeclarations,
                     oldField.Declaration.Variables.AsReadOnlyList(),
                     newField.Declaration.Variables.AsReadOnlyList(),
                     newNodeParent,

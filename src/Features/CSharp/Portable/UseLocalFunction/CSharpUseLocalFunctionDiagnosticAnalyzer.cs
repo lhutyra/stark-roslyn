@@ -192,12 +192,12 @@ namespace Microsoft.CodeAnalysis.CSharp.UseLocalFunction
         {
             // Type t = <anonymous function>
             if (anonymousFunction.IsParentKind(SyntaxKind.EqualsValueClause) &&
-                anonymousFunction.Parent.IsParentKind(SyntaxKind.VariableDeclarator) &&
+                anonymousFunction.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 anonymousFunction.Parent.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 anonymousFunction.Parent.Parent.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement))
             {
                 localDeclaration = (LocalDeclarationStatementSyntax)anonymousFunction.Parent.Parent.Parent.Parent;
-                if (!localDeclaration.Declaration.Type.IsVar)
+                if (!localDeclaration.Declaration.Type.IsNullWithNoType())
                 {
                     return true;
                 }

@@ -61,7 +61,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Progression
                             node.Kind() == SyntaxKind.EnumDeclaration ||
                             node.Kind() == SyntaxKind.InterfaceDeclaration ||
                             node.Kind() == SyntaxKind.StructDeclaration ||
-                            node.Kind() == SyntaxKind.VariableDeclarator ||
+                            node.Kind() == SyntaxKind.VariableDeclaration ||
                             node.Kind() == SyntaxKind.MethodDeclaration ||
                             node.Kind() == SyntaxKind.PropertyDeclaration)
                         {

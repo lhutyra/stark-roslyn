@@ -418,7 +418,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
             // Also do the same check if we are in an object creation expression
             if (type.IsParentKind(SyntaxKind.ObjectCreationExpression) &&
                 type.Parent.IsParentKind(SyntaxKind.EqualsValueClause) &&
-                type.Parent.Parent.IsParentKind(SyntaxKind.VariableDeclarator) &&
+                type.Parent.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 type.Parent.Parent.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 type.Parent.Parent.Parent.Parent.IsParentKind(SyntaxKind.FieldDeclaration))
             {

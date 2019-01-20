@@ -178,18 +178,13 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             VariableDeclarationSyntax declarationSyntax = node.Declaration;
 
-            ImmutableArray<BoundLocalDeclaration> declarations;
-            BindForOrUsingOrFixedDeclarations(declarationSyntax, LocalDeclarationKind.FixedVariable, diagnostics, out declarations);
-
-            Debug.Assert(!declarations.IsEmpty);
-
-            BoundMultipleLocalDeclarations boundMultipleDeclarations = new BoundMultipleLocalDeclarations(declarationSyntax, declarations);
+            var declaration = BindForOrUsingOrFixedDeclarations(declarationSyntax, LocalDeclarationKind.FixedVariable, diagnostics);
 
             BoundStatement boundBody = BindPossibleEmbeddedStatement(node.Statement, diagnostics);
 
             return new BoundFixedStatement(node,
                                            GetDeclaredLocalsForScope(node),
-                                           boundMultipleDeclarations,
+                                           declaration,
                                            boundBody);
         }
 
@@ -634,7 +629,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         private BoundStatement BindUsingDeclarationStatementParts(LocalDeclarationStatementSyntax node, DiagnosticBag diagnostics)
         {
             var usingDeclaration = UsingStatementBinder.BindUsingStatementOrDeclarationFromParts(node, node.UsingKeyword, node.AwaitKeyword, originalBinder: this, usingBinderOpt: null, diagnostics);
-            Debug.Assert(usingDeclaration is BoundUsingLocalDeclarations);
+            Debug.Assert(usingDeclaration is BoundUsingLocalDeclaration);
             return usingDeclaration;
         }
 
@@ -648,22 +643,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             TypeSymbolWithAnnotations declType = BindVariableType(node.Declaration, diagnostics, typeSyntax, ref isConst, isVar: out isVar, alias: out alias);
 
             var kind = isConst ? LocalDeclarationKind.Constant : LocalDeclarationKind.RegularVariable;
-            var variableList = node.Declaration.Variables;
-            int variableCount = variableList.Count;
-            if (variableCount == 1)
-            {
-                return BindVariableDeclaration(kind, isVar, variableList[0], typeSyntax, declType, alias, diagnostics, node);
-            }
-            else
-            {
-                BoundLocalDeclaration[] boundDeclarations = new BoundLocalDeclaration[variableCount];
-                int i = 0;
-                foreach (var variableDeclarationSyntax in variableList)
-                {
-                    boundDeclarations[i++] = BindVariableDeclaration(kind, isVar, variableDeclarationSyntax, typeSyntax, declType, alias, diagnostics);
-                }
-                return new BoundMultipleLocalDeclarations(node, boundDeclarations.AsImmutableOrNull());
-            }
+            return BindVariableDeclaration(kind, isVar, node.Declaration, typeSyntax, declType, alias, diagnostics, node);
         }
 
         /// <summary>
@@ -733,28 +713,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                     Error(diagnostics, ErrorCode.ERR_ImplicitlyTypedVariableCannotBeConst, declarationNode);
                     // Keep processing it as a non-const local.
                     isConst = false;
-                }
-
-                // In the dev10 compiler the error recovery semantics for the illegal case
-                // "var x = 10, y = 123.4;" are somewhat undesirable.
-                //
-                // First off, this is an error because a straw poll of language designers and
-                // users showed that there was no consensus on whether the above should mean
-                // "double x = 10, y = 123.4;", taking the best type available and substituting
-                // that for "var", or treating it as "var x = 10; var y = 123.4;" -- since there
-                // was no consensus we decided to simply make it illegal. 
-                //
-                // In dev10 for error recovery in the IDE we do an odd thing -- we simply take
-                // the type of the first variable and use it. So that is "int x = 10, y = 123.4;".
-                // 
-                // This seems less than ideal. In the error recovery scenario it probably makes
-                // more sense to treat that as "var x = 10; var y = 123.4;" and do each inference
-                // separately.
-
-                if (declarationNode.Parent.Kind() == SyntaxKind.LocalDeclarationStatement &&
-                    ((VariableDeclarationSyntax)declarationNode).Variables.Count > 1 && !declarationNode.HasErrors)
-                {
-                    Error(diagnostics, ErrorCode.ERR_ImplicitlyTypedVariableMultipleDeclarator, declarationNode);
                 }
             }
             else
@@ -876,7 +834,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         protected BoundLocalDeclaration BindVariableDeclaration(
             LocalDeclarationKind kind,
             bool isVar,
-            VariableDeclaratorSyntax declarator,
+            VariableDeclarationSyntax declarator,
             TypeSyntax typeSyntax,
             TypeSymbolWithAnnotations declTypeOpt,
             AliasSymbol aliasOpt,
@@ -900,7 +858,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             SourceLocalSymbol localSymbol,
             LocalDeclarationKind kind,
             bool isVar,
-            VariableDeclaratorSyntax declarator,
+            VariableDeclarationSyntax declarator,
             TypeSyntax typeSyntax,
             TypeSymbolWithAnnotations declTypeOpt,
             AliasSymbol aliasOpt,
@@ -908,8 +866,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             CSharpSyntaxNode associatedSyntaxNode = null)
         {
             Debug.Assert(declarator != null);
-            Debug.Assert(!declTypeOpt.IsNull || isVar);
-            Debug.Assert(typeSyntax != null);
+            Debug.Assert(!declTypeOpt.IsNull || (typeSyntax == null && isVar));
 
             var localDiagnostics = DiagnosticBag.GetInstance();
             // if we are not given desired syntax, we use declarator
@@ -1039,8 +996,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                 }
             }
 
-            ImmutableArray<BoundExpression> arguments = BindDeclaratorArguments(declarator, localDiagnostics);
-
             if (kind == LocalDeclarationKind.FixedVariable || kind == LocalDeclarationKind.UsingVariable)
             {
                 // CONSIDER: The error message is "you must provide an initializer in a fixed 
@@ -1068,33 +1023,13 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             diagnostics.AddRangeAndFree(localDiagnostics);
-            var boundDeclType = new BoundTypeExpression(typeSyntax, aliasOpt, inferredType: isVar, type: declTypeOpt.TypeSymbol);
-            return new BoundLocalDeclaration(associatedSyntaxNode, localSymbol, boundDeclType, initializerOpt, arguments, hasErrors);
+
+
+            var boundDeclType = new BoundTypeExpression(isVar ? (SyntaxNode)declarator : typeSyntax, aliasOpt, inferredType: isVar, type: declTypeOpt.TypeSymbol);
+            return new BoundLocalDeclaration(associatedSyntaxNode, localSymbol, boundDeclType, initializerOpt, hasErrors);
         }
 
-        internal ImmutableArray<BoundExpression> BindDeclaratorArguments(VariableDeclaratorSyntax declarator, DiagnosticBag diagnostics)
-        {
-            // It is possible that we have a bracketed argument list, like "int x[];" or "int x[123];" 
-            // in a non-fixed-size-array declaration . This is a common error made by C++ programmers. 
-            // We have already given a good error at parse time telling the user to either make it "fixed"
-            // or to move the brackets to the type. However, we should still do semantic analysis of
-            // the arguments, so that errors in them are discovered, hovering over them in the IDE
-            // gives good results, and so on.
-
-            var arguments = default(ImmutableArray<BoundExpression>);
-
-            if (declarator.ArgumentList != null)
-            {
-                AnalyzedArguments analyzedArguments = AnalyzedArguments.GetInstance();
-                BindArgumentsAndNames(declarator.ArgumentList, diagnostics, analyzedArguments);
-                arguments = BuildArgumentsForErrorRecovery(analyzedArguments);
-                analyzedArguments.Free();
-            }
-
-            return arguments;
-        }
-
-        private SourceLocalSymbol LocateDeclaredVariableSymbol(VariableDeclaratorSyntax declarator, TypeSyntax typeSyntax, LocalDeclarationKind outerKind)
+        private SourceLocalSymbol LocateDeclaredVariableSymbol(VariableDeclarationSyntax declarator, TypeSyntax typeSyntax, LocalDeclarationKind outerKind)
         {
             LocalDeclarationKind kind = outerKind == LocalDeclarationKind.UsingVariable ? LocalDeclarationKind.UsingVariable : LocalDeclarationKind.RegularVariable;
             return LocateDeclaredVariableSymbol(declarator.Identifier, typeSyntax, declarator.Initializer, kind);
@@ -1333,6 +1268,13 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             var op2 = BindValue(rhsExpr, diagnostics, rhsKind);
+
+            // For transient type, we are checking the same restriction than RefAssignable
+            if (op2.Type.IsRefLikeType)
+            {
+                // TODO: The error message has to be changed
+                CheckValue(op1, BindValueKind.RefAssignable, diagnostics);
+            }
 
             if (op1.Kind == BoundKind.DiscardExpression)
             {
@@ -2323,11 +2265,10 @@ namespace Microsoft.CodeAnalysis.CSharp
             return this.Next.BindForParts(diagnostics, originalBinder);
         }
 
-        internal BoundStatement BindForOrUsingOrFixedDeclarations(VariableDeclarationSyntax nodeOpt, LocalDeclarationKind localKind, DiagnosticBag diagnostics, out ImmutableArray<BoundLocalDeclaration> declarations)
+        internal BoundLocalDeclaration BindForOrUsingOrFixedDeclarations(VariableDeclarationSyntax nodeOpt, LocalDeclarationKind localKind, DiagnosticBag diagnostics)
         {
             if (nodeOpt == null)
             {
-                declarations = ImmutableArray<BoundLocalDeclaration>.Empty;
                 return null;
             }
 
@@ -2344,33 +2285,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             Debug.Assert(!declType.IsNull || isVar);
 
-            var variables = nodeOpt.Variables;
-            int count = variables.Count;
-            Debug.Assert(count > 0);
-
-            if (isVar && count > 1)
-            {
-                // There are a number of ways in which a var decl can be illegal, but in these 
-                // cases we should report an error and then keep right on going with the inference.
-
-                Error(diagnostics, ErrorCode.ERR_ImplicitlyTypedVariableMultipleDeclarator, nodeOpt);
-            }
-
-            var declarationArray = new BoundLocalDeclaration[count];
-
-            for (int i = 0; i < count; i++)
-            {
-                var variableDeclarator = variables[i];
-                var declaration = BindVariableDeclaration(localKind, isVar, variableDeclarator, typeSyntax, declType, alias, diagnostics);
-
-                declarationArray[i] = declaration;
-            }
-
-            declarations = declarationArray.AsImmutableOrNull();
-
-            return (count == 1) ?
-                (BoundStatement)declarations[0] :
-                new BoundMultipleLocalDeclarations(nodeOpt, declarations);
+            return BindVariableDeclaration(localKind, isVar, nodeOpt, typeSyntax, declType, alias, diagnostics);
         }
 
         internal BoundStatement BindStatementExpressionList(SeparatedSyntaxList<ExpressionSyntax> statements, DiagnosticBag diagnostics)

@@ -41,7 +41,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.LockStatement:
                 case SyntaxKind.IfStatement:
                 case SyntaxKind.SwitchStatement:
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                 case SyntaxKind.ConstructorDeclaration:
                 case SyntaxKind.SwitchExpressionArm:
                     break;
@@ -84,16 +84,8 @@ namespace Microsoft.CodeAnalysis.CSharp
             _nodeToBind = previousNodeToBind;
         }
 
-        public override void VisitVariableDeclarator(VariableDeclaratorSyntax node)
+        public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
-            if (node.ArgumentList != null)
-            {
-                foreach (ArgumentSyntax arg in node.ArgumentList.Arguments)
-                {
-                    Visit(arg.Expression);
-                }
-            }
-
             VisitNodeToBind(node.Initializer);
         }
 

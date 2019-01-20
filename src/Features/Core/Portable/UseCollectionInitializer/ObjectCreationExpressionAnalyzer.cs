@@ -15,11 +15,11 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         TMemberAccessExpressionSyntax,
         TInvocationExpressionSyntax,
         TExpressionStatementSyntax,
-        TVariableDeclaratorSyntax> : AbstractObjectCreationExpressionAnalyzer<
+        TVariableDeclarationSyntax> : AbstractObjectCreationExpressionAnalyzer<
             TExpressionSyntax,
             TStatementSyntax,
             TObjectCreationExpressionSyntax,
-            TVariableDeclaratorSyntax,
+            TVariableDeclarationSyntax,
             TExpressionStatementSyntax>
         where TExpressionSyntax : SyntaxNode
         where TStatementSyntax : SyntaxNode
@@ -27,11 +27,11 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         where TMemberAccessExpressionSyntax : TExpressionSyntax
         where TInvocationExpressionSyntax : TExpressionSyntax
         where TExpressionStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
     {
-        private static readonly ObjectPool<ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclaratorSyntax>> s_pool
-            = new ObjectPool<ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclaratorSyntax>>(
-                () => new ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclaratorSyntax>());
+        private static readonly ObjectPool<ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclarationSyntax>> s_pool
+            = new ObjectPool<ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclarationSyntax>>(
+                () => new ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclarationSyntax>());
 
         private ObjectCreationExpressionAnalyzer()
         {

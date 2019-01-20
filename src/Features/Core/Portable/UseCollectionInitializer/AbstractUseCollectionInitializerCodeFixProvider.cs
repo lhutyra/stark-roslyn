@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         TMemberAccessExpressionSyntax,
         TInvocationExpressionSyntax,
         TExpressionStatementSyntax,
-        TVariableDeclaratorSyntax>
+        TVariableDeclarationSyntax>
         : SyntaxEditorBasedCodeFixProvider
         where TSyntaxKind : struct
         where TExpressionSyntax : SyntaxNode
@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         where TMemberAccessExpressionSyntax : TExpressionSyntax
         where TInvocationExpressionSyntax : TExpressionSyntax
         where TExpressionStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
     {
         public override ImmutableArray<string> FixableDiagnosticIds
             => ImmutableArray.Create(IDEDiagnosticIds.UseCollectionInitializerDiagnosticId);
@@ -85,7 +85,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
                 var originalObjectCreation = originalObjectCreationNodes.Pop();
                 var objectCreation = currentRoot.GetCurrentNodes(originalObjectCreation).Single();
 
-                var matches = ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclaratorSyntax>.Analyze(
+                var matches = ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TInvocationExpressionSyntax, TExpressionStatementSyntax, TVariableDeclarationSyntax>.Analyze(
                     semanticModel, syntaxFacts, objectCreation, cancellationToken);
 
                 if (matches == null || matches.Value.Length == 0)

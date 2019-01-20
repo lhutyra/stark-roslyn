@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Completion.KeywordRecommenders
             {
                 node = node.Parent;
 
-                if (node.IsKind(SyntaxKind.VariableDeclarator))
+                if (node.IsKind(SyntaxKind.VariableDeclaration))
                 {
                     node = node.Parent;
 

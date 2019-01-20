@@ -41,6 +41,8 @@ namespace Microsoft.Cci
 
         internal static bool IsTypeSpecification(this ITypeReference typeReference)
         {
+            if (typeReference is IExtendedTypeReference) return true;
+
             INestedTypeReference nestedTypeReference = typeReference.AsNestedTypeReference;
             if (nestedTypeReference != null)
             {

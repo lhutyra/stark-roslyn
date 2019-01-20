@@ -220,7 +220,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Classification
             {
                 return ClassificationTypeNames.EnumMemberName;
             }
-            else if (token.Parent is VariableDeclaratorSyntax variableDeclarator && variableDeclarator.Identifier == token)
+            else if (token.Parent is VariableDeclarationSyntax variableDeclarator && variableDeclarator.Identifier == token)
             {
                 var varDecl = variableDeclarator.Parent as VariableDeclarationSyntax;
                 switch (varDecl.Parent)
@@ -316,9 +316,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Classification
                 // classification type.
                 return false;
             }
-            else if (parentNode.IsKind(SyntaxKind.VariableDeclarator))
+            else if (parentNode.IsKind(SyntaxKind.VariableDeclaration))
             {
-                // The parent of a VariableDeclarator is a VariableDeclarationSyntax node.
+                // The parent of a VariableDeclaration is a VariableDeclarationSyntax node.
                 // It's parent will be the declaration syntax node.
                 parentNode = parentNode.Parent.Parent;
 

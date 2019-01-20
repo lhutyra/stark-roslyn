@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.CSharp.DocumentHighlighting
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    if (type.IsVar)
+                    if (type.IsNullWithNoType())
                     {
                         if (semanticModel == null)
                         {

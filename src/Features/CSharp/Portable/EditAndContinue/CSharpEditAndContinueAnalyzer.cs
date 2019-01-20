@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
 
         /// <returns>
         /// <see cref="BaseMethodDeclarationSyntax"/> for methods, operators, constructors, destructors and accessors.
-        /// <see cref="VariableDeclaratorSyntax"/> for field initializers.
+        /// <see cref="VariableDeclarationSyntax"/> for field initializers.
         /// <see cref="PropertyDeclarationSyntax"/> for property initializers and expression bodies.
         /// <see cref="IndexerDeclarationSyntax"/> for indexer expression bodies.
         /// </returns>
@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                         // [|public static int F = 1|], G = 2;
                         return ((BaseFieldDeclarationSyntax)node).Declaration.Variables.First();
 
-                    case SyntaxKind.VariableDeclarator:
+                    case SyntaxKind.VariableDeclaration:
                         // public static int F = 1, [|G = 2|];
                         Debug.Assert(node.Parent.IsKind(SyntaxKind.VariableDeclaration));
 
@@ -111,9 +111,9 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
         /// </returns>
         internal override SyntaxNode TryGetDeclarationBody(SyntaxNode node, bool isMember)
         {
-            if (node.IsKind(SyntaxKind.VariableDeclarator))
+            if (node.IsKind(SyntaxKind.VariableDeclaration))
             {
-                return (((VariableDeclaratorSyntax)node).Initializer)?.Value;
+                return (((VariableDeclarationSyntax)node).Initializer)?.Value;
             }
 
             return SyntaxUtilities.TryGetMethodDeclarationBody(node);
@@ -165,12 +165,12 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
         /// </returns>
         internal override IEnumerable<SyntaxToken> TryGetActiveTokens(SyntaxNode node)
         {
-            if (node.IsKind(SyntaxKind.VariableDeclarator))
+            if (node.IsKind(SyntaxKind.VariableDeclaration))
             {
                 // TODO: The logic is similar to BreakpointSpans.TryCreateSpanForVariableDeclaration. Can we abstract it?
 
                 var declarator = node;
-                var fieldDeclaration = (BaseFieldDeclarationSyntax)declarator.Parent.Parent;
+                var fieldDeclaration = (BaseFieldDeclarationSyntax)declarator.Parent;
                 var variableDeclaration = fieldDeclaration.Declaration;
 
                 if (fieldDeclaration.Modifiers.Any(SyntaxKind.ConstKeyword))
@@ -178,22 +178,12 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                     return null;
                 }
 
-                if (variableDeclaration.Variables.Count == 1)
+                if (variableDeclaration.Initializer == null)
                 {
-                    if (variableDeclaration.Variables[0].Initializer == null)
-                    {
-                        return null;
-                    }
-
-                    return fieldDeclaration.Modifiers.Concat(variableDeclaration.DescendantTokens()).Concat(fieldDeclaration.SemicolonToken);
+                    return null;
                 }
 
-                if (declarator == variableDeclaration.Variables[0])
-                {
-                    return fieldDeclaration.Modifiers.Concat(variableDeclaration.Type.DescendantTokens()).Concat(node.DescendantTokens());
-                }
-
-                return declarator.DescendantTokens();
+                return fieldDeclaration.Modifiers.Concat(variableDeclaration.DescendantTokens()).Concat(fieldDeclaration.SemicolonToken);
             }
 
             var bodyTokens = SyntaxUtilities.TryGetMethodDeclarationBody(node)?.DescendantTokens();
@@ -222,7 +212,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
             // Field initializer match root -- an active statement may include the modifiers 
             // and type specification of the field declaration.
             if (bodyOrMatchRoot.IsKind(SyntaxKind.EqualsValueClause) &&
-                bodyOrMatchRoot.Parent.IsKind(SyntaxKind.VariableDeclarator) &&
+                bodyOrMatchRoot.Parent.IsKind(SyntaxKind.VariableDeclaration) &&
                 bodyOrMatchRoot.Parent.Parent.IsKind(SyntaxKind.FieldDeclaration))
             {
                 return bodyOrMatchRoot.Parent.Parent;
@@ -231,7 +221,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
             // Field initializer body -- an active statement may include the modifiers 
             // and type specification of the field declaration.
             if (bodyOrMatchRoot.Parent.IsKind(SyntaxKind.EqualsValueClause) &&
-                bodyOrMatchRoot.Parent.Parent.IsKind(SyntaxKind.VariableDeclarator) &&
+                bodyOrMatchRoot.Parent.Parent.IsKind(SyntaxKind.VariableDeclaration) &&
                 bodyOrMatchRoot.Parent.Parent.Parent.IsKind(SyntaxKind.FieldDeclaration))
             {
                 return bodyOrMatchRoot.Parent.Parent.Parent;
@@ -310,7 +300,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                     break;
 
                 case SyntaxKind.VariableDeclaration:
-                    // VariableDeclaration ::= TypeSyntax CommaSeparatedList(VariableDeclarator)
+                    // VariableDeclaration ::= TypeSyntax CommaSeparatedList(VariableDeclaration)
                     // 
                     // The compiler places sequence points after each local variable initialization.
                     // The TypeSyntax is considered to be part of the first sequence span.
@@ -447,12 +437,12 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
             }
             else
             {
-                var leftDeclarator = (VariableDeclaratorSyntax)leftEqualsClause.Parent;
+                var leftDeclarator = (VariableDeclarationSyntax)leftEqualsClause.Parent;
                 var leftSymbol = leftModel.GetDeclaredSymbol(leftDeclarator, cancellationToken);
                 Debug.Assert(leftSymbol != null);
 
                 var rightField = rightType.GetMembers(leftSymbol.Name).Single();
-                var rightDeclarator = (VariableDeclaratorSyntax)GetSymbolSyntax(rightField, cancellationToken);
+                var rightDeclarator = (VariableDeclarationSyntax)GetSymbolSyntax(rightField, cancellationToken);
 
                 rightEqualsClause = rightDeclarator.Initializer;
             }
@@ -889,8 +879,8 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
         {
             switch (declaration.Kind())
             {
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)declaration).Initializer != null;
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)declaration).Initializer != null;
 
                 case SyntaxKind.PropertyDeclaration:
                     return ((PropertyDeclarationSyntax)declaration).Initializer != null;
@@ -1196,7 +1186,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 case SyntaxKind.VariableDeclaration:
                     return GetDiagnosticSpanImpl(node.Parent, editKind);
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     return node.Span;
 
                 case SyntaxKind.MethodDeclaration:
@@ -1528,7 +1518,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                     return CSharpFeaturesResources.event_field;
 
                 case SyntaxKind.VariableDeclaration:
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     return GetTopLevelDisplayNameImpl(node.Parent, editKind);
 
                 case SyntaxKind.MethodDeclaration:
@@ -1864,7 +1854,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                     case SyntaxKind.PropertyDeclaration:
                     case SyntaxKind.FieldDeclaration:
                     case SyntaxKind.EventFieldDeclaration:
-                    case SyntaxKind.VariableDeclarator:
+                    case SyntaxKind.VariableDeclaration:
                         // Maybe we could allow changing order of field declarations unless the containing type layout is sequential.
                         ReportError(RudeEditKind.Move);
                         return;
@@ -1980,9 +1970,9 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                         ClassifyFieldInsert((BaseFieldDeclarationSyntax)node);
                         return;
 
-                    case SyntaxKind.VariableDeclarator:
+                    case SyntaxKind.VariableDeclaration:
                         // allowed: private fields in classes
-                        ClassifyFieldInsert((VariableDeclaratorSyntax)node);
+                        ClassifyFieldInsert((VariableDeclarationSyntax)node);
                         return;
 
                     case SyntaxKind.VariableDeclaration:
@@ -2123,7 +2113,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 ClassifyModifiedMemberInsert(field.Modifiers);
             }
 
-            private void ClassifyFieldInsert(VariableDeclaratorSyntax fieldVariable)
+            private void ClassifyFieldInsert(VariableDeclarationSyntax fieldVariable)
             {
                 ClassifyFieldInsert((VariableDeclarationSyntax)fieldVariable.Parent);
             }
@@ -2163,7 +2153,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                     case SyntaxKind.EventDeclaration:
                     case SyntaxKind.FieldDeclaration:
                     case SyntaxKind.EventFieldDeclaration:
-                    case SyntaxKind.VariableDeclarator:
+                    case SyntaxKind.VariableDeclaration:
                     case SyntaxKind.VariableDeclaration:
                         // To allow removal of declarations we would need to update method bodies that 
                         // were previously binding to them but now are binding to another symbol that was previously hidden.
@@ -2286,8 +2276,8 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                         ClassifyUpdate((VariableDeclarationSyntax)oldNode, (VariableDeclarationSyntax)newNode);
                         return;
 
-                    case SyntaxKind.VariableDeclarator:
-                        ClassifyUpdate((VariableDeclaratorSyntax)oldNode, (VariableDeclaratorSyntax)newNode);
+                    case SyntaxKind.VariableDeclaration:
+                        ClassifyUpdate((VariableDeclarationSyntax)oldNode, (VariableDeclarationSyntax)newNode);
                         return;
 
                     case SyntaxKind.MethodDeclaration:
@@ -2461,7 +2451,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 // separators may be added/removed:
             }
 
-            private void ClassifyUpdate(VariableDeclaratorSyntax oldNode, VariableDeclaratorSyntax newNode)
+            private void ClassifyUpdate(VariableDeclarationSyntax oldNode, VariableDeclarationSyntax newNode)
             {
                 if (!SyntaxFactory.AreEquivalent(oldNode.Identifier, newNode.Identifier))
                 {
@@ -3173,12 +3163,12 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
 
                 case SyntaxKind.VariableDeclaration:
                     // var idf = await expr in using, for, etc.
-                    // EqualsValueClause -> VariableDeclarator -> VariableDeclaration
+                    // EqualsValueClause -> VariableDeclaration -> VariableDeclaration
                     return awaitExpression.Parent.Parent.Parent == containingStatementPart;
 
                 case SyntaxKind.LocalDeclarationStatement:
                     // var idf = await expr;
-                    // EqualsValueClause -> VariableDeclarator -> VariableDeclaration -> LocalDeclarationStatement
+                    // EqualsValueClause -> VariableDeclaration -> VariableDeclaration -> LocalDeclarationStatement
                     return awaitExpression.Parent.Parent.Parent.Parent == containingStatementPart;
             }
 
@@ -3317,7 +3307,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 areSimilar: AreSimilarActiveStatements);
         }
 
-        private static bool DeclareSameIdentifiers(SeparatedSyntaxList<VariableDeclaratorSyntax> oldVariables, SeparatedSyntaxList<VariableDeclaratorSyntax> newVariables)
+        private static bool DeclareSameIdentifiers(SeparatedSyntaxList<VariableDeclarationSyntax> oldVariables, SeparatedSyntaxList<VariableDeclarationSyntax> newVariables)
         {
             return DeclareSameIdentifiers(oldVariables.Select(v => v.Identifier).ToArray(), newVariables.Select(v => v.Identifier).ToArray());
         }

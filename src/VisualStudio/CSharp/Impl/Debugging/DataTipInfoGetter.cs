@@ -82,7 +82,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Debugging
                 }
 
                 string textOpt = null;
-                if (expression is TypeSyntax typeSyntax && typeSyntax.IsVar)
+                if (expression is TypeSyntax typeSyntax && typeSyntax.IsNullWithNoType())
                 {
                     // If the user is hovering over 'var', then pass back the full type name that 'var'
                     // binds to.

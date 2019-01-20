@@ -136,7 +136,7 @@ namespace Microsoft.CodeAnalysis.CSharp.GenerateType
         {
             generateTypeServiceStateOptions = new GenerateTypeServiceStateOptions();
 
-            if (simpleName.IsVar)
+            if (simpleName.IsNullWithNoType())
             {
                 return false;
             }

@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.CSharp.MoveDeclarationNearReference
             CSharpMoveDeclarationNearReferenceService,
             StatementSyntax,
             LocalDeclarationStatementSyntax,
-            VariableDeclaratorSyntax>
+            VariableDeclarationSyntax>
     {
         protected override bool IsMeaningfulBlock(SyntaxNode node)
         {
@@ -29,13 +29,13 @@ namespace Microsoft.CodeAnalysis.CSharp.MoveDeclarationNearReference
                    node is CheckedStatementSyntax;
         }
 
-        protected override SyntaxNode GetVariableDeclaratorSymbolNode(VariableDeclaratorSyntax variableDeclarator)
+        protected override SyntaxNode GetVariableDeclarationSymbolNode(VariableDeclarationSyntax variableDeclarator)
             => variableDeclarator;
 
-        protected override bool IsValidVariableDeclarator(VariableDeclaratorSyntax variableDeclarator)
+        protected override bool IsValidVariableDeclaration(VariableDeclarationSyntax variableDeclarator)
             => true;
 
-        protected override SyntaxToken GetIdentifierOfVariableDeclarator(VariableDeclaratorSyntax variableDeclarator)
+        protected override SyntaxToken GetIdentifierOfVariableDeclaration(VariableDeclarationSyntax variableDeclarator)
             => variableDeclarator.Identifier;
 
         protected override async Task<bool> TypesAreCompatibleAsync(
@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.CSharp.MoveDeclarationNearReference
             SyntaxNode right, CancellationToken cancellationToken)
         {
             var type = declarationStatement.Declaration.Type;
-            if (type.IsVar)
+            if (type.IsNullWithNoType())
             {
                 // Type inference.  Only merge if types match.
                 var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);

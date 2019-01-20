@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseAutoProperty
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     internal class CSharpUseAutoPropertyAnalyzer : AbstractUseAutoPropertyAnalyzer<
-        PropertyDeclarationSyntax, FieldDeclarationSyntax, VariableDeclaratorSyntax, ExpressionSyntax>
+        PropertyDeclarationSyntax, FieldDeclarationSyntax, VariableDeclarationSyntax, ExpressionSyntax>
     {
         protected override bool SupportsReadOnlyProperties(Compilation compilation)
             => ((CSharpCompilation)compilation).LanguageVersion >= LanguageVersion.CSharp6;
@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseAutoProperty
         }
 
         protected override ExpressionSyntax GetFieldInitializer(
-            VariableDeclaratorSyntax variable, CancellationToken cancellationToken)
+            VariableDeclarationSyntax variable, CancellationToken cancellationToken)
         {
             return variable.Initializer?.Value;
         }
@@ -209,7 +209,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseAutoProperty
                GetSingleStatementFromAccessor<ExpressionStatementSyntax>(setAccessor)?.Expression;
 
         protected override SyntaxNode GetNodeToFade(
-            FieldDeclarationSyntax fieldDeclaration, VariableDeclaratorSyntax variableDeclarator)
+            FieldDeclarationSyntax fieldDeclaration, VariableDeclarationSyntax variableDeclarator)
         {
             return fieldDeclaration.Declaration.Variables.Count == 1
                 ? fieldDeclaration

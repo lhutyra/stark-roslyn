@@ -22,7 +22,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseCollectionInitializer
             MemberAccessExpressionSyntax,
             InvocationExpressionSyntax,
             ExpressionStatementSyntax,
-            VariableDeclaratorSyntax>
+            VariableDeclarationSyntax>
     {
         protected override StatementSyntax GetNewStatement(
             StatementSyntax statement,

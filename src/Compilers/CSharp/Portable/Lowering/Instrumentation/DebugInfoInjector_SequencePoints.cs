@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return new BoundSequencePoint(node.Syntax, node);
         }
 
-        internal static BoundStatement AddSequencePoint(VariableDeclaratorSyntax declaratorSyntax, BoundStatement rewrittenStatement)
+        internal static BoundStatement AddSequencePoint(VariableDeclarationSyntax declaratorSyntax, BoundStatement rewrittenStatement)
         {
             SyntaxNode node;
             TextSpan? part;
@@ -111,68 +111,44 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
         }
 
-        internal static void GetBreakpointSpan(VariableDeclaratorSyntax declaratorSyntax, out SyntaxNode node, out TextSpan? part)
+        internal static void GetBreakpointSpan(VariableDeclarationSyntax declarationSyntax, out SyntaxNode node, out TextSpan? part)
         {
-            var declarationSyntax = (VariableDeclarationSyntax)declaratorSyntax.Parent;
-
-            if (declarationSyntax.Variables.First() == declaratorSyntax)
+            switch (declarationSyntax.Parent.Kind())
             {
-                switch (declarationSyntax.Parent.Kind())
-                {
-                    case SyntaxKind.EventFieldDeclaration:
-                    case SyntaxKind.FieldDeclaration:
-                        var modifiers = ((BaseFieldDeclarationSyntax)declarationSyntax.Parent).Modifiers;
-                        GetFirstLocalOrFieldBreakpointSpan(modifiers, declaratorSyntax, out node, out part);
-                        break;
+                case SyntaxKind.EventFieldDeclaration:
+                case SyntaxKind.FieldDeclaration:
+                    var modifiers = ((BaseFieldDeclarationSyntax)declarationSyntax.Parent).Modifiers;
+                    GetFirstLocalOrFieldBreakpointSpan(modifiers, declarationSyntax, out node, out part);
+                    break;
 
-                    case SyntaxKind.LocalDeclarationStatement:
-                        // only const locals have modifiers and those don't have a sequence point:
-                        Debug.Assert(!((LocalDeclarationStatementSyntax)declarationSyntax.Parent).Modifiers.Any());
-                        GetFirstLocalOrFieldBreakpointSpan(default(SyntaxTokenList), declaratorSyntax, out node, out part);
-                        break;
+                case SyntaxKind.LocalDeclarationStatement:
+                    // only const locals have modifiers and those don't have a sequence point:
+                    Debug.Assert(!((LocalDeclarationStatementSyntax)declarationSyntax.Parent).IsConst);
+                    GetFirstLocalOrFieldBreakpointSpan(default(SyntaxTokenList), declarationSyntax, out node, out part);
+                    break;
 
-                    case SyntaxKind.UsingStatement:
-                    case SyntaxKind.FixedStatement:
-                    case SyntaxKind.ForStatement:
-                        // for ([|int i = 1|]; i < 10; i++)
-                        // for ([|int i = 1|], j = 0; i < 10; i++)
-                        node = declarationSyntax;
-                        part = TextSpan.FromBounds(declarationSyntax.SpanStart, declaratorSyntax.Span.End);
-                        break;
+                case SyntaxKind.UsingStatement:
+                case SyntaxKind.FixedStatement:
+                case SyntaxKind.ForStatement:
+                    // for ([|int i = 1|]; i < 10; i++)
+                    // for ([|int i = 1|], j = 0; i < 10; i++)
+                    node = declarationSyntax;
+                    part = TextSpan.FromBounds(declarationSyntax.SpanStart, declarationSyntax.Span.End);
+                    break;
 
-                    default:
-                        throw ExceptionUtilities.UnexpectedValue(declarationSyntax.Parent.Kind());
-                }
-            }
-            else
-            {
-                // int x = 1, [|y = 2|];
-                // public static int x = 1, [|y = 2|];
-                // for (int i = 1, [|j = 0|]; i < 10; i++)
-                node = declaratorSyntax;
-                part = null;
+                default:
+                    throw ExceptionUtilities.UnexpectedValue(declarationSyntax.Parent.Kind());
             }
         }
 
-        internal static void GetFirstLocalOrFieldBreakpointSpan(SyntaxTokenList modifiers, VariableDeclaratorSyntax declaratorSyntax, out SyntaxNode node, out TextSpan? part)
+        internal static void GetFirstLocalOrFieldBreakpointSpan(SyntaxTokenList modifiers, VariableDeclarationSyntax declarationSyntax, out SyntaxNode node, out TextSpan? part)
         {
-            var declarationSyntax = (VariableDeclarationSyntax)declaratorSyntax.Parent;
-
             int start = modifiers.Any() ? modifiers[0].SpanStart : declarationSyntax.SpanStart;
 
             int end;
-            if (declarationSyntax.Variables.Count == 1)
-            {
-                // [|int x = 1;|]
-                // [|public static int x = 1;|]
-                end = declarationSyntax.Parent.Span.End;
-            }
-            else
-            {
-                // [|int x = 1|], y = 2;
-                // [|public static int x = 1|], y = 2;
-                end = declaratorSyntax.Span.End;
-            }
+            // [|int x = 1;|]
+            // [|public static int x = 1;|]
+            end = declarationSyntax.Parent.Span.End;
 
             part = TextSpan.FromBounds(start, end);
             node = declarationSyntax.Parent;

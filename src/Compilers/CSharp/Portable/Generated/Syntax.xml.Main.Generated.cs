@@ -64,6 +64,12 @@ namespace Microsoft.CodeAnalysis.CSharp
       return this.DefaultVisit(node);
     }
 
+    /// <summary>Called when the visitor visits a ExtendedTypeSyntax node.</summary>
+    public virtual TResult VisitExtendedType(ExtendedTypeSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     /// <summary>Called when the visitor visits a PointerTypeSyntax node.</summary>
     public virtual TResult VisitPointerType(PointerTypeSyntax node)
     {
@@ -564,12 +570,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     /// <summary>Called when the visitor visits a VariableDeclarationSyntax node.</summary>
     public virtual TResult VisitVariableDeclaration(VariableDeclarationSyntax node)
-    {
-      return this.DefaultVisit(node);
-    }
-
-    /// <summary>Called when the visitor visits a VariableDeclaratorSyntax node.</summary>
-    public virtual TResult VisitVariableDeclarator(VariableDeclaratorSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -1351,6 +1351,12 @@ namespace Microsoft.CodeAnalysis.CSharp
       this.DefaultVisit(node);
     }
 
+    /// <summary>Called when the visitor visits a ExtendedTypeSyntax node.</summary>
+    public virtual void VisitExtendedType(ExtendedTypeSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
     /// <summary>Called when the visitor visits a PointerTypeSyntax node.</summary>
     public virtual void VisitPointerType(PointerTypeSyntax node)
     {
@@ -1851,12 +1857,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     /// <summary>Called when the visitor visits a VariableDeclarationSyntax node.</summary>
     public virtual void VisitVariableDeclaration(VariableDeclarationSyntax node)
-    {
-      this.DefaultVisit(node);
-    }
-
-    /// <summary>Called when the visitor visits a VariableDeclaratorSyntax node.</summary>
-    public virtual void VisitVariableDeclarator(VariableDeclaratorSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -2649,11 +2649,18 @@ namespace Microsoft.CodeAnalysis.CSharp
       return node.Update(openBracketToken, sizes, closeBracketToken, questionToken);
     }
 
+    public override SyntaxNode VisitExtendedType(ExtendedTypeSyntax node)
+    {
+      var modifiers = this.VisitList(node.Modifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(modifiers, elementType);
+    }
+
     public override SyntaxNode VisitPointerType(PointerTypeSyntax node)
     {
-      var elementType = (TypeSyntax)this.Visit(node.ElementType);
       var asteriskToken = this.VisitToken(node.AsteriskToken);
-      return node.Update(elementType, asteriskToken);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(asteriskToken, elementType);
     }
 
     public override SyntaxNode VisitNullableType(NullableTypeSyntax node)
@@ -2687,9 +2694,8 @@ namespace Microsoft.CodeAnalysis.CSharp
     public override SyntaxNode VisitRefType(RefTypeSyntax node)
     {
       var refKeyword = this.VisitToken(node.RefKeyword);
-      var readOnlyKeyword = this.VisitToken(node.ReadOnlyKeyword);
       var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(refKeyword, readOnlyKeyword, type);
+      return node.Update(refKeyword, type);
     }
 
     public override SyntaxNode VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
@@ -3301,25 +3307,19 @@ namespace Microsoft.CodeAnalysis.CSharp
     {
       var awaitKeyword = this.VisitToken(node.AwaitKeyword);
       var usingKeyword = this.VisitToken(node.UsingKeyword);
-      var modifiers = this.VisitList(node.Modifiers);
       var declaration = (VariableDeclarationSyntax)this.Visit(node.Declaration);
       var semicolonToken = this.VisitToken(node.SemicolonToken);
-      return node.Update(awaitKeyword, usingKeyword, modifiers, declaration, semicolonToken);
+      return node.Update(awaitKeyword, usingKeyword, declaration, semicolonToken);
     }
 
     public override SyntaxNode VisitVariableDeclaration(VariableDeclarationSyntax node)
     {
-      var type = (TypeSyntax)this.Visit(node.Type);
-      var variables = this.VisitList(node.Variables);
-      return node.Update(type, variables);
-    }
-
-    public override SyntaxNode VisitVariableDeclarator(VariableDeclaratorSyntax node)
-    {
+      var variableKeyword = this.VisitToken(node.VariableKeyword);
       var identifier = this.VisitToken(node.Identifier);
-      var argumentList = (BracketedArgumentListSyntax)this.Visit(node.ArgumentList);
+      var colonToken = this.VisitToken(node.ColonToken);
+      var type = (TypeSyntax)this.Visit(node.Type);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
-      return node.Update(identifier, argumentList, initializer);
+      return node.Update(variableKeyword, identifier, colonToken, type, initializer);
     }
 
     public override SyntaxNode VisitEqualsValueClause(EqualsValueClauseSyntax node)
@@ -4641,11 +4641,24 @@ namespace Microsoft.CodeAnalysis.CSharp
       return SyntaxFactory.ArrayRankSpecifier(SyntaxFactory.Token(SyntaxKind.OpenBracketToken), sizes, SyntaxFactory.Token(SyntaxKind.CloseBracketToken), default(SyntaxToken));
     }
 
-    /// <summary>Creates a new PointerTypeSyntax instance.</summary>
-    public static PointerTypeSyntax PointerType(TypeSyntax elementType, SyntaxToken asteriskToken)
+    /// <summary>Creates a new ExtendedTypeSyntax instance.</summary>
+    public static ExtendedTypeSyntax ExtendedType(SyntaxTokenList modifiers, TypeSyntax elementType)
     {
       if (elementType == null)
         throw new ArgumentNullException(nameof(elementType));
+      return (ExtendedTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.ExtendedType(modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), elementType == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)elementType.Green).CreateRed();
+    }
+
+
+    /// <summary>Creates a new ExtendedTypeSyntax instance.</summary>
+    public static ExtendedTypeSyntax ExtendedType(TypeSyntax elementType)
+    {
+      return SyntaxFactory.ExtendedType(default(SyntaxTokenList), elementType);
+    }
+
+    /// <summary>Creates a new PointerTypeSyntax instance.</summary>
+    public static PointerTypeSyntax PointerType(SyntaxToken asteriskToken, TypeSyntax elementType)
+    {
       switch (asteriskToken.Kind())
       {
         case SyntaxKind.AsteriskToken:
@@ -4653,14 +4666,16 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(asteriskToken));
       }
-      return (PointerTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.PointerType(elementType == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)elementType.Green, (Syntax.InternalSyntax.SyntaxToken)asteriskToken.Node).CreateRed();
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
+      return (PointerTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.PointerType((Syntax.InternalSyntax.SyntaxToken)asteriskToken.Node, elementType == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)elementType.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new PointerTypeSyntax instance.</summary>
     public static PointerTypeSyntax PointerType(TypeSyntax elementType)
     {
-      return SyntaxFactory.PointerType(elementType, SyntaxFactory.Token(SyntaxKind.AsteriskToken));
+      return SyntaxFactory.PointerType(SyntaxFactory.Token(SyntaxKind.AsteriskToken), elementType);
     }
 
     /// <summary>Creates a new NullableTypeSyntax instance.</summary>
@@ -4756,7 +4771,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     }
 
     /// <summary>Creates a new RefTypeSyntax instance.</summary>
-    public static RefTypeSyntax RefType(SyntaxToken refKeyword, SyntaxToken readOnlyKeyword, TypeSyntax type)
+    public static RefTypeSyntax RefType(SyntaxToken refKeyword, TypeSyntax type)
     {
       switch (refKeyword.Kind())
       {
@@ -4765,24 +4780,16 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(refKeyword));
       }
-      switch (readOnlyKeyword.Kind())
-      {
-        case SyntaxKind.ReadOnlyKeyword:
-        case SyntaxKind.None:
-          break;
-        default:
-          throw new ArgumentException(nameof(readOnlyKeyword));
-      }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      return (RefTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.RefType((Syntax.InternalSyntax.SyntaxToken)refKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)readOnlyKeyword.Node, type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
+      return (RefTypeSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.RefType((Syntax.InternalSyntax.SyntaxToken)refKeyword.Node, type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new RefTypeSyntax instance.</summary>
     public static RefTypeSyntax RefType(TypeSyntax type)
     {
-      return SyntaxFactory.RefType(SyntaxFactory.Token(SyntaxKind.RefKeyword), default(SyntaxToken), type);
+      return SyntaxFactory.RefType(SyntaxFactory.Token(SyntaxKind.RefKeyword), type);
     }
 
     /// <summary>Creates a new ParenthesizedExpressionSyntax instance.</summary>
@@ -7141,7 +7148,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     }
 
     /// <summary>Creates a new LocalDeclarationStatementSyntax instance.</summary>
-    public static LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public static LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
     {
       switch (awaitKeyword.Kind())
       {
@@ -7168,40 +7175,28 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(semicolonToken));
       }
-      return (LocalDeclarationStatementSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.LocalDeclarationStatement((Syntax.InternalSyntax.SyntaxToken)awaitKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)usingKeyword.Node, modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), declaration == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
+      return (LocalDeclarationStatementSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.LocalDeclarationStatement((Syntax.InternalSyntax.SyntaxToken)awaitKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)usingKeyword.Node, declaration == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
     }
 
-
-    /// <summary>Creates a new LocalDeclarationStatementSyntax instance.</summary>
-    public static LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxTokenList modifiers, VariableDeclarationSyntax declaration)
-    {
-      return SyntaxFactory.LocalDeclarationStatement(default(SyntaxToken), default(SyntaxToken), modifiers, declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-    }
 
     /// <summary>Creates a new LocalDeclarationStatementSyntax instance.</summary>
     public static LocalDeclarationStatementSyntax LocalDeclarationStatement(VariableDeclarationSyntax declaration)
     {
-      return SyntaxFactory.LocalDeclarationStatement(default(SyntaxToken), default(SyntaxToken), default(SyntaxTokenList), declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+      return SyntaxFactory.LocalDeclarationStatement(default(SyntaxToken), default(SyntaxToken), declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
-    public static VariableDeclarationSyntax VariableDeclaration(TypeSyntax type, SeparatedSyntaxList<VariableDeclaratorSyntax> variables)
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
-      return (VariableDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.VariableDeclaration(type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green, variables.Node.ToGreenSeparatedList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclaratorSyntax>()).CreateRed();
-    }
-
-
-    /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
-    public static VariableDeclarationSyntax VariableDeclaration(TypeSyntax type)
-    {
-      return SyntaxFactory.VariableDeclaration(type, default(SeparatedSyntaxList<VariableDeclaratorSyntax>));
-    }
-
-    /// <summary>Creates a new VariableDeclaratorSyntax instance.</summary>
-    public static VariableDeclaratorSyntax VariableDeclarator(SyntaxToken identifier, BracketedArgumentListSyntax argumentList, EqualsValueClauseSyntax initializer)
-    {
+      switch (variableKeyword.Kind())
+      {
+        case SyntaxKind.VarKeyword:
+        case SyntaxKind.ValKeyword:
+        case SyntaxKind.ConstKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(variableKeyword));
+      }
       switch (identifier.Kind())
       {
         case SyntaxKind.IdentifierToken:
@@ -7209,20 +7204,34 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      return (VariableDeclaratorSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.VariableDeclarator((Syntax.InternalSyntax.SyntaxToken)identifier.Node, argumentList == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BracketedArgumentListSyntax)argumentList.Green, initializer == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EqualsValueClauseSyntax)initializer.Green).CreateRed();
+      switch (colonToken.Kind())
+      {
+        case SyntaxKind.ColonToken:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(colonToken));
+      }
+      return (VariableDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.VariableDeclaration((Syntax.InternalSyntax.SyntaxToken)variableKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green, initializer == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EqualsValueClauseSyntax)initializer.Green).CreateRed();
     }
 
 
-    /// <summary>Creates a new VariableDeclaratorSyntax instance.</summary>
-    public static VariableDeclaratorSyntax VariableDeclarator(SyntaxToken identifier)
+    /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-      return SyntaxFactory.VariableDeclarator(identifier, default(BracketedArgumentListSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.VariableDeclaration(variableKeyword, identifier, default(SyntaxToken), type, initializer);
     }
 
-    /// <summary>Creates a new VariableDeclaratorSyntax instance.</summary>
-    public static VariableDeclaratorSyntax VariableDeclarator(string identifier)
+    /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier)
     {
-      return SyntaxFactory.VariableDeclarator(SyntaxFactory.Identifier(identifier), default(BracketedArgumentListSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.VariableDeclaration(variableKeyword, identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
+    }
+
+    /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, string identifier)
+    {
+      return SyntaxFactory.VariableDeclaration(variableKeyword, SyntaxFactory.Identifier(identifier), default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
     }
 
     /// <summary>Creates a new EqualsValueClauseSyntax instance.</summary>

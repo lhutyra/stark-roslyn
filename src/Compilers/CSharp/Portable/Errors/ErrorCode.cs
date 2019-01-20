@@ -1680,6 +1680,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         ERR_GoToBackwardJumpOverUsingVar = 8649,
         #endregion diagnostics introduced for C# 8.0
 
+
+        #region diagnostics introduced for Stark
+        ERR_AccessInvalid = 9000,
+        ERR_AccessInvalidEmpty = 9001,
+        #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }
 }

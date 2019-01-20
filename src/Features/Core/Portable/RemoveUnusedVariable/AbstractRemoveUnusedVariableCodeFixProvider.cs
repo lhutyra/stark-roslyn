@@ -17,9 +17,9 @@ using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.RemoveUnusedVariable
 {
-    internal abstract class AbstractRemoveUnusedVariableCodeFixProvider<TLocalDeclarationStatement, TVariableDeclarator, TVariableDeclaration> : SyntaxEditorBasedCodeFixProvider
+    internal abstract class AbstractRemoveUnusedVariableCodeFixProvider<TLocalDeclarationStatement, TVariableDeclaration, TVariableDeclaration> : SyntaxEditorBasedCodeFixProvider
         where TLocalDeclarationStatement : SyntaxNode
-        where TVariableDeclarator : SyntaxNode
+        where TVariableDeclaration : SyntaxNode
         where TVariableDeclaration : SyntaxNode
     {
         protected abstract bool IsCatchDeclarationIdentifier(SyntaxToken token);
@@ -150,7 +150,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedVariable
         private void MergeNodesToRemove(HashSet<SyntaxNode> nodesToRemove)
         {
             var candidateLocalDeclarationsToRemove = new HashSet<TLocalDeclarationStatement>();
-            foreach (var variableDeclarator in nodesToRemove.OfType<TVariableDeclarator>())
+            foreach (var variableDeclarator in nodesToRemove.OfType<TVariableDeclaration>())
             {
                 var localDeclaration = (TLocalDeclarationStatement)variableDeclarator.Parent.Parent;
                 candidateLocalDeclarationsToRemove.Add(localDeclaration);

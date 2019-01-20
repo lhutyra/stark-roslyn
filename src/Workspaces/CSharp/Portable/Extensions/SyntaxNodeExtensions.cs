@@ -458,11 +458,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
                 ((AssignmentExpressionSyntax)node.Parent).Right == node;
         }
 
-        public static bool IsVariableDeclaratorValue(this SyntaxNode node)
+        public static bool IsVariableDeclarationValue(this SyntaxNode node)
         {
             return
                 node.IsParentKind(SyntaxKind.EqualsValueClause) &&
-                node.Parent.IsParentKind(SyntaxKind.VariableDeclarator) &&
+                node.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 ((EqualsValueClauseSyntax)node.Parent).Value == node;
         }
 

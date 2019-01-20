@@ -14,16 +14,16 @@ namespace Microsoft.CodeAnalysis.CSharp.UseConditionalExpression
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
     internal partial class CSharpUseConditionalExpressionForAssignmentCodeRefactoringProvider
         : AbstractUseConditionalExpressionForAssignmentCodeFixProvider<
-            StatementSyntax, IfStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclaratorSyntax, ExpressionSyntax, ConditionalExpressionSyntax>
+            StatementSyntax, IfStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclarationSyntax, ExpressionSyntax, ConditionalExpressionSyntax>
     {
         protected override IFormattingRule GetMultiLineFormattingRule()
             => MultiLineConditionalExpressionFormattingRule.Instance;
 
-        protected override VariableDeclaratorSyntax WithInitializer(VariableDeclaratorSyntax variable, ExpressionSyntax value)
+        protected override VariableDeclarationSyntax WithInitializer(VariableDeclarationSyntax variable, ExpressionSyntax value)
             => variable.WithInitializer(SyntaxFactory.EqualsValueClause(value));
 
-        protected override VariableDeclaratorSyntax GetDeclaratorSyntax(IVariableDeclaratorOperation declarator)
-            => (VariableDeclaratorSyntax)declarator.Syntax;
+        protected override VariableDeclarationSyntax GetDeclaratorSyntax(IVariableDeclarationOperation declarator)
+            => (VariableDeclarationSyntax)declarator.Syntax;
 
         protected override LocalDeclarationStatementSyntax AddSimplificationToType(LocalDeclarationStatementSyntax statement)
             => statement.WithDeclaration(statement.Declaration.WithType(

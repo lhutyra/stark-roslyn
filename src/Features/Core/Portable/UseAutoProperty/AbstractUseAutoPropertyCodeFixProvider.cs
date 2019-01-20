@@ -21,10 +21,10 @@ using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.UseAutoProperty
 {
-    internal abstract class AbstractUseAutoPropertyCodeFixProvider<TTypeDeclarationSyntax, TPropertyDeclaration, TVariableDeclarator, TConstructorDeclaration, TExpression> : CodeFixProvider
+    internal abstract class AbstractUseAutoPropertyCodeFixProvider<TTypeDeclarationSyntax, TPropertyDeclaration, TVariableDeclaration, TConstructorDeclaration, TExpression> : CodeFixProvider
         where TTypeDeclarationSyntax : SyntaxNode
         where TPropertyDeclaration : SyntaxNode
-        where TVariableDeclarator : SyntaxNode
+        where TVariableDeclaration : SyntaxNode
         where TConstructorDeclaration : SyntaxNode
         where TExpression : SyntaxNode
     {
@@ -35,7 +35,7 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
 
         public sealed override FixAllProvider GetFixAllProvider() => WellKnownFixAllProviders.BatchFixer;
 
-        protected abstract SyntaxNode GetNodeToRemove(TVariableDeclarator declarator);
+        protected abstract SyntaxNode GetNodeToRemove(TVariableDeclaration declarator);
 
         protected abstract IEnumerable<IFormattingRule> GetFormattingRules(Document document);
 
@@ -68,7 +68,7 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
             var propertyLocation = locations[0];
             var declaratorLocation = locations[1];
 
-            var declarator = declaratorLocation.FindToken(cancellationToken).Parent.FirstAncestorOrSelf<TVariableDeclarator>();
+            var declarator = declaratorLocation.FindToken(cancellationToken).Parent.FirstAncestorOrSelf<TVariableDeclaration>();
             var fieldDocument = context.Document.Project.GetDocument(declarator.SyntaxTree);
             var fieldSemanticModel = await fieldDocument.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
             var fieldSymbol = (IFieldSymbol)fieldSemanticModel.GetDeclaredSymbol(declarator);
@@ -137,7 +137,7 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
             propertySymbol = (IPropertySymbol)propertySymbol.GetSymbolKey().Resolve(compilation, cancellationToken: cancellationToken).Symbol;
             Debug.Assert(fieldSymbol != null && propertySymbol != null);
 
-            declarator = (TVariableDeclarator)await fieldSymbol.DeclaringSyntaxReferences[0].GetSyntaxAsync(cancellationToken).ConfigureAwait(false);
+            declarator = (TVariableDeclaration)await fieldSymbol.DeclaringSyntaxReferences[0].GetSyntaxAsync(cancellationToken).ConfigureAwait(false);
             var temp = await propertySymbol.DeclaringSyntaxReferences[0].GetSyntaxAsync(cancellationToken).ConfigureAwait(false);
             property = temp.FirstAncestorOrSelf<TPropertyDeclaration>();
 

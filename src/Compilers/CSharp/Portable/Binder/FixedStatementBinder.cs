@@ -26,14 +26,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             if (_syntax.Declaration != null)
             {
-                var locals = new ArrayBuilder<LocalSymbol>(_syntax.Declaration.Variables.Count);
-                foreach (VariableDeclaratorSyntax declarator in _syntax.Declaration.Variables)
-                {
-                    locals.Add(MakeLocal(_syntax.Declaration, declarator, LocalDeclarationKind.FixedVariable));
+                var locals = new ArrayBuilder<LocalSymbol>(1);
+                locals.Add(MakeLocal(_syntax.Declaration, LocalDeclarationKind.FixedVariable));
 
-                    // also gather expression-declared variables from the bracketed argument lists and the initializers
-                    ExpressionVariableFinder.FindExpressionVariables(this, locals, declarator);
-                }
+                // also gather expression-declared variables from the bracketed argument lists and the initializers
+                ExpressionVariableFinder.FindExpressionVariables(this, locals, _syntax.Declaration);
 
                 return locals.ToImmutable();
             }

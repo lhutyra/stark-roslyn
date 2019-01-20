@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
 
             FieldDeclaration,                  // tied to parent
             FieldVariableDeclaration,          // tied to parent
-            FieldVariableDeclarator,           // tied to parent
+            FieldVariableDeclaration,           // tied to parent
 
             MethodDeclaration,                 // tied to parent
             OperatorDeclaration,               // tied to parent
@@ -133,7 +133,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 case Label.UsingDirective:
                 case Label.FieldDeclaration:
                 case Label.FieldVariableDeclaration:
-                case Label.FieldVariableDeclarator:
+                case Label.FieldVariableDeclaration:
                 case Label.MethodDeclaration:
                 case Label.OperatorDeclaration:
                 case Label.ConversionOperatorDeclaration:
@@ -209,9 +209,9 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                     isLeaf = false;
                     return Label.FieldVariableDeclaration;
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     isLeaf = true;
-                    return Label.FieldVariableDeclarator;
+                    return Label.FieldVariableDeclaration;
 
                 case SyntaxKind.MethodDeclaration:
                     isLeaf = false;
@@ -345,7 +345,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 case SyntaxKind.SetAccessorDeclaration:
                 case SyntaxKind.AddAccessorDeclaration:
                 case SyntaxKind.RemoveAccessorDeclaration:
-                    // When comparing method bodies we need to NOT ignore VariableDeclaration and VariableDeclarator children,
+                    // When comparing method bodies we need to NOT ignore VariableDeclaration and VariableDeclaration children,
                     // but when comparing field definitions we should ignore VariableDeclarations children.
 
                     var leftBody = GetBody(left);
@@ -432,8 +432,8 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 case SyntaxKind.VariableDeclaration:
                     return null;
 
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)node).Identifier;
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)node).Identifier;
 
                 case SyntaxKind.MethodDeclaration:
                     return ((MethodDeclarationSyntax)node).Identifier;

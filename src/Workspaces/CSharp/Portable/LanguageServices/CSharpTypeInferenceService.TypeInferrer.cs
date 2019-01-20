@@ -1151,9 +1151,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SpecializedCollections.EmptyEnumerable<TypeInferenceInfo>();
                 }
 
-                if (equalsValue.IsParentKind(SyntaxKind.VariableDeclarator))
+                if (equalsValue.IsParentKind(SyntaxKind.VariableDeclaration))
                 {
-                    return InferTypeInVariableDeclarator((VariableDeclaratorSyntax)equalsValue.Parent);
+                    return InferTypeInVariableDeclaration((VariableDeclarationSyntax)equalsValue.Parent);
                 }
 
                 if (equalsValue.IsParentKind(SyntaxKind.PropertyDeclaration))
@@ -2058,7 +2058,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 return CreateResult(SpecialType.System_IDisposable);
             }
 
-            private IEnumerable<TypeInferenceInfo> InferTypeInVariableDeclarator(VariableDeclaratorSyntax variableDeclarator)
+            private IEnumerable<TypeInferenceInfo> InferTypeInVariableDeclaration(VariableDeclarationSyntax variableDeclarator)
             {
                 var variableType = variableDeclarator.GetVariableType();
                 if (variableType == null)
@@ -2068,7 +2068,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 var types = GetTypes(variableType).Where(IsUsableTypeFunc);
 
-                if (variableType.IsVar)
+                if (variableType.IsNullWithNoType())
                 {
                     if (variableDeclarator.Parent is VariableDeclarationSyntax variableDeclaration)
                     {

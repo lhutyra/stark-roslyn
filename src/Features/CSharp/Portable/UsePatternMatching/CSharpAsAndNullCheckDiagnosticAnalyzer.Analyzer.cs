@@ -120,7 +120,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
                         // Skip over declaration parts to get to the parenting statement
                         // which might be a for-statement or a local declaration statement.
                         case SyntaxKind.EqualsValueClause:
-                        case SyntaxKind.VariableDeclarator:
+                        case SyntaxKind.VariableDeclaration:
                         case SyntaxKind.VariableDeclaration:
                             continue;
 

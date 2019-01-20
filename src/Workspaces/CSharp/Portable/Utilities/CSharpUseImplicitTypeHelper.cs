@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
             TypeSyntax typeName, SemanticModel semanticModel,
             OptionSet optionSet, CancellationToken cancellationToken)
         {
-            if (typeName.StripRefIfNeeded().IsVar)
+            if (typeName.StripRefIfNeeded().IsNullWithNoType())
             {
                 return default;
             }
@@ -48,7 +48,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
         protected override bool ShouldAnalyzeVariableDeclaration(VariableDeclarationSyntax variableDeclaration, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
             var type = variableDeclaration.Type.StripRefIfNeeded();
-            if (type.IsVar)
+            if (type.IsNullWithNoType())
             {
                 // If the type is already 'var' or 'ref var', this analyzer has no work to do
                 return false;
@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
         protected override bool ShouldAnalyzeForEachStatement(ForEachStatementSyntax forEachStatement, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
             var type = forEachStatement.Type;
-            if (type.IsVar || (type.Kind() == SyntaxKind.RefType && ((RefTypeSyntax)type).Type.IsVar))
+            if (type.IsNullWithNoType() || (type.Kind() == SyntaxKind.RefType && ((RefTypeSyntax)type).Type.IsNullWithNoType()))
             {
                 // If the type is already 'var', this analyze has no work to do
                 return false;
@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
             TypeSyntax typeName, SemanticModel semanticModel,
             OptionSet optionSet, CancellationToken cancellationToken)
         {
-            Debug.Assert(!typeName.StripRefIfNeeded().IsVar, "'var' special case should have prevented analysis of this variable.");
+            Debug.Assert(!typeName.StripRefIfNeeded().IsNullWithNoType(), "'var' special case should have prevented analysis of this variable.");
 
             var candidateReplacementNode = SyntaxFactory.IdentifierName("var");
 
@@ -306,7 +306,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
 
         protected override bool ShouldAnalyzeDeclarationExpression(DeclarationExpressionSyntax declaration, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
-            if (declaration.Type.IsVar)
+            if (declaration.Type.IsNullWithNoType())
             {
                 // If the type is already 'var', this analyze has no work to do
                 return false;

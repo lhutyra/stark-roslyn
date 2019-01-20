@@ -248,7 +248,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return true;
 
                 case SyntaxKind.Block:
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                 case SyntaxKind.TypeParameterConstraintClause:
                 case SyntaxKind.Attribute:
                 case SyntaxKind.EqualsValueClause:

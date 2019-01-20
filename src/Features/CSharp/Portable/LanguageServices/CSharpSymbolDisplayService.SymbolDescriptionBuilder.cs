@@ -105,7 +105,7 @@ namespace Microsoft.CodeAnalysis.Editor.CSharp.LanguageServices
             {
                 EqualsValueClauseSyntax initializer = null;
 
-                var variableDeclarator = await this.GetFirstDeclaration<VariableDeclaratorSyntax>(symbol).ConfigureAwait(false);
+                var variableDeclarator = await this.GetFirstDeclaration<VariableDeclarationSyntax>(symbol).ConfigureAwait(false);
                 if (variableDeclarator != null)
                 {
                     initializer = variableDeclarator.Initializer;
@@ -131,7 +131,7 @@ namespace Microsoft.CodeAnalysis.Editor.CSharp.LanguageServices
             private async Task<ImmutableArray<SymbolDisplayPart>> GetInitializerSourcePartsAsync(
                 ILocalSymbol symbol)
             {
-                var syntax = await this.GetFirstDeclaration<VariableDeclaratorSyntax>(symbol).ConfigureAwait(false);
+                var syntax = await this.GetFirstDeclaration<VariableDeclarationSyntax>(symbol).ConfigureAwait(false);
                 if (syntax != null)
                 {
                     return await GetInitializerSourcePartsAsync(syntax.Initializer).ConfigureAwait(false);

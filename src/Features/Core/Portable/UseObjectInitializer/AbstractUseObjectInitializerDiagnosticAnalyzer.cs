@@ -17,7 +17,7 @@ namespace Microsoft.CodeAnalysis.UseObjectInitializer
         TObjectCreationExpressionSyntax,
         TMemberAccessExpressionSyntax,
         TAssignmentStatementSyntax,
-        TVariableDeclaratorSyntax>
+        TVariableDeclarationSyntax>
         : AbstractBuiltInCodeStyleDiagnosticAnalyzer
         where TSyntaxKind : struct
         where TExpressionSyntax : SyntaxNode
@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.UseObjectInitializer
         where TObjectCreationExpressionSyntax : TExpressionSyntax
         where TMemberAccessExpressionSyntax : TExpressionSyntax
         where TAssignmentStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
     {
         protected abstract bool FadeOutOperatorToken { get; }
 
@@ -70,7 +70,7 @@ namespace Microsoft.CodeAnalysis.UseObjectInitializer
             }
 
             var syntaxFacts = GetSyntaxFactsService();
-            var matches = ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TAssignmentStatementSyntax, TVariableDeclaratorSyntax>.Analyze(
+            var matches = ObjectCreationExpressionAnalyzer<TExpressionSyntax, TStatementSyntax, TObjectCreationExpressionSyntax, TMemberAccessExpressionSyntax, TAssignmentStatementSyntax, TVariableDeclarationSyntax>.Analyze(
                 context.SemanticModel, syntaxFacts, objectCreationExpression, context.CancellationToken);
 
             if (matches == null || matches.Value.Length == 0)

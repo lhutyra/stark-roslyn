@@ -215,10 +215,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 return boundLocal.LocalSymbol.IsUsing;
             }
-            else if (boundStatement is BoundMultipleLocalDeclarations boundMultiple && !boundMultiple.LocalDeclarations.IsDefaultOrEmpty)
-            {
-                return boundMultiple.LocalDeclarations[0].LocalSymbol.IsUsing;
-            }
             return false;
         }
 

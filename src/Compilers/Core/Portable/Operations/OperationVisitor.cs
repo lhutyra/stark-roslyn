@@ -37,11 +37,6 @@ namespace Microsoft.CodeAnalysis.Operations
             DefaultVisit(operation);
         }
 
-        public virtual void VisitVariableDeclarator(IVariableDeclaratorOperation operation)
-        {
-            DefaultVisit(operation);
-        }
-
         public virtual void VisitVariableDeclaration(IVariableDeclarationOperation operation)
         {
             DefaultVisit(operation);
@@ -651,11 +646,6 @@ namespace Microsoft.CodeAnalysis.Operations
         }
 
         public virtual TResult VisitVariableDeclarationGroup(IVariableDeclarationGroupOperation operation, TArgument argument)
-        {
-            return DefaultVisit(operation, argument);
-        }
-
-        public virtual TResult VisitVariableDeclarator(IVariableDeclaratorOperation operation, TArgument argument)
         {
             return DefaultVisit(operation, argument);
         }

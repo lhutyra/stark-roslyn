@@ -91,7 +91,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
             }
 
             if (!TryGetTypeCheckParts(semanticModel, operand,
-                    out VariableDeclaratorSyntax declarator,
+                    out VariableDeclarationSyntax declarator,
                     out BinaryExpressionSyntax asExpression,
                     out ILocalSymbol localSymbol))
             {
@@ -200,7 +200,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
         private static bool TryGetTypeCheckParts(
             SemanticModel semanticModel,
             SyntaxNode operand,
-            out VariableDeclaratorSyntax declarator,
+            out VariableDeclarationSyntax declarator,
             out BinaryExpressionSyntax asExpression,
             out ILocalSymbol localSymbol)
         {
@@ -211,7 +211,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
                         // var x = e as T;
                         // if (x != null) F(x);
                         var identifier = (IdentifierNameSyntax)operand;
-                        if (!TryFindVariableDeclarator(semanticModel, identifier, out localSymbol, out declarator))
+                        if (!TryFindVariableDeclaration(semanticModel, identifier, out localSymbol, out declarator))
                         {
                             break;
                         }
@@ -236,7 +236,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
                             break;
                         }
 
-                        if (!TryFindVariableDeclarator(semanticModel, identifier, out localSymbol, out declarator))
+                        if (!TryFindVariableDeclaration(semanticModel, identifier, out localSymbol, out declarator))
                         {
                             break;
                         }
@@ -251,14 +251,14 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
             return false;
         }
 
-        private static bool TryFindVariableDeclarator(
+        private static bool TryFindVariableDeclaration(
             SemanticModel semanticModel,
             IdentifierNameSyntax identifier,
             out ILocalSymbol localSymbol,
-            out VariableDeclaratorSyntax declarator)
+            out VariableDeclarationSyntax declarator)
         {
             localSymbol = semanticModel.GetSymbolInfo(identifier).Symbol as ILocalSymbol;
-            declarator = localSymbol?.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() as VariableDeclaratorSyntax;
+            declarator = localSymbol?.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() as VariableDeclarationSyntax;
             return declarator != null;
         }
 

@@ -115,7 +115,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             return DefaultVisit(symbol, argument);
         }
-
+        
         /// <summary>
         /// Called when visiting an <see cref="ErrorTypeSymbol" /> 
         /// Error symbol is created when there is compiler error; Override this with specific

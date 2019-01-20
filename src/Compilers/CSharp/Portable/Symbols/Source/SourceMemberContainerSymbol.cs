@@ -29,49 +29,53 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
             // First int:
             //
-            // | |d|yy|xxxxxxxxxxxxxxxxxxxxxxx|wwwwww|
+            // |xxxxxxxxxxxxxxxxxxxxxxxx|
+            //
+            // x = modifiers.  24 bits.
+
+            private const int DeclarationModifiersOffset = 0;
+            private const int DeclarationModifiersSize = 24;
+            private const int DeclarationModifiersMask = (1 << DeclarationModifiersSize) - 1;
+
+            private int _flags;
+
+            // More flags.
+            //  012345 6 789A BC D
+            // |wwwwww|f|zzzz|yy|d|
             //
             // w = special type.  6 bits.
-            // x = modifiers.  23 bits.
+            // f = FlattenedMembersIsSorted.  1 bit.
+            // z = TypeKind. 4 bits.
             // y = IsManagedType.  2 bits.
             // d = FieldDefinitionsNoted. 1 bit
             private const int SpecialTypeOffset = 0;
             private const int SpecialTypeSize = 6;
 
-            private const int DeclarationModifiersOffset = SpecialTypeSize;
-            private const int DeclarationModifiersSize = 23;
+            private const int FlattenedMembersIsSortedOffset = SpecialTypeSize;
+            private const int FlattenedMembersIsSortedSize = 1;
+            private const int FlattenedMembersIsSortedBit = 1 << 0;
 
-            private const int IsManagedTypeOffset = DeclarationModifiersOffset + DeclarationModifiersSize;
+            private const int TypeKindOffset = FlattenedMembersIsSortedOffset + FlattenedMembersIsSortedSize;
+            private const int TypeKindSize = 4;
+            private const int TypeKindMask = 0xF;
+
+            private const int IsManagedTypeOffset = TypeKindOffset + TypeKindSize;
             private const int IsManagedTypeSize = 2;
 
             private const int FieldDefinitionsNotedOffset = IsManagedTypeOffset + IsManagedTypeSize;
             private const int FieldDefinitionsNotedSize = 1;
 
             private const int SpecialTypeMask = (1 << SpecialTypeSize) - 1;
-            private const int DeclarationModifiersMask = (1 << DeclarationModifiersSize) - 1;
             private const int IsManagedTypeMask = (1 << IsManagedTypeSize) - 1;
 
             private const int FieldDefinitionsNotedBit = 1 << FieldDefinitionsNotedOffset;
 
-            private int _flags;
-
-            // More flags.
-            //
-            // |                           |zzzz|f|
-            //
-            // f = FlattenedMembersIsSorted.  1 bit.
-            // z = TypeKind. 4 bits.
-            private const int TypeKindOffset = 1;
-
-            private const int TypeKindMask = 0xF;
-
-            private const int FlattenedMembersIsSortedBit = 1 << 0;
 
             private int _flags2;
 
             public SpecialType SpecialType
             {
-                get { return (SpecialType)((_flags >> SpecialTypeOffset) & SpecialTypeMask); }
+                get { return (SpecialType)((_flags2 >> SpecialTypeOffset) & SpecialTypeMask); }
             }
 
             public DeclarationModifiers DeclarationModifiers
@@ -81,12 +85,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
             public ThreeState IsManagedType
             {
-                get { return (ThreeState)((_flags >> IsManagedTypeOffset) & IsManagedTypeMask); }
+                get { return (ThreeState)((_flags2 >> IsManagedTypeOffset) & IsManagedTypeMask); }
             }
 
             public bool FieldDefinitionsNoted
             {
-                get { return (_flags & FieldDefinitionsNotedBit) != 0; }
+                get { return (_flags2 & FieldDefinitionsNotedBit) != 0; }
             }
 
             // True if "lazyMembersFlattened" is sorted.
@@ -127,13 +131,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 int declarationModifiersInt = ((int)declarationModifiers & DeclarationModifiersMask) << DeclarationModifiersOffset;
                 int typeKindInt = ((int)typeKind & TypeKindMask) << TypeKindOffset;
 
-                _flags = specialTypeInt | declarationModifiersInt;
-                _flags2 = typeKindInt;
+                _flags =  declarationModifiersInt;
+                _flags2 = specialTypeInt | typeKindInt;
             }
 
             public void SetFieldDefinitionsNoted()
             {
-                ThreadSafeFlagOperations.Set(ref _flags, FieldDefinitionsNotedBit);
+                ThreadSafeFlagOperations.Set(ref _flags2, FieldDefinitionsNotedBit);
             }
 
             public void SetFlattenedMembersIsSorted()
@@ -149,8 +153,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             public void SetIsManagedType(bool isManagedType)
             {
                 int bitsToSet = ((int)isManagedType.ToThreeState() & IsManagedTypeMask) << IsManagedTypeOffset;
-                Debug.Assert(BitsAreUnsetOrSame(_flags, bitsToSet));
-                ThreadSafeFlagOperations.Set(ref _flags, bitsToSet);
+                Debug.Assert(BitsAreUnsetOrSame(_flags2, bitsToSet));
+                ThreadSafeFlagOperations.Set(ref _flags2, bitsToSet);
             }
         }
 
@@ -2954,13 +2958,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                             if (IsImplicitClass && reportMisplacedGlobalCode)
                             {
                                 diagnostics.Add(ErrorCode.ERR_NamespaceUnexpected,
-                                    new SourceLocation(fieldSyntax.Declaration.Variables.First().Identifier));
+                                    new SourceLocation(fieldSyntax.Declaration.Identifier));
                             }
 
                             bool modifierErrors;
-                            var modifiers = SourceMemberFieldSymbol.MakeModifiers(this, fieldSyntax.Declaration.Variables[0].Identifier, fieldSyntax.Modifiers, diagnostics, out modifierErrors);
-                            foreach (var variable in fieldSyntax.Declaration.Variables)
+                            var modifiers = SourceMemberFieldSymbol.MakeModifiers(this, fieldSyntax.Declaration.Identifier, fieldSyntax.Modifiers, diagnostics, out modifierErrors);
+
+                            //if (fieldSyntax.Declaration.Kind() == SyntaxKind.ValKeyword || (fieldSyntax.Declaration.Type != null && fieldSyntax.Declaration.Type.IsUnmanaged)
                             {
+                                var variable = fieldSyntax.Declaration;
                                 var fieldSymbol = (modifiers & DeclarationModifiers.Fixed) == 0
                                     ? new SourceMemberFieldSymbolFromDeclarator(this, variable, modifiers, modifierErrors, diagnostics)
                                     : new SourceFixedFieldSymbol(this, variable, modifiers, modifierErrors, diagnostics);
@@ -3085,78 +3091,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         }
                         break;
 
-                    case SyntaxKind.EventFieldDeclaration:
-                        {
-                            var eventFieldSyntax = (EventFieldDeclarationSyntax)m;
-                            if (IsImplicitClass && reportMisplacedGlobalCode)
-                            {
-                                diagnostics.Add(
-                                    ErrorCode.ERR_NamespaceUnexpected,
-                                    new SourceLocation(eventFieldSyntax.Declaration.Variables.First().Identifier));
-                            }
-
-                            foreach (VariableDeclaratorSyntax declarator in eventFieldSyntax.Declaration.Variables)
-                            {
-                                SourceFieldLikeEventSymbol @event = new SourceFieldLikeEventSymbol(this, bodyBinder, eventFieldSyntax.Modifiers, declarator, diagnostics);
-                                builder.NonTypeNonIndexerMembers.Add(@event);
-
-                                FieldSymbol associatedField = @event.AssociatedField;
-
-                                if (IsScriptClass)
-                                {
-                                    // also gather expression-declared variables from the bracketed argument lists and the initializers
-                                    ExpressionFieldFinder.FindExpressionVariables(builder.NonTypeNonIndexerMembers, declarator, this,
-                                                            DeclarationModifiers.Private | (@event.IsStatic ? DeclarationModifiers.Static : 0),
-                                                            associatedField);
-                                }
-
-                                if ((object)associatedField != null)
-                                {
-                                    // NOTE: specifically don't add the associated field to the members list
-                                    // (regard it as an implementation detail).
-
-                                    if (declarator.Initializer != null)
-                                    {
-                                        if (associatedField.IsStatic)
-                                        {
-                                            AddInitializer(ref staticInitializers, ref builder.StaticSyntaxLength, associatedField, declarator.Initializer);
-                                        }
-                                        else
-                                        {
-                                            AddInitializer(ref instanceInitializers, ref builder.InstanceSyntaxLength, associatedField, declarator.Initializer);
-                                        }
-                                    }
-                                }
-
-                                Debug.Assert((object)@event.AddMethod != null);
-                                Debug.Assert((object)@event.RemoveMethod != null);
-
-                                AddAccessorIfAvailable(builder.NonTypeNonIndexerMembers, @event.AddMethod, diagnostics);
-                                AddAccessorIfAvailable(builder.NonTypeNonIndexerMembers, @event.RemoveMethod, diagnostics);
-                            }
-                        }
-                        break;
-
-                    case SyntaxKind.EventDeclaration:
-                        {
-                            var eventSyntax = (EventDeclarationSyntax)m;
-                            if (IsImplicitClass && reportMisplacedGlobalCode)
-                            {
-                                diagnostics.Add(ErrorCode.ERR_NamespaceUnexpected,
-                                    new SourceLocation(eventSyntax.Identifier));
-                            }
-
-                            var @event = new SourceCustomEventSymbol(this, bodyBinder, eventSyntax, diagnostics);
-
-                            builder.NonTypeNonIndexerMembers.Add(@event);
-
-                            AddAccessorIfAvailable(builder.NonTypeNonIndexerMembers, @event.AddMethod, diagnostics);
-                            AddAccessorIfAvailable(builder.NonTypeNonIndexerMembers, @event.RemoveMethod, diagnostics);
-
-                            Debug.Assert((object)@event.AssociatedField == null);
-                        }
-                        break;
-
                     case SyntaxKind.IndexerDeclaration:
                         {
                             var indexerSyntax = (IndexerDeclarationSyntax)m;
@@ -3225,10 +3159,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                                         // We shouldn't reach this place, but field declarations preceded with a label end up here.
                                         // This is tracked by https://github.com/dotnet/roslyn/issues/13712. Let's do our best for now.
                                         var decl = (LocalDeclarationStatementSyntax)innerStatement;
-                                        foreach (var vdecl in decl.Declaration.Variables)
                                         {
                                             // also gather expression-declared variables from the bracketed argument lists and the initializers
-                                            ExpressionFieldFinder.FindExpressionVariables(builder.NonTypeNonIndexerMembers, vdecl, this, DeclarationModifiers.Private,
+                                            ExpressionFieldFinder.FindExpressionVariables(builder.NonTypeNonIndexerMembers, decl.Declaration, this, DeclarationModifiers.Private,
                                                                                           containingFieldOpt: null);
                                         }
                                         break;

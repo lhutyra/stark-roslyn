@@ -6,10 +6,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         public bool IsConst
         {
-            get
-            {
-                return this.Modifiers.Any(SyntaxKind.ConstKeyword);
-            }
+            get { return this.Declaration.VariableKeyword.Kind() == SyntaxKind.ConstKeyword; }
         }
     }
 }

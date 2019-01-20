@@ -307,6 +307,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             return type.TypeKind == TypeKind.Dynamic;
         }
 
+        public static NamedTypeSymbol GetNamedTypeSymbol(this TypeSymbol type)
+        {
+            var resolveNamedType = type;
+            while (resolveNamedType is ITypeWithElementTypeSymbol)
+            {
+                Debug.Assert(resolveNamedType.TypeKind == TypeKind.Transient || resolveNamedType.TypeKind == TypeKind.ReadOnly);
+                resolveNamedType = (TypeSymbol)((ITypeWithElementTypeSymbol)resolveNamedType).ElementType;
+            }
+            Debug.Assert(resolveNamedType.Kind == SymbolKind.NamedType);
+            return (NamedTypeSymbol)resolveNamedType;
+        }
+
         public static bool IsTypeParameter(this TypeSymbol type)
         {
             Debug.Assert((object)type != null);

@@ -675,7 +675,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 switch (syntax.Parent?.Parent.Kind())
                 {
-                    case SyntaxKind.VariableDeclarator:
+                    case SyntaxKind.VariableDeclaration:
                     case SyntaxKind.PropertyDeclaration:
 
                         switch (initializer.Kind)

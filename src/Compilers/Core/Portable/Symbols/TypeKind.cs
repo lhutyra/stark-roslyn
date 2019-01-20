@@ -79,5 +79,16 @@ namespace Microsoft.CodeAnalysis
         /// Type is an interactive submission.
         /// </summary>
         Submission = 12,
+
+        /// <summary>
+        /// Type is a readonly.
+        /// </summary>
+        ReadOnly = 13,
+
+        /// <summary>
+        /// Type is a transient.
+        /// </summary>
+        Transient = 14,
+
     }
 }

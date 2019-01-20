@@ -61,7 +61,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseDeconstruction
             // We need to see the results of the inner changes when making the outer changes.
 
             ImmutableArray<MemberAccessExpressionSyntax> memberAccessExpressions = default;
-            if (node is VariableDeclaratorSyntax variableDeclarator)
+            if (node is VariableDeclarationSyntax variableDeclarator)
             {
                 var variableDeclaration = (VariableDeclarationSyntax)variableDeclarator.Parent;
                 if (CSharpUseDeconstructionDiagnosticAnalyzer.TryAnalyzeVariableDeclaration(
@@ -121,7 +121,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseDeconstruction
         }
 
         private ExpressionStatementSyntax CreateDeconstructionStatement(
-            INamedTypeSymbol tupleType, LocalDeclarationStatementSyntax declarationStatement, VariableDeclaratorSyntax variableDeclarator)
+            INamedTypeSymbol tupleType, LocalDeclarationStatementSyntax declarationStatement, VariableDeclarationSyntax variableDeclarator)
         {
             // Copy all the tokens/nodes from the existing declaration statement to the new assignment
             // statement. However, convert the existing declaration over to a "var (x, y)" declaration 

@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.MakeFieldReadonly
             => ImmutableArray.Create(IDEDiagnosticIds.MakeFieldReadonlyDiagnosticId);
 
         protected abstract SyntaxNode GetInitializerNode(TSymbolSyntax declaration);
-        protected abstract ImmutableList<TSymbolSyntax> GetVariableDeclarators(TFieldDeclarationSyntax declaration);
+        protected abstract ImmutableList<TSymbolSyntax> GetVariableDeclarations(TFieldDeclarationSyntax declaration);
 
         public override Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.MakeFieldReadonly
 
             foreach (var fieldDeclarators in declaratorsByField)
             {
-                var declarationDeclarators = GetVariableDeclarators(fieldDeclarators.Key);
+                var declarationDeclarators = GetVariableDeclarations(fieldDeclarators.Key);
 
                 if (declarationDeclarators.Count == fieldDeclarators.Count())
                 {

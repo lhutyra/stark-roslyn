@@ -133,7 +133,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         {
                             case SyntaxKind.EventDeclaration:
                                 return ((EventDeclarationSyntax)syntax).AttributeLists;
-                            case SyntaxKind.VariableDeclarator:
+                            case SyntaxKind.VariableDeclaration:
                                 return ((EventFieldDeclarationSyntax)syntax.Parent.Parent).AttributeLists;
                             default:
                                 throw ExceptionUtilities.UnexpectedValue(syntax.Kind());

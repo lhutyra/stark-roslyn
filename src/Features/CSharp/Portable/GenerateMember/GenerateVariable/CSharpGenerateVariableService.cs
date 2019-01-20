@@ -59,7 +59,7 @@ namespace Microsoft.CodeAnalysis.CSharp.GenerateMember.GenerateVariable
         {
             identifierToken = identifierName.Identifier;
             if (identifierToken.ValueText != string.Empty &&
-                !identifierName.IsVar &&
+                !identifierName.IsNullWithNoType() &&
                 !IsProbablyGeneric(identifierName, cancellationToken))
             {
                 var memberAccess = identifierName.Parent as MemberAccessExpressionSyntax;
@@ -177,7 +177,7 @@ namespace Microsoft.CodeAnalysis.CSharp.GenerateMember.GenerateVariable
                     SyntaxFactory.VariableDeclaration(
                         type.GenerateTypeSyntax(),
                         SyntaxFactory.SingletonSeparatedList(
-                            SyntaxFactory.VariableDeclarator(token, null, SyntaxFactory.EqualsValueClause(
+                            SyntaxFactory.VariableDeclaration(token, null, SyntaxFactory.EqualsValueClause(
                                 assignExpression.OperatorToken, assignExpression.Right)))));
                 declarationStatement = declarationStatement.WithAdditionalAnnotations(Formatter.Annotation);
 

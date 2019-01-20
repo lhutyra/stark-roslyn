@@ -16,7 +16,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseObjectInitializer
             ObjectCreationExpressionSyntax,
             MemberAccessExpressionSyntax,
             ExpressionStatementSyntax,
-            VariableDeclaratorSyntax>
+            VariableDeclarationSyntax>
     {
         protected override bool FadeOutOperatorToken => true;
 

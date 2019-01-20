@@ -71,13 +71,13 @@ namespace Microsoft.CodeAnalysis.Operations
             }
         }
 
-        internal IVariableInitializerOperation CreateVariableDeclaratorInitializer(BoundLocalDeclaration boundLocalDeclaration, SyntaxNode syntax)
+        internal IVariableInitializerOperation CreateVariableDeclarationInitializer(BoundLocalDeclaration boundLocalDeclaration, SyntaxNode syntax)
         {
             if (boundLocalDeclaration.InitializerOpt != null)
             {
                 SyntaxNode initializerSyntax = null;
                 bool initializerIsImplicit = false;
-                if (syntax is VariableDeclaratorSyntax variableDeclarator)
+                if (syntax is VariableDeclarationSyntax variableDeclarator)
                 {
                     initializerSyntax = variableDeclarator.Initializer;
                 }
@@ -99,7 +99,7 @@ namespace Microsoft.CodeAnalysis.Operations
             return null;
         }
 
-        private IVariableDeclaratorOperation CreateVariableDeclaratorInternal(BoundLocalDeclaration boundLocalDeclaration, SyntaxNode syntax)
+        private IVariableDeclarationOperation CreateVariableDeclarationInternal(BoundLocalDeclaration boundLocalDeclaration, SyntaxNode syntax)
         {
             ILocalSymbol symbol = boundLocalDeclaration.LocalSymbol;
             SyntaxNode syntaxNode = boundLocalDeclaration.Syntax;
@@ -107,12 +107,12 @@ namespace Microsoft.CodeAnalysis.Operations
             Optional<object> constantValue = default;
             bool isImplicit = false;
 
-            return new CSharpLazyVariableDeclaratorOperation(this, boundLocalDeclaration, symbol, _semanticModel, syntax, type, constantValue, isImplicit);
+            return new CSharpLazyVariableDeclarationOperation(this, boundLocalDeclaration, symbol, _semanticModel, syntax, type, constantValue, isImplicit);
         }
 
-        internal IVariableDeclaratorOperation CreateVariableDeclarator(BoundLocal boundLocal)
+        internal IVariableDeclarationOperation CreateVariableDeclaration(BoundLocal boundLocal)
         {
-            return boundLocal == null ? null : new VariableDeclaratorOperation(boundLocal.LocalSymbol, initializer: null, ignoredArguments: ImmutableArray<IOperation>.Empty, semanticModel: _semanticModel, syntax: boundLocal.Syntax, type: null, constantValue: default, isImplicit: false);
+            return boundLocal == null ? null : new VariableDeclarationOperation(boundLocal.LocalSymbol, initializer: null, ignoredArguments: ImmutableArray<IOperation>.Empty, semanticModel: _semanticModel, syntax: boundLocal.Syntax, type: null, constantValue: default, isImplicit: false);
         }
 
         internal IOperation CreateReceiverOperation(BoundNode instance, ISymbol symbol)

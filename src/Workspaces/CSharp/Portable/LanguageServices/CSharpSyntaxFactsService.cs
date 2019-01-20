@@ -271,8 +271,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         public bool IsParameter(SyntaxNode node)
             => node is ParameterSyntax;
 
-        public bool IsVariableDeclarator(SyntaxNode node)
-            => node is VariableDeclaratorSyntax;
+        public bool IsVariableDeclaration(SyntaxNode node)
+            => node is VariableDeclarationSyntax;
 
         public bool IsMethodBody(SyntaxNode node)
         {
@@ -753,7 +753,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 .FirstOrDefault(n => n is BaseTypeDeclarationSyntax || n is DelegateDeclarationSyntax);
         }
 
-        public SyntaxNode GetContainingVariableDeclaratorOfFieldDeclaration(SyntaxNode node)
+        public SyntaxNode GetContainingVariableDeclarationOfFieldDeclaration(SyntaxNode node)
         {
             throw ExceptionUtilities.Unreachable;
         }
@@ -1003,7 +1003,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
             else
             {
-                if (node is VariableDeclaratorSyntax fieldDeclarator)
+                if (node is VariableDeclarationSyntax fieldDeclarator)
                 {
                     var nameToken = fieldDeclarator.Identifier;
                     if (nameToken != default)
@@ -1468,8 +1468,8 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (node.Kind())
             {
                 // Because fields declarations can define multiple symbols "public int a, b;" 
-                // We want to get the VariableDeclarator node inside the field declaration to print out the symbol for the name.
-                case SyntaxKind.VariableDeclarator:
+                // We want to get the VariableDeclaration node inside the field declaration to print out the symbol for the name.
+                case SyntaxKind.VariableDeclaration:
                     return node.Parent.Parent.IsKind(SyntaxKind.FieldDeclaration) ||
                            node.Parent.Parent.IsKind(SyntaxKind.EventFieldDeclaration);
 
@@ -1562,8 +1562,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         public SyntaxToken GetIdentifierOfSimpleName(SyntaxNode node)
             => ((SimpleNameSyntax)node).Identifier;
 
-        public SyntaxToken GetIdentifierOfVariableDeclarator(SyntaxNode node)
-            => ((VariableDeclaratorSyntax)node).Identifier;
+        public SyntaxToken GetIdentifierOfVariableDeclaration(SyntaxNode node)
+            => ((VariableDeclarationSyntax)node).Identifier;
 
         public bool IsIdentifierName(SyntaxNode node)
             => node.IsKind(SyntaxKind.IdentifierName);
@@ -1577,7 +1577,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         public bool IsDeclaratorOfLocalDeclarationStatement(SyntaxNode declarator, SyntaxNode localDeclarationStatement)
         {
             return ((LocalDeclarationStatementSyntax)localDeclarationStatement).Declaration.Variables.Contains(
-                (VariableDeclaratorSyntax)declarator);
+                (VariableDeclarationSyntax)declarator);
         }
 
         public bool AreEquivalent(SyntaxToken token1, SyntaxToken token2)
@@ -1877,11 +1877,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         public SeparatedSyntaxList<SyntaxNode> GetVariablesOfLocalDeclarationStatement(SyntaxNode node)
             => ((LocalDeclarationStatementSyntax)node).Declaration.Variables;
 
-        public SyntaxNode GetInitializerOfVariableDeclarator(SyntaxNode node)
-            => ((VariableDeclaratorSyntax)node).Initializer;
+        public SyntaxNode GetInitializerOfVariableDeclaration(SyntaxNode node)
+            => ((VariableDeclarationSyntax)node).Initializer;
 
-        public SyntaxNode GetTypeOfVariableDeclarator(SyntaxNode node)
-            => ((VariableDeclarationSyntax)((VariableDeclaratorSyntax)node).Parent).Type;
+        public SyntaxNode GetTypeOfVariableDeclaration(SyntaxNode node)
+            => ((VariableDeclarationSyntax)((VariableDeclarationSyntax)node).Parent).Type;
 
         public SyntaxNode GetValueOfEqualsValueClause(SyntaxNode node)
             => ((EqualsValueClauseSyntax)node)?.Value;

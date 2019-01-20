@@ -16,8 +16,8 @@ namespace Microsoft.CodeAnalysis.CSharp
     {
         public override BoundNode VisitFixedStatement(BoundFixedStatement node)
         {
-            ImmutableArray<BoundLocalDeclaration> localDecls = node.Declarations.LocalDeclarations;
-            int numFixedLocals = localDecls.Length;
+            BoundLocalDeclaration localDecl = node.Declaration;
+            int numFixedLocals = 1;
 
             var localBuilder = ArrayBuilder<LocalSymbol>.GetInstance(node.Locals.Length);
             localBuilder.AddRange(node.Locals);
@@ -25,9 +25,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             var statementBuilder = ArrayBuilder<BoundStatement>.GetInstance(numFixedLocals + 1 + 1); //+1 for body, +1 for hidden seq point
             var cleanup = new BoundStatement[numFixedLocals];
 
-            for (int i = 0; i < numFixedLocals; i++)
             {
-                BoundLocalDeclaration localDecl = localDecls[i];
                 LocalSymbol pinnedTemp;
                 statementBuilder.Add(InitializeFixedStatementLocal(localDecl, _factory, out pinnedTemp));
                 localBuilder.Add(pinnedTemp);
@@ -36,14 +34,14 @@ namespace Microsoft.CodeAnalysis.CSharp
                 if (pinnedTemp.RefKind == RefKind.None)
                 {
                     // temp = null;
-                    cleanup[i] = _factory.Assignment(_factory.Local(pinnedTemp), _factory.Null(pinnedTemp.Type.TypeSymbol));
+                    cleanup[0] = _factory.Assignment(_factory.Local(pinnedTemp), _factory.Null(pinnedTemp.Type.TypeSymbol));
                 }
                 else
                 {
                     Debug.Assert(!pinnedTemp.Type.IsManagedType);
 
                     // temp = ref *default(T*);
-                    cleanup[i] = _factory.Assignment(_factory.Local(pinnedTemp), new BoundPointerIndirectionOperator(
+                    cleanup[0] = _factory.Assignment(_factory.Local(pinnedTemp), new BoundPointerIndirectionOperator(
                         _factory.Syntax,
                         _factory.Default(new PointerTypeSymbol(pinnedTemp.Type)),
                         pinnedTemp.Type.TypeSymbol),
@@ -254,7 +252,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             initializerExpr = ((BoundAddressOfOperator)initializerExpr).Operand;
 
             // intervening parens may have been skipped by the binder; find the declarator
-            VariableDeclaratorSyntax declarator = fixedInitializer.Syntax.FirstAncestorOrSelf<VariableDeclaratorSyntax>();
+            VariableDeclarationSyntax declarator = fixedInitializer.Syntax.FirstAncestorOrSelf<VariableDeclarationSyntax>();
             Debug.Assert(declarator != null);
 
             pinnedTemp = factory.SynthesizedLocal(
@@ -316,7 +314,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             var getPinnableMethod = fixedInitializer.GetPinnableOpt;
 
             // intervening parens may have been skipped by the binder; find the declarator
-            VariableDeclaratorSyntax declarator = fixedInitializer.Syntax.FirstAncestorOrSelf<VariableDeclaratorSyntax>();
+            VariableDeclarationSyntax declarator = fixedInitializer.Syntax.FirstAncestorOrSelf<VariableDeclarationSyntax>();
             Debug.Assert(declarator != null);
 
             // pinned ref int pinnedTemp
@@ -415,7 +413,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             TypeSymbol initializerType = initializerExpr.Type;
 
             // intervening parens may have been skipped by the binder; find the declarator
-            VariableDeclaratorSyntax declarator = fixedInitializer.Syntax.FirstAncestorOrSelf<VariableDeclaratorSyntax>();
+            VariableDeclarationSyntax declarator = fixedInitializer.Syntax.FirstAncestorOrSelf<VariableDeclarationSyntax>();
             Debug.Assert(declarator != null);
 
             pinnedTemp = factory.SynthesizedLocal(

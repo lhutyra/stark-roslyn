@@ -13,12 +13,12 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
         TExpressionSyntax,
         TStatementSyntax,
         TObjectCreationExpressionSyntax,
-        TVariableDeclaratorSyntax,
+        TVariableDeclarationSyntax,
         TMatch>
         where TExpressionSyntax : SyntaxNode
         where TStatementSyntax : SyntaxNode
         where TObjectCreationExpressionSyntax : TExpressionSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
     {
         protected SemanticModel _semanticModel;
         protected ISyntaxFactsService _syntaxFacts;
@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
                 return false;
             }
 
-            var containingDeclarator = _objectCreationExpression.Parent.Parent as TVariableDeclaratorSyntax;
+            var containingDeclarator = _objectCreationExpression.Parent.Parent as TVariableDeclarationSyntax;
             if (containingDeclarator == null)
             {
                 return false;
@@ -115,7 +115,7 @@ namespace Microsoft.CodeAnalysis.UseCollectionInitializer
                 return false;
             }
 
-            _valuePattern = _syntaxFacts.GetIdentifierOfVariableDeclarator(containingDeclarator);
+            _valuePattern = _syntaxFacts.GetIdentifierOfVariableDeclaration(containingDeclarator);
             return true;
         }
 

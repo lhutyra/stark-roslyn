@@ -224,7 +224,7 @@ namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
                 OnReferenceFound(operation.Parameter, operation);
             }
 
-            public override void VisitVariableDeclarator(IVariableDeclaratorOperation operation)
+            public override void VisitVariableDeclaration(IVariableDeclarationOperation operation)
             {
                 var variableInitializer = operation.GetVariableInitializer();
                 if (variableInitializer != null ||
@@ -234,7 +234,7 @@ namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
                     OnWriteReferenceFound(operation.Symbol, operation, maybeWritten: false);
                 }
 
-                base.VisitVariableDeclarator(operation);
+                base.VisitVariableDeclaration(operation);
             }
 
             public override void VisitFlowCaptureReference(IFlowCaptureReferenceOperation operation)
@@ -351,7 +351,7 @@ namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
                 }
 
                 IOperation initializerValue = null;
-                if (write is IVariableDeclaratorOperation variableDeclarator)
+                if (write is IVariableDeclarationOperation variableDeclarator)
                 {
                     initializerValue = variableDeclarator.GetVariableInitializer()?.Value;
                 }

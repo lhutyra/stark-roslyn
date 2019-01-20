@@ -10,12 +10,12 @@ using Roslyn.Utilities;
 namespace Microsoft.CodeAnalysis.CSharp.MakeFieldReadonly
 {
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
-    internal class CSharpMakeFieldReadonlyCodeFixProvider : AbstractMakeFieldReadonlyCodeFixProvider<VariableDeclaratorSyntax, FieldDeclarationSyntax>
+    internal class CSharpMakeFieldReadonlyCodeFixProvider : AbstractMakeFieldReadonlyCodeFixProvider<VariableDeclarationSyntax, FieldDeclarationSyntax>
     {
-        protected override SyntaxNode GetInitializerNode(VariableDeclaratorSyntax declaration)
+        protected override SyntaxNode GetInitializerNode(VariableDeclarationSyntax declaration)
             => declaration.Initializer?.Value;
 
-        protected override ImmutableList<VariableDeclaratorSyntax> GetVariableDeclarators(FieldDeclarationSyntax fieldDeclaration)
+        protected override ImmutableList<VariableDeclarationSyntax> GetVariableDeclarations(FieldDeclarationSyntax fieldDeclaration)
             => fieldDeclaration.Declaration.Variables.ToImmutableListOrEmpty();
     }
 }

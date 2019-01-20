@@ -265,7 +265,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseDeconstruction
 
         private static bool IsViableTupleTypeSyntax(TypeSyntax type)
         {
-            if (type.IsVar)
+            if (type.IsNullWithNoType())
             {
                 // 'var t' can be converted to 'var (x, y, z)'
                 return true;

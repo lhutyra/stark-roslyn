@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "csc": {
+      "commandName": "Project",
+      "commandLineArgs": "/noconfig /nowarn:1701,1702,2008 /nostdlib+ /platform:AnyCPU /errorreport:prompt /warn:4 /define:TRACE /errorendlocation /preferreduilang:en-US /highentropyva+ /reference:\"C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework\\v4.6.1\\System.Core.dll\" /reference:C:\\Code\\Stark\\src\\System\\bin\\Release\\System.dll /debug:pdbonly /filealign:512 /optimize+ /out:obj\\Release\\StarkApp.exe /ruleset:\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Preview\\Team Tools\\Static Analysis Tools\\\\Rule Sets\\MinimumRecommendedRules.ruleset\" /subsystemversion:6.00 /target:exe /utf8output /langversion:7.3 Program.cs obj\\Release\\\\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs obj\\Release\\\\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs obj\\Release\\\\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs",
+      "workingDirectory": "C:\\Code\\Stark\\src\\StarkApp"
+    }
+  }
+}

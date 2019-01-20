@@ -284,7 +284,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         internal SourceMemberFieldSymbolFromDeclarator(
             SourceMemberContainerTypeSymbol containingType,
-            VariableDeclaratorSyntax declarator,
+            VariableDeclarationSyntax declarator,
             DeclarationModifiers modifiers,
             bool modifierErrors,
             DiagnosticBag diagnostics)
@@ -304,7 +304,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         {
             get
             {
-                return GetFieldDeclaration(VariableDeclaratorNode).Declaration.Type;
+                return GetFieldDeclaration(VariableDeclarationNode).Declaration.Type;
             }
         }
 
@@ -312,7 +312,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         {
             get
             {
-                return GetFieldDeclaration(VariableDeclaratorNode).Modifiers;
+                return GetFieldDeclaration(VariableDeclarationNode).Modifiers;
             }
         }
 
@@ -321,17 +321,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             get { return _hasInitializer; }
         }
 
-        protected VariableDeclaratorSyntax VariableDeclaratorNode
+        protected VariableDeclarationSyntax VariableDeclarationNode
         {
             get
             {
-                return (VariableDeclaratorSyntax)this.SyntaxNode;
+                return (VariableDeclarationSyntax)this.SyntaxNode;
             }
         }
 
         private static BaseFieldDeclarationSyntax GetFieldDeclaration(CSharpSyntaxNode declarator)
         {
-            return (BaseFieldDeclarationSyntax)declarator.Parent.Parent;
+            return (BaseFieldDeclarationSyntax)declarator.Parent;
         }
 
         protected override SyntaxList<AttributeSyntax> AttributeDeclarationSyntaxList
@@ -365,21 +365,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         private bool IsPointerFieldSyntactically()
         {
-            var declaration = GetFieldDeclaration(VariableDeclaratorNode).Declaration;
+            var declaration = GetFieldDeclaration(VariableDeclarationNode).Declaration;
             if (declaration.Type.Kind() == SyntaxKind.PointerType)
             {
                 // public int * Blah;   // pointer
                 return true;
-            }
-
-            foreach (var singleVariable in declaration.Variables)
-            {
-                var argList = singleVariable.ArgumentList;
-                if (argList != null && argList.Arguments.Count != 0)
-                {
-                    // public int Blah[10];     // fixed buffer
-                    return true;
-                }
             }
 
             return false;
@@ -394,14 +384,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 return _lazyType.ToType();
             }
 
-            var declarator = VariableDeclaratorNode;
+            var declarator = VariableDeclarationNode;
             var fieldSyntax = GetFieldDeclaration(declarator);
             var typeSyntax = fieldSyntax.Declaration.Type;
 
             var compilation = this.DeclaringCompilation;
 
             var diagnostics = DiagnosticBag.GetInstance();
-            TypeSymbolWithAnnotations type;
+            TypeSymbolWithAnnotations type = default;
 
             // When we have multiple declarators, we report the type diagnostics on only the first.
             DiagnosticBag diagnosticsForFirstDeclarator = DiagnosticBag.GetInstance();
@@ -427,64 +417,58 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             else
             {
                 var binderFactory = compilation.GetBinderFactory(SyntaxTree);
-                var binder = binderFactory.GetBinder(typeSyntax);
+
+                var binder = binderFactory.GetBinder(declarator);
 
                 binder = binder.WithContainingMemberOrLambda(this);
+
                 if (!ContainingType.IsScriptClass)
                 {
                     type = binder.BindType(typeSyntax, diagnosticsForFirstDeclarator);
                 }
-                else
+                else if (typeSyntax == null)
                 {
-                    bool isVar;
-                    type = binder.BindTypeOrVarKeyword(typeSyntax, diagnostics, out isVar);
-
-                    Debug.Assert(!type.IsNull || isVar);
-
-                    if (isVar)
+                    if (this.IsConst)
                     {
-                        if (this.IsConst)
-                        {
-                            diagnosticsForFirstDeclarator.Add(ErrorCode.ERR_ImplicitlyTypedVariableCannotBeConst, typeSyntax.Location);
-                        }
+                        diagnosticsForFirstDeclarator.Add(ErrorCode.ERR_ImplicitlyTypedVariableCannotBeConst, typeSyntax.Location);
+                    }
 
-                        if (fieldsBeingBound.ContainsReference(this))
-                        {
-                            diagnostics.Add(ErrorCode.ERR_RecursivelyTypedVariable, this.ErrorLocation, this);
-                            type = default;
-                        }
-                        else if (fieldSyntax.Declaration.Variables.Count > 1)
-                        {
-                            diagnosticsForFirstDeclarator.Add(ErrorCode.ERR_ImplicitlyTypedVariableMultipleDeclarator, typeSyntax.Location);
-                        }
-                        else if (this.IsConst && this.ContainingType.IsScriptClass)
-                        {
-                            // For const var in script, we won't try to bind the initializer (case below), as it can lead to an unbound recursion
-                            type = default;
-                        }
-                        else
-                        {
-                            fieldsBeingBound = new ConsList<FieldSymbol>(this, fieldsBeingBound);
+                    if (fieldsBeingBound.ContainsReference(this))
+                    {
+                        diagnostics.Add(ErrorCode.ERR_RecursivelyTypedVariable, this.ErrorLocation, this);
+                        type = default;
+                    }
+                    else if (this.IsConst && this.ContainingType.IsScriptClass)
+                    {
+                        // For const var in script, we won't try to bind the initializer (case below), as it can lead to an unbound recursion
+                        type = default;
+                    }
+                    else
+                    {
+                        fieldsBeingBound = new ConsList<FieldSymbol>(this, fieldsBeingBound);
 
-                            var initializerBinder = new ImplicitlyTypedFieldBinder(binder, fieldsBeingBound);
-                            var initializerOpt = initializerBinder.BindInferredVariableInitializer(diagnostics, RefKind.None, (EqualsValueClauseSyntax)declarator.Initializer, declarator);
+                        var initializerBinder = new ImplicitlyTypedFieldBinder(binder, fieldsBeingBound);
+                        var initializerOpt = initializerBinder.BindInferredVariableInitializer(diagnostics, RefKind.None, (EqualsValueClauseSyntax)declarator.Initializer, declarator);
 
-                            if (initializerOpt != null)
+                        if (initializerOpt != null)
+                        {
+                            if ((object)initializerOpt.Type != null && !initializerOpt.Type.IsErrorType())
                             {
-                                if ((object)initializerOpt.Type != null && !initializerOpt.Type.IsErrorType())
-                                {
-                                    type = TypeSymbolWithAnnotations.Create(initializerOpt.Type);
-                                }
-
-                                _lazyFieldTypeInferred = 1;
+                                type = TypeSymbolWithAnnotations.Create(initializerOpt.Type);
                             }
-                        }
 
-                        if (type.IsNull)
-                        {
-                            type = TypeSymbolWithAnnotations.Create(binder.CreateErrorType("var"));
+                            _lazyFieldTypeInferred = 1;
                         }
                     }
+
+                    if (type.IsNull)
+                    {
+                        type = TypeSymbolWithAnnotations.Create(binder.CreateErrorType("var"));
+                    }
+                }
+                else
+                {
+                    type = binder.BindType(typeSyntax, diagnostics);
                 }
 
                 if (IsFixedSizeBuffer)
@@ -518,12 +502,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
                 // CONSIDER: SourceEventFieldSymbol would like to suppress these diagnostics.
                 compilation.DeclarationDiagnostics.AddRange(diagnostics);
-
-                bool isFirstDeclarator = fieldSyntax.Declaration.Variables[0] == declarator;
-                if (isFirstDeclarator)
-                {
-                    compilation.DeclarationDiagnostics.AddRange(diagnosticsForFirstDeclarator);
-                }
+                compilation.DeclarationDiagnostics.AddRange(diagnosticsForFirstDeclarator);
 
                 state.NotePartComplete(CompletionPart.Type);
             }
@@ -548,12 +527,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         protected sealed override ConstantValue MakeConstantValue(HashSet<SourceFieldSymbolWithSyntaxReference> dependencies, bool earlyDecodingWellKnownAttributes, DiagnosticBag diagnostics)
         {
-            if (!this.IsConst || VariableDeclaratorNode.Initializer == null)
+            if (!this.IsConst || VariableDeclarationNode.Initializer == null)
             {
                 return null;
             }
 
-            return ConstantValueUtils.EvaluateFieldConstant(this, (EqualsValueClauseSyntax)VariableDeclaratorNode.Initializer, dependencies, earlyDecodingWellKnownAttributes, diagnostics);
+            return ConstantValueUtils.EvaluateFieldConstant(this, (EqualsValueClauseSyntax)VariableDeclarationNode.Initializer, dependencies, earlyDecodingWellKnownAttributes, diagnostics);
         }
 
         internal override bool IsDefinedInSourceTree(SyntaxTree tree, TextSpan? definedWithinSpan, CancellationToken cancellationToken = default(CancellationToken))

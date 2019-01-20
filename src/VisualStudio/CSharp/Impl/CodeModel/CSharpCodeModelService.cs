@@ -98,7 +98,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 case SyntaxKind.StructDeclaration:
                     return true;
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     // Could be a regular field or an event field.
                     return node.FirstAncestorOrSelf<BaseFieldDeclarationSyntax>() != null;
 
@@ -241,8 +241,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                     break;
 
                 case SyntaxKind.VariableDeclaration:
-                case SyntaxKind.VariableDeclarator:
-                    // The parent of a VariableDeclarator might be an event or
+                case SyntaxKind.VariableDeclaration:
+                    // The parent of a VariableDeclaration might be an event or
                     // a field declaration. If the parent matches the desired
                     // scope, then this node matches the scope as well.
                     return MatchesScope(node.Parent, scope);
@@ -326,7 +326,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
             {
                 return GetAttributeNodes(parameter.AttributeLists);
             }
-            else if (parent is VariableDeclaratorSyntax ||
+            else if (parent is VariableDeclarationSyntax ||
                      parent is VariableDeclarationSyntax)
             {
                 return GetAttributeNodes(parent.Parent);
@@ -558,7 +558,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                     return (EnvDTE.CodeElement)CodeProperty.Create(state, fileCodeModel, nodeKey, (int)node.Kind());
                 case SyntaxKind.EventDeclaration:
                     return (EnvDTE.CodeElement)CodeEvent.Create(state, fileCodeModel, nodeKey, (int)node.Kind());
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     var baseFieldDeclaration = node.FirstAncestorOrSelf<BaseFieldDeclarationSyntax>();
                     if (baseFieldDeclaration != null)
                     {
@@ -610,7 +610,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 case SyntaxKind.EventDeclaration:
                     return (EnvDTE.CodeElement)CodeEvent.CreateUnknown(state, fileCodeModel, node.RawKind, GetName(node));
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     var eventFieldDeclaration = node.FirstAncestorOrSelf<EventFieldDeclarationSyntax>();
                     if (eventFieldDeclaration != null)
                     {
@@ -843,8 +843,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                         + conversionOperator.Type.ToString();
                 case SyntaxKind.EnumMemberDeclaration:
                     return ((EnumMemberDeclarationSyntax)node).Identifier.ToString();
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)node).Identifier.ToString();
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)node).Identifier.ToString();
                 case SyntaxKind.Attribute:
                     return ((AttributeSyntax)node).Name.ToString();
                 case SyntaxKind.AttributeArgument:
@@ -913,8 +913,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                             .WithTrailingTrivia(SyntaxFactory.TriviaList(SyntaxFactory.ElasticMarker)));
                 case SyntaxKind.EnumMemberDeclaration:
                     return ((EnumMemberDeclarationSyntax)node).WithIdentifier(newIdentifier);
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)node).WithIdentifier(newIdentifier);
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)node).WithIdentifier(newIdentifier);
                 case SyntaxKind.Attribute:
                     return ((AttributeSyntax)node).WithName(
                         SyntaxFactory.ParseName(name)
@@ -1096,14 +1096,14 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
 
         public override SyntaxNode GetNodeWithModifiers(SyntaxNode node)
         {
-            return node is VariableDeclaratorSyntax
+            return node is VariableDeclarationSyntax
                    ? node.GetAncestor<MemberDeclarationSyntax>()
                    : node;
         }
 
         public override SyntaxNode GetNodeWithType(SyntaxNode node)
         {
-            return node is VariableDeclaratorSyntax
+            return node is VariableDeclarationSyntax
                    ? node.GetAncestor<MemberDeclarationSyntax>()
                    : node;
         }
@@ -1770,7 +1770,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
 
         public override SyntaxNode GetNodeWithAttributes(SyntaxNode node)
         {
-            return node is VariableDeclaratorSyntax
+            return node is VariableDeclarationSyntax
                    ? node.GetAncestor<MemberDeclarationSyntax>()
                    : node;
         }
@@ -2588,7 +2588,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
         public override bool GetIsConstant(SyntaxNode variableNode)
         {
             Debug.Assert(variableNode is MemberDeclarationSyntax ||
-                         variableNode is VariableDeclaratorSyntax);
+                         variableNode is VariableDeclarationSyntax);
 
             if (variableNode is EnumMemberDeclarationSyntax)
             {
@@ -2687,7 +2687,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
         public override bool GetIsShared(SyntaxNode memberNode, ISymbol symbol)
         {
             Debug.Assert(memberNode is MemberDeclarationSyntax ||
-                         memberNode is VariableDeclaratorSyntax);
+                         memberNode is VariableDeclarationSyntax);
 
             var member = GetNodeWithModifiers(memberNode) as MemberDeclarationSyntax;
             if (member == null)
@@ -2792,7 +2792,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
             return node.ReplaceNode(oldType, newType);
         }
 
-        private Document Delete(Document document, VariableDeclaratorSyntax node)
+        private Document Delete(Document document, VariableDeclarationSyntax node)
         {
             var fieldDeclaration = node.FirstAncestorOrSelf<BaseFieldDeclarationSyntax>();
 
@@ -2928,8 +2928,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
         {
             switch (node.Kind())
             {
-                case SyntaxKind.VariableDeclarator:
-                    return Delete(document, (VariableDeclaratorSyntax)node);
+                case SyntaxKind.VariableDeclaration:
+                    return Delete(document, (VariableDeclarationSyntax)node);
                 case SyntaxKind.EnumMemberDeclaration:
                     return Delete(document, (EnumMemberDeclarationSyntax)node);
                 case SyntaxKind.Attribute:
@@ -2963,8 +2963,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                     return enumMemberDeclaration.EqualsValue != null
                         ? enumMemberDeclaration.EqualsValue.Value.ToString()
                         : null;
-                case SyntaxKind.VariableDeclarator:
-                    var variableDeclarator = (VariableDeclaratorSyntax)node;
+                case SyntaxKind.VariableDeclaration:
+                    var variableDeclarator = (VariableDeclarationSyntax)node;
                     return variableDeclarator.Initializer != null
                         ? variableDeclarator.Initializer.Value.ToString()
                         : null;
@@ -2999,9 +2999,9 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                         return enumMemberDeclaration.WithEqualsValue(equalsValueClause);
                     }
 
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     {
-                        var variableDeclarator = (VariableDeclaratorSyntax)node;
+                        var variableDeclarator = (VariableDeclarationSyntax)node;
 
                         if (string.IsNullOrWhiteSpace(value))
                         {
@@ -3216,9 +3216,9 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 {
                     // If a variable declarator was specified, make sure we return
                     // the index of the last variable declarator in the parenting field declaration.
-                    if (member.Kind() == SyntaxKind.VariableDeclarator)
+                    if (member.Kind() == SyntaxKind.VariableDeclaration)
                     {
-                        var variableDeclarator = (VariableDeclaratorSyntax)member;
+                        var variableDeclarator = (VariableDeclarationSyntax)member;
                         var variableDeclaration = (VariableDeclarationSyntax)member.Parent;
                         var indexOfDeclaratorInField = variableDeclaration.Variables.IndexOf(variableDeclarator);
                         return index + (variableDeclaration.Variables.Count - indexOfDeclaratorInField);
@@ -3236,7 +3236,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
 
         protected override SyntaxNode GetFieldFromVariableNode(SyntaxNode node)
         {
-            return node.Kind() == SyntaxKind.VariableDeclarator
+            return node.Kind() == SyntaxKind.VariableDeclaration
                 ? node.FirstAncestorOrSelf<BaseFieldDeclarationSyntax>()
                 : node;
         }
@@ -3511,7 +3511,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                 var newAttributeLists = parameter.AttributeLists.Insert(index, (AttributeListSyntax)list);
                 return parameter.WithAttributeLists(newAttributeLists);
             }
-            else if (container is VariableDeclaratorSyntax ||
+            else if (container is VariableDeclarationSyntax ||
                      container is VariableDeclarationSyntax)
             {
                 return InsertAttributeListIntoContainer(index, list, container.Parent);

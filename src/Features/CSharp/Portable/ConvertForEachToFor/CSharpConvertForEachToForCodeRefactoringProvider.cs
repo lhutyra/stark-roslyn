@@ -109,7 +109,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertForEachToFor
                 SyntaxFactory.VariableDeclaration(
                     model.Compilation.GetSpecialType(SpecialType.System_Int32).GenerateTypeSyntax(),
                     SyntaxFactory.SingletonSeparatedList(
-                        SyntaxFactory.VariableDeclarator(
+                        SyntaxFactory.VariableDeclaration(
                             indexVariable.WithAdditionalAnnotations(RenameAnnotation.Create()),
                             argumentList: default,
                             SyntaxFactory.EqualsValueClause((ExpressionSyntax)generator.LiteralExpression(0))))),

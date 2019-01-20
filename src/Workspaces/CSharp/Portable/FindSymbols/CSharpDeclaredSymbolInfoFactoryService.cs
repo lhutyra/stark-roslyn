@@ -281,9 +281,9 @@ namespace Microsoft.CodeAnalysis.CSharp.FindSymbols
                         property.Identifier.Span,
                         inheritanceNames: ImmutableArray<string>.Empty);
                     return true;
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     // could either be part of a field declaration or an event field declaration
-                    var variableDeclarator = (VariableDeclaratorSyntax)node;
+                    var variableDeclarator = (VariableDeclarationSyntax)node;
                     var variableDeclaration = variableDeclarator.Parent as VariableDeclarationSyntax;
                     var fieldDeclaration = variableDeclaration?.Parent as BaseFieldDeclarationSyntax;
                     if (fieldDeclaration != null)

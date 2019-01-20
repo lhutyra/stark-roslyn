@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             var localDeclaration = syntax as LocalDeclarationStatementSyntax;
             if (localDeclaration != null)
             {
-                syntax = localDeclaration.Declaration.Variables[0];
+                syntax = localDeclaration.Declaration;
             }
 
             BoundStatement rewrittenLocalDeclaration = new BoundExpressionStatement(
@@ -72,9 +72,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             // Add sequence points, if necessary.
             if (this.Instrument && originalOpt?.WasCompilerGenerated == false && !localSymbol.IsConst &&
-                (originalOpt.Syntax.Kind() == SyntaxKind.VariableDeclarator ||
-                    (originalOpt.Syntax.Kind() == SyntaxKind.LocalDeclarationStatement &&
-                        ((LocalDeclarationStatementSyntax)originalOpt.Syntax).Declaration.Variables.Count == 1)))
+                (originalOpt.Syntax.Kind() == SyntaxKind.VariableDeclaration ||
+                    originalOpt.Syntax.Kind() == SyntaxKind.LocalDeclarationStatement))
             {
                 rewrittenLocalDeclaration = _instrumenter.InstrumentLocalInitialization(originalOpt, rewrittenLocalDeclaration);
             }

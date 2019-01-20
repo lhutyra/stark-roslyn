@@ -42,7 +42,7 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
             }
 
             // Don't offer the refactoring inside the initializer for the variable.
-            var initializer = syntaxFacts.GetInitializerOfVariableDeclarator(variables[0]);
+            var initializer = syntaxFacts.GetInitializerOfVariableDeclaration(variables[0]);
             var applicableSpan = initializer == null
                 ? statement.Span
                 : TextSpan.FromBounds(statement.SpanStart, initializer.SpanStart);

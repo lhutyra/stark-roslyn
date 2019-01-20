@@ -1455,7 +1455,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
             replacementNode = null;
             issueSpan = default;
 
-            if (name.IsVar)
+            if (name.IsNullWithNoType())
             {
                 return false;
             }
@@ -1698,7 +1698,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
 
                     // Nullable rewrite: Nullable<int> -> int?
                     // Don't rewrite in the case where Nullable<int> is part of some qualified name like Nullable<int>.Something
-                    if (!name.IsVar && (symbol.Kind == SymbolKind.NamedType) && !name.IsLeftSideOfQualifiedName())
+                    if (!name.IsNullWithNoType() && (symbol.Kind == SymbolKind.NamedType) && !name.IsLeftSideOfQualifiedName())
                     {
                         var type = (INamedTypeSymbol)symbol;
                         if (aliasInfo == null && CanSimplifyNullable(type, name, semanticModel))

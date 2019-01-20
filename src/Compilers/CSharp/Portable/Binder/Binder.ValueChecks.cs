@@ -306,7 +306,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// </summary>
         internal bool CheckValueKind(SyntaxNode node, BoundExpression expr, BindValueKind valueKind, bool checkingReceiver, DiagnosticBag diagnostics)
         {
-            Debug.Assert(!checkingReceiver || expr.Type.IsValueType || expr.Type.IsTypeParameter());
+            Debug.Assert(!checkingReceiver || expr.Type.IsValueType || expr.Type.IsReferenceType || expr.Type.IsTypeParameter());
 
             if (expr.HasAnyErrors)
             {
@@ -448,7 +448,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                     // Note: RValueOnly is checked at the beginning of this method. Since we are here we need more than readable.
                     //"this" is readonly in members of readonly structs, unless we are in a constructor.
-                    if (!thisref.Type.IsValueType ||
+                    if ((!checkingReceiver && !thisref.Type.IsValueType) ||
                             (RequiresAssignableVariable(valueKind) &&
                              thisref.Type.IsReadOnly &&
                              (this.ContainingMemberOrLambda as MethodSymbol)?.MethodKind != MethodKind.Constructor))
@@ -706,7 +706,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             // r/w fields that are static or belong to reference types are writeable and returnable
-            if (fieldIsStatic || fieldSymbol.ContainingType.IsReferenceType)
+            if (fieldIsStatic)
             {
                 return true;
             }

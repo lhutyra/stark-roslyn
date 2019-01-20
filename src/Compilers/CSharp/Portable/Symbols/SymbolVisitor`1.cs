@@ -92,7 +92,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             return DefaultVisit(symbol);
         }
-
+        
         public virtual TResult VisitProperty(PropertySymbol symbol)
         {
             return DefaultVisit(symbol);

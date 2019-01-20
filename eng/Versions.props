@@ -278,7 +278,7 @@
     <UsingToolVSSDK>true</UsingToolVSSDK>
     <UsingToolNetFrameworkReferenceAssemblies>true</UsingToolNetFrameworkReferenceAssemblies>
     <UsingToolIbcOptimization>true</UsingToolIbcOptimization>
-    <UsingToolXliff>true</UsingToolXliff>
+    <UsingToolXliff>false</UsingToolXliff>
     <UsingToolXUnit>true</UsingToolXUnit>
 
     <!-- 

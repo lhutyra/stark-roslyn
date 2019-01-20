@@ -48,9 +48,9 @@ namespace Microsoft.CodeAnalysis.CSharp.ExtractMethod
                     if (expression.Parent != null &&
                         expression.Parent.Kind() == SyntaxKind.EqualsValueClause &&
                         expression.Parent.Parent != null &&
-                        expression.Parent.Parent.Kind() == SyntaxKind.VariableDeclarator)
+                        expression.Parent.Parent.Kind() == SyntaxKind.VariableDeclaration)
                     {
-                        var name = ((VariableDeclaratorSyntax)expression.Parent.Parent).Identifier.ValueText;
+                        var name = ((VariableDeclarationSyntax)expression.Parent.Parent).Identifier.ValueText;
                         return (name != null && name.Length > 0) ? MakeMethodName("Get", name) : methodName;
                     }
 

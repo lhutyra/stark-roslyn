@@ -22,7 +22,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         internal SourceFixedFieldSymbol(
             SourceMemberContainerTypeSymbol containingType,
-            VariableDeclaratorSyntax declarator,
+            VariableDeclarationSyntax declarator,
             DeclarationModifiers modifiers,
             bool modifierErrors,
             DiagnosticBag diagnostics)
@@ -56,77 +56,80 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     DiagnosticBag diagnostics = DiagnosticBag.GetInstance();
                     int size = 0;
 
-                    VariableDeclaratorSyntax declarator = VariableDeclaratorNode;
-                    if (declarator.ArgumentList == null)
-                    {
-                        // Diagnostic reported by parser.
-                    }
-                    else
-                    {
-                        SeparatedSyntaxList<ArgumentSyntax> arguments = declarator.ArgumentList.Arguments;
+                    throw new NotImplementedException();
 
-                        if (arguments.Count == 0 || arguments[0].Expression.Kind() == SyntaxKind.OmittedArraySizeExpression)
-                        {
-                            Debug.Assert(declarator.ArgumentList.ContainsDiagnostics, "The parser should have caught this.");
-                        }
-                        else
-                        {
-                            if (arguments.Count > 1)
-                            {
-                                diagnostics.Add(ErrorCode.ERR_FixedBufferTooManyDimensions, declarator.ArgumentList.Location);
-                            }
+                    VariableDeclarationSyntax declarator = VariableDeclarationNode;
+                    //    if (declarator.ArgumentList == null)
+                    //    {
+                    //        // Diagnostic reported by parser.
+                    //    }
+                    //    else
+                    //    {
+                    //        SeparatedSyntaxList<ArgumentSyntax> arguments = declarator.ArgumentList.Arguments;
 
-                            ExpressionSyntax sizeExpression = arguments[0].Expression;
+                    //        if (arguments.Count == 0 || arguments[0].Expression.Kind() == SyntaxKind.OmittedArraySizeExpression)
+                    //        {
+                    //            Debug.Assert(declarator.ArgumentList.ContainsDiagnostics, "The parser should have caught this.");
+                    //        }
+                    //        else
+                    //        {
+                    //            if (arguments.Count > 1)
+                    //            {
+                    //                diagnostics.Add(ErrorCode.ERR_FixedBufferTooManyDimensions, declarator.ArgumentList.Location);
+                    //            }
 
-                            BinderFactory binderFactory = this.DeclaringCompilation.GetBinderFactory(SyntaxTree);
-                            Binder binder = binderFactory.GetBinder(sizeExpression);
-                            binder = new ExecutableCodeBinder(sizeExpression, binder.ContainingMemberOrLambda, binder).GetBinder(sizeExpression);
+                    //            ExpressionSyntax sizeExpression = arguments[0].Expression;
 
-                            TypeSymbol intType = binder.GetSpecialType(SpecialType.System_Int32, diagnostics, sizeExpression);
-                            BoundExpression boundSizeExpression = binder.GenerateConversionForAssignment(
-                                intType,
-                                binder.BindValue(sizeExpression, diagnostics, Binder.BindValueKind.RValue),
-                                diagnostics);
+                    //            BinderFactory binderFactory = this.DeclaringCompilation.GetBinderFactory(SyntaxTree);
+                    //            Binder binder = binderFactory.GetBinder(sizeExpression);
+                    //            binder = new ExecutableCodeBinder(sizeExpression, binder.ContainingMemberOrLambda, binder).GetBinder(sizeExpression);
 
-                            // GetAndValidateConstantValue doesn't generate a very intuitive-reading diagnostic
-                            // for this situation, but this is what the Dev10 compiler produces.
-                            ConstantValue sizeConstant = ConstantValueUtils.GetAndValidateConstantValue(boundSizeExpression, this, intType, sizeExpression.Location, diagnostics);
+                    //            TypeSymbol intType = binder.GetSpecialType(SpecialType.System_Int32, diagnostics, sizeExpression);
+                    //            BoundExpression boundSizeExpression = binder.GenerateConversionForAssignment(
+                    //                intType,
+                    //                binder.BindValue(sizeExpression, diagnostics, Binder.BindValueKind.RValue),
+                    //                diagnostics);
 
-                            Debug.Assert(sizeConstant != null);
-                            Debug.Assert(sizeConstant.IsIntegral || diagnostics.HasAnyErrors() || sizeExpression.HasErrors);
+                    //            // GetAndValidateConstantValue doesn't generate a very intuitive-reading diagnostic
+                    //            // for this situation, but this is what the Dev10 compiler produces.
+                    //            ConstantValue sizeConstant = ConstantValueUtils.GetAndValidateConstantValue(boundSizeExpression, this, intType, sizeExpression.Location, diagnostics);
 
-                            if (sizeConstant.IsIntegral)
-                            {
-                                int int32Value = sizeConstant.Int32Value;
-                                if (int32Value > 0)
-                                {
-                                    size = int32Value;
+                    //            Debug.Assert(sizeConstant != null);
+                    //            Debug.Assert(sizeConstant.IsIntegral || diagnostics.HasAnyErrors() || sizeExpression.HasErrors);
 
-                                    TypeSymbol elementType = ((PointerTypeSymbol)this.Type.TypeSymbol).PointedAtType.TypeSymbol;
-                                    int elementSize = elementType.FixedBufferElementSizeInBytes();
-                                    long totalSize = elementSize * 1L * int32Value;
-                                    if (totalSize > int.MaxValue)
-                                    {
-                                        // Fixed size buffer of length '{0}' and type '{1}' is too big
-                                        diagnostics.Add(ErrorCode.ERR_FixedOverflow, sizeExpression.Location, int32Value, elementType);
-                                    }
-                                }
-                                else
-                                {
-                                    diagnostics.Add(ErrorCode.ERR_InvalidFixedArraySize, sizeExpression.Location);
-                                }
-                            }
-                        }
-                    }
+                    //            if (sizeConstant.IsIntegral)
+                    //            {
+                    //                int int32Value = sizeConstant.Int32Value;
+                    //                if (int32Value > 0)
+                    //                {
+                    //                    size = int32Value;
 
-                    // Winner writes diagnostics.
-                    if (Interlocked.CompareExchange(ref _fixedSize, size, FixedSizeNotInitialized) == FixedSizeNotInitialized)
-                    {
-                        this.AddDeclarationDiagnostics(diagnostics);
-                        state.NotePartComplete(CompletionPart.FixedSize);
-                    }
+                    //                    TypeSymbol elementType = ((PointerTypeSymbol)this.Type.TypeSymbol).PointedAtType.TypeSymbol;
+                    //                    int elementSize = elementType.FixedBufferElementSizeInBytes();
+                    //                    long totalSize = elementSize * 1L * int32Value;
+                    //                    if (totalSize > int.MaxValue)
+                    //                    {
+                    //                        // Fixed size buffer of length '{0}' and type '{1}' is too big
+                    //                        diagnostics.Add(ErrorCode.ERR_FixedOverflow, sizeExpression.Location, int32Value, elementType);
+                    //                    }
+                    //                }
+                    //                else
+                    //                {
+                    //                    diagnostics.Add(ErrorCode.ERR_InvalidFixedArraySize, sizeExpression.Location);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                    diagnostics.Free();
+                    //    // Winner writes diagnostics.
+                    //    if (Interlocked.CompareExchange(ref _fixedSize, size, FixedSizeNotInitialized) == FixedSizeNotInitialized)
+                    //    {
+                    //        this.AddDeclarationDiagnostics(diagnostics);
+                    //        state.NotePartComplete(CompletionPart.FixedSize);
+                    //    }
+
+                    //    diagnostics.Free();
+                    //}
                 }
 
                 Debug.Assert(_fixedSize != FixedSizeNotInitialized);

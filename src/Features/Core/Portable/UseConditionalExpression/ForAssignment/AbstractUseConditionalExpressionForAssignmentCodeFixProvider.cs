@@ -21,19 +21,19 @@ namespace Microsoft.CodeAnalysis.UseConditionalExpression
         TStatementSyntax,
         TIfStatementSyntax,
         TLocalDeclarationStatementSyntax,
-        TVariableDeclaratorSyntax,
+        TVariableDeclarationSyntax,
         TExpressionSyntax,
         TConditionalExpressionSyntax>
         : AbstractUseConditionalExpressionCodeFixProvider<TStatementSyntax, TIfStatementSyntax, TExpressionSyntax, TConditionalExpressionSyntax>
         where TStatementSyntax : SyntaxNode
         where TIfStatementSyntax : TStatementSyntax
         where TLocalDeclarationStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
         where TExpressionSyntax : SyntaxNode
         where TConditionalExpressionSyntax : TExpressionSyntax
     {
-        protected abstract TVariableDeclaratorSyntax WithInitializer(TVariableDeclaratorSyntax variable, TExpressionSyntax value);
-        protected abstract TVariableDeclaratorSyntax GetDeclaratorSyntax(IVariableDeclaratorOperation declarator);
+        protected abstract TVariableDeclarationSyntax WithInitializer(TVariableDeclarationSyntax variable, TExpressionSyntax value);
+        protected abstract TVariableDeclarationSyntax GetDeclaratorSyntax(IVariableDeclarationOperation declarator);
         protected abstract TLocalDeclarationStatementSyntax AddSimplificationToType(TLocalDeclarationStatementSyntax updatedLocalDeclaration);
 
         public override ImmutableArray<string> FixableDiagnosticIds
@@ -136,7 +136,7 @@ namespace Microsoft.CodeAnalysis.UseConditionalExpression
 
         private bool TryFindMatchingLocalDeclarationImmediatelyAbove(
             IConditionalOperation ifOperation, ISimpleAssignmentOperation trueAssignment, ISimpleAssignmentOperation falseAssignment,
-            out IVariableDeclarationGroupOperation localDeclaration, out IVariableDeclaratorOperation declarator)
+            out IVariableDeclarationGroupOperation localDeclaration, out IVariableDeclarationOperation declarator)
         {
             localDeclaration = null;
             declarator = null;

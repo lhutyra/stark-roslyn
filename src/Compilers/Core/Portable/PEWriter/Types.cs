@@ -369,6 +369,21 @@ namespace Microsoft.Cci
         ITypeReference UnmodifiedType { get; }
     }
 
+
+    /// <summary>
+    /// This interface models the metadata representation of a pointer to a location in unmanaged memory.
+    /// </summary>
+    internal interface IExtendedTypeReference : ITypeReference
+    {
+        /// <summary>
+        /// The type of value stored at the target memory location.
+        /// </summary>
+        ITypeReference GetElementType(EmitContext context);
+
+        TypeAccessModifiers AccessModifiers { get; }
+    }
+
+
     /// <summary>
     /// This interface models the metadata representation of a pointer to a location in unmanaged memory.
     /// </summary>

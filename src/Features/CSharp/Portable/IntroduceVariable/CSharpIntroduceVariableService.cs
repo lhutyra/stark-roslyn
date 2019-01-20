@@ -36,7 +36,7 @@ namespace Microsoft.CodeAnalysis.CSharp.IntroduceVariable
 
         protected override bool IsInFieldInitializer(ExpressionSyntax expression)
         {
-            return expression.GetAncestorOrThis<VariableDeclaratorSyntax>()
+            return expression.GetAncestorOrThis<VariableDeclarationSyntax>()
                              .GetAncestorOrThis<FieldDeclarationSyntax>() != null;
         }
 

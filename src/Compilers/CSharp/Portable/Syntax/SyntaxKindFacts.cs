@@ -970,6 +970,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.ExplicitKeyword;
                 case "func":
                     return SyntaxKind.FuncKeyword;
+                case "val":
+                    return SyntaxKind.ValKeyword;
+                case "transient":
+                    return SyntaxKind.TransientKeyword;
                 case "constructor":
                     return SyntaxKind.ConstructorKeyword;
                 default:
@@ -1641,6 +1645,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "var";
                 case SyntaxKind.FuncKeyword:
                     return "func";
+                case SyntaxKind.ValKeyword:
+                    return "val";
+                case SyntaxKind.TransientKeyword:
+                    return "transient";
                 case SyntaxKind.ConstructorKeyword:
                     return "constructor";
                 default:

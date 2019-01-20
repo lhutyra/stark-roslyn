@@ -77,13 +77,13 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
         public static FieldDeclarationSyntax GenerateFieldDeclaration(
             IFieldSymbol field, CodeGenerationDestination destination, CodeGenerationOptions options)
         {
-            var reusableSyntax = GetReuseableSyntaxNodeForSymbol<VariableDeclaratorSyntax>(field, options);
+            var reusableSyntax = GetReuseableSyntaxNodeForSymbol<VariableDeclarationSyntax>(field, options);
             if (reusableSyntax != null)
             {
                 if (reusableSyntax.Parent is VariableDeclarationSyntax variableDeclaration)
                 {
-                    var newVariableDeclaratorsList = new SeparatedSyntaxList<VariableDeclaratorSyntax>().Add(reusableSyntax);
-                    var newVariableDeclaration = variableDeclaration.WithVariables(newVariableDeclaratorsList);
+                    var newVariableDeclarationsList = new SeparatedSyntaxList<VariableDeclarationSyntax>().Add(reusableSyntax);
+                    var newVariableDeclaration = variableDeclaration.WithVariables(newVariableDeclarationsList);
                     if (variableDeclaration.Parent is FieldDeclarationSyntax fieldDecl)
                     {
                         return fieldDecl.WithDeclaration(newVariableDeclaration);
@@ -103,7 +103,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGeneration
                 SyntaxFactory.VariableDeclaration(
                     field.Type.GenerateTypeSyntax(),
                     SyntaxFactory.SingletonSeparatedList(
-                        AddAnnotationsTo(field, SyntaxFactory.VariableDeclarator(field.Name.ToIdentifierToken(), null, initializer)))));
+                        AddAnnotationsTo(field, SyntaxFactory.VariableDeclaration(field.Name.ToIdentifierToken(), null, initializer)))));
 
             return AddFormatterAndCodeGeneratorAnnotationsTo(
                 ConditionallyAddDocumentationCommentTo(fieldDeclaration, field, options));

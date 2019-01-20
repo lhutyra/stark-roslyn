@@ -143,7 +143,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertLinq.ConvertForEachToLinqQuery
                 editor.RemoveNode(ForEachInfo.ForEachStatement);
             }
 
-            SyntaxTrivia[] GetTriviaFromVariableDeclarator(VariableDeclaratorSyntax variableDeclarator)
+            SyntaxTrivia[] GetTriviaFromVariableDeclaration(VariableDeclarationSyntax variableDeclarator)
                 => SyntaxNodeOrTokenExtensions.GetTrivia(variableDeclarator.Identifier, variableDeclarator.Initializer.EqualsToken, variableDeclarator.Initializer.Value);
 
             SyntaxTrivia[] GetTriviaFromNode(SyntaxNode node)
@@ -160,11 +160,11 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertLinq.ConvertForEachToLinqQuery
 
                         return new IEnumerable<SyntaxTrivia>[] {
                             SyntaxNodeOrTokenExtensions.GetTrivia(localDeclaration.Declaration.Type),
-                            GetTriviaFromVariableDeclarator(localDeclaration.Declaration.Variables[0]),
+                            GetTriviaFromVariableDeclaration(localDeclaration.Declaration.Variables[0]),
                             SyntaxNodeOrTokenExtensions.GetTrivia(localDeclaration.SemicolonToken)}.Flatten().ToArray();
 
-                    case SyntaxKind.VariableDeclarator:
-                        return GetTriviaFromVariableDeclarator((VariableDeclaratorSyntax)node);
+                    case SyntaxKind.VariableDeclaration:
+                        return GetTriviaFromVariableDeclaration((VariableDeclarationSyntax)node);
 
                     case SyntaxKind.ExpressionStatement:
                         if (((ExpressionStatementSyntax)node).Expression is AssignmentExpressionSyntax assignmentExpression)

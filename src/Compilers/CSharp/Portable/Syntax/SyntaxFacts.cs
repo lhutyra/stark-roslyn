@@ -319,7 +319,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             while (node != null && (node.IsKind(ParenthesizedExpression) || node.IsKind(CastExpression))) node = node.Parent;
             if (node == null || !node.IsKind(EqualsValueClause)) return false;
             node = node.Parent;
-            if (node == null || !node.IsKind(VariableDeclarator)) return false;
+            if (node == null || !node.IsKind(VariableDeclaration)) return false;
             node = node.Parent;
             if (node == null || !node.IsKind(VariableDeclaration)) return false;
             node = node.Parent;

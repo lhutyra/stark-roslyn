@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
             var comparisonLocation = diagnostic.AdditionalLocations[1];
             var asExpressionLocation = diagnostic.AdditionalLocations[2];
 
-            var declarator = (VariableDeclaratorSyntax)declaratorLocation.FindNode(cancellationToken);
+            var declarator = (VariableDeclarationSyntax)declaratorLocation.FindNode(cancellationToken);
             var comparison = (BinaryExpressionSyntax)comparisonLocation.FindNode(cancellationToken);
             var asExpression = (BinaryExpressionSyntax)asExpressionLocation.FindNode(cancellationToken);
             var newIdentifier = declarator.Identifier

@@ -152,7 +152,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Classification.Classifiers
                 return true;
             }
 
-            if (name.IsVar &&
+            if (name.IsNullWithNoType() &&
                 IsInVarContext(name))
             {
                 var alias = semanticModel.GetAliasInfo(name, cancellationToken);
@@ -287,7 +287,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Classification.Classifiers
                 symbolInfo.Symbol == null)
             {
                 var token = identifierName.Identifier;
-                if (identifierName.IsRightSideOfAnyAssignExpression() || identifierName.IsVariableDeclaratorValue())
+                if (identifierName.IsRightSideOfAnyAssignExpression() || identifierName.IsVariableDeclarationValue())
                 {
                     result.Add(new ClassifiedSpan(token.Span, ClassificationTypeNames.Keyword));
                     return true;

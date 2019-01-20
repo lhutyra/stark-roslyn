@@ -6,9 +6,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Microsoft.CodeAnalysis.CSharp.Extensions
 {
-    internal static class VariableDeclaratorExtensions
+    internal static class VariableDeclarationExtensions
     {
-        public static TypeSyntax GetVariableType(this VariableDeclaratorSyntax declarator)
+        public static TypeSyntax GetVariableType(this VariableDeclarationSyntax declarator)
         {
             if (declarator.Parent is VariableDeclarationSyntax variableDeclaration)
             {
@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
             return null;
         }
 
-        public static bool IsTypeInferred(this VariableDeclaratorSyntax variable, SemanticModel semanticModel)
+        public static bool IsTypeInferred(this VariableDeclarationSyntax variable, SemanticModel semanticModel)
         {
             var variableTypeName = variable.GetVariableType();
             if (variableTypeName == null)

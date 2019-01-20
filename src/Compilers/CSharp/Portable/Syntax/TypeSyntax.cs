@@ -4,8 +4,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 {
     public abstract partial class TypeSyntax
     {
-        public bool IsVar => ((InternalSyntax.TypeSyntax)this.Green).IsVar;
-
         public bool IsUnmanaged => ((InternalSyntax.TypeSyntax)this.Green).IsUnmanaged;
+    }
+
+    public static class TypeSyntaxExtensions
+    {
+        public static bool IsNullWithNoType(this TypeSyntax type)
+        {
+            //return ((InternalSyntax.TypeSyntax)type.Green).IsVar;
+            return type == null;
+        }
     }
 }

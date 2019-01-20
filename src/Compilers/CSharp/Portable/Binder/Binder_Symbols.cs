@@ -100,16 +100,10 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// </returns>
         private NamespaceOrTypeOrAliasSymbolWithAnnotations BindTypeOrAliasOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isVar)
         {
-            if (syntax.IsVar)
+            if (syntax == null)
             {
-                var symbol = BindTypeOrAliasOrKeyword((IdentifierNameSyntax)syntax, diagnostics, out isVar);
-
-                if (isVar)
-                {
-                    CheckFeatureAvailability(syntax, MessageID.IDS_FeatureImplicitLocal, diagnostics);
-                }
-
-                return symbol;
+                isVar = true;
+                return NamespaceOrTypeOrAliasSymbolWithAnnotations.CreateUnannotated(false, null);
             }
             else
             {
@@ -340,6 +334,12 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         internal NamespaceOrTypeOrAliasSymbolWithAnnotations BindNamespaceOrTypeOrAliasSymbol(ExpressionSyntax syntax, DiagnosticBag diagnostics, ConsList<TypeSymbol> basesBeingResolved, bool suppressUseSiteDiagnostics)
         {
+            // A null expression syntax is void
+            if (syntax == null)
+            {
+                return TypeSymbolWithAnnotations.Create(false, Compilation.GetSpecialType(SpecialType.System_Void));
+            }
+
             switch (syntax.Kind())
             {
                 case SyntaxKind.NullableType:
@@ -497,6 +497,36 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                         return BindNamespaceOrTypeOrAliasSymbol(refTypeSyntax.Type, diagnostics, basesBeingResolved, suppressUseSiteDiagnostics);
                     }
+
+                case SyntaxKind.ExtendedType:
+                {
+                    // extended type syntax
+                    var extendedTypeSyntax = (ExtendedTypeSyntax)syntax;
+                    TypeAccessModifiers accessModifiers = 0;
+                    foreach (var token in extendedTypeSyntax.Modifiers)
+                    {
+                        switch (token.Kind())
+                        {
+                            case SyntaxKind.ReadOnlyKeyword:
+                                accessModifiers |= TypeAccessModifiers.ReadOnly;
+                                break;
+                            case SyntaxKind.TransientKeyword:
+                                accessModifiers |= TypeAccessModifiers.Transient;
+                                break;
+                            default:
+                                throw new InvalidOperationException($"The type modifiers `{token}` is not supported");
+
+                        }
+                    }
+                    var elementType = BindType(extendedTypeSyntax.ElementType, diagnostics, basesBeingResolved);
+
+                    if (elementType.Kind == SymbolKind.NamedType)
+                    {
+                        return TypeSymbolWithAnnotations.Create(new ExtendedNamedTypeSymbol(elementType, accessModifiers));
+                    }
+
+                    throw new NotImplementedException($"ReadOnly type not implemented for {elementType}");
+                }
 
                 default:
                     throw ExceptionUtilities.UnexpectedValue(syntax.Kind());

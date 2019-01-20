@@ -69,8 +69,8 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertLinq.ConvertForEachToLinqQuery
         {
             switch (node.Node.Kind())
             {
-                case SyntaxKind.VariableDeclarator:
-                    var variable = (VariableDeclaratorSyntax)node.Node;
+                case SyntaxKind.VariableDeclaration:
+                    var variable = (VariableDeclarationSyntax)node.Node;
                     return SyntaxFactory.LetClause(
                                 SyntaxFactory.Token(SyntaxKind.LetKeyword),
                                 variable.Identifier,
@@ -104,8 +104,8 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertLinq.ConvertForEachToLinqQuery
                                         forEachStatement.ForEachKeyword.TrailingTrivia,
                                         forEachStatement.OpenParenToken)
                                     .KeepCommentsAndAddElasticMarkers(),
-                    type: forEachStatement.Type.IsVar ? null : forEachStatement.Type,
-                    identifier: forEachStatement.Type.IsVar ?
+                    type: forEachStatement.Type.IsNullWithNoType() ? null : forEachStatement.Type,
+                    identifier: forEachStatement.Type.IsNullWithNoType() ?
                                 forEachStatement.Identifier.WithPrependedLeadingTrivia(
                                     SyntaxNodeOrTokenExtensions.GetTrivia(forEachStatement.Type.GetFirstToken())
                                     .FilterComments(addElasticMarker: false)) :

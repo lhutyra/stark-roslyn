@@ -81,8 +81,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         Scope,
         StateMachineScope,
         LocalDeclaration,
-        MultipleLocalDeclarations,
-        UsingLocalDeclarations,
+        UsingLocalDeclaration,
         LocalFunctionStatement,
         NoOpStatement,
         ReturnStatement,
@@ -2596,8 +2595,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     internal sealed partial class BoundLocalDeclaration : BoundStatement
     {
-        public BoundLocalDeclaration(SyntaxNode syntax, LocalSymbol localSymbol, BoundTypeExpression declaredType, BoundExpression initializerOpt, ImmutableArray<BoundExpression> argumentsOpt, bool hasErrors = false)
-            : base(BoundKind.LocalDeclaration, syntax, hasErrors || declaredType.HasErrors() || initializerOpt.HasErrors() || argumentsOpt.HasErrors())
+        public BoundLocalDeclaration(SyntaxNode syntax, LocalSymbol localSymbol, BoundTypeExpression declaredType, BoundExpression initializerOpt, bool hasErrors = false)
+            : base(BoundKind.LocalDeclaration, syntax, hasErrors || declaredType.HasErrors() || initializerOpt.HasErrors())
         {
 
             Debug.Assert((object)localSymbol != null, "Field 'localSymbol' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
@@ -2606,7 +2605,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             this.LocalSymbol = localSymbol;
             this.DeclaredType = declaredType;
             this.InitializerOpt = initializerOpt;
-            this.ArgumentsOpt = argumentsOpt;
         }
 
 
@@ -2616,18 +2614,16 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public BoundExpression InitializerOpt { get; }
 
-        public ImmutableArray<BoundExpression> ArgumentsOpt { get; }
-
         public override BoundNode Accept(BoundTreeVisitor visitor)
         {
             return visitor.VisitLocalDeclaration(this);
         }
 
-        public BoundLocalDeclaration Update(LocalSymbol localSymbol, BoundTypeExpression declaredType, BoundExpression initializerOpt, ImmutableArray<BoundExpression> argumentsOpt)
+        public BoundLocalDeclaration Update(LocalSymbol localSymbol, BoundTypeExpression declaredType, BoundExpression initializerOpt)
         {
-            if (localSymbol != this.LocalSymbol || declaredType != this.DeclaredType || initializerOpt != this.InitializerOpt || argumentsOpt != this.ArgumentsOpt)
+            if (localSymbol != this.LocalSymbol || declaredType != this.DeclaredType || initializerOpt != this.InitializerOpt)
             {
-                var result = new BoundLocalDeclaration(this.Syntax, localSymbol, declaredType, initializerOpt, argumentsOpt, this.HasErrors);
+                var result = new BoundLocalDeclaration(this.Syntax, localSymbol, declaredType, initializerOpt, this.HasErrors);
                 result.WasCompilerGenerated = this.WasCompilerGenerated;
                 return result;
             }
@@ -2635,57 +2631,18 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
     }
 
-    internal partial class BoundMultipleLocalDeclarations : BoundStatement
+    internal sealed partial class BoundUsingLocalDeclaration : BoundStatement
     {
-        protected BoundMultipleLocalDeclarations(BoundKind kind, SyntaxNode syntax, ImmutableArray<BoundLocalDeclaration> localDeclarations, bool hasErrors = false)
-            : base(kind, syntax, hasErrors)
+        public BoundUsingLocalDeclaration(SyntaxNode syntax, MethodSymbol disposeMethodOpt, Conversion iDisposableConversion, AwaitableInfo awaitOpt, BoundLocalDeclaration declaration, bool hasErrors = false)
+            : base(BoundKind.UsingLocalDeclaration, syntax, hasErrors || declaration.HasErrors())
         {
 
-            Debug.Assert(!localDeclarations.IsDefault, "Field 'localDeclarations' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
-
-            this.LocalDeclarations = localDeclarations;
-        }
-
-        public BoundMultipleLocalDeclarations(SyntaxNode syntax, ImmutableArray<BoundLocalDeclaration> localDeclarations, bool hasErrors = false)
-            : base(BoundKind.MultipleLocalDeclarations, syntax, hasErrors || localDeclarations.HasErrors())
-        {
-
-            Debug.Assert(!localDeclarations.IsDefault, "Field 'localDeclarations' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
-
-            this.LocalDeclarations = localDeclarations;
-        }
-
-
-        public ImmutableArray<BoundLocalDeclaration> LocalDeclarations { get; }
-
-        public override BoundNode Accept(BoundTreeVisitor visitor)
-        {
-            return visitor.VisitMultipleLocalDeclarations(this);
-        }
-
-        public BoundMultipleLocalDeclarations Update(ImmutableArray<BoundLocalDeclaration> localDeclarations)
-        {
-            if (localDeclarations != this.LocalDeclarations)
-            {
-                var result = new BoundMultipleLocalDeclarations(this.Syntax, localDeclarations, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
-                return result;
-            }
-            return this;
-        }
-    }
-
-    internal sealed partial class BoundUsingLocalDeclarations : BoundMultipleLocalDeclarations
-    {
-        public BoundUsingLocalDeclarations(SyntaxNode syntax, MethodSymbol disposeMethodOpt, Conversion iDisposableConversion, AwaitableInfo awaitOpt, ImmutableArray<BoundLocalDeclaration> localDeclarations, bool hasErrors = false)
-            : base(BoundKind.UsingLocalDeclarations, syntax, localDeclarations, hasErrors || localDeclarations.HasErrors())
-        {
-
-            Debug.Assert(!localDeclarations.IsDefault, "Field 'localDeclarations' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+            Debug.Assert((object)declaration != null, "Field 'declaration' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
 
             this.DisposeMethodOpt = disposeMethodOpt;
             this.IDisposableConversion = iDisposableConversion;
             this.AwaitOpt = awaitOpt;
+            this.Declaration = declaration;
         }
 
 
@@ -2695,16 +2652,18 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public AwaitableInfo AwaitOpt { get; }
 
+        public BoundLocalDeclaration Declaration { get; }
+
         public override BoundNode Accept(BoundTreeVisitor visitor)
         {
-            return visitor.VisitUsingLocalDeclarations(this);
+            return visitor.VisitUsingLocalDeclaration(this);
         }
 
-        public BoundUsingLocalDeclarations Update(MethodSymbol disposeMethodOpt, Conversion iDisposableConversion, AwaitableInfo awaitOpt, ImmutableArray<BoundLocalDeclaration> localDeclarations)
+        public BoundUsingLocalDeclaration Update(MethodSymbol disposeMethodOpt, Conversion iDisposableConversion, AwaitableInfo awaitOpt, BoundLocalDeclaration declaration)
         {
-            if (disposeMethodOpt != this.DisposeMethodOpt || iDisposableConversion != this.IDisposableConversion || awaitOpt != this.AwaitOpt || localDeclarations != this.LocalDeclarations)
+            if (disposeMethodOpt != this.DisposeMethodOpt || iDisposableConversion != this.IDisposableConversion || awaitOpt != this.AwaitOpt || declaration != this.Declaration)
             {
-                var result = new BoundUsingLocalDeclarations(this.Syntax, disposeMethodOpt, iDisposableConversion, awaitOpt, localDeclarations, this.HasErrors);
+                var result = new BoundUsingLocalDeclaration(this.Syntax, disposeMethodOpt, iDisposableConversion, awaitOpt, declaration, this.HasErrors);
                 result.WasCompilerGenerated = this.WasCompilerGenerated;
                 return result;
             }
@@ -3406,15 +3365,15 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     internal sealed partial class BoundUsingStatement : BoundStatement
     {
-        public BoundUsingStatement(SyntaxNode syntax, ImmutableArray<LocalSymbol> locals, BoundMultipleLocalDeclarations declarationsOpt, BoundExpression expressionOpt, Conversion iDisposableConversion, BoundStatement body, AwaitableInfo awaitOpt, MethodSymbol disposeMethodOpt, bool hasErrors = false)
-            : base(BoundKind.UsingStatement, syntax, hasErrors || declarationsOpt.HasErrors() || expressionOpt.HasErrors() || body.HasErrors())
+        public BoundUsingStatement(SyntaxNode syntax, ImmutableArray<LocalSymbol> locals, BoundLocalDeclaration declarationOpt, BoundExpression expressionOpt, Conversion iDisposableConversion, BoundStatement body, AwaitableInfo awaitOpt, MethodSymbol disposeMethodOpt, bool hasErrors = false)
+            : base(BoundKind.UsingStatement, syntax, hasErrors || declarationOpt.HasErrors() || expressionOpt.HasErrors() || body.HasErrors())
         {
 
             Debug.Assert(!locals.IsDefault, "Field 'locals' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
             Debug.Assert((object)body != null, "Field 'body' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
 
             this.Locals = locals;
-            this.DeclarationsOpt = declarationsOpt;
+            this.DeclarationOpt = declarationOpt;
             this.ExpressionOpt = expressionOpt;
             this.IDisposableConversion = iDisposableConversion;
             this.Body = body;
@@ -3425,7 +3384,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public ImmutableArray<LocalSymbol> Locals { get; }
 
-        public BoundMultipleLocalDeclarations DeclarationsOpt { get; }
+        public BoundLocalDeclaration DeclarationOpt { get; }
 
         public BoundExpression ExpressionOpt { get; }
 
@@ -3442,11 +3401,11 @@ namespace Microsoft.CodeAnalysis.CSharp
             return visitor.VisitUsingStatement(this);
         }
 
-        public BoundUsingStatement Update(ImmutableArray<LocalSymbol> locals, BoundMultipleLocalDeclarations declarationsOpt, BoundExpression expressionOpt, Conversion iDisposableConversion, BoundStatement body, AwaitableInfo awaitOpt, MethodSymbol disposeMethodOpt)
+        public BoundUsingStatement Update(ImmutableArray<LocalSymbol> locals, BoundLocalDeclaration declarationOpt, BoundExpression expressionOpt, Conversion iDisposableConversion, BoundStatement body, AwaitableInfo awaitOpt, MethodSymbol disposeMethodOpt)
         {
-            if (locals != this.Locals || declarationsOpt != this.DeclarationsOpt || expressionOpt != this.ExpressionOpt || iDisposableConversion != this.IDisposableConversion || body != this.Body || awaitOpt != this.AwaitOpt || disposeMethodOpt != this.DisposeMethodOpt)
+            if (locals != this.Locals || declarationOpt != this.DeclarationOpt || expressionOpt != this.ExpressionOpt || iDisposableConversion != this.IDisposableConversion || body != this.Body || awaitOpt != this.AwaitOpt || disposeMethodOpt != this.DisposeMethodOpt)
             {
-                var result = new BoundUsingStatement(this.Syntax, locals, declarationsOpt, expressionOpt, iDisposableConversion, body, awaitOpt, disposeMethodOpt, this.HasErrors);
+                var result = new BoundUsingStatement(this.Syntax, locals, declarationOpt, expressionOpt, iDisposableConversion, body, awaitOpt, disposeMethodOpt, this.HasErrors);
                 result.WasCompilerGenerated = this.WasCompilerGenerated;
                 return result;
             }
@@ -3456,23 +3415,23 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     internal sealed partial class BoundFixedStatement : BoundStatement
     {
-        public BoundFixedStatement(SyntaxNode syntax, ImmutableArray<LocalSymbol> locals, BoundMultipleLocalDeclarations declarations, BoundStatement body, bool hasErrors = false)
-            : base(BoundKind.FixedStatement, syntax, hasErrors || declarations.HasErrors() || body.HasErrors())
+        public BoundFixedStatement(SyntaxNode syntax, ImmutableArray<LocalSymbol> locals, BoundLocalDeclaration declaration, BoundStatement body, bool hasErrors = false)
+            : base(BoundKind.FixedStatement, syntax, hasErrors || declaration.HasErrors() || body.HasErrors())
         {
 
             Debug.Assert(!locals.IsDefault, "Field 'locals' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
-            Debug.Assert((object)declarations != null, "Field 'declarations' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+            Debug.Assert((object)declaration != null, "Field 'declaration' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
             Debug.Assert((object)body != null, "Field 'body' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
 
             this.Locals = locals;
-            this.Declarations = declarations;
+            this.Declaration = declaration;
             this.Body = body;
         }
 
 
         public ImmutableArray<LocalSymbol> Locals { get; }
 
-        public BoundMultipleLocalDeclarations Declarations { get; }
+        public BoundLocalDeclaration Declaration { get; }
 
         public BoundStatement Body { get; }
 
@@ -3481,11 +3440,11 @@ namespace Microsoft.CodeAnalysis.CSharp
             return visitor.VisitFixedStatement(this);
         }
 
-        public BoundFixedStatement Update(ImmutableArray<LocalSymbol> locals, BoundMultipleLocalDeclarations declarations, BoundStatement body)
+        public BoundFixedStatement Update(ImmutableArray<LocalSymbol> locals, BoundLocalDeclaration declaration, BoundStatement body)
         {
-            if (locals != this.Locals || declarations != this.Declarations || body != this.Body)
+            if (locals != this.Locals || declaration != this.Declaration || body != this.Body)
             {
-                var result = new BoundFixedStatement(this.Syntax, locals, declarations, body, this.HasErrors);
+                var result = new BoundFixedStatement(this.Syntax, locals, declaration, body, this.HasErrors);
                 result.WasCompilerGenerated = this.WasCompilerGenerated;
                 return result;
             }
@@ -7601,10 +7560,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return VisitStateMachineScope(node as BoundStateMachineScope, arg);
                 case BoundKind.LocalDeclaration: 
                     return VisitLocalDeclaration(node as BoundLocalDeclaration, arg);
-                case BoundKind.MultipleLocalDeclarations: 
-                    return VisitMultipleLocalDeclarations(node as BoundMultipleLocalDeclarations, arg);
-                case BoundKind.UsingLocalDeclarations: 
-                    return VisitUsingLocalDeclarations(node as BoundUsingLocalDeclarations, arg);
+                case BoundKind.UsingLocalDeclaration: 
+                    return VisitUsingLocalDeclaration(node as BoundUsingLocalDeclaration, arg);
                 case BoundKind.LocalFunctionStatement: 
                     return VisitLocalFunctionStatement(node as BoundLocalFunctionStatement, arg);
                 case BoundKind.NoOpStatement: 
@@ -8093,11 +8050,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             return this.DefaultVisit(node, arg);
         }
-        public virtual R VisitMultipleLocalDeclarations(BoundMultipleLocalDeclarations node, A arg)
-        {
-            return this.DefaultVisit(node, arg);
-        }
-        public virtual R VisitUsingLocalDeclarations(BoundUsingLocalDeclarations node, A arg)
+        public virtual R VisitUsingLocalDeclaration(BoundUsingLocalDeclaration node, A arg)
         {
             return this.DefaultVisit(node, arg);
         }
@@ -8821,11 +8774,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             return this.DefaultVisit(node);
         }
-        public virtual BoundNode VisitMultipleLocalDeclarations(BoundMultipleLocalDeclarations node)
-        {
-            return this.DefaultVisit(node);
-        }
-        public virtual BoundNode VisitUsingLocalDeclarations(BoundUsingLocalDeclarations node)
+        public virtual BoundNode VisitUsingLocalDeclaration(BoundUsingLocalDeclaration node)
         {
             return this.DefaultVisit(node);
         }
@@ -9608,17 +9557,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             this.Visit(node.DeclaredType);
             this.Visit(node.InitializerOpt);
-            this.VisitList(node.ArgumentsOpt);
             return null;
         }
-        public override BoundNode VisitMultipleLocalDeclarations(BoundMultipleLocalDeclarations node)
+        public override BoundNode VisitUsingLocalDeclaration(BoundUsingLocalDeclaration node)
         {
-            this.VisitList(node.LocalDeclarations);
-            return null;
-        }
-        public override BoundNode VisitUsingLocalDeclarations(BoundUsingLocalDeclarations node)
-        {
-            this.VisitList(node.LocalDeclarations);
+            this.Visit(node.Declaration);
             return null;
         }
         public override BoundNode VisitLocalFunctionStatement(BoundLocalFunctionStatement node)
@@ -9719,14 +9662,14 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
         public override BoundNode VisitUsingStatement(BoundUsingStatement node)
         {
-            this.Visit(node.DeclarationsOpt);
+            this.Visit(node.DeclarationOpt);
             this.Visit(node.ExpressionOpt);
             this.Visit(node.Body);
             return null;
         }
         public override BoundNode VisitFixedStatement(BoundFixedStatement node)
         {
-            this.Visit(node.Declarations);
+            this.Visit(node.Declaration);
             this.Visit(node.Body);
             return null;
         }
@@ -10609,18 +10552,12 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             BoundTypeExpression declaredType = (BoundTypeExpression)this.Visit(node.DeclaredType);
             BoundExpression initializerOpt = (BoundExpression)this.Visit(node.InitializerOpt);
-            ImmutableArray<BoundExpression> argumentsOpt = (ImmutableArray<BoundExpression>)this.VisitList(node.ArgumentsOpt);
-            return node.Update(node.LocalSymbol, declaredType, initializerOpt, argumentsOpt);
+            return node.Update(node.LocalSymbol, declaredType, initializerOpt);
         }
-        public override BoundNode VisitMultipleLocalDeclarations(BoundMultipleLocalDeclarations node)
+        public override BoundNode VisitUsingLocalDeclaration(BoundUsingLocalDeclaration node)
         {
-            ImmutableArray<BoundLocalDeclaration> localDeclarations = (ImmutableArray<BoundLocalDeclaration>)this.VisitList(node.LocalDeclarations);
-            return node.Update(localDeclarations);
-        }
-        public override BoundNode VisitUsingLocalDeclarations(BoundUsingLocalDeclarations node)
-        {
-            ImmutableArray<BoundLocalDeclaration> localDeclarations = (ImmutableArray<BoundLocalDeclaration>)this.VisitList(node.LocalDeclarations);
-            return node.Update(node.DisposeMethodOpt, node.IDisposableConversion, node.AwaitOpt, localDeclarations);
+            BoundLocalDeclaration declaration = (BoundLocalDeclaration)this.Visit(node.Declaration);
+            return node.Update(node.DisposeMethodOpt, node.IDisposableConversion, node.AwaitOpt, declaration);
         }
         public override BoundNode VisitLocalFunctionStatement(BoundLocalFunctionStatement node)
         {
@@ -10721,16 +10658,16 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
         public override BoundNode VisitUsingStatement(BoundUsingStatement node)
         {
-            BoundMultipleLocalDeclarations declarationsOpt = (BoundMultipleLocalDeclarations)this.Visit(node.DeclarationsOpt);
+            BoundLocalDeclaration declarationOpt = (BoundLocalDeclaration)this.Visit(node.DeclarationOpt);
             BoundExpression expressionOpt = (BoundExpression)this.Visit(node.ExpressionOpt);
             BoundStatement body = (BoundStatement)this.Visit(node.Body);
-            return node.Update(node.Locals, declarationsOpt, expressionOpt, node.IDisposableConversion, body, node.AwaitOpt, node.DisposeMethodOpt);
+            return node.Update(node.Locals, declarationOpt, expressionOpt, node.IDisposableConversion, body, node.AwaitOpt, node.DisposeMethodOpt);
         }
         public override BoundNode VisitFixedStatement(BoundFixedStatement node)
         {
-            BoundMultipleLocalDeclarations declarations = (BoundMultipleLocalDeclarations)this.Visit(node.Declarations);
+            BoundLocalDeclaration declaration = (BoundLocalDeclaration)this.Visit(node.Declaration);
             BoundStatement body = (BoundStatement)this.Visit(node.Body);
-            return node.Update(node.Locals, declarations, body);
+            return node.Update(node.Locals, declaration, body);
         }
         public override BoundNode VisitLockStatement(BoundLockStatement node)
         {
@@ -11958,27 +11895,18 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 new TreeDumperNode("localSymbol", node.LocalSymbol, null),
                 new TreeDumperNode("declaredType", null, new TreeDumperNode[] { Visit(node.DeclaredType, null) }),
-                new TreeDumperNode("initializerOpt", null, new TreeDumperNode[] { Visit(node.InitializerOpt, null) }),
-                new TreeDumperNode("argumentsOpt", null, node.ArgumentsOpt.IsDefault ? Array.Empty<TreeDumperNode>() : from x in node.ArgumentsOpt select Visit(x, null))
+                new TreeDumperNode("initializerOpt", null, new TreeDumperNode[] { Visit(node.InitializerOpt, null) })
             }
             );
         }
-        public override TreeDumperNode VisitMultipleLocalDeclarations(BoundMultipleLocalDeclarations node, object arg)
+        public override TreeDumperNode VisitUsingLocalDeclaration(BoundUsingLocalDeclaration node, object arg)
         {
-            return new TreeDumperNode("multipleLocalDeclarations", null, new TreeDumperNode[]
-            {
-                new TreeDumperNode("localDeclarations", null, from x in node.LocalDeclarations select Visit(x, null))
-            }
-            );
-        }
-        public override TreeDumperNode VisitUsingLocalDeclarations(BoundUsingLocalDeclarations node, object arg)
-        {
-            return new TreeDumperNode("usingLocalDeclarations", null, new TreeDumperNode[]
+            return new TreeDumperNode("usingLocalDeclaration", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("disposeMethodOpt", node.DisposeMethodOpt, null),
                 new TreeDumperNode("iDisposableConversion", node.IDisposableConversion, null),
                 new TreeDumperNode("awaitOpt", node.AwaitOpt, null),
-                new TreeDumperNode("localDeclarations", null, from x in node.LocalDeclarations select Visit(x, null))
+                new TreeDumperNode("declaration", null, new TreeDumperNode[] { Visit(node.Declaration, null) })
             }
             );
         }
@@ -12161,7 +12089,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return new TreeDumperNode("usingStatement", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("locals", node.Locals, null),
-                new TreeDumperNode("declarationsOpt", null, new TreeDumperNode[] { Visit(node.DeclarationsOpt, null) }),
+                new TreeDumperNode("declarationOpt", null, new TreeDumperNode[] { Visit(node.DeclarationOpt, null) }),
                 new TreeDumperNode("expressionOpt", null, new TreeDumperNode[] { Visit(node.ExpressionOpt, null) }),
                 new TreeDumperNode("iDisposableConversion", node.IDisposableConversion, null),
                 new TreeDumperNode("body", null, new TreeDumperNode[] { Visit(node.Body, null) }),
@@ -12175,7 +12103,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return new TreeDumperNode("fixedStatement", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("locals", node.Locals, null),
-                new TreeDumperNode("declarations", null, new TreeDumperNode[] { Visit(node.Declarations, null) }),
+                new TreeDumperNode("declaration", null, new TreeDumperNode[] { Visit(node.Declaration, null) }),
                 new TreeDumperNode("body", null, new TreeDumperNode[] { Visit(node.Body, null) })
             }
             );

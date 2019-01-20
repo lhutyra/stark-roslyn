@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 return MakeDeclarationUsingStatement(node.Syntax,
                                                      tryBlock,
                                                      node.Locals,
-                                                     node.DeclarationsOpt.LocalDeclarations,
+                                                     node.DeclarationOpt,
                                                      node.IDisposableConversion,
                                                      node.DisposeMethodOpt,
                                                      node.AwaitOpt,
@@ -57,19 +57,16 @@ namespace Microsoft.CodeAnalysis.CSharp
         private BoundStatement MakeDeclarationUsingStatement(SyntaxNode syntax,
                                                        BoundBlock body,
                                                        ImmutableArray<LocalSymbol> locals,
-                                                       ImmutableArray<BoundLocalDeclaration> declarations,
+                                                       BoundLocalDeclaration declaration,
                                                        Conversion iDisposableConversion,
                                                        MethodSymbol disposeMethodOpt,
                                                        AwaitableInfo awaitOpt,
                                                        SyntaxToken awaitKeyword)
         {
-            Debug.Assert(declarations != null);
+            Debug.Assert(declaration != null);
 
             BoundBlock result = body;
-            for (int i = declarations.Length - 1; i >= 0; i--) //NB: inner-to-outer = right-to-left
-            {
-                result = RewriteDeclarationUsingStatement(syntax, declarations[i], result, iDisposableConversion, awaitKeyword, awaitOpt, disposeMethodOpt);
-            }
+            result = RewriteDeclarationUsingStatement(syntax, declaration, result, iDisposableConversion, awaitKeyword, awaitOpt, disposeMethodOpt);
 
             // Declare all locals in a single, top-level block so that the scope is correct in the debugger
             // (Dev10 has them all come into scope at once, not per-declaration.)
@@ -82,18 +79,18 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <summary>
         /// Lower "[await] using var x = (expression)" to a try-finally block.
         /// </summary>
-        private BoundStatement MakeLocalUsingDeclarationStatement(BoundUsingLocalDeclarations usingDeclarations, ImmutableArray<BoundStatement> statements)
+        private BoundStatement MakeLocalUsingDeclarationStatement(BoundUsingLocalDeclaration usingDeclaration, ImmutableArray<BoundStatement> statements)
         {
-            LocalDeclarationStatementSyntax syntax = (LocalDeclarationStatementSyntax)usingDeclarations.Syntax;
+            LocalDeclarationStatementSyntax syntax = (LocalDeclarationStatementSyntax)usingDeclaration.Syntax;
             BoundBlock body = new BoundBlock(syntax, ImmutableArray<LocalSymbol>.Empty, statements);
 
             var usingStatement = MakeDeclarationUsingStatement(syntax,
                                                                body,
                                                                ImmutableArray<LocalSymbol>.Empty,
-                                                               usingDeclarations.LocalDeclarations,
-                                                               usingDeclarations.IDisposableConversion,
-                                                               usingDeclarations.DisposeMethodOpt,
-                                                               awaitOpt: usingDeclarations.AwaitOpt,
+                                                               usingDeclaration.Declaration,
+                                                               usingDeclaration.IDisposableConversion,
+                                                               usingDeclaration.DisposeMethodOpt,
+                                                               awaitOpt: usingDeclaration.AwaitOpt,
                                                                awaitKeyword: syntax.AwaitKeyword);
 
             return usingStatement;
@@ -105,7 +102,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         private BoundBlock MakeExpressionUsingStatement(BoundUsingStatement node, BoundBlock tryBlock)
         {
             Debug.Assert(node.ExpressionOpt != null);
-            Debug.Assert(node.DeclarationsOpt == null);
+            Debug.Assert(node.DeclarationOpt == null);
 
             // See comments in BuildUsingTryFinally for the details of the lowering to try-finally.
             //

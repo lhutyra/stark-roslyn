@@ -35,7 +35,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             // All declarators in a declaration get the same doc comment.
             // (As a consequence, the same duplicate diagnostics are produced for each declarator.)
-            if (syntaxNode.Kind() == SyntaxKind.VariableDeclarator)
+            if (syntaxNode.Kind() == SyntaxKind.VariableDeclaration)
             {
                 CSharpSyntaxNode curr = syntaxNode;
                 while ((object)curr != null)

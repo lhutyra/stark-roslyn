@@ -36,13 +36,12 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
             else
             {
-                var locals = ArrayBuilder<LocalSymbol>.GetInstance(declarationSyntax.Variables.Count);
-                foreach (VariableDeclaratorSyntax declarator in declarationSyntax.Variables)
+                var locals = ArrayBuilder<LocalSymbol>.GetInstance(1);
                 {
-                    locals.Add(MakeLocal(declarationSyntax, declarator, LocalDeclarationKind.UsingVariable));
+                    locals.Add(MakeLocal(declarationSyntax, LocalDeclarationKind.UsingVariable));
 
                     // also gather expression-declared variables from the bracketed argument lists and the initializers
-                    ExpressionVariableFinder.FindExpressionVariables(this, locals, declarator);
+                    ExpressionVariableFinder.FindExpressionVariables(this, locals, declarationSyntax);
                 }
 
                 return locals.ToImmutableAndFree();
@@ -84,8 +83,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             bool hasErrors = ReportUseSiteDiagnostics(disposableInterface, diagnostics, hasAwait ? awaitKeyword : usingKeyword);
 
             Conversion iDisposableConversion = Conversion.NoConversion;
-            ImmutableArray<BoundLocalDeclaration> declarationsOpt = default;
-            BoundMultipleLocalDeclarations multipleDeclarationsOpt = null;
+            BoundLocalDeclaration declarationOpt = default;
             BoundExpression expressionOpt = null;
             AwaitableInfo awaitOpt = null;
             TypeSymbol declarationTypeOpt = null;
@@ -99,11 +97,10 @@ namespace Microsoft.CodeAnalysis.CSharp
             else
             {
                 VariableDeclarationSyntax declarationSyntax = isUsingDeclaration ? ((LocalDeclarationStatementSyntax)syntax).Declaration : (VariableDeclarationSyntax)syntax;
-                originalBinder.BindForOrUsingOrFixedDeclarations(declarationSyntax, LocalDeclarationKind.UsingVariable, diagnostics, out declarationsOpt);
+                declarationOpt = originalBinder.BindForOrUsingOrFixedDeclarations(declarationSyntax, LocalDeclarationKind.UsingVariable, diagnostics);
 
-                Debug.Assert(!declarationsOpt.IsEmpty);
-                multipleDeclarationsOpt = new BoundMultipleLocalDeclarations(declarationSyntax, declarationsOpt);
-                declarationTypeOpt = declarationsOpt[0].DeclaredType.Type;
+                Debug.Assert(declarationOpt != null);
+                declarationTypeOpt = declarationOpt.DeclaredType.Type;
 
                 if (declarationTypeOpt.IsDynamic())
                 {
@@ -128,7 +125,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // In the future it might be better to have a seperate shared type that we add the info to, and have the callers create the appropriate bound nodes from it
             if (isUsingDeclaration)
             {
-                return new BoundUsingLocalDeclarations(syntax, disposeMethodOpt, iDisposableConversion, awaitOpt, declarationsOpt, hasErrors);
+                return new BoundUsingLocalDeclaration(syntax, disposeMethodOpt, iDisposableConversion, awaitOpt, declarationOpt, hasErrors);
             }
             else
             {
@@ -137,7 +134,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 return new BoundUsingStatement(
                     usingBinderOpt._syntax,
                     usingBinderOpt.Locals,
-                    multipleDeclarationsOpt,
+                    declarationOpt,
                     expressionOpt,
                     iDisposableConversion,
                     boundBody,
@@ -166,7 +163,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 {
                     BoundExpression receiver = fromExpression
                                                ? expressionOpt
-                                               : new BoundLocal(syntax, declarationsOpt[0].LocalSymbol, null, type) { WasCompilerGenerated = true };
+                                               : new BoundLocal(syntax, declarationOpt.LocalSymbol, null, type) { WasCompilerGenerated = true };
 
                     disposeMethodOpt = originalBinder.TryFindDisposePatternMethod(receiver, syntax, hasAwait, diagnostics);
                     if (!(disposeMethodOpt is null))

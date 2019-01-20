@@ -66,14 +66,9 @@ namespace Microsoft.CodeAnalysis.Operations
             return new VariableDeclarationGroupOperation(VisitArray(operation.Declarations), ((Operation)operation).OwningSemanticModel, operation.Syntax, operation.Type, operation.ConstantValue, operation.IsImplicit);
         }
 
-        public override IOperation VisitVariableDeclarator(IVariableDeclaratorOperation operation, object argument)
-        {
-            return new VariableDeclaratorOperation(operation.Symbol, Visit(operation.Initializer), VisitArray(operation.IgnoredArguments), ((Operation)operation).OwningSemanticModel, operation.Syntax, operation.Type, operation.ConstantValue, operation.IsImplicit);
-        }
-
         public override IOperation VisitVariableDeclaration(IVariableDeclarationOperation operation, object argument)
         {
-            return new VariableDeclarationOperation(VisitArray(operation.Declarators), Visit(operation.Initializer), ((Operation)operation).OwningSemanticModel, operation.Syntax, operation.Type, operation.ConstantValue, operation.IsImplicit);
+            return new VariableDeclarationOperation(operation.Symbol, Visit(operation.Initializer), VisitArray(operation.IgnoredArguments), ((Operation)operation).OwningSemanticModel, operation.Syntax, operation.Type, operation.ConstantValue, operation.IsImplicit);
         }
 
         public override IOperation VisitConversion(IConversionOperation operation, object argument)

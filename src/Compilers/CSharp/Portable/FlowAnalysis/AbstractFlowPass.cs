@@ -1849,25 +1849,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             return null;
         }
 
-        public override BoundNode VisitMultipleLocalDeclarations(BoundMultipleLocalDeclarations node)
-        {
-            foreach (var v in node.LocalDeclarations)
-            {
-                Visit(v);
-            }
-
-            return null;
-        }
-
-        public override BoundNode VisitUsingLocalDeclarations(BoundUsingLocalDeclarations node)
-        {
-            if (AwaitUsingAndForeachAddsPendingBranch && node.AwaitOpt != null)
-            {
-                PendingBranches.Add(new PendingBranch(node, this.State, null));
-            }
-            return VisitMultipleLocalDeclarations(node);
-        }
-
         public override BoundNode VisitWhileStatement(BoundWhileStatement node)
         {
             // while (node.Condition) { node.Body; node.ContinueLabel: } node.BreakLabel:
@@ -2559,9 +2540,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                 VisitRvalue(node.ExpressionOpt);
             }
 
-            if (node.DeclarationsOpt != null)
+            if (node.DeclarationOpt != null)
             {
-                VisitStatement(node.DeclarationsOpt);
+                VisitStatement(node.DeclarationOpt);
             }
 
             VisitStatement(node.Body);
@@ -2577,7 +2558,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public override BoundNode VisitFixedStatement(BoundFixedStatement node)
         {
-            VisitStatement(node.Declarations);
+            VisitStatement(node.Declaration);
             VisitStatement(node.Body);
             return null;
         }

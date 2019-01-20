@@ -14,13 +14,13 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
         {
             private readonly SemanticModel _semanticModel;
             private readonly ILocalSymbol _localSymbol;
-            private readonly VariableDeclaratorSyntax _variableDeclarator;
+            private readonly VariableDeclarationSyntax _variableDeclarator;
             private readonly ExpressionSyntax _expressionToInline;
             private readonly CancellationToken _cancellationToken;
 
             private ReferenceRewriter(
                 SemanticModel semanticModel,
-                VariableDeclaratorSyntax variableDeclarator,
+                VariableDeclarationSyntax variableDeclarator,
                 ExpressionSyntax expressionToInline,
                 CancellationToken cancellationToken)
             {
@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             public static SyntaxNode Visit(
                 SemanticModel semanticModel,
                 SyntaxNode scope,
-                VariableDeclaratorSyntax variableDeclarator,
+                VariableDeclarationSyntax variableDeclarator,
                 ExpressionSyntax expressionToInline,
                 CancellationToken cancellationToken)
             {

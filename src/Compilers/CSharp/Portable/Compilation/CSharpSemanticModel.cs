@@ -532,7 +532,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                         return GetSymbolInfoFromSymbolOrNone(GetTypeInfoWorker(parent, cancellationToken).Type);
 
                     case SyntaxKind.ParenthesizedVariableDesignation:
-                        if (((TypeSyntax)expression).IsVar)
+                        if (((TypeSyntax)expression).IsNullWithNoType())
                         {
                             return SymbolInfo.None;
                         }
@@ -870,7 +870,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                         return new CSharpTypeInfo(declarationType, declarationType, Conversion.Identity);
 
                     case SyntaxKind.ParenthesizedVariableDesignation:
-                        if (((TypeSyntax)expression).IsVar)
+                        if (((TypeSyntax)expression).IsNullWithNoType())
                         {
                             return CSharpTypeInfo.None;
                         }
@@ -2872,7 +2872,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <param name="declarationSyntax">The syntax node that declares a variable.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbol that was declared.</returns>
-        public abstract ISymbol GetDeclaredSymbol(VariableDeclaratorSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract ISymbol GetDeclaredSymbol(VariableDeclarationSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Given a variable designation syntax, get the corresponding symbol.
@@ -4758,8 +4758,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return this.GetDeclaredSymbol((TupleExpressionSyntax)node, cancellationToken);
                 case SyntaxKind.Argument:
                     return this.GetDeclaredSymbol((ArgumentSyntax)node, cancellationToken);
-                case SyntaxKind.VariableDeclarator:
-                    return this.GetDeclaredSymbol((VariableDeclaratorSyntax)node, cancellationToken);
+                case SyntaxKind.VariableDeclaration:
+                    return this.GetDeclaredSymbol((VariableDeclarationSyntax)node, cancellationToken);
                 case SyntaxKind.SingleVariableDesignation:
                     return this.GetDeclaredSymbol((SingleVariableDesignationSyntax)node, cancellationToken);
                 case SyntaxKind.TupleElement:

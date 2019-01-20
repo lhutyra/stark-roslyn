@@ -117,34 +117,10 @@ namespace Microsoft.CodeAnalysis.Operations
             var arrayBuilder = ArrayBuilder<ILocalSymbol>.GetInstance();
             foreach (IVariableDeclarationOperation group in declarationGroup.Declarations)
             {
-                group.GetDeclaredVariables(arrayBuilder);
+                arrayBuilder.Add(group.Symbol);                
             }
 
             return arrayBuilder.ToImmutableAndFree();
-        }
-
-        /// <summary>
-        /// Gets all the declared local variables in the given <paramref name="declaration"/>.
-        /// </summary>
-        /// <param name="declaration">Variable declaration</param>
-        public static ImmutableArray<ILocalSymbol> GetDeclaredVariables(this IVariableDeclarationOperation declaration)
-        {
-            if (declaration == null)
-            {
-                throw new ArgumentNullException(nameof(declaration));
-            }
-
-            var arrayBuilder = ArrayBuilder<ILocalSymbol>.GetInstance();
-            declaration.GetDeclaredVariables(arrayBuilder);
-            return arrayBuilder.ToImmutableAndFree();
-        }
-
-        private static void GetDeclaredVariables(this IVariableDeclarationOperation declaration, ArrayBuilder<ILocalSymbol> arrayBuilder)
-        {
-            foreach (var decl in declaration.Declarators)
-            {
-                arrayBuilder.Add(decl.Symbol);
-            }
         }
 
         /// <summary>
@@ -152,7 +128,7 @@ namespace Microsoft.CodeAnalysis.Operations
         /// if the single variable initializer is null.
         /// </summary>
         /// <param name="declarationOperation">Single variable declaration to retrieve initializer for.</param>
-        public static IVariableInitializerOperation GetVariableInitializer(this IVariableDeclaratorOperation declarationOperation)
+        public static IVariableInitializerOperation GetVariableInitializer(this IVariableDeclarationOperation declarationOperation)
         {
             if (declarationOperation == null)
             {

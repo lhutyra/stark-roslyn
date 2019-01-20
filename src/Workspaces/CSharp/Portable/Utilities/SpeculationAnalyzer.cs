@@ -314,13 +314,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
             {
                 return ReplacementBreaksQueryClause(queryClause, (QueryClauseSyntax)currentReplacedNode);
             }
-            else if (currentOriginalNode.Kind() == SyntaxKind.VariableDeclarator)
+            else if (currentOriginalNode.Kind() == SyntaxKind.VariableDeclaration)
             {
                 // Heuristic: If replacing the node will result in changing the type of a local variable
                 // that is type-inferred, we won't remove it. It's possible to do this analysis, but it's
                 // very expensive and the benefit to the user is small.
-                var originalDeclarator = (VariableDeclaratorSyntax)currentOriginalNode;
-                var newDeclarator = (VariableDeclaratorSyntax)currentReplacedNode;
+                var originalDeclarator = (VariableDeclarationSyntax)currentOriginalNode;
+                var newDeclarator = (VariableDeclarationSyntax)currentReplacedNode;
 
                 if (originalDeclarator.Initializer == null)
                 {

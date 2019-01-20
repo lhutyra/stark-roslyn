@@ -124,7 +124,7 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
             return node.FirstAncestorOrSelf<SyntaxNode>(
                 n => syntaxFacts.IsStatement(n) ||
                      syntaxFacts.IsParameter(n) ||
-                     syntaxFacts.IsVariableDeclarator(n) ||
+                     syntaxFacts.IsVariableDeclaration(n) ||
                      n.Parent == null);
         }
 

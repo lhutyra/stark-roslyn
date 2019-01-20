@@ -366,10 +366,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
             else
             {
-                foreach (VariableDeclaratorSyntax declarator in declarationSyntax.Variables)
-                {
-                    Visit(declarator, usingBinder);
-                }
+                Visit(declarationSyntax, usingBinder);
             }
 
             VisitPossibleEmbeddedStatement(node.Statement, usingBinder);
@@ -404,10 +401,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             VariableDeclarationSyntax declaration = node.Declaration;
             if (declaration != null)
             {
-                foreach (VariableDeclaratorSyntax variable in declaration.Variables)
-                {
-                    Visit(variable, binder);
-                }
+                Visit(declaration, binder);
             }
             else
             {
@@ -487,10 +481,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             if (node.Declaration != null)
             {
-                foreach (VariableDeclaratorSyntax declarator in node.Declaration.Variables)
-                {
-                    Visit(declarator, binder);
-                }
+                Visit(node.Declaration, binder);
             }
 
             VisitPossibleEmbeddedStatement(node.Statement, binder);
@@ -687,15 +678,11 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public override void VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
         {
-            foreach (VariableDeclaratorSyntax decl in node.Declaration.Variables)
-            {
-                Visit(decl);
-            }
+            Visit(node.Declaration);
         }
 
-        public override void VisitVariableDeclarator(VariableDeclaratorSyntax node)
+        public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
-            Visit(node.ArgumentList);
             Visit(node.Initializer?.Value);
         }
 

@@ -3374,9 +3374,9 @@ oneMoreTime:
             {
                 IOperation exceptionTarget;
                 SyntaxNode syntax = exceptionDeclarationOrExpression.Syntax;
-                if (exceptionDeclarationOrExpression.Kind == OperationKind.VariableDeclarator)
+                if (exceptionDeclarationOrExpression.Kind == OperationKind.VariableDeclaration)
                 {
-                    ILocalSymbol local = ((IVariableDeclaratorOperation)exceptionDeclarationOrExpression).Symbol;
+                    ILocalSymbol local = ((IVariableDeclarationOperation)exceptionDeclarationOrExpression).Symbol;
                     exceptionTarget = new LocalReferenceOperation(local,
                                                                   isDeclaration: true,
                                                                   semanticModel: null,
@@ -3538,14 +3538,11 @@ oneMoreTime:
             if (operation.Resources.Kind == OperationKind.VariableDeclarationGroup)
             {
                 var declarationGroup = (IVariableDeclarationGroupOperation)operation.Resources;
-                var resourceQueue = ArrayBuilder<(IVariableDeclarationOperation, IVariableDeclaratorOperation)>.GetInstance(declarationGroup.Declarations.Length);
+                var resourceQueue = ArrayBuilder<IVariableDeclarationOperation>.GetInstance(declarationGroup.Declarations.Length);
 
                 foreach (IVariableDeclarationOperation declaration in declarationGroup.Declarations)
                 {
-                    foreach (IVariableDeclaratorOperation declarator in declaration.Declarators)
-                    {
-                        resourceQueue.Add((declaration, declarator));
-                    }
+                    resourceQueue.Add(declaration);
                 }
 
                 resourceQueue.ReverseContents();
@@ -3555,7 +3552,7 @@ oneMoreTime:
             else
             {
                 Debug.Assert(operation.Resources.Kind != OperationKind.VariableDeclaration);
-                Debug.Assert(operation.Resources.Kind != OperationKind.VariableDeclarator);
+                Debug.Assert(operation.Resources.Kind != OperationKind.VariableDeclaration);
 
                 EvalStackFrame frame = PushStackFrame();
                 IOperation resource = Visit(operation.Resources);
@@ -3578,7 +3575,7 @@ oneMoreTime:
             LeaveRegion();
             return FinishVisitingStatement(operation);
 
-            void processQueue(ArrayBuilder<(IVariableDeclarationOperation, IVariableDeclaratorOperation)> resourceQueueOpt)
+            void processQueue(ArrayBuilder<IVariableDeclarationOperation> resourceQueueOpt)
             {
                 if (resourceQueueOpt == null || resourceQueueOpt.Count == 0)
                 {
@@ -3586,10 +3583,10 @@ oneMoreTime:
                 }
                 else
                 {
-                    (IVariableDeclarationOperation declaration, IVariableDeclaratorOperation declarator) = resourceQueueOpt.Pop();
-                    HandleVariableDeclarator(declaration, declarator);
-                    ILocalSymbol localSymbol = declarator.Symbol;
-                    processResource(new LocalReferenceOperation(localSymbol, isDeclaration: false, semanticModel: null, declarator.Syntax, localSymbol.Type,
+                    IVariableDeclarationOperation declaration = resourceQueueOpt.Pop();
+                    HandleVariableDeclaration(declaration);
+                    ILocalSymbol localSymbol = declaration.Symbol;
+                    processResource(new LocalReferenceOperation(localSymbol, isDeclaration: false, semanticModel: null, declaration.Syntax, localSymbol.Type,
                                                                  constantValue: default, isImplicit: true),
                                     resourceQueueOpt);
                 }
@@ -3600,7 +3597,7 @@ oneMoreTime:
                 return resource.Type == null || resource.Type.Kind == SymbolKind.DynamicType;
             }
 
-            void processResource(IOperation resource, ArrayBuilder<(IVariableDeclarationOperation, IVariableDeclaratorOperation)> resourceQueueOpt)
+            void processResource(IOperation resource, ArrayBuilder<IVariableDeclarationOperation> resourceQueueOpt)
             {
                 // When ResourceType is a non-nullable value type, the expansion is:
                 //
@@ -3927,7 +3924,7 @@ oneMoreTime:
 
             RegionBuilder regionForCollection = null;
 
-            if (!operation.Locals.IsEmpty && operation.LoopControlVariable.Kind == OperationKind.VariableDeclarator)
+            if (!operation.Locals.IsEmpty && operation.LoopControlVariable.Kind == OperationKind.VariableDeclaration)
             {
                 // VB has rather interesting scoping rules for control variable.
                 // It is in scope in the collection expression. However, it is considered to be
@@ -3938,7 +3935,7 @@ oneMoreTime:
                 // Rather than introducing a separate local symbol, we will simply add another
                 // lifetime region for that local around the collection expression.
 
-                var declarator = (IVariableDeclaratorOperation)operation.LoopControlVariable;
+                var declarator = (IVariableDeclarationOperation)operation.LoopControlVariable;
                 ILocalSymbol local = declarator.Symbol;
 
                 foreach (IOperation op in operation.Collection.DescendantsAndSelf())
@@ -4088,8 +4085,8 @@ oneMoreTime:
             {
                 switch (operation.LoopControlVariable.Kind)
                 {
-                    case OperationKind.VariableDeclarator:
-                        var declarator = (IVariableDeclaratorOperation)operation.LoopControlVariable;
+                    case OperationKind.VariableDeclaration:
+                        var declarator = (IVariableDeclarationOperation)operation.LoopControlVariable;
                         ILocalSymbol local = declarator.Symbol;
                         current = applyConversion(info?.ElementConversion, current, local.Type);
 
@@ -4829,8 +4826,8 @@ oneMoreTime:
             {
                 switch (operation.LoopControlVariable.Kind)
                 {
-                    case OperationKind.VariableDeclarator:
-                        var declarator = (IVariableDeclaratorOperation)operation.LoopControlVariable;
+                    case OperationKind.VariableDeclaration:
+                        var declarator = (IVariableDeclarationOperation)operation.LoopControlVariable;
                         ILocalSymbol local = declarator.Symbol;
 
                         return new LocalReferenceOperation(local, isDeclaration: true, semanticModel: null,
@@ -5208,22 +5205,14 @@ oneMoreTime:
             }
         }
 
-        private void HandleVariableDeclaration(IVariableDeclarationOperation operation)
+        private void HandleVariableDeclaration(IVariableDeclarationOperation declaration)
         {
-            foreach (IVariableDeclaratorOperation declarator in operation.Declarators)
-            {
-                HandleVariableDeclarator(operation, declarator);
-            }
-        }
-
-        private void HandleVariableDeclarator(IVariableDeclarationOperation declaration, IVariableDeclaratorOperation declarator)
-        {
-            if (declarator.Initializer == null && declaration.Initializer == null)
+            if (declaration.Initializer == null && declaration.Initializer == null)
             {
                 return;
             }
 
-            ILocalSymbol localSymbol = declarator.Symbol;
+            ILocalSymbol localSymbol = declaration.Symbol;
 
             // If the local is a static (possible in VB), then we create a semaphore for conditional execution of the initializer.
             BasicBlockBuilder afterInitialization = null;
@@ -5232,7 +5221,7 @@ oneMoreTime:
                 afterInitialization = new BasicBlockBuilder(BasicBlockKind.Block);
 
                 ITypeSymbol booleanType = _compilation.GetSpecialType(SpecialType.System_Boolean);
-                var initializationSemaphore = new StaticLocalInitializationSemaphoreOperation(localSymbol, declarator.Syntax, booleanType);
+                var initializationSemaphore = new StaticLocalInitializationSemaphoreOperation(localSymbol, declaration.Syntax, booleanType);
                 ConditionalBranch(initializationSemaphore, jumpIfTrue: false, afterInitialization);
 
                 _currentBasicBlock = null;
@@ -5243,10 +5232,10 @@ oneMoreTime:
 
             IOperation initializer = null;
             SyntaxNode assignmentSyntax = null;
-            if (declarator.Initializer != null)
+            if (declaration.Initializer != null)
             {
-                initializer = Visit(declarator.Initializer.Value);
-                assignmentSyntax = declarator.Syntax;
+                initializer = Visit(declaration.Initializer.Value);
+                assignmentSyntax = declaration.Syntax;
             }
 
             if (declaration.Initializer != null)
@@ -5275,7 +5264,7 @@ oneMoreTime:
 
             // We can't use the IdentifierToken as the syntax for the local reference, so we use the
             // entire declarator as the node
-            var localRef = new LocalReferenceOperation(localSymbol, isDeclaration: true, semanticModel: null, declarator.Syntax, localSymbol.Type, constantValue: default, isImplicit: true);
+            var localRef = new LocalReferenceOperation(localSymbol, isDeclaration: true, semanticModel: null, declaration.Syntax, localSymbol.Type, constantValue: default, isImplicit: true);
             var assignment = new SimpleAssignmentOperation(localRef, isRef: localSymbol.IsRef, initializer, semanticModel: null, assignmentSyntax, localRef.Type, constantValue: default, isImplicit: true);
             AddStatement(assignment);
 
@@ -5291,12 +5280,6 @@ oneMoreTime:
         public override IOperation VisitVariableDeclaration(IVariableDeclarationOperation operation, int? captureIdForResult)
         {
             // All variable declarators should be handled by VisitVariableDeclarationGroup.
-            throw ExceptionUtilities.Unreachable;
-        }
-
-        public override IOperation VisitVariableDeclarator(IVariableDeclaratorOperation operation, int? captureIdForResult)
-        {
-            // All variable declarators should be handled by VisitVariableDeclaration.
             throw ExceptionUtilities.Unreachable;
         }
 

@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
     {
         private readonly SourceEventSymbol _associatedEvent;
 
-        internal SourceEventFieldSymbol(SourceEventSymbol associatedEvent, VariableDeclaratorSyntax declaratorSyntax, DiagnosticBag discardedDiagnostics)
+        internal SourceEventFieldSymbol(SourceEventSymbol associatedEvent, VariableDeclarationSyntax declaratorSyntax, DiagnosticBag discardedDiagnostics)
             : base(associatedEvent.containingType,
                    declaratorSyntax,
                    (associatedEvent.Modifiers & (~DeclarationModifiers.AccessibilityMask)) | DeclarationModifiers.Private,

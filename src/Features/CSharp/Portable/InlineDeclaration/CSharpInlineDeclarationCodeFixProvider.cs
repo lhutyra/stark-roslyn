@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis.CSharp.InlineDeclaration
 
             var root = declaratorLocation.SourceTree.GetRoot(cancellationToken);
 
-            var declarator = (VariableDeclaratorSyntax)declaratorLocation.FindNode(cancellationToken);
+            var declarator = (VariableDeclarationSyntax)declaratorLocation.FindNode(cancellationToken);
             var identifier = (IdentifierNameSyntax)identifierLocation.FindNode(cancellationToken);
             var invocationOrCreation = (ExpressionSyntax)invocationOrCreationLocation.FindNode(
                 getInnermostNodeForTie: true, cancellationToken: cancellationToken);
@@ -164,13 +164,13 @@ namespace Microsoft.CodeAnalysis.CSharp.InlineDeclaration
             var semanticsChanged = await SemanticsChangedAsync(
                 document, declaration, invocationOrCreation, newType,
                 identifier, declarationExpression, cancellationToken).ConfigureAwait(false);
-            if (semanticsChanged && newType.IsVar)
+            if (semanticsChanged && newType.IsNullWithNoType())
             {
                 // Switching to 'var' changed semantics.  Just use the original type of the local.
 
                 // If the user originally wrote it something other than 'var', then use what they
                 // wrote.  Otherwise, synthesize the actual type of the local.
-                var explicitType = declaration.Type.IsVar ? local.Type?.GenerateTypeSyntax() : declaration.Type;
+                var explicitType = declaration.Type.IsNullWithNoType() ? local.Type?.GenerateTypeSyntax() : declaration.Type;
                 declarationExpression = GetDeclarationExpression(
                     sourceText, identifier, explicitType, singleDeclarator ? null : declarator);
             }
@@ -206,7 +206,7 @@ namespace Microsoft.CodeAnalysis.CSharp.InlineDeclaration
 
         private static DeclarationExpressionSyntax GetDeclarationExpression(
             SourceText sourceText, IdentifierNameSyntax identifier,
-            TypeSyntax newType, VariableDeclaratorSyntax declaratorOpt)
+            TypeSyntax newType, VariableDeclarationSyntax declaratorOpt)
         {
             newType = newType.WithoutTrivia().WithAdditionalAnnotations(Formatter.Annotation);
             var designation = SyntaxFactory.SingleVariableDesignation(identifier.Identifier);
@@ -261,7 +261,7 @@ namespace Microsoft.CodeAnalysis.CSharp.InlineDeclaration
             DeclarationExpressionSyntax declarationExpression,
             CancellationToken cancellationToken)
         {
-            if (newType.IsVar)
+            if (newType.IsNullWithNoType())
             {
                 // Options want us to use 'var' if we can.  Make sure we didn't change
                 // the semantics of the call by doing this.

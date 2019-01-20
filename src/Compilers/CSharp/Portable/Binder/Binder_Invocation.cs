@@ -871,18 +871,29 @@ namespace Microsoft.CodeAnalysis.CSharp
                         {
                             // error CS0029: Cannot implicitly convert type 'A' to 'B'
 
-                            // Case 1: receiver is a restricted type, and method called is defined on a parent type
-                            if (call.ReceiverOpt.Type.IsRestrictedType() && !TypeSymbol.Equals(call.Method.ContainingType, call.ReceiverOpt.Type, TypeCompareKind.ConsiderEverything2))
+                            // TODO: TypeAccessModifiers, not sure this is correct to do that here
+                            var receiverType = call.ReceiverOpt.Type;
+                            if (receiverType is NamedTypeSymbol receiverNamedType)
                             {
-                                SymbolDistinguisher distinguisher = new SymbolDistinguisher(compilation, call.ReceiverOpt.Type, call.Method.ContainingType);
+                                receiverType = receiverNamedType.GetWithoutModifiers();
+                            }
+                            var plainContainingType = call.Method.ContainingType.GetWithoutModifiers();
+
+                            // Case 1: receiver is a restricted type, and method called is defined on a parent type
+                            if (call.ReceiverOpt.Type.IsRestrictedType() && !TypeSymbol.Equals(plainContainingType, receiverType, TypeCompareKind.ConsiderEverything2))
+                            {
+                                SymbolDistinguisher distinguisher = new SymbolDistinguisher(compilation, receiverType, plainContainingType);
                                 Error(diagnostics, ErrorCode.ERR_NoImplicitConv, call.ReceiverOpt.Syntax, distinguisher.First, distinguisher.Second);
                             }
                             // Case 2: receiver is a base reference, and the the child type is restricted
                             else if (call.ReceiverOpt.Kind == BoundKind.BaseReference && this.ContainingType.IsRestrictedType())
                             {
-                                SymbolDistinguisher distinguisher = new SymbolDistinguisher(compilation, this.ContainingType, call.Method.ContainingType);
+                                SymbolDistinguisher distinguisher = new SymbolDistinguisher(compilation, this.ContainingType, plainContainingType);
                                 Error(diagnostics, ErrorCode.ERR_NoImplicitConv, call.ReceiverOpt.Syntax, distinguisher.First, distinguisher.Second);
                             }
+
+                            // Check type access
+                            VerifyExtendedTypeAccess(call, diagnostics);
                         }
                     }
                     break;
@@ -901,6 +912,30 @@ namespace Microsoft.CodeAnalysis.CSharp
                     break;
                 default:
                     throw ExceptionUtilities.UnexpectedValue(expression.Kind);
+            }
+        }
+
+        private void VerifyExtendedTypeAccess(BoundCall call, DiagnosticBag diagnostics)
+        {
+            Debug.Assert(call.ReceiverOpt != null && (object)call.ReceiverOpt.Type != null);
+
+            var source = call.ReceiverOpt.Type;
+            var destination = call.Method.ContainingType;
+
+            TypeAccessModifiers destModifiers;
+            var requiredModifiers = source.GetRequiredAccessModifiers(destination, out destModifiers);
+
+            if (requiredModifiers != TypeAccessModifiers.None)
+            {
+                // We are trying to call a transient method while the source is not transient
+                if (destModifiers == TypeAccessModifiers.None)
+                {
+                    Error(diagnostics, ErrorCode.ERR_AccessInvalidEmpty, call.Syntax, (object)call.Syntax, requiredModifiers);
+                }
+                else
+                {
+                    Error(diagnostics, ErrorCode.ERR_AccessInvalid, call.Syntax, (object)call.Syntax, destModifiers, requiredModifiers);
+                }
             }
         }
 

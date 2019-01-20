@@ -11,7 +11,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Diagnostics.NamingStyles
     {
         protected override ImmutableArray<SyntaxKind> SupportedSyntaxKinds { get; } =
             ImmutableArray.Create(
-                SyntaxKind.VariableDeclarator,
+                SyntaxKind.VariableDeclaration,
                 SyntaxKind.ForEachStatement,
                 SyntaxKind.CatchDeclaration,
                 SyntaxKind.SingleVariableDesignation,

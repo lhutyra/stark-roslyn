@@ -214,6 +214,24 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The member `{0}` with access modifiers `{1}` cannot be accessed with the requested access modifiers `{2}`.
+        /// </summary>
+        internal static string ERR_AccessInvalid {
+            get {
+                return ResourceManager.GetString("ERR_AccessInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The member `{0}` with no access modifiers cannot be accessed with the requested access modifiers `{1}`.
+        /// </summary>
+        internal static string ERR_AccessInvalidEmpty {
+            get {
+                return ResourceManager.GetString("ERR_AccessInvalidEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos;: accessibility modifiers on accessors may only be used if the property or indexer has both a get and a set accessor.
         /// </summary>
         internal static string ERR_AccessModMissingAccessor {

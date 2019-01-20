@@ -1432,7 +1432,8 @@ namespace Microsoft.CodeAnalysis.CSharp
             var declaringType = members[0].ContainingType;
 
             HashSet<DiagnosticInfo> unused = null;
-            if (currentType.IsEqualToOrDerivedFrom(declaringType, TypeCompareKind.ConsiderEverything, useSiteDiagnostics: ref unused))
+            var currentTypeWithoutModifiers = currentType.GetWithoutModifiers();
+            if (currentTypeWithoutModifiers.IsEqualToOrDerivedFrom(declaringType, TypeCompareKind.ConsiderEverything, useSiteDiagnostics: ref unused))
             {
                 return ThisReference(syntax, currentType, wasCompilerGenerated: true);
             }
@@ -1656,7 +1657,8 @@ namespace Microsoft.CodeAnalysis.CSharp
             var currentType = this.ContainingType;
             HashSet<DiagnosticInfo> useSiteDiagnostics = null;
 
-            if (currentType.IsEqualToOrDerivedFrom(member.ContainingType, TypeCompareKind.ConsiderEverything, useSiteDiagnostics: ref useSiteDiagnostics))
+            var currentTypeWithoutModifiers = currentType.GetWithoutModifiers();
+            if (currentTypeWithoutModifiers.IsEqualToOrDerivedFrom(member.ContainingType, TypeCompareKind.ConsiderEverything, useSiteDiagnostics: ref useSiteDiagnostics))
             {
                 bool hasErrors = false;
                 if (EnclosingNameofArgument != node)
@@ -2510,7 +2512,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             BoundExpression receiver = SynthesizeReceiver(designation, expressionVariableField, diagnostics);
 
-            if (typeSyntax.IsVar)
+            if (typeSyntax.IsNullWithNoType())
             {
                 var ignored = DiagnosticBag.GetInstance();
                 BindTypeOrAliasOrVarKeyword(typeSyntax, ignored, out isVar);
@@ -4841,7 +4843,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     constantValueOpt,
                     boundInitializerOpt,
                     this,
-                    type,
+                    initializerTypeOpt ?? type,
                     hasError);
 
                 // CONSIDER: Add ResultKind field to BoundObjectCreationExpression to avoid wrapping result with BoundBadExpression.

@@ -1346,13 +1346,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                                 {
                                     memberName = null;
 
-                                    foreach (VariableDeclaratorSyntax varDecl in fieldDecl.Declaration.Variables)
                                     {
-                                        EqualsValueClauseSyntax initializer = varDecl.Initializer;
+                                        EqualsValueClauseSyntax initializer = fieldDecl.Declaration.Initializer;
 
                                         if (initializer != null && initializer.Span.Contains(syntax.Span))
                                         {
-                                            memberName = varDecl.Identifier.ValueText;
+                                            memberName = fieldDecl.Declaration.Identifier.ValueText;
                                             break;
                                         }
                                     }

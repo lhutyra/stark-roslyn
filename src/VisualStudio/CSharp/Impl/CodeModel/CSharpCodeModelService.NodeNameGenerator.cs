@@ -192,8 +192,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                         builder.Append(enumMemberDeclaration.Identifier.ValueText);
                         break;
 
-                    case SyntaxKind.VariableDeclarator:
-                        var variableDeclarator = (VariableDeclaratorSyntax)node;
+                    case SyntaxKind.VariableDeclaration:
+                        var variableDeclarator = (VariableDeclarationSyntax)node;
                         builder.Append(variableDeclarator.Identifier.ValueText);
                         break;
 

@@ -3733,6 +3733,18 @@ namespace Microsoft.Cci
                     continue;
                 }
 
+                var extendedTypeReference = typeReference as IExtendedTypeReference;
+                if (extendedTypeReference != null)
+                {
+                    // ELEMENT_TYPE_WITH_ACCESS_MODIFIERS: 0x60
+                    encoder.Builder.WriteByte(0x60);
+                    byte modifiers = (byte)extendedTypeReference.AccessModifiers;
+                    encoder.Builder.WriteByte(modifiers);
+
+                    typeReference = extendedTypeReference.GetElementType(Context);
+                    continue;
+                }
+
                 var primitiveType = typeReference.TypeCode;
                 if (primitiveType != PrimitiveTypeCode.Pointer && primitiveType != PrimitiveTypeCode.NotPrimitive)
                 {

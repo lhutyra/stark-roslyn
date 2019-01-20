@@ -181,7 +181,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         public override BoundNode VisitUsingStatement(BoundUsingStatement node)
         {
             var newLocals = RewriteLocals(node.Locals);
-            BoundMultipleLocalDeclarations declarationsOpt = (BoundMultipleLocalDeclarations)this.Visit(node.DeclarationsOpt);
+            BoundLocalDeclaration declarationsOpt = (BoundLocalDeclaration)this.Visit(node.DeclarationOpt);
             BoundExpression expressionOpt = (BoundExpression)this.Visit(node.ExpressionOpt);
             BoundStatement body = (BoundStatement)this.Visit(node.Body);
             Conversion disposableConversion = RewriteConversion(node.IDisposableConversion);

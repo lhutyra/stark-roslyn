@@ -18,11 +18,11 @@ namespace Microsoft.CodeAnalysis.CSharp.UseAutoProperty
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(CSharpUseAutoPropertyCodeFixProvider)), Shared]
     internal class CSharpUseAutoPropertyCodeFixProvider
-        : AbstractUseAutoPropertyCodeFixProvider<TypeDeclarationSyntax, PropertyDeclarationSyntax, VariableDeclaratorSyntax, ConstructorDeclarationSyntax, ExpressionSyntax>
+        : AbstractUseAutoPropertyCodeFixProvider<TypeDeclarationSyntax, PropertyDeclarationSyntax, VariableDeclarationSyntax, ConstructorDeclarationSyntax, ExpressionSyntax>
     {
-        protected override SyntaxNode GetNodeToRemove(VariableDeclaratorSyntax declarator)
+        protected override SyntaxNode GetNodeToRemove(VariableDeclarationSyntax declarator)
         {
-            var fieldDeclaration = (FieldDeclarationSyntax)declarator.Parent.Parent;
+            var fieldDeclaration = (FieldDeclarationSyntax)declarator.Parent;
             var nodeToRemove = fieldDeclaration.Declaration.Variables.Count > 1 ? declarator : (SyntaxNode)fieldDeclaration;
             return nodeToRemove;
         }
@@ -119,7 +119,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UseAutoProperty
 
         private async Task<ExpressionSyntax> GetFieldInitializerAsync(IFieldSymbol fieldSymbol, CancellationToken cancellationToken)
         {
-            var variableDeclarator = (VariableDeclaratorSyntax)await fieldSymbol.DeclaringSyntaxReferences[0].GetSyntaxAsync(cancellationToken).ConfigureAwait(false);
+            var variableDeclarator = (VariableDeclarationSyntax)await fieldSymbol.DeclaringSyntaxReferences[0].GetSyntaxAsync(cancellationToken).ConfigureAwait(false);
             return variableDeclarator.Initializer?.Value;
         }
 

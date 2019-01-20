@@ -140,8 +140,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     {
                         var t = (BaseFieldDeclarationSyntax)node;
                         var attributes = GetAttributes(t.AttributeLists);
-                        foreach (var decl in t.Declaration.Variables)
                         {
+                            var decl = t.Declaration;
                             var codeBlocks = SpecializedCollections.SingletonEnumerable(decl.Initializer).Concat(attributes);
                             builder.Add(GetDeclarationInfo(model, decl, getSymbol, codeBlocks, cancellationToken));
                         }

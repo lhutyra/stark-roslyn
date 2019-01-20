@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.CSharp.IntroduceVariable
                 modifiers,
                 SyntaxFactory.VariableDeclaration(
                     this.GetTypeSyntax(document, options, expression, isConstant, cancellationToken),
-                    SyntaxFactory.SingletonSeparatedList(SyntaxFactory.VariableDeclarator(
+                    SyntaxFactory.SingletonSeparatedList(SyntaxFactory.VariableDeclaration(
                         newLocalNameToken.WithAdditionalAnnotations(RenameAnnotation.Create()),
                         null,
                         SyntaxFactory.EqualsValueClause(expression.WithoutTrivia())))));

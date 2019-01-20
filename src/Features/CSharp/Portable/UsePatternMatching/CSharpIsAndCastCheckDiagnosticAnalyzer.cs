@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
             BinaryExpressionSyntax isExpression,
             out IfStatementSyntax ifStatement,
             out LocalDeclarationStatementSyntax localDeclarationStatement,
-            out VariableDeclaratorSyntax declarator,
+            out VariableDeclarationSyntax declarator,
             out CastExpressionSyntax castExpression)
         {
             ifStatement = null;
@@ -217,11 +217,11 @@ namespace Microsoft.CodeAnalysis.CSharp.UsePatternMatching
         }
 
         private bool ContainsVariableDeclaration(
-            SyntaxNode scope, VariableDeclaratorSyntax variable)
+            SyntaxNode scope, VariableDeclarationSyntax variable)
         {
             var variableName = variable.Identifier.ValueText;
             return scope.DescendantNodes()
-                        .OfType<VariableDeclaratorSyntax>()
+                        .OfType<VariableDeclarationSyntax>()
                         .Where(d => d != variable)
                         .Any(d => d.Identifier.ValueText.Equals(variableName));
         }

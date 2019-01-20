@@ -145,7 +145,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             Debug.Assert(nodeBinder != null);
 
             Debug.Assert(closestTypeSyntax.Kind() != SyntaxKind.RefType);
-            return closestTypeSyntax.IsVar
+            return closestTypeSyntax.IsNullWithNoType()
                 ? new DeconstructionLocalSymbol(containingSymbol, scopeBinder, nodeBinder, closestTypeSyntax, identifierToken, kind, deconstruction)
                 : new SourceLocalSymbol(containingSymbol, scopeBinder, false, closestTypeSyntax, identifierToken, kind);
         }
@@ -169,12 +169,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 nodeToBind.Kind() == SyntaxKind.BaseConstructorInitializer ||
                 nodeToBind.Kind() == SyntaxKind.SwitchExpressionArm ||
                 nodeToBind.Kind() == SyntaxKind.ArgumentList && nodeToBind.Parent is ConstructorInitializerSyntax ||
-                nodeToBind.Kind() == SyntaxKind.VariableDeclarator &&
+                nodeToBind.Kind() == SyntaxKind.VariableDeclaration &&
                     new[] { SyntaxKind.LocalDeclarationStatement, SyntaxKind.ForStatement, SyntaxKind.UsingStatement, SyntaxKind.FixedStatement }.
                         Contains(nodeToBind.Ancestors().OfType<StatementSyntax>().First().Kind()) ||
                 nodeToBind is ExpressionSyntax);
             Debug.Assert(!(nodeToBind.Kind() == SyntaxKind.SwitchExpressionArm) || nodeBinder is SwitchExpressionArmBinder);
-            return typeSyntax?.IsVar != false && kind != LocalDeclarationKind.DeclarationExpressionVariable
+            return typeSyntax.IsNullWithNoType() != false && kind != LocalDeclarationKind.DeclarationExpressionVariable
                 ? new LocalSymbolWithEnclosingContext(containingSymbol, scopeBinder, nodeBinder, typeSyntax, identifierToken, kind, nodeToBind, forbiddenZone)
                 : new SourceLocalSymbol(containingSymbol, scopeBinder, false, typeSyntax, identifierToken, kind);
         }
@@ -311,7 +311,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     return true;
                 }
 
-                if (_typeSyntax.IsVar)
+                if (_typeSyntax.IsNullWithNoType())
                 {
                     bool isVar;
                     TypeSymbolWithAnnotations declType = this.TypeSyntaxBinder.BindTypeOrVarKeyword(_typeSyntax, new DiagnosticBag(), out isVar);
@@ -424,13 +424,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 switch (_declarationKind)
                 {
                     case LocalDeclarationKind.RegularVariable:
-                        Debug.Assert(node is VariableDeclaratorSyntax);
+                        Debug.Assert(node is VariableDeclarationSyntax);
                         break;
 
                     case LocalDeclarationKind.Constant:
                     case LocalDeclarationKind.FixedVariable:
                     case LocalDeclarationKind.UsingVariable:
-                        Debug.Assert(node is VariableDeclaratorSyntax);
+                        Debug.Assert(node is VariableDeclarationSyntax);
                         break;
 
                     case LocalDeclarationKind.ForEachIterationVariable:
@@ -735,7 +735,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     nodeToBind.Kind() == SyntaxKind.ThisConstructorInitializer ||
                     nodeToBind.Kind() == SyntaxKind.BaseConstructorInitializer ||
                     nodeToBind.Kind() == SyntaxKind.ArgumentList && nodeToBind.Parent is ConstructorInitializerSyntax ||
-                    nodeToBind.Kind() == SyntaxKind.VariableDeclarator ||
+                    nodeToBind.Kind() == SyntaxKind.VariableDeclaration ||
                     nodeToBind.Kind() == SyntaxKind.SwitchExpressionArm ||
                     nodeToBind is ExpressionSyntax);
                 Debug.Assert(!(nodeToBind.Kind() == SyntaxKind.SwitchExpressionArm) || nodeBinder is SwitchExpressionArmBinder);
@@ -767,12 +767,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     case SyntaxKind.CasePatternSwitchLabel:
                         _nodeBinder.BindPatternSwitchLabelForInference((CasePatternSwitchLabelSyntax)_nodeToBind, diagnostics);
                         break;
-                    case SyntaxKind.VariableDeclarator:
-                        // This occurs, for example, in
-                        // int x, y[out var Z, 1 is int I];
-                        // for (int x, y[out var Z, 1 is int I]; ;) {}
-                        _nodeBinder.BindDeclaratorArguments((VariableDeclaratorSyntax)_nodeToBind, diagnostics);
-                        break;
+                    //case SyntaxKind.VariableDeclaration:
+                    //    // This occurs, for example, in
+                    //    // int x, y[out var Z, 1 is int I];
+                    //    // for (int x, y[out var Z, 1 is int I]; ;) {}
+                    //    _nodeBinder.BindDeclaratorArguments((VariableDeclarationSyntax)_nodeToBind, diagnostics);
+                    //    break;
                     case SyntaxKind.SwitchExpressionArm:
                         var arm = (SwitchExpressionArmSyntax)_nodeToBind;
                         var armBinder = (SwitchExpressionArmBinder)_nodeBinder;

@@ -167,6 +167,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     return DeclarationModifiers.Extern;
                 case SyntaxKind.ReadOnlyKeyword:
                     return DeclarationModifiers.ReadOnly;
+                case SyntaxKind.TransientKeyword:
+                    return DeclarationModifiers.Transient;
                 case SyntaxKind.PartialKeyword:
                     return DeclarationModifiers.Partial;
                 case SyntaxKind.UnsafeKeyword:

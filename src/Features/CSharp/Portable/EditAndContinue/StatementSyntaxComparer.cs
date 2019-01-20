@@ -186,12 +186,12 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
             LabeledStatement,
 
             // TODO: 
-            // Ideally we could declare LocalVariableDeclarator tied to the first enclosing node that defines local scope (block, foreach, etc.)
+            // Ideally we could declare LocalVariableDeclaration tied to the first enclosing node that defines local scope (block, foreach, etc.)
             // Also consider handling LocalDeclarationStatement as just a bag of variable declarators,
             // so that variable declarators contained in one can be matched with variable declarators contained in the other.
             LocalDeclarationStatement,         // tied to parent
             LocalVariableDeclaration,          // tied to parent
-            LocalVariableDeclarator,           // tied to parent
+            LocalVariableDeclaration,           // tied to parent
 
             SingleVariableDesignation,
             AwaitExpression,
@@ -221,7 +221,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
             {
                 case Label.LocalDeclarationStatement:
                 case Label.LocalVariableDeclaration:
-                case Label.LocalVariableDeclarator:
+                case Label.LocalVariableDeclaration:
                 case Label.GotoCaseStatement:
                 case Label.BreakContinueStatement:
                 case Label.ElseClause:
@@ -287,8 +287,8 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
                 case SyntaxKind.VariableDeclaration:
                     return Label.LocalVariableDeclaration;
 
-                case SyntaxKind.VariableDeclarator:
-                    return Label.LocalVariableDeclarator;
+                case SyntaxKind.VariableDeclaration:
+                    return Label.LocalVariableDeclaration;
 
                 case SyntaxKind.SingleVariableDesignation:
                     return Label.SingleVariableDesignation;
@@ -576,10 +576,10 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
         {
             switch (leftNode.Kind())
             {
-                case SyntaxKind.VariableDeclarator:
+                case SyntaxKind.VariableDeclaration:
                     distance = ComputeDistance(
-                        ((VariableDeclaratorSyntax)leftNode).Identifier,
-                        ((VariableDeclaratorSyntax)rightNode).Identifier);
+                        ((VariableDeclarationSyntax)leftNode).Identifier,
+                        ((VariableDeclarationSyntax)rightNode).Identifier);
                     return true;
 
                 case SyntaxKind.ForStatement:

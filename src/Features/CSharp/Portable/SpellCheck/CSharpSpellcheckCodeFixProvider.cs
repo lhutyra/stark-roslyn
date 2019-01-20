@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.CSharp.SpellCheck
                 ImmutableArray.Create(CS0426, CS1520));
 
         protected override bool ShouldSpellCheck(SimpleNameSyntax name)
-            => !name.IsVar;
+            => !name.IsNullWithNoType();
 
         protected override bool DescendIntoChildren(SyntaxNode arg)
         {

@@ -189,6 +189,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
+        public virtual NamedTypeSymbol GetWithoutModifiers()
+        {
+            return this;
+        }
+
         /// <summary>
         /// Get the operators for this type by their metadata name
         /// </summary>

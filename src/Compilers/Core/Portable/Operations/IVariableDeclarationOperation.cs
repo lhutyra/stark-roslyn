@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Operations
     /// The initializer of this node is applied to all individual declarations in <see cref="Declarators"/>. There cannot
     /// be initializers in both locations except in invalid code scenarios.
     /// In C#, this node will never have an initializer.
-    /// This corresponds to the VariableDeclarationSyntax in C#, and the VariableDeclaratorSyntax in Visual Basic.
+    /// This corresponds to the VariableDeclarationSyntax in C#, and the VariableDeclarationSyntax in Visual Basic.
     ///
     /// This interface is reserved for implementation by its associated APIs. We reserve the right to
     /// change it in the future.
@@ -27,13 +27,9 @@ namespace Microsoft.CodeAnalysis.Operations
     public interface IVariableDeclarationOperation : IOperation
     {
         /// <summary>
-        /// Individual variable declarations declared by this multiple declaration.
+        /// Symbol declared by this variable declaration
         /// </summary>
-        /// <remarks>
-        /// All <see cref="IVariableDeclarationGroupOperation"/> will have at least 1 <see cref="IVariableDeclarationOperation"/>,
-        /// even if the declaration group only declares 1 variable.
-        /// </remarks>
-        ImmutableArray<IVariableDeclaratorOperation> Declarators { get; }
+        ILocalSymbol Symbol { get; }
 
         /// <summary>
         /// Optional initializer of the variable.
@@ -42,5 +38,12 @@ namespace Microsoft.CodeAnalysis.Operations
         /// In C#, this will always be null.
         /// </remarks>
         IVariableInitializerOperation Initializer { get; }
+
+
+        /// <summary>
+        /// Additional arguments supplied to the declarator in error cases, ignored by the compiler. This only used for the C# case of
+        /// DeclaredArgumentSyntax nodes on a VariableDeclarationSyntax.
+        /// </summary>
+        ImmutableArray<IOperation> IgnoredArguments { get; }
     }
 }

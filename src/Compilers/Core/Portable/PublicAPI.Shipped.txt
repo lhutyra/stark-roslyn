@@ -1261,7 +1261,7 @@ Microsoft.CodeAnalysis.OperationKind.UnaryOperator = 31 -> Microsoft.CodeAnalysi
 Microsoft.CodeAnalysis.OperationKind.Using = 13 -> Microsoft.CodeAnalysis.OperationKind
 Microsoft.CodeAnalysis.OperationKind.VariableDeclaration = 78 -> Microsoft.CodeAnalysis.OperationKind
 Microsoft.CodeAnalysis.OperationKind.VariableDeclarationGroup = 3 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.VariableDeclarator = 77 -> Microsoft.CodeAnalysis.OperationKind
+Microsoft.CodeAnalysis.OperationKind.VariableDeclaration = 77 -> Microsoft.CodeAnalysis.OperationKind
 Microsoft.CodeAnalysis.OperationKind.VariableInitializer = 73 -> Microsoft.CodeAnalysis.OperationKind
 Microsoft.CodeAnalysis.OperationKind.YieldBreak = 10 -> Microsoft.CodeAnalysis.OperationKind
 Microsoft.CodeAnalysis.OperationKind.YieldReturn = 14 -> Microsoft.CodeAnalysis.OperationKind
@@ -1593,12 +1593,12 @@ Microsoft.CodeAnalysis.Operations.IUsingOperation.Resources.get -> Microsoft.Cod
 Microsoft.CodeAnalysis.Operations.IVariableDeclarationGroupOperation
 Microsoft.CodeAnalysis.Operations.IVariableDeclarationGroupOperation.Declarations.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation>
 Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation
-Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation.Declarators.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation>
+Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation.Declarators.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation>
 Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation.Initializer.get -> Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation
-Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation
-Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation.IgnoredArguments.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.IOperation>
-Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation.Initializer.get -> Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation
-Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation.Symbol.get -> Microsoft.CodeAnalysis.ILocalSymbol
+Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation
+Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation.IgnoredArguments.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.IOperation>
+Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation.Initializer.get -> Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation
+Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation.Symbol.get -> Microsoft.CodeAnalysis.ILocalSymbol
 Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation
 Microsoft.CodeAnalysis.Operations.IWhileLoopOperation
 Microsoft.CodeAnalysis.Operations.IWhileLoopOperation.Condition.get -> Microsoft.CodeAnalysis.IOperation
@@ -2741,7 +2741,7 @@ static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetArgumentRefKind(
 static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetArgumentRefKind(this Microsoft.CodeAnalysis.Operations.IDynamicObjectCreationOperation dynamicOperation, int index) -> Microsoft.CodeAnalysis.RefKind?
 static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetDeclaredVariables(this Microsoft.CodeAnalysis.Operations.IVariableDeclarationGroupOperation declarationGroup) -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
 static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetDeclaredVariables(this Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation declaration) -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetVariableInitializer(this Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation declarationOperation) -> Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation
+static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetVariableInitializer(this Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation declarationOperation) -> Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation
 static Microsoft.CodeAnalysis.Optional<T>.implicit operator Microsoft.CodeAnalysis.Optional<T>(T value) -> Microsoft.CodeAnalysis.Optional<T>
 static Microsoft.CodeAnalysis.ParseOptions.operator !=(Microsoft.CodeAnalysis.ParseOptions left, Microsoft.CodeAnalysis.ParseOptions right) -> bool
 static Microsoft.CodeAnalysis.ParseOptions.operator ==(Microsoft.CodeAnalysis.ParseOptions left, Microsoft.CodeAnalysis.ParseOptions right) -> bool
@@ -2973,7 +2973,7 @@ virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitUnaryOperator(Mi
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitUsing(Microsoft.CodeAnalysis.Operations.IUsingOperation operation) -> void
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitVariableDeclaration(Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation operation) -> void
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitVariableDeclarationGroup(Microsoft.CodeAnalysis.Operations.IVariableDeclarationGroupOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitVariableDeclarator(Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation operation) -> void
+virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitVariableDeclaration(Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation operation) -> void
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitVariableInitializer(Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation operation) -> void
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitWhileLoop(Microsoft.CodeAnalysis.Operations.IWhileLoopOperation operation) -> void
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.DefaultVisit(Microsoft.CodeAnalysis.IOperation operation, TArgument argument) -> TResult
@@ -3068,7 +3068,7 @@ virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.V
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitUsing(Microsoft.CodeAnalysis.Operations.IUsingOperation operation, TArgument argument) -> TResult
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitVariableDeclaration(Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation operation, TArgument argument) -> TResult
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitVariableDeclarationGroup(Microsoft.CodeAnalysis.Operations.IVariableDeclarationGroupOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitVariableDeclarator(Microsoft.CodeAnalysis.Operations.IVariableDeclaratorOperation operation, TArgument argument) -> TResult
+virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitVariableDeclaration(Microsoft.CodeAnalysis.Operations.IVariableDeclarationOperation operation, TArgument argument) -> TResult
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitVariableInitializer(Microsoft.CodeAnalysis.Operations.IVariableInitializerOperation operation, TArgument argument) -> TResult
 virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitWhileLoop(Microsoft.CodeAnalysis.Operations.IWhileLoopOperation operation, TArgument argument) -> TResult
 virtual Microsoft.CodeAnalysis.SemanticModel.GetTopmostNodeForDiagnosticAnalysis(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.SyntaxNode declaringSyntax) -> Microsoft.CodeAnalysis.SyntaxNode

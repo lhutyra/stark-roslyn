@@ -131,7 +131,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ExtractMethod
                     Contract.ThrowIfFalse(keyValuePair.Value.Count > 0);
 
                     // merge all variable decl for current type
-                    var variables = new List<VariableDeclaratorSyntax>();
+                    var variables = new List<VariableDeclarationSyntax>();
                     foreach (var statement in keyValuePair.Value)
                     {
                         foreach (var variable in statement.Declaration.Variables)

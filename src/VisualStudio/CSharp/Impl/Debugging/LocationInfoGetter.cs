@@ -34,10 +34,10 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Debugging
 
             // field or event field declarations may contain multiple variable declarators. Try finding the correct one.
             // If the position does not point to one, try using the first one.
-            VariableDeclaratorSyntax fieldDeclarator = null;
+            VariableDeclarationSyntax fieldDeclarator = null;
             if (memberDeclaration.Kind() == SyntaxKind.FieldDeclaration || memberDeclaration.Kind() == SyntaxKind.EventFieldDeclaration)
             {
-                SeparatedSyntaxList<VariableDeclaratorSyntax> variableDeclarators = ((BaseFieldDeclarationSyntax)memberDeclaration).Declaration.Variables;
+                SeparatedSyntaxList<VariableDeclarationSyntax> variableDeclarators = ((BaseFieldDeclarationSyntax)memberDeclaration).Declaration.Variables;
 
                 foreach (var declarator in variableDeclarators)
                 {

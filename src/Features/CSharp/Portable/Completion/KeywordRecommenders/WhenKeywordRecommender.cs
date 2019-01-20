@@ -145,7 +145,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Completion.KeywordRecommenders
                     return true;
                 }
 
-                isVar = typeSyntax.IsVar;
+                isVar = typeSyntax.IsNullWithNoType();
                 symbols = semanticModel.LookupName(typeSyntax, namespacesAndTypesOnly: false, cancellationToken);
             }
             else

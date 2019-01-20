@@ -470,7 +470,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         #region IArrayTypeSymbol Members
 
-        ITypeSymbol IArrayTypeSymbol.ElementType
+        ITypeSymbol ITypeWithElementTypeSymbol.ElementType
         {
             get { return this.ElementType.TypeSymbol; }
         }

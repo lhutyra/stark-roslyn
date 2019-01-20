@@ -41,9 +41,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
                 }
             }
 
-            public override void VisitVariableDeclarator(VariableDeclaratorSyntax node)
+            public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
             {
-                base.VisitVariableDeclarator(node);
+                base.VisitVariableDeclaration(node);
                 Add(node.Identifier);
             }
 

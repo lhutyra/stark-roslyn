@@ -123,7 +123,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             SyntaxNode variableDeclarator = equalsValueClause.Parent;
 
-            if (!variableDeclarator.IsKind(SyntaxKind.VariableDeclarator))
+            if (!variableDeclarator.IsKind(SyntaxKind.VariableDeclaration))
             {
                 return false;
             }
@@ -164,7 +164,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     {
                         SyntaxNode variableDeclarator = parentNode.Parent;
 
-                        return variableDeclarator.IsKind(SyntaxKind.VariableDeclarator) &&
+                        return variableDeclarator.IsKind(SyntaxKind.VariableDeclaration) &&
                             variableDeclarator.Parent.IsKind(SyntaxKind.VariableDeclaration);
                     }
                 // In case of reassignment to a Span<T> variable
@@ -233,7 +233,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         internal static TypeSyntax SkipRef(this TypeSyntax syntax)
         {
-            if (syntax.Kind() == SyntaxKind.RefType)
+            if (syntax != null && syntax.Kind() == SyntaxKind.RefType)
             {
                 syntax = ((RefTypeSyntax)syntax).Type;
             }
@@ -244,10 +244,10 @@ namespace Microsoft.CodeAnalysis.CSharp
         internal static TypeSyntax SkipRef(this TypeSyntax syntax, out RefKind refKind)
         {
             refKind = RefKind.None;
-            if (syntax.Kind() == SyntaxKind.RefType)
+            if (syntax != null && syntax.Kind() == SyntaxKind.RefType)
             {
                 var refType = (RefTypeSyntax)syntax;
-                refKind = refType.ReadOnlyKeyword.Kind() == SyntaxKind.ReadOnlyKeyword ?
+                refKind = refType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)refType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword) ?
                     RefKind.RefReadOnly :
                     RefKind.Ref;
 
@@ -298,7 +298,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 var invocationTarget = invocation.Expression;
 
                 return invocationTarget.Kind() == SyntaxKind.IdentifierName &&
-                    ((IdentifierNameSyntax)invocationTarget).IsVar;
+                    ((IdentifierNameSyntax)invocationTarget).IsNullWithNoType();
             }
 
             return false;

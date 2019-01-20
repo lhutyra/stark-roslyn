@@ -171,10 +171,8 @@ namespace Microsoft.CodeAnalysis
         ParameterInitializer = 0x4b,
         /// <summary>Indicates an <see cref="IArrayInitializerOperation"/>.</summary>
         ArrayInitializer = 0x4c,
-        /// <summary>Indicates an <see cref="IVariableDeclaratorOperation"/>.</summary>
-        VariableDeclarator = 0x4d,
         /// <summary>Indicates an <see cref="IVariableDeclarationOperation"/>.</summary>
-        VariableDeclaration = 0x4e,
+        VariableDeclaration = 0x4d,
         /// <summary>Indicates an <see cref="IArgumentOperation"/>.</summary>
         Argument = 0x4f,
         /// <summary>Indicates an <see cref="ICatchClauseOperation"/>.</summary>

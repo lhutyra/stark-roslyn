@@ -199,9 +199,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public virtual BoundStatement InstrumentLocalInitialization(BoundLocalDeclaration original, BoundStatement rewritten)
         {
-            Debug.Assert(original.Syntax.Kind() == SyntaxKind.VariableDeclarator ||
-                         (original.Syntax.Kind() == SyntaxKind.LocalDeclarationStatement &&
-                                ((LocalDeclarationStatementSyntax)original.Syntax).Declaration.Variables.Count == 1));
+            Debug.Assert(original.Syntax.Kind() == SyntaxKind.VariableDeclaration ||
+                         original.Syntax.Kind() == SyntaxKind.LocalDeclarationStatement);
             return InstrumentStatement(original, rewritten);
         }
 

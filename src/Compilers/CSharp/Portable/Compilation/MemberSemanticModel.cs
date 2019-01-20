@@ -596,7 +596,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return null;
         }
 
-        public override ISymbol GetDeclaredSymbol(VariableDeclaratorSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
+        public override ISymbol GetDeclaredSymbol(VariableDeclarationSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckSyntaxNode(declarationSyntax);
             return GetDeclaredLocal(declarationSyntax, declarationSyntax.Identifier);
@@ -1064,7 +1064,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             // if binding root is field variable declarator, make it initializer
             // we need to do this since node map doesn't contain bound node for field/event variable declarator
-            if (bindingRoot is VariableDeclaratorSyntax variableDeclarator && variableDeclarator.Initializer?.FullSpan.Contains(node.Span) == true)
+            if (bindingRoot is VariableDeclarationSyntax variableDeclarator && variableDeclarator.Initializer?.FullSpan.Contains(node.Span) == true)
             {
                 if (variableDeclarator.Parent?.Parent.IsKind(SyntaxKind.FieldDeclaration) == true ||
                     variableDeclarator.Parent?.Parent.IsKind(SyntaxKind.EventFieldDeclaration) == true)
@@ -1927,7 +1927,7 @@ done:
                     case SyntaxKind.AnonymousObjectMemberDeclarator:
                         return GetBindableSyntaxNode(parent);
 
-                    case SyntaxKind.VariableDeclarator: // declarators are mapped in SyntaxBinder
+                    case SyntaxKind.VariableDeclaration: // declarators are mapped in SyntaxBinder
 
                         // When a local variable declaration contains a single declarator, the bound node
                         // is associated with the declaration, rather than with the declarator.  If we
@@ -1935,8 +1935,7 @@ done:
                         // end up with an entry in the syntax-to-bound node map.
                         Debug.Assert(parent.Kind() == SyntaxKind.VariableDeclaration);
                         var grandparent = parent.Parent;
-                        if (grandparent != null && grandparent.Kind() == SyntaxKind.LocalDeclarationStatement &&
-                            ((VariableDeclarationSyntax)parent).Variables.Count == 1)
+                        if (grandparent != null && grandparent.Kind() == SyntaxKind.LocalDeclarationStatement)
                         {
                             return GetBindableSyntaxNode(parent);
                         }

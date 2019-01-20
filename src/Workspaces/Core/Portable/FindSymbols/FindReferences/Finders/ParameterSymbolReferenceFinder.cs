@@ -217,7 +217,7 @@ namespace Microsoft.CodeAnalysis.FindSymbols.Finders
                 }
             }
 
-            return syntaxFactsService.GetContainingVariableDeclaratorOfFieldDeclaration(parameterNode);
+            return syntaxFactsService.GetContainingVariableDeclarationOfFieldDeclaration(parameterNode);
         }
 
         private void CascadeBetweenPropertyAndAccessorParameters(

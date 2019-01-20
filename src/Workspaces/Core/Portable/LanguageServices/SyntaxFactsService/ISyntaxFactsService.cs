@@ -220,8 +220,8 @@ namespace Microsoft.CodeAnalysis.LanguageServices
 
         SyntaxToken GetIdentifierOfGenericName(SyntaxNode node);
         SyntaxToken GetIdentifierOfSimpleName(SyntaxNode node);
-        SyntaxToken GetIdentifierOfVariableDeclarator(SyntaxNode node);
-        SyntaxNode GetTypeOfVariableDeclarator(SyntaxNode node);
+        SyntaxToken GetIdentifierOfVariableDeclaration(SyntaxNode node);
+        SyntaxNode GetTypeOfVariableDeclaration(SyntaxNode node);
 
         /// <summary>
         /// True if this is an argument with just an expression and nothing else (i.e. no ref/out,
@@ -258,7 +258,7 @@ namespace Microsoft.CodeAnalysis.LanguageServices
         bool IsUsingStatement(SyntaxNode node);
         bool IsStatement(SyntaxNode node);
         bool IsParameter(SyntaxNode node);
-        bool IsVariableDeclarator(SyntaxNode node);
+        bool IsVariableDeclaration(SyntaxNode node);
         bool IsDeconstructionAssignment(SyntaxNode node);
         bool IsDeconstructionForEachStatement(SyntaxNode node);
 
@@ -284,7 +284,7 @@ namespace Microsoft.CodeAnalysis.LanguageServices
 
         bool IsDeclaratorOfLocalDeclarationStatement(SyntaxNode declarator, SyntaxNode localDeclarationStatement);
         SeparatedSyntaxList<SyntaxNode> GetVariablesOfLocalDeclarationStatement(SyntaxNode node);
-        SyntaxNode GetInitializerOfVariableDeclarator(SyntaxNode node);
+        SyntaxNode GetInitializerOfVariableDeclaration(SyntaxNode node);
         SyntaxNode GetValueOfEqualsValueClause(SyntaxNode node);
 
         bool IsThisConstructorInitializer(SyntaxToken token);
@@ -335,7 +335,7 @@ namespace Microsoft.CodeAnalysis.LanguageServices
 
         SyntaxNode GetContainingTypeDeclaration(SyntaxNode root, int position);
         SyntaxNode GetContainingMemberDeclaration(SyntaxNode root, int position, bool useFullSpan = true);
-        SyntaxNode GetContainingVariableDeclaratorOfFieldDeclaration(SyntaxNode node);
+        SyntaxNode GetContainingVariableDeclarationOfFieldDeclaration(SyntaxNode node);
 
         SyntaxToken FindTokenOnLeftOfPosition(SyntaxNode node, int position, bool includeSkipped = true, bool includeDirectives = false, bool includeDocumentationComments = false);
         SyntaxToken FindTokenOnRightOfPosition(SyntaxNode node, int position, bool includeSkipped = true, bool includeDirectives = false, bool includeDocumentationComments = false);

@@ -66,8 +66,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return VisitBlock(node as BoundBlock, arg);
                 case BoundKind.LocalDeclaration:
                     return VisitLocalDeclaration(node as BoundLocalDeclaration, arg);
-                case BoundKind.MultipleLocalDeclarations:
-                    return VisitMultipleLocalDeclarations(node as BoundMultipleLocalDeclarations, arg);
                 case BoundKind.Sequence:
                     return VisitSequence(node as BoundSequence, arg);
                 case BoundKind.NoOpStatement:

@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
 
         protected override bool ShouldAnalyzeVariableDeclaration(VariableDeclarationSyntax variableDeclaration, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
-            if (!variableDeclaration.Type.StripRefIfNeeded().IsVar)
+            if (!variableDeclaration.Type.StripRefIfNeeded().IsNullWithNoType())
             {
                 // If the type is not 'var', this analyze has no work to do
                 return false;
@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
 
         protected override bool ShouldAnalyzeForEachStatement(ForEachStatementSyntax forEachStatement, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
-            if (!forEachStatement.Type.StripRefIfNeeded().IsVar)
+            if (!forEachStatement.Type.StripRefIfNeeded().IsNullWithNoType())
             {
                 // If the type is not 'var', this analyze has no work to do
                 return false;
@@ -119,7 +119,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Utilities
 
         protected override bool ShouldAnalyzeDeclarationExpression(DeclarationExpressionSyntax declaration, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
-            if (!declaration.Type.IsVar)
+            if (!declaration.Type.IsNullWithNoType())
             {
                 // If the type is not 'var', this analyze has no work to do
                 return false;

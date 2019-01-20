@@ -1365,7 +1365,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
             while (CurrentToken.Kind == SyntaxKind.AsteriskToken)
             {
-                type = SyntaxFactory.PointerType(type, EatToken());
+                // TODO: This is wrong! with pointer type
+                type = SyntaxFactory.PointerType(EatToken(), type);
             }
 
             if (CurrentToken.Kind == SyntaxKind.OpenBracketToken)

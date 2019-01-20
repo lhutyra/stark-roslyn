@@ -1200,7 +1200,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Rename
             }
 
             var enclosingInitializer = token.GetAncestors<EqualsValueClauseSyntax>().FirstOrDefault();
-            if (enclosingStatement == null && enclosingInitializer != null && enclosingInitializer.Parent is VariableDeclaratorSyntax)
+            if (enclosingStatement == null && enclosingInitializer != null && enclosingInitializer.Parent is VariableDeclarationSyntax)
             {
                 return enclosingInitializer.Value;
             }

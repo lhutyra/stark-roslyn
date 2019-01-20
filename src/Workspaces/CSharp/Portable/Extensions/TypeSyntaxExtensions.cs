@@ -67,7 +67,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
         /// </summary>
         public static bool IsTypeInferred(this TypeSyntax typeSyntax, SemanticModel semanticModel)
         {
-            if (!typeSyntax.IsVar)
+            if (!typeSyntax.IsNullWithNoType())
             {
                 return false;
             }

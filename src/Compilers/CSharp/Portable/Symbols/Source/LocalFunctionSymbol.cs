@@ -78,7 +78,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             if (syntax.ReturnType.Kind() == SyntaxKind.RefType)
             {
                 var returnType = (RefTypeSyntax)syntax.ReturnType;
-                if (returnType.ReadOnlyKeyword.Kind() == SyntaxKind.ReadOnlyKeyword)
+                if (returnType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)returnType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword))
                 {
                     _refKind = RefKind.RefReadOnly;
                 }

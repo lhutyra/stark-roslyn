@@ -51,7 +51,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
                         return GetFunctionPrototype(methodDeclaration, (IMethodSymbol)symbol, flags);
                     case BasePropertyDeclarationSyntax propertyDeclaration:
                         return GetPropertyPrototype(propertyDeclaration, (IPropertySymbol)symbol, flags);
-                    case VariableDeclaratorSyntax variableDeclarator when symbol.Kind == SymbolKind.Field:
+                    case VariableDeclarationSyntax variableDeclarator when symbol.Kind == SymbolKind.Field:
                         return GetVariablePrototype(variableDeclarator, (IFieldSymbol)symbol, flags);
                     case EnumMemberDeclarationSyntax enumMember:
                         return GetVariablePrototype(enumMember, (IFieldSymbol)symbol, flags);
@@ -236,7 +236,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.CodeModel
             return builder.ToString();
         }
 
-        private string GetVariablePrototype(VariableDeclaratorSyntax node, IFieldSymbol symbol, PrototypeFlags flags)
+        private string GetVariablePrototype(VariableDeclarationSyntax node, IFieldSymbol symbol, PrototypeFlags flags)
         {
             if ((flags & PrototypeFlags.Signature) != 0)
             {

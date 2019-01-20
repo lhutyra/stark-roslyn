@@ -55,7 +55,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.PullMemberUp
                 case MemberDeclarationSyntax memberDeclarationSyntax:
                     // Nested type is checked in before this method is called.
                     return memberDeclarationSyntax.GetNameToken();
-                case VariableDeclaratorSyntax variableDeclaratorSyntax:
+                case VariableDeclarationSyntax variableDeclaratorSyntax:
                     // It handles multiple fields or events declared in one line
                     return variableDeclaratorSyntax.Identifier;
                 default:

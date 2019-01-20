@@ -10,10 +10,10 @@ using Microsoft.CodeAnalysis.Shared.Extensions;
 namespace Microsoft.CodeAnalysis.UseAutoProperty
 {
     internal abstract class AbstractUseAutoPropertyAnalyzer<
-        TPropertyDeclaration, TFieldDeclaration, TVariableDeclarator, TExpression> : AbstractBuiltInCodeStyleDiagnosticAnalyzer
+        TPropertyDeclaration, TFieldDeclaration, TVariableDeclaration, TExpression> : AbstractBuiltInCodeStyleDiagnosticAnalyzer
         where TPropertyDeclaration : SyntaxNode
         where TFieldDeclaration : SyntaxNode
-        where TVariableDeclarator : SyntaxNode
+        where TVariableDeclaration : SyntaxNode
         where TExpression : SyntaxNode
     {
         private static readonly LocalizableString s_title =
@@ -32,10 +32,10 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
         protected abstract bool SupportsReadOnlyProperties(Compilation compilation);
         protected abstract bool SupportsPropertyInitializer(Compilation compilation);
         protected abstract bool CanExplicitInterfaceImplementationsBeFixed();
-        protected abstract TExpression GetFieldInitializer(TVariableDeclarator variable, CancellationToken cancellationToken);
+        protected abstract TExpression GetFieldInitializer(TVariableDeclaration variable, CancellationToken cancellationToken);
         protected abstract TExpression GetGetterExpression(IMethodSymbol getMethod, CancellationToken cancellationToken);
         protected abstract TExpression GetSetterExpression(IMethodSymbol setMethod, SemanticModel semanticModel, CancellationToken cancellationToken);
-        protected abstract SyntaxNode GetNodeToFade(TFieldDeclaration fieldDeclaration, TVariableDeclarator variableDeclarator);
+        protected abstract SyntaxNode GetNodeToFade(TFieldDeclaration fieldDeclaration, TVariableDeclaration variableDeclarator);
 
         protected abstract void RegisterIneligibleFieldsAction(
             List<AnalysisResult> analysisResults, HashSet<IFieldSymbol> ineligibleFields,
@@ -201,7 +201,7 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
             }
 
             var fieldReference = getterField.DeclaringSyntaxReferences[0];
-            var variableDeclarator = fieldReference.GetSyntax(cancellationToken) as TVariableDeclarator;
+            var variableDeclarator = fieldReference.GetSyntax(cancellationToken) as TVariableDeclaration;
             if (variableDeclarator == null)
             {
                 return;
@@ -304,7 +304,7 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
             }
 
             var propertyDeclaration = result.PropertyDeclaration;
-            var variableDeclarator = result.VariableDeclarator;
+            var variableDeclarator = result.VariableDeclaration;
             var nodeToFade = GetNodeToFade(result.FieldDeclaration, variableDeclarator);
 
             var optionSet = context.Options.GetDocumentOptionSetAsync(
@@ -359,7 +359,7 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
             public readonly IFieldSymbol Field;
             public readonly TPropertyDeclaration PropertyDeclaration;
             public readonly TFieldDeclaration FieldDeclaration;
-            public readonly TVariableDeclarator VariableDeclarator;
+            public readonly TVariableDeclaration VariableDeclaration;
             public readonly string SymbolEquivalenceKey;
 
             public AnalysisResult(
@@ -367,14 +367,14 @@ namespace Microsoft.CodeAnalysis.UseAutoProperty
                 IFieldSymbol field,
                 TPropertyDeclaration propertyDeclaration,
                 TFieldDeclaration fieldDeclaration,
-                TVariableDeclarator variableDeclarator,
+                TVariableDeclaration variableDeclarator,
                 string symbolEquivalenceKey)
             {
                 Property = property;
                 Field = field;
                 PropertyDeclaration = propertyDeclaration;
                 FieldDeclaration = fieldDeclaration;
-                VariableDeclarator = variableDeclarator;
+                VariableDeclaration = variableDeclarator;
                 SymbolEquivalenceKey = symbolEquivalenceKey;
             }
         }

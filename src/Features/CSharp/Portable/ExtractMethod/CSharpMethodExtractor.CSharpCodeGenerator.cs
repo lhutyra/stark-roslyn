@@ -325,7 +325,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ExtractMethod
                     }
 
                     var expressionStatements = new List<StatementSyntax>();
-                    var list = new List<VariableDeclaratorSyntax>();
+                    var list = new List<VariableDeclarationSyntax>();
                     var triviaList = new List<SyntaxTrivia>();
 
                     // When we modify the declaration to an initialization we have to preserve the leading trivia
@@ -476,7 +476,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ExtractMethod
                 return statement.ReplaceNodes(replacements.Keys, (orig, partiallyReplaced) => replacements[orig]);
             }
 
-            private static SyntaxToken ApplyTriviaFromDeclarationToAssignmentIdentifier(LocalDeclarationStatementSyntax declarationStatement, bool firstVariableToAttachTrivia, VariableDeclaratorSyntax variable)
+            private static SyntaxToken ApplyTriviaFromDeclarationToAssignmentIdentifier(LocalDeclarationStatementSyntax declarationStatement, bool firstVariableToAttachTrivia, VariableDeclarationSyntax variable)
             {
                 var identifier = variable.Identifier;
                 var typeSyntax = declarationStatement.Declaration.Type;
@@ -625,7 +625,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ExtractMethod
 
                 return SyntaxFactory.LocalDeclarationStatement(
                     SyntaxFactory.VariableDeclaration(typeNode)
-                          .AddVariables(SyntaxFactory.VariableDeclarator(SyntaxFactory.Identifier(variable.Name)).WithInitializer(equalsValueClause)));
+                          .AddVariables(SyntaxFactory.VariableDeclaration(SyntaxFactory.Identifier(variable.Name)).WithInitializer(equalsValueClause)));
             }
 
             protected override async Task<GeneratedCode> CreateGeneratedCodeAsync(OperationStatus status, SemanticDocument newDocument, CancellationToken cancellationToken)

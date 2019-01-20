@@ -175,7 +175,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
 
         /// <summary>
         /// Given a node, finds the related node that holds on to the attribute information.
-        /// Generally, this will be an ancestor node. For example, given a C# VariableDeclarator,
+        /// Generally, this will be an ancestor node. For example, given a C# VariableDeclaration,
         /// looks up the syntax tree to find the FieldDeclaration.
         /// </summary>
         SyntaxNode GetNodeWithAttributes(SyntaxNode node);
@@ -183,7 +183,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
         /// <summary>
         /// Given node for an attribute, returns a node that can represent the parent.
         /// For example, an attribute on a C# field cannot use the FieldDeclaration (as it is
-        /// not keyed) but instead must use one of the FieldDeclaration's VariableDeclarators.
+        /// not keyed) but instead must use one of the FieldDeclaration's VariableDeclarations.
         /// </summary>
         SyntaxNode GetEffectiveParentForAttribute(SyntaxNode node);
 

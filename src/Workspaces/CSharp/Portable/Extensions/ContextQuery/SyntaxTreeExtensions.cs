@@ -1507,7 +1507,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions.ContextQuery
 
             if (CodeAnalysis.CSharpExtensions.IsKind(token, SyntaxKind.EqualsToken) &&
                 token.Parent.IsKind(SyntaxKind.EqualsValueClause) &&
-                token.Parent.IsParentKind(SyntaxKind.VariableDeclarator))
+                token.Parent.IsParentKind(SyntaxKind.VariableDeclaration))
             {
                 return true;
             }
@@ -1852,7 +1852,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions.ContextQuery
             {
                 var equalsValue = (EqualsValueClauseSyntax)token.Parent;
 
-                if (equalsValue.IsParentKind(SyntaxKind.VariableDeclarator) &&
+                if (equalsValue.IsParentKind(SyntaxKind.VariableDeclaration) &&
                     equalsValue.Parent.IsParentKind(SyntaxKind.VariableDeclaration))
                 {
                     // class C { const int i = |

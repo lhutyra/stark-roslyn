@@ -674,7 +674,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         public abstract bool IsRefLikeType { get; }
 
         /// <summary>
-        /// Returns true if the type is a readonly struct
+        /// Returns true if the type is a readonly
         /// </summary>
         internal abstract bool IsReadOnly { get; }
 

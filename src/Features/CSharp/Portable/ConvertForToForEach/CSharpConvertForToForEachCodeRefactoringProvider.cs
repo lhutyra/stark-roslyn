@@ -21,7 +21,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertForToForEach
             ExpressionSyntax,
             MemberAccessExpressionSyntax,
             TypeSyntax,
-            VariableDeclaratorSyntax>
+            VariableDeclarationSyntax>
     {
         protected override string GetTitle()
             => CSharpFeaturesResources.Convert_to_foreach;
@@ -145,7 +145,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ConvertForToForEach
         }
 
         // C# has no special variable declarator forms that would cause us to not be able to convert.
-        protected override bool IsValidVariableDeclarator(VariableDeclaratorSyntax firstVariable)
+        protected override bool IsValidVariableDeclaration(VariableDeclarationSyntax firstVariable)
             => true;
     }
 }

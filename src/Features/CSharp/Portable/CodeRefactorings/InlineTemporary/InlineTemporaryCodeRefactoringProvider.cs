@@ -50,14 +50,14 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
 
             var node = token.Parent;
 
-            if (!node.IsKind(SyntaxKind.VariableDeclarator) ||
+            if (!node.IsKind(SyntaxKind.VariableDeclaration) ||
                 !node.IsParentKind(SyntaxKind.VariableDeclaration) ||
                 !node.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement))
             {
                 return;
             }
 
-            var variableDeclarator = (VariableDeclaratorSyntax)node;
+            var variableDeclarator = (VariableDeclarationSyntax)node;
             var variableDeclaration = (VariableDeclarationSyntax)variableDeclarator.Parent;
             var localDeclarationStatement = (LocalDeclarationStatementSyntax)variableDeclaration.Parent;
 
@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
 
         private async Task<IEnumerable<ReferenceLocation>> GetReferencesAsync(
             Document document,
-            VariableDeclaratorSyntax variableDeclarator,
+            VariableDeclarationSyntax variableDeclarator,
             CancellationToken cancellationToken)
         {
             var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             return SpecializedCollections.EmptyEnumerable<ReferenceLocation>();
         }
 
-        private static bool HasConflict(IdentifierNameSyntax identifier, VariableDeclaratorSyntax variableDeclarator)
+        private static bool HasConflict(IdentifierNameSyntax identifier, VariableDeclarationSyntax variableDeclarator)
         {
             // TODO: Check for more conflict types.
             if (identifier.SpanStart < variableDeclarator.SpanStart)
@@ -166,7 +166,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             return ConflictAnnotation.Create(CSharpFeaturesResources.Conflict_s_detected);
         }
 
-        private async Task<Document> InlineTemporaryAsync(Document document, VariableDeclaratorSyntax declarator, CancellationToken cancellationToken)
+        private async Task<Document> InlineTemporaryAsync(Document document, VariableDeclarationSyntax declarator, CancellationToken cancellationToken)
         {
             var workspace = document.Project.Solution.Workspace;
 
@@ -252,9 +252,9 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             return updatedDocument;
         }
 
-        private static async Task<VariableDeclaratorSyntax> FindDeclaratorAsync(Document document, CancellationToken cancellationToken)
+        private static async Task<VariableDeclarationSyntax> FindDeclaratorAsync(Document document, CancellationToken cancellationToken)
         {
-            return await FindNodeWithAnnotationAsync<VariableDeclaratorSyntax>(document, DefinitionAnnotation, cancellationToken).ConfigureAwait(false);
+            return await FindNodeWithAnnotationAsync<VariableDeclarationSyntax>(document, DefinitionAnnotation, cancellationToken).ConfigureAwait(false);
         }
 
         private static async Task<ExpressionSyntax> FindInitializerAsync(Document document, CancellationToken cancellationToken)
@@ -290,7 +290,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             }
         }
 
-        private SyntaxNode GetScope(VariableDeclaratorSyntax variableDeclarator)
+        private SyntaxNode GetScope(VariableDeclarationSyntax variableDeclarator)
         {
             var variableDeclaration = (VariableDeclarationSyntax)variableDeclarator.Parent;
             var localDeclaration = (LocalDeclarationStatementSyntax)variableDeclaration.Parent;
@@ -310,12 +310,12 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             return scope;
         }
 
-        private VariableDeclaratorSyntax FindDeclarator(SyntaxNode node)
+        private VariableDeclarationSyntax FindDeclarator(SyntaxNode node)
         {
             var annotatedNodesOrTokens = node.GetAnnotatedNodesAndTokens(DefinitionAnnotation).ToList();
             Debug.Assert(annotatedNodesOrTokens.Count == 1, "Only a single variable declarator should have been annotated.");
 
-            return (VariableDeclaratorSyntax)annotatedNodesOrTokens.First().AsNode();
+            return (VariableDeclarationSyntax)annotatedNodesOrTokens.First().AsNode();
         }
 
         private SyntaxTriviaList GetTriviaToPreserve(SyntaxTriviaList syntaxTriviaList)
@@ -328,7 +328,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             return trivia.Any(t => t.IsRegularComment() || t.IsDirective);
         }
 
-        private SyntaxNode RemoveDeclaratorFromVariableList(VariableDeclaratorSyntax variableDeclarator, VariableDeclarationSyntax variableDeclaration)
+        private SyntaxNode RemoveDeclaratorFromVariableList(VariableDeclarationSyntax variableDeclarator, VariableDeclarationSyntax variableDeclaration)
         {
             Debug.Assert(variableDeclaration.Variables.Count > 1);
             Debug.Assert(variableDeclaration.Variables.Contains(variableDeclarator));
@@ -345,7 +345,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
                 newLocalDeclaration.WithAdditionalAnnotations(Formatter.Annotation));
         }
 
-        private SyntaxNode RemoveDeclaratorFromScope(VariableDeclaratorSyntax variableDeclarator, SyntaxNode scope)
+        private SyntaxNode RemoveDeclaratorFromScope(VariableDeclarationSyntax variableDeclarator, SyntaxNode scope)
         {
             var variableDeclaration = (VariableDeclarationSyntax)variableDeclarator.Parent;
 
@@ -421,7 +421,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
         }
 
         private async Task<ExpressionSyntax> CreateExpressionToInlineAsync(
-            VariableDeclaratorSyntax variableDeclarator,
+            VariableDeclarationSyntax variableDeclarator,
             Document document,
             CancellationToken cancellationToken)
         {
@@ -458,20 +458,20 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeRefactorings.InlineTemporary
             updatedDocument = await updatedDocument.ReplaceNodeAsync(variableDeclarator.Initializer.Value, newExpression, cancellationToken).ConfigureAwait(false);
             semanticModel = await updatedDocument.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
             newExpression = await FindInitializerAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
-            var newVariableDeclarator = await FindDeclaratorAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
-            localSymbol = (ILocalSymbol)semanticModel.GetDeclaredSymbol(newVariableDeclarator, cancellationToken);
+            var newVariableDeclaration = await FindDeclaratorAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
+            localSymbol = (ILocalSymbol)semanticModel.GetDeclaredSymbol(newVariableDeclaration, cancellationToken);
 
-            var explicitCastExpression = newExpression.CastIfPossible(localSymbol.Type, newVariableDeclarator.SpanStart, semanticModel);
+            var explicitCastExpression = newExpression.CastIfPossible(localSymbol.Type, newVariableDeclaration.SpanStart, semanticModel);
             if (explicitCastExpression != newExpression)
             {
                 updatedDocument = await updatedDocument.ReplaceNodeAsync(newExpression, explicitCastExpression, cancellationToken).ConfigureAwait(false);
                 semanticModel = await updatedDocument.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
-                newVariableDeclarator = await FindDeclaratorAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
+                newVariableDeclaration = await FindDeclaratorAsync(updatedDocument, cancellationToken).ConfigureAwait(false);
             }
 
             // Now that the variable declarator is normalized, make its initializer
             // value semantically explicit.
-            newExpression = await Simplifier.ExpandAsync(newVariableDeclarator.Initializer.Value, updatedDocument, cancellationToken: cancellationToken).ConfigureAwait(false);
+            newExpression = await Simplifier.ExpandAsync(newVariableDeclaration.Initializer.Value, updatedDocument, cancellationToken: cancellationToken).ConfigureAwait(false);
             return newExpression.WithAdditionalAnnotations(ExpressionToInlineAnnotation);
         }
 

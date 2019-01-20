@@ -14,7 +14,7 @@ namespace Microsoft.CodeAnalysis.CSharp.RemoveUnusedParametersAndValues
     [ExtensionOrder(After = PredefinedCodeFixProviderNames.AddImport)]
     internal class CSharpRemoveUnusedValuesCodeFixProvider :
         AbstractRemoveUnusedValuesCodeFixProvider<ExpressionSyntax, StatementSyntax, BlockSyntax,
-            ExpressionStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclaratorSyntax,
+            ExpressionStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclarationSyntax,
             ForEachStatementSyntax, SwitchSectionSyntax, SwitchLabelSyntax, CatchClauseSyntax, CatchClauseSyntax>
     {
         protected override BlockSyntax WrapWithBlockIfNecessary(IEnumerable<StatementSyntax> statements)
@@ -31,8 +31,8 @@ namespace Microsoft.CodeAnalysis.CSharp.RemoveUnusedParametersAndValues
                     var identifierName = (IdentifierNameSyntax)node;
                     return identifierName.WithIdentifier(newName.WithTriviaFrom(identifierName.Identifier));
 
-                case SyntaxKind.VariableDeclarator:
-                    var variableDeclarator = (VariableDeclaratorSyntax)node;
+                case SyntaxKind.VariableDeclaration:
+                    var variableDeclarator = (VariableDeclarationSyntax)node;
                     return variableDeclarator.WithIdentifier(newName.WithTriviaFrom(variableDeclarator.Identifier));
 
                 case SyntaxKind.SingleVariableDesignation:

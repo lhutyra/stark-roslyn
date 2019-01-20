@@ -100,7 +100,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EditAndContinue
             }
 
             // field initializer
-            if (syntax is ExpressionSyntax && syntax.Parent.Parent is VariableDeclaratorSyntax)
+            if (syntax is ExpressionSyntax && syntax.Parent.Parent is VariableDeclarationSyntax)
             {
                 return;
             }

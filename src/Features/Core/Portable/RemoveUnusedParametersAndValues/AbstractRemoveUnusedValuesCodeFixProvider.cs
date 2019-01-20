@@ -40,7 +40,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
     ///     3. Otherwise, we recommend assigning the value to a new unused local variable which has no reads.
     /// </summary>
     internal abstract class AbstractRemoveUnusedValuesCodeFixProvider<TExpressionSyntax, TStatementSyntax, TBlockSyntax,
-        TExpressionStatementSyntax, TLocalDeclarationStatementSyntax, TVariableDeclaratorSyntax, TForEachStatementSyntax,
+        TExpressionStatementSyntax, TLocalDeclarationStatementSyntax, TVariableDeclarationSyntax, TForEachStatementSyntax,
         TSwitchCaseBlockSyntax, TSwitchCaseLabelOrClauseSyntax, TCatchStatementSyntax, TCatchBlockSyntax>
         : SyntaxEditorBasedCodeFixProvider
         where TExpressionSyntax : SyntaxNode
@@ -49,7 +49,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
         where TExpressionStatementSyntax : TStatementSyntax
         where TLocalDeclarationStatementSyntax : TStatementSyntax
         where TForEachStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
         where TSwitchCaseBlockSyntax : SyntaxNode
         where TSwitchCaseLabelOrClauseSyntax : SyntaxNode
     {
@@ -403,7 +403,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
                         {
                             // Redundant initialization.
                             // For example, "int a = 0;"
-                            var variableDeclarator = node.FirstAncestorOrSelf<TVariableDeclaratorSyntax>();
+                            var variableDeclarator = node.FirstAncestorOrSelf<TVariableDeclarationSyntax>();
                             Debug.Assert(variableDeclarator != null);
                             nodesToRemove.Add(variableDeclarator);
 
@@ -524,7 +524,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
                     {
                         var variables = syntaxFacts.GetVariablesOfLocalDeclarationStatement(localDeclarationStatement);
                         if (variables.Count == 1 &&
-                            syntaxFacts.GetInitializerOfVariableDeclarator(variables[0]) == null &&
+                            syntaxFacts.GetInitializerOfVariableDeclaration(variables[0]) == null &&
                             !(await IsLocalDeclarationWithNoReferencesAsync(localDeclarationStatement, document, cancellationToken).ConfigureAwait(false)))
                         {
                             nodeReplacementMap.Add(localDeclarationStatement, localDeclarationStatement.WithAdditionalAnnotations(s_existingLocalDeclarationWithoutInitializerAnnotation));

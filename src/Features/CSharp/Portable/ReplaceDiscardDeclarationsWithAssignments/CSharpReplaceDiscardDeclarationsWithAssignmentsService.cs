@@ -94,7 +94,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ReplaceDiscardDeclarationsWithAssignment
             return Task.FromResult(editor.GetChangedRoot());
         }
 
-        private static bool IsDiscardDeclaration(VariableDeclaratorSyntax variable)
+        private static bool IsDiscardDeclaration(VariableDeclarationSyntax variable)
             => variable.Identifier.Text == AbstractRemoveUnusedParametersAndValuesDiagnosticAnalyzer.DiscardVariableName;
         private static bool IsDiscardDeclaration(CatchDeclarationSyntax catchDeclaration)
             => catchDeclaration.Identifier.Text == AbstractRemoveUnusedParametersAndValuesDiagnosticAnalyzer.DiscardVariableName;
@@ -104,7 +104,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ReplaceDiscardDeclarationsWithAssignment
             private readonly LocalDeclarationStatementSyntax _localDeclarationStatement;
             private readonly SyntaxEditor _editor;
             private readonly ArrayBuilder<StatementSyntax> _statementsBuilder;
-            private SeparatedSyntaxList<VariableDeclaratorSyntax> _currentNonDiscardVariables;
+            private SeparatedSyntaxList<VariableDeclarationSyntax> _currentNonDiscardVariables;
 
             private RemoveDiscardHelper(LocalDeclarationStatementSyntax localDeclarationStatement, SyntaxEditor editor)
             {
@@ -112,7 +112,7 @@ namespace Microsoft.CodeAnalysis.CSharp.ReplaceDiscardDeclarationsWithAssignment
                 _editor = editor;
 
                 _statementsBuilder = ArrayBuilder<StatementSyntax>.GetInstance();
-                _currentNonDiscardVariables = new SeparatedSyntaxList<VariableDeclaratorSyntax>();
+                _currentNonDiscardVariables = new SeparatedSyntaxList<VariableDeclarationSyntax>();
             }
 
             public static void ProcessDeclarationStatement(
@@ -215,11 +215,11 @@ namespace Microsoft.CodeAnalysis.CSharp.ReplaceDiscardDeclarationsWithAssignment
                                         SyntaxFactory.VariableDeclaration(_localDeclarationStatement.Declaration.Type, _currentNonDiscardVariables))
                                     .WithAdditionalAnnotations(Formatter.Annotation);
                     _statementsBuilder.Add(statement);
-                    _currentNonDiscardVariables = new SeparatedSyntaxList<VariableDeclaratorSyntax>();
+                    _currentNonDiscardVariables = new SeparatedSyntaxList<VariableDeclarationSyntax>();
                 }
             }
 
-            private void GenerateAssignmentForDiscardVariable(VariableDeclaratorSyntax variable)
+            private void GenerateAssignmentForDiscardVariable(VariableDeclarationSyntax variable)
             {
                 Debug.Assert(IsDiscardDeclaration(variable));
 

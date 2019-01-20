@@ -28,13 +28,12 @@ namespace Microsoft.CodeAnalysis.CSharp
             // Declaration and Initializers are mutually exclusive.
             if (_syntax.Declaration != null)
             {
-                foreach (var vdecl in _syntax.Declaration.Variables)
                 {
-                    var localSymbol = MakeLocal(_syntax.Declaration, vdecl, LocalDeclarationKind.RegularVariable);
+                    var localSymbol = MakeLocal(_syntax.Declaration, LocalDeclarationKind.RegularVariable);
                     locals.Add(localSymbol);
 
                     // also gather expression-declared variables from the bracketed argument lists and the initializers
-                    ExpressionVariableFinder.FindExpressionVariables(this, locals, vdecl);
+                    ExpressionVariableFinder.FindExpressionVariables(this, locals, _syntax.Declaration);
                 }
             }
             else
@@ -57,8 +56,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // Declaration and Initializers are mutually exclusive.
             if (_syntax.Declaration != null)
             {
-                ImmutableArray<BoundLocalDeclaration> unused;
-                initializer = originalBinder.BindForOrUsingOrFixedDeclarations(node.Declaration, LocalDeclarationKind.RegularVariable, diagnostics, out unused);
+                initializer = originalBinder.BindForOrUsingOrFixedDeclarations(node.Declaration, LocalDeclarationKind.RegularVariable, diagnostics);
             }
             else
             {

@@ -82,8 +82,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (syntax.Parent.Parent.Kind())
             {
-                case SyntaxKind.VariableDeclarator:
-                    var declaratorSyntax = (VariableDeclaratorSyntax)syntax.Parent.Parent;
+                case SyntaxKind.VariableDeclaration:
+                    var declaratorSyntax = (VariableDeclarationSyntax)syntax.Parent.Parent;
                     return AddSequencePoint(declaratorSyntax, rewritten);
 
                 case SyntaxKind.PropertyDeclaration:
@@ -320,9 +320,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public override BoundStatement InstrumentLocalInitialization(BoundLocalDeclaration original, BoundStatement rewritten)
         {
-            return AddSequencePoint(original.Syntax.Kind() == SyntaxKind.VariableDeclarator ?
-                                        (VariableDeclaratorSyntax)original.Syntax :
-                                        ((LocalDeclarationStatementSyntax)original.Syntax).Declaration.Variables.First(),
+            return AddSequencePoint(original.Syntax.Kind() == SyntaxKind.VariableDeclaration ?
+                                        (VariableDeclarationSyntax)original.Syntax :
+                                        ((LocalDeclarationStatementSyntax)original.Syntax).Declaration,
                                     base.InstrumentLocalInitialization(original, rewritten));
         }
 

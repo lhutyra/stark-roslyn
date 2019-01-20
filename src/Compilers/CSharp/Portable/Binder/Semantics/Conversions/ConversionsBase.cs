@@ -541,7 +541,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                 return tupleConversion;
             }
 
+            if (HasExtendedTypeImplicitConversion(source, destination, ref useSiteDiagnostics))
+            {
+                return Conversion.Identity;
+            }
+
             return Conversion.NoConversion;
+        }
+
+        private bool HasExtendedTypeImplicitConversion(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
+        {
+            return source.GetRequiredAccessModifiers(destination, out _) == 0;
         }
 
         private Conversion ClassifyImplicitBuiltInConversionSlow(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)

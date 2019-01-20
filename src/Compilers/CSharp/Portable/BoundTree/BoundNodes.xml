@@ -769,7 +769,6 @@
     <Field Name="LocalSymbol" Type="LocalSymbol"/>
     <Field Name="DeclaredType" Type="BoundTypeExpression"/>
     <Field Name="InitializerOpt" Type="BoundExpression" Null="allow"/>
-    <Field Name="ArgumentsOpt" Type="ImmutableArray&lt;BoundExpression&gt;" Null="allow"/>
   </Node>
 
   <!--
@@ -778,14 +777,11 @@
     
   Works like multiple BoundLocalDeclaration nodes.  
   -->
-  <Node Name="BoundMultipleLocalDeclarations" Base="BoundStatement">
-    <Field Name="LocalDeclarations" Type="ImmutableArray&lt;BoundLocalDeclaration&gt;"/>
-  </Node>
-
-  <Node Name="BoundUsingLocalDeclarations" Base="BoundMultipleLocalDeclarations">
+  <Node Name="BoundUsingLocalDeclaration" Base="BoundStatement">
     <Field Name="DisposeMethodOpt" Type="MethodSymbol" Null="Allow"/>
     <Field Name="IDisposableConversion" Type="Conversion"/>
     <Field Name="AwaitOpt" Type="AwaitableInfo" Null="allow"/>
+    <Field Name="Declaration" Type="BoundLocalDeclaration"/>
   </Node>
 
   <!-- 
@@ -948,7 +944,7 @@
   <Node Name="BoundUsingStatement" Base="BoundStatement">
     <!-- DeclarationsOpt and ExpressionOpt cannot both be non-null. -->
     <Field Name="Locals" Type="ImmutableArray&lt;LocalSymbol&gt;"/>
-    <Field Name="DeclarationsOpt" Type="BoundMultipleLocalDeclarations" Null="allow"/>
+    <Field Name="DeclarationOpt" Type="BoundLocalDeclaration" Null="allow"/>
     <Field Name="ExpressionOpt" Type="BoundExpression" Null="allow"/>
     <Field Name="IDisposableConversion" Type="Conversion" />
     <Field Name="Body" Type="BoundStatement"/>
@@ -958,7 +954,7 @@
 
   <Node Name="BoundFixedStatement" Base="BoundStatement">
     <Field Name="Locals" Type="ImmutableArray&lt;LocalSymbol&gt;"/>
-    <Field Name="Declarations" Type="BoundMultipleLocalDeclarations"/>
+    <Field Name="Declaration" Type="BoundLocalDeclaration"/>
     <Field Name="Body" Type="BoundStatement"/>
   </Node>
 

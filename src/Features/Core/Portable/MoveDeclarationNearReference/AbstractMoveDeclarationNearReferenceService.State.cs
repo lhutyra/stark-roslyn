@@ -16,12 +16,12 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
         TService,
         TStatementSyntax,
         TLocalDeclarationStatementSyntax,
-        TVariableDeclaratorSyntax>
+        TVariableDeclarationSyntax>
     {
         private class State
         {
             public TLocalDeclarationStatementSyntax DeclarationStatement { get; private set; }
-            public TVariableDeclaratorSyntax VariableDeclarator { get; private set; }
+            public TVariableDeclarationSyntax VariableDeclaration { get; private set; }
             public ILocalSymbol LocalSymbol { get; private set; }
             public SyntaxNode OutermostBlock { get; private set; }
             public SyntaxNode InnermostBlock { get; private set; }
@@ -62,8 +62,8 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
                     return false;
                 }
 
-                this.VariableDeclarator = (TVariableDeclaratorSyntax)variables[0];
-                if (!service.IsValidVariableDeclarator(this.VariableDeclarator))
+                this.VariableDeclaration = (TVariableDeclarationSyntax)variables[0];
+                if (!service.IsValidVariableDeclaration(this.VariableDeclaration))
                 {
                     return false;
                 }
@@ -76,7 +76,7 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
 
                 var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
                 this.LocalSymbol = (ILocalSymbol)semanticModel.GetDeclaredSymbol(
-                    service.GetVariableDeclaratorSymbolNode(this.VariableDeclarator), cancellationToken);
+                    service.GetVariableDeclarationSymbolNode(this.VariableDeclaration), cancellationToken);
                 if (this.LocalSymbol == null)
                 {
                     // This can happen in broken code, for example: "{ object x; object }"
@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
                     // statement.
                     // So, we also check if the variable declaration has an initializer below.
 
-                    if (syntaxFacts.GetInitializerOfVariableDeclarator(this.VariableDeclarator) != null &&
+                    if (syntaxFacts.GetInitializerOfVariableDeclaration(this.VariableDeclaration) != null &&
                         InDeclarationStatementGroup(this.IndexOfDeclarationStatementInInnermostBlock, this.IndexOfFirstStatementAffectedInInnermostBlock))
                     {
                         return false;

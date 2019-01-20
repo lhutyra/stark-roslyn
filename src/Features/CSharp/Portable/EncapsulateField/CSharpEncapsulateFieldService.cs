@@ -27,7 +27,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EncapsulateField
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-            var declarator = root.GetAnnotatedNodes<VariableDeclaratorSyntax>(declarationAnnotation).FirstOrDefault();
+            var declarator = root.GetAnnotatedNodes<VariableDeclarationSyntax>(declarationAnnotation).FirstOrDefault();
 
             // There may be no field to rewrite if this document is part of a set of linked files
             // and the declaration is not conditionally compiled in this document's project.
@@ -80,7 +80,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EncapsulateField
 
                 root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-                declarator = root.GetAnnotatedNodes<VariableDeclaratorSyntax>(tempAnnotation).First();
+                declarator = root.GetAnnotatedNodes<VariableDeclarationSyntax>(tempAnnotation).First();
                 declaration = declarator.Parent as VariableDeclarationSyntax;
 
                 var field = semanticModel.GetDeclaredSymbol(declarator, cancellationToken) as IFieldSymbol;
@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EncapsulateField
                 var withField = await codeGenService.AddFieldAsync(document.Project.Solution, field.ContainingType, fieldToAdd, new CodeGenerationOptions(), cancellationToken).ConfigureAwait(false);
                 root = await withField.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-                declarator = root.GetAnnotatedNodes<VariableDeclaratorSyntax>(tempAnnotation).First();
+                declarator = root.GetAnnotatedNodes<VariableDeclarationSyntax>(tempAnnotation).First();
                 declaration = declarator.Parent as VariableDeclarationSyntax;
 
                 return root.RemoveNode(declarator, SyntaxRemoveOptions.KeepNoTrivia);
@@ -118,7 +118,7 @@ namespace Microsoft.CodeAnalysis.CSharp.EncapsulateField
 
             var declarations = fields.Where(CanEncapsulate).Select(f => f.Declaration);
 
-            IEnumerable<VariableDeclaratorSyntax> declarators;
+            IEnumerable<VariableDeclarationSyntax> declarators;
             if (span.IsEmpty)
             {
                 // no selection, get all variables

@@ -43,7 +43,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
 
                 if (typeSyntax != null)
                 {
-                    if (typeSyntax.IsVar)
+                    if (typeSyntax.IsNullWithNoType())
                     {
                         // If we have:   var v = default(CancellationToken);    then we can't simplify this.
                         return false;
@@ -66,7 +66,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Extensions
 
         private static TypeSyntax GetTypeSyntax(EqualsValueClauseSyntax equalsValueClause)
         {
-            if (equalsValueClause.IsParentKind(SyntaxKind.VariableDeclarator) &&
+            if (equalsValueClause.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 equalsValueClause.Parent.IsParentKind(SyntaxKind.VariableDeclaration))
             {
                 var declaration = (VariableDeclarationSyntax)equalsValueClause.Parent.Parent;

@@ -345,7 +345,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         else if (SyntaxFacts.IsInTypeOnlyContext(type))
                         {
-                            if (!type.IsVar)
+                            if (!type.IsNullWithNoType())
                             {
                                 return binder.BindTypeOrAlias(type, diagnostics, basesBeingResolved).Symbol;
                             }
@@ -369,9 +369,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                                 // Note that for regular C#, fieldSymbol.Type would be an error type.
 
                                 var variableDecl = type.Parent as VariableDeclarationSyntax;
-                                if (variableDecl != null && variableDecl.Variables.Any())
+                                if (variableDecl != null)
                                 {
-                                    var fieldSymbol = GetDeclaredFieldSymbol(variableDecl.Variables.First());
+                                    var fieldSymbol = GetDeclaredFieldSymbol(variableDecl);
                                     if ((object)fieldSymbol != null)
                                     {
                                         result = fieldSymbol.Type.TypeSymbol;
@@ -825,13 +825,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case SyntaxKind.EventFieldDeclaration:
                         {
                             var fieldDecl = (BaseFieldDeclarationSyntax)memberDecl;
-                            foreach (var variableDecl in fieldDecl.Declaration.Variables)
+                            var binding = GetOrAddModelIfContains(fieldDecl.Declaration.Initializer, span);
+                            if (binding != null)
                             {
-                                var binding = GetOrAddModelIfContains(variableDecl.Initializer, span);
-                                if (binding != null)
-                                {
-                                    return binding;
-                                }
+                                return binding;
                             }
                         }
                         break;
@@ -1019,9 +1016,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.EqualsValueClause:
                     switch (node.Parent.Kind())
                     {
-                        case SyntaxKind.VariableDeclarator:
+                        case SyntaxKind.VariableDeclaration:
                             {
-                                var variableDecl = (VariableDeclaratorSyntax)node.Parent;
+                                var variableDecl = (VariableDeclarationSyntax)node.Parent;
                                 SourceMemberFieldSymbol fieldSymbol = GetDeclaredFieldSymbol(variableDecl);
 
                                 return InitializerSemanticModel.Create(
@@ -1155,7 +1152,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 enclosingBinder.WithAdditionalFlags(BinderFlags.AttributeArgument));
         }
 
-        private SourceMemberFieldSymbol GetDeclaredFieldSymbol(VariableDeclaratorSyntax variableDecl)
+        private SourceMemberFieldSymbol GetDeclaredFieldSymbol(VariableDeclarationSyntax variableDecl)
         {
             var declaredSymbol = GetDeclaredSymbol(variableDecl);
 
@@ -1555,8 +1552,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.EnumDeclaration:
                     return ((BaseTypeDeclarationSyntax)declaration).Identifier.ValueText;
 
-                case SyntaxKind.VariableDeclarator:
-                    return ((VariableDeclaratorSyntax)declaration).Identifier.ValueText;
+                case SyntaxKind.VariableDeclaration:
+                    return ((VariableDeclarationSyntax)declaration).Identifier.ValueText;
 
                 case SyntaxKind.EnumMemberDeclaration:
                     return ((EnumMemberDeclarationSyntax)declaration).Identifier.ValueText;
@@ -1711,7 +1708,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <param name="declarationSyntax">The syntax node that declares a variable.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbol that was declared.</returns>
-        public override ISymbol GetDeclaredSymbol(VariableDeclaratorSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
+        public override ISymbol GetDeclaredSymbol(VariableDeclarationSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckSyntaxNode(declarationSyntax);
 
@@ -1856,13 +1853,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             var builder = new ArrayBuilder<ISymbol>();
 
-            foreach (var declarator in declarationSyntax.Declaration.Variables)
+            var field = this.GetDeclaredSymbol(declarationSyntax.Declaration, cancellationToken) as ISymbol;
+            if (field != null)
             {
-                var field = this.GetDeclaredSymbol(declarator, cancellationToken) as ISymbol;
-                if (field != null)
-                {
-                    builder.Add(field);
-                }
+                builder.Add(field);
             }
 
             return builder.ToImmutableAndFree();

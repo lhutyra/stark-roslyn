@@ -160,9 +160,12 @@ namespace Microsoft.CodeAnalysis.CSharp
         OperatorKeyword = 8382,
         ExplicitKeyword = 8383,
         ImplicitKeyword = 8384,
-#if STARK
-        FuncKeyword = 8390,
-        ConstructorKeyword = 8391,
+#if STARK        
+        VarKeyword = 8390,
+        ValKeyword = 8391,
+        FuncKeyword = 8392,
+        TransientKeyword = 8393,
+        ConstructorKeyword = 8394, // Must be always last
 #endif
 
         // contextual keywords
@@ -232,7 +235,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         SafeOnlyKeyword = 8488,
 
         // Other
-        VarKeyword = 8490,
         UnderscoreToken = 8491,
         OmittedTypeArgumentToken = 8492,
         OmittedArraySizeExpressionToken = 8493,
@@ -319,7 +321,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         ArrayRankSpecifier = 8623,
         PointerType = 8624,
         NullableType = 8625,
-        OmittedTypeArgument = 8626,
+        ExtendedType = 8626,
+        OmittedTypeArgument = 8627,
 
         // expressions
         ParenthesizedExpression = 8632,
@@ -450,7 +453,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         Block = 8792,
         LocalDeclarationStatement = 8793,
         VariableDeclaration = 8794,
-        VariableDeclarator = 8795,
+        //VariableDeclarator = 8795,
         EqualsValueClause = 8796,
         ExpressionStatement = 8797,
         EmptyStatement = 8798,

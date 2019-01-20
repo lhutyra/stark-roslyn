@@ -107,7 +107,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Debugging
             }
 
             private void AddVariableExpressions(
-                SeparatedSyntaxList<VariableDeclaratorSyntax> declarators,
+                SeparatedSyntaxList<VariableDeclarationSyntax> declarators,
                 IList<string> expressions)
             {
                 foreach (var declarator in declarators)

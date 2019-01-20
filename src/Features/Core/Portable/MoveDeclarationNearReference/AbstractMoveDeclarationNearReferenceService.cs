@@ -18,17 +18,17 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
         TService,
         TStatementSyntax,
         TLocalDeclarationStatementSyntax,
-        TVariableDeclaratorSyntax> : IMoveDeclarationNearReferenceService
-        where TService : AbstractMoveDeclarationNearReferenceService<TService, TStatementSyntax, TLocalDeclarationStatementSyntax, TVariableDeclaratorSyntax>
+        TVariableDeclarationSyntax> : IMoveDeclarationNearReferenceService
+        where TService : AbstractMoveDeclarationNearReferenceService<TService, TStatementSyntax, TLocalDeclarationStatementSyntax, TVariableDeclarationSyntax>
         where TStatementSyntax : SyntaxNode
         where TLocalDeclarationStatementSyntax : TStatementSyntax
-        where TVariableDeclaratorSyntax : SyntaxNode
+        where TVariableDeclarationSyntax : SyntaxNode
     {
         protected abstract bool IsMeaningfulBlock(SyntaxNode node);
         protected abstract bool CanMoveToBlock(ILocalSymbol localSymbol, SyntaxNode currentBlock, SyntaxNode destinationBlock);
-        protected abstract SyntaxNode GetVariableDeclaratorSymbolNode(TVariableDeclaratorSyntax variableDeclarator);
-        protected abstract bool IsValidVariableDeclarator(TVariableDeclaratorSyntax variableDeclarator);
-        protected abstract SyntaxToken GetIdentifierOfVariableDeclarator(TVariableDeclaratorSyntax variableDeclarator);
+        protected abstract SyntaxNode GetVariableDeclarationSymbolNode(TVariableDeclarationSyntax variableDeclarator);
+        protected abstract bool IsValidVariableDeclaration(TVariableDeclarationSyntax variableDeclarator);
+        protected abstract SyntaxToken GetIdentifierOfVariableDeclaration(TVariableDeclarationSyntax variableDeclarator);
         protected abstract Task<bool> TypesAreCompatibleAsync(Document document, ILocalSymbol localSymbol, TLocalDeclarationStatementSyntax declarationStatement, SyntaxNode right, CancellationToken cancellationToken);
 
         public async Task<bool> CanMoveDeclarationNearReferenceAsync(Document document, SyntaxNode node, CancellationToken cancellationToken)
@@ -202,7 +202,7 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
         {
             var syntaxFacts = document.GetLanguageService<ISyntaxFactsService>();
 
-            var initializer = syntaxFacts.GetInitializerOfVariableDeclarator(state.VariableDeclarator);
+            var initializer = syntaxFacts.GetInitializerOfVariableDeclaration(state.VariableDeclaration);
             if (initializer == null ||
                 syntaxFacts.IsLiteralExpression(syntaxFacts.GetValueOfEqualsValueClause(initializer)))
             {
@@ -237,11 +237,11 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
                 out var left, out var operatorToken, out var right);
 
             return state.DeclarationStatement.ReplaceNode(
-                state.VariableDeclarator,
+                state.VariableDeclaration,
                 generator.WithInitializer(
-                    state.VariableDeclarator.WithoutTrailingTrivia(),
+                    state.VariableDeclaration.WithoutTrailingTrivia(),
                     generator.EqualsValueClause(operatorToken, right))
-                    .WithTrailingTrivia(state.VariableDeclarator.GetTrailingTrivia()));
+                    .WithTrailingTrivia(state.VariableDeclaration.GetTrailingTrivia()));
         }
 
         private class MyCodeAction : CodeAction.DocumentChangeAction

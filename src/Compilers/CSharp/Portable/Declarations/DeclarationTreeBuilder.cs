@@ -596,24 +596,12 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 case SyntaxKind.FieldDeclaration:
                     anyNonTypeMembers = true;
-                    CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<Syntax.InternalSyntax.VariableDeclaratorSyntax> fieldDeclarators =
-                        ((Syntax.InternalSyntax.FieldDeclarationSyntax)member).Declaration.Variables;
-                    int numFieldDeclarators = fieldDeclarators.Count;
-                    for (int i = 0; i < numFieldDeclarators; i++)
-                    {
-                        set.Add(fieldDeclarators[i].Identifier.ValueText);
-                    }
+                    set.Add(((Syntax.InternalSyntax.FieldDeclarationSyntax)member).Declaration.Identifier.ValueText);
                     break;
 
                 case SyntaxKind.EventFieldDeclaration:
                     anyNonTypeMembers = true;
-                    CoreInternalSyntax.SeparatedSyntaxList<Syntax.InternalSyntax.VariableDeclaratorSyntax> eventDeclarators =
-                        ((Syntax.InternalSyntax.EventFieldDeclarationSyntax)member).Declaration.Variables;
-                    int numEventDeclarators = eventDeclarators.Count;
-                    for (int i = 0; i < numEventDeclarators; i++)
-                    {
-                        set.Add(eventDeclarators[i].Identifier.ValueText);
-                    }
+                    set.Add(((Syntax.InternalSyntax.EventFieldDeclarationSyntax)member).Declaration.Identifier.ValueText);
                     break;
 
                 case SyntaxKind.MethodDeclaration:

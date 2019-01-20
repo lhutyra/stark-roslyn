@@ -151,7 +151,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Completion.KeywordRecommenders
                 case SyntaxKind.EqualsToken:
                     var parent = token.Parent;
                     return parent?.Kind() == SyntaxKind.SimpleAssignmentExpression
-                        || parent?.Parent?.Kind() == SyntaxKind.VariableDeclarator;
+                        || parent?.Parent?.Kind() == SyntaxKind.VariableDeclaration;
 
                 // {
                 //     var x = true ?

@@ -140,7 +140,7 @@ namespace Microsoft.CodeAnalysis.CSharp.InlineDeclaration
             // esoteric and would make us have to write a lot more complex code to support
             // that scenario.
             var localReference = outLocalSymbol.DeclaringSyntaxReferences.FirstOrDefault();
-            var localDeclarator = localReference?.GetSyntax(cancellationToken) as VariableDeclaratorSyntax;
+            var localDeclarator = localReference?.GetSyntax(cancellationToken) as VariableDeclarationSyntax;
             if (localDeclarator == null)
             {
                 return;
