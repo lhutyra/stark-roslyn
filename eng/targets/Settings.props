@@ -68,6 +68,7 @@
   <!-- Stark -->
   <PropertyGroup Condition="'$(Stark)' == 'true'">
     <!-- TODO: Enable source link at some point -->
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
     <EnableSourceLink>false</EnableSourceLink> 
     <EnableXlfLocalization>false</EnableXlfLocalization>
 
