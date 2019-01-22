@@ -77,6 +77,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             IsEndOfTypeParameterList = 1 << 20,
             IsEndOfMethodSignature = 1 << 21,
             IsEndOfNameInExplicitInterface = 1 << 22,
+            IsEndOfIfBlock = 1 << 23,
         }
 
         private const int LastTerminatorState = (int)TerminatorState.IsEndOfNameInExplicitInterface;
@@ -179,6 +180,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                             }
 
                             break;
+                        case TerminatorState.IsEndOfIfBlock:
+                            if (this.IsEndOfIfBlock())
+                            {
+                                return true;
+                            }
+
+                            break;
+
                         case TerminatorState.IsEndOfilterClause:
                             if (this.IsEndOfFilterClause())
                             {
@@ -3604,8 +3613,8 @@ tryAgain:
             SyntaxKind parentKind)
         {
             var variableDeclaration = ParseVariableDeclaration(false);
-            var semicolon = EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.FieldDeclaration(attributes, modifiers.ToList(), variableDeclaration, semicolon);
+            var eos = EatEos(ref variableDeclaration);
+            return _syntaxFactory.FieldDeclaration(attributes, modifiers.ToList(), variableDeclaration, eos);
         }
 
         private VariableDeclarationSyntax ParseVariableDeclaration(bool isLocal = true)
@@ -5835,7 +5844,6 @@ tryAgain:
                 case SyntaxKind.GotoKeyword:
                     return this.ParseGotoStatement();
                 case SyntaxKind.IfKeyword:
-                case SyntaxKind.ElseKeyword: // Including 'else' keyword to handle 'else without if' error cases 
                     return this.ParseIfStatement();
                 case SyntaxKind.LockKeyword:
                     return this.ParseLockStatement();
@@ -6367,9 +6375,12 @@ tryAgain:
                 ? this.AddError(
                     SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken),
                     IsFeatureEnabled(MessageID.IDS_FeatureExpressionBodiedAccessor)
-                            ? ErrorCode.ERR_SemiOrLBraceOrArrowExpected
-                            : ErrorCode.ERR_SemiOrLBraceExpected)
-                : this.EatToken(SyntaxKind.OpenBraceToken);
+                        ? ErrorCode.ERR_SemiOrLBraceOrArrowExpected
+                        : ErrorCode.ERR_SemiOrLBraceExpected)
+                : CurrentToken.Kind != SyntaxKind.OpenBraceToken
+                    ? this.AddError(
+                        SyntaxFactory.MissingToken(SyntaxKind.OpenBraceToken), ErrorCode.ERR_OpenBraceExpected)
+                    : this.EatToken(SyntaxKind.OpenBraceToken);
 
             var statements = _pool.Allocate<StatementSyntax>();
             try
@@ -6377,7 +6388,11 @@ tryAgain:
                 CSharpSyntaxNode tmp = openBrace;
                 this.ParseStatements(ref tmp, statements, stopOnSwitchSections: false);
                 openBrace = (SyntaxToken)tmp;
-                var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
+
+                var closeBrace = this.CurrentToken.Kind != SyntaxKind.CloseBraceToken
+                    ? this.AddError(
+                        SyntaxFactory.MissingToken(SyntaxKind.CloseBraceToken), ErrorCode.ERR_CloseBraceExpected)
+                    : this.EatToken(SyntaxKind.CloseBraceToken);
 
                 SyntaxList<StatementSyntax> statementList;
                 if (isMethodBody && IsLargeEnoughNonEmptyStatementList(statements))
@@ -6495,7 +6510,7 @@ tryAgain:
                 case SyntaxKind.ForEachKeyword:
                 case SyntaxKind.GotoKeyword:
                 case SyntaxKind.IfKeyword:
-                case SyntaxKind.ElseKeyword:
+                //case SyntaxKind.ElseKeyword:
                 case SyntaxKind.LockKeyword:  // TODO: to remove
                 case SyntaxKind.ReturnKeyword:
                 case SyntaxKind.SwitchKeyword:
@@ -6746,6 +6761,12 @@ tryAgain:
                 || this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
                 || this.CurrentToken.Kind == SyntaxKind.CatchKeyword
                 || this.CurrentToken.Kind == SyntaxKind.FinallyKeyword;
+        }
+
+        private bool IsEndOfIfBlock()
+        {
+            return this.CurrentToken.Kind == SyntaxKind.CloseBraceToken
+                   || this.CurrentToken.Kind == SyntaxKind.ElseKeyword;
         }
 
         private bool IsEndOfFilterClause()
@@ -7090,19 +7111,18 @@ tryAgain:
 
         private IfStatementSyntax ParseIfStatement()
         {
-            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.IfKeyword || this.CurrentToken.Kind == SyntaxKind.ElseKeyword);
+            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.IfKeyword);
 
-            bool firstTokenIsElse = this.CurrentToken.Kind == SyntaxKind.ElseKeyword;
-            var @if = firstTokenIsElse
-                ? this.EatToken(SyntaxKind.IfKeyword, ErrorCode.ERR_ElseCannotStartStatement)
-                : this.EatToken(SyntaxKind.IfKeyword);
-            var openParen = this.EatToken(SyntaxKind.OpenParenToken);
+            var @if = this.EatToken(SyntaxKind.IfKeyword);
             var condition = this.ParseExpressionCore();
-            var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-            var statement = firstTokenIsElse ? this.ParseExpressionStatement() : this.ParseEmbeddedStatement();
+
+            var saveTerm = _termState;
+            _termState |= TerminatorState.IsEndOfIfBlock;
+            var statement = this.ParseBlock();
+            _termState = saveTerm;
             var elseClause = this.ParseElseClauseOpt();
 
-            return _syntaxFactory.IfStatement(@if, openParen, condition, closeParen, statement, elseClause);
+            return _syntaxFactory.IfStatement(@if, condition, statement, elseClause);
         }
 
         private ElseClauseSyntax ParseElseClauseOpt()
@@ -7113,7 +7133,13 @@ tryAgain:
             }
 
             var elseToken = this.EatToken(SyntaxKind.ElseKeyword);
-            var elseStatement = this.ParseEmbeddedStatement();
+            if (CurrentToken.Kind == SyntaxKind.IfKeyword)
+            {
+                var elseIf = ParseIfStatement();
+                return _syntaxFactory.ElseClause(elseToken, elseIf);
+            }
+
+            var elseStatement = this.ParseBlock();
             return _syntaxFactory.ElseClause(elseToken, elseStatement);
         }
 

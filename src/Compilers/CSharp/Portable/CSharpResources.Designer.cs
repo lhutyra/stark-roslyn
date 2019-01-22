@@ -2914,6 +2914,15 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to } expected.
+        /// </summary>
+        internal static string ERR_CloseBraceExpected {
+            get {
+                return ResourceManager.GetString("ERR_CloseBraceExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ) expected.
         /// </summary>
         internal static string ERR_CloseParenExpected {
@@ -7779,6 +7788,15 @@ namespace Microsoft.CodeAnalysis.CSharp {
         internal static string ERR_OnlyClassesCanContainDestructors {
             get {
                 return ResourceManager.GetString("ERR_OnlyClassesCanContainDestructors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to { expected.
+        /// </summary>
+        internal static string ERR_OpenBraceExpected {
+            get {
+                return ResourceManager.GetString("ERR_OpenBraceExpected", resourceCulture);
             }
         }
         

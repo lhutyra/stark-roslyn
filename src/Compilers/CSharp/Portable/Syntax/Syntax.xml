@@ -2376,14 +2376,6 @@
         </summary>
       </PropertyComment>
     </Field>
-    <Field Name="OpenParenToken" Type="SyntaxToken">
-      <Kind Name="OpenParenToken"/>
-      <PropertyComment>
-        <summary>
-          Gets a SyntaxToken that represents the open parenthesis before the if statement's condition expression.
-        </summary>
-      </PropertyComment>
-    </Field>
     <Field Name="Condition" Type="ExpressionSyntax">
       <PropertyComment>
         <summary>
@@ -2391,15 +2383,7 @@
         </summary>
       </PropertyComment>
     </Field>
-    <Field Name="CloseParenToken" Type="SyntaxToken">
-      <Kind Name="CloseParenToken"/>
-      <PropertyComment>
-        <summary>
-          Gets a SyntaxToken that represents the close parenthesis after the if statement's condition expression.
-        </summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Statement" Type="StatementSyntax">
+    <Field Name="Statement" Type="BlockSyntax">
       <PropertyComment>
         <summary>
           Gets a StatementSyntax the represents the statement to be executed when the condition is true.
@@ -3298,8 +3282,9 @@
       </PropertyComment>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax"/>
-    <Field Name="SemicolonToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken">
       <Kind Name="SemicolonToken"/>
+      <Kind Name="EndOfLineTrivia"/>
     </Field>
   </AbstractNode>
   <Node Name="FieldDeclarationSyntax" Base="BaseFieldDeclarationSyntax">
@@ -3315,8 +3300,9 @@
       </PropertyComment>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax" Override="true"/>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Override="true">
+    <Field Name="EosToken" Type="SyntaxToken" Override="true">
       <Kind Name="SemicolonToken"/>
+      <Kind Name="EndOfLineTrivia"/>
     </Field>
   </Node>
   <Node Name="EventFieldDeclarationSyntax" Base="BaseFieldDeclarationSyntax">
@@ -3335,8 +3321,9 @@
       <Kind Name="EventKeyword"/>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax" Override="true"/>
-    <Field Name="SemicolonToken" Type="SyntaxToken" Override="true">
+    <Field Name="EosToken" Type="SyntaxToken" Override="true">
       <Kind Name="SemicolonToken"/>
+      <Kind Name="EndOfLineTrivia"/>
     </Field>
   </Node>
   <Node Name="ExplicitInterfaceSpecifierSyntax" Base="CSharpSyntaxNode">

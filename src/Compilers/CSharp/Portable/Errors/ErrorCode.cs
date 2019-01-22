@@ -1684,6 +1684,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         #region diagnostics introduced for Stark
         ERR_AccessInvalid = 9000,
         ERR_AccessInvalidEmpty = 9001,
+        ERR_OpenBraceExpected = 9002,
+        ERR_CloseBraceExpected = 9003,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

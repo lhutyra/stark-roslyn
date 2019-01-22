@@ -3531,12 +3531,10 @@ namespace Microsoft.CodeAnalysis.CSharp
     public override SyntaxNode VisitIfStatement(IfStatementSyntax node)
     {
       var ifKeyword = this.VisitToken(node.IfKeyword);
-      var openParenToken = this.VisitToken(node.OpenParenToken);
       var condition = (ExpressionSyntax)this.Visit(node.Condition);
-      var closeParenToken = this.VisitToken(node.CloseParenToken);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
+      var statement = (BlockSyntax)this.Visit(node.Statement);
       var @else = (ElseClauseSyntax)this.Visit(node.Else);
-      return node.Update(ifKeyword, openParenToken, condition, closeParenToken, statement, @else);
+      return node.Update(ifKeyword, condition, statement, @else);
     }
 
     public override SyntaxNode VisitElseClause(ElseClauseSyntax node)
@@ -3880,8 +3878,8 @@ namespace Microsoft.CodeAnalysis.CSharp
       var attributeLists = this.VisitList(node.AttributeLists);
       var modifiers = this.VisitList(node.Modifiers);
       var declaration = (VariableDeclarationSyntax)this.Visit(node.Declaration);
-      var semicolonToken = this.VisitToken(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, declaration, semicolonToken);
+      var eosToken = this.VisitToken(node.EosToken);
+      return node.Update(attributeLists, modifiers, declaration, eosToken);
     }
 
     public override SyntaxNode VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
@@ -3890,8 +3888,8 @@ namespace Microsoft.CodeAnalysis.CSharp
       var modifiers = this.VisitList(node.Modifiers);
       var eventKeyword = this.VisitToken(node.EventKeyword);
       var declaration = (VariableDeclarationSyntax)this.Visit(node.Declaration);
-      var semicolonToken = this.VisitToken(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, eventKeyword, declaration, semicolonToken);
+      var eosToken = this.VisitToken(node.EosToken);
+      return node.Update(attributeLists, modifiers, eventKeyword, declaration, eosToken);
     }
 
     public override SyntaxNode VisitExplicitInterfaceSpecifier(ExplicitInterfaceSpecifierSyntax node)
@@ -8071,7 +8069,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     }
 
     /// <summary>Creates a new IfStatementSyntax instance.</summary>
-    public static IfStatementSyntax IfStatement(SyntaxToken ifKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, StatementSyntax statement, ElseClauseSyntax @else)
+    public static IfStatementSyntax IfStatement(SyntaxToken ifKeyword, ExpressionSyntax condition, BlockSyntax statement, ElseClauseSyntax @else)
     {
       switch (ifKeyword.Kind())
       {
@@ -8080,38 +8078,24 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(ifKeyword));
       }
-      switch (openParenToken.Kind())
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
       if (condition == null)
         throw new ArgumentNullException(nameof(condition));
-      switch (closeParenToken.Kind())
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
       if (statement == null)
         throw new ArgumentNullException(nameof(statement));
-      return (IfStatementSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.IfStatement((Syntax.InternalSyntax.SyntaxToken)ifKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)openParenToken.Node, condition == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)closeParenToken.Node, statement == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.StatementSyntax)statement.Green, @else == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ElseClauseSyntax)@else.Green).CreateRed();
+      return (IfStatementSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.IfStatement((Syntax.InternalSyntax.SyntaxToken)ifKeyword.Node, condition == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, statement == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BlockSyntax)statement.Green, @else == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ElseClauseSyntax)@else.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new IfStatementSyntax instance.</summary>
-    public static IfStatementSyntax IfStatement(ExpressionSyntax condition, StatementSyntax statement, ElseClauseSyntax @else)
+    public static IfStatementSyntax IfStatement(ExpressionSyntax condition, BlockSyntax statement, ElseClauseSyntax @else)
     {
-      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), statement, @else);
+      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, statement, @else);
     }
 
     /// <summary>Creates a new IfStatementSyntax instance.</summary>
-    public static IfStatementSyntax IfStatement(ExpressionSyntax condition, StatementSyntax statement)
+    public static IfStatementSyntax IfStatement(ExpressionSyntax condition)
     {
-      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), statement, default(ElseClauseSyntax));
+      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Block(), default(ElseClauseSyntax));
     }
 
     /// <summary>Creates a new ElseClauseSyntax instance.</summary>
@@ -9329,35 +9313,30 @@ namespace Microsoft.CodeAnalysis.CSharp
 
 
     /// <summary>Creates a new FieldDeclarationSyntax instance.</summary>
-    public static FieldDeclarationSyntax FieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public static FieldDeclarationSyntax FieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      switch (semicolonToken.Kind())
+      switch (eosToken.Kind())
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
-      return (FieldDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.FieldDeclaration(attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), declaration == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
+      return (FieldDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.FieldDeclaration(attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), declaration == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new FieldDeclarationSyntax instance.</summary>
-    public static FieldDeclarationSyntax FieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration)
+    public static FieldDeclarationSyntax FieldDeclaration(VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
-      return SyntaxFactory.FieldDeclaration(attributeLists, modifiers, declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-    }
-
-    /// <summary>Creates a new FieldDeclarationSyntax instance.</summary>
-    public static FieldDeclarationSyntax FieldDeclaration(VariableDeclarationSyntax declaration)
-    {
-      return SyntaxFactory.FieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+      return SyntaxFactory.FieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), declaration, eosToken);
     }
 
     /// <summary>Creates a new EventFieldDeclarationSyntax instance.</summary>
-    public static EventFieldDeclarationSyntax EventFieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public static EventFieldDeclarationSyntax EventFieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
       switch (eventKeyword.Kind())
       {
@@ -9368,27 +9347,28 @@ namespace Microsoft.CodeAnalysis.CSharp
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      switch (semicolonToken.Kind())
+      switch (eosToken.Kind())
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
-      return (EventFieldDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.EventFieldDeclaration(attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)eventKeyword.Node, declaration == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
+      return (EventFieldDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.EventFieldDeclaration(attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)eventKeyword.Node, declaration == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new EventFieldDeclarationSyntax instance.</summary>
-    public static EventFieldDeclarationSyntax EventFieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration)
+    public static EventFieldDeclarationSyntax EventFieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
-      return SyntaxFactory.EventFieldDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.EventKeyword), declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+      return SyntaxFactory.EventFieldDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.EventKeyword), declaration, eosToken);
     }
 
     /// <summary>Creates a new EventFieldDeclarationSyntax instance.</summary>
-    public static EventFieldDeclarationSyntax EventFieldDeclaration(VariableDeclarationSyntax declaration)
+    public static EventFieldDeclarationSyntax EventFieldDeclaration(VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
-      return SyntaxFactory.EventFieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EventKeyword), declaration, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+      return SyntaxFactory.EventFieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EventKeyword), declaration, eosToken);
     }
 
     /// <summary>Creates a new ExplicitInterfaceSpecifierSyntax instance.</summary>

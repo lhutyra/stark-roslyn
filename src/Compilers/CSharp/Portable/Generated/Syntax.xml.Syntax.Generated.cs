@@ -10997,7 +10997,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
   public sealed partial class IfStatementSyntax : StatementSyntax
   {
     private ExpressionSyntax condition;
-    private StatementSyntax statement;
+    private BlockSyntax statement;
     private ElseClauseSyntax @else;
 
     internal IfStatementSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
@@ -11014,40 +11014,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
 
     /// <summary>
-    /// Gets a SyntaxToken that represents the open parenthesis before the if statement's condition expression.
-    /// </summary>
-    public SyntaxToken OpenParenToken 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IfStatementSyntax)this.Green).openParenToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
-    }
-
-    /// <summary>
     /// Gets an ExpressionSyntax that represents the condition of the if statement.
     /// </summary>
     public ExpressionSyntax Condition 
     {
         get
         {
-            return this.GetRed(ref this.condition, 2);
+            return this.GetRed(ref this.condition, 1);
         }
-    }
-
-    /// <summary>
-    /// Gets a SyntaxToken that represents the close parenthesis after the if statement's condition expression.
-    /// </summary>
-    public SyntaxToken CloseParenToken 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IfStatementSyntax)this.Green).closeParenToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
     }
 
     /// <summary>
     /// Gets a StatementSyntax the represents the statement to be executed when the condition is true.
     /// </summary>
-    public StatementSyntax Statement 
+    public BlockSyntax Statement 
     {
         get
         {
-            return this.GetRed(ref this.statement, 4);
+            return this.GetRed(ref this.statement, 2);
         }
     }
 
@@ -11058,7 +11042,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         get
         {
-            return this.GetRed(ref this.@else, 5);
+            return this.GetRed(ref this.@else, 3);
         }
     }
 
@@ -11066,9 +11050,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 2: return this.GetRed(ref this.condition, 2);
-            case 4: return this.GetRed(ref this.statement, 4);
-            case 5: return this.GetRed(ref this.@else, 5);
+            case 1: return this.GetRed(ref this.condition, 1);
+            case 2: return this.GetRed(ref this.statement, 2);
+            case 3: return this.GetRed(ref this.@else, 3);
             default: return null;
         }
     }
@@ -11076,9 +11060,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 2: return this.condition;
-            case 4: return this.statement;
-            case 5: return this.@else;
+            case 1: return this.condition;
+            case 2: return this.statement;
+            case 3: return this.@else;
             default: return null;
         }
     }
@@ -11093,11 +11077,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitIfStatement(this);
     }
 
-    public IfStatementSyntax Update(SyntaxToken ifKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, StatementSyntax statement, ElseClauseSyntax @else)
+    public IfStatementSyntax Update(SyntaxToken ifKeyword, ExpressionSyntax condition, BlockSyntax statement, ElseClauseSyntax @else)
     {
-        if (ifKeyword != this.IfKeyword || openParenToken != this.OpenParenToken || condition != this.Condition || closeParenToken != this.CloseParenToken || statement != this.Statement || @else != this.Else)
+        if (ifKeyword != this.IfKeyword || condition != this.Condition || statement != this.Statement || @else != this.Else)
         {
-            var newNode = SyntaxFactory.IfStatement(ifKeyword, openParenToken, condition, closeParenToken, statement, @else);
+            var newNode = SyntaxFactory.IfStatement(ifKeyword, condition, statement, @else);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -11109,32 +11093,27 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
     public IfStatementSyntax WithIfKeyword(SyntaxToken ifKeyword)
     {
-        return this.Update(ifKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, this.Statement, this.Else);
-    }
-
-    public IfStatementSyntax WithOpenParenToken(SyntaxToken openParenToken)
-    {
-        return this.Update(this.IfKeyword, openParenToken, this.Condition, this.CloseParenToken, this.Statement, this.Else);
+        return this.Update(ifKeyword, this.Condition, this.Statement, this.Else);
     }
 
     public IfStatementSyntax WithCondition(ExpressionSyntax condition)
     {
-        return this.Update(this.IfKeyword, this.OpenParenToken, condition, this.CloseParenToken, this.Statement, this.Else);
+        return this.Update(this.IfKeyword, condition, this.Statement, this.Else);
     }
 
-    public IfStatementSyntax WithCloseParenToken(SyntaxToken closeParenToken)
+    public IfStatementSyntax WithStatement(BlockSyntax statement)
     {
-        return this.Update(this.IfKeyword, this.OpenParenToken, this.Condition, closeParenToken, this.Statement, this.Else);
-    }
-
-    public IfStatementSyntax WithStatement(StatementSyntax statement)
-    {
-        return this.Update(this.IfKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, statement, this.Else);
+        return this.Update(this.IfKeyword, this.Condition, statement, this.Else);
     }
 
     public IfStatementSyntax WithElse(ElseClauseSyntax @else)
     {
-        return this.Update(this.IfKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, this.Statement, @else);
+        return this.Update(this.IfKeyword, this.Condition, this.Statement, @else);
+    }
+
+    public IfStatementSyntax AddStatementStatements(params StatementSyntax[] items)
+    {
+        return this.WithStatement(this.Statement.WithStatements(this.Statement.Statements.AddRange(items)));
     }
   }
 
@@ -15609,9 +15588,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     public BaseFieldDeclarationSyntax WithDeclaration(VariableDeclarationSyntax declaration) => WithDeclarationCore(declaration);
     internal abstract BaseFieldDeclarationSyntax WithDeclarationCore(VariableDeclarationSyntax declaration);
 
-    public abstract SyntaxToken SemicolonToken { get; }
-    public BaseFieldDeclarationSyntax WithSemicolonToken(SyntaxToken semicolonToken) => WithSemicolonTokenCore(semicolonToken);
-    internal abstract BaseFieldDeclarationSyntax WithSemicolonTokenCore(SyntaxToken semicolonToken);
+    public abstract SyntaxToken EosToken { get; }
+    public BaseFieldDeclarationSyntax WithEosToken(SyntaxToken eosToken) => WithEosTokenCore(eosToken);
+    internal abstract BaseFieldDeclarationSyntax WithEosTokenCore(SyntaxToken eosToken);
   }
 
   public sealed partial class FieldDeclarationSyntax : BaseFieldDeclarationSyntax
@@ -15654,9 +15633,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    public override SyntaxToken SemicolonToken 
+    public override SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.FieldDeclarationSyntax)this.Green).semicolonToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.FieldDeclarationSyntax)this.Green).eosToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -15688,11 +15667,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitFieldDeclaration(this);
     }
 
-    public FieldDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public FieldDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || declaration != this.Declaration || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || declaration != this.Declaration || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.FieldDeclaration(attributeLists, modifiers, declaration, semicolonToken);
+            var newNode = SyntaxFactory.FieldDeclaration(attributeLists, modifiers, declaration, eosToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -15705,25 +15684,25 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     internal override BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
     public new FieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
-        return this.Update(attributeLists, this.Modifiers, this.Declaration, this.SemicolonToken);
+        return this.Update(attributeLists, this.Modifiers, this.Declaration, this.EosToken);
     }
 
     internal override BaseFieldDeclarationSyntax WithModifiersCore(SyntaxTokenList modifiers) => WithModifiers(modifiers);
     public new FieldDeclarationSyntax WithModifiers(SyntaxTokenList modifiers)
     {
-        return this.Update(this.AttributeLists, modifiers, this.Declaration, this.SemicolonToken);
+        return this.Update(this.AttributeLists, modifiers, this.Declaration, this.EosToken);
     }
 
     internal override BaseFieldDeclarationSyntax WithDeclarationCore(VariableDeclarationSyntax declaration) => WithDeclaration(declaration);
     public new FieldDeclarationSyntax WithDeclaration(VariableDeclarationSyntax declaration)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, declaration, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, declaration, this.EosToken);
     }
 
-    internal override BaseFieldDeclarationSyntax WithSemicolonTokenCore(SyntaxToken semicolonToken) => WithSemicolonToken(semicolonToken);
-    public new FieldDeclarationSyntax WithSemicolonToken(SyntaxToken semicolonToken)
+    internal override BaseFieldDeclarationSyntax WithEosTokenCore(SyntaxToken eosToken) => WithEosToken(eosToken);
+    public new FieldDeclarationSyntax WithEosToken(SyntaxToken eosToken)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Declaration, semicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.Declaration, eosToken);
     }
     internal override BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
@@ -15784,9 +15763,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    public override SyntaxToken SemicolonToken 
+    public override SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EventFieldDeclarationSyntax)this.Green).semicolonToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.EventFieldDeclarationSyntax)this.Green).eosToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -15818,11 +15797,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitEventFieldDeclaration(this);
     }
 
-    public EventFieldDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public EventFieldDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken eventKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || eventKeyword != this.EventKeyword || declaration != this.Declaration || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || eventKeyword != this.EventKeyword || declaration != this.Declaration || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.EventFieldDeclaration(attributeLists, modifiers, eventKeyword, declaration, semicolonToken);
+            var newNode = SyntaxFactory.EventFieldDeclaration(attributeLists, modifiers, eventKeyword, declaration, eosToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -15835,30 +15814,30 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     internal override BaseFieldDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
     public new EventFieldDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
-        return this.Update(attributeLists, this.Modifiers, this.EventKeyword, this.Declaration, this.SemicolonToken);
+        return this.Update(attributeLists, this.Modifiers, this.EventKeyword, this.Declaration, this.EosToken);
     }
 
     internal override BaseFieldDeclarationSyntax WithModifiersCore(SyntaxTokenList modifiers) => WithModifiers(modifiers);
     public new EventFieldDeclarationSyntax WithModifiers(SyntaxTokenList modifiers)
     {
-        return this.Update(this.AttributeLists, modifiers, this.EventKeyword, this.Declaration, this.SemicolonToken);
+        return this.Update(this.AttributeLists, modifiers, this.EventKeyword, this.Declaration, this.EosToken);
     }
 
     public EventFieldDeclarationSyntax WithEventKeyword(SyntaxToken eventKeyword)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, eventKeyword, this.Declaration, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, eventKeyword, this.Declaration, this.EosToken);
     }
 
     internal override BaseFieldDeclarationSyntax WithDeclarationCore(VariableDeclarationSyntax declaration) => WithDeclaration(declaration);
     public new EventFieldDeclarationSyntax WithDeclaration(VariableDeclarationSyntax declaration)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.EventKeyword, declaration, this.SemicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.EventKeyword, declaration, this.EosToken);
     }
 
-    internal override BaseFieldDeclarationSyntax WithSemicolonTokenCore(SyntaxToken semicolonToken) => WithSemicolonToken(semicolonToken);
-    public new EventFieldDeclarationSyntax WithSemicolonToken(SyntaxToken semicolonToken)
+    internal override BaseFieldDeclarationSyntax WithEosTokenCore(SyntaxToken eosToken) => WithEosToken(eosToken);
+    public new EventFieldDeclarationSyntax WithEosToken(SyntaxToken eosToken)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.EventKeyword, this.Declaration, semicolonToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.EventKeyword, this.Declaration, eosToken);
     }
     internal override BaseFieldDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 
