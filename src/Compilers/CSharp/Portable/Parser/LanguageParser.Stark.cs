@@ -2347,7 +2347,7 @@ tryAgain:
             if (CurrentToken.Kind == SyntaxKind.MinusGreaterThanToken)
             {
                 minusGreaterThanForReturnType = EatToken();
-                returnType = ParseTypeOrVoid(); //ParseType();
+                returnType = ParseType(); // ParseTypeOrVoid();
             }
             var constraints = default(SyntaxListBuilder<TypeParameterConstraintClauseSyntax>);
             try
@@ -2417,7 +2417,7 @@ tryAgain:
         {
             var saveTerm = _termState;
             _termState |= TerminatorState.IsEndOfReturnType;
-            var type = this.ParseTypeOrVoid();
+            var type = this.ParseType(); //var type = this.ParseTypeOrVoid();
             _termState = saveTerm;
             return type;
         }
