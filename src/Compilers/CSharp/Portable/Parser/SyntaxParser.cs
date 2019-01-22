@@ -1127,5 +1127,78 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
 
         private int CurrentTokenPosition => _firstToken + _tokenOffset;
+
+        protected SyntaxToken EatEos<T>(ref T node) where T : CSharpSyntaxNode
+        {
+            var trivias = node.GetLastTerminal().GetTrailingTriviaCore();
+            if (trivias != null)
+            {
+                GreenNode leftTrivia;
+                GreenNode rightTrivia;
+                var eolTrivia = FindEolAndSplit(trivias, out leftTrivia, out rightTrivia);
+                if (eolTrivia != null)
+                {
+                    var lastToken = node.GetLastToken();
+                    var newToken = (SyntaxToken)lastToken.WithTrailingTrivia(leftTrivia);
+                    node = SyntaxLastTokenReplacer.Replace(node, newToken);
+                    return SyntaxFactory.Token(null, SyntaxKind.EndOfLineTrivia, eolTrivia.Text, null, rightTrivia);
+                }
+            }
+
+            return EatToken(SyntaxKind.SemicolonToken);
+        }
+
+        private static SyntaxTrivia FindEolAndSplit(GreenNode trivias, out GreenNode leftTrivia, out GreenNode rightTrivia)
+        {
+            leftTrivia = null;
+            rightTrivia = null;
+            if (trivias is SyntaxTrivia oneTrivia && oneTrivia.Kind == SyntaxKind.EndOfLineTrivia)
+            {
+                return oneTrivia;
+            }
+
+            int found = -1;
+            SyntaxTrivia eolTrivia = null;
+            for (int i = 0; i < trivias.SlotCount; i++)
+            {
+                var slot = trivias.GetSlot(i);
+                if (slot is SyntaxTrivia trivia && trivia.Kind == SyntaxKind.EndOfLineTrivia)
+                {
+                    found = i;
+                    eolTrivia = trivia;
+                    break;
+                }
+            }
+
+            //SyntaxList.Concat(node.GetTrailingTrivia(), SyntaxList.List(list, )
+            if (found >= 0)
+            {
+                if (found > 0)
+                {
+                    var tempList = new SyntaxListBuilder(found);
+                    for (int i = 0; i < found; i++)
+                    {
+                        tempList.Add(trivias.GetSlot(i));
+                    }
+
+                    leftTrivia = tempList.ToListNode();
+                }
+
+                GreenNode trailingTriviaForEos = null;
+
+                if (found + 1 < trivias.SlotCount)
+                {
+                    var tempList = new SyntaxListBuilder(trivias.SlotCount - found - 1);
+                    for (int i = found + 1; i < trivias.SlotCount; i++)
+                    {
+                        tempList.Add(trivias.GetSlot(i));
+                    }
+
+                    rightTrivia = tempList.ToListNode();
+                }
+            }
+
+            return eolTrivia;
+        }
     }
 }

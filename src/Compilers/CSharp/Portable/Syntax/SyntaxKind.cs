@@ -256,8 +256,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                                                         // This only exists in transient form during parsing.
         InterpolatedStringTextToken = 8517,             // literal text that is part of an interpolated string
 
-        // trivia
+        // trivia-token (the only token that can be a token and a trivia)
         EndOfLineTrivia = 8539,
+
+        // trivia
         WhitespaceTrivia = 8540,
         SingleLineCommentTrivia = 8541,
         MultiLineCommentTrivia = 8542,
