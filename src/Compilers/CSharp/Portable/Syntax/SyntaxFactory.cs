@@ -2479,15 +2479,15 @@ namespace Microsoft.CodeAnalysis.CSharp
                 semicolonToken: semicolonToken);
         }
 
-        /// <summary>Creates a new UsingDirectiveSyntax instance.</summary>
-        public static UsingDirectiveSyntax UsingDirective(NameEqualsSyntax alias, NameSyntax name)
+        /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
+        public static ImportDirectiveSyntax ImportDirective(NameEqualsSyntax alias, NameSyntax name)
         {
-            return UsingDirective(
-                usingKeyword: Token(SyntaxKind.UsingKeyword),
+            return ImportDirective(
+                importKeyword: Token(SyntaxKind.ImportKeyword),
                 staticKeyword: default(SyntaxToken),
                 alias: alias,
                 name: name,
-                semicolonToken: Token(SyntaxKind.SemicolonToken));
+                eosToken: Token(SyntaxKind.SemicolonToken));
         }
 
         /// <summary>Creates a new ArrayRankSpecifierSyntax instance.</summary>

@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             _binder = binder;
         }
 
-        internal AliasSymbol(Binder binder, UsingDirectiveSyntax syntax)
+        internal AliasSymbol(Binder binder, ImportDirectiveSyntax syntax)
             : this(binder, syntax.Alias.Name.Identifier)
         {
             _aliasTargetName = syntax.Name;
@@ -155,7 +155,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         {
             get
             {
-                return GetDeclaringSyntaxReferenceHelper<UsingDirectiveSyntax>(_locations);
+                return GetDeclaringSyntaxReferenceHelper<ImportDirectiveSyntax>(_locations);
             }
         }
 

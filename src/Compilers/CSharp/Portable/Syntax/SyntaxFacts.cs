@@ -220,8 +220,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                 {
                     switch (parent.Kind())
                     {
-                        case UsingDirective:
-                            return ((UsingDirectiveSyntax)parent).Name == node;
+                        case ImportDirective:
+                            return ((ImportDirectiveSyntax)parent).Name == node;
 
                         case QualifiedName:
                             // left of QN is namespace or type.  Note: when you have "a.b.c()", then

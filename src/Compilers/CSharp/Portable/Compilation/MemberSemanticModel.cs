@@ -696,7 +696,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return null;
         }
 
-        public override IAliasSymbol GetDeclaredSymbol(UsingDirectiveSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
+        public override IAliasSymbol GetDeclaredSymbol(ImportDirectiveSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Can't define alias inside member.
             return null;

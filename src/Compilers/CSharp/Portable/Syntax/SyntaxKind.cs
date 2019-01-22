@@ -165,7 +165,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         ValKeyword = 8391,
         FuncKeyword = 8392,
         TransientKeyword = 8393,
-        ConstructorKeyword = 8394, // Must be always last
+        ImportKeyword = 8394,
+        ConstructorKeyword = 8395, // Must be always last
 #endif
 
         // contextual keywords
@@ -504,7 +505,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         CompilationUnit = 8840,
         GlobalStatement = 8841,
         NamespaceDeclaration = 8842,
-        UsingDirective = 8843,
+        ImportDirective = 8843,
         ExternAliasDirective = 8844,
 
         // attributes

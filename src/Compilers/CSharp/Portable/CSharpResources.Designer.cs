@@ -10791,18 +10791,18 @@ namespace Microsoft.CodeAnalysis.CSharp {
         /// <summary>
         ///   Looks up a localized string similar to Unnecessary using directive..
         /// </summary>
-        internal static string HDN_UnusedUsingDirective {
+        internal static string HDN_UnusedImportDirective {
             get {
-                return ResourceManager.GetString("HDN_UnusedUsingDirective", resourceCulture);
+                return ResourceManager.GetString("HDN_UnusedImportDirective", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Unnecessary using directive.
         /// </summary>
-        internal static string HDN_UnusedUsingDirective_Title {
+        internal static string HDN_UnusedImportDirective_Title {
             get {
-                return ResourceManager.GetString("HDN_UnusedUsingDirective_Title", resourceCulture);
+                return ResourceManager.GetString("HDN_UnusedImportDirective_Title", resourceCulture);
             }
         }
         

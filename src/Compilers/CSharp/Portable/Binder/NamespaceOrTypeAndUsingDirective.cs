@@ -5,15 +5,15 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Microsoft.CodeAnalysis.CSharp
 {
-    internal struct NamespaceOrTypeAndUsingDirective
+    internal struct NamespaceOrTypeAndImportDirective
     {
         public readonly NamespaceOrTypeSymbol NamespaceOrType;
-        public readonly UsingDirectiveSyntax UsingDirective;
+        public readonly ImportDirectiveSyntax ImportDirective;
 
-        public NamespaceOrTypeAndUsingDirective(NamespaceOrTypeSymbol namespaceOrType, UsingDirectiveSyntax usingDirective)
+        public NamespaceOrTypeAndImportDirective(NamespaceOrTypeSymbol namespaceOrType, ImportDirectiveSyntax usingDirective)
         {
             this.NamespaceOrType = namespaceOrType;
-            this.UsingDirective = usingDirective;
+            this.ImportDirective = usingDirective;
         }
     }
 }

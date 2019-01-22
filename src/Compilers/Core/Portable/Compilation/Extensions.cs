@@ -127,7 +127,7 @@ namespace Microsoft.CodeAnalysis
         /// <param name="declaration">A syntax node that is a declaration. This can be any type
         /// derived from MemberDeclarationSyntax, TypeDeclarationSyntax, EnumDeclarationSyntax,
         /// NamespaceDeclarationSyntax, ParameterSyntax, TypeParameterSyntax, or the alias part of a
-        /// UsingDirectiveSyntax</param>
+        /// ImportDirectiveSyntax</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbol declared by the node or null if the node is not a declaration.</returns>
         public static ISymbol GetDeclaredSymbol(this SemanticModel semanticModel, SyntaxNode declaration, CancellationToken cancellationToken = default(CancellationToken))

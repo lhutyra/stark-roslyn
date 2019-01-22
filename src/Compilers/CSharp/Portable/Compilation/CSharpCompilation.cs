@@ -1982,7 +1982,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                         {
                             ErrorCode code = info.Kind == SyntaxKind.ExternAliasDirective
                                 ? ErrorCode.HDN_UnusedExternAlias
-                                : ErrorCode.HDN_UnusedUsingDirective;
+                                : ErrorCode.HDN_UnusedImportDirective;
                             diagnostics.Add(code, infoTree.GetLocation(infoSpan));
                         }
                     }
@@ -2013,7 +2013,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
         }
 
-        internal void RecordImport(UsingDirectiveSyntax syntax)
+        internal void RecordImport(ImportDirectiveSyntax syntax)
         {
             RecordImportInternal(syntax);
         }

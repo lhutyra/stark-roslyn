@@ -977,6 +977,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.TransientKeyword;
                 case "constructor":
                     return SyntaxKind.ConstructorKeyword;
+                case "import":
+                    return SyntaxKind.ImportKeyword;
                 default:
                     return SyntaxKind.None;
             }
@@ -1652,6 +1654,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "transient";
                 case SyntaxKind.ConstructorKeyword:
                     return "constructor";
+                case SyntaxKind.ImportKeyword:
+                    return "import";
                 default:
                     return string.Empty;
             }

@@ -1785,7 +1785,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// symbol table).
         /// </remarks>
         public override IAliasSymbol GetDeclaredSymbol(
-            UsingDirectiveSyntax declarationSyntax,
+            ImportDirectiveSyntax declarationSyntax,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             CheckSyntaxNode(declarationSyntax);

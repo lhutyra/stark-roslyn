@@ -386,7 +386,7 @@ namespace Microsoft.CodeAnalysis
         /// <param name="declaration">A syntax node that is a declaration. This can be any type
         /// derived from MemberDeclarationSyntax, TypeDeclarationSyntax, EnumDeclarationSyntax,
         /// NamespaceDeclarationSyntax, ParameterSyntax, TypeParameterSyntax, or the alias part of a
-        /// UsingDirectiveSyntax</param>
+        /// ImportDirectiveSyntax</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbol declared by the node or null if the node is not a declaration.</returns>
         internal ISymbol GetDeclaredSymbolForNode(SyntaxNode declaration, CancellationToken cancellationToken = default(CancellationToken))
@@ -400,7 +400,7 @@ namespace Microsoft.CodeAnalysis
         /// <param name="declaration">A syntax node that is a declaration. This can be any type
         /// derived from MemberDeclarationSyntax, TypeDeclarationSyntax, EnumDeclarationSyntax,
         /// NamespaceDeclarationSyntax, ParameterSyntax, TypeParameterSyntax, or the alias part of a
-        /// UsingDirectiveSyntax</param>
+        /// ImportDirectiveSyntax</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbol declared by the node or null if the node is not a declaration.</returns>
         protected abstract ISymbol GetDeclaredSymbolCore(SyntaxNode declaration, CancellationToken cancellationToken = default(CancellationToken));
@@ -413,7 +413,7 @@ namespace Microsoft.CodeAnalysis
         /// <param name="declaration">A syntax node that is a declaration. This can be any type
         /// derived from MemberDeclarationSyntax, TypeDeclarationSyntax, EnumDeclarationSyntax,
         /// NamespaceDeclarationSyntax, ParameterSyntax, TypeParameterSyntax, or the alias part of a
-        /// UsingDirectiveSyntax</param>
+        /// ImportDirectiveSyntax</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbols declared by the node.</returns>
         internal ImmutableArray<ISymbol> GetDeclaredSymbolsForNode(SyntaxNode declaration, CancellationToken cancellationToken = default(CancellationToken))
@@ -429,7 +429,7 @@ namespace Microsoft.CodeAnalysis
         /// <param name="declaration">A syntax node that is a declaration. This can be any type
         /// derived from MemberDeclarationSyntax, TypeDeclarationSyntax, EnumDeclarationSyntax,
         /// NamespaceDeclarationSyntax, ParameterSyntax, TypeParameterSyntax, or the alias part of a
-        /// UsingDirectiveSyntax</param>
+        /// ImportDirectiveSyntax</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The symbols declared by the node.</returns>
         protected abstract ImmutableArray<ISymbol> GetDeclaredSymbolsCore(SyntaxNode declaration, CancellationToken cancellationToken = default(CancellationToken));

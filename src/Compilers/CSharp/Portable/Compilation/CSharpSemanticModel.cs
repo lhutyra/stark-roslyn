@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 case SyntaxKind.IdentifierName:
                     // The alias of a using directive is a declaration, so there is no semantic info - use GetDeclaredSymbol instead.
-                    if (!isSpeculative && node.Parent != null && node.Parent.Kind() == SyntaxKind.NameEquals && node.Parent.Parent.Kind() == SyntaxKind.UsingDirective)
+                    if (!isSpeculative && node.Parent != null && node.Parent.Kind() == SyntaxKind.NameEquals && node.Parent.Parent.Kind() == SyntaxKind.ImportDirective)
                     {
                         return false;
                     }
@@ -2910,7 +2910,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// previously declared in the same scope, the result is a newly-constructed AliasSymbol (i.e. not one from the
         /// symbol table).
         /// </remarks>
-        public abstract IAliasSymbol GetDeclaredSymbol(UsingDirectiveSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken));
+        public abstract IAliasSymbol GetDeclaredSymbol(ImportDirectiveSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Given an extern alias declaration get the corresponding symbol for the alias that was introduced.
@@ -4770,8 +4770,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return this.GetDeclaredSymbol((ParameterSyntax)node, cancellationToken);
                 case SyntaxKind.TypeParameter:
                     return this.GetDeclaredSymbol((TypeParameterSyntax)node, cancellationToken);
-                case SyntaxKind.UsingDirective:
-                    var usingDirective = (UsingDirectiveSyntax)node;
+                case SyntaxKind.ImportDirective:
+                    var usingDirective = (ImportDirectiveSyntax)node;
                     if (usingDirective.Alias == null)
                     {
                         break;

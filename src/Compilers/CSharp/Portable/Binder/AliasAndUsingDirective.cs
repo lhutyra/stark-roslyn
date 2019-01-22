@@ -5,15 +5,15 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Microsoft.CodeAnalysis.CSharp
 {
-    internal struct AliasAndUsingDirective
+    internal struct AliasAndImportDirective
     {
         public readonly AliasSymbol Alias;
-        public readonly UsingDirectiveSyntax UsingDirective;
+        public readonly ImportDirectiveSyntax ImportDirective;
 
-        public AliasAndUsingDirective(AliasSymbol alias, UsingDirectiveSyntax usingDirective)
+        public AliasAndImportDirective(AliasSymbol alias, ImportDirectiveSyntax usingDirective)
         {
             this.Alias = alias;
-            this.UsingDirective = usingDirective;
+            this.ImportDirective = usingDirective;
         }
     }
 }

@@ -257,7 +257,7 @@
         {
             switch (code)
             {
-                case ErrorCode.HDN_UnusedUsingDirective:
+                case ErrorCode.HDN_UnusedImportDirective:
                 case ErrorCode.HDN_UnusedExternAlias:
                 case ErrorCode.HDN_NullCheckIsProbablyAlwaysTrue:
                 case ErrorCode.HDN_NullCheckIsProbablyAlwaysFalse:

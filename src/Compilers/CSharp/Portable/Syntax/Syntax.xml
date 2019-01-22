@@ -2691,7 +2691,7 @@
   <Node Name="CompilationUnitSyntax" Base="CSharpSyntaxNode">
     <Kind Name="CompilationUnit"/>
     <Field Name="Externs" Type="SyntaxList&lt;ExternAliasDirectiveSyntax&gt;"/>
-    <Field Name="Usings" Type="SyntaxList&lt;UsingDirectiveSyntax&gt;"/>
+    <Field Name="Usings" Type="SyntaxList&lt;ImportDirectiveSyntax&gt;"/>
     <Field Name="AttributeLists" Type="SyntaxList&lt;AttributeSyntax&gt;">
       <PropertyComment>
         <summary>Gets the attribute declaration list.</summary>
@@ -2737,16 +2737,17 @@
       <summary>Creates an ExternAliasDirectiveSyntax node</summary>
     </FactoryComment>
   </Node>
-  <Node Name="UsingDirectiveSyntax" Base="CSharpSyntaxNode">
-    <Kind Name="UsingDirective"/>
-    <Field Name="UsingKeyword" Type="SyntaxToken">
-      <Kind Name="UsingKeyword"/>
+  <Node Name="ImportDirectiveSyntax" Base="CSharpSyntaxNode">
+    <Kind Name="ImportDirective"/>
+    <Field Name="ImportKeyword" Type="SyntaxToken">
+      <Kind Name="ImportKeyword"/>
     </Field>
     <Field Name="StaticKeyword" Type="SyntaxToken" Optional="true"/>
     <Field Name="Alias" Type="NameEqualsSyntax" Optional="true"/>
     <Field Name="Name" Type="NameSyntax"/>
-    <Field Name="SemicolonToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken">
       <Kind Name="SemicolonToken"/>
+      <Kind Name="EndOfLineTrivia"/>
     </Field>
   </Node>
   <AbstractNode Name="MemberDeclarationSyntax" Base="CSharpSyntaxNode">
@@ -2764,7 +2765,7 @@
       <Kind Name="OpenBraceToken"/>
     </Field>
     <Field Name="Externs" Type="SyntaxList&lt;ExternAliasDirectiveSyntax&gt;"/>
-    <Field Name="Usings" Type="SyntaxList&lt;UsingDirectiveSyntax&gt;"/>
+    <Field Name="Usings" Type="SyntaxList&lt;ImportDirectiveSyntax&gt;"/>
     <Field Name="Members" Type="SyntaxList&lt;MemberDeclarationSyntax&gt;"/>
     <Field Name="CloseBraceToken" Type="SyntaxToken">
       <Kind Name="CloseBraceToken"/>

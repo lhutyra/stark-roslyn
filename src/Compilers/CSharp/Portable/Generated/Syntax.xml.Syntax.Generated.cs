@@ -12522,11 +12522,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    public SyntaxList<UsingDirectiveSyntax> Usings 
+    public SyntaxList<ImportDirectiveSyntax> Usings 
     {
         get
         {
-            return new SyntaxList<UsingDirectiveSyntax>(this.GetRed(ref this.usings, 1));
+            return new SyntaxList<ImportDirectiveSyntax>(this.GetRed(ref this.usings, 1));
         }
     }
 
@@ -12585,7 +12585,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitCompilationUnit(this);
     }
 
-    public CompilationUnitSyntax Update(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken endOfFileToken)
+    public CompilationUnitSyntax Update(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<ImportDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken endOfFileToken)
     {
         if (externs != this.Externs || usings != this.Usings || attributeLists != this.AttributeLists || members != this.Members || endOfFileToken != this.EndOfFileToken)
         {
@@ -12604,7 +12604,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(externs, this.Usings, this.AttributeLists, this.Members, this.EndOfFileToken);
     }
 
-    public CompilationUnitSyntax WithUsings(SyntaxList<UsingDirectiveSyntax> usings)
+    public CompilationUnitSyntax WithUsings(SyntaxList<ImportDirectiveSyntax> usings)
     {
         return this.Update(this.Externs, usings, this.AttributeLists, this.Members, this.EndOfFileToken);
     }
@@ -12629,7 +12629,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.WithExterns(this.Externs.AddRange(items));
     }
 
-    public CompilationUnitSyntax AddUsings(params UsingDirectiveSyntax[] items)
+    public CompilationUnitSyntax AddUsings(params ImportDirectiveSyntax[] items)
     {
         return this.WithUsings(this.Usings.AddRange(items));
     }
@@ -12739,26 +12739,26 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     }
   }
 
-  public sealed partial class UsingDirectiveSyntax : CSharpSyntaxNode
+  public sealed partial class ImportDirectiveSyntax : CSharpSyntaxNode
   {
     private NameEqualsSyntax alias;
     private NameSyntax name;
 
-    internal UsingDirectiveSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+    internal ImportDirectiveSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
 
-    public SyntaxToken UsingKeyword 
+    public SyntaxToken ImportKeyword 
     {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.UsingDirectiveSyntax)this.Green).usingKeyword, this.Position, 0); }
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportDirectiveSyntax)this.Green).importKeyword, this.Position, 0); }
     }
 
     public SyntaxToken StaticKeyword 
     {
         get
         {
-            var slot = ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.UsingDirectiveSyntax)this.Green).staticKeyword;
+            var slot = ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportDirectiveSyntax)this.Green).staticKeyword;
             if (slot != null)
                 return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
 
@@ -12782,9 +12782,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    public SyntaxToken SemicolonToken 
+    public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.UsingDirectiveSyntax)this.Green).semicolonToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportDirectiveSyntax)this.Green).eosToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -12808,19 +12808,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitUsingDirective(this);
+        return visitor.VisitImportDirective(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitUsingDirective(this);
+        visitor.VisitImportDirective(this);
     }
 
-    public UsingDirectiveSyntax Update(SyntaxToken usingKeyword, SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken semicolonToken)
+    public ImportDirectiveSyntax Update(SyntaxToken importKeyword, SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken eosToken)
     {
-        if (usingKeyword != this.UsingKeyword || staticKeyword != this.StaticKeyword || alias != this.Alias || name != this.Name || semicolonToken != this.SemicolonToken)
+        if (importKeyword != this.ImportKeyword || staticKeyword != this.StaticKeyword || alias != this.Alias || name != this.Name || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.UsingDirective(usingKeyword, staticKeyword, alias, name, semicolonToken);
+            var newNode = SyntaxFactory.ImportDirective(importKeyword, staticKeyword, alias, name, eosToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -12830,29 +12830,29 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public UsingDirectiveSyntax WithUsingKeyword(SyntaxToken usingKeyword)
+    public ImportDirectiveSyntax WithImportKeyword(SyntaxToken importKeyword)
     {
-        return this.Update(usingKeyword, this.StaticKeyword, this.Alias, this.Name, this.SemicolonToken);
+        return this.Update(importKeyword, this.StaticKeyword, this.Alias, this.Name, this.EosToken);
     }
 
-    public UsingDirectiveSyntax WithStaticKeyword(SyntaxToken staticKeyword)
+    public ImportDirectiveSyntax WithStaticKeyword(SyntaxToken staticKeyword)
     {
-        return this.Update(this.UsingKeyword, staticKeyword, this.Alias, this.Name, this.SemicolonToken);
+        return this.Update(this.ImportKeyword, staticKeyword, this.Alias, this.Name, this.EosToken);
     }
 
-    public UsingDirectiveSyntax WithAlias(NameEqualsSyntax alias)
+    public ImportDirectiveSyntax WithAlias(NameEqualsSyntax alias)
     {
-        return this.Update(this.UsingKeyword, this.StaticKeyword, alias, this.Name, this.SemicolonToken);
+        return this.Update(this.ImportKeyword, this.StaticKeyword, alias, this.Name, this.EosToken);
     }
 
-    public UsingDirectiveSyntax WithName(NameSyntax name)
+    public ImportDirectiveSyntax WithName(NameSyntax name)
     {
-        return this.Update(this.UsingKeyword, this.StaticKeyword, this.Alias, name, this.SemicolonToken);
+        return this.Update(this.ImportKeyword, this.StaticKeyword, this.Alias, name, this.EosToken);
     }
 
-    public UsingDirectiveSyntax WithSemicolonToken(SyntaxToken semicolonToken)
+    public ImportDirectiveSyntax WithEosToken(SyntaxToken eosToken)
     {
-        return this.Update(this.UsingKeyword, this.StaticKeyword, this.Alias, this.Name, semicolonToken);
+        return this.Update(this.ImportKeyword, this.StaticKeyword, this.Alias, this.Name, eosToken);
     }
   }
 
@@ -12903,11 +12903,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    public SyntaxList<UsingDirectiveSyntax> Usings 
+    public SyntaxList<ImportDirectiveSyntax> Usings 
     {
         get
         {
-            return new SyntaxList<UsingDirectiveSyntax>(this.GetRed(ref this.usings, 4));
+            return new SyntaxList<ImportDirectiveSyntax>(this.GetRed(ref this.usings, 4));
         }
     }
 
@@ -12970,7 +12970,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitNamespaceDeclaration(this);
     }
 
-    public NamespaceDeclarationSyntax Update(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public NamespaceDeclarationSyntax Update(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<ImportDirectiveSyntax> usings, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
     {
         if (namespaceKeyword != this.NamespaceKeyword || name != this.Name || openBraceToken != this.OpenBraceToken || externs != this.Externs || usings != this.Usings || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
         {
@@ -13004,7 +13004,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.Update(this.NamespaceKeyword, this.Name, this.OpenBraceToken, externs, this.Usings, this.Members, this.CloseBraceToken, this.SemicolonToken);
     }
 
-    public NamespaceDeclarationSyntax WithUsings(SyntaxList<UsingDirectiveSyntax> usings)
+    public NamespaceDeclarationSyntax WithUsings(SyntaxList<ImportDirectiveSyntax> usings)
     {
         return this.Update(this.NamespaceKeyword, this.Name, this.OpenBraceToken, this.Externs, usings, this.Members, this.CloseBraceToken, this.SemicolonToken);
     }
@@ -13029,7 +13029,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this.WithExterns(this.Externs.AddRange(items));
     }
 
-    public NamespaceDeclarationSyntax AddUsings(params UsingDirectiveSyntax[] items)
+    public NamespaceDeclarationSyntax AddUsings(params ImportDirectiveSyntax[] items)
     {
         return this.WithUsings(this.Usings.AddRange(items));
     }

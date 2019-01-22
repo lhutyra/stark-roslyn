@@ -1362,7 +1362,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// <summary>
         /// Given a using declaration get the corresponding symbol for the using alias that was introduced.
         /// </summary>
-        public static IAliasSymbol GetDeclaredSymbol(this SemanticModel semanticModel, UsingDirectiveSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
+        public static IAliasSymbol GetDeclaredSymbol(this SemanticModel semanticModel, ImportDirectiveSyntax declarationSyntax, CancellationToken cancellationToken = default(CancellationToken))
         {
             var csmodel = semanticModel as CSharpSemanticModel;
             return csmodel?.GetDeclaredSymbol(declarationSyntax, cancellationToken);

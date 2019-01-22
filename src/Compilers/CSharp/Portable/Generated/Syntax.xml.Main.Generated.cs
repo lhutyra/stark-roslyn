@@ -808,8 +808,8 @@ namespace Microsoft.CodeAnalysis.CSharp
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a UsingDirectiveSyntax node.</summary>
-    public virtual TResult VisitUsingDirective(UsingDirectiveSyntax node)
+    /// <summary>Called when the visitor visits a ImportDirectiveSyntax node.</summary>
+    public virtual TResult VisitImportDirective(ImportDirectiveSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -2095,8 +2095,8 @@ namespace Microsoft.CodeAnalysis.CSharp
       this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a UsingDirectiveSyntax node.</summary>
-    public virtual void VisitUsingDirective(UsingDirectiveSyntax node)
+    /// <summary>Called when the visitor visits a ImportDirectiveSyntax node.</summary>
+    public virtual void VisitImportDirective(ImportDirectiveSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -3670,14 +3670,14 @@ namespace Microsoft.CodeAnalysis.CSharp
       return node.Update(externKeyword, aliasKeyword, identifier, semicolonToken);
     }
 
-    public override SyntaxNode VisitUsingDirective(UsingDirectiveSyntax node)
+    public override SyntaxNode VisitImportDirective(ImportDirectiveSyntax node)
     {
-      var usingKeyword = this.VisitToken(node.UsingKeyword);
+      var importKeyword = this.VisitToken(node.ImportKeyword);
       var staticKeyword = this.VisitToken(node.StaticKeyword);
       var alias = (NameEqualsSyntax)this.Visit(node.Alias);
       var name = (NameSyntax)this.Visit(node.Name);
-      var semicolonToken = this.VisitToken(node.SemicolonToken);
-      return node.Update(usingKeyword, staticKeyword, alias, name, semicolonToken);
+      var eosToken = this.VisitToken(node.EosToken);
+      return node.Update(importKeyword, staticKeyword, alias, name, eosToken);
     }
 
     public override SyntaxNode VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
@@ -8507,7 +8507,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     }
 
     /// <summary>Creates a new CompilationUnitSyntax instance.</summary>
-    public static CompilationUnitSyntax CompilationUnit(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken endOfFileToken)
+    public static CompilationUnitSyntax CompilationUnit(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<ImportDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken endOfFileToken)
     {
       switch (endOfFileToken.Kind())
       {
@@ -8516,12 +8516,12 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(endOfFileToken));
       }
-      return (CompilationUnitSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.CompilationUnit(externs.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExternAliasDirectiveSyntax>(), usings.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.UsingDirectiveSyntax>(), attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), members.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)endOfFileToken.Node).CreateRed();
+      return (CompilationUnitSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.CompilationUnit(externs.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExternAliasDirectiveSyntax>(), usings.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportDirectiveSyntax>(), attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), members.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)endOfFileToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new CompilationUnitSyntax instance.</summary>
-    public static CompilationUnitSyntax CompilationUnit(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members)
+    public static CompilationUnitSyntax CompilationUnit(SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<ImportDirectiveSyntax> usings, SyntaxList<AttributeSyntax> attributeLists, SyntaxList<MemberDeclarationSyntax> members)
     {
       return SyntaxFactory.CompilationUnit(externs, usings, attributeLists, members, SyntaxFactory.Token(SyntaxKind.EndOfFileToken));
     }
@@ -8529,7 +8529,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     /// <summary>Creates a new CompilationUnitSyntax instance.</summary>
     public static CompilationUnitSyntax CompilationUnit()
     {
-      return SyntaxFactory.CompilationUnit(default(SyntaxList<ExternAliasDirectiveSyntax>), default(SyntaxList<UsingDirectiveSyntax>), default(SyntaxList<AttributeSyntax>), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.EndOfFileToken));
+      return SyntaxFactory.CompilationUnit(default(SyntaxList<ExternAliasDirectiveSyntax>), default(SyntaxList<ImportDirectiveSyntax>), default(SyntaxList<AttributeSyntax>), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.EndOfFileToken));
     }
 
     /// <summary>Creates a new ExternAliasDirectiveSyntax instance.</summary>
@@ -8579,43 +8579,44 @@ namespace Microsoft.CodeAnalysis.CSharp
       return SyntaxFactory.ExternAliasDirective(SyntaxFactory.Token(SyntaxKind.ExternKeyword), SyntaxFactory.Token(SyntaxKind.AliasKeyword), SyntaxFactory.Identifier(identifier), SyntaxFactory.Token(SyntaxKind.SemicolonToken));
     }
 
-    /// <summary>Creates a new UsingDirectiveSyntax instance.</summary>
-    public static UsingDirectiveSyntax UsingDirective(SyntaxToken usingKeyword, SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken semicolonToken)
+    /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
+    public static ImportDirectiveSyntax ImportDirective(SyntaxToken importKeyword, SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken eosToken)
     {
-      switch (usingKeyword.Kind())
+      switch (importKeyword.Kind())
       {
-        case SyntaxKind.UsingKeyword:
+        case SyntaxKind.ImportKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(usingKeyword));
+          throw new ArgumentException(nameof(importKeyword));
       }
       if (name == null)
         throw new ArgumentNullException(nameof(name));
-      switch (semicolonToken.Kind())
+      switch (eosToken.Kind())
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
-      return (UsingDirectiveSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.UsingDirective((Syntax.InternalSyntax.SyntaxToken)usingKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)staticKeyword.Node, alias == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameEqualsSyntax)alias.Green, name == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameSyntax)name.Green, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
+      return (ImportDirectiveSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.ImportDirective((Syntax.InternalSyntax.SyntaxToken)importKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)staticKeyword.Node, alias == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameEqualsSyntax)alias.Green, name == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameSyntax)name.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
-    /// <summary>Creates a new UsingDirectiveSyntax instance.</summary>
-    public static UsingDirectiveSyntax UsingDirective(SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name)
+    /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
+    public static ImportDirectiveSyntax ImportDirective(SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken eosToken)
     {
-      return SyntaxFactory.UsingDirective(SyntaxFactory.Token(SyntaxKind.UsingKeyword), staticKeyword, alias, name, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+      return SyntaxFactory.ImportDirective(SyntaxFactory.Token(SyntaxKind.ImportKeyword), staticKeyword, alias, name, eosToken);
     }
 
-    /// <summary>Creates a new UsingDirectiveSyntax instance.</summary>
-    public static UsingDirectiveSyntax UsingDirective(NameSyntax name)
+    /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
+    public static ImportDirectiveSyntax ImportDirective(NameSyntax name, SyntaxToken eosToken)
     {
-      return SyntaxFactory.UsingDirective(SyntaxFactory.Token(SyntaxKind.UsingKeyword), default(SyntaxToken), default(NameEqualsSyntax), name, SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+      return SyntaxFactory.ImportDirective(SyntaxFactory.Token(SyntaxKind.ImportKeyword), default(SyntaxToken), default(NameEqualsSyntax), name, eosToken);
     }
 
     /// <summary>Creates a new NamespaceDeclarationSyntax instance.</summary>
-    public static NamespaceDeclarationSyntax NamespaceDeclaration(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public static NamespaceDeclarationSyntax NamespaceDeclaration(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<ImportDirectiveSyntax> usings, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
     {
       switch (namespaceKeyword.Kind())
       {
@@ -8648,12 +8649,12 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(semicolonToken));
       }
-      return (NamespaceDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.NamespaceDeclaration((Syntax.InternalSyntax.SyntaxToken)namespaceKeyword.Node, name == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameSyntax)name.Green, (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, externs.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExternAliasDirectiveSyntax>(), usings.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.UsingDirectiveSyntax>(), members.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
+      return (NamespaceDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.NamespaceDeclaration((Syntax.InternalSyntax.SyntaxToken)namespaceKeyword.Node, name == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.NameSyntax)name.Green, (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, externs.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExternAliasDirectiveSyntax>(), usings.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ImportDirectiveSyntax>(), members.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)semicolonToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new NamespaceDeclarationSyntax instance.</summary>
-    public static NamespaceDeclarationSyntax NamespaceDeclaration(NameSyntax name, SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<UsingDirectiveSyntax> usings, SyntaxList<MemberDeclarationSyntax> members)
+    public static NamespaceDeclarationSyntax NamespaceDeclaration(NameSyntax name, SyntaxList<ExternAliasDirectiveSyntax> externs, SyntaxList<ImportDirectiveSyntax> usings, SyntaxList<MemberDeclarationSyntax> members)
     {
       return SyntaxFactory.NamespaceDeclaration(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword), name, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), externs, usings, members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
@@ -8661,7 +8662,7 @@ namespace Microsoft.CodeAnalysis.CSharp
     /// <summary>Creates a new NamespaceDeclarationSyntax instance.</summary>
     public static NamespaceDeclarationSyntax NamespaceDeclaration(NameSyntax name)
     {
-      return SyntaxFactory.NamespaceDeclaration(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword), name, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<ExternAliasDirectiveSyntax>), default(SyntaxList<UsingDirectiveSyntax>), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.NamespaceDeclaration(SyntaxFactory.Token(SyntaxKind.NamespaceKeyword), name, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<ExternAliasDirectiveSyntax>), default(SyntaxList<ImportDirectiveSyntax>), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new AttributeTargetSpecifierSyntax instance.</summary>

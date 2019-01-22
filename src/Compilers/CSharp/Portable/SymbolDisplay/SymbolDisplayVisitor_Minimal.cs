@@ -187,7 +187,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // NOTE(cyrusn): If we're currently in a block of usings, then we want to collect the
             // aliases that are higher up than this block.  Using aliases declared in a block of
             // usings are not usable from within that same block.
-            var usingDirective = GetAncestorOrThis<UsingDirectiveSyntax>(startNode);
+            var usingDirective = GetAncestorOrThis<ImportDirectiveSyntax>(startNode);
             if (usingDirective != null)
             {
                 startNode = usingDirective.Parent.Parent;

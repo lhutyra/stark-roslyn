@@ -267,14 +267,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         private struct NamespaceBodyBuilder
         {
             public SyntaxListBuilder<ExternAliasDirectiveSyntax> Externs;
-            public SyntaxListBuilder<UsingDirectiveSyntax> Usings;
+            public SyntaxListBuilder<ImportDirectiveSyntax> Imports;
             public SyntaxListBuilder<AttributeSyntax> Attributes;
             public SyntaxListBuilder<MemberDeclarationSyntax> Members;
 
             public NamespaceBodyBuilder(SyntaxListPool pool)
             {
                 Externs = pool.Allocate<ExternAliasDirectiveSyntax>();
-                Usings = pool.Allocate<UsingDirectiveSyntax>();
+                Imports = pool.Allocate<ImportDirectiveSyntax>();
                 Attributes = pool.Allocate<AttributeSyntax>();
                 Members = pool.Allocate<MemberDeclarationSyntax>();
             }
@@ -283,7 +283,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             {
                 pool.Free(Members);
                 pool.Free(Attributes);
-                pool.Free(Usings);
+                pool.Free(Imports);
                 pool.Free(Externs);
             }
         }
@@ -294,7 +294,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 ParseCompilationUnitCore,
                 () => SyntaxFactory.CompilationUnit(
                         new SyntaxList<ExternAliasDirectiveSyntax>(),
-                        new SyntaxList<UsingDirectiveSyntax>(),
+                        new SyntaxList<ImportDirectiveSyntax>(),
                         new SyntaxList<AttributeSyntax>(),
                         new SyntaxList<MemberDeclarationSyntax>(),
                         SyntaxFactory.Token(SyntaxKind.EndOfFileToken)));
@@ -310,7 +310,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 this.ParseNamespaceBody(ref tmp, ref body, ref initialBadNodes, SyntaxKind.CompilationUnit);
 
                 var eof = this.EatToken(SyntaxKind.EndOfFileToken);
-                var result = _syntaxFactory.CompilationUnit(body.Externs, body.Usings, body.Attributes, body.Members, eof);
+                var result = _syntaxFactory.CompilationUnit(body.Externs, body.Imports, body.Attributes, body.Members, eof);
 
                 if (initialBadNodes != null)
                 {
@@ -411,7 +411,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 }
 
                 Debug.Assert(initialBadNodes == null); // init bad nodes should have been attached to open brace...
-                return _syntaxFactory.NamespaceDeclaration(namespaceToken, name, openBrace, body.Externs, body.Usings, body.Members, closeBrace, semicolon);
+                return _syntaxFactory.NamespaceDeclaration(namespaceToken, name, openBrace, body.Externs, body.Imports, body.Members, closeBrace, semicolon);
             }
             finally
             {
@@ -458,9 +458,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             {
                 AddTrailingSkippedSyntax(body.Attributes, skippedSyntax);
             }
-            else if (body.Usings.Count > 0)
+            else if (body.Imports.Count > 0)
             {
-                AddTrailingSkippedSyntax(body.Usings, skippedSyntax);
+                AddTrailingSkippedSyntax(body.Imports, skippedSyntax);
             }
             else if (body.Externs.Count > 0)
             {
@@ -486,7 +486,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             None = 0,
             ExternAliases = 1,
-            Usings = 2,
+            Imports = 2,
             GlobalAttributes = 3,
             MembersAndStatements = 4,
         }
@@ -586,22 +586,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                                 body.Members.Add(_syntaxFactory.GlobalStatement(ParseUsingStatement()));
                                 seen = NamespaceParts.MembersAndStatements;
                             }
+                            reportUnexpectedToken = true;
+                            break;
+
+                        case SyntaxKind.ImportKeyword:
+                            // incomplete members must be processed before we add any nodes to the body:
+                            ReduceIncompleteMembers(ref pendingIncompleteMembers, ref openBrace, ref body, ref initialBadNodes);
+
+                            var @using = this.ParseImportDirective();
+                            if (seen > NamespaceParts.Imports)
+                            {
+                                @using = this.AddError(@using, ErrorCode.ERR_UsingAfterElements);
+                                this.AddSkippedNamespaceText(ref openBrace, ref body, ref initialBadNodes, @using);
+                            }
                             else
                             {
-                                // incomplete members must be processed before we add any nodes to the body:
-                                ReduceIncompleteMembers(ref pendingIncompleteMembers, ref openBrace, ref body, ref initialBadNodes);
-
-                                var @using = this.ParseUsingDirective();
-                                if (seen > NamespaceParts.Usings)
-                                {
-                                    @using = this.AddError(@using, ErrorCode.ERR_UsingAfterElements);
-                                    this.AddSkippedNamespaceText(ref openBrace, ref body, ref initialBadNodes, @using);
-                                }
-                                else
-                                {
-                                    body.Usings.Add(@using);
-                                    seen = NamespaceParts.Usings;
-                                }
+                                body.Imports.Add(@using);
+                                seen = NamespaceParts.Imports;
                             }
 
                             reportUnexpectedToken = true;
@@ -704,7 +705,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             switch (this.CurrentToken.Kind)
             {
                 case SyntaxKind.ExternKeyword:
-                case SyntaxKind.UsingKeyword:
+                case SyntaxKind.ImportKeyword:
                 case SyntaxKind.NamespaceKeyword:
                     return true;
                 case SyntaxKind.IdentifierToken:
@@ -792,16 +793,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 this.EatToken(SyntaxKind.EqualsToken));
         }
 
-        private UsingDirectiveSyntax ParseUsingDirective()
+        private ImportDirectiveSyntax ParseImportDirective()
         {
-            if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.UsingDirective)
+            if (this.IsIncrementalAndFactoryContextMatches && this.CurrentNodeKind == SyntaxKind.ImportDirective)
             {
-                return (UsingDirectiveSyntax)this.EatNode();
+                return (ImportDirectiveSyntax)this.EatNode();
             }
 
-            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.UsingKeyword);
+            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ImportKeyword);
 
-            var usingToken = this.EatToken(SyntaxKind.UsingKeyword);
+            var usingToken = this.EatToken(SyntaxKind.ImportKeyword);
 
             var staticToken = default(SyntaxToken);
             if (this.CurrentToken.Kind == SyntaxKind.StaticKeyword)
@@ -812,7 +813,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             var alias = this.IsNamedAssignment() ? ParseNameEquals() : null;
 
             NameSyntax name;
-            SyntaxToken semicolon;
+            SyntaxToken eos;
 
             if (IsPossibleNamespaceMemberDeclaration())
             {
@@ -833,21 +834,16 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 //using directive, so there's no danger in checking the error case first.
 
                 name = WithAdditionalDiagnostics(CreateMissingIdentifierName(), GetExpectedTokenError(SyntaxKind.IdentifierToken, this.CurrentToken.Kind));
-                semicolon = SyntaxFactory.MissingToken(SyntaxKind.SemicolonToken);
+                eos = SyntaxFactory.MissingToken(SyntaxKind.SemicolonToken);
             }
             else
             {
                 name = this.ParseQualifiedName();
-                if (name.IsMissing && this.PeekToken(1).Kind == SyntaxKind.SemicolonToken)
-                {
-                    //if we can see a semicolon ahead, then the current token was
-                    //probably supposed to be an identifier
-                    name = AddTrailingSkippedSyntax(name, this.EatToken());
-                }
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+                // Eat End-Of-Statement: an end of line or a semi-colon
+                eos = EatEos(ref name);
             }
 
-            var usingDirective = _syntaxFactory.UsingDirective(usingToken, staticToken, alias, name, semicolon);
+            var usingDirective = _syntaxFactory.ImportDirective(usingToken, staticToken, alias, name, eos);
             if (staticToken != default(SyntaxToken))
             {
                 usingDirective = CheckFeatureAvailability(usingDirective, MessageID.IDS_FeatureUsingStatic);

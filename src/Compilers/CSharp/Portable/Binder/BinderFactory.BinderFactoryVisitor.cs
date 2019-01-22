@@ -892,7 +892,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             /// <summary>
             /// Returns true if containingNode has a child that contains the specified position
-            /// and has kind UsingDirective.
+            /// and has kind ImportDirective.
             /// </summary>
             /// <remarks>
             /// Usings can't see other usings, so this is extra info when looking at a namespace
@@ -925,7 +925,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     // of containingNode (vs descendants) seems to be required for cases like
                     // GetSemanticInfoTests.BindAliasQualifier, which binds an alias name
                     // within a using directive.
-                    if (node.IsKind(SyntaxKind.UsingDirective) && node.Parent == containingNode)
+                    if (node.IsKind(SyntaxKind.ImportDirective) && node.Parent == containingNode)
                     {
                         return true;
                     }

@@ -66,7 +66,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 }
             }
 
-            ImmutableArray<NamespaceOrTypeAndUsingDirective> usings = Imports.Usings;
+            ImmutableArray<NamespaceOrTypeAndImportDirective> usings = Imports.Usings;
             if (!usings.IsDefault)
             {
                 foreach (var nsOrType in usings)
@@ -81,13 +81,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                     else if (!namespaceOrType.ContainingAssembly.IsLinked)
                     {
                         // We skip alias imports of embedded types to be consistent with imports of aliased embedded types and with VB.
-                        var typeRef = GetTypeReference((TypeSymbol)namespaceOrType, nsOrType.UsingDirective, moduleBuilder, diagnostics);
+                        var typeRef = GetTypeReference((TypeSymbol)namespaceOrType, nsOrType.ImportDirective, moduleBuilder, diagnostics);
                         usedNamespaces.Add(Cci.UsedNamespaceOrType.CreateType(typeRef));
                     }
                 }
             }
 
-            ImmutableDictionary<string, AliasAndUsingDirective> aliasSymbols = Imports.UsingAliases;
+            ImmutableDictionary<string, AliasAndImportDirective> aliasSymbols = Imports.UsingAliases;
             if (!aliasSymbols.IsEmpty)
             {
                 var aliases = ArrayBuilder<string>.GetInstance(aliasSymbols.Count);
@@ -96,9 +96,9 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 foreach (var alias in aliases)
                 {
-                    var aliasAndUsingDirective = aliasSymbols[alias];
-                    var symbol = aliasAndUsingDirective.Alias;
-                    var syntax = aliasAndUsingDirective.UsingDirective;
+                    var aliasAndImportDirective = aliasSymbols[alias];
+                    var symbol = aliasAndImportDirective.Alias;
+                    var syntax = aliasAndImportDirective.ImportDirective;
                     Debug.Assert(!symbol.IsExtern);
 
                     NamespaceOrTypeSymbol target = symbol.Target;

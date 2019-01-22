@@ -308,9 +308,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
             {
                 return 1;
             }
-            else if (currentToken.Parent.Kind() == SyntaxKind.UsingDirective)
+            else if (currentToken.Parent.Kind() == SyntaxKind.ImportDirective)
             {
-                return nextToken.Parent.Kind() == SyntaxKind.UsingDirective ? 1 : 2;
+                return nextToken.Parent.Kind() == SyntaxKind.ImportDirective ? 1 : 2;
             }
             else if (currentToken.Parent.Kind() == SyntaxKind.ExternAliasDirective)
             {
@@ -829,7 +829,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                         node is AccessorDeclarationSyntax ||
                         node is TypeParameterConstraintClauseSyntax ||
                         node is SwitchSectionSyntax ||
-                        node is UsingDirectiveSyntax ||
+                        node is ImportDirectiveSyntax ||
                         node is ExternAliasDirectiveSyntax ||
                         node is QueryExpressionSyntax ||
                         node is QueryContinuationSyntax)

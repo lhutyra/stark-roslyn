@@ -75,7 +75,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             _nameToAttributeMap[name] = newValue;
         }
 
-        internal QuickAttributeChecker AddAliasesIfAny(SyntaxList<UsingDirectiveSyntax> usingsSyntax)
+        internal QuickAttributeChecker AddAliasesIfAny(SyntaxList<ImportDirectiveSyntax> usingsSyntax)
         {
             if (usingsSyntax.Count == 0)
             {
