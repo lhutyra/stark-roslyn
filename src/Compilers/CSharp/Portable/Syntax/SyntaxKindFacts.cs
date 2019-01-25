@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static IEnumerable<SyntaxKind> GetReservedKeywordKinds()
         {
-            for (int i = (int)SyntaxKind.BoolKeyword; i <= (int)SyntaxKind.ConstructorKeyword; i++)
+            for (int i = (int)SyntaxKind.IntKeyword; i <= (int)SyntaxKind.ConstructorKeyword; i++)
             {
                 yield return (SyntaxKind)i;
             }
@@ -34,7 +34,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public static bool IsReservedKeyword(SyntaxKind kind)
         {
-            return kind >= SyntaxKind.BoolKeyword && kind <= SyntaxKind.ConstructorKeyword;
+            return kind >= SyntaxKind.IntKeyword && kind <= SyntaxKind.ConstructorKeyword;
         }
 
         public static bool IsAttributeTargetSpecifier(SyntaxKind kind)
@@ -276,17 +276,20 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (kind)
             {
-                case SyntaxKind.BoolKeyword:
-                case SyntaxKind.ByteKeyword:
-                case SyntaxKind.SByteKeyword:
                 case SyntaxKind.IntKeyword:
                 case SyntaxKind.UIntKeyword:
-                case SyntaxKind.ShortKeyword:
-                case SyntaxKind.UShortKeyword:
-                case SyntaxKind.LongKeyword:
-                case SyntaxKind.ULongKeyword:
-                case SyntaxKind.FloatKeyword:
-                case SyntaxKind.DoubleKeyword:
+                case SyntaxKind.BoolKeyword:
+                case SyntaxKind.ByteKeyword:
+                case SyntaxKind.UInt8Keyword:
+                case SyntaxKind.Int8Keyword:
+                case SyntaxKind.Int32Keyword:
+                case SyntaxKind.UInt32Keyword:
+                case SyntaxKind.Int16Keyword:
+                case SyntaxKind.UInt16Keyword:
+                case SyntaxKind.Int64Keyword:
+                case SyntaxKind.UInt64Keyword:
+                case SyntaxKind.Float32Keyword:
+                case SyntaxKind.Float64Keyword:
                 case SyntaxKind.DecimalKeyword:
                 case SyntaxKind.StringKeyword:
                 case SyntaxKind.CharKeyword:
@@ -809,34 +812,36 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 case "bool":
                     return SyntaxKind.BoolKeyword;
+                case "int8":
+                    return SyntaxKind.Int8Keyword;
+                case "uint8":
+                    return SyntaxKind.UInt8Keyword;
                 case "byte":
                     return SyntaxKind.ByteKeyword;
-                case "sbyte":
-                    return SyntaxKind.SByteKeyword;
-                case "short":
-                    return SyntaxKind.ShortKeyword;
-                case "ushort":
-                    return SyntaxKind.UShortKeyword;
+                case "int16":
+                    return SyntaxKind.Int16Keyword;
+                case "uint16":
+                    return SyntaxKind.UInt16Keyword;
                 case "int":
                     return SyntaxKind.IntKeyword;
                 case "uint":
                     return SyntaxKind.UIntKeyword;
-                case "long":
-                    return SyntaxKind.LongKeyword;
-                case "ulong":
-                    return SyntaxKind.ULongKeyword;
-                case "double":
-                    return SyntaxKind.DoubleKeyword;
-                case "float":
-                    return SyntaxKind.FloatKeyword;
+                case "int32":
+                    return SyntaxKind.Int32Keyword;
+                case "uint32":
+                    return SyntaxKind.UInt32Keyword;
+                case "int64":
+                    return SyntaxKind.Int64Keyword;
+                case "uint64":
+                    return SyntaxKind.UInt64Keyword;
+                case "float64":
+                    return SyntaxKind.Float64Keyword;
+                case "float32":
+                    return SyntaxKind.Float32Keyword;
                 case "decimal":
                     return SyntaxKind.DecimalKeyword;
                 case "string":
                     return SyntaxKind.StringKeyword;
-                case "char":
-                    return SyntaxKind.CharKeyword;
-                case "void":
-                    return SyntaxKind.VoidKeyword;
                 case "object":
                     return SyntaxKind.ObjectKeyword;
                 case "typeof":
@@ -1374,32 +1379,34 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "bool";
                 case SyntaxKind.ByteKeyword:
                     return "byte";
-                case SyntaxKind.SByteKeyword:
-                    return "sbyte";
-                case SyntaxKind.ShortKeyword:
-                    return "short";
-                case SyntaxKind.UShortKeyword:
-                    return "ushort";
+                case SyntaxKind.UInt8Keyword:
+                    return "uint8";
+                case SyntaxKind.Int8Keyword:
+                    return "int8";
+                case SyntaxKind.Int16Keyword:
+                    return "int16";
+                case SyntaxKind.UInt16Keyword:
+                    return "uint16";
                 case SyntaxKind.IntKeyword:
                     return "int";
                 case SyntaxKind.UIntKeyword:
                     return "uint";
-                case SyntaxKind.LongKeyword:
-                    return "long";
-                case SyntaxKind.ULongKeyword:
-                    return "ulong";
-                case SyntaxKind.DoubleKeyword:
-                    return "double";
-                case SyntaxKind.FloatKeyword:
-                    return "float";
+                case SyntaxKind.Int32Keyword:
+                    return "int32";
+                case SyntaxKind.UInt32Keyword:
+                    return "uint32";
+                case SyntaxKind.Int64Keyword:
+                    return "int64";
+                case SyntaxKind.UInt64Keyword:
+                    return "uint64";
+                case SyntaxKind.Float64Keyword:
+                    return "float64";
+                case SyntaxKind.Float32Keyword:
+                    return "float32";
                 case SyntaxKind.DecimalKeyword:
                     return "decimal";
                 case SyntaxKind.StringKeyword:
                     return "string";
-                case SyntaxKind.CharKeyword:
-                    return "char";
-                case SyntaxKind.VoidKeyword:
-                    return "void";
                 case SyntaxKind.ObjectKeyword:
                     return "object";
                 case SyntaxKind.TypeOfKeyword:

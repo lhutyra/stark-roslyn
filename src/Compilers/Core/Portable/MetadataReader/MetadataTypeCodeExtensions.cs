@@ -21,10 +21,10 @@ namespace Microsoft.CodeAnalysis
                     return SpecialType.System_Boolean;
 
                 case SignatureTypeCode.SByte:
-                    return SpecialType.System_SByte;
+                    return SpecialType.System_Int8;
 
                 case SignatureTypeCode.Byte:
-                    return SpecialType.System_Byte;
+                    return SpecialType.System_UInt8;
 
                 case SignatureTypeCode.Int16:
                     return SpecialType.System_Int16;
@@ -45,10 +45,10 @@ namespace Microsoft.CodeAnalysis
                     return SpecialType.System_UInt64;
 
                 case SignatureTypeCode.Single:
-                    return SpecialType.System_Single;
+                    return SpecialType.System_Float32;
 
                 case SignatureTypeCode.Double:
-                    return SpecialType.System_Double;
+                    return SpecialType.System_Float64;
 
                 case SignatureTypeCode.Char:
                     return SpecialType.System_Char;
@@ -57,10 +57,10 @@ namespace Microsoft.CodeAnalysis
                     return SpecialType.System_String;
 
                 case SignatureTypeCode.IntPtr:
-                    return SpecialType.System_IntPtr;
+                    return SpecialType.System_Int;
 
                 case SignatureTypeCode.UIntPtr:
-                    return SpecialType.System_UIntPtr;
+                    return SpecialType.System_UInt;
 
                 case SignatureTypeCode.Object:
                     return SpecialType.System_Object;
@@ -103,19 +103,19 @@ namespace Microsoft.CodeAnalysis
                 case SpecialType.System_Void:
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_IntPtr:
-                case SpecialType.System_UIntPtr:
+                case SpecialType.System_Int:
+                case SpecialType.System_UInt:
                 case SpecialType.System_TypedReference:
-                case SpecialType.System_Single:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float32:
+                case SpecialType.System_Float64:
                     return true;
             }
 
@@ -129,10 +129,10 @@ namespace Microsoft.CodeAnalysis
                 case SpecialType.System_Boolean:
                     return SerializationTypeCode.Boolean;
 
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return SerializationTypeCode.SByte;
 
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     return SerializationTypeCode.Byte;
 
                 case SpecialType.System_Int16:
@@ -153,10 +153,10 @@ namespace Microsoft.CodeAnalysis
                 case SpecialType.System_UInt64:
                     return SerializationTypeCode.UInt64;
 
-                case SpecialType.System_Single:
+                case SpecialType.System_Float32:
                     return SerializationTypeCode.Single;
 
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                     return SerializationTypeCode.Double;
 
                 case SpecialType.System_Char:

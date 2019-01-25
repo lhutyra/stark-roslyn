@@ -23,7 +23,7 @@ namespace Roslyn.Utilities
             {
                 switch (specialType)
                 {
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_Int8:
                         return (ulong)(sbyte)value;
                     case SpecialType.System_Int16:
                         return (ulong)(short)value;
@@ -31,7 +31,7 @@ namespace Roslyn.Utilities
                         return (ulong)(int)value;
                     case SpecialType.System_Int64:
                         return (ulong)(long)value;
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_UInt8:
                         return (byte)value;
                     case SpecialType.System_UInt16:
                         return (ushort)value;

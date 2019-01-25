@@ -238,7 +238,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                     if (InitializerRewriter.GetTrailingScriptExpression(labeledStatementBody) != null)
                     {
-                        Error(diagnostics, ErrorCode.ERR_SemicolonExpected, ((ExpressionStatementSyntax)labeledStatementBody.Syntax).SemicolonToken);
+                        Error(diagnostics, ErrorCode.ERR_SemicolonExpected, ((ExpressionStatementSyntax)labeledStatementBody.Syntax).EosToken);
                     }
                 }
             }

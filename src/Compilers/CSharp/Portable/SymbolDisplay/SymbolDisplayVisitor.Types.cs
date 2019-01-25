@@ -585,7 +585,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 case SpecialType.System_Void:
                     return "void";
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return "sbyte";
                 case SpecialType.System_Int16:
                     return "short";
@@ -593,7 +593,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "int";
                 case SpecialType.System_Int64:
                     return "long";
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     return "byte";
                 case SpecialType.System_UInt16:
                     return "ushort";
@@ -601,9 +601,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "uint";
                 case SpecialType.System_UInt64:
                     return "ulong";
-                case SpecialType.System_Single:
+                case SpecialType.System_Float32:
                     return "float";
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                     return "double";
                 case SpecialType.System_Decimal:
                     return "decimal";

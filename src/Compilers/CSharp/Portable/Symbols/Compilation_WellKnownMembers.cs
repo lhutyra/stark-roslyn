@@ -449,7 +449,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             byte scale;
             uint low, mid, high;
             value.GetBits(out isNegative, out scale, out low, out mid, out high);
-            var systemByte = GetSpecialType(SpecialType.System_Byte);
+            var systemByte = GetSpecialType(SpecialType.System_UInt8);
             Debug.Assert(!systemByte.HasUseSiteError);
 
             var systemUnit32 = GetSpecialType(SpecialType.System_UInt32);

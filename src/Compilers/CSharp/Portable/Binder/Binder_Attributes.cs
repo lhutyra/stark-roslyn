@@ -740,7 +740,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 {
                     // DoUncheckedConversion() keeps "single" floats as doubles internally to maintain higher
                     // precision, so make sure they get cast to floats here.
-                    defaultValue = (parameterType.SpecialType == SpecialType.System_Single)
+                    defaultValue = (parameterType.SpecialType == SpecialType.System_Float32)
                         ? (float)line
                         : Binder.DoUncheckedConversion(parameterType.SpecialType, ConstantValue.Create(line));
                 }

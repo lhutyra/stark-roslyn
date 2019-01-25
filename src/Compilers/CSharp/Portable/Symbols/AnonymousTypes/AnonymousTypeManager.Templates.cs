@@ -179,7 +179,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         this.Compilation.Assembly.GlobalNamespace,
                         key.MakeTypeName(),
                         this.System_Object,
-                        Compilation.GetSpecialType(SpecialType.System_IntPtr),
+                        Compilation.GetSpecialType(SpecialType.System_Int),
                         returnsVoid ? Compilation.GetSpecialType(SpecialType.System_Void) : null,
                         parameterCount,
                         byRefParameters))).Delegate;

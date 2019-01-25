@@ -20,17 +20,17 @@ namespace Microsoft.CodeAnalysis.Operations
                     return ConstantValue.Create((ushort)value);
                 case SpecialType.System_Int16:
                     return ConstantValue.Create((short)value);
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return ConstantValue.Create((sbyte)value);
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     return ConstantValue.Create((byte)value);
                 case SpecialType.System_Char:
                     return ConstantValue.Create((char)value);
                 case SpecialType.System_Boolean:
                     return ConstantValue.Create(value != 0);
-                case SpecialType.System_Single:
+                case SpecialType.System_Float32:
                     return ConstantValue.Create((float)value);
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                     return ConstantValue.Create((double)value);
                 case SpecialType.System_Object:
                     return ConstantValue.Create(1, ConstantValueTypeDiscriminator.Int32);

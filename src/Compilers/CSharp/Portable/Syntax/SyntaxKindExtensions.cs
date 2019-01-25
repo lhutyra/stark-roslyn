@@ -15,25 +15,31 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.BoolKeyword:
                     return SpecialType.System_Boolean;
                 case SyntaxKind.ByteKeyword:
-                    return SpecialType.System_Byte;
-                case SyntaxKind.SByteKeyword:
-                    return SpecialType.System_SByte;
-                case SyntaxKind.ShortKeyword:
+                    return SpecialType.System_UInt8;
+                case SyntaxKind.UInt8Keyword:
+                    return SpecialType.System_UInt8;
+                case SyntaxKind.Int8Keyword:
+                    return SpecialType.System_Int8;
+                case SyntaxKind.Int16Keyword:
                     return SpecialType.System_Int16;
-                case SyntaxKind.UShortKeyword:
+                case SyntaxKind.UInt16Keyword:
                     return SpecialType.System_UInt16;
                 case SyntaxKind.IntKeyword:
-                    return SpecialType.System_Int32;
+                    return SpecialType.System_Int;
                 case SyntaxKind.UIntKeyword:
+                    return SpecialType.System_UInt;
+                case SyntaxKind.Int32Keyword:
+                    return SpecialType.System_Int32;
+                case SyntaxKind.UInt32Keyword:
                     return SpecialType.System_UInt32;
-                case SyntaxKind.LongKeyword:
+                case SyntaxKind.Int64Keyword:
                     return SpecialType.System_Int64;
-                case SyntaxKind.ULongKeyword:
+                case SyntaxKind.UInt64Keyword:
                     return SpecialType.System_UInt64;
-                case SyntaxKind.DoubleKeyword:
-                    return SpecialType.System_Double;
-                case SyntaxKind.FloatKeyword:
-                    return SpecialType.System_Single;
+                case SyntaxKind.Float64Keyword:
+                    return SpecialType.System_Float64;
+                case SyntaxKind.Float32Keyword:
+                    return SpecialType.System_Float32;
                 case SyntaxKind.DecimalKeyword:
                     return SpecialType.System_Decimal;
                 case SyntaxKind.StringKeyword:

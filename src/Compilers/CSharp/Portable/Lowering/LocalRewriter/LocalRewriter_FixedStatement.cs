@@ -119,7 +119,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                         //   goto L1: ; 
                         // }
                         return true;
-                    case SyntaxKind.ForEachStatement:
                     case SyntaxKind.ForEachVariableStatement:
                         // We're being conservative here - there's actually only
                         // a try block if the enumerator is disposable, but we

@@ -1376,8 +1376,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (underlyingType)
             {
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                     return SpecialType.System_Int32;
@@ -2135,7 +2135,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             TypeSymbol pointedAtType = isManagedType && allowManagedAddressOf
-                ? GetSpecialType(SpecialType.System_IntPtr, diagnostics, node)
+                ? GetSpecialType(SpecialType.System_Int, diagnostics, node)
                 : operandType ?? CreateErrorType();
             TypeSymbol pointerType = new PointerTypeSymbol(TypeSymbolWithAnnotations.Create(pointedAtType));
 

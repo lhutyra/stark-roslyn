@@ -966,9 +966,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                     // to precisely the required precision.
                     switch (destination.SpecialType)
                     {
-                        case SpecialType.System_Single:
+                        case SpecialType.System_Float32:
                             return ConstantValue.Create(sourceConstantValue.SingleValue);
-                        case SpecialType.System_Double:
+                        case SpecialType.System_Float64:
                             return ConstantValue.Create(sourceConstantValue.DoubleValue);
                         default:
                             return sourceConstantValue;
@@ -1098,17 +1098,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         byte byteValue = value.ByteValue;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)byteValue;
+                            case SpecialType.System_UInt8: return (byte)byteValue;
                             case SpecialType.System_Char: return (char)byteValue;
                             case SpecialType.System_UInt16: return (ushort)byteValue;
                             case SpecialType.System_UInt32: return (uint)byteValue;
                             case SpecialType.System_UInt64: return (ulong)byteValue;
-                            case SpecialType.System_SByte: return (sbyte)byteValue;
+                            case SpecialType.System_Int8: return (sbyte)byteValue;
                             case SpecialType.System_Int16: return (short)byteValue;
                             case SpecialType.System_Int32: return (int)byteValue;
                             case SpecialType.System_Int64: return (long)byteValue;
-                            case SpecialType.System_Single:
-                            case SpecialType.System_Double: return (double)byteValue;
+                            case SpecialType.System_Float32:
+                            case SpecialType.System_Float64: return (double)byteValue;
                             case SpecialType.System_Decimal: return (decimal)byteValue;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1116,17 +1116,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         char charValue = value.CharValue;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)charValue;
+                            case SpecialType.System_UInt8: return (byte)charValue;
                             case SpecialType.System_Char: return (char)charValue;
                             case SpecialType.System_UInt16: return (ushort)charValue;
                             case SpecialType.System_UInt32: return (uint)charValue;
                             case SpecialType.System_UInt64: return (ulong)charValue;
-                            case SpecialType.System_SByte: return (sbyte)charValue;
+                            case SpecialType.System_Int8: return (sbyte)charValue;
                             case SpecialType.System_Int16: return (short)charValue;
                             case SpecialType.System_Int32: return (int)charValue;
                             case SpecialType.System_Int64: return (long)charValue;
-                            case SpecialType.System_Single:
-                            case SpecialType.System_Double: return (double)charValue;
+                            case SpecialType.System_Float32:
+                            case SpecialType.System_Float64: return (double)charValue;
                             case SpecialType.System_Decimal: return (decimal)charValue;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1134,17 +1134,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         ushort uint16Value = value.UInt16Value;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)uint16Value;
+                            case SpecialType.System_UInt8: return (byte)uint16Value;
                             case SpecialType.System_Char: return (char)uint16Value;
                             case SpecialType.System_UInt16: return (ushort)uint16Value;
                             case SpecialType.System_UInt32: return (uint)uint16Value;
                             case SpecialType.System_UInt64: return (ulong)uint16Value;
-                            case SpecialType.System_SByte: return (sbyte)uint16Value;
+                            case SpecialType.System_Int8: return (sbyte)uint16Value;
                             case SpecialType.System_Int16: return (short)uint16Value;
                             case SpecialType.System_Int32: return (int)uint16Value;
                             case SpecialType.System_Int64: return (long)uint16Value;
-                            case SpecialType.System_Single:
-                            case SpecialType.System_Double: return (double)uint16Value;
+                            case SpecialType.System_Float32:
+                            case SpecialType.System_Float64: return (double)uint16Value;
                             case SpecialType.System_Decimal: return (decimal)uint16Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1152,17 +1152,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         uint uint32Value = value.UInt32Value;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)uint32Value;
+                            case SpecialType.System_UInt8: return (byte)uint32Value;
                             case SpecialType.System_Char: return (char)uint32Value;
                             case SpecialType.System_UInt16: return (ushort)uint32Value;
                             case SpecialType.System_UInt32: return (uint)uint32Value;
                             case SpecialType.System_UInt64: return (ulong)uint32Value;
-                            case SpecialType.System_SByte: return (sbyte)uint32Value;
+                            case SpecialType.System_Int8: return (sbyte)uint32Value;
                             case SpecialType.System_Int16: return (short)uint32Value;
                             case SpecialType.System_Int32: return (int)uint32Value;
                             case SpecialType.System_Int64: return (long)uint32Value;
-                            case SpecialType.System_Single: return (double)(float)uint32Value;
-                            case SpecialType.System_Double: return (double)uint32Value;
+                            case SpecialType.System_Float32: return (double)(float)uint32Value;
+                            case SpecialType.System_Float64: return (double)uint32Value;
                             case SpecialType.System_Decimal: return (decimal)uint32Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1170,17 +1170,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         ulong uint64Value = value.UInt64Value;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)uint64Value;
+                            case SpecialType.System_UInt8: return (byte)uint64Value;
                             case SpecialType.System_Char: return (char)uint64Value;
                             case SpecialType.System_UInt16: return (ushort)uint64Value;
                             case SpecialType.System_UInt32: return (uint)uint64Value;
                             case SpecialType.System_UInt64: return (ulong)uint64Value;
-                            case SpecialType.System_SByte: return (sbyte)uint64Value;
+                            case SpecialType.System_Int8: return (sbyte)uint64Value;
                             case SpecialType.System_Int16: return (short)uint64Value;
                             case SpecialType.System_Int32: return (int)uint64Value;
                             case SpecialType.System_Int64: return (long)uint64Value;
-                            case SpecialType.System_Single: return (double)(float)uint64Value;
-                            case SpecialType.System_Double: return (double)uint64Value;
+                            case SpecialType.System_Float32: return (double)(float)uint64Value;
+                            case SpecialType.System_Float64: return (double)uint64Value;
                             case SpecialType.System_Decimal: return (decimal)uint64Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1188,17 +1188,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         sbyte sbyteValue = value.SByteValue;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)sbyteValue;
+                            case SpecialType.System_UInt8: return (byte)sbyteValue;
                             case SpecialType.System_Char: return (char)sbyteValue;
                             case SpecialType.System_UInt16: return (ushort)sbyteValue;
                             case SpecialType.System_UInt32: return (uint)sbyteValue;
                             case SpecialType.System_UInt64: return (ulong)sbyteValue;
-                            case SpecialType.System_SByte: return (sbyte)sbyteValue;
+                            case SpecialType.System_Int8: return (sbyte)sbyteValue;
                             case SpecialType.System_Int16: return (short)sbyteValue;
                             case SpecialType.System_Int32: return (int)sbyteValue;
                             case SpecialType.System_Int64: return (long)sbyteValue;
-                            case SpecialType.System_Single:
-                            case SpecialType.System_Double: return (double)sbyteValue;
+                            case SpecialType.System_Float32:
+                            case SpecialType.System_Float64: return (double)sbyteValue;
                             case SpecialType.System_Decimal: return (decimal)sbyteValue;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1206,17 +1206,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         short int16Value = value.Int16Value;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)int16Value;
+                            case SpecialType.System_UInt8: return (byte)int16Value;
                             case SpecialType.System_Char: return (char)int16Value;
                             case SpecialType.System_UInt16: return (ushort)int16Value;
                             case SpecialType.System_UInt32: return (uint)int16Value;
                             case SpecialType.System_UInt64: return (ulong)int16Value;
-                            case SpecialType.System_SByte: return (sbyte)int16Value;
+                            case SpecialType.System_Int8: return (sbyte)int16Value;
                             case SpecialType.System_Int16: return (short)int16Value;
                             case SpecialType.System_Int32: return (int)int16Value;
                             case SpecialType.System_Int64: return (long)int16Value;
-                            case SpecialType.System_Single:
-                            case SpecialType.System_Double: return (double)int16Value;
+                            case SpecialType.System_Float32:
+                            case SpecialType.System_Float64: return (double)int16Value;
                             case SpecialType.System_Decimal: return (decimal)int16Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1224,17 +1224,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         int int32Value = value.Int32Value;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)int32Value;
+                            case SpecialType.System_UInt8: return (byte)int32Value;
                             case SpecialType.System_Char: return (char)int32Value;
                             case SpecialType.System_UInt16: return (ushort)int32Value;
                             case SpecialType.System_UInt32: return (uint)int32Value;
                             case SpecialType.System_UInt64: return (ulong)int32Value;
-                            case SpecialType.System_SByte: return (sbyte)int32Value;
+                            case SpecialType.System_Int8: return (sbyte)int32Value;
                             case SpecialType.System_Int16: return (short)int32Value;
                             case SpecialType.System_Int32: return (int)int32Value;
                             case SpecialType.System_Int64: return (long)int32Value;
-                            case SpecialType.System_Single: return (double)(float)int32Value;
-                            case SpecialType.System_Double: return (double)int32Value;
+                            case SpecialType.System_Float32: return (double)(float)int32Value;
+                            case SpecialType.System_Float64: return (double)int32Value;
                             case SpecialType.System_Decimal: return (decimal)int32Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1242,17 +1242,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         long int64Value = value.Int64Value;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)int64Value;
+                            case SpecialType.System_UInt8: return (byte)int64Value;
                             case SpecialType.System_Char: return (char)int64Value;
                             case SpecialType.System_UInt16: return (ushort)int64Value;
                             case SpecialType.System_UInt32: return (uint)int64Value;
                             case SpecialType.System_UInt64: return (ulong)int64Value;
-                            case SpecialType.System_SByte: return (sbyte)int64Value;
+                            case SpecialType.System_Int8: return (sbyte)int64Value;
                             case SpecialType.System_Int16: return (short)int64Value;
                             case SpecialType.System_Int32: return (int)int64Value;
                             case SpecialType.System_Int64: return (long)int64Value;
-                            case SpecialType.System_Single: return (double)(float)int64Value;
-                            case SpecialType.System_Double: return (double)int64Value;
+                            case SpecialType.System_Float32: return (double)(float)int64Value;
+                            case SpecialType.System_Float64: return (double)int64Value;
                             case SpecialType.System_Decimal: return (decimal)int64Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1268,17 +1268,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         double doubleValue = value.DoubleValue;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)doubleValue;
+                            case SpecialType.System_UInt8: return (byte)doubleValue;
                             case SpecialType.System_Char: return (char)doubleValue;
                             case SpecialType.System_UInt16: return (ushort)doubleValue;
                             case SpecialType.System_UInt32: return (uint)doubleValue;
                             case SpecialType.System_UInt64: return (ulong)doubleValue;
-                            case SpecialType.System_SByte: return (sbyte)doubleValue;
+                            case SpecialType.System_Int8: return (sbyte)doubleValue;
                             case SpecialType.System_Int16: return (short)doubleValue;
                             case SpecialType.System_Int32: return (int)doubleValue;
                             case SpecialType.System_Int64: return (long)doubleValue;
-                            case SpecialType.System_Single: return (double)(float)doubleValue;
-                            case SpecialType.System_Double: return (double)doubleValue;
+                            case SpecialType.System_Float32: return (double)(float)doubleValue;
+                            case SpecialType.System_Float64: return (double)doubleValue;
                             case SpecialType.System_Decimal: return (value.Discriminator == ConstantValueTypeDiscriminator.Single) ? (decimal)(float)doubleValue : (decimal)doubleValue;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1286,17 +1286,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                         decimal decimalValue = CheckConstantBounds(destinationType, value.DecimalValue) ? value.DecimalValue : 0m;
                         switch (destinationType)
                         {
-                            case SpecialType.System_Byte: return (byte)decimalValue;
+                            case SpecialType.System_UInt8: return (byte)decimalValue;
                             case SpecialType.System_Char: return (char)decimalValue;
                             case SpecialType.System_UInt16: return (ushort)decimalValue;
                             case SpecialType.System_UInt32: return (uint)decimalValue;
                             case SpecialType.System_UInt64: return (ulong)decimalValue;
-                            case SpecialType.System_SByte: return (sbyte)decimalValue;
+                            case SpecialType.System_Int8: return (sbyte)decimalValue;
                             case SpecialType.System_Int16: return (short)decimalValue;
                             case SpecialType.System_Int32: return (int)decimalValue;
                             case SpecialType.System_Int64: return (long)decimalValue;
-                            case SpecialType.System_Single: return (double)(float)decimalValue;
-                            case SpecialType.System_Double: return (double)decimalValue;
+                            case SpecialType.System_Float32: return (double)(float)decimalValue;
+                            case SpecialType.System_Float64: return (double)decimalValue;
                             case SpecialType.System_Decimal: return (decimal)decimalValue;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
@@ -1332,12 +1332,12 @@ namespace Microsoft.CodeAnalysis.CSharp
             // See ExpressionBinder::isConstantInRange.
             switch (destinationType)
             {
-                case SpecialType.System_Byte: return (byte.MinValue - 1D) < value && value < (byte.MaxValue + 1D);
+                case SpecialType.System_UInt8: return (byte.MinValue - 1D) < value && value < (byte.MaxValue + 1D);
                 case SpecialType.System_Char: return (char.MinValue - 1D) < value && value < (char.MaxValue + 1D);
                 case SpecialType.System_UInt16: return (ushort.MinValue - 1D) < value && value < (ushort.MaxValue + 1D);
                 case SpecialType.System_UInt32: return (uint.MinValue - 1D) < value && value < (uint.MaxValue + 1D);
                 case SpecialType.System_UInt64: return (ulong.MinValue - 1D) < value && value < (ulong.MaxValue + 1D);
-                case SpecialType.System_SByte: return (sbyte.MinValue - 1D) < value && value < (sbyte.MaxValue + 1D);
+                case SpecialType.System_Int8: return (sbyte.MinValue - 1D) < value && value < (sbyte.MaxValue + 1D);
                 case SpecialType.System_Int16: return (short.MinValue - 1D) < value && value < (short.MaxValue + 1D);
                 case SpecialType.System_Int32: return (int.MinValue - 1D) < value && value < (int.MaxValue + 1D);
                 // Note: Using <= to compare the min value matches the native compiler.
@@ -1354,12 +1354,12 @@ namespace Microsoft.CodeAnalysis.CSharp
             // See ExpressionBinder::isConstantInRange.
             switch (destinationType)
             {
-                case SpecialType.System_Byte: return (byte.MinValue - 1M) < value && value < (byte.MaxValue + 1M);
+                case SpecialType.System_UInt8: return (byte.MinValue - 1M) < value && value < (byte.MaxValue + 1M);
                 case SpecialType.System_Char: return (char.MinValue - 1M) < value && value < (char.MaxValue + 1M);
                 case SpecialType.System_UInt16: return (ushort.MinValue - 1M) < value && value < (ushort.MaxValue + 1M);
                 case SpecialType.System_UInt32: return (uint.MinValue - 1M) < value && value < (uint.MaxValue + 1M);
                 case SpecialType.System_UInt64: return (ulong.MinValue - 1M) < value && value < (ulong.MaxValue + 1M);
-                case SpecialType.System_SByte: return (sbyte.MinValue - 1M) < value && value < (sbyte.MaxValue + 1M);
+                case SpecialType.System_Int8: return (sbyte.MinValue - 1M) < value && value < (sbyte.MaxValue + 1M);
                 case SpecialType.System_Int16: return (short.MinValue - 1M) < value && value < (short.MaxValue + 1M);
                 case SpecialType.System_Int32: return (int.MinValue - 1M) < value && value < (int.MaxValue + 1M);
                 case SpecialType.System_Int64: return (long.MinValue - 1M) < value && value < (long.MaxValue + 1M);

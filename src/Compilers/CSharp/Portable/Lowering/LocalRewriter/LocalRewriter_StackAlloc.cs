@@ -89,7 +89,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // and conversions).
 
             TypeSymbol uintType = _factory.SpecialType(SpecialType.System_UInt32);
-            TypeSymbol uintPtrType = _factory.SpecialType(SpecialType.System_UIntPtr);
+            TypeSymbol uintPtrType = _factory.SpecialType(SpecialType.System_UInt);
 
             // Why convert twice?  Because dev10 actually uses an explicit conv_u instruction and the normal conversion
             // from int32 to native uint is emitted as conv_i.  The behavior we want to emulate is to re-interpret

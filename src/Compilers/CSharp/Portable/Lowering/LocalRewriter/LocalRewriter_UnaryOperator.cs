@@ -875,13 +875,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                     specialType = SpecialType.System_Int32;
                     break;
                 case UnaryOperatorKind.SByte:
-                    specialType = SpecialType.System_SByte;
+                    specialType = SpecialType.System_Int8;
                     break;
                 case UnaryOperatorKind.Short:
                     specialType = SpecialType.System_Int16;
                     break;
                 case UnaryOperatorKind.Byte:
-                    specialType = SpecialType.System_Byte;
+                    specialType = SpecialType.System_UInt8;
                     break;
                 case UnaryOperatorKind.UShort:
                     specialType = SpecialType.System_UInt16;
@@ -899,10 +899,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     specialType = SpecialType.System_UInt64;
                     break;
                 case UnaryOperatorKind.Float:
-                    specialType = SpecialType.System_Single;
+                    specialType = SpecialType.System_Float32;
                     break;
                 case UnaryOperatorKind.Double:
-                    specialType = SpecialType.System_Double;
+                    specialType = SpecialType.System_Float64;
                     break;
                 case UnaryOperatorKind.Decimal:
                     specialType = SpecialType.System_Decimal;
@@ -977,12 +977,12 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                         switch (underlyingType.SpecialType)
                         {
-                            case SpecialType.System_SByte:
+                            case SpecialType.System_Int8:
                             case SpecialType.System_Int16:
                             case SpecialType.System_Int32:
                                 result = BinaryOperatorKind.Int;
                                 break;
-                            case SpecialType.System_Byte:
+                            case SpecialType.System_UInt8:
                             case SpecialType.System_UInt16:
                             case SpecialType.System_UInt32:
                                 result = BinaryOperatorKind.UInt;

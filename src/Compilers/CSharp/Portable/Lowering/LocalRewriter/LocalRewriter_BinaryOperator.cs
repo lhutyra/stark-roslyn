@@ -530,7 +530,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         //This helper removes unnecessary implied conversion from ArrayLength node.
         private BoundExpression UnconvertArrayLength(BoundArrayLength arrLength)
         {
-            return arrLength.Update(arrLength.Expression, _factory.SpecialType(SpecialType.System_UIntPtr));
+            return arrLength.Update(arrLength.Expression, _factory.SpecialType(SpecialType.System_UInt));
         }
 
         private BoundExpression MakeDynamicLogicalBinaryOperator(
@@ -2106,7 +2106,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                             var constVal = numericOperand.ConstantValue;
                             if (constVal == null || constVal.Int32Value < 0)
                             {
-                                destinationType = SpecialType.System_IntPtr;
+                                destinationType = SpecialType.System_Int;
                             }
                         }
                         break;
@@ -2117,15 +2117,15 @@ namespace Microsoft.CodeAnalysis.CSharp
                             var constVal = numericOperand.ConstantValue;
                             if (constVal == null || constVal.UInt32Value > int.MaxValue)
                             {
-                                destinationType = SpecialType.System_UIntPtr;
+                                destinationType = SpecialType.System_UInt;
                             }
                         }
                         break;
                     case SpecialType.System_Int64:
-                        destinationType = SpecialType.System_IntPtr;
+                        destinationType = SpecialType.System_Int;
                         break;
                     case SpecialType.System_UInt64:
-                        destinationType = SpecialType.System_UIntPtr;
+                        destinationType = SpecialType.System_UInt;
                         break;
                     default:
                         throw ExceptionUtilities.UnexpectedValue(numericSpecialType);
@@ -2144,7 +2144,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 case SpecialType.System_Int32:
                     {
-                        TypeSymbol nativeIntType = _factory.SpecialType(SpecialType.System_IntPtr);
+                        TypeSymbol nativeIntType = _factory.SpecialType(SpecialType.System_Int);
 
                         // From ExpressionBinder::bindPtrMul:
                         // this multiplication needs to be done as natural ints, but since a (int * natint) ==> natint,
@@ -2159,7 +2159,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SpecialType.System_UInt32:
                     {
                         TypeSymbol longType = _factory.SpecialType(SpecialType.System_Int64);
-                        TypeSymbol nativeIntType = _factory.SpecialType(SpecialType.System_IntPtr);
+                        TypeSymbol nativeIntType = _factory.SpecialType(SpecialType.System_Int);
 
                         // We're multiplying a uint by an int, so promote both to long (same as normal operator overload resolution).
                         numericOperand = _factory.Convert(longType, numericOperand, Conversion.ExplicitNumeric, isChecked);
@@ -2172,7 +2172,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SpecialType.System_Int64:
                     {
                         TypeSymbol longType = _factory.SpecialType(SpecialType.System_Int64);
-                        TypeSymbol nativeIntType = _factory.SpecialType(SpecialType.System_IntPtr);
+                        TypeSymbol nativeIntType = _factory.SpecialType(SpecialType.System_Int);
 
                         // We're multiplying a long by an int, so promote the int to long (same as normal operator overload resolution).
                         sizeOfExpression = _factory.Convert(longType, sizeOfExpression, Conversion.ExplicitNumeric, isChecked);
@@ -2184,7 +2184,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SpecialType.System_UInt64:
                     {
                         TypeSymbol ulongType = _factory.SpecialType(SpecialType.System_UInt64);
-                        TypeSymbol nativeUIntType = _factory.SpecialType(SpecialType.System_UIntPtr);
+                        TypeSymbol nativeUIntType = _factory.SpecialType(SpecialType.System_UInt);
 
                         // We're multiplying a ulong by an int, so promote the int to ulong (same as normal operator overload resolution).
                         sizeOfExpression = _factory.Convert(ulongType, sizeOfExpression, Conversion.ExplicitNumeric, isChecked);
@@ -2229,7 +2229,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 returnType,
                 _factory.Binary(
                     BinaryOperatorKind.Division,
-                    _factory.SpecialType(SpecialType.System_IntPtr),
+                    _factory.SpecialType(SpecialType.System_Int),
                     _factory.Binary(
                         kind & ~BinaryOperatorKind.Checked, // For some reason, dev10 never checks for subtraction overflow.
                         returnType,

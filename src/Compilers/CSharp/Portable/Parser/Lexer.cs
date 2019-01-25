@@ -363,10 +363,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                             case SpecialType.System_UInt64:
                                 token = SyntaxFactory.Literal(leadingNode, info.Text, info.UlongValue, trailingNode);
                                 break;
-                            case SpecialType.System_Single:
+                            case SpecialType.System_Float32:
                                 token = SyntaxFactory.Literal(leadingNode, info.Text, info.FloatValue, trailingNode);
                                 break;
-                            case SpecialType.System_Double:
+                            case SpecialType.System_Float64:
                                 token = SyntaxFactory.Literal(leadingNode, info.Text, info.DoubleValue, trailingNode);
                                 break;
                             case SpecialType.System_Decimal:
@@ -1157,12 +1157,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     if ((ch = TextWindow.PeekChar()) == 'f' || ch == 'F')
                     {
                         TextWindow.AdvanceChar();
-                        info.ValueKind = SpecialType.System_Single;
+                        info.ValueKind = SpecialType.System_Float32;
                     }
                     else if (ch == 'D' || ch == 'd')
                     {
                         TextWindow.AdvanceChar();
-                        info.ValueKind = SpecialType.System_Double;
+                        info.ValueKind = SpecialType.System_Float64;
                     }
                     else if (ch == 'm' || ch == 'M')
                     {
@@ -1171,18 +1171,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                     }
                     else
                     {
-                        info.ValueKind = SpecialType.System_Double;
+                        info.ValueKind = SpecialType.System_Float64;
                     }
                 }
                 else if ((ch = TextWindow.PeekChar()) == 'f' || ch == 'F')
                 {
                     TextWindow.AdvanceChar();
-                    info.ValueKind = SpecialType.System_Single;
+                    info.ValueKind = SpecialType.System_Float32;
                 }
                 else if (ch == 'D' || ch == 'd')
                 {
                     TextWindow.AdvanceChar();
-                    info.ValueKind = SpecialType.System_Double;
+                    info.ValueKind = SpecialType.System_Float64;
                 }
                 else if (ch == 'm' || ch == 'M')
                 {
@@ -1236,10 +1236,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             ulong val;
             switch (info.ValueKind)
             {
-                case SpecialType.System_Single:
+                case SpecialType.System_Float32:
                     info.FloatValue = this.GetValueSingle(valueText);
                     break;
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                     info.DoubleValue = this.GetValueDouble(valueText);
                     break;
                 case SpecialType.System_Decimal:

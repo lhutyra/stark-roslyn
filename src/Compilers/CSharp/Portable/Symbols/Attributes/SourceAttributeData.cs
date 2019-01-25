@@ -282,12 +282,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                             break;
 
                         case (byte)SignatureTypeCode.SByte:
-                            foundMatch = specType == SpecialType.System_SByte;
+                            foundMatch = specType == SpecialType.System_Int8;
                             k += 1;
                             break;
 
                         case (byte)SignatureTypeCode.Byte:
-                            foundMatch = specType == SpecialType.System_Byte;
+                            foundMatch = specType == SpecialType.System_UInt8;
                             k += 1;
                             break;
 
@@ -322,12 +322,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                             break;
 
                         case (byte)SignatureTypeCode.Single:
-                            foundMatch = specType == SpecialType.System_Single;
+                            foundMatch = specType == SpecialType.System_Float32;
                             k += 1;
                             break;
 
                         case (byte)SignatureTypeCode.Double:
-                            foundMatch = specType == SpecialType.System_Double;
+                            foundMatch = specType == SpecialType.System_Float64;
                             k += 1;
                             break;
 

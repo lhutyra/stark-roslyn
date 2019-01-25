@@ -874,7 +874,7 @@ namespace Microsoft.CodeAnalysis.Emit
                         Compilation.GetSubmissionSlotIndex(),
                         this.GetSpecialType(SpecialType.System_Object, syntaxNodeOpt, diagnostics),
                         this.GetSpecialType(SpecialType.System_ValueType, syntaxNodeOpt, diagnostics),
-                        this.GetSpecialType(SpecialType.System_Byte, syntaxNodeOpt, diagnostics),
+                        this.GetSpecialType(SpecialType.System_UInt8, syntaxNodeOpt, diagnostics),
                         this.GetSpecialType(SpecialType.System_Int16, syntaxNodeOpt, diagnostics),
                         this.GetSpecialType(SpecialType.System_Int32, syntaxNodeOpt, diagnostics),
                         this.GetSpecialType(SpecialType.System_Int64, syntaxNodeOpt, diagnostics),

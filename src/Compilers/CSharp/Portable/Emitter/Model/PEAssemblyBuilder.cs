@@ -328,7 +328,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Emit
             NamedTypeSymbol containingType,
             DiagnosticBag diagnostics)
         {
-            var byteType = TypeSymbolWithAnnotations.Create(compilation.GetSpecialType(SpecialType.System_Byte));
+            var byteType = TypeSymbolWithAnnotations.Create(compilation.GetSpecialType(SpecialType.System_UInt8));
             Binder.ReportUseSiteDiagnostics(byteType.TypeSymbol, diagnostics, Location.None);
             var byteArray = TypeSymbolWithAnnotations.Create(
                 ArrayTypeSymbol.CreateSZArray(

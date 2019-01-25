@@ -1858,10 +1858,10 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 if (conversion.IsExplicit)
                 {
-                    if (sourceType.SpecialType == SpecialType.System_Double && syntax.Kind() == SyntaxKind.NumericLiteralExpression &&
-                        (targetType.SpecialType == SpecialType.System_Single || targetType.SpecialType == SpecialType.System_Decimal))
+                    if (sourceType.SpecialType == SpecialType.System_Float64 && syntax.Kind() == SyntaxKind.NumericLiteralExpression &&
+                        (targetType.SpecialType == SpecialType.System_Float32 || targetType.SpecialType == SpecialType.System_Decimal))
                     {
-                        Error(diagnostics, ErrorCode.ERR_LiteralDoubleCast, syntax, (targetType.SpecialType == SpecialType.System_Single) ? "F" : "M", targetType);
+                        Error(diagnostics, ErrorCode.ERR_LiteralDoubleCast, syntax, (targetType.SpecialType == SpecialType.System_Float32) ? "F" : "M", targetType);
                     }
                     else if (conversion.Kind == ConversionKind.ExplicitNumeric && sourceConstantValueOpt != null && sourceConstantValueOpt != ConstantValue.Bad &&
                         ConversionsBase.HasImplicitConstantExpressionConversion(new BoundLiteral(syntax, ConstantValue.Bad, sourceType), targetType))

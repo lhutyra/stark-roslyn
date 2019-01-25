@@ -65,7 +65,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             var type = rewrittenNode.Type;
-            if (type.SpecialType != SpecialType.System_Double && type.SpecialType != SpecialType.System_Single)
+            if (type.SpecialType != SpecialType.System_Float64 && type.SpecialType != SpecialType.System_Float32)
             {
                 return false;
             }
@@ -403,7 +403,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // integral to double or float is never checked, but float/double to integral 
             // may be checked.
             return (explicitCastInCode || sourceST != targetST) &&
-                IsInRange(sourceST, SpecialType.System_Char, SpecialType.System_Double) &&
+                IsInRange(sourceST, SpecialType.System_Char, SpecialType.System_Float64) &&
                 IsInRange(targetST, SpecialType.System_Char, SpecialType.System_UInt64);
         }
 
@@ -1199,7 +1199,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             SpecialType t0Type = t0.IsEnumType() ? t0.GetEnumUnderlyingType().SpecialType : t0.SpecialType;
             SpecialType s0Type = s0.IsEnumType() ? s0.GetEnumUnderlyingType().SpecialType : s0.SpecialType;
 
-            if (t0Type == SpecialType.System_IntPtr)
+            if (t0Type == SpecialType.System_Int)
             {
                 if (source.TypeKind == TypeKind.Pointer)
                 {
@@ -1208,8 +1208,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 switch (s0Type)
                 {
-                    case SpecialType.System_Byte:
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_UInt8:
+                    case SpecialType.System_Int8:
                     case SpecialType.System_Int16:
                     case SpecialType.System_UInt16:
                     case SpecialType.System_Char:
@@ -1218,13 +1218,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case SpecialType.System_UInt32:
                     case SpecialType.System_UInt64:
                     case SpecialType.System_Int64:
-                    case SpecialType.System_Single:
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float32:
+                    case SpecialType.System_Float64:
                     case SpecialType.System_Decimal:
                         return SpecialMember.System_IntPtr__op_Explicit_FromInt64;
                 }
             }
-            else if (t0Type == SpecialType.System_UIntPtr)
+            else if (t0Type == SpecialType.System_UInt)
             {
                 if (source.TypeKind == TypeKind.Pointer)
                 {
@@ -1233,23 +1233,23 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 switch (s0Type)
                 {
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_UInt8:
                     case SpecialType.System_UInt16:
                     case SpecialType.System_Char:
                     case SpecialType.System_UInt32:
                         return SpecialMember.System_UIntPtr__op_Explicit_FromUInt32;
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_Int8:
                     case SpecialType.System_Int16:
                     case SpecialType.System_Int32:
                     case SpecialType.System_UInt64:
                     case SpecialType.System_Int64:
-                    case SpecialType.System_Single:
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float32:
+                    case SpecialType.System_Float64:
                     case SpecialType.System_Decimal:
                         return SpecialMember.System_UIntPtr__op_Explicit_FromUInt64;
                 }
             }
-            else if (s0Type == SpecialType.System_IntPtr)
+            else if (s0Type == SpecialType.System_Int)
             {
                 if (target.TypeKind == TypeKind.Pointer)
                 {
@@ -1258,8 +1258,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 switch (t0Type)
                 {
-                    case SpecialType.System_Byte:
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_UInt8:
+                    case SpecialType.System_Int8:
                     case SpecialType.System_Int16:
                     case SpecialType.System_UInt16:
                     case SpecialType.System_Char:
@@ -1268,13 +1268,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                         return SpecialMember.System_IntPtr__op_Explicit_ToInt32;
                     case SpecialType.System_UInt64:
                     case SpecialType.System_Int64:
-                    case SpecialType.System_Single:
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float32:
+                    case SpecialType.System_Float64:
                     case SpecialType.System_Decimal:
                         return SpecialMember.System_IntPtr__op_Explicit_ToInt64;
                 }
             }
-            else if (s0Type == SpecialType.System_UIntPtr)
+            else if (s0Type == SpecialType.System_UInt)
             {
                 if (target.TypeKind == TypeKind.Pointer)
                 {
@@ -1283,18 +1283,18 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 switch (t0Type)
                 {
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_Int8:
                     case SpecialType.System_Int16:
                     case SpecialType.System_Int32:
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_UInt8:
                     case SpecialType.System_UInt16:
                     case SpecialType.System_Char:
                     case SpecialType.System_UInt32:
                         return SpecialMember.System_UIntPtr__op_Explicit_ToUInt32;
                     case SpecialType.System_UInt64:
                     case SpecialType.System_Int64:
-                    case SpecialType.System_Single:
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float32:
+                    case SpecialType.System_Float64:
                     case SpecialType.System_Decimal:
                         return SpecialMember.System_UIntPtr__op_Explicit_ToUInt64;
                 }
@@ -1311,16 +1311,16 @@ namespace Microsoft.CodeAnalysis.CSharp
                 switch (typeTo.SpecialType)
                 {
                     case SpecialType.System_Char: return SpecialMember.System_Decimal__op_Explicit_ToChar;
-                    case SpecialType.System_SByte: return SpecialMember.System_Decimal__op_Explicit_ToSByte;
-                    case SpecialType.System_Byte: return SpecialMember.System_Decimal__op_Explicit_ToByte;
+                    case SpecialType.System_Int8: return SpecialMember.System_Decimal__op_Explicit_ToSByte;
+                    case SpecialType.System_UInt8: return SpecialMember.System_Decimal__op_Explicit_ToByte;
                     case SpecialType.System_Int16: return SpecialMember.System_Decimal__op_Explicit_ToInt16;
                     case SpecialType.System_UInt16: return SpecialMember.System_Decimal__op_Explicit_ToUInt16;
                     case SpecialType.System_Int32: return SpecialMember.System_Decimal__op_Explicit_ToInt32;
                     case SpecialType.System_UInt32: return SpecialMember.System_Decimal__op_Explicit_ToUInt32;
                     case SpecialType.System_Int64: return SpecialMember.System_Decimal__op_Explicit_ToInt64;
                     case SpecialType.System_UInt64: return SpecialMember.System_Decimal__op_Explicit_ToUInt64;
-                    case SpecialType.System_Single: return SpecialMember.System_Decimal__op_Explicit_ToSingle;
-                    case SpecialType.System_Double: return SpecialMember.System_Decimal__op_Explicit_ToDouble;
+                    case SpecialType.System_Float32: return SpecialMember.System_Decimal__op_Explicit_ToSingle;
+                    case SpecialType.System_Float64: return SpecialMember.System_Decimal__op_Explicit_ToDouble;
                     default:
                         throw ExceptionUtilities.UnexpectedValue(typeTo.SpecialType);
                 }
@@ -1331,16 +1331,16 @@ namespace Microsoft.CodeAnalysis.CSharp
                 switch (typeFrom.SpecialType)
                 {
                     case SpecialType.System_Char: return SpecialMember.System_Decimal__op_Implicit_FromChar;
-                    case SpecialType.System_SByte: return SpecialMember.System_Decimal__op_Implicit_FromSByte;
-                    case SpecialType.System_Byte: return SpecialMember.System_Decimal__op_Implicit_FromByte;
+                    case SpecialType.System_Int8: return SpecialMember.System_Decimal__op_Implicit_FromSByte;
+                    case SpecialType.System_UInt8: return SpecialMember.System_Decimal__op_Implicit_FromByte;
                     case SpecialType.System_Int16: return SpecialMember.System_Decimal__op_Implicit_FromInt16;
                     case SpecialType.System_UInt16: return SpecialMember.System_Decimal__op_Implicit_FromUInt16;
                     case SpecialType.System_Int32: return SpecialMember.System_Decimal__op_Implicit_FromInt32;
                     case SpecialType.System_UInt32: return SpecialMember.System_Decimal__op_Implicit_FromUInt32;
                     case SpecialType.System_Int64: return SpecialMember.System_Decimal__op_Implicit_FromInt64;
                     case SpecialType.System_UInt64: return SpecialMember.System_Decimal__op_Implicit_FromUInt64;
-                    case SpecialType.System_Single: return SpecialMember.System_Decimal__op_Explicit_FromSingle;
-                    case SpecialType.System_Double: return SpecialMember.System_Decimal__op_Explicit_FromDouble;
+                    case SpecialType.System_Float32: return SpecialMember.System_Decimal__op_Explicit_FromSingle;
+                    case SpecialType.System_Float64: return SpecialMember.System_Decimal__op_Explicit_FromDouble;
                     default:
                         throw ExceptionUtilities.UnexpectedValue(typeFrom.SpecialType);
                 }

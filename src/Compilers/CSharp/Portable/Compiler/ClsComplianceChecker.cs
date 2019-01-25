@@ -1006,11 +1006,11 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (type.SpecialType)
             {
                 case SpecialType.System_TypedReference:
-                case SpecialType.System_UIntPtr:
+                case SpecialType.System_UInt:
                     // Hard-coded in dev11 (LangCompiler::isCLS_Type).
                     return false;
 
-                case SpecialType.System_SByte: // sic
+                case SpecialType.System_Int8: // sic
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:

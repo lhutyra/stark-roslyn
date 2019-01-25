@@ -1054,9 +1054,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                 int value = constantValue.IsBad ? 0 : constantValue.Int32Value;
                 switch (destination.GetSpecialTypeSafe())
                 {
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_UInt8:
                         return byte.MinValue <= value && value <= byte.MaxValue;
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_Int8:
                         return sbyte.MinValue <= value && value <= sbyte.MaxValue;
                     case SpecialType.System_Int16:
                         return short.MinValue <= value && value <= short.MaxValue;
@@ -1653,8 +1653,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (specialType)
             {
-                case SpecialType.System_SByte: return 0;
-                case SpecialType.System_Byte: return 1;
+                case SpecialType.System_Int8: return 0;
+                case SpecialType.System_UInt8: return 1;
                 case SpecialType.System_Int16: return 2;
                 case SpecialType.System_UInt16: return 3;
                 case SpecialType.System_Int32: return 4;
@@ -1662,8 +1662,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SpecialType.System_Int64: return 6;
                 case SpecialType.System_UInt64: return 7;
                 case SpecialType.System_Char: return 8;
-                case SpecialType.System_Single: return 9;
-                case SpecialType.System_Double: return 10;
+                case SpecialType.System_Float32: return 9;
+                case SpecialType.System_Float64: return 10;
                 case SpecialType.System_Decimal: return 11;
                 default: return -1;
             }
@@ -1745,16 +1745,16 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (specialType)
             {
                 case SpecialType.System_Char:
-                case SpecialType.System_SByte:
-                case SpecialType.System_Byte:
+                case SpecialType.System_Int8:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_Single:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float32:
+                case SpecialType.System_Float64:
                 case SpecialType.System_Decimal:
                     return true;
                 default:
@@ -1801,15 +1801,15 @@ namespace Microsoft.CodeAnalysis.CSharp
             var s0 = source.StrippedType();
             var t0 = target.StrippedType();
 
-            if (s0.SpecialType != SpecialType.System_UIntPtr &&
-                s0.SpecialType != SpecialType.System_IntPtr &&
-                t0.SpecialType != SpecialType.System_UIntPtr &&
-                t0.SpecialType != SpecialType.System_IntPtr)
+            if (s0.SpecialType != SpecialType.System_UInt &&
+                s0.SpecialType != SpecialType.System_Int &&
+                t0.SpecialType != SpecialType.System_UInt &&
+                t0.SpecialType != SpecialType.System_Int)
             {
                 return false;
             }
 
-            TypeSymbol otherType = (s0.SpecialType == SpecialType.System_UIntPtr || s0.SpecialType == SpecialType.System_IntPtr) ? t0 : s0;
+            TypeSymbol otherType = (s0.SpecialType == SpecialType.System_UInt || s0.SpecialType == SpecialType.System_Int) ? t0 : s0;
 
             if (otherType.TypeKind == TypeKind.Pointer)
             {
@@ -1823,8 +1823,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (otherType.SpecialType)
             {
-                case SpecialType.System_SByte:
-                case SpecialType.System_Byte:
+                case SpecialType.System_Int8:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Char:
@@ -1832,8 +1832,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_Double:
-                case SpecialType.System_Single:
+                case SpecialType.System_Float64:
+                case SpecialType.System_Float32:
                 case SpecialType.System_Decimal:
                     return true;
             }
@@ -3292,8 +3292,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (destination.StrippedType().SpecialType)
             {
-                case SpecialType.System_SByte:
-                case SpecialType.System_Byte:
+                case SpecialType.System_Int8:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
@@ -3320,8 +3320,8 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (source.SpecialType)
             {
-                case SpecialType.System_SByte:
-                case SpecialType.System_Byte:
+                case SpecialType.System_Int8:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:

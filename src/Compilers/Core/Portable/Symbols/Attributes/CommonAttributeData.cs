@@ -147,13 +147,13 @@ namespace Microsoft.CodeAnalysis
             ImmutableArray<TypedConstant> args = this.CommonConstructorArguments;
 
             Debug.Assert(parameters.Length == 5);
-            Debug.Assert(parameters[0].Type.SpecialType == SpecialType.System_Byte);
-            Debug.Assert(parameters[1].Type.SpecialType == SpecialType.System_Byte);
+            Debug.Assert(parameters[0].Type.SpecialType == SpecialType.System_UInt8);
+            Debug.Assert(parameters[1].Type.SpecialType == SpecialType.System_UInt8);
 
             int low, mid, high;
 
-            byte scale = args[0].DecodeValue<byte>(SpecialType.System_Byte);
-            bool isNegative = args[1].DecodeValue<byte>(SpecialType.System_Byte) != 0;
+            byte scale = args[0].DecodeValue<byte>(SpecialType.System_UInt8);
+            bool isNegative = args[1].DecodeValue<byte>(SpecialType.System_UInt8) != 0;
 
             if (parameters[2].Type.SpecialType == SpecialType.System_Int32)
             {

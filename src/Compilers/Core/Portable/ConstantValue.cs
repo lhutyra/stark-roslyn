@@ -386,8 +386,8 @@ namespace Microsoft.CodeAnalysis
         {
             switch (st)
             {
-                case SpecialType.System_SByte: return ConstantValueTypeDiscriminator.SByte;
-                case SpecialType.System_Byte: return ConstantValueTypeDiscriminator.Byte;
+                case SpecialType.System_Int8: return ConstantValueTypeDiscriminator.SByte;
+                case SpecialType.System_UInt8: return ConstantValueTypeDiscriminator.Byte;
                 case SpecialType.System_Int16: return ConstantValueTypeDiscriminator.Int16;
                 case SpecialType.System_UInt16: return ConstantValueTypeDiscriminator.UInt16;
                 case SpecialType.System_Int32: return ConstantValueTypeDiscriminator.Int32;
@@ -396,8 +396,8 @@ namespace Microsoft.CodeAnalysis
                 case SpecialType.System_UInt64: return ConstantValueTypeDiscriminator.UInt64;
                 case SpecialType.System_Char: return ConstantValueTypeDiscriminator.Char;
                 case SpecialType.System_Boolean: return ConstantValueTypeDiscriminator.Boolean;
-                case SpecialType.System_Single: return ConstantValueTypeDiscriminator.Single;
-                case SpecialType.System_Double: return ConstantValueTypeDiscriminator.Double;
+                case SpecialType.System_Float32: return ConstantValueTypeDiscriminator.Single;
+                case SpecialType.System_Float64: return ConstantValueTypeDiscriminator.Double;
                 case SpecialType.System_Decimal: return ConstantValueTypeDiscriminator.Decimal;
                 case SpecialType.System_DateTime: return ConstantValueTypeDiscriminator.DateTime;
                 case SpecialType.System_String: return ConstantValueTypeDiscriminator.String;
@@ -410,8 +410,8 @@ namespace Microsoft.CodeAnalysis
         {
             switch (discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte: return SpecialType.System_SByte;
-                case ConstantValueTypeDiscriminator.Byte: return SpecialType.System_Byte;
+                case ConstantValueTypeDiscriminator.SByte: return SpecialType.System_Int8;
+                case ConstantValueTypeDiscriminator.Byte: return SpecialType.System_UInt8;
                 case ConstantValueTypeDiscriminator.Int16: return SpecialType.System_Int16;
                 case ConstantValueTypeDiscriminator.UInt16: return SpecialType.System_UInt16;
                 case ConstantValueTypeDiscriminator.Int32: return SpecialType.System_Int32;
@@ -420,8 +420,8 @@ namespace Microsoft.CodeAnalysis
                 case ConstantValueTypeDiscriminator.UInt64: return SpecialType.System_UInt64;
                 case ConstantValueTypeDiscriminator.Char: return SpecialType.System_Char;
                 case ConstantValueTypeDiscriminator.Boolean: return SpecialType.System_Boolean;
-                case ConstantValueTypeDiscriminator.Single: return SpecialType.System_Single;
-                case ConstantValueTypeDiscriminator.Double: return SpecialType.System_Double;
+                case ConstantValueTypeDiscriminator.Single: return SpecialType.System_Float32;
+                case ConstantValueTypeDiscriminator.Double: return SpecialType.System_Float64;
                 case ConstantValueTypeDiscriminator.Decimal: return SpecialType.System_Decimal;
                 case ConstantValueTypeDiscriminator.DateTime: return SpecialType.System_DateTime;
                 case ConstantValueTypeDiscriminator.String: return SpecialType.System_String;

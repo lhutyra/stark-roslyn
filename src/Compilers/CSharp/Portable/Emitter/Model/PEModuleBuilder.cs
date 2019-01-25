@@ -1501,7 +1501,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Emit
 
             WellKnownMember constructor;
             ImmutableArray<TypedConstant> arguments;
-            NamedTypeSymbol byteType = Compilation.GetSpecialType(SpecialType.System_Byte);
+            NamedTypeSymbol byteType = Compilation.GetSpecialType(SpecialType.System_UInt8);
             Debug.Assert((object)byteType != null);
 
             if (flagsBuilder.All(flag => flag == (byte)NullableAnnotation.NotAnnotated) || flagsBuilder.All(flag => flag == (byte)NullableAnnotation.Annotated))

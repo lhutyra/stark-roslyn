@@ -515,8 +515,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
                 switch (type.SpecialType)
                 {
-                    case SpecialType.System_SByte:
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_Int8:
+                    case SpecialType.System_UInt8:
                     case SpecialType.System_Int16:
                     case SpecialType.System_UInt16:
                     case SpecialType.System_Int32:
@@ -525,8 +525,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     case SpecialType.System_UInt64:
                     case SpecialType.System_Char:
                     case SpecialType.System_Boolean:
-                    case SpecialType.System_Single:
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float32:
+                    case SpecialType.System_Float64:
                     case SpecialType.System_Decimal:
                         return ConstantValue.Default(type.SpecialType);
                 }
@@ -1026,8 +1026,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
             switch (type.SpecialType)
             {
-                case SpecialType.System_SByte:
-                case SpecialType.System_Byte:
+                case SpecialType.System_Int8:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:

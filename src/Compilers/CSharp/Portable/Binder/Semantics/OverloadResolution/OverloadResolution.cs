@@ -2721,7 +2721,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (type.GetSpecialTypeSafe())
             {
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_Int64:
@@ -2741,7 +2741,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (type.GetSpecialTypeSafe())
             {
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:

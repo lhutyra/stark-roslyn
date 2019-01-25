@@ -87,16 +87,16 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case SpecialType.System_String: return 1;
                     case SpecialType.System_Boolean: return 2;
                     case SpecialType.System_Char: return 3;
-                    case SpecialType.System_SByte: return 4;
+                    case SpecialType.System_Int8: return 4;
                     case SpecialType.System_Int16: return 5;
                     case SpecialType.System_Int32: return 6;
                     case SpecialType.System_Int64: return 7;
-                    case SpecialType.System_Byte: return 8;
+                    case SpecialType.System_UInt8: return 8;
                     case SpecialType.System_UInt16: return 9;
                     case SpecialType.System_UInt32: return 10;
                     case SpecialType.System_UInt64: return 11;
-                    case SpecialType.System_Single: return 12;
-                    case SpecialType.System_Double: return 13;
+                    case SpecialType.System_Float32: return 12;
+                    case SpecialType.System_Float64: return 13;
                     case SpecialType.System_Decimal: return 14;
 
                     case SpecialType.None:
@@ -108,16 +108,16 @@ namespace Microsoft.CodeAnalysis.CSharp
                             {
                                 case SpecialType.System_Boolean: return 15;
                                 case SpecialType.System_Char: return 16;
-                                case SpecialType.System_SByte: return 17;
+                                case SpecialType.System_Int8: return 17;
                                 case SpecialType.System_Int16: return 18;
                                 case SpecialType.System_Int32: return 19;
                                 case SpecialType.System_Int64: return 20;
-                                case SpecialType.System_Byte: return 21;
+                                case SpecialType.System_UInt8: return 21;
                                 case SpecialType.System_UInt16: return 22;
                                 case SpecialType.System_UInt32: return 23;
                                 case SpecialType.System_UInt64: return 24;
-                                case SpecialType.System_Single: return 25;
-                                case SpecialType.System_Double: return 26;
+                                case SpecialType.System_Float32: return 25;
+                                case SpecialType.System_Float64: return 26;
                                 case SpecialType.System_Decimal: return 27;
                             }
                         }

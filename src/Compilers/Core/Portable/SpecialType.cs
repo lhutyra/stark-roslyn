@@ -68,12 +68,12 @@ namespace Microsoft.CodeAnalysis
         /// <summary>
         /// Indicates that the type is <see cref="sbyte"/>.
         /// </summary>
-        System_SByte = 9,
+        System_Int8 = 9,
 
         /// <summary>
         /// Indicates that the type is <see cref="byte"/>.
         /// </summary>
-        System_Byte = 10,
+        System_UInt8 = 10,
 
         /// <summary>
         /// Indicates that the type is <see cref="short"/>.
@@ -113,12 +113,12 @@ namespace Microsoft.CodeAnalysis
         /// <summary>
         /// Indicates that the type is <see cref="float"/>.
         /// </summary>
-        System_Single = 18,
+        System_Float32 = 18,
 
         /// <summary>
         /// Indicates that the type is <see cref="double"/>.
         /// </summary>
-        System_Double = 19,
+        System_Float64 = 19,
 
         /// <summary>
         /// Indicates that the type is <see cref="string"/>.
@@ -128,12 +128,12 @@ namespace Microsoft.CodeAnalysis
         /// <summary>
         /// Indicates that the type is <see cref="IntPtr" />.
         /// </summary>
-        System_IntPtr = 21,
+        System_Int = 21,
 
         /// <summary>
         /// Indicates that the type is <see cref="UIntPtr"/>.
         /// </summary>
-        System_UIntPtr = 22,
+        System_UInt = 22,
 
         /// <summary>
         /// Indicates that the type is <see cref="Array"/>.

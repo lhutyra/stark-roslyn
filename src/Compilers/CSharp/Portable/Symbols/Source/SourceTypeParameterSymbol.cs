@@ -363,7 +363,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
             if (this.HasReferenceTypeConstraint && this.ReferenceTypeConstraintIsNullable != null)
             {
-                NamedTypeSymbol byteType = DeclaringCompilation.GetSpecialType(SpecialType.System_Byte);
+                NamedTypeSymbol byteType = DeclaringCompilation.GetSpecialType(SpecialType.System_UInt8);
                 Debug.Assert((object)byteType != null);
 
                 AddSynthesizedAttribute(

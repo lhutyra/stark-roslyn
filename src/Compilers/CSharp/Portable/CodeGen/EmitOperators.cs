@@ -594,10 +594,10 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
             SpecialType type = enumType.GetEnumUnderlyingType().SpecialType;
             switch (type)
             {
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     _builder.EmitNumericConversion(Microsoft.Cci.PrimitiveTypeCode.Int32, Microsoft.Cci.PrimitiveTypeCode.UInt8, @checked);
                     break;
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     _builder.EmitNumericConversion(Microsoft.Cci.PrimitiveTypeCode.Int32, Microsoft.Cci.PrimitiveTypeCode.Int8, @checked);
                     break;
                 case SpecialType.System_Int16:
@@ -680,7 +680,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
         {
             switch (type)
             {
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:

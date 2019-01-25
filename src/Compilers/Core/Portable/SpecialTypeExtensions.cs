@@ -16,16 +16,16 @@ namespace Microsoft.CodeAnalysis
             {
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_IntPtr:
-                case SpecialType.System_UIntPtr:
+                case SpecialType.System_Int:
+                case SpecialType.System_UInt:
                     return true;
                 default:
                     return false;
@@ -41,16 +41,16 @@ namespace Microsoft.CodeAnalysis
             {
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_Single:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float32:
+                case SpecialType.System_Float64:
                     return true;
                 default:
                     return false;
@@ -64,19 +64,19 @@ namespace Microsoft.CodeAnalysis
                 case SpecialType.System_Void:
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_Single:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float32:
+                case SpecialType.System_Float64:
                 case SpecialType.System_Decimal:
-                case SpecialType.System_IntPtr:
-                case SpecialType.System_UIntPtr:
+                case SpecialType.System_Int:
+                case SpecialType.System_UInt:
                 case SpecialType.System_Nullable_T:
                 case SpecialType.System_DateTime:
                 case SpecialType.System_TypedReference:
@@ -95,9 +95,9 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return sizeof(sbyte);
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     return sizeof(byte);
                 case SpecialType.System_Int16:
                     return sizeof(short);
@@ -113,9 +113,9 @@ namespace Microsoft.CodeAnalysis
                     return sizeof(ulong);
                 case SpecialType.System_Char:
                     return sizeof(char);
-                case SpecialType.System_Single:
+                case SpecialType.System_Float32:
                     return sizeof(float);
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                     return sizeof(double);
                 case SpecialType.System_Boolean:
                     return sizeof(bool);
@@ -139,19 +139,19 @@ namespace Microsoft.CodeAnalysis
             switch (specialType)
             {
                 case SpecialType.System_Boolean:
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_Char:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_IntPtr:
-                case SpecialType.System_UIntPtr:
-                case SpecialType.System_SByte:
-                case SpecialType.System_Single:
+                case SpecialType.System_Int:
+                case SpecialType.System_UInt:
+                case SpecialType.System_Int8:
+                case SpecialType.System_Float32:
                     return true;
                 default:
                     return false;
@@ -162,8 +162,8 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
@@ -180,16 +180,16 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_Int64:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_Single:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float32:
+                case SpecialType.System_Float64:
                 case SpecialType.System_Decimal:
                     return true;
                 default:
@@ -201,7 +201,7 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:
@@ -215,7 +215,7 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_Int64:
@@ -234,7 +234,7 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return 7;
                 case SpecialType.System_Int16:
                     return 15;
@@ -281,7 +281,7 @@ namespace Microsoft.CodeAnalysis
 
             if (value.GetType() == typeof(double))
             {
-                return SpecialType.System_Double;
+                return SpecialType.System_Float64;
             }
 
             if (value.GetType() == typeof(uint))
@@ -296,7 +296,7 @@ namespace Microsoft.CodeAnalysis
 
             if (value.GetType() == typeof(float))
             {
-                return SpecialType.System_Single;
+                return SpecialType.System_Float32;
             }
 
             if (value.GetType() == typeof(decimal))
@@ -321,12 +321,12 @@ namespace Microsoft.CodeAnalysis
 
             if (value.GetType() == typeof(byte))
             {
-                return SpecialType.System_Byte;
+                return SpecialType.System_UInt8;
             }
 
             if (value.GetType() == typeof(sbyte))
             {
-                return SpecialType.System_SByte;
+                return SpecialType.System_Int8;
             }
 
             return SpecialType.None;

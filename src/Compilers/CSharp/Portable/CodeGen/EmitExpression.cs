@@ -1167,7 +1167,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
             switch (type.SpecialType)
             {
                 // case PT_BYTE:
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                 // case PT_SHORT:
                 case SpecialType.System_Int16:
                 // case PT_INT:
@@ -1179,7 +1179,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
                 // case PT_BOOL:
                 case SpecialType.System_Boolean:
                 // case PT_SBYTE:
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                 // case PT_USHORT:
                 case SpecialType.System_UInt16:
                 // case PT_UINT:
@@ -1187,13 +1187,13 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
                 // case PT_ULONG:
                 case SpecialType.System_UInt64:
                 // case PT_INTPTR:
-                case SpecialType.System_IntPtr:
+                case SpecialType.System_Int:
                 // case PT_UINTPTR:
-                case SpecialType.System_UIntPtr:
+                case SpecialType.System_UInt:
                 // case PT_FLOAT:
-                case SpecialType.System_Single:
+                case SpecialType.System_Float32:
                 // case PT_DOUBLE:
-                case SpecialType.System_Double:
+                case SpecialType.System_Float64:
                 // case PT_TYPEHANDLE:
                 case SpecialType.System_RuntimeTypeHandle:
                 // case PT_FIELDHANDLE:
@@ -1845,7 +1845,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
             //                  this is used in "fixed(int* ptr = arr)"
             Debug.Assert(expression.Type.SpecialType == SpecialType.System_Int32 ||
                 expression.Type.SpecialType == SpecialType.System_Int64 ||
-                expression.Type.SpecialType == SpecialType.System_UIntPtr);
+                expression.Type.SpecialType == SpecialType.System_UInt);
 
             // ldlen will null-check the expression so it must be "used"
             EmitExpression(expression.Expression, used: true);
@@ -2887,13 +2887,13 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
                     }
                 }
 
-                if (type.IsPointerType() || type.SpecialType == SpecialType.System_UIntPtr)
+                if (type.IsPointerType() || type.SpecialType == SpecialType.System_UInt)
                 {
                     // default(whatever*) and default(UIntPtr) can be emitted as:
                     _builder.EmitOpCode(ILOpCode.Ldc_i4_0);
                     _builder.EmitOpCode(ILOpCode.Conv_u);
                 }
-                else if (type.SpecialType == SpecialType.System_IntPtr)
+                else if (type.SpecialType == SpecialType.System_Int)
                 {
                     _builder.EmitOpCode(ILOpCode.Ldc_i4_0);
                     _builder.EmitOpCode(ILOpCode.Conv_i);

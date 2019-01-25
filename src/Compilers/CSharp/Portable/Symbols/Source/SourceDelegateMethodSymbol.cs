@@ -52,7 +52,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             var voidType = TypeSymbolWithAnnotations.Create(binder.GetSpecialType(SpecialType.System_Void, diagnostics, syntax));
             // https://github.com/dotnet/roslyn/issues/30079: Should the 'object', IAsyncResult and AsyncCallback parameters be considered nullable or not nullable?
             var objectType = TypeSymbolWithAnnotations.Create(binder.GetSpecialType(SpecialType.System_Object, diagnostics, syntax));
-            var intPtrType = TypeSymbolWithAnnotations.Create(binder.GetSpecialType(SpecialType.System_IntPtr, diagnostics, syntax));
+            var intPtrType = TypeSymbolWithAnnotations.Create(binder.GetSpecialType(SpecialType.System_Int, diagnostics, syntax));
 
             if (returnType.IsRestrictedType(ignoreSpanLikeTypes: true))
             {
