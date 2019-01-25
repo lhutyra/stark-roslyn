@@ -343,10 +343,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                     }
                     break;
 
-                case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForEachVariableStatement:
                     var foreachStmt = (CommonForEachStatementSyntax)stmt;
-                    var start = stmt.Kind() == SyntaxKind.ForEachVariableStatement ? foreachStmt.InKeyword : foreachStmt.OpenParenToken;
+                    var start = foreachStmt.InKeyword;
                     if (LookupPosition.IsBetweenTokens(position, start, foreachStmt.Statement.GetFirstToken()))
                     {
                         binder = binder.GetBinder(foreachStmt.Expression);
@@ -824,11 +823,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             return new AwaitExpressionInfo(boundAwait.AwaitableInfo);
-        }
-
-        public override ForEachStatementInfo GetForEachStatementInfo(ForEachStatementSyntax node)
-        {
-            return GetForEachStatementInfo((CommonForEachStatementSyntax)node);
         }
 
         public override ForEachStatementInfo GetForEachStatementInfo(CommonForEachStatementSyntax node)

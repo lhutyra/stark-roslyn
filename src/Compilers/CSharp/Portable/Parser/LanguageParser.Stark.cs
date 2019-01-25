@@ -789,9 +789,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
             var name = this.ParseIdentifierToken();
 
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+            var eos = this.EatEos(ref name);
 
-            return _syntaxFactory.ExternAliasDirective(externToken, aliasToken, name, semicolon);
+            return _syntaxFactory.ExternAliasDirective(externToken, aliasToken, name, eos);
         }
 
         private NameEqualsSyntax ParseNameEquals()
@@ -1314,12 +1314,6 @@ tryAgain:
                     closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
                 }
 
-                SyntaxToken semicolon = null;
-                if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-                {
-                    semicolon = this.EatToken();
-                }
-
                 switch (classOrStructOrInterface.Kind)
                 {
                     case SyntaxKind.ClassKeyword:
@@ -1334,7 +1328,7 @@ tryAgain:
                             openBrace,
                             members,
                             closeBrace,
-                            semicolon);
+                            null);
 
                     case SyntaxKind.StructKeyword:
                         return _syntaxFactory.StructDeclaration(
@@ -1348,7 +1342,7 @@ tryAgain:
                             openBrace,
                             members,
                             closeBrace,
-                            semicolon);
+                            null);
 
                     case SyntaxKind.InterfaceKeyword:
                         return _syntaxFactory.InterfaceDeclaration(
@@ -1362,7 +1356,7 @@ tryAgain:
                             openBrace,
                             members,
                             closeBrace,
-                            semicolon);
+                            null);
 
                     default:
                         throw ExceptionUtilities.UnexpectedValue(classOrStructOrInterface.Kind);
@@ -2173,11 +2167,15 @@ tryAgain:
                     ? this.ParseConstructorInitializer()
                     : null;
 
-                this.ParseBlockAndExpressionBodiesWithSemicolon(
-                    out BlockSyntax body, out ArrowExpressionClauseSyntax expressionBody, out SyntaxToken semicolon,
-                    requestedExpressionBodyFeature: MessageID.IDS_FeatureExpressionBodiedDeOrConstructor);
+                this.ParseBlockAndExpressionBodies(out BlockSyntax body, out ArrowExpressionClauseSyntax expressionBody, requestedExpressionBodyFeature: MessageID.IDS_FeatureExpressionBodiedDeOrConstructor);
 
-                return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToList(), constructor, paramList, initializer, body, expressionBody, semicolon);
+                SyntaxToken eosToken = null;
+                if (body == null)
+                {
+                    eosToken = EatEos(ref initializer);
+                }
+
+                return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToList(), constructor, paramList, initializer, body, expressionBody, eosToken);
             }
             finally
             {
@@ -2226,22 +2224,12 @@ tryAgain:
         /// Parses any block or expression bodies that are present. Also parses
         /// the trailing semicolon if one is present.
         /// </summary>
-        private void ParseBlockAndExpressionBodiesWithSemicolon(
+        private void ParseBlockAndExpressionBodies(
             out BlockSyntax blockBody,
             out ArrowExpressionClauseSyntax expressionBody,
-            out SyntaxToken semicolon,
             bool parseSemicolonAfterBlock = true,
             MessageID requestedExpressionBodyFeature = MessageID.IDS_FeatureExpressionBodiedMethod)
         {
-            // Check for 'forward' declarations with no block of any kind
-            if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-            {
-                blockBody = null;
-                expressionBody = null;
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-                return;
-            }
-
             blockBody = null;
             expressionBody = null;
 
@@ -2253,43 +2241,11 @@ tryAgain:
             if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken)
             {
                 Debug.Assert(requestedExpressionBodyFeature == MessageID.IDS_FeatureExpressionBodiedMethod
-                                || requestedExpressionBodyFeature == MessageID.IDS_FeatureExpressionBodiedAccessor
-                                || requestedExpressionBodyFeature == MessageID.IDS_FeatureExpressionBodiedDeOrConstructor,
-                                "Only IDS_FeatureExpressionBodiedMethod, IDS_FeatureExpressionBodiedAccessor or IDS_FeatureExpressionBodiedDeOrConstructor can be requested");
+                             || requestedExpressionBodyFeature == MessageID.IDS_FeatureExpressionBodiedAccessor
+                             || requestedExpressionBodyFeature == MessageID.IDS_FeatureExpressionBodiedDeOrConstructor,
+                    "Only IDS_FeatureExpressionBodiedMethod, IDS_FeatureExpressionBodiedAccessor or IDS_FeatureExpressionBodiedDeOrConstructor can be requested");
                 expressionBody = this.ParseArrowExpressionClause();
                 expressionBody = CheckFeatureAvailability(expressionBody, requestedExpressionBodyFeature);
-            }
-
-            semicolon = null;
-            // Expression-bodies need semicolons and native behavior
-            // expects a semicolon if there is no body
-            if (expressionBody != null || blockBody == null)
-            {
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            }
-            // Check for bad semicolon after block body
-            else if (parseSemicolonAfterBlock && this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-            {
-                semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
-            }
-        }
-
-        private void ParseBodyOrSemicolon(out BlockSyntax body, out SyntaxToken semicolon)
-        {
-            if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
-            {
-                body = this.ParseBlock(isMethodBody: true);
-
-                semicolon = null;
-                if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-                {
-                    semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
-                }
-            }
-            else
-            {
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-                body = null;
             }
         }
 
@@ -2390,7 +2346,35 @@ tryAgain:
 
                 IsInAsync = modifiers.Any((int)SyntaxKind.AsyncKeyword);
 
-                this.ParseBlockAndExpressionBodiesWithSemicolon(out blockBody, out expressionBody, out semicolon);
+                this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
+
+
+                var constraintsList = (SyntaxList<TypeParameterConstraintClauseSyntax>)constraints;
+
+                // If we don't have a block body, we need to recover a Eos
+                SyntaxToken eosToken = null;
+                if (blockBody == null)
+                {
+                    if (expressionBody != null)
+                    {
+                        eosToken = EatEos(ref expressionBody);
+                    }
+                    else if (!constraints.IsNull && constraints.Count > 0)
+                    {
+                        var lastClause = constraints[constraints.Count - 1];
+                        eosToken = EatEos(ref lastClause);
+                        constraints[constraints.Count - 1] = lastClause;
+                    }
+                    else if (returnType != null)
+                    {
+                        eosToken = EatEos(ref returnType);
+                    }
+                    else
+                    {
+                        Debug.Assert(paramList != null);
+                        eosToken = EatEos(ref paramList);
+                    }
+                }
 
                 IsInAsync = false;
 
@@ -2407,7 +2391,7 @@ tryAgain:
                     constraints,
                     blockBody,
                     expressionBody,
-                    semicolon);
+                    eosToken);
             }
             finally
             {
@@ -2460,8 +2444,23 @@ tryAgain:
 
             BlockSyntax blockBody;
             ArrowExpressionClauseSyntax expressionBody;
-            SyntaxToken semicolon;
-            this.ParseBlockAndExpressionBodiesWithSemicolon(out blockBody, out expressionBody, out semicolon);
+            this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
+
+            // If we don't have a block body, we need to recover a Eos
+            SyntaxToken eosToken = null;
+            if (blockBody == null)
+            {
+                if (expressionBody != null)
+                {
+                    eosToken = EatEos(ref expressionBody);
+                }
+                else
+                { 
+
+                    Debug.Assert(paramList != null);
+                    eosToken = EatEos(ref paramList);
+                }
+            }
 
             return _syntaxFactory.ConversionOperatorDeclaration(
                 attributes,
@@ -2472,7 +2471,7 @@ tryAgain:
                 paramList,
                 blockBody,
                 expressionBody,
-                semicolon);
+                eosToken);
         }
 
         private OperatorDeclarationSyntax ParseOperatorDeclaration(
@@ -2583,8 +2582,23 @@ tryAgain:
 
             BlockSyntax blockBody;
             ArrowExpressionClauseSyntax expressionBody;
-            SyntaxToken semicolon;
-            this.ParseBlockAndExpressionBodiesWithSemicolon(out blockBody, out expressionBody, out semicolon);
+            this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
+
+            // If we don't have a block body, we need to recover a Eos
+            SyntaxToken eosToken = null;
+            if (blockBody == null)
+            {
+                if (expressionBody != null)
+                {
+                    eosToken = EatEos(ref expressionBody);
+                }
+                else
+                {
+
+                    Debug.Assert(paramList != null);
+                    eosToken = EatEos(ref paramList);
+                }
+            }
 
             // if the operator is invalid, then switch it to plus (which will work either way) so that
             // we can finish building the tree
@@ -2604,7 +2618,7 @@ tryAgain:
                 paramList,
                 blockBody,
                 expressionBody,
-                semicolon);
+                eosToken);
         }
 
         private IndexerDeclarationSyntax ParseIndexerDeclaration(
@@ -2615,6 +2629,8 @@ tryAgain:
             SyntaxToken thisKeyword,
             TypeParameterListSyntax typeParameterList)
         {
+            // TODO: this part is no longer valid in stark
+
             Debug.Assert(thisKeyword.Kind == SyntaxKind.ThisKeyword);
 
             // check to see if the user tried to create a generic indexer.
@@ -2656,7 +2672,7 @@ tryAgain:
                 expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
                 semicolon = this.EatToken(SyntaxKind.SemicolonToken);
             }
-
+            
             return _syntaxFactory.IndexerDeclaration(
                 attributes,
                 modifiers.ToList(),
@@ -2717,14 +2733,14 @@ tryAgain:
                 initializer = CheckFeatureAvailability(initializer, MessageID.IDS_FeatureAutoPropertyInitializer);
             }
 
-            SyntaxToken semicolon = null;
-            if (expressionBody != null || initializer != null)
+            SyntaxToken eosToken = null;
+            if (expressionBody != null)
             {
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+                eosToken = EatEos(ref expressionBody);
             }
-            else if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
+            else if (initializer != null)
             {
-                semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
+                eosToken = EatEos(ref initializer);
             }
 
             return _syntaxFactory.PropertyDeclaration(
@@ -2738,7 +2754,7 @@ tryAgain:
                 accessorList,
                 expressionBody,
                 initializer,
-                semicolon);
+                eosToken);
         }
 
         private AccessorListSyntax ParseAccessorList(bool isEvent)
@@ -3088,7 +3104,7 @@ tryAgain:
 
                 BlockSyntax blockBody = null;
                 ArrowExpressionClauseSyntax expressionBody = null;
-                SyntaxToken semicolon = null;
+                SyntaxToken eosToken = null;
 
                 bool currentTokenIsSemicolon = this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
                 bool currentTokenIsArrow = this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken;
@@ -3096,52 +3112,34 @@ tryAgain:
 
                 if (currentTokenIsOpenBraceToken || currentTokenIsArrow)
                 {
-                    this.ParseBlockAndExpressionBodiesWithSemicolon(
-                        out blockBody, out expressionBody, out semicolon,
-                        requestedExpressionBodyFeature: MessageID.IDS_FeatureExpressionBodiedAccessor);
+                    this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody, requestedExpressionBodyFeature: MessageID.IDS_FeatureExpressionBodiedAccessor);
                 }
-                else if (currentTokenIsSemicolon)
-                {
-                    semicolon = EatAccessorSemicolon();
 
-                    if (accessorKind == SyntaxKind.AddAccessorDeclaration ||
-                        accessorKind == SyntaxKind.RemoveAccessorDeclaration)
-                    {
-                        semicolon = this.AddError(semicolon, ErrorCode.ERR_AddRemoveMustHaveBody);
-                    }
-                }
-                else
+
+
+                // If we don't have a block body, we need to recover a Eos
+                if (blockBody == null)
                 {
-                    // We didn't get something we recognized.  If we got an accessor type we 
-                    // recognized (i.e. get/set/add/remove) then try to parse out a block.
-                    // Only do this if it doesn't seem like we're at the end of the accessor/property.
-                    // for example, if we have "get set", don't actually try to parse out the 
-                    // block.  Otherwise we'll consume the 'set'.  In that case, just end the
-                    // current accessor with a semicolon so we can properly consume the next
-                    // in the calling method's loop.
-                    if (accessorKind != SyntaxKind.UnknownAccessorDeclaration)
+                    if (expressionBody != null)
                     {
-                        if (!IsTerminator())
-                        {
-                            blockBody = this.ParseBlock(isMethodBody: true, isAccessorBody: true);
-                        }
-                        else
-                        {
-                            semicolon = EatAccessorSemicolon();
-                        }
+                        eosToken = EatEos(ref expressionBody);
                     }
                     else
                     {
-                        // Don't bother eating anything if we didn't even have a valid accessor.
-                        // It will just lead to more errors.  Note: we will have already produced
-                        // a good error by now.
-                        Debug.Assert(accessorName.ContainsDiagnostics);
+                        Debug.Assert(accessorName != null);
+                        eosToken = EatEos(ref accessorName);
+
+                        if (accessorKind == SyntaxKind.AddAccessorDeclaration ||
+                            accessorKind == SyntaxKind.RemoveAccessorDeclaration)
+                        {
+                            eosToken = this.AddError(eosToken, ErrorCode.ERR_AddRemoveMustHaveBody);
+                        }
                     }
                 }
 
                 return _syntaxFactory.AccessorDeclaration(
                     accessorKind, accAttrs, accMods.ToList(), accessorName,
-                    blockBody, expressionBody, semicolon);
+                    blockBody, expressionBody, eosToken);
             }
             finally
             {
@@ -3149,12 +3147,6 @@ tryAgain:
                 _pool.Free(accAttrs);
             }
         }
-
-        private SyntaxToken EatAccessorSemicolon()
-            => this.EatToken(SyntaxKind.SemicolonToken,
-                IsFeatureEnabled(MessageID.IDS_FeatureExpressionBodiedAccessor)
-                    ? ErrorCode.ERR_SemiOrLBraceOrArrowExpected
-                    : ErrorCode.ERR_SemiOrLBraceExpected);
 
         private SyntaxKind GetAccessorKind(SyntaxToken accessorName)
         {
@@ -3806,8 +3798,20 @@ tryAgain:
 
                 _termState = saveTerm;
 
-                var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-                return _syntaxFactory.DelegateDeclaration(attributes, modifiers.ToList(), delegateToken, type, name, typeParameters, parameterList, constraints, semicolon);
+                SyntaxToken eos = null;
+                if (!constraints.IsNull && constraints.Count > 0)
+                {
+                    var lastContraint = constraints[constraints.Count - 1];
+                    eos = this.EatEos(ref lastContraint);
+                    constraints[constraints.Count - 1] = lastContraint;
+                }
+                else
+                {
+                    Debug.Assert(parameterList != null);
+                    eos = this.EatEos(ref parameterList);
+                }
+                
+                return _syntaxFactory.DelegateDeclaration(attributes, modifiers.ToList(), delegateToken, type, name, typeParameters, parameterList, constraints, eos);
             }
             finally
             {
@@ -6587,7 +6591,7 @@ tryAgain:
                     if (IsScript)
                     {
                         var expressionStatementSyntax = (ExpressionStatementSyntax)statement;
-                        var semicolonToken = expressionStatementSyntax.SemicolonToken;
+                        var semicolonToken = expressionStatementSyntax.EosToken;
 
                         // Do not add a new error if the same error was already added.
                         if (semicolonToken.IsMissing &&
@@ -6607,15 +6611,15 @@ tryAgain:
         private BreakStatementSyntax ParseBreakStatement()
         {
             var breakKeyword = this.EatToken(SyntaxKind.BreakKeyword);
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.BreakStatement(breakKeyword, semicolon);
+            var eos = this.EatEos(ref breakKeyword);
+            return _syntaxFactory.BreakStatement(breakKeyword, eos);
         }
 
         private ContinueStatementSyntax ParseContinueStatement()
         {
             var continueKeyword = this.EatToken(SyntaxKind.ContinueKeyword);
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.ContinueStatement(continueKeyword, semicolon);
+            var eos = this.EatEos(ref continueKeyword);
+            return _syntaxFactory.ContinueStatement(continueKeyword, eos);
         }
 
         private TryStatementSyntax ParseTryStatement()
@@ -6812,8 +6816,8 @@ tryAgain:
             _termState = saveTerm;
 
             var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.DoStatement(@do, statement, @while, openParen, expression, closeParen, semicolon);
+            var eos = this.EatEos(ref closeParen);
+            return _syntaxFactory.DoStatement(@do, statement, @while, openParen, expression, closeParen, eos);
         }
 
         private bool IsEndOfDoWhileExpression()
@@ -7009,8 +7013,6 @@ tryAgain:
                 @foreach = this.EatToken(SyntaxKind.ForEachKeyword);
             }
 
-            var openParen = this.EatToken(SyntaxKind.OpenParenToken);
-
             var variable = ParseExpressionOrDeclaration(ParseTypeMode.Normal, feature: MessageID.IDS_FeatureTuples, permitTupleDesignation: true);
             var @in = this.EatToken(SyntaxKind.InKeyword, ErrorCode.ERR_InExpected);
             if (!IsValidForeachVariable(variable))
@@ -7019,58 +7021,55 @@ tryAgain:
             }
 
             var expression = this.ParseExpressionCore();
-            var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-            var statement = this.ParseEmbeddedStatement();
 
-            if (variable is DeclarationExpressionSyntax decl)
-            {
-                if (decl.Type.Kind == SyntaxKind.RefType)
-                {
-                    decl = decl.Update(
-                        CheckFeatureAvailability(decl.Type, MessageID.IDS_FeatureRefForEach),
-                        decl.Designation);
-                }
+            var statement = this.ParseBlock();
+
+            //if (variable is DeclarationExpressionSyntax decl)
+            //{
+            //    if (decl.Type.Kind == SyntaxKind.RefType)
+            //    {
+            //        decl = decl.Update(
+            //            CheckFeatureAvailability(decl.Type, MessageID.IDS_FeatureRefForEach),
+            //            decl.Designation);
+            //    }
 
 
-                if (decl.designation.Kind != SyntaxKind.ParenthesizedVariableDesignation)
-                {
-                    // if we see a foreach declaration that isn't a deconstruction, we use the old form of foreach syntax node.
-                    SyntaxToken identifier;
-                    switch (decl.designation.Kind)
-                    {
-                        case SyntaxKind.SingleVariableDesignation:
-                            identifier = ((SingleVariableDesignationSyntax)decl.designation).identifier;
-                            break;
-                        case SyntaxKind.DiscardDesignation:
-                            // revert the identifier from its contextual underscore back to an identifier.
-                            var discard = ((DiscardDesignationSyntax)decl.designation).underscoreToken;
-                            Debug.Assert(discard.Kind == SyntaxKind.UnderscoreToken);
-                            identifier = SyntaxToken.WithValue(SyntaxKind.IdentifierToken, discard.LeadingTrivia.Node, discard.Text, discard.ValueText, discard.TrailingTrivia.Node);
-                            break;
-                        default:
-                            throw ExceptionUtilities.UnexpectedValue(decl.designation.Kind);
-                    }
+            //    if (decl.designation.Kind != SyntaxKind.ParenthesizedVariableDesignation)
+            //    {
+            //        // if we see a foreach declaration that isn't a deconstruction, we use the old form of foreach syntax node.
+            //        SyntaxToken identifier;
+            //        switch (decl.designation.Kind)
+            //        {
+            //            case SyntaxKind.SingleVariableDesignation:
+            //                identifier = ((SingleVariableDesignationSyntax)decl.designation).identifier;
+            //                break;
+            //            case SyntaxKind.DiscardDesignation:
+            //                // revert the identifier from its contextual underscore back to an identifier.
+            //                var discard = ((DiscardDesignationSyntax)decl.designation).underscoreToken;
+            //                Debug.Assert(discard.Kind == SyntaxKind.UnderscoreToken);
+            //                identifier = SyntaxToken.WithValue(SyntaxKind.IdentifierToken, discard.LeadingTrivia.Node, discard.Text, discard.ValueText, discard.TrailingTrivia.Node);
+            //                break;
+            //            default:
+            //                throw ExceptionUtilities.UnexpectedValue(decl.designation.Kind);
+            //        }
 
-                    return _syntaxFactory.ForEachStatement(awaitTokenOpt, @foreach, openParen, decl.Type, identifier, @in, expression, closeParen, statement);
-                }
-            }
+            //        return _syntaxFactory.ForEachStatement(awaitTokenOpt, @foreach, decl.Type, identifier, @in, expression, statement);
+            //    }
+            //}
 
-            return _syntaxFactory.ForEachVariableStatement(awaitTokenOpt, @foreach, openParen, variable, @in, expression, closeParen, statement);
+            return _syntaxFactory.ForEachVariableStatement(awaitTokenOpt, @foreach, variable, @in, expression, statement);
         }
 
         private static bool IsValidForeachVariable(ExpressionSyntax variable)
         {
             switch (variable.Kind)
             {
-                case SyntaxKind.DeclarationExpression:
-                    // e.g. `foreach (var (x, y) in e)`
-                    return true;
                 case SyntaxKind.TupleExpression:
-                    // e.g. `foreach ((var x, var y) in e)`
+                    // e.g. `foreach (x, y) in e`
                     return true;
                 case SyntaxKind.IdentifierName:
-                    // e.g. `foreach (_ in e)`
-                    return ((IdentifierNameSyntax)variable).Identifier.ContextualKind == SyntaxKind.UnderscoreToken;
+                    // e.g. `foreach x in e`
+                    return true;
                 default:
                     return false;
             }
@@ -7105,8 +7104,10 @@ tryAgain:
                 arg = this.ParseIdentifierName();
             }
 
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.GotoStatement(kind, @goto, caseOrDefault, arg, semicolon);
+            SyntaxToken eos = null;
+            eos = arg != null ? EatEos(ref arg) : this.EatEos(ref caseOrDefault);
+
+            return _syntaxFactory.GotoStatement(kind, @goto, caseOrDefault, arg, eos);
         }
 
         private IfStatementSyntax ParseIfStatement()
@@ -7164,8 +7165,8 @@ tryAgain:
                 arg = this.ParsePossibleRefExpression();
             }
 
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.ReturnStatement(@return, arg, semicolon);
+            var eos = arg != null ? EatEos(ref arg) : EatEos(ref @return);
+            return _syntaxFactory.ReturnStatement(@return, arg, eos);
         }
 
         private YieldStatementSyntax ParseYieldStatement()
@@ -7198,8 +7199,8 @@ tryAgain:
                 }
             }
 
-            var semi = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.YieldStatement(kind, yieldToken, returnOrBreak, arg, semi);
+            var eos = arg != null ? EatEos(ref arg) : EatEos(ref returnOrBreak);
+            return _syntaxFactory.YieldStatement(kind, yieldToken, returnOrBreak, arg, eos);
         }
 
         private SwitchStatementSyntax ParseSwitchStatement()
@@ -7345,8 +7346,8 @@ tryAgain:
                 arg = this.ParseExpressionCore();
             }
 
-            var semi = this.EatToken(SyntaxKind.SemicolonToken);
-            return _syntaxFactory.ThrowStatement(@throw, arg, semi);
+            var eos = arg != null ? EatEos(ref arg) : EatEos(ref @throw);
+            return _syntaxFactory.ThrowStatement(@throw, arg, eos);
         }
 
         private UnsafeStatementSyntax ParseUnsafeStatement()
@@ -7490,7 +7491,7 @@ tryAgain:
             var label = this.ParseIdentifierToken();
             var colon = this.EatToken(SyntaxKind.ColonToken);
             Debug.Assert(!colon.IsMissing);
-            var statement = this.ParseStatementCore() ?? SyntaxFactory.EmptyStatement(EatToken(SyntaxKind.SemicolonToken));
+            var statement = this.ParseStatementCore() ?? SyntaxFactory.EmptyStatement(EatEos(ref colon));
             return _syntaxFactory.LabeledStatement(label, colon, statement);
         }
 
@@ -7507,12 +7508,12 @@ tryAgain:
 
             var variableDeclaration = ParseVariableDeclaration(true);
 
-            var semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+            var eos = EatEos(ref variableDeclaration);
             return _syntaxFactory.LocalDeclarationStatement(
                 awaitKeywordOpt,
                 usingKeyword,
                 variableDeclaration,
-                semicolon
+                eos
             );
         }
 
@@ -7711,123 +7712,6 @@ tryAgain:
             }
         }
 
-        private LocalFunctionStatementSyntax TryParseLocalFunctionStatementBody(
-            SyntaxList<SyntaxToken> modifiers,
-            TypeSyntax type,
-            SyntaxToken identifier)
-        {
-            // This may potentially be an ambiguous parse until very far into the token stream, so we may have to backtrack.
-            // For example, "await x()" is ambiguous at the current point of parsing (right now we're right after the x).
-            // The point at which it becomes unambiguous is after the argument list. A "=>" or "{" means its a local function
-            // (with return type @await), a ";" or other expression-y token means its an await of a function call.
-
-            // Note that we could just check if we're in an async context, but that breaks some analyzers, because
-            // "await f();" would be parsed as a local function statement when really we want a parse error so we can say
-            // "did you mean to make this method be an async method?" (it's invalid either way, so the spec doesn't care)
-            var resetPoint = this.GetResetPoint();
-
-            // Indicates this must be parsed as a local function, even if there's no body
-            bool forceLocalFunc = true;
-            if (type.Kind == SyntaxKind.IdentifierName)
-            {
-                var id = ((IdentifierNameSyntax)type).Identifier;
-                forceLocalFunc = id.ContextualKind != SyntaxKind.AwaitKeyword;
-            }
-
-            bool parentScopeIsInAsync = IsInAsync;
-            IsInAsync = false;
-            SyntaxListBuilder badBuilder = null;
-            for (int i = 0; i < modifiers.Count; i++)
-            {
-                var modifier = modifiers[i];
-                switch (modifier.ContextualKind)
-                {
-                    case SyntaxKind.AsyncKeyword:
-                        IsInAsync = true;
-                        forceLocalFunc = true;
-                        continue;
-                    case SyntaxKind.UnsafeKeyword:
-                        forceLocalFunc = true;
-                        continue;
-                    case SyntaxKind.ReadOnlyKeyword:
-                    case SyntaxKind.VolatileKeyword:
-                        continue; // already reported earlier, no need to report again
-                    case SyntaxKind.StaticKeyword:
-                        modifier = CheckFeatureAvailability(modifier, MessageID.IDS_FeatureStaticLocalFunctions);
-                        if ((object)modifier == modifiers[i])
-                        {
-                            continue;
-                        }
-                        break;
-                    default:
-                        modifier = this.AddError(modifier, ErrorCode.ERR_BadMemberFlag, modifier.Text);
-                        break;
-                }
-                if (badBuilder == null)
-                {
-                    badBuilder = _pool.Allocate();
-                    badBuilder.AddRange(modifiers);
-                }
-                badBuilder[i] = modifier;
-            }
-            if (badBuilder != null)
-            {
-                modifiers = badBuilder.ToList();
-                _pool.Free(badBuilder);
-            }
-
-            TypeParameterListSyntax typeParameterListOpt = this.ParseTypeParameterList();
-            // "await f<T>()" still makes sense, so don't force accept a local function if there's a type parameter list.
-            ParameterListSyntax paramList = this.ParseParenthesizedParameterList();
-            // "await x()" is ambiguous (see note at start of this method), but we assume "await x(await y)" is meant to be a function if it's in a non-async context.
-            if (!forceLocalFunc)
-            {
-                var paramListSyntax = paramList.Parameters;
-                for (int i = 0; i < paramListSyntax.Count; i++)
-                {
-                    // "await x(y)" still parses as a parameter list, so check to see if it's a valid parameter (like "x(t y)")
-                    forceLocalFunc |= !paramListSyntax[i].ContainsDiagnostics;
-                    if (forceLocalFunc)
-                        break;
-                }
-            }
-
-            var constraints = default(SyntaxListBuilder<TypeParameterConstraintClauseSyntax>);
-            if (this.CurrentToken.ContextualKind == SyntaxKind.WhereKeyword)
-            {
-                constraints = _pool.Allocate<TypeParameterConstraintClauseSyntax>();
-                this.ParseTypeParameterConstraintClauses(constraints);
-                forceLocalFunc = true;
-            }
-
-            BlockSyntax blockBody;
-            ArrowExpressionClauseSyntax expressionBody;
-            SyntaxToken semicolon;
-            this.ParseBlockAndExpressionBodiesWithSemicolon(out blockBody, out expressionBody, out semicolon, parseSemicolonAfterBlock: false);
-
-            IsInAsync = parentScopeIsInAsync;
-
-            if (!forceLocalFunc && blockBody == null && expressionBody == null)
-            {
-                this.Reset(ref resetPoint);
-                this.Release(ref resetPoint);
-                return null;
-            }
-            this.Release(ref resetPoint);
-
-            identifier = CheckFeatureAvailability(identifier, MessageID.IDS_FeatureLocalFunctions);
-            return _syntaxFactory.LocalFunctionStatement(
-                modifiers,
-                type,
-                identifier,
-                typeParameterListOpt,
-                paramList,
-                constraints,
-                blockBody,
-                expressionBody,
-                semicolon);
-        }
-
         private ExpressionStatementSyntax ParseExpressionStatement()
         {
             return ParseExpressionStatement(this.ParseExpressionCore());
@@ -7835,19 +7719,8 @@ tryAgain:
 
         private ExpressionStatementSyntax ParseExpressionStatement(ExpressionSyntax expression)
         {
-            SyntaxToken semicolon;
-            if (IsScript && this.CurrentToken.Kind == SyntaxKind.EndOfFileToken)
-            {
-                semicolon = SyntaxFactory.MissingToken(SyntaxKind.SemicolonToken);
-            }
-            else
-            {
-                // Do not report an error if the expression is not a statement expression.
-                // The error is reported in semantic analysis.
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
-            }
-
-            return _syntaxFactory.ExpressionStatement(expression, semicolon);
+            var eosToken = EatEos(ref expression);
+            return _syntaxFactory.ExpressionStatement(expression, eosToken);
         }
 
         public ExpressionSyntax ParseExpression()

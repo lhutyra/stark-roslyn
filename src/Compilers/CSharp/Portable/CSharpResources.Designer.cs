@@ -1636,7 +1636,7 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type and identifier are both required in a foreach statement.
+        ///   Looks up a localized string similar to An identifier or a tuple expression is required for the iteration variable in a foreach statement.
         /// </summary>
         internal static string ERR_BadForeachDecl {
             get {

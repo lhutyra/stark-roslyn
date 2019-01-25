@@ -476,7 +476,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         WhileStatement = 8809,
         DoStatement = 8810,
         ForStatement = 8811,
-        ForEachStatement = 8812,
         UsingStatement = 8813,
         FixedStatement = 8814,
 

@@ -434,7 +434,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         break;
 
                     case LocalDeclarationKind.ForEachIterationVariable:
-                        Debug.Assert(node is ForEachStatementSyntax || node is SingleVariableDesignationSyntax);
+                        Debug.Assert(node is IdentifierNameSyntax);
                         break;
 
                     case LocalDeclarationKind.CatchVariable:

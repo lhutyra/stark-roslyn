@@ -1054,14 +1054,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             if (this.Instrument)
             {
                 CommonForEachStatementSyntax forEachSyntax = (CommonForEachStatementSyntax)original.Syntax;
-                if (forEachSyntax is ForEachVariableStatementSyntax)
-                {
-                    iterationVarDecl = _instrumenter.InstrumentForEachStatementDeconstructionVariablesDeclaration(original, iterationVarDecl);
-                }
-                else
-                {
-                    iterationVarDecl = _instrumenter.InstrumentForEachStatementIterationVarDeclaration(original, iterationVarDecl);
-                }
+                iterationVarDecl = _instrumenter.InstrumentForEachStatementDeconstructionVariablesDeclaration(original, iterationVarDecl);
             }
         }
 

@@ -46,7 +46,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         /// </summary>
         internal static bool IsInBody(int position,
             PropertyDeclarationSyntax property)
-            => IsInBody(position, default(BlockSyntax), property.GetExpressionBodySyntax(), property.SemicolonToken);
+            => IsInBody(position, default(BlockSyntax), property.GetExpressionBodySyntax(), property.EosToken);
 
         /// <summary>
         /// A position is inside a property body only if it is inside an expression body.
@@ -55,14 +55,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         /// </summary>
         internal static bool IsInBody(int position,
             IndexerDeclarationSyntax indexer)
-            => IsInBody(position, default(BlockSyntax), indexer.GetExpressionBodySyntax(), indexer.SemicolonToken);
+            => IsInBody(position, default(BlockSyntax), indexer.GetExpressionBodySyntax(), indexer.EosToken);
 
         /// <summary>
         /// A position is inside an accessor body if it is inside the block or expression
         /// body. 
         /// </summary>
         internal static bool IsInBody(int position, AccessorDeclarationSyntax method)
-            => IsInBody(position, method.Body, method.GetExpressionBodySyntax(), method.SemicolonToken);
+            => IsInBody(position, method.Body, method.GetExpressionBodySyntax(), method.EosToken);
 
         /// <summary>
         /// A position is inside a body if it is inside the block or expression
@@ -74,7 +74,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         /// the '=>' and strictly before the semicolon.
         /// </summary>
         internal static bool IsInBody(int position, BaseMethodDeclarationSyntax method)
-            => IsInBody(position, method.Body, method.GetExpressionBodySyntax(), method.SemicolonToken);
+            => IsInBody(position, method.Body, method.GetExpressionBodySyntax(), method.EosToken);
 
         internal static bool IsBetweenTokens(int position, SyntaxToken firstIncluded, SyntaxToken firstExcluded)
         {
@@ -126,11 +126,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
             var body = methodDecl.Body;
             if (body == null)
             {
-                return IsBeforeToken(position, methodDecl, methodDecl.SemicolonToken);
+                return IsBeforeToken(position, methodDecl, methodDecl.EosToken);
             }
 
             return IsBeforeToken(position, methodDecl, body.CloseBraceToken) ||
-                   IsInExpressionBody(position, methodDecl.GetExpressionBodySyntax(), methodDecl.SemicolonToken);
+                   IsInExpressionBody(position, methodDecl.GetExpressionBodySyntax(), methodDecl.EosToken);
         }
 
         internal static bool IsInMethodDeclaration(int position, AccessorDeclarationSyntax accessorDecl)
@@ -138,7 +138,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
             Debug.Assert(accessorDecl != null);
 
             var body = accessorDecl.Body;
-            SyntaxToken lastToken = body == null ? accessorDecl.SemicolonToken : body.CloseBraceToken;
+            SyntaxToken lastToken = body == null ? accessorDecl.EosToken : body.CloseBraceToken;
             return IsBeforeToken(position, accessorDecl, lastToken);
         }
 
@@ -146,7 +146,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         {
             Debug.Assert(delegateDecl != null);
 
-            return IsBeforeToken(position, delegateDecl, delegateDecl.SemicolonToken);
+            return IsBeforeToken(position, delegateDecl, delegateDecl.EosToken);
         }
 
         internal static bool IsInTypeDeclaration(int position, BaseTypeDeclarationSyntax typeDecl)
@@ -181,7 +181,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
             return initializerOpt == null ?
                 IsInBody(position, constructorDecl) :
                 IsBetweenTokens(position, initializerOpt.ColonToken,
-                                constructorDecl.SemicolonToken.Kind() == SyntaxKind.None ? constructorDecl.Body.CloseBraceToken : constructorDecl.SemicolonToken);
+                                constructorDecl.EosToken.Kind() == SyntaxKind.None ? constructorDecl.Body.CloseBraceToken : constructorDecl.EosToken);
         }
 
         internal static bool IsInMethodTypeParameterScope(int position, MethodDeclarationSyntax methodDecl)
@@ -292,9 +292,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                     return default(SyntaxToken); //The caller will have to check for this.
                 case SyntaxKind.FixedStatement:
                     return ((FixedStatementSyntax)statement).FixedKeyword;
-                case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForEachVariableStatement:
-                    return ((CommonForEachStatementSyntax)statement).OpenParenToken.GetNextToken();
+                    return ((CommonForEachStatementSyntax)statement).ForEachKeyword.GetNextToken();
                 case SyntaxKind.ForStatement:
                     return ((ForStatementSyntax)statement).OpenParenToken.GetNextToken();
                 case SyntaxKind.GotoDefaultStatement:
@@ -339,23 +338,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                 case SyntaxKind.Block:
                     return ((BlockSyntax)statement).CloseBraceToken;
                 case SyntaxKind.BreakStatement:
-                    return ((BreakStatementSyntax)statement).SemicolonToken;
+                    return ((BreakStatementSyntax)statement).EosToken;
                 case SyntaxKind.CheckedStatement:
                 case SyntaxKind.UncheckedStatement:
                     return ((CheckedStatementSyntax)statement).Block.CloseBraceToken;
                 case SyntaxKind.ContinueStatement:
-                    return ((ContinueStatementSyntax)statement).SemicolonToken;
+                    return ((ContinueStatementSyntax)statement).EosToken;
                 case SyntaxKind.LocalDeclarationStatement:
-                    return ((LocalDeclarationStatementSyntax)statement).SemicolonToken;
+                    return ((LocalDeclarationStatementSyntax)statement).EosToken;
                 case SyntaxKind.DoStatement:
-                    return ((DoStatementSyntax)statement).SemicolonToken;
+                    return ((DoStatementSyntax)statement).EosToken;
                 case SyntaxKind.EmptyStatement:
-                    return ((EmptyStatementSyntax)statement).SemicolonToken;
+                    return ((EmptyStatementSyntax)statement).EosToken;
                 case SyntaxKind.ExpressionStatement:
-                    return ((ExpressionStatementSyntax)statement).SemicolonToken;
+                    return ((ExpressionStatementSyntax)statement).EosToken;
                 case SyntaxKind.FixedStatement:
                     return GetFirstExcludedToken(((FixedStatementSyntax)statement).Statement);
-                case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForEachVariableStatement:
                     return GetFirstExcludedToken(((CommonForEachStatementSyntax)statement).Statement);
                 case SyntaxKind.ForStatement:
@@ -363,7 +361,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                 case SyntaxKind.GotoDefaultStatement:
                 case SyntaxKind.GotoCaseStatement:
                 case SyntaxKind.GotoStatement:
-                    return ((GotoStatementSyntax)statement).SemicolonToken;
+                    return ((GotoStatementSyntax)statement).EosToken;
                 case SyntaxKind.IfStatement:
                     IfStatementSyntax ifStmt = (IfStatementSyntax)statement;
                     ElseClauseSyntax elseOpt = ifStmt.Else;
@@ -373,11 +371,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                 case SyntaxKind.LockStatement:
                     return GetFirstExcludedToken(((LockStatementSyntax)statement).Statement);
                 case SyntaxKind.ReturnStatement:
-                    return ((ReturnStatementSyntax)statement).SemicolonToken;
+                    return ((ReturnStatementSyntax)statement).EosToken;
                 case SyntaxKind.SwitchStatement:
                     return ((SwitchStatementSyntax)statement).CloseBraceToken;
                 case SyntaxKind.ThrowStatement:
-                    return ((ThrowStatementSyntax)statement).SemicolonToken;
+                    return ((ThrowStatementSyntax)statement).EosToken;
                 case SyntaxKind.TryStatement:
                     TryStatementSyntax tryStmt = (TryStatementSyntax)statement;
 
@@ -401,13 +399,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
                     return GetFirstExcludedToken(((WhileStatementSyntax)statement).Statement);
                 case SyntaxKind.YieldReturnStatement:
                 case SyntaxKind.YieldBreakStatement:
-                    return ((YieldStatementSyntax)statement).SemicolonToken;
+                    return ((YieldStatementSyntax)statement).EosToken;
                 case SyntaxKind.LocalFunctionStatement:
                     LocalFunctionStatementSyntax localFunctionStmt = (LocalFunctionStatementSyntax)statement;
                     if (localFunctionStmt.Body != null)
                         return GetFirstExcludedToken(localFunctionStmt.Body);
-                    if (localFunctionStmt.SemicolonToken != default(SyntaxToken))
-                        return localFunctionStmt.SemicolonToken;
+                    if (localFunctionStmt.EosToken != default(SyntaxToken))
+                        return localFunctionStmt.EosToken;
                     return localFunctionStmt.ParameterList.GetLastToken();
                 default:
                     throw ExceptionUtilities.UnexpectedValue(statement.Kind());

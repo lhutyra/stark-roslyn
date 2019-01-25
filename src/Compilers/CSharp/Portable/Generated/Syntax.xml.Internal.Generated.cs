@@ -13153,9 +13153,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly GreenNode constraintClauses;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal LocalFunctionStatementSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal LocalFunctionStatementSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 9;
@@ -13190,15 +13190,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal LocalFunctionStatementSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal LocalFunctionStatementSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -13234,15 +13234,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal LocalFunctionStatementSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal LocalFunctionStatementSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 9;
@@ -13277,10 +13277,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -13294,7 +13294,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public BlockSyntax Body { get { return this.body; } }
     public ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -13308,7 +13308,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 5: return this.constraintClauses;
             case 6: return this.body;
             case 7: return this.expressionBody;
-            case 8: return this.semicolonToken;
+            case 8: return this.eosToken;
             default: return null;
         }
     }
@@ -13328,11 +13328,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitLocalFunctionStatement(this);
     }
 
-    public LocalFunctionStatementSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public LocalFunctionStatementSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (modifiers != this.Modifiers || returnType != this.ReturnType || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (modifiers != this.Modifiers || returnType != this.ReturnType || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.LocalFunctionStatement(modifiers, returnType, identifier, typeParameterList, parameterList, constraintClauses, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.LocalFunctionStatement(modifiers, returnType, identifier, typeParameterList, parameterList, constraintClauses, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -13347,12 +13347,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new LocalFunctionStatementSyntax(this.Kind, this.modifiers, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new LocalFunctionStatementSyntax(this.Kind, this.modifiers, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new LocalFunctionStatementSyntax(this.Kind, this.modifiers, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new LocalFunctionStatementSyntax(this.Kind, this.modifiers, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal LocalFunctionStatementSyntax(ObjectReader reader)
@@ -13407,11 +13407,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -13426,7 +13426,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.constraintClauses);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static LocalFunctionStatementSyntax()
@@ -13440,9 +13440,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken awaitKeyword;
     internal readonly SyntaxToken usingKeyword;
     internal readonly VariableDeclarationSyntax declaration;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal LocalDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal LocalDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 4;
@@ -13458,12 +13458,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal LocalDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal LocalDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -13480,12 +13480,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal LocalDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    internal LocalDeclarationStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 4;
@@ -13501,14 +13501,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken AwaitKeyword { get { return this.awaitKeyword; } }
     public SyntaxToken UsingKeyword { get { return this.usingKeyword; } }
     public VariableDeclarationSyntax Declaration { get { return this.declaration; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -13517,7 +13517,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 0: return this.awaitKeyword;
             case 1: return this.usingKeyword;
             case 2: return this.declaration;
-            case 3: return this.semicolonToken;
+            case 3: return this.eosToken;
             default: return null;
         }
     }
@@ -13537,11 +13537,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitLocalDeclarationStatement(this);
     }
 
-    public LocalDeclarationStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public LocalDeclarationStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
-        if (awaitKeyword != this.AwaitKeyword || usingKeyword != this.UsingKeyword || declaration != this.Declaration || semicolonToken != this.SemicolonToken)
+        if (awaitKeyword != this.AwaitKeyword || usingKeyword != this.UsingKeyword || declaration != this.Declaration || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.LocalDeclarationStatement(awaitKeyword, usingKeyword, declaration, semicolonToken);
+            var newNode = SyntaxFactory.LocalDeclarationStatement(awaitKeyword, usingKeyword, declaration, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -13556,12 +13556,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new LocalDeclarationStatementSyntax(this.Kind, this.awaitKeyword, this.usingKeyword, this.declaration, this.semicolonToken, diagnostics, GetAnnotations());
+         return new LocalDeclarationStatementSyntax(this.Kind, this.awaitKeyword, this.usingKeyword, this.declaration, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new LocalDeclarationStatementSyntax(this.Kind, this.awaitKeyword, this.usingKeyword, this.declaration, this.semicolonToken, GetDiagnostics(), annotations);
+         return new LocalDeclarationStatementSyntax(this.Kind, this.awaitKeyword, this.usingKeyword, this.declaration, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal LocalDeclarationStatementSyntax(ObjectReader reader)
@@ -13586,11 +13586,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(declaration);
          this.declaration = declaration;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -13600,7 +13600,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.awaitKeyword);
       writer.WriteValue(this.usingKeyword);
       writer.WriteValue(this.declaration);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static LocalDeclarationStatementSyntax()
@@ -14320,50 +14320,50 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   internal sealed partial class ExpressionStatementSyntax : StatementSyntax
   {
     internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ExpressionStatementSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ExpressionStatementSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ExpressionStatementSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ExpressionStatementSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ExpressionStatementSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    internal ExpressionStatementSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public ExpressionSyntax Expression { get { return this.expression; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
             case 0: return this.expression;
-            case 1: return this.semicolonToken;
+            case 1: return this.eosToken;
             default: return null;
         }
     }
@@ -14383,11 +14383,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitExpressionStatement(this);
     }
 
-    public ExpressionStatementSyntax Update(ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public ExpressionStatementSyntax Update(ExpressionSyntax expression, SyntaxToken eosToken)
     {
-        if (expression != this.Expression || semicolonToken != this.SemicolonToken)
+        if (expression != this.Expression || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ExpressionStatement(expression, semicolonToken);
+            var newNode = SyntaxFactory.ExpressionStatement(expression, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -14402,12 +14402,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ExpressionStatementSyntax(this.Kind, this.expression, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ExpressionStatementSyntax(this.Kind, this.expression, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ExpressionStatementSyntax(this.Kind, this.expression, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ExpressionStatementSyntax(this.Kind, this.expression, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ExpressionStatementSyntax(ObjectReader reader)
@@ -14420,11 +14420,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expression);
          this.expression = expression;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -14432,7 +14432,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.expression);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ExpressionStatementSyntax()
@@ -14443,42 +14443,42 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
   internal sealed partial class EmptyStatementSyntax : StatementSyntax
   {
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 1;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 1;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken semicolonToken)
+    internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 1;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.semicolonToken;
+            case 0: return this.eosToken;
             default: return null;
         }
     }
@@ -14498,11 +14498,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitEmptyStatement(this);
     }
 
-    public EmptyStatementSyntax Update(SyntaxToken semicolonToken)
+    public EmptyStatementSyntax Update(SyntaxToken eosToken)
     {
-        if (semicolonToken != this.SemicolonToken)
+        if (eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.EmptyStatement(semicolonToken);
+            var newNode = SyntaxFactory.EmptyStatement(eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -14517,30 +14517,30 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new EmptyStatementSyntax(this.Kind, this.semicolonToken, diagnostics, GetAnnotations());
+         return new EmptyStatementSyntax(this.Kind, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new EmptyStatementSyntax(this.Kind, this.semicolonToken, GetDiagnostics(), annotations);
+         return new EmptyStatementSyntax(this.Kind, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal EmptyStatementSyntax(ObjectReader reader)
         : base(reader)
     {
       this.SlotCount = 1;
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static EmptyStatementSyntax()
@@ -14700,9 +14700,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken gotoKeyword;
     internal readonly SyntaxToken caseOrDefaultKeyword;
     internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal GotoStatementSyntax(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal GotoStatementSyntax(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 4;
@@ -14718,12 +14718,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal GotoStatementSyntax(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal GotoStatementSyntax(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -14740,12 +14740,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal GotoStatementSyntax(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    internal GotoStatementSyntax(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 4;
@@ -14761,8 +14761,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     /// <summary>
@@ -14780,7 +14780,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     /// <summary>
     /// Gets a SyntaxToken that represents the semi-colon at the end of the statement.
     /// </summary>
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -14789,7 +14789,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 0: return this.gotoKeyword;
             case 1: return this.caseOrDefaultKeyword;
             case 2: return this.expression;
-            case 3: return this.semicolonToken;
+            case 3: return this.eosToken;
             default: return null;
         }
     }
@@ -14809,11 +14809,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitGotoStatement(this);
     }
 
-    public GotoStatementSyntax Update(SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public GotoStatementSyntax Update(SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
-        if (gotoKeyword != this.GotoKeyword || caseOrDefaultKeyword != this.CaseOrDefaultKeyword || expression != this.Expression || semicolonToken != this.SemicolonToken)
+        if (gotoKeyword != this.GotoKeyword || caseOrDefaultKeyword != this.CaseOrDefaultKeyword || expression != this.Expression || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.GotoStatement(this.Kind, gotoKeyword, caseOrDefaultKeyword, expression, semicolonToken);
+            var newNode = SyntaxFactory.GotoStatement(this.Kind, gotoKeyword, caseOrDefaultKeyword, expression, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -14828,12 +14828,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new GotoStatementSyntax(this.Kind, this.gotoKeyword, this.caseOrDefaultKeyword, this.expression, this.semicolonToken, diagnostics, GetAnnotations());
+         return new GotoStatementSyntax(this.Kind, this.gotoKeyword, this.caseOrDefaultKeyword, this.expression, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new GotoStatementSyntax(this.Kind, this.gotoKeyword, this.caseOrDefaultKeyword, this.expression, this.semicolonToken, GetDiagnostics(), annotations);
+         return new GotoStatementSyntax(this.Kind, this.gotoKeyword, this.caseOrDefaultKeyword, this.expression, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal GotoStatementSyntax(ObjectReader reader)
@@ -14858,11 +14858,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expression);
          this.expression = expression;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -14872,7 +14872,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.gotoKeyword);
       writer.WriteValue(this.caseOrDefaultKeyword);
       writer.WriteValue(this.expression);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static GotoStatementSyntax()
@@ -14884,50 +14884,50 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   internal sealed partial class BreakStatementSyntax : StatementSyntax
   {
     internal readonly SyntaxToken breakKeyword;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal BreakStatementSyntax(SyntaxKind kind, SyntaxToken breakKeyword, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal BreakStatementSyntax(SyntaxKind kind, SyntaxToken breakKeyword, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(breakKeyword);
         this.breakKeyword = breakKeyword;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal BreakStatementSyntax(SyntaxKind kind, SyntaxToken breakKeyword, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal BreakStatementSyntax(SyntaxKind kind, SyntaxToken breakKeyword, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(breakKeyword);
         this.breakKeyword = breakKeyword;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal BreakStatementSyntax(SyntaxKind kind, SyntaxToken breakKeyword, SyntaxToken semicolonToken)
+    internal BreakStatementSyntax(SyntaxKind kind, SyntaxToken breakKeyword, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(breakKeyword);
         this.breakKeyword = breakKeyword;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken BreakKeyword { get { return this.breakKeyword; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
             case 0: return this.breakKeyword;
-            case 1: return this.semicolonToken;
+            case 1: return this.eosToken;
             default: return null;
         }
     }
@@ -14947,11 +14947,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitBreakStatement(this);
     }
 
-    public BreakStatementSyntax Update(SyntaxToken breakKeyword, SyntaxToken semicolonToken)
+    public BreakStatementSyntax Update(SyntaxToken breakKeyword, SyntaxToken eosToken)
     {
-        if (breakKeyword != this.BreakKeyword || semicolonToken != this.SemicolonToken)
+        if (breakKeyword != this.BreakKeyword || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.BreakStatement(breakKeyword, semicolonToken);
+            var newNode = SyntaxFactory.BreakStatement(breakKeyword, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -14966,12 +14966,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new BreakStatementSyntax(this.Kind, this.breakKeyword, this.semicolonToken, diagnostics, GetAnnotations());
+         return new BreakStatementSyntax(this.Kind, this.breakKeyword, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new BreakStatementSyntax(this.Kind, this.breakKeyword, this.semicolonToken, GetDiagnostics(), annotations);
+         return new BreakStatementSyntax(this.Kind, this.breakKeyword, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal BreakStatementSyntax(ObjectReader reader)
@@ -14984,11 +14984,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(breakKeyword);
          this.breakKeyword = breakKeyword;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -14996,7 +14996,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.breakKeyword);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static BreakStatementSyntax()
@@ -15008,50 +15008,50 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   internal sealed partial class ContinueStatementSyntax : StatementSyntax
   {
     internal readonly SyntaxToken continueKeyword;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ContinueStatementSyntax(SyntaxKind kind, SyntaxToken continueKeyword, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ContinueStatementSyntax(SyntaxKind kind, SyntaxToken continueKeyword, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(continueKeyword);
         this.continueKeyword = continueKeyword;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ContinueStatementSyntax(SyntaxKind kind, SyntaxToken continueKeyword, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ContinueStatementSyntax(SyntaxKind kind, SyntaxToken continueKeyword, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(continueKeyword);
         this.continueKeyword = continueKeyword;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ContinueStatementSyntax(SyntaxKind kind, SyntaxToken continueKeyword, SyntaxToken semicolonToken)
+    internal ContinueStatementSyntax(SyntaxKind kind, SyntaxToken continueKeyword, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(continueKeyword);
         this.continueKeyword = continueKeyword;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken ContinueKeyword { get { return this.continueKeyword; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
             case 0: return this.continueKeyword;
-            case 1: return this.semicolonToken;
+            case 1: return this.eosToken;
             default: return null;
         }
     }
@@ -15071,11 +15071,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitContinueStatement(this);
     }
 
-    public ContinueStatementSyntax Update(SyntaxToken continueKeyword, SyntaxToken semicolonToken)
+    public ContinueStatementSyntax Update(SyntaxToken continueKeyword, SyntaxToken eosToken)
     {
-        if (continueKeyword != this.ContinueKeyword || semicolonToken != this.SemicolonToken)
+        if (continueKeyword != this.ContinueKeyword || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ContinueStatement(continueKeyword, semicolonToken);
+            var newNode = SyntaxFactory.ContinueStatement(continueKeyword, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -15090,12 +15090,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ContinueStatementSyntax(this.Kind, this.continueKeyword, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ContinueStatementSyntax(this.Kind, this.continueKeyword, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ContinueStatementSyntax(this.Kind, this.continueKeyword, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ContinueStatementSyntax(this.Kind, this.continueKeyword, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ContinueStatementSyntax(ObjectReader reader)
@@ -15108,11 +15108,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(continueKeyword);
          this.continueKeyword = continueKeyword;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -15120,7 +15120,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.continueKeyword);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ContinueStatementSyntax()
@@ -15133,9 +15133,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   {
     internal readonly SyntaxToken returnKeyword;
     internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ReturnStatementSyntax(SyntaxKind kind, SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ReturnStatementSyntax(SyntaxKind kind, SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 3;
@@ -15146,12 +15146,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ReturnStatementSyntax(SyntaxKind kind, SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ReturnStatementSyntax(SyntaxKind kind, SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -15163,12 +15163,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ReturnStatementSyntax(SyntaxKind kind, SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    internal ReturnStatementSyntax(SyntaxKind kind, SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 3;
@@ -15179,13 +15179,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken ReturnKeyword { get { return this.returnKeyword; } }
     public ExpressionSyntax Expression { get { return this.expression; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -15193,7 +15193,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             case 0: return this.returnKeyword;
             case 1: return this.expression;
-            case 2: return this.semicolonToken;
+            case 2: return this.eosToken;
             default: return null;
         }
     }
@@ -15213,11 +15213,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitReturnStatement(this);
     }
 
-    public ReturnStatementSyntax Update(SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public ReturnStatementSyntax Update(SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
-        if (returnKeyword != this.ReturnKeyword || expression != this.Expression || semicolonToken != this.SemicolonToken)
+        if (returnKeyword != this.ReturnKeyword || expression != this.Expression || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ReturnStatement(returnKeyword, expression, semicolonToken);
+            var newNode = SyntaxFactory.ReturnStatement(returnKeyword, expression, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -15232,12 +15232,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ReturnStatementSyntax(this.Kind, this.returnKeyword, this.expression, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ReturnStatementSyntax(this.Kind, this.returnKeyword, this.expression, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ReturnStatementSyntax(this.Kind, this.returnKeyword, this.expression, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ReturnStatementSyntax(this.Kind, this.returnKeyword, this.expression, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ReturnStatementSyntax(ObjectReader reader)
@@ -15256,11 +15256,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expression);
          this.expression = expression;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -15269,7 +15269,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       base.WriteTo(writer);
       writer.WriteValue(this.returnKeyword);
       writer.WriteValue(this.expression);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ReturnStatementSyntax()
@@ -15282,9 +15282,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   {
     internal readonly SyntaxToken throwKeyword;
     internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ThrowStatementSyntax(SyntaxKind kind, SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ThrowStatementSyntax(SyntaxKind kind, SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 3;
@@ -15295,12 +15295,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ThrowStatementSyntax(SyntaxKind kind, SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ThrowStatementSyntax(SyntaxKind kind, SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -15312,12 +15312,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ThrowStatementSyntax(SyntaxKind kind, SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    internal ThrowStatementSyntax(SyntaxKind kind, SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 3;
@@ -15328,13 +15328,13 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken ThrowKeyword { get { return this.throwKeyword; } }
     public ExpressionSyntax Expression { get { return this.expression; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -15342,7 +15342,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             case 0: return this.throwKeyword;
             case 1: return this.expression;
-            case 2: return this.semicolonToken;
+            case 2: return this.eosToken;
             default: return null;
         }
     }
@@ -15362,11 +15362,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitThrowStatement(this);
     }
 
-    public ThrowStatementSyntax Update(SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public ThrowStatementSyntax Update(SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
-        if (throwKeyword != this.ThrowKeyword || expression != this.Expression || semicolonToken != this.SemicolonToken)
+        if (throwKeyword != this.ThrowKeyword || expression != this.Expression || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ThrowStatement(throwKeyword, expression, semicolonToken);
+            var newNode = SyntaxFactory.ThrowStatement(throwKeyword, expression, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -15381,12 +15381,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ThrowStatementSyntax(this.Kind, this.throwKeyword, this.expression, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ThrowStatementSyntax(this.Kind, this.throwKeyword, this.expression, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ThrowStatementSyntax(this.Kind, this.throwKeyword, this.expression, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ThrowStatementSyntax(this.Kind, this.throwKeyword, this.expression, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ThrowStatementSyntax(ObjectReader reader)
@@ -15405,11 +15405,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expression);
          this.expression = expression;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -15418,7 +15418,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       base.WriteTo(writer);
       writer.WriteValue(this.throwKeyword);
       writer.WriteValue(this.expression);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ThrowStatementSyntax()
@@ -15432,9 +15432,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken yieldKeyword;
     internal readonly SyntaxToken returnOrBreakKeyword;
     internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal YieldStatementSyntax(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal YieldStatementSyntax(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 4;
@@ -15447,12 +15447,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal YieldStatementSyntax(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal YieldStatementSyntax(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -15466,12 +15466,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal YieldStatementSyntax(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    internal YieldStatementSyntax(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 4;
@@ -15484,14 +15484,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken YieldKeyword { get { return this.yieldKeyword; } }
     public SyntaxToken ReturnOrBreakKeyword { get { return this.returnOrBreakKeyword; } }
     public ExpressionSyntax Expression { get { return this.expression; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -15500,7 +15500,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 0: return this.yieldKeyword;
             case 1: return this.returnOrBreakKeyword;
             case 2: return this.expression;
-            case 3: return this.semicolonToken;
+            case 3: return this.eosToken;
             default: return null;
         }
     }
@@ -15520,11 +15520,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitYieldStatement(this);
     }
 
-    public YieldStatementSyntax Update(SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public YieldStatementSyntax Update(SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
-        if (yieldKeyword != this.YieldKeyword || returnOrBreakKeyword != this.ReturnOrBreakKeyword || expression != this.Expression || semicolonToken != this.SemicolonToken)
+        if (yieldKeyword != this.YieldKeyword || returnOrBreakKeyword != this.ReturnOrBreakKeyword || expression != this.Expression || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.YieldStatement(this.Kind, yieldKeyword, returnOrBreakKeyword, expression, semicolonToken);
+            var newNode = SyntaxFactory.YieldStatement(this.Kind, yieldKeyword, returnOrBreakKeyword, expression, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -15539,12 +15539,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new YieldStatementSyntax(this.Kind, this.yieldKeyword, this.returnOrBreakKeyword, this.expression, this.semicolonToken, diagnostics, GetAnnotations());
+         return new YieldStatementSyntax(this.Kind, this.yieldKeyword, this.returnOrBreakKeyword, this.expression, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new YieldStatementSyntax(this.Kind, this.yieldKeyword, this.returnOrBreakKeyword, this.expression, this.semicolonToken, GetDiagnostics(), annotations);
+         return new YieldStatementSyntax(this.Kind, this.yieldKeyword, this.returnOrBreakKeyword, this.expression, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal YieldStatementSyntax(ObjectReader reader)
@@ -15569,11 +15569,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expression);
          this.expression = expression;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -15583,7 +15583,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.yieldKeyword);
       writer.WriteValue(this.returnOrBreakKeyword);
       writer.WriteValue(this.expression);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static YieldStatementSyntax()
@@ -15772,9 +15772,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken openParenToken;
     internal readonly ExpressionSyntax condition;
     internal readonly SyntaxToken closeParenToken;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal DoStatementSyntax(SyntaxKind kind, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal DoStatementSyntax(SyntaxKind kind, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 7;
@@ -15790,12 +15790,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         this.condition = condition;
         this.AdjustFlagsAndWidth(closeParenToken);
         this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal DoStatementSyntax(SyntaxKind kind, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal DoStatementSyntax(SyntaxKind kind, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -15812,12 +15812,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         this.condition = condition;
         this.AdjustFlagsAndWidth(closeParenToken);
         this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal DoStatementSyntax(SyntaxKind kind, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken semicolonToken)
+    internal DoStatementSyntax(SyntaxKind kind, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 7;
@@ -15833,8 +15833,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         this.condition = condition;
         this.AdjustFlagsAndWidth(closeParenToken);
         this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     public SyntaxToken DoKeyword { get { return this.doKeyword; } }
@@ -15843,7 +15843,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public SyntaxToken OpenParenToken { get { return this.openParenToken; } }
     public ExpressionSyntax Condition { get { return this.condition; } }
     public SyntaxToken CloseParenToken { get { return this.closeParenToken; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -15855,7 +15855,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 3: return this.openParenToken;
             case 4: return this.condition;
             case 5: return this.closeParenToken;
-            case 6: return this.semicolonToken;
+            case 6: return this.eosToken;
             default: return null;
         }
     }
@@ -15875,11 +15875,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitDoStatement(this);
     }
 
-    public DoStatementSyntax Update(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken semicolonToken)
+    public DoStatementSyntax Update(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken)
     {
-        if (doKeyword != this.DoKeyword || statement != this.Statement || whileKeyword != this.WhileKeyword || openParenToken != this.OpenParenToken || condition != this.Condition || closeParenToken != this.CloseParenToken || semicolonToken != this.SemicolonToken)
+        if (doKeyword != this.DoKeyword || statement != this.Statement || whileKeyword != this.WhileKeyword || openParenToken != this.OpenParenToken || condition != this.Condition || closeParenToken != this.CloseParenToken || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.DoStatement(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken);
+            var newNode = SyntaxFactory.DoStatement(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -15894,12 +15894,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new DoStatementSyntax(this.Kind, this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.semicolonToken, diagnostics, GetAnnotations());
+         return new DoStatementSyntax(this.Kind, this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new DoStatementSyntax(this.Kind, this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.semicolonToken, GetDiagnostics(), annotations);
+         return new DoStatementSyntax(this.Kind, this.doKeyword, this.statement, this.whileKeyword, this.openParenToken, this.condition, this.closeParenToken, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal DoStatementSyntax(ObjectReader reader)
@@ -15942,11 +15942,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(closeParenToken);
          this.closeParenToken = closeParenToken;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -15959,7 +15959,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.openParenToken);
       writer.WriteValue(this.condition);
       writer.WriteValue(this.closeParenToken);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static DoStatementSyntax()
@@ -16276,278 +16276,26 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     public abstract SyntaxToken ForEachKeyword { get; }
 
-    public abstract SyntaxToken OpenParenToken { get; }
-
     public abstract SyntaxToken InKeyword { get; }
 
     public abstract ExpressionSyntax Expression { get; }
 
-    public abstract SyntaxToken CloseParenToken { get; }
-
-    public abstract StatementSyntax Statement { get; }
-  }
-
-  internal sealed partial class ForEachStatementSyntax : CommonForEachStatementSyntax
-  {
-    internal readonly SyntaxToken awaitKeyword;
-    internal readonly SyntaxToken forEachKeyword;
-    internal readonly SyntaxToken openParenToken;
-    internal readonly TypeSyntax type;
-    internal readonly SyntaxToken identifier;
-    internal readonly SyntaxToken inKeyword;
-    internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken closeParenToken;
-    internal readonly StatementSyntax statement;
-
-    internal ForEachStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken identifier, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-        : base(kind, diagnostics, annotations)
-    {
-        this.SlotCount = 9;
-        if (awaitKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(awaitKeyword);
-            this.awaitKeyword = awaitKeyword;
-        }
-        this.AdjustFlagsAndWidth(forEachKeyword);
-        this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
-        this.AdjustFlagsAndWidth(identifier);
-        this.identifier = identifier;
-        this.AdjustFlagsAndWidth(inKeyword);
-        this.inKeyword = inKeyword;
-        this.AdjustFlagsAndWidth(expression);
-        this.expression = expression;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(statement);
-        this.statement = statement;
-    }
-
-
-    internal ForEachStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken identifier, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement, SyntaxFactoryContext context)
-        : base(kind)
-    {
-        this.SetFactoryContext(context);
-        this.SlotCount = 9;
-        if (awaitKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(awaitKeyword);
-            this.awaitKeyword = awaitKeyword;
-        }
-        this.AdjustFlagsAndWidth(forEachKeyword);
-        this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
-        this.AdjustFlagsAndWidth(identifier);
-        this.identifier = identifier;
-        this.AdjustFlagsAndWidth(inKeyword);
-        this.inKeyword = inKeyword;
-        this.AdjustFlagsAndWidth(expression);
-        this.expression = expression;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(statement);
-        this.statement = statement;
-    }
-
-
-    internal ForEachStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken identifier, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
-        : base(kind)
-    {
-        this.SlotCount = 9;
-        if (awaitKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(awaitKeyword);
-            this.awaitKeyword = awaitKeyword;
-        }
-        this.AdjustFlagsAndWidth(forEachKeyword);
-        this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
-        this.AdjustFlagsAndWidth(identifier);
-        this.identifier = identifier;
-        this.AdjustFlagsAndWidth(inKeyword);
-        this.inKeyword = inKeyword;
-        this.AdjustFlagsAndWidth(expression);
-        this.expression = expression;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(statement);
-        this.statement = statement;
-    }
-
-    public override SyntaxToken AwaitKeyword { get { return this.awaitKeyword; } }
-    public override SyntaxToken ForEachKeyword { get { return this.forEachKeyword; } }
-    public override SyntaxToken OpenParenToken { get { return this.openParenToken; } }
-    public TypeSyntax Type { get { return this.type; } }
-    /// <summary>Gets the identifier.</summary>
-    public SyntaxToken Identifier { get { return this.identifier; } }
-    public override SyntaxToken InKeyword { get { return this.inKeyword; } }
-    public override ExpressionSyntax Expression { get { return this.expression; } }
-    public override SyntaxToken CloseParenToken { get { return this.closeParenToken; } }
-    public override StatementSyntax Statement { get { return this.statement; } }
-
-    internal override GreenNode GetSlot(int index)
-    {
-        switch (index)
-        {
-            case 0: return this.awaitKeyword;
-            case 1: return this.forEachKeyword;
-            case 2: return this.openParenToken;
-            case 3: return this.type;
-            case 4: return this.identifier;
-            case 5: return this.inKeyword;
-            case 6: return this.expression;
-            case 7: return this.closeParenToken;
-            case 8: return this.statement;
-            default: return null;
-        }
-    }
-
-    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
-    {
-      return new CSharp.Syntax.ForEachStatementSyntax(this, parent, position);
-    }
-
-    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
-    {
-        return visitor.VisitForEachStatement(this);
-    }
-
-    public override void Accept(CSharpSyntaxVisitor visitor)
-    {
-        visitor.VisitForEachStatement(this);
-    }
-
-    public ForEachStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken identifier, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-        if (awaitKeyword != this.AwaitKeyword || forEachKeyword != this.ForEachKeyword || openParenToken != this.OpenParenToken || type != this.Type || identifier != this.Identifier || inKeyword != this.InKeyword || expression != this.Expression || closeParenToken != this.CloseParenToken || statement != this.Statement)
-        {
-            var newNode = SyntaxFactory.ForEachStatement(awaitKeyword, forEachKeyword, openParenToken, type, identifier, inKeyword, expression, closeParenToken, statement);
-            var diags = this.GetDiagnostics();
-            if (diags != null && diags.Length > 0)
-               newNode = newNode.WithDiagnosticsGreen(diags);
-            var annotations = this.GetAnnotations();
-            if (annotations != null && annotations.Length > 0)
-               newNode = newNode.WithAnnotationsGreen(annotations);
-            return newNode;
-        }
-
-        return this;
-    }
-
-    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
-    {
-         return new ForEachStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.openParenToken, this.type, this.identifier, this.inKeyword, this.expression, this.closeParenToken, this.statement, diagnostics, GetAnnotations());
-    }
-
-    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
-    {
-         return new ForEachStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.openParenToken, this.type, this.identifier, this.inKeyword, this.expression, this.closeParenToken, this.statement, GetDiagnostics(), annotations);
-    }
-
-    internal ForEachStatementSyntax(ObjectReader reader)
-        : base(reader)
-    {
-      this.SlotCount = 9;
-      var awaitKeyword = (SyntaxToken)reader.ReadValue();
-      if (awaitKeyword != null)
-      {
-         AdjustFlagsAndWidth(awaitKeyword);
-         this.awaitKeyword = awaitKeyword;
-      }
-      var forEachKeyword = (SyntaxToken)reader.ReadValue();
-      if (forEachKeyword != null)
-      {
-         AdjustFlagsAndWidth(forEachKeyword);
-         this.forEachKeyword = forEachKeyword;
-      }
-      var openParenToken = (SyntaxToken)reader.ReadValue();
-      if (openParenToken != null)
-      {
-         AdjustFlagsAndWidth(openParenToken);
-         this.openParenToken = openParenToken;
-      }
-      var type = (TypeSyntax)reader.ReadValue();
-      if (type != null)
-      {
-         AdjustFlagsAndWidth(type);
-         this.type = type;
-      }
-      var identifier = (SyntaxToken)reader.ReadValue();
-      if (identifier != null)
-      {
-         AdjustFlagsAndWidth(identifier);
-         this.identifier = identifier;
-      }
-      var inKeyword = (SyntaxToken)reader.ReadValue();
-      if (inKeyword != null)
-      {
-         AdjustFlagsAndWidth(inKeyword);
-         this.inKeyword = inKeyword;
-      }
-      var expression = (ExpressionSyntax)reader.ReadValue();
-      if (expression != null)
-      {
-         AdjustFlagsAndWidth(expression);
-         this.expression = expression;
-      }
-      var closeParenToken = (SyntaxToken)reader.ReadValue();
-      if (closeParenToken != null)
-      {
-         AdjustFlagsAndWidth(closeParenToken);
-         this.closeParenToken = closeParenToken;
-      }
-      var statement = (StatementSyntax)reader.ReadValue();
-      if (statement != null)
-      {
-         AdjustFlagsAndWidth(statement);
-         this.statement = statement;
-      }
-    }
-
-    internal override void WriteTo(ObjectWriter writer)
-    {
-      base.WriteTo(writer);
-      writer.WriteValue(this.awaitKeyword);
-      writer.WriteValue(this.forEachKeyword);
-      writer.WriteValue(this.openParenToken);
-      writer.WriteValue(this.type);
-      writer.WriteValue(this.identifier);
-      writer.WriteValue(this.inKeyword);
-      writer.WriteValue(this.expression);
-      writer.WriteValue(this.closeParenToken);
-      writer.WriteValue(this.statement);
-    }
-
-    static ForEachStatementSyntax()
-    {
-       ObjectBinder.RegisterTypeReader(typeof(ForEachStatementSyntax), r => new ForEachStatementSyntax(r));
-    }
+    public abstract BlockSyntax Statement { get; }
   }
 
   internal sealed partial class ForEachVariableStatementSyntax : CommonForEachStatementSyntax
   {
     internal readonly SyntaxToken awaitKeyword;
     internal readonly SyntaxToken forEachKeyword;
-    internal readonly SyntaxToken openParenToken;
     internal readonly ExpressionSyntax variable;
     internal readonly SyntaxToken inKeyword;
     internal readonly ExpressionSyntax expression;
-    internal readonly SyntaxToken closeParenToken;
-    internal readonly StatementSyntax statement;
+    internal readonly BlockSyntax statement;
 
-    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 8;
+        this.SlotCount = 6;
         if (awaitKeyword != null)
         {
             this.AdjustFlagsAndWidth(awaitKeyword);
@@ -16555,26 +16303,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(forEachKeyword);
         this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
         this.AdjustFlagsAndWidth(variable);
         this.variable = variable;
         this.AdjustFlagsAndWidth(inKeyword);
         this.inKeyword = inKeyword;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
         this.AdjustFlagsAndWidth(statement);
         this.statement = statement;
     }
 
 
-    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement, SyntaxFactoryContext context)
+    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 8;
+        this.SlotCount = 6;
         if (awaitKeyword != null)
         {
             this.AdjustFlagsAndWidth(awaitKeyword);
@@ -16582,25 +16326,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(forEachKeyword);
         this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
         this.AdjustFlagsAndWidth(variable);
         this.variable = variable;
         this.AdjustFlagsAndWidth(inKeyword);
         this.inKeyword = inKeyword;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
         this.AdjustFlagsAndWidth(statement);
         this.statement = statement;
     }
 
 
-    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
+    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
         : base(kind)
     {
-        this.SlotCount = 8;
+        this.SlotCount = 6;
         if (awaitKeyword != null)
         {
             this.AdjustFlagsAndWidth(awaitKeyword);
@@ -16608,23 +16348,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(forEachKeyword);
         this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
         this.AdjustFlagsAndWidth(variable);
         this.variable = variable;
         this.AdjustFlagsAndWidth(inKeyword);
         this.inKeyword = inKeyword;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
         this.AdjustFlagsAndWidth(statement);
         this.statement = statement;
     }
 
     public override SyntaxToken AwaitKeyword { get { return this.awaitKeyword; } }
     public override SyntaxToken ForEachKeyword { get { return this.forEachKeyword; } }
-    public override SyntaxToken OpenParenToken { get { return this.openParenToken; } }
     /// <summary>
     /// The variable(s) of the loop. In correct code this is a tuple
     /// literal, declaration expression with a tuple designator, or
@@ -16634,8 +16369,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public ExpressionSyntax Variable { get { return this.variable; } }
     public override SyntaxToken InKeyword { get { return this.inKeyword; } }
     public override ExpressionSyntax Expression { get { return this.expression; } }
-    public override SyntaxToken CloseParenToken { get { return this.closeParenToken; } }
-    public override StatementSyntax Statement { get { return this.statement; } }
+    public override BlockSyntax Statement { get { return this.statement; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -16643,12 +16377,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         {
             case 0: return this.awaitKeyword;
             case 1: return this.forEachKeyword;
-            case 2: return this.openParenToken;
-            case 3: return this.variable;
-            case 4: return this.inKeyword;
-            case 5: return this.expression;
-            case 6: return this.closeParenToken;
-            case 7: return this.statement;
+            case 2: return this.variable;
+            case 3: return this.inKeyword;
+            case 4: return this.expression;
+            case 5: return this.statement;
             default: return null;
         }
     }
@@ -16668,11 +16400,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitForEachVariableStatement(this);
     }
 
-    public ForEachVariableStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
+    public ForEachVariableStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
-        if (awaitKeyword != this.AwaitKeyword || forEachKeyword != this.ForEachKeyword || openParenToken != this.OpenParenToken || variable != this.Variable || inKeyword != this.InKeyword || expression != this.Expression || closeParenToken != this.CloseParenToken || statement != this.Statement)
+        if (awaitKeyword != this.AwaitKeyword || forEachKeyword != this.ForEachKeyword || variable != this.Variable || inKeyword != this.InKeyword || expression != this.Expression || statement != this.Statement)
         {
-            var newNode = SyntaxFactory.ForEachVariableStatement(awaitKeyword, forEachKeyword, openParenToken, variable, inKeyword, expression, closeParenToken, statement);
+            var newNode = SyntaxFactory.ForEachVariableStatement(awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -16687,18 +16419,18 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ForEachVariableStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.openParenToken, this.variable, this.inKeyword, this.expression, this.closeParenToken, this.statement, diagnostics, GetAnnotations());
+         return new ForEachVariableStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.variable, this.inKeyword, this.expression, this.statement, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ForEachVariableStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.openParenToken, this.variable, this.inKeyword, this.expression, this.closeParenToken, this.statement, GetDiagnostics(), annotations);
+         return new ForEachVariableStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.variable, this.inKeyword, this.expression, this.statement, GetDiagnostics(), annotations);
     }
 
     internal ForEachVariableStatementSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 8;
+      this.SlotCount = 6;
       var awaitKeyword = (SyntaxToken)reader.ReadValue();
       if (awaitKeyword != null)
       {
@@ -16710,12 +16442,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       {
          AdjustFlagsAndWidth(forEachKeyword);
          this.forEachKeyword = forEachKeyword;
-      }
-      var openParenToken = (SyntaxToken)reader.ReadValue();
-      if (openParenToken != null)
-      {
-         AdjustFlagsAndWidth(openParenToken);
-         this.openParenToken = openParenToken;
       }
       var variable = (ExpressionSyntax)reader.ReadValue();
       if (variable != null)
@@ -16735,13 +16461,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expression);
          this.expression = expression;
       }
-      var closeParenToken = (SyntaxToken)reader.ReadValue();
-      if (closeParenToken != null)
-      {
-         AdjustFlagsAndWidth(closeParenToken);
-         this.closeParenToken = closeParenToken;
-      }
-      var statement = (StatementSyntax)reader.ReadValue();
+      var statement = (BlockSyntax)reader.ReadValue();
       if (statement != null)
       {
          AdjustFlagsAndWidth(statement);
@@ -16754,11 +16474,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       base.WriteTo(writer);
       writer.WriteValue(this.awaitKeyword);
       writer.WriteValue(this.forEachKeyword);
-      writer.WriteValue(this.openParenToken);
       writer.WriteValue(this.variable);
       writer.WriteValue(this.inKeyword);
       writer.WriteValue(this.expression);
-      writer.WriteValue(this.closeParenToken);
       writer.WriteValue(this.statement);
     }
 
@@ -20126,9 +19844,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken externKeyword;
     internal readonly SyntaxToken aliasKeyword;
     internal readonly SyntaxToken identifier;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ExternAliasDirectiveSyntax(SyntaxKind kind, SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ExternAliasDirectiveSyntax(SyntaxKind kind, SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 4;
@@ -20138,12 +19856,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         this.aliasKeyword = aliasKeyword;
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ExternAliasDirectiveSyntax(SyntaxKind kind, SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ExternAliasDirectiveSyntax(SyntaxKind kind, SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -20154,12 +19872,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         this.aliasKeyword = aliasKeyword;
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal ExternAliasDirectiveSyntax(SyntaxKind kind, SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken semicolonToken)
+    internal ExternAliasDirectiveSyntax(SyntaxKind kind, SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 4;
@@ -20169,8 +19887,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         this.aliasKeyword = aliasKeyword;
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     /// <summary>SyntaxToken representing the extern keyword.</summary>
@@ -20180,7 +19898,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
     /// <summary>SyntaxToken representing the semicolon token.</summary>
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -20189,7 +19907,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 0: return this.externKeyword;
             case 1: return this.aliasKeyword;
             case 2: return this.identifier;
-            case 3: return this.semicolonToken;
+            case 3: return this.eosToken;
             default: return null;
         }
     }
@@ -20209,11 +19927,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitExternAliasDirective(this);
     }
 
-    public ExternAliasDirectiveSyntax Update(SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken semicolonToken)
+    public ExternAliasDirectiveSyntax Update(SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken eosToken)
     {
-        if (externKeyword != this.ExternKeyword || aliasKeyword != this.AliasKeyword || identifier != this.Identifier || semicolonToken != this.SemicolonToken)
+        if (externKeyword != this.ExternKeyword || aliasKeyword != this.AliasKeyword || identifier != this.Identifier || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ExternAliasDirective(externKeyword, aliasKeyword, identifier, semicolonToken);
+            var newNode = SyntaxFactory.ExternAliasDirective(externKeyword, aliasKeyword, identifier, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -20228,12 +19946,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ExternAliasDirectiveSyntax(this.Kind, this.externKeyword, this.aliasKeyword, this.identifier, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ExternAliasDirectiveSyntax(this.Kind, this.externKeyword, this.aliasKeyword, this.identifier, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ExternAliasDirectiveSyntax(this.Kind, this.externKeyword, this.aliasKeyword, this.identifier, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ExternAliasDirectiveSyntax(this.Kind, this.externKeyword, this.aliasKeyword, this.identifier, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ExternAliasDirectiveSyntax(ObjectReader reader)
@@ -20258,11 +19976,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(identifier);
          this.identifier = identifier;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -20272,7 +19990,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.externKeyword);
       writer.WriteValue(this.aliasKeyword);
       writer.WriteValue(this.identifier);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ExternAliasDirectiveSyntax()
@@ -20498,9 +20216,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly GreenNode usings;
     internal readonly GreenNode members;
     internal readonly SyntaxToken closeBraceToken;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal NamespaceDeclarationSyntax(SyntaxKind kind, SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, GreenNode externs, GreenNode usings, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal NamespaceDeclarationSyntax(SyntaxKind kind, SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, GreenNode externs, GreenNode usings, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 8;
@@ -20527,15 +20245,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal NamespaceDeclarationSyntax(SyntaxKind kind, SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, GreenNode externs, GreenNode usings, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal NamespaceDeclarationSyntax(SyntaxKind kind, SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, GreenNode externs, GreenNode usings, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -20563,15 +20281,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal NamespaceDeclarationSyntax(SyntaxKind kind, SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, GreenNode externs, GreenNode usings, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    internal NamespaceDeclarationSyntax(SyntaxKind kind, SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, GreenNode externs, GreenNode usings, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 8;
@@ -20598,10 +20316,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -20613,7 +20331,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> Members { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax>(this.members); } }
     public SyntaxToken CloseBraceToken { get { return this.closeBraceToken; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -20626,7 +20344,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 4: return this.usings;
             case 5: return this.members;
             case 6: return this.closeBraceToken;
-            case 7: return this.semicolonToken;
+            case 7: return this.eosToken;
             default: return null;
         }
     }
@@ -20646,11 +20364,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitNamespaceDeclaration(this);
     }
 
-    public NamespaceDeclarationSyntax Update(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ExternAliasDirectiveSyntax> externs, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ImportDirectiveSyntax> usings, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public NamespaceDeclarationSyntax Update(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ExternAliasDirectiveSyntax> externs, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ImportDirectiveSyntax> usings, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
-        if (namespaceKeyword != this.NamespaceKeyword || name != this.Name || openBraceToken != this.OpenBraceToken || externs != this.Externs || usings != this.Usings || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
+        if (namespaceKeyword != this.NamespaceKeyword || name != this.Name || openBraceToken != this.OpenBraceToken || externs != this.Externs || usings != this.Usings || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.NamespaceDeclaration(namespaceKeyword, name, openBraceToken, externs, usings, members, closeBraceToken, semicolonToken);
+            var newNode = SyntaxFactory.NamespaceDeclaration(namespaceKeyword, name, openBraceToken, externs, usings, members, closeBraceToken, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -20665,12 +20383,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new NamespaceDeclarationSyntax(this.Kind, this.namespaceKeyword, this.name, this.openBraceToken, this.externs, this.usings, this.members, this.closeBraceToken, this.semicolonToken, diagnostics, GetAnnotations());
+         return new NamespaceDeclarationSyntax(this.Kind, this.namespaceKeyword, this.name, this.openBraceToken, this.externs, this.usings, this.members, this.closeBraceToken, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new NamespaceDeclarationSyntax(this.Kind, this.namespaceKeyword, this.name, this.openBraceToken, this.externs, this.usings, this.members, this.closeBraceToken, this.semicolonToken, GetDiagnostics(), annotations);
+         return new NamespaceDeclarationSyntax(this.Kind, this.namespaceKeyword, this.name, this.openBraceToken, this.externs, this.usings, this.members, this.closeBraceToken, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal NamespaceDeclarationSyntax(ObjectReader reader)
@@ -20719,11 +20437,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(closeBraceToken);
          this.closeBraceToken = closeBraceToken;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -20737,7 +20455,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.usings);
       writer.WriteValue(this.members);
       writer.WriteValue(this.closeBraceToken);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static NamespaceDeclarationSyntax()
@@ -21840,7 +21558,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public abstract SyntaxToken CloseBraceToken { get; }
 
     /// <summary>Gets the optional semicolon token.</summary>
-    public abstract SyntaxToken SemicolonToken { get; }
+    public abstract SyntaxToken EosToken { get; }
   }
 
   /// <summary>Base class for type declaration syntax (class, struct, interface).</summary>
@@ -21885,9 +21603,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken openBraceToken;
     internal readonly GreenNode members;
     internal readonly SyntaxToken closeBraceToken;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ClassDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ClassDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 11;
@@ -21929,15 +21647,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal ClassDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ClassDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -21980,15 +21698,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal ClassDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    internal ClassDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 11;
@@ -22030,10 +21748,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -22048,7 +21766,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override SyntaxToken OpenBraceToken { get { return this.openBraceToken; } }
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> Members { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax>(this.members); } }
     public override SyntaxToken CloseBraceToken { get { return this.closeBraceToken; } }
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -22064,7 +21782,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 7: return this.openBraceToken;
             case 8: return this.members;
             case 9: return this.closeBraceToken;
-            case 10: return this.semicolonToken;
+            case 10: return this.eosToken;
             default: return null;
         }
     }
@@ -22084,11 +21802,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitClassDeclaration(this);
     }
 
-    public ClassDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public ClassDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ClassDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+            var newNode = SyntaxFactory.ClassDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -22103,12 +21821,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ClassDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ClassDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ClassDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ClassDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ClassDeclarationSyntax(ObjectReader reader)
@@ -22175,11 +21893,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(closeBraceToken);
          this.closeBraceToken = closeBraceToken;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -22196,7 +21914,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.openBraceToken);
       writer.WriteValue(this.members);
       writer.WriteValue(this.closeBraceToken);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ClassDeclarationSyntax()
@@ -22218,9 +21936,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken openBraceToken;
     internal readonly GreenNode members;
     internal readonly SyntaxToken closeBraceToken;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal StructDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal StructDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 11;
@@ -22262,15 +21980,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal StructDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal StructDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -22313,15 +22031,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal StructDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    internal StructDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 11;
@@ -22363,10 +22081,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -22381,7 +22099,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override SyntaxToken OpenBraceToken { get { return this.openBraceToken; } }
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> Members { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax>(this.members); } }
     public override SyntaxToken CloseBraceToken { get { return this.closeBraceToken; } }
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -22397,7 +22115,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 7: return this.openBraceToken;
             case 8: return this.members;
             case 9: return this.closeBraceToken;
-            case 10: return this.semicolonToken;
+            case 10: return this.eosToken;
             default: return null;
         }
     }
@@ -22417,11 +22135,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitStructDeclaration(this);
     }
 
-    public StructDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public StructDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.StructDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+            var newNode = SyntaxFactory.StructDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -22436,12 +22154,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new StructDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, diagnostics, GetAnnotations());
+         return new StructDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new StructDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, GetDiagnostics(), annotations);
+         return new StructDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal StructDeclarationSyntax(ObjectReader reader)
@@ -22508,11 +22226,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(closeBraceToken);
          this.closeBraceToken = closeBraceToken;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -22529,7 +22247,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.openBraceToken);
       writer.WriteValue(this.members);
       writer.WriteValue(this.closeBraceToken);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static StructDeclarationSyntax()
@@ -22551,9 +22269,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken openBraceToken;
     internal readonly GreenNode members;
     internal readonly SyntaxToken closeBraceToken;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal InterfaceDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal InterfaceDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 11;
@@ -22595,15 +22313,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal InterfaceDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal InterfaceDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -22646,15 +22364,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal InterfaceDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    internal InterfaceDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 11;
@@ -22696,10 +22414,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -22714,7 +22432,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override SyntaxToken OpenBraceToken { get { return this.openBraceToken; } }
     public override Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> Members { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax>(this.members); } }
     public override SyntaxToken CloseBraceToken { get { return this.closeBraceToken; } }
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -22730,7 +22448,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 7: return this.openBraceToken;
             case 8: return this.members;
             case 9: return this.closeBraceToken;
-            case 10: return this.semicolonToken;
+            case 10: return this.eosToken;
             default: return null;
         }
     }
@@ -22750,11 +22468,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitInterfaceDeclaration(this);
     }
 
-    public InterfaceDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public InterfaceDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || baseList != this.BaseList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.InterfaceDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+            var newNode = SyntaxFactory.InterfaceDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -22769,12 +22487,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new InterfaceDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, diagnostics, GetAnnotations());
+         return new InterfaceDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new InterfaceDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, GetDiagnostics(), annotations);
+         return new InterfaceDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.baseList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal InterfaceDeclarationSyntax(ObjectReader reader)
@@ -22841,11 +22559,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(closeBraceToken);
          this.closeBraceToken = closeBraceToken;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -22862,7 +22580,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.openBraceToken);
       writer.WriteValue(this.members);
       writer.WriteValue(this.closeBraceToken);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static InterfaceDeclarationSyntax()
@@ -22882,9 +22600,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken openBraceToken;
     internal readonly GreenNode members;
     internal readonly SyntaxToken closeBraceToken;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal EnumDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal EnumDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 9;
@@ -22916,15 +22634,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal EnumDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal EnumDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -22957,15 +22675,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal EnumDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    internal EnumDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 9;
@@ -22997,10 +22715,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(closeBraceToken);
         this.closeBraceToken = closeBraceToken;
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -23015,7 +22733,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> Members { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax>(new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.members)); } }
     public override SyntaxToken CloseBraceToken { get { return this.closeBraceToken; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -23029,7 +22747,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 5: return this.openBraceToken;
             case 6: return this.members;
             case 7: return this.closeBraceToken;
-            case 8: return this.semicolonToken;
+            case 8: return this.eosToken;
             default: return null;
         }
     }
@@ -23049,11 +22767,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitEnumDeclaration(this);
     }
 
-    public EnumDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public EnumDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || enumKeyword != this.EnumKeyword || identifier != this.Identifier || baseList != this.BaseList || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || enumKeyword != this.EnumKeyword || identifier != this.Identifier || baseList != this.BaseList || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.EnumDeclaration(attributeLists, modifiers, enumKeyword, identifier, baseList, openBraceToken, members, closeBraceToken, semicolonToken);
+            var newNode = SyntaxFactory.EnumDeclaration(attributeLists, modifiers, enumKeyword, identifier, baseList, openBraceToken, members, closeBraceToken, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -23068,12 +22786,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new EnumDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.enumKeyword, this.identifier, this.baseList, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, diagnostics, GetAnnotations());
+         return new EnumDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.enumKeyword, this.identifier, this.baseList, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new EnumDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.enumKeyword, this.identifier, this.baseList, this.openBraceToken, this.members, this.closeBraceToken, this.semicolonToken, GetDiagnostics(), annotations);
+         return new EnumDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.enumKeyword, this.identifier, this.baseList, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal EnumDeclarationSyntax(ObjectReader reader)
@@ -23128,11 +22846,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(closeBraceToken);
          this.closeBraceToken = closeBraceToken;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -23147,7 +22865,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.openBraceToken);
       writer.WriteValue(this.members);
       writer.WriteValue(this.closeBraceToken);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static EnumDeclarationSyntax()
@@ -23167,9 +22885,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly TypeParameterListSyntax typeParameterList;
     internal readonly ParameterListSyntax parameterList;
     internal readonly GreenNode constraintClauses;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal DelegateDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal DelegateDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 9;
@@ -23201,12 +22919,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(constraintClauses);
             this.constraintClauses = constraintClauses;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal DelegateDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal DelegateDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -23239,12 +22957,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(constraintClauses);
             this.constraintClauses = constraintClauses;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
 
-    internal DelegateDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, SyntaxToken semicolonToken)
+    internal DelegateDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, GreenNode constraintClauses, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 9;
@@ -23276,8 +22994,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(constraintClauses);
             this.constraintClauses = constraintClauses;
         }
-        this.AdjustFlagsAndWidth(semicolonToken);
-        this.semicolonToken = semicolonToken;
+        this.AdjustFlagsAndWidth(eosToken);
+        this.eosToken = eosToken;
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
@@ -23296,7 +23014,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     /// <summary>Gets the constraint clause list.</summary>
     public Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> ConstraintClauses { get { return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax>(this.constraintClauses); } }
     /// <summary>Gets the semicolon token.</summary>
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -23310,7 +23028,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 5: return this.typeParameterList;
             case 6: return this.parameterList;
             case 7: return this.constraintClauses;
-            case 8: return this.semicolonToken;
+            case 8: return this.eosToken;
             default: return null;
         }
     }
@@ -23330,11 +23048,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitDelegateDeclaration(this);
     }
 
-    public DelegateDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken semicolonToken)
+    public DelegateDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || delegateKeyword != this.DelegateKeyword || returnType != this.ReturnType || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || constraintClauses != this.ConstraintClauses || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || delegateKeyword != this.DelegateKeyword || returnType != this.ReturnType || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || constraintClauses != this.ConstraintClauses || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.DelegateDeclaration(attributeLists, modifiers, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses, semicolonToken);
+            var newNode = SyntaxFactory.DelegateDeclaration(attributeLists, modifiers, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -23349,12 +23067,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new DelegateDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.delegateKeyword, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.semicolonToken, diagnostics, GetAnnotations());
+         return new DelegateDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.delegateKeyword, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new DelegateDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.delegateKeyword, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.semicolonToken, GetDiagnostics(), annotations);
+         return new DelegateDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.delegateKeyword, this.returnType, this.identifier, this.typeParameterList, this.parameterList, this.constraintClauses, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal DelegateDeclarationSyntax(ObjectReader reader)
@@ -23409,11 +23127,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(constraintClauses);
          this.constraintClauses = constraintClauses;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -23428,7 +23146,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.typeParameterList);
       writer.WriteValue(this.parameterList);
       writer.WriteValue(this.constraintClauses);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static DelegateDeclarationSyntax()
@@ -24988,7 +24706,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public abstract ArrowExpressionClauseSyntax ExpressionBody { get; }
 
     /// <summary>Gets the optional semicolon token.</summary>
-    public abstract SyntaxToken SemicolonToken { get; }
+    public abstract SyntaxToken EosToken { get; }
   }
 
   /// <summary>Method declaration syntax.</summary>
@@ -25006,9 +24724,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly GreenNode constraintClauses;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 13;
@@ -25063,15 +24781,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -25127,15 +24845,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 13;
@@ -25190,10 +24908,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -25215,7 +24933,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override BlockSyntax Body { get { return this.body; } }
     public override ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -25233,7 +24951,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 9: return this.constraintClauses;
             case 10: return this.body;
             case 11: return this.expressionBody;
-            case 12: return this.semicolonToken;
+            case 12: return this.eosToken;
             default: return null;
         }
     }
@@ -25253,11 +24971,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitMethodDeclaration(this);
     }
 
-    public MethodDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public MethodDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || returnToken != this.ReturnToken || returnType != this.ReturnType || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || returnToken != this.ReturnToken || returnType != this.ReturnType || constraintClauses != this.ConstraintClauses || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -25272,12 +24990,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal MethodDeclarationSyntax(ObjectReader reader)
@@ -25356,11 +25074,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -25379,7 +25097,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.constraintClauses);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static MethodDeclarationSyntax()
@@ -25399,9 +25117,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly ParameterListSyntax parameterList;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal OperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal OperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 9;
@@ -25433,15 +25151,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal OperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal OperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -25474,15 +25192,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal OperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal OperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 9;
@@ -25514,10 +25232,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -25532,7 +25250,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override ParameterListSyntax ParameterList { get { return this.parameterList; } }
     public override BlockSyntax Body { get { return this.body; } }
     public override ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -25546,7 +25264,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 5: return this.parameterList;
             case 6: return this.body;
             case 7: return this.expressionBody;
-            case 8: return this.semicolonToken;
+            case 8: return this.eosToken;
             default: return null;
         }
     }
@@ -25566,11 +25284,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitOperatorDeclaration(this);
     }
 
-    public OperatorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public OperatorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || returnType != this.ReturnType || operatorKeyword != this.OperatorKeyword || operatorToken != this.OperatorToken || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || returnType != this.ReturnType || operatorKeyword != this.OperatorKeyword || operatorToken != this.OperatorToken || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.OperatorDeclaration(attributeLists, modifiers, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.OperatorDeclaration(attributeLists, modifiers, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -25585,12 +25303,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new OperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.returnType, this.operatorKeyword, this.operatorToken, this.parameterList, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new OperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.returnType, this.operatorKeyword, this.operatorToken, this.parameterList, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new OperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.returnType, this.operatorKeyword, this.operatorToken, this.parameterList, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new OperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.returnType, this.operatorKeyword, this.operatorToken, this.parameterList, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal OperatorDeclarationSyntax(ObjectReader reader)
@@ -25645,11 +25363,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -25664,7 +25382,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.parameterList);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static OperatorDeclarationSyntax()
@@ -25684,9 +25402,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly ParameterListSyntax parameterList;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ConversionOperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ConversionOperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 9;
@@ -25718,15 +25436,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal ConversionOperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ConversionOperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -25759,15 +25477,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal ConversionOperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal ConversionOperatorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 9;
@@ -25799,10 +25517,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -25818,7 +25536,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override BlockSyntax Body { get { return this.body; } }
     public override ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -25832,7 +25550,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 5: return this.parameterList;
             case 6: return this.body;
             case 7: return this.expressionBody;
-            case 8: return this.semicolonToken;
+            case 8: return this.eosToken;
             default: return null;
         }
     }
@@ -25852,11 +25570,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitConversionOperatorDeclaration(this);
     }
 
-    public ConversionOperatorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public ConversionOperatorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || implicitOrExplicitKeyword != this.ImplicitOrExplicitKeyword || operatorKeyword != this.OperatorKeyword || type != this.Type || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || implicitOrExplicitKeyword != this.ImplicitOrExplicitKeyword || operatorKeyword != this.OperatorKeyword || type != this.Type || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ConversionOperatorDeclaration(attributeLists, modifiers, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.ConversionOperatorDeclaration(attributeLists, modifiers, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -25871,12 +25589,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ConversionOperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.implicitOrExplicitKeyword, this.operatorKeyword, this.type, this.parameterList, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ConversionOperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.implicitOrExplicitKeyword, this.operatorKeyword, this.type, this.parameterList, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ConversionOperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.implicitOrExplicitKeyword, this.operatorKeyword, this.type, this.parameterList, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ConversionOperatorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.implicitOrExplicitKeyword, this.operatorKeyword, this.type, this.parameterList, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ConversionOperatorDeclarationSyntax(ObjectReader reader)
@@ -25931,11 +25649,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -25950,7 +25668,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.parameterList);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ConversionOperatorDeclarationSyntax()
@@ -25969,9 +25687,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly ConstructorInitializerSyntax initializer;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal ConstructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ConstructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 8;
@@ -26004,15 +25722,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal ConstructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal ConstructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -26046,15 +25764,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal ConstructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal ConstructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 8;
@@ -26087,10 +25805,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -26103,7 +25821,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override BlockSyntax Body { get { return this.body; } }
     public override ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -26116,7 +25834,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 4: return this.initializer;
             case 5: return this.body;
             case 6: return this.expressionBody;
-            case 7: return this.semicolonToken;
+            case 7: return this.eosToken;
             default: return null;
         }
     }
@@ -26136,11 +25854,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitConstructorDeclaration(this);
     }
 
-    public ConstructorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public ConstructorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || constructorKeyword != this.ConstructorKeyword || parameterList != this.ParameterList || initializer != this.Initializer || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || constructorKeyword != this.ConstructorKeyword || parameterList != this.ParameterList || initializer != this.Initializer || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.ConstructorDeclaration(attributeLists, modifiers, constructorKeyword, parameterList, initializer, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.ConstructorDeclaration(attributeLists, modifiers, constructorKeyword, parameterList, initializer, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -26155,12 +25873,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ConstructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.constructorKeyword, this.parameterList, this.initializer, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new ConstructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.constructorKeyword, this.parameterList, this.initializer, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ConstructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.constructorKeyword, this.parameterList, this.initializer, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new ConstructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.constructorKeyword, this.parameterList, this.initializer, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal ConstructorDeclarationSyntax(ObjectReader reader)
@@ -26209,11 +25927,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -26227,7 +25945,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.initializer);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static ConstructorDeclarationSyntax()
@@ -26389,9 +26107,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly ParameterListSyntax parameterList;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal DestructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal DestructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 8;
@@ -26421,15 +26139,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal DestructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal DestructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -26460,15 +26178,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal DestructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal DestructorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 8;
@@ -26498,10 +26216,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -26515,7 +26233,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override BlockSyntax Body { get { return this.body; } }
     public override ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public override SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -26528,7 +26246,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 4: return this.parameterList;
             case 5: return this.body;
             case 6: return this.expressionBody;
-            case 7: return this.semicolonToken;
+            case 7: return this.eosToken;
             default: return null;
         }
     }
@@ -26548,11 +26266,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitDestructorDeclaration(this);
     }
 
-    public DestructorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public DestructorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || tildeToken != this.TildeToken || identifier != this.Identifier || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || tildeToken != this.TildeToken || identifier != this.Identifier || parameterList != this.ParameterList || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.DestructorDeclaration(attributeLists, modifiers, tildeToken, identifier, parameterList, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.DestructorDeclaration(attributeLists, modifiers, tildeToken, identifier, parameterList, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -26567,12 +26285,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new DestructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.tildeToken, this.identifier, this.parameterList, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new DestructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.tildeToken, this.identifier, this.parameterList, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new DestructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.tildeToken, this.identifier, this.parameterList, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new DestructorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.tildeToken, this.identifier, this.parameterList, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal DestructorDeclarationSyntax(ObjectReader reader)
@@ -26621,11 +26339,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -26639,7 +26357,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.parameterList);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static DestructorDeclarationSyntax()
@@ -26692,9 +26410,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly AccessorListSyntax accessorList;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
     internal readonly EqualsValueClauseSyntax initializer;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 11;
@@ -26736,15 +26454,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(initializer);
             this.initializer = initializer;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -26787,15 +26505,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(initializer);
             this.initializer = initializer;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    internal PropertyDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 11;
@@ -26837,10 +26555,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(initializer);
             this.initializer = initializer;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -26857,7 +26575,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override AccessorListSyntax AccessorList { get { return this.accessorList; } }
     public ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     public EqualsValueClauseSyntax Initializer { get { return this.initializer; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -26873,7 +26591,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 7: return this.accessorList;
             case 8: return this.expressionBody;
             case 9: return this.initializer;
-            case 10: return this.semicolonToken;
+            case 10: return this.eosToken;
             default: return null;
         }
     }
@@ -26893,11 +26611,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitPropertyDeclaration(this);
     }
 
-    public PropertyDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public PropertyDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || returnToken != this.ReturnToken || type != this.Type || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || initializer != this.Initializer || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || returnToken != this.ReturnToken || type != this.Type || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || initializer != this.Initializer || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.PropertyDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken);
+            var newNode = SyntaxFactory.PropertyDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -26912,12 +26630,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.returnToken, this.type, this.accessorList, this.expressionBody, this.initializer, this.semicolonToken, diagnostics, GetAnnotations());
+         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.returnToken, this.type, this.accessorList, this.expressionBody, this.initializer, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.returnToken, this.type, this.accessorList, this.expressionBody, this.initializer, this.semicolonToken, GetDiagnostics(), annotations);
+         return new PropertyDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.returnToken, this.type, this.accessorList, this.expressionBody, this.initializer, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal PropertyDeclarationSyntax(ObjectReader reader)
@@ -26984,11 +26702,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(initializer);
          this.initializer = initializer;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -27005,7 +26723,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.accessorList);
       writer.WriteValue(this.expressionBody);
       writer.WriteValue(this.initializer);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static PropertyDeclarationSyntax()
@@ -27381,9 +27099,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly BracketedParameterListSyntax parameterList;
     internal readonly AccessorListSyntax accessorList;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal IndexerDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal IndexerDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 9;
@@ -27418,15 +27136,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal IndexerDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal IndexerDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -27462,15 +27180,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal IndexerDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal IndexerDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 9;
@@ -27505,10 +27223,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -27521,7 +27239,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public BracketedParameterListSyntax ParameterList { get { return this.parameterList; } }
     public override AccessorListSyntax AccessorList { get { return this.accessorList; } }
     public ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -27535,7 +27253,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 5: return this.parameterList;
             case 6: return this.accessorList;
             case 7: return this.expressionBody;
-            case 8: return this.semicolonToken;
+            case 8: return this.eosToken;
             default: return null;
         }
     }
@@ -27555,11 +27273,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitIndexerDeclaration(this);
     }
 
-    public IndexerDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public IndexerDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || thisKeyword != this.ThisKeyword || parameterList != this.ParameterList || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || thisKeyword != this.ThisKeyword || parameterList != this.ParameterList || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -27574,12 +27292,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new IndexerDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.explicitInterfaceSpecifier, this.thisKeyword, this.parameterList, this.accessorList, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new IndexerDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.explicitInterfaceSpecifier, this.thisKeyword, this.parameterList, this.accessorList, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new IndexerDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.explicitInterfaceSpecifier, this.thisKeyword, this.parameterList, this.accessorList, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new IndexerDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.type, this.explicitInterfaceSpecifier, this.thisKeyword, this.parameterList, this.accessorList, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal IndexerDeclarationSyntax(ObjectReader reader)
@@ -27634,11 +27352,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -27653,7 +27371,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.parameterList);
       writer.WriteValue(this.accessorList);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static IndexerDeclarationSyntax()
@@ -27818,9 +27536,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     internal readonly SyntaxToken keyword;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
-    internal readonly SyntaxToken semicolonToken;
+    internal readonly SyntaxToken eosToken;
 
-    internal AccessorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal AccessorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 6;
@@ -27846,15 +27564,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal AccessorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken, SyntaxFactoryContext context)
+    internal AccessorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
@@ -27881,15 +27599,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
 
-    internal AccessorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    internal AccessorDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
         this.SlotCount = 6;
@@ -27915,10 +27633,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expressionBody);
             this.expressionBody = expressionBody;
         }
-        if (semicolonToken != null)
+        if (eosToken != null)
         {
-            this.AdjustFlagsAndWidth(semicolonToken);
-            this.semicolonToken = semicolonToken;
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
         }
     }
 
@@ -27933,7 +27651,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     /// <summary>Gets the optional expression body.</summary>
     public ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
-    public SyntaxToken SemicolonToken { get { return this.semicolonToken; } }
+    public SyntaxToken EosToken { get { return this.eosToken; } }
 
     internal override GreenNode GetSlot(int index)
     {
@@ -27944,7 +27662,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             case 2: return this.keyword;
             case 3: return this.body;
             case 4: return this.expressionBody;
-            case 5: return this.semicolonToken;
+            case 5: return this.eosToken;
             default: return null;
         }
     }
@@ -27964,11 +27682,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitAccessorDeclaration(this);
     }
 
-    public AccessorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public AccessorDeclarationSyntax Update(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || body != this.Body || expressionBody != this.ExpressionBody || semicolonToken != this.SemicolonToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.AccessorDeclaration(this.Kind, attributeLists, modifiers, keyword, body, expressionBody, semicolonToken);
+            var newNode = SyntaxFactory.AccessorDeclaration(this.Kind, attributeLists, modifiers, keyword, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -27983,12 +27701,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new AccessorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.body, this.expressionBody, this.semicolonToken, diagnostics, GetAnnotations());
+         return new AccessorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new AccessorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.body, this.expressionBody, this.semicolonToken, GetDiagnostics(), annotations);
+         return new AccessorDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal AccessorDeclarationSyntax(ObjectReader reader)
@@ -28025,11 +27743,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(expressionBody);
          this.expressionBody = expressionBody;
       }
-      var semicolonToken = (SyntaxToken)reader.ReadValue();
-      if (semicolonToken != null)
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
       {
-         AdjustFlagsAndWidth(semicolonToken);
-         this.semicolonToken = semicolonToken;
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
       }
     }
 
@@ -28041,7 +27759,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       writer.WriteValue(this.keyword);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
-      writer.WriteValue(this.semicolonToken);
+      writer.WriteValue(this.eosToken);
     }
 
     static AccessorDeclarationSyntax()
@@ -36025,11 +35743,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
-    public virtual TResult VisitForEachStatement(ForEachStatementSyntax node)
-    {
-      return this.DefaultVisit(node);
-    }
-
     public virtual TResult VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
     {
       return this.DefaultVisit(node);
@@ -37095,11 +36808,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     }
 
     public virtual void VisitForStatement(ForStatementSyntax node)
-    {
-      this.DefaultVisit(node);
-    }
-
-    public virtual void VisitForEachStatement(ForEachStatementSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -38336,8 +38044,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(modifiers, returnType, identifier, typeParameterList, parameterList, constraintClauses, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(modifiers, returnType, identifier, typeParameterList, parameterList, constraintClauses, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
@@ -38345,8 +38053,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var awaitKeyword = (SyntaxToken)this.Visit(node.AwaitKeyword);
       var usingKeyword = (SyntaxToken)this.Visit(node.UsingKeyword);
       var declaration = (VariableDeclarationSyntax)this.Visit(node.Declaration);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(awaitKeyword, usingKeyword, declaration, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(awaitKeyword, usingKeyword, declaration, eosToken);
     }
 
     public override CSharpSyntaxNode VisitVariableDeclaration(VariableDeclarationSyntax node)
@@ -38389,14 +38097,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
     public override CSharpSyntaxNode VisitExpressionStatement(ExpressionStatementSyntax node)
     {
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(expression, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(expression, eosToken);
     }
 
     public override CSharpSyntaxNode VisitEmptyStatement(EmptyStatementSyntax node)
     {
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(eosToken);
     }
 
     public override CSharpSyntaxNode VisitLabeledStatement(LabeledStatementSyntax node)
@@ -38412,38 +38120,38 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var gotoKeyword = (SyntaxToken)this.Visit(node.GotoKeyword);
       var caseOrDefaultKeyword = (SyntaxToken)this.Visit(node.CaseOrDefaultKeyword);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(gotoKeyword, caseOrDefaultKeyword, expression, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(gotoKeyword, caseOrDefaultKeyword, expression, eosToken);
     }
 
     public override CSharpSyntaxNode VisitBreakStatement(BreakStatementSyntax node)
     {
       var breakKeyword = (SyntaxToken)this.Visit(node.BreakKeyword);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(breakKeyword, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(breakKeyword, eosToken);
     }
 
     public override CSharpSyntaxNode VisitContinueStatement(ContinueStatementSyntax node)
     {
       var continueKeyword = (SyntaxToken)this.Visit(node.ContinueKeyword);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(continueKeyword, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(continueKeyword, eosToken);
     }
 
     public override CSharpSyntaxNode VisitReturnStatement(ReturnStatementSyntax node)
     {
       var returnKeyword = (SyntaxToken)this.Visit(node.ReturnKeyword);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(returnKeyword, expression, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(returnKeyword, expression, eosToken);
     }
 
     public override CSharpSyntaxNode VisitThrowStatement(ThrowStatementSyntax node)
     {
       var throwKeyword = (SyntaxToken)this.Visit(node.ThrowKeyword);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(throwKeyword, expression, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(throwKeyword, expression, eosToken);
     }
 
     public override CSharpSyntaxNode VisitYieldStatement(YieldStatementSyntax node)
@@ -38451,8 +38159,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var yieldKeyword = (SyntaxToken)this.Visit(node.YieldKeyword);
       var returnOrBreakKeyword = (SyntaxToken)this.Visit(node.ReturnOrBreakKeyword);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(yieldKeyword, returnOrBreakKeyword, expression, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(yieldKeyword, returnOrBreakKeyword, expression, eosToken);
     }
 
     public override CSharpSyntaxNode VisitWhileStatement(WhileStatementSyntax node)
@@ -38473,8 +38181,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var openParenToken = (SyntaxToken)this.Visit(node.OpenParenToken);
       var condition = (ExpressionSyntax)this.Visit(node.Condition);
       var closeParenToken = (SyntaxToken)this.Visit(node.CloseParenToken);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitForStatement(ForStatementSyntax node)
@@ -38492,31 +38200,15 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return node.Update(forKeyword, openParenToken, declaration, initializers, firstSemicolonToken, condition, secondSemicolonToken, incrementors, closeParenToken, statement);
     }
 
-    public override CSharpSyntaxNode VisitForEachStatement(ForEachStatementSyntax node)
-    {
-      var awaitKeyword = (SyntaxToken)this.Visit(node.AwaitKeyword);
-      var forEachKeyword = (SyntaxToken)this.Visit(node.ForEachKeyword);
-      var openParenToken = (SyntaxToken)this.Visit(node.OpenParenToken);
-      var type = (TypeSyntax)this.Visit(node.Type);
-      var identifier = (SyntaxToken)this.Visit(node.Identifier);
-      var inKeyword = (SyntaxToken)this.Visit(node.InKeyword);
-      var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var closeParenToken = (SyntaxToken)this.Visit(node.CloseParenToken);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
-      return node.Update(awaitKeyword, forEachKeyword, openParenToken, type, identifier, inKeyword, expression, closeParenToken, statement);
-    }
-
     public override CSharpSyntaxNode VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
     {
       var awaitKeyword = (SyntaxToken)this.Visit(node.AwaitKeyword);
       var forEachKeyword = (SyntaxToken)this.Visit(node.ForEachKeyword);
-      var openParenToken = (SyntaxToken)this.Visit(node.OpenParenToken);
       var variable = (ExpressionSyntax)this.Visit(node.Variable);
       var inKeyword = (SyntaxToken)this.Visit(node.InKeyword);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      var closeParenToken = (SyntaxToken)this.Visit(node.CloseParenToken);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
-      return node.Update(awaitKeyword, forEachKeyword, openParenToken, variable, inKeyword, expression, closeParenToken, statement);
+      var statement = (BlockSyntax)this.Visit(node.Statement);
+      return node.Update(awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
     }
 
     public override CSharpSyntaxNode VisitUsingStatement(UsingStatementSyntax node)
@@ -38701,8 +38393,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var externKeyword = (SyntaxToken)this.Visit(node.ExternKeyword);
       var aliasKeyword = (SyntaxToken)this.Visit(node.AliasKeyword);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(externKeyword, aliasKeyword, identifier, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(externKeyword, aliasKeyword, identifier, eosToken);
     }
 
     public override CSharpSyntaxNode VisitImportDirective(ImportDirectiveSyntax node)
@@ -38724,8 +38416,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var usings = this.VisitList(node.Usings);
       var members = this.VisitList(node.Members);
       var closeBraceToken = (SyntaxToken)this.Visit(node.CloseBraceToken);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(namespaceKeyword, name, openBraceToken, externs, usings, members, closeBraceToken, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(namespaceKeyword, name, openBraceToken, externs, usings, members, closeBraceToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitAttributeTargetSpecifier(AttributeTargetSpecifierSyntax node)
@@ -38795,8 +38487,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var openBraceToken = (SyntaxToken)this.Visit(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = (SyntaxToken)this.Visit(node.CloseBraceToken);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
@@ -38811,8 +38503,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var openBraceToken = (SyntaxToken)this.Visit(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = (SyntaxToken)this.Visit(node.CloseBraceToken);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
@@ -38827,8 +38519,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var openBraceToken = (SyntaxToken)this.Visit(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = (SyntaxToken)this.Visit(node.CloseBraceToken);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitEnumDeclaration(EnumDeclarationSyntax node)
@@ -38841,8 +38533,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var openBraceToken = (SyntaxToken)this.Visit(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = (SyntaxToken)this.Visit(node.CloseBraceToken);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, enumKeyword, identifier, baseList, openBraceToken, members, closeBraceToken, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, enumKeyword, identifier, baseList, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitDelegateDeclaration(DelegateDeclarationSyntax node)
@@ -38855,8 +38547,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var typeParameterList = (TypeParameterListSyntax)this.Visit(node.TypeParameterList);
       var parameterList = (ParameterListSyntax)this.Visit(node.ParameterList);
       var constraintClauses = this.VisitList(node.ConstraintClauses);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses, eosToken);
     }
 
     public override CSharpSyntaxNode VisitEnumMemberDeclaration(EnumMemberDeclarationSyntax node)
@@ -38950,8 +38642,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitOperatorDeclaration(OperatorDeclarationSyntax node)
@@ -38964,8 +38656,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var parameterList = (ParameterListSyntax)this.Visit(node.ParameterList);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitConversionOperatorDeclaration(ConversionOperatorDeclarationSyntax node)
@@ -38978,8 +38670,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var parameterList = (ParameterListSyntax)this.Visit(node.ParameterList);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
@@ -38991,8 +38683,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var initializer = (ConstructorInitializerSyntax)this.Visit(node.Initializer);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, constructorKeyword, parameterList, initializer, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, constructorKeyword, parameterList, initializer, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitConstructorInitializer(ConstructorInitializerSyntax node)
@@ -39012,8 +38704,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var parameterList = (ParameterListSyntax)this.Visit(node.ParameterList);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, tildeToken, identifier, parameterList, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, tildeToken, identifier, parameterList, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitPropertyDeclaration(PropertyDeclarationSyntax node)
@@ -39028,8 +38720,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var accessorList = (AccessorListSyntax)this.Visit(node.AccessorList);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, eosToken);
     }
 
     public override CSharpSyntaxNode VisitArrowExpressionClause(ArrowExpressionClauseSyntax node)
@@ -39061,8 +38753,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var parameterList = (BracketedParameterListSyntax)this.Visit(node.ParameterList);
       var accessorList = (AccessorListSyntax)this.Visit(node.AccessorList);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitAccessorList(AccessorListSyntax node)
@@ -39080,8 +38772,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       var keyword = (SyntaxToken)this.Visit(node.Keyword);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
-      var semicolonToken = (SyntaxToken)this.Visit(node.SemicolonToken);
-      return node.Update(attributeLists, modifiers, keyword, body, expressionBody, semicolonToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, keyword, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitParameterList(ParameterListSyntax node)
@@ -39644,20 +39336,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       {
         case SyntaxKind.BoolKeyword:
         case SyntaxKind.ByteKeyword:
-        case SyntaxKind.SByteKeyword:
+        case SyntaxKind.UInt8Keyword:
+        case SyntaxKind.Int8Keyword:
         case SyntaxKind.IntKeyword:
         case SyntaxKind.UIntKeyword:
-        case SyntaxKind.ShortKeyword:
-        case SyntaxKind.UShortKeyword:
-        case SyntaxKind.LongKeyword:
-        case SyntaxKind.ULongKeyword:
-        case SyntaxKind.FloatKeyword:
-        case SyntaxKind.DoubleKeyword:
+        case SyntaxKind.Int32Keyword:
+        case SyntaxKind.UInt32Keyword:
+        case SyntaxKind.Int16Keyword:
+        case SyntaxKind.UInt16Keyword:
+        case SyntaxKind.Int64Keyword:
+        case SyntaxKind.UInt64Keyword:
+        case SyntaxKind.Float32Keyword:
+        case SyntaxKind.Float64Keyword:
         case SyntaxKind.DecimalKeyword:
         case SyntaxKind.StringKeyword:
         case SyntaxKind.CharKeyword:
         case SyntaxKind.ObjectKeyword:
-        case SyntaxKind.VoidKeyword:
           break;
         default:
           throw new ArgumentException(nameof(keyword));
@@ -42370,7 +42064,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public LocalFunctionStatementSyntax LocalFunctionStatement(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public LocalFunctionStatementSyntax LocalFunctionStatement(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (returnType == null)
@@ -42386,23 +42080,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new LocalFunctionStatementSyntax(SyntaxKind.LocalFunctionStatement, modifiers.Node, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, body, expressionBody, semicolonToken, this.context);
+      return new LocalFunctionStatementSyntax(SyntaxKind.LocalFunctionStatement, modifiers.Node, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, body, expressionBody, eosToken, this.context);
     }
 
-    public LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
 #if DEBUG
       if (awaitKeyword != null)
@@ -42429,18 +42124,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, semicolonToken, this.context);
+      return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, eosToken, this.context);
     }
 
     public VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
@@ -42601,27 +42297,28 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression, SyntaxToken eosToken)
     {
 #if DEBUG
       if (expression == null)
         throw new ArgumentNullException(nameof(expression));
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ExpressionStatement, expression, semicolonToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ExpressionStatement, expression, eosToken, this.context, out hash);
       if (cached != null) return (ExpressionStatementSyntax)cached;
 
-      var result = new ExpressionStatementSyntax(SyntaxKind.ExpressionStatement, expression, semicolonToken, this.context);
+      var result = new ExpressionStatementSyntax(SyntaxKind.ExpressionStatement, expression, eosToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -42630,25 +42327,26 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public EmptyStatementSyntax EmptyStatement(SyntaxToken semicolonToken)
+    public EmptyStatementSyntax EmptyStatement(SyntaxToken eosToken)
     {
 #if DEBUG
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.EmptyStatement, semicolonToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.EmptyStatement, eosToken, this.context, out hash);
       if (cached != null) return (EmptyStatementSyntax)cached;
 
-      var result = new EmptyStatementSyntax(SyntaxKind.EmptyStatement, semicolonToken, this.context);
+      var result = new EmptyStatementSyntax(SyntaxKind.EmptyStatement, eosToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -42695,7 +42393,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public GotoStatementSyntax GotoStatement(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public GotoStatementSyntax GotoStatement(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
       switch (kind)
       {
@@ -42728,21 +42426,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
           throw new ArgumentException(nameof(caseOrDefaultKeyword));
       }
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new GotoStatementSyntax(kind, gotoKeyword, caseOrDefaultKeyword, expression, semicolonToken, this.context);
+      return new GotoStatementSyntax(kind, gotoKeyword, caseOrDefaultKeyword, expression, eosToken, this.context);
     }
 
-    public BreakStatementSyntax BreakStatement(SyntaxToken breakKeyword, SyntaxToken semicolonToken)
+    public BreakStatementSyntax BreakStatement(SyntaxToken breakKeyword, SyntaxToken eosToken)
     {
 #if DEBUG
       if (breakKeyword == null)
@@ -42754,22 +42453,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(breakKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.BreakStatement, breakKeyword, semicolonToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.BreakStatement, breakKeyword, eosToken, this.context, out hash);
       if (cached != null) return (BreakStatementSyntax)cached;
 
-      var result = new BreakStatementSyntax(SyntaxKind.BreakStatement, breakKeyword, semicolonToken, this.context);
+      var result = new BreakStatementSyntax(SyntaxKind.BreakStatement, breakKeyword, eosToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -42778,7 +42478,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ContinueStatementSyntax ContinueStatement(SyntaxToken continueKeyword, SyntaxToken semicolonToken)
+    public ContinueStatementSyntax ContinueStatement(SyntaxToken continueKeyword, SyntaxToken eosToken)
     {
 #if DEBUG
       if (continueKeyword == null)
@@ -42790,22 +42490,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(continueKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ContinueStatement, continueKeyword, semicolonToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ContinueStatement, continueKeyword, eosToken, this.context, out hash);
       if (cached != null) return (ContinueStatementSyntax)cached;
 
-      var result = new ContinueStatementSyntax(SyntaxKind.ContinueStatement, continueKeyword, semicolonToken, this.context);
+      var result = new ContinueStatementSyntax(SyntaxKind.ContinueStatement, continueKeyword, eosToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -42814,7 +42515,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ReturnStatementSyntax ReturnStatement(SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public ReturnStatementSyntax ReturnStatement(SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
 #if DEBUG
       if (returnKeyword == null)
@@ -42826,22 +42527,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ReturnStatement, returnKeyword, expression, semicolonToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ReturnStatement, returnKeyword, expression, eosToken, this.context, out hash);
       if (cached != null) return (ReturnStatementSyntax)cached;
 
-      var result = new ReturnStatementSyntax(SyntaxKind.ReturnStatement, returnKeyword, expression, semicolonToken, this.context);
+      var result = new ReturnStatementSyntax(SyntaxKind.ReturnStatement, returnKeyword, expression, eosToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -42850,7 +42552,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ThrowStatementSyntax ThrowStatement(SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public ThrowStatementSyntax ThrowStatement(SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
 #if DEBUG
       if (throwKeyword == null)
@@ -42862,22 +42564,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(throwKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ThrowStatement, throwKeyword, expression, semicolonToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ThrowStatement, throwKeyword, expression, eosToken, this.context, out hash);
       if (cached != null) return (ThrowStatementSyntax)cached;
 
-      var result = new ThrowStatementSyntax(SyntaxKind.ThrowStatement, throwKeyword, expression, semicolonToken, this.context);
+      var result = new ThrowStatementSyntax(SyntaxKind.ThrowStatement, throwKeyword, expression, eosToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -42886,7 +42589,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public YieldStatementSyntax YieldStatement(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public YieldStatementSyntax YieldStatement(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
       switch (kind)
       {
@@ -42916,18 +42619,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnOrBreakKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new YieldStatementSyntax(kind, yieldKeyword, returnOrBreakKeyword, expression, semicolonToken, this.context);
+      return new YieldStatementSyntax(kind, yieldKeyword, returnOrBreakKeyword, expression, eosToken, this.context);
     }
 
     public WhileStatementSyntax WhileStatement(SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -42969,7 +42673,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new WhileStatementSyntax(SyntaxKind.WhileStatement, whileKeyword, openParenToken, condition, closeParenToken, statement, this.context);
     }
 
-    public DoStatementSyntax DoStatement(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken semicolonToken)
+    public DoStatementSyntax DoStatement(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (doKeyword == null)
@@ -43012,18 +42716,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeParenToken));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new DoStatementSyntax(SyntaxKind.DoStatement, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken, this.context);
+      return new DoStatementSyntax(SyntaxKind.DoStatement, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken, this.context);
     }
 
     public ForStatementSyntax ForStatement(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -43081,7 +42786,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new ForStatementSyntax(SyntaxKind.ForStatement, forKeyword, openParenToken, declaration, initializers.Node, firstSemicolonToken, condition, secondSemicolonToken, incrementors.Node, closeParenToken, statement, this.context);
     }
 
-    public ForEachStatementSyntax ForEachStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken identifier, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
+    public ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
 #if DEBUG
       if (awaitKeyword != null)
@@ -43103,85 +42808,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
           break;
         default:
           throw new ArgumentException(nameof(forEachKeyword));
-      }
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
-      if (identifier == null)
-        throw new ArgumentNullException(nameof(identifier));
-      switch (identifier.Kind)
-      {
-        case SyntaxKind.IdentifierToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(identifier));
-      }
-      if (inKeyword == null)
-        throw new ArgumentNullException(nameof(inKeyword));
-      switch (inKeyword.Kind)
-      {
-        case SyntaxKind.InKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(inKeyword));
-      }
-      if (expression == null)
-        throw new ArgumentNullException(nameof(expression));
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (statement == null)
-        throw new ArgumentNullException(nameof(statement));
-#endif
-
-      return new ForEachStatementSyntax(SyntaxKind.ForEachStatement, awaitKeyword, forEachKeyword, openParenToken, type, identifier, inKeyword, expression, closeParenToken, statement, this.context);
-    }
-
-    public ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-#if DEBUG
-      if (awaitKeyword != null)
-      {
-      switch (awaitKeyword.Kind)
-      {
-        case SyntaxKind.AwaitKeyword:
-        case SyntaxKind.None:
-          break;
-        default:
-          throw new ArgumentException(nameof(awaitKeyword));
-      }
-      }
-      if (forEachKeyword == null)
-        throw new ArgumentNullException(nameof(forEachKeyword));
-      switch (forEachKeyword.Kind)
-      {
-        case SyntaxKind.ForEachKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(forEachKeyword));
-      }
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
       }
       if (variable == null)
         throw new ArgumentNullException(nameof(variable));
@@ -43196,20 +42822,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (expression == null)
         throw new ArgumentNullException(nameof(expression));
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
       if (statement == null)
         throw new ArgumentNullException(nameof(statement));
 #endif
 
-      return new ForEachVariableStatementSyntax(SyntaxKind.ForEachVariableStatement, awaitKeyword, forEachKeyword, openParenToken, variable, inKeyword, expression, closeParenToken, statement, this.context);
+      return new ForEachVariableStatementSyntax(SyntaxKind.ForEachVariableStatement, awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement, this.context);
     }
 
     public UsingStatementSyntax UsingStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -43831,7 +43448,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new CompilationUnitSyntax(SyntaxKind.CompilationUnit, externs.Node, usings.Node, attributeLists.Node, members.Node, endOfFileToken, this.context);
     }
 
-    public ExternAliasDirectiveSyntax ExternAliasDirective(SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken semicolonToken)
+    public ExternAliasDirectiveSyntax ExternAliasDirective(SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken eosToken)
     {
 #if DEBUG
       if (externKeyword == null)
@@ -43861,18 +43478,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new ExternAliasDirectiveSyntax(SyntaxKind.ExternAliasDirective, externKeyword, aliasKeyword, identifier, semicolonToken, this.context);
+      return new ExternAliasDirectiveSyntax(SyntaxKind.ExternAliasDirective, externKeyword, aliasKeyword, identifier, eosToken, this.context);
     }
 
     public ImportDirectiveSyntax ImportDirective(SyntaxToken importKeyword, SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken eosToken)
@@ -43904,7 +43522,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new ImportDirectiveSyntax(SyntaxKind.ImportDirective, importKeyword, staticKeyword, alias, name, eosToken, this.context);
     }
 
-    public NamespaceDeclarationSyntax NamespaceDeclaration(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ExternAliasDirectiveSyntax> externs, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ImportDirectiveSyntax> usings, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public NamespaceDeclarationSyntax NamespaceDeclaration(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ExternAliasDirectiveSyntax> externs, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ImportDirectiveSyntax> usings, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (namespaceKeyword == null)
@@ -43936,20 +43554,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new NamespaceDeclarationSyntax(SyntaxKind.NamespaceDeclaration, namespaceKeyword, name, openBraceToken, externs.Node, usings.Node, members.Node, closeBraceToken, semicolonToken, this.context);
+      return new NamespaceDeclarationSyntax(SyntaxKind.NamespaceDeclaration, namespaceKeyword, name, openBraceToken, externs.Node, usings.Node, members.Node, closeBraceToken, eosToken, this.context);
     }
 
     public AttributeTargetSpecifierSyntax AttributeTargetSpecifier(SyntaxToken identifier, SyntaxToken colonToken)
@@ -44160,7 +43779,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public ClassDeclarationSyntax ClassDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public ClassDeclarationSyntax ClassDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (keyword == null)
@@ -44199,23 +43818,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new ClassDeclarationSyntax(SyntaxKind.ClassDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, semicolonToken, this.context);
+      return new ClassDeclarationSyntax(SyntaxKind.ClassDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken, this.context);
     }
 
-    public StructDeclarationSyntax StructDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public StructDeclarationSyntax StructDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (keyword == null)
@@ -44254,23 +43874,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new StructDeclarationSyntax(SyntaxKind.StructDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, semicolonToken, this.context);
+      return new StructDeclarationSyntax(SyntaxKind.StructDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken, this.context);
     }
 
-    public InterfaceDeclarationSyntax InterfaceDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public InterfaceDeclarationSyntax InterfaceDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (keyword == null)
@@ -44309,23 +43930,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new InterfaceDeclarationSyntax(SyntaxKind.InterfaceDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, semicolonToken, this.context);
+      return new InterfaceDeclarationSyntax(SyntaxKind.InterfaceDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken, this.context);
     }
 
-    public EnumDeclarationSyntax EnumDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public EnumDeclarationSyntax EnumDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (enumKeyword == null)
@@ -44364,23 +43986,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new EnumDeclarationSyntax(SyntaxKind.EnumDeclaration, attributeLists.Node, modifiers.Node, enumKeyword, identifier, baseList, openBraceToken, members.Node, closeBraceToken, semicolonToken, this.context);
+      return new EnumDeclarationSyntax(SyntaxKind.EnumDeclaration, attributeLists.Node, modifiers.Node, enumKeyword, identifier, baseList, openBraceToken, members.Node, closeBraceToken, eosToken, this.context);
     }
 
-    public DelegateDeclarationSyntax DelegateDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken semicolonToken)
+    public DelegateDeclarationSyntax DelegateDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken eosToken)
     {
 #if DEBUG
       if (delegateKeyword == null)
@@ -44405,18 +44028,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new DelegateDeclarationSyntax(SyntaxKind.DelegateDeclaration, attributeLists.Node, modifiers.Node, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, semicolonToken, this.context);
+      return new DelegateDeclarationSyntax(SyntaxKind.DelegateDeclaration, attributeLists.Node, modifiers.Node, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, eosToken, this.context);
     }
 
     public EnumMemberDeclarationSyntax EnumMemberDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, EqualsValueClauseSyntax equalsValue)
@@ -44711,7 +44335,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (funcKeyword == null)
@@ -44745,23 +44369,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
           throw new ArgumentException(nameof(returnToken));
       }
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, body, expressionBody, semicolonToken, this.context);
+      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, body, expressionBody, eosToken, this.context);
     }
 
-    public OperatorDeclarationSyntax OperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public OperatorDeclarationSyntax OperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (returnType == null)
@@ -44808,23 +44433,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new OperatorDeclarationSyntax(SyntaxKind.OperatorDeclaration, attributeLists.Node, modifiers.Node, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, semicolonToken, this.context);
+      return new OperatorDeclarationSyntax(SyntaxKind.OperatorDeclaration, attributeLists.Node, modifiers.Node, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, eosToken, this.context);
     }
 
-    public ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (implicitOrExplicitKeyword == null)
@@ -44850,23 +44476,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         throw new ArgumentNullException(nameof(type));
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new ConversionOperatorDeclarationSyntax(SyntaxKind.ConversionOperatorDeclaration, attributeLists.Node, modifiers.Node, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, semicolonToken, this.context);
+      return new ConversionOperatorDeclarationSyntax(SyntaxKind.ConversionOperatorDeclaration, attributeLists.Node, modifiers.Node, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, eosToken, this.context);
     }
 
-    public ConstructorDeclarationSyntax ConstructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public ConstructorDeclarationSyntax ConstructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (constructorKeyword == null)
@@ -44880,20 +44507,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new ConstructorDeclarationSyntax(SyntaxKind.ConstructorDeclaration, attributeLists.Node, modifiers.Node, constructorKeyword, parameterList, initializer, body, expressionBody, semicolonToken, this.context);
+      return new ConstructorDeclarationSyntax(SyntaxKind.ConstructorDeclaration, attributeLists.Node, modifiers.Node, constructorKeyword, parameterList, initializer, body, expressionBody, eosToken, this.context);
     }
 
     public ConstructorInitializerSyntax ConstructorInitializer(SyntaxKind kind, SyntaxToken colonToken, SyntaxToken thisOrBaseKeyword, ArgumentListSyntax argumentList)
@@ -44943,7 +44571,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public DestructorDeclarationSyntax DestructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public DestructorDeclarationSyntax DestructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (tildeToken == null)
@@ -44966,23 +44594,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new DestructorDeclarationSyntax(SyntaxKind.DestructorDeclaration, attributeLists.Node, modifiers.Node, tildeToken, identifier, parameterList, body, expressionBody, semicolonToken, this.context);
+      return new DestructorDeclarationSyntax(SyntaxKind.DestructorDeclaration, attributeLists.Node, modifiers.Node, tildeToken, identifier, parameterList, body, expressionBody, eosToken, this.context);
     }
 
-    public PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken eosToken)
     {
 #if DEBUG
       if (funcKeyword == null)
@@ -45014,20 +44643,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken, this.context);
+      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, eosToken, this.context);
     }
 
     public ArrowExpressionClauseSyntax ArrowExpressionClause(SyntaxToken arrowToken, ExpressionSyntax expression)
@@ -45089,7 +44719,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new EventDeclarationSyntax(SyntaxKind.EventDeclaration, attributeLists.Node, modifiers.Node, eventKeyword, type, explicitInterfaceSpecifier, identifier, accessorList, this.context);
     }
 
-    public IndexerDeclarationSyntax IndexerDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public IndexerDeclarationSyntax IndexerDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (type == null)
@@ -45105,20 +44735,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new IndexerDeclarationSyntax(SyntaxKind.IndexerDeclaration, attributeLists.Node, modifiers.Node, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, semicolonToken, this.context);
+      return new IndexerDeclarationSyntax(SyntaxKind.IndexerDeclaration, attributeLists.Node, modifiers.Node, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, eosToken, this.context);
     }
 
     public AccessorListSyntax AccessorList(SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AccessorDeclarationSyntax> accessors, SyntaxToken closeBraceToken)
@@ -45157,7 +44788,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
       switch (kind)
       {
@@ -45184,20 +44815,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(keyword));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new AccessorDeclarationSyntax(kind, attributeLists.Node, modifiers.Node, keyword, body, expressionBody, semicolonToken, this.context);
+      return new AccessorDeclarationSyntax(kind, attributeLists.Node, modifiers.Node, keyword, body, expressionBody, eosToken, this.context);
     }
 
     public ParameterListSyntax ParameterList(SyntaxToken openParenToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ParameterSyntax> parameters, SyntaxToken closeParenToken)
@@ -46981,20 +46613,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       {
         case SyntaxKind.BoolKeyword:
         case SyntaxKind.ByteKeyword:
-        case SyntaxKind.SByteKeyword:
+        case SyntaxKind.UInt8Keyword:
+        case SyntaxKind.Int8Keyword:
         case SyntaxKind.IntKeyword:
         case SyntaxKind.UIntKeyword:
-        case SyntaxKind.ShortKeyword:
-        case SyntaxKind.UShortKeyword:
-        case SyntaxKind.LongKeyword:
-        case SyntaxKind.ULongKeyword:
-        case SyntaxKind.FloatKeyword:
-        case SyntaxKind.DoubleKeyword:
+        case SyntaxKind.Int32Keyword:
+        case SyntaxKind.UInt32Keyword:
+        case SyntaxKind.Int16Keyword:
+        case SyntaxKind.UInt16Keyword:
+        case SyntaxKind.Int64Keyword:
+        case SyntaxKind.UInt64Keyword:
+        case SyntaxKind.Float32Keyword:
+        case SyntaxKind.Float64Keyword:
         case SyntaxKind.DecimalKeyword:
         case SyntaxKind.StringKeyword:
         case SyntaxKind.CharKeyword:
         case SyntaxKind.ObjectKeyword:
-        case SyntaxKind.VoidKeyword:
           break;
         default:
           throw new ArgumentException(nameof(keyword));
@@ -49707,7 +49341,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static LocalFunctionStatementSyntax LocalFunctionStatement(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static LocalFunctionStatementSyntax LocalFunctionStatement(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (returnType == null)
@@ -49723,23 +49357,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new LocalFunctionStatementSyntax(SyntaxKind.LocalFunctionStatement, modifiers.Node, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, body, expressionBody, semicolonToken);
+      return new LocalFunctionStatementSyntax(SyntaxKind.LocalFunctionStatement, modifiers.Node, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, body, expressionBody, eosToken);
     }
 
-    public static LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken semicolonToken)
+    public static LocalDeclarationStatementSyntax LocalDeclarationStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
 #if DEBUG
       if (awaitKeyword != null)
@@ -49766,18 +49401,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, semicolonToken);
+      return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, eosToken);
     }
 
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
@@ -49938,27 +49574,28 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public static ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression, SyntaxToken eosToken)
     {
 #if DEBUG
       if (expression == null)
         throw new ArgumentNullException(nameof(expression));
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ExpressionStatement, expression, semicolonToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ExpressionStatement, expression, eosToken, out hash);
       if (cached != null) return (ExpressionStatementSyntax)cached;
 
-      var result = new ExpressionStatementSyntax(SyntaxKind.ExpressionStatement, expression, semicolonToken);
+      var result = new ExpressionStatementSyntax(SyntaxKind.ExpressionStatement, expression, eosToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -49967,25 +49604,26 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static EmptyStatementSyntax EmptyStatement(SyntaxToken semicolonToken)
+    public static EmptyStatementSyntax EmptyStatement(SyntaxToken eosToken)
     {
 #if DEBUG
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.EmptyStatement, semicolonToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.EmptyStatement, eosToken, out hash);
       if (cached != null) return (EmptyStatementSyntax)cached;
 
-      var result = new EmptyStatementSyntax(SyntaxKind.EmptyStatement, semicolonToken);
+      var result = new EmptyStatementSyntax(SyntaxKind.EmptyStatement, eosToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -50032,7 +49670,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static GotoStatementSyntax GotoStatement(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public static GotoStatementSyntax GotoStatement(SyntaxKind kind, SyntaxToken gotoKeyword, SyntaxToken caseOrDefaultKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
       switch (kind)
       {
@@ -50065,21 +49703,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
           throw new ArgumentException(nameof(caseOrDefaultKeyword));
       }
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new GotoStatementSyntax(kind, gotoKeyword, caseOrDefaultKeyword, expression, semicolonToken);
+      return new GotoStatementSyntax(kind, gotoKeyword, caseOrDefaultKeyword, expression, eosToken);
     }
 
-    public static BreakStatementSyntax BreakStatement(SyntaxToken breakKeyword, SyntaxToken semicolonToken)
+    public static BreakStatementSyntax BreakStatement(SyntaxToken breakKeyword, SyntaxToken eosToken)
     {
 #if DEBUG
       if (breakKeyword == null)
@@ -50091,22 +49730,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(breakKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.BreakStatement, breakKeyword, semicolonToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.BreakStatement, breakKeyword, eosToken, out hash);
       if (cached != null) return (BreakStatementSyntax)cached;
 
-      var result = new BreakStatementSyntax(SyntaxKind.BreakStatement, breakKeyword, semicolonToken);
+      var result = new BreakStatementSyntax(SyntaxKind.BreakStatement, breakKeyword, eosToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -50115,7 +49755,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ContinueStatementSyntax ContinueStatement(SyntaxToken continueKeyword, SyntaxToken semicolonToken)
+    public static ContinueStatementSyntax ContinueStatement(SyntaxToken continueKeyword, SyntaxToken eosToken)
     {
 #if DEBUG
       if (continueKeyword == null)
@@ -50127,22 +49767,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(continueKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ContinueStatement, continueKeyword, semicolonToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ContinueStatement, continueKeyword, eosToken, out hash);
       if (cached != null) return (ContinueStatementSyntax)cached;
 
-      var result = new ContinueStatementSyntax(SyntaxKind.ContinueStatement, continueKeyword, semicolonToken);
+      var result = new ContinueStatementSyntax(SyntaxKind.ContinueStatement, continueKeyword, eosToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -50151,7 +49792,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ReturnStatementSyntax ReturnStatement(SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public static ReturnStatementSyntax ReturnStatement(SyntaxToken returnKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
 #if DEBUG
       if (returnKeyword == null)
@@ -50163,22 +49804,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ReturnStatement, returnKeyword, expression, semicolonToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ReturnStatement, returnKeyword, expression, eosToken, out hash);
       if (cached != null) return (ReturnStatementSyntax)cached;
 
-      var result = new ReturnStatementSyntax(SyntaxKind.ReturnStatement, returnKeyword, expression, semicolonToken);
+      var result = new ReturnStatementSyntax(SyntaxKind.ReturnStatement, returnKeyword, expression, eosToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -50187,7 +49829,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ThrowStatementSyntax ThrowStatement(SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public static ThrowStatementSyntax ThrowStatement(SyntaxToken throwKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
 #if DEBUG
       if (throwKeyword == null)
@@ -50199,22 +49841,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(throwKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ThrowStatement, throwKeyword, expression, semicolonToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ThrowStatement, throwKeyword, expression, eosToken, out hash);
       if (cached != null) return (ThrowStatementSyntax)cached;
 
-      var result = new ThrowStatementSyntax(SyntaxKind.ThrowStatement, throwKeyword, expression, semicolonToken);
+      var result = new ThrowStatementSyntax(SyntaxKind.ThrowStatement, throwKeyword, expression, eosToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -50223,7 +49866,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static YieldStatementSyntax YieldStatement(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+    public static YieldStatementSyntax YieldStatement(SyntaxKind kind, SyntaxToken yieldKeyword, SyntaxToken returnOrBreakKeyword, ExpressionSyntax expression, SyntaxToken eosToken)
     {
       switch (kind)
       {
@@ -50253,18 +49896,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnOrBreakKeyword));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new YieldStatementSyntax(kind, yieldKeyword, returnOrBreakKeyword, expression, semicolonToken);
+      return new YieldStatementSyntax(kind, yieldKeyword, returnOrBreakKeyword, expression, eosToken);
     }
 
     public static WhileStatementSyntax WhileStatement(SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -50306,7 +49950,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new WhileStatementSyntax(SyntaxKind.WhileStatement, whileKeyword, openParenToken, condition, closeParenToken, statement);
     }
 
-    public static DoStatementSyntax DoStatement(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken semicolonToken)
+    public static DoStatementSyntax DoStatement(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (doKeyword == null)
@@ -50349,18 +49993,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeParenToken));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new DoStatementSyntax(SyntaxKind.DoStatement, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, semicolonToken);
+      return new DoStatementSyntax(SyntaxKind.DoStatement, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken);
     }
 
     public static ForStatementSyntax ForStatement(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -50418,7 +50063,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new ForStatementSyntax(SyntaxKind.ForStatement, forKeyword, openParenToken, declaration, initializers.Node, firstSemicolonToken, condition, secondSemicolonToken, incrementors.Node, closeParenToken, statement);
     }
 
-    public static ForEachStatementSyntax ForEachStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken identifier, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
+    public static ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
 #if DEBUG
       if (awaitKeyword != null)
@@ -50440,85 +50085,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
           break;
         default:
           throw new ArgumentException(nameof(forEachKeyword));
-      }
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
-      if (identifier == null)
-        throw new ArgumentNullException(nameof(identifier));
-      switch (identifier.Kind)
-      {
-        case SyntaxKind.IdentifierToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(identifier));
-      }
-      if (inKeyword == null)
-        throw new ArgumentNullException(nameof(inKeyword));
-      switch (inKeyword.Kind)
-      {
-        case SyntaxKind.InKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(inKeyword));
-      }
-      if (expression == null)
-        throw new ArgumentNullException(nameof(expression));
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (statement == null)
-        throw new ArgumentNullException(nameof(statement));
-#endif
-
-      return new ForEachStatementSyntax(SyntaxKind.ForEachStatement, awaitKeyword, forEachKeyword, openParenToken, type, identifier, inKeyword, expression, closeParenToken, statement);
-    }
-
-    public static ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, SyntaxToken openParenToken, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-#if DEBUG
-      if (awaitKeyword != null)
-      {
-      switch (awaitKeyword.Kind)
-      {
-        case SyntaxKind.AwaitKeyword:
-        case SyntaxKind.None:
-          break;
-        default:
-          throw new ArgumentException(nameof(awaitKeyword));
-      }
-      }
-      if (forEachKeyword == null)
-        throw new ArgumentNullException(nameof(forEachKeyword));
-      switch (forEachKeyword.Kind)
-      {
-        case SyntaxKind.ForEachKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(forEachKeyword));
-      }
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
       }
       if (variable == null)
         throw new ArgumentNullException(nameof(variable));
@@ -50533,20 +50099,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (expression == null)
         throw new ArgumentNullException(nameof(expression));
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
       if (statement == null)
         throw new ArgumentNullException(nameof(statement));
 #endif
 
-      return new ForEachVariableStatementSyntax(SyntaxKind.ForEachVariableStatement, awaitKeyword, forEachKeyword, openParenToken, variable, inKeyword, expression, closeParenToken, statement);
+      return new ForEachVariableStatementSyntax(SyntaxKind.ForEachVariableStatement, awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
     }
 
     public static UsingStatementSyntax UsingStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -51168,7 +50725,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new CompilationUnitSyntax(SyntaxKind.CompilationUnit, externs.Node, usings.Node, attributeLists.Node, members.Node, endOfFileToken);
     }
 
-    public static ExternAliasDirectiveSyntax ExternAliasDirective(SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken semicolonToken)
+    public static ExternAliasDirectiveSyntax ExternAliasDirective(SyntaxToken externKeyword, SyntaxToken aliasKeyword, SyntaxToken identifier, SyntaxToken eosToken)
     {
 #if DEBUG
       if (externKeyword == null)
@@ -51198,18 +50755,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new ExternAliasDirectiveSyntax(SyntaxKind.ExternAliasDirective, externKeyword, aliasKeyword, identifier, semicolonToken);
+      return new ExternAliasDirectiveSyntax(SyntaxKind.ExternAliasDirective, externKeyword, aliasKeyword, identifier, eosToken);
     }
 
     public static ImportDirectiveSyntax ImportDirective(SyntaxToken importKeyword, SyntaxToken staticKeyword, NameEqualsSyntax alias, NameSyntax name, SyntaxToken eosToken)
@@ -51241,7 +50799,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new ImportDirectiveSyntax(SyntaxKind.ImportDirective, importKeyword, staticKeyword, alias, name, eosToken);
     }
 
-    public static NamespaceDeclarationSyntax NamespaceDeclaration(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ExternAliasDirectiveSyntax> externs, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ImportDirectiveSyntax> usings, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public static NamespaceDeclarationSyntax NamespaceDeclaration(SyntaxToken namespaceKeyword, NameSyntax name, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ExternAliasDirectiveSyntax> externs, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ImportDirectiveSyntax> usings, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (namespaceKeyword == null)
@@ -51273,20 +50831,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new NamespaceDeclarationSyntax(SyntaxKind.NamespaceDeclaration, namespaceKeyword, name, openBraceToken, externs.Node, usings.Node, members.Node, closeBraceToken, semicolonToken);
+      return new NamespaceDeclarationSyntax(SyntaxKind.NamespaceDeclaration, namespaceKeyword, name, openBraceToken, externs.Node, usings.Node, members.Node, closeBraceToken, eosToken);
     }
 
     public static AttributeTargetSpecifierSyntax AttributeTargetSpecifier(SyntaxToken identifier, SyntaxToken colonToken)
@@ -51497,7 +51056,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static ClassDeclarationSyntax ClassDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public static ClassDeclarationSyntax ClassDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (keyword == null)
@@ -51536,23 +51095,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new ClassDeclarationSyntax(SyntaxKind.ClassDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, semicolonToken);
+      return new ClassDeclarationSyntax(SyntaxKind.ClassDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken);
     }
 
-    public static StructDeclarationSyntax StructDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public static StructDeclarationSyntax StructDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (keyword == null)
@@ -51591,23 +51151,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new StructDeclarationSyntax(SyntaxKind.StructDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, semicolonToken);
+      return new StructDeclarationSyntax(SyntaxKind.StructDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken);
     }
 
-    public static InterfaceDeclarationSyntax InterfaceDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public static InterfaceDeclarationSyntax InterfaceDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (keyword == null)
@@ -51646,23 +51207,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new InterfaceDeclarationSyntax(SyntaxKind.InterfaceDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, semicolonToken);
+      return new InterfaceDeclarationSyntax(SyntaxKind.InterfaceDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, baseList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken);
     }
 
-    public static EnumDeclarationSyntax EnumDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+    public static EnumDeclarationSyntax EnumDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
       if (enumKeyword == null)
@@ -51701,23 +51263,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeBraceToken));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new EnumDeclarationSyntax(SyntaxKind.EnumDeclaration, attributeLists.Node, modifiers.Node, enumKeyword, identifier, baseList, openBraceToken, members.Node, closeBraceToken, semicolonToken);
+      return new EnumDeclarationSyntax(SyntaxKind.EnumDeclaration, attributeLists.Node, modifiers.Node, enumKeyword, identifier, baseList, openBraceToken, members.Node, closeBraceToken, eosToken);
     }
 
-    public static DelegateDeclarationSyntax DelegateDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken semicolonToken)
+    public static DelegateDeclarationSyntax DelegateDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken delegateKeyword, TypeSyntax returnType, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken eosToken)
     {
 #if DEBUG
       if (delegateKeyword == null)
@@ -51742,18 +51305,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken == null)
-        throw new ArgumentNullException(nameof(semicolonToken));
-      switch (semicolonToken.Kind)
+      if (eosToken == null)
+        throw new ArgumentNullException(nameof(eosToken));
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
 #endif
 
-      return new DelegateDeclarationSyntax(SyntaxKind.DelegateDeclaration, attributeLists.Node, modifiers.Node, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, semicolonToken);
+      return new DelegateDeclarationSyntax(SyntaxKind.DelegateDeclaration, attributeLists.Node, modifiers.Node, delegateKeyword, returnType, identifier, typeParameterList, parameterList, constraintClauses.Node, eosToken);
     }
 
     public static EnumMemberDeclarationSyntax EnumMemberDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, EqualsValueClauseSyntax equalsValue)
@@ -52048,7 +51612,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static MethodDeclarationSyntax MethodDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (funcKeyword == null)
@@ -52082,23 +51646,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
           throw new ArgumentException(nameof(returnToken));
       }
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, body, expressionBody, semicolonToken);
+      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, body, expressionBody, eosToken);
     }
 
-    public static OperatorDeclarationSyntax OperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static OperatorDeclarationSyntax OperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (returnType == null)
@@ -52145,23 +51710,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new OperatorDeclarationSyntax(SyntaxKind.OperatorDeclaration, attributeLists.Node, modifiers.Node, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, semicolonToken);
+      return new OperatorDeclarationSyntax(SyntaxKind.OperatorDeclaration, attributeLists.Node, modifiers.Node, returnType, operatorKeyword, operatorToken, parameterList, body, expressionBody, eosToken);
     }
 
-    public static ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static ConversionOperatorDeclarationSyntax ConversionOperatorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken implicitOrExplicitKeyword, SyntaxToken operatorKeyword, TypeSyntax type, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (implicitOrExplicitKeyword == null)
@@ -52187,23 +51753,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         throw new ArgumentNullException(nameof(type));
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new ConversionOperatorDeclarationSyntax(SyntaxKind.ConversionOperatorDeclaration, attributeLists.Node, modifiers.Node, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, semicolonToken);
+      return new ConversionOperatorDeclarationSyntax(SyntaxKind.ConversionOperatorDeclaration, attributeLists.Node, modifiers.Node, implicitOrExplicitKeyword, operatorKeyword, type, parameterList, body, expressionBody, eosToken);
     }
 
-    public static ConstructorDeclarationSyntax ConstructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static ConstructorDeclarationSyntax ConstructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken constructorKeyword, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (constructorKeyword == null)
@@ -52217,20 +51784,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new ConstructorDeclarationSyntax(SyntaxKind.ConstructorDeclaration, attributeLists.Node, modifiers.Node, constructorKeyword, parameterList, initializer, body, expressionBody, semicolonToken);
+      return new ConstructorDeclarationSyntax(SyntaxKind.ConstructorDeclaration, attributeLists.Node, modifiers.Node, constructorKeyword, parameterList, initializer, body, expressionBody, eosToken);
     }
 
     public static ConstructorInitializerSyntax ConstructorInitializer(SyntaxKind kind, SyntaxToken colonToken, SyntaxToken thisOrBaseKeyword, ArgumentListSyntax argumentList)
@@ -52280,7 +51848,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static DestructorDeclarationSyntax DestructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static DestructorDeclarationSyntax DestructorDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken tildeToken, SyntaxToken identifier, ParameterListSyntax parameterList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (tildeToken == null)
@@ -52303,23 +51871,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new DestructorDeclarationSyntax(SyntaxKind.DestructorDeclaration, attributeLists.Node, modifiers.Node, tildeToken, identifier, parameterList, body, expressionBody, semicolonToken);
+      return new DestructorDeclarationSyntax(SyntaxKind.DestructorDeclaration, attributeLists.Node, modifiers.Node, tildeToken, identifier, parameterList, body, expressionBody, eosToken);
     }
 
-    public static PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken semicolonToken)
+    public static PropertyDeclarationSyntax PropertyDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, EqualsValueClauseSyntax initializer, SyntaxToken eosToken)
     {
 #if DEBUG
       if (funcKeyword == null)
@@ -52351,20 +51920,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, semicolonToken);
+      return new PropertyDeclarationSyntax(SyntaxKind.PropertyDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, returnToken, type, accessorList, expressionBody, initializer, eosToken);
     }
 
     public static ArrowExpressionClauseSyntax ArrowExpressionClause(SyntaxToken arrowToken, ExpressionSyntax expression)
@@ -52426,7 +51996,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return new EventDeclarationSyntax(SyntaxKind.EventDeclaration, attributeLists.Node, modifiers.Node, eventKeyword, type, explicitInterfaceSpecifier, identifier, accessorList);
     }
 
-    public static IndexerDeclarationSyntax IndexerDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static IndexerDeclarationSyntax IndexerDeclaration(Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (type == null)
@@ -52442,20 +52012,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new IndexerDeclarationSyntax(SyntaxKind.IndexerDeclaration, attributeLists.Node, modifiers.Node, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, semicolonToken);
+      return new IndexerDeclarationSyntax(SyntaxKind.IndexerDeclaration, attributeLists.Node, modifiers.Node, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, eosToken);
     }
 
     public static AccessorListSyntax AccessorList(SyntaxToken openBraceToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AccessorDeclarationSyntax> accessors, SyntaxToken closeBraceToken)
@@ -52494,7 +52065,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
+    public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
       switch (kind)
       {
@@ -52521,20 +52092,21 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(keyword));
       }
-      if (semicolonToken != null)
+      if (eosToken != null)
       {
-      switch (semicolonToken.Kind)
+      switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
         default:
-          throw new ArgumentException(nameof(semicolonToken));
+          throw new ArgumentException(nameof(eosToken));
       }
       }
 #endif
 
-      return new AccessorDeclarationSyntax(kind, attributeLists.Node, modifiers.Node, keyword, body, expressionBody, semicolonToken);
+      return new AccessorDeclarationSyntax(kind, attributeLists.Node, modifiers.Node, keyword, body, expressionBody, eosToken);
     }
 
     public static ParameterListSyntax ParameterList(SyntaxToken openParenToken, Microsoft.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ParameterSyntax> parameters, SyntaxToken closeParenToken)
@@ -54263,7 +53835,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
            typeof(WhileStatementSyntax),
            typeof(DoStatementSyntax),
            typeof(ForStatementSyntax),
-           typeof(ForEachStatementSyntax),
            typeof(ForEachVariableStatementSyntax),
            typeof(UsingStatementSyntax),
            typeof(FixedStatementSyntax),

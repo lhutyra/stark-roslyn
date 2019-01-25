@@ -988,7 +988,7 @@
     <value>Ambiguity between '{0}' and '{1}'</value>
   </data>
   <data name="ERR_BadForeachDecl" xml:space="preserve">
-    <value>Type and identifier are both required in a foreach statement</value>
+    <value>An identifier or a tuple expression is required for the iteration variable in a foreach statement</value>
   </data>
   <data name="ERR_ParamsLast" xml:space="preserve">
     <value>A params parameter must be the last parameter in a formal parameter list</value>

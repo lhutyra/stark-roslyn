@@ -98,11 +98,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             return Previous.InstrumentForEachStatement(original, rewritten);
         }
 
-        public override BoundStatement InstrumentForEachStatementIterationVarDeclaration(BoundForEachStatement original, BoundStatement iterationVarDecl)
-        {
-            return Previous.InstrumentForEachStatementIterationVarDeclaration(original, iterationVarDecl);
-        }
-
         public override BoundStatement InstrumentForStatementConditionalGotoStartOrBreak(BoundForStatement original, BoundStatement branchBack)
         {
             return Previous.InstrumentForStatementConditionalGotoStartOrBreak(original, branchBack);

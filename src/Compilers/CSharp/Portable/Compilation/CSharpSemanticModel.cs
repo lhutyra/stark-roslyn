@@ -2974,34 +2974,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         }
 
         /// <summary>
-        /// Given a foreach statement, get the symbol for the iteration variable
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="forEachStatement"></param>
-        public ILocalSymbol GetDeclaredSymbol(ForEachStatementSyntax forEachStatement, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            Binder enclosingBinder = this.GetEnclosingBinder(GetAdjustedNodePosition(forEachStatement));
-
-            if (enclosingBinder == null)
-            {
-                return null;
-            }
-
-            Binder foreachBinder = enclosingBinder.GetBinder(forEachStatement);
-
-            // Binder.GetBinder can fail in presence of syntax errors. 
-            if (foreachBinder == null)
-            {
-                return null;
-            }
-
-            LocalSymbol local = foreachBinder.GetDeclaredLocalsForScope(forEachStatement).FirstOrDefault();
-            return ((object)local != null && local.DeclarationKind == LocalDeclarationKind.ForEachIterationVariable)
-                ? local
-                : null;
-        }
-
-        /// <summary>
         /// Given a catch declaration, get the symbol for the exception variable
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -4469,12 +4441,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// Gets for each statement info.
         /// </summary>
         /// <param name="node">The node.</param>
-        public abstract ForEachStatementInfo GetForEachStatementInfo(ForEachStatementSyntax node);
-
-        /// <summary>
-        /// Gets for each statement info.
-        /// </summary>
-        /// <param name="node">The node.</param>
         public abstract ForEachStatementInfo GetForEachStatementInfo(CommonForEachStatementSyntax node);
 
         /// <summary>
@@ -4778,8 +4744,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                     }
 
                     return this.GetDeclaredSymbol(usingDirective, cancellationToken);
-                case SyntaxKind.ForEachStatement:
-                    return this.GetDeclaredSymbol((ForEachStatementSyntax)node, cancellationToken);
                 case SyntaxKind.CatchDeclaration:
                     return this.GetDeclaredSymbol((CatchDeclarationSyntax)node, cancellationToken);
                 case SyntaxKind.JoinIntoClause:

@@ -2454,7 +2454,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 parameterList: parameterList,
                 body: body,
                 expressionBody: default(ArrowExpressionClauseSyntax),
-                semicolonToken: semicolonToken);
+                eosToken: semicolonToken);
         }
 
         public static OperatorDeclarationSyntax OperatorDeclaration(
@@ -2476,7 +2476,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 parameterList: parameterList,
                 body: body,
                 expressionBody: default(ArrowExpressionClauseSyntax),
-                semicolonToken: semicolonToken);
+                eosToken: semicolonToken);
         }
 
         /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
@@ -2504,11 +2504,11 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         // backwards compatibility for extended API
         public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, BlockSyntax body)
-                => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, body, default(ArrowExpressionClauseSyntax));
+                => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, default(SyntaxToken), body, default(ArrowExpressionClauseSyntax), default(SyntaxToken));
         public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, BlockSyntax body, SyntaxToken semicolonToken)
                 => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, keyword, body, default(ArrowExpressionClauseSyntax), semicolonToken);
         public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, ArrowExpressionClauseSyntax expressionBody)
-                => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, default(BlockSyntax), expressionBody);
+                => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, default(SyntaxToken), default(BlockSyntax), expressionBody, default(SyntaxToken));
         public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, ArrowExpressionClauseSyntax expressionBody, SyntaxToken semicolonToken)
                 => SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, keyword, default(BlockSyntax), expressionBody, semicolonToken);
 

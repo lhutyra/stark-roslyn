@@ -28,13 +28,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         private const string MoveNextAsyncMethodName = WellKnownMemberNames.MoveNextAsyncMethodName;
 
         private readonly CommonForEachStatementSyntax _syntax;
-        private SourceLocalSymbol IterationVariable
-        {
-            get
-            {
-                return (_syntax.Kind() == SyntaxKind.ForEachStatement) ? (SourceLocalSymbol)this.Locals[0] : null;
-            }
-        }
 
         private bool IsAsync
             => _syntax.AwaitKeyword != default;
@@ -60,17 +53,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                             locals,
                             syntax);
                         return locals.ToImmutableAndFree();
-                    }
-                case SyntaxKind.ForEachStatement:
-                    {
-                        var syntax = (ForEachStatementSyntax)_syntax;
-                        var iterationVariable = SourceLocalSymbol.MakeForeachLocal(
-                            (MethodSymbol)this.ContainingMemberOrLambda,
-                            this,
-                            syntax.Type,
-                            syntax.Identifier,
-                            syntax.Expression);
-                        return ImmutableArray.Create<LocalSymbol>(iterationVariable);
                     }
                 default:
                     throw ExceptionUtilities.UnexpectedValue(_syntax.Kind());
@@ -105,6 +87,15 @@ namespace Microsoft.CodeAnalysis.CSharp
                         break;
                     }
                 case SyntaxKind.IdentifierName:
+                    var syntax = (IdentifierNameSyntax)declaration;
+                    var collection = ((ForEachVariableStatementSyntax)deconstructionStatement).Expression;
+                    var symbol = SourceLocalSymbol.MakeForeachLocal(
+                        (MethodSymbol)this.ContainingMemberOrLambda,
+                        this,
+                        null,
+                        syntax.Identifier,
+                        collection);
+                    locals.Add(symbol);
                     break;
                 default:
                     // In broken code, we can have an arbitrary expression here. Collect its expression variables.
@@ -227,85 +218,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             uint collectionEscape = GetValEscape(collectionExpr, this.LocalScopeDepth);
             switch (_syntax.Kind())
             {
-                case SyntaxKind.ForEachStatement:
-                    {
-                        var node = (ForEachStatementSyntax)_syntax;
-                        // Check for local variable conflicts in the *enclosing* binder; obviously the *current*
-                        // binder has a local that matches!
-                        hasNameConflicts = originalBinder.ValidateDeclarationNameConflictsInScope(IterationVariable, diagnostics);
-
-                        // If the type in syntax is "var", then the type should be set explicitly so that the
-                        // Type property doesn't fail.
-                        TypeSyntax typeSyntax = node.Type.SkipRef(out _);
-
-                        bool isVar;
-                        AliasSymbol alias;
-                        TypeSymbolWithAnnotations declType = BindTypeOrVarKeyword(typeSyntax, diagnostics, out isVar, out alias);
-
-                        if (isVar)
-                        {
-                            declType = inferredType.IsNull ? TypeSymbolWithAnnotations.Create(CreateErrorType("var")) : inferredType;
-                        }
-                        else
-                        {
-                            Debug.Assert(!declType.IsNull);
-                        }
-
-                        iterationVariableType = declType.TypeSymbol;
-                        boundIterationVariableType = new BoundTypeExpression(typeSyntax, alias, iterationVariableType);
-
-                        SourceLocalSymbol local = this.IterationVariable;
-                        local.SetType(declType);
-                        local.SetValEscape(collectionEscape);
-
-                        if (local.RefKind != RefKind.None)
-                        {
-                            // The ref-escape of a ref-returning property is decided
-                            // by the value escape of its receiverm, in this case the
-                            // collection
-                            local.SetRefEscape(collectionEscape);
-
-                            if (IsDirectlyInIterator)
-                            {
-                                diagnostics.Add(ErrorCode.ERR_BadIteratorLocalType, local.IdentifierToken.GetLocation());
-                                hasErrors = true;
-                            }
-                            else if (IsInAsyncMethod())
-                            {
-                                diagnostics.Add(ErrorCode.ERR_BadAsyncLocalType, local.IdentifierToken.GetLocation());
-                                hasErrors = true;
-                            }
-                        }
-
-                        if (!hasErrors)
-                        {
-                            BindValueKind requiredCurrentKind;
-                            switch (local.RefKind)
-                            {
-                                case RefKind.None:
-                                    requiredCurrentKind = BindValueKind.RValue;
-                                    break;
-                                case RefKind.Ref:
-                                    requiredCurrentKind = BindValueKind.Assignable | BindValueKind.RefersToLocation;
-                                    break;
-                                case RefKind.RefReadOnly:
-                                    requiredCurrentKind = BindValueKind.RefersToLocation;
-                                    break;
-                                default:
-                                    throw ExceptionUtilities.UnexpectedValue(local.RefKind);
-                            }
-
-                            hasErrors |= !CheckMethodReturnValueKind(
-                                builder.CurrentPropertyGetter,
-                                callSyntaxOpt: null,
-                                collectionExpr.Syntax,
-                                requiredCurrentKind,
-                                checkingReceiver: false,
-                                diagnostics);
-                        }
-
-                        break;
-                    }
                 case SyntaxKind.ForEachVariableStatement:
                     {
                         var node = (ForEachVariableStatementSyntax)_syntax;
@@ -337,20 +249,58 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         else
                         {
-                            // Bind the expression for error recovery, but discard all new diagnostics
-                            iterationErrorExpression = BindExpression(node.Variable, new DiagnosticBag());
-                            if (iterationErrorExpression.Kind == BoundKind.DiscardExpression)
-                            {
-                                iterationErrorExpression = ((BoundDiscardExpression)iterationErrorExpression).FailInference(this, diagnosticsOpt: null);
-                            }
-                            hasErrors = true;
+                            var iterationVariable = (SourceLocalSymbol)this.Locals[0];
+                            hasNameConflicts = originalBinder.ValidateDeclarationNameConflictsInScope(iterationVariable, diagnostics);
 
-                            if (!node.HasErrors)
+                            iterationVariable.SetType(TypeSymbolWithAnnotations.Create(iterationVariableType));
+                            iterationVariable.SetValEscape(collectionEscape);
+
+                            if (iterationVariable.RefKind != RefKind.None)
                             {
-                                Error(diagnostics, ErrorCode.ERR_MustDeclareForeachIteration, variables);
+                                // The ref-escape of a ref-returning property is decided
+                                // by the value escape of its receiverm, in this case the
+                                // collection
+                                iterationVariable.SetRefEscape(collectionEscape);
+
+                                if (IsDirectlyInIterator)
+                                {
+                                    diagnostics.Add(ErrorCode.ERR_BadIteratorLocalType, iterationVariable.IdentifierToken.GetLocation());
+                                    hasErrors = true;
+                                }
+                                else if (IsInAsyncMethod())
+                                {
+                                    diagnostics.Add(ErrorCode.ERR_BadAsyncLocalType, iterationVariable.IdentifierToken.GetLocation());
+                                    hasErrors = true;
+                                }
+                            }
+
+                            if (!hasErrors)
+                            {
+                                BindValueKind requiredCurrentKind;
+                                switch (iterationVariable.RefKind)
+                                {
+                                    case RefKind.None:
+                                        requiredCurrentKind = BindValueKind.RValue;
+                                        break;
+                                    case RefKind.Ref:
+                                        requiredCurrentKind = BindValueKind.Assignable | BindValueKind.RefersToLocation;
+                                        break;
+                                    case RefKind.RefReadOnly:
+                                        requiredCurrentKind = BindValueKind.RefersToLocation;
+                                        break;
+                                    default:
+                                        throw ExceptionUtilities.UnexpectedValue(iterationVariable.RefKind);
+                                }
+
+                                hasErrors |= !CheckMethodReturnValueKind(
+                                    builder.CurrentPropertyGetter,
+                                    callSyntaxOpt: null,
+                                    collectionExpr.Syntax,
+                                    requiredCurrentKind,
+                                    checkingReceiver: false,
+                                    diagnostics);
                             }
                         }
-
                         boundIterationVariableType = new BoundTypeExpression(variables, aliasOpt: null, type: iterationVariableType).MakeCompilerGenerated();
                         break;
                     }
@@ -868,19 +818,9 @@ namespace Microsoft.CodeAnalysis.CSharp
             // NOTE: for arrays, we won't actually use any of these members - they're just for the API.
             builder.CollectionType = GetSpecialType(SpecialType.System_Collections_IEnumerable, diagnostics, _syntax);
 
-            if (collectionExprType.IsDynamic())
-            {
-                builder.ElementType = TypeSymbolWithAnnotations.Create(
-                    (((_syntax as ForEachStatementSyntax)?.Type).IsNullWithNoType() == true) ?
-                        (TypeSymbol)DynamicTypeSymbol.Instance :
-                        GetSpecialType(SpecialType.System_Object, diagnostics, _syntax));
-            }
-            else
-            {
-                builder.ElementType = collectionExprType.SpecialType == SpecialType.System_String ?
-                    TypeSymbolWithAnnotations.Create(GetSpecialType(SpecialType.System_Char, diagnostics, _syntax)) :
-                    ((ArrayTypeSymbol)collectionExprType).ElementType;
-            }
+            builder.ElementType = collectionExprType.SpecialType == SpecialType.System_String ?
+                TypeSymbolWithAnnotations.Create(GetSpecialType(SpecialType.System_Char, diagnostics, _syntax)) :
+                ((ArrayTypeSymbol)collectionExprType).ElementType;
 
             // CONSIDER: 
             // For arrays and string none of these members will actually be emitted, so it seems strange to prevent compilation if they can't be found.

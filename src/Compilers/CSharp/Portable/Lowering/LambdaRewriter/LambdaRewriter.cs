@@ -1638,7 +1638,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                 switch (curSyntax.Kind())
                 {
                     case SyntaxKind.ForStatement:
-                    case SyntaxKind.ForEachStatement:
                     case SyntaxKind.ForEachVariableStatement:
                     case SyntaxKind.WhileStatement:
                     case SyntaxKind.DoStatement:

@@ -137,7 +137,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             Debug.Assert(
                 tryStatementSyntax.IsKind(SyntaxKind.TryStatement) ||
                 tryStatementSyntax.IsKind(SyntaxKind.UsingStatement) ||
-                tryStatementSyntax.IsKind(SyntaxKind.ForEachStatement) ||
                 tryStatementSyntax.IsKind(SyntaxKind.ForEachVariableStatement) ||
                 tryStatementSyntax.IsKind(SyntaxKind.LocalDeclarationStatement));
 
@@ -903,7 +902,6 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 Debug.Assert(statementSyntax.Kind() == SyntaxKind.TryStatement ||
                     (statementSyntax.Kind() == SyntaxKind.UsingStatement && ((UsingStatementSyntax)statementSyntax).AwaitKeyword != default) ||
-                    (statementSyntax.Kind() == SyntaxKind.ForEachStatement && ((CommonForEachStatementSyntax)statementSyntax).AwaitKeyword != default) ||
                     (statementSyntax.Kind() == SyntaxKind.ForEachVariableStatement && ((CommonForEachStatementSyntax)statementSyntax).AwaitKeyword != default) ||
                     (statementSyntax.Kind() == SyntaxKind.LocalDeclarationStatement && ((LocalDeclarationStatementSyntax)statementSyntax).AwaitKeyword != default));
 

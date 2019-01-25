@@ -117,9 +117,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case VariableDeclaration:
                         return ((VariableDeclarationSyntax)parent).Type == node;
 
-                    case ForEachStatement:
-                        return ((ForEachStatementSyntax)parent).Type == node;
-
                     case CatchDeclaration:
                         return ((CatchDeclarationSyntax)parent).Type == node;
 

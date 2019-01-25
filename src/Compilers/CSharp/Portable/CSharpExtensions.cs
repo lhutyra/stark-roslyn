@@ -771,19 +771,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
         }
 
-        public static ForEachStatementInfo GetForEachStatementInfo(this SemanticModel semanticModel, ForEachStatementSyntax forEachStatement)
-        {
-            var csmodel = semanticModel as CSharpSemanticModel;
-            if (csmodel != null)
-            {
-                return csmodel.GetForEachStatementInfo(forEachStatement);
-            }
-            else
-            {
-                return default(ForEachStatementInfo);
-            }
-        }
-
         public static ForEachStatementInfo GetForEachStatementInfo(this SemanticModel semanticModel, CommonForEachStatementSyntax forEachStatement)
         {
             var csmodel = semanticModel as CSharpSemanticModel;
@@ -1393,15 +1380,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             var csmodel = semanticModel as CSharpSemanticModel;
             return csmodel?.GetDeclaredSymbol(typeParameter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Given a foreach statement, get the symbol for the iteration variable
-        /// </summary>
-        public static ILocalSymbol GetDeclaredSymbol(this SemanticModel semanticModel, ForEachStatementSyntax forEachStatement, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var csmodel = semanticModel as CSharpSemanticModel;
-            return csmodel?.GetDeclaredSymbol(forEachStatement, cancellationToken);
         }
 
         /// <summary>

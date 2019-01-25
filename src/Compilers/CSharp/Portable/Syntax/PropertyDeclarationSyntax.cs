@@ -6,26 +6,6 @@ using System.ComponentModel;
 
 namespace Microsoft.CodeAnalysis.CSharp.Syntax
 {
-    public partial class PropertyDeclarationSyntax
-    {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This member is obsolete.", true)]
-        public SyntaxToken Semicolon
-        {
-            get
-            {
-                return this.SemicolonToken;
-            }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This member is obsolete.", true)]
-        public PropertyDeclarationSyntax WithSemicolon(SyntaxToken semicolon)
-        {
-            return this.WithSemicolonToken(semicolon);
-        }
-    }
-
     // backwards compatibility for API extension
     public sealed partial class AccessorDeclarationSyntax : CSharpSyntaxNode
     {

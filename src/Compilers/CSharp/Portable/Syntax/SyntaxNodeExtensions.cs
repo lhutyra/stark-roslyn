@@ -101,7 +101,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                     var forStmt = (ForStatementSyntax)parent;
                     return forStmt.Condition == expression || forStmt.Incrementors.FirstOrDefault() == expression;
 
-                case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForEachVariableStatement:
                     return ((CommonForEachStatementSyntax)parent).Expression == expression;
 

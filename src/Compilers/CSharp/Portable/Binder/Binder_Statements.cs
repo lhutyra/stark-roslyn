@@ -66,7 +66,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.ForStatement:
                     result = BindFor((ForStatementSyntax)node, diagnostics);
                     break;
-                case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForEachVariableStatement:
                     result = BindForEach((CommonForEachStatementSyntax)node, diagnostics);
                     break;
@@ -317,18 +316,17 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 case SyntaxKind.EmptyStatement:
                     var emptyStatement = (EmptyStatementSyntax)node;
-                    if (!emptyStatement.SemicolonToken.IsMissing)
+                    if (!emptyStatement.EosToken.IsMissing)
                     {
                         switch (node.Parent.Kind())
                         {
                             case SyntaxKind.ForStatement:
-                            case SyntaxKind.ForEachStatement:
                             case SyntaxKind.ForEachVariableStatement:
                             case SyntaxKind.WhileStatement:
                                 // For loop constructs, only warn if we see a block following the statement.
                                 // That indicates code like:  "while (x) ; { }"
                                 // which is most likely a bug.
-                                if (emptyStatement.SemicolonToken.GetNextToken().Kind() != SyntaxKind.OpenBraceToken)
+                                if (emptyStatement.EosToken.GetNextToken().Kind() != SyntaxKind.OpenBraceToken)
                                 {
                                     break;
                                 }

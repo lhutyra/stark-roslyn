@@ -2174,12 +2174,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             return memberModel == null ? default(AwaitExpressionInfo) : memberModel.GetAwaitExpressionInfo(node);
         }
 
-        public override ForEachStatementInfo GetForEachStatementInfo(ForEachStatementSyntax node)
-        {
-            MemberSemanticModel memberModel = GetMemberModel(node);
-            return memberModel == null ? default(ForEachStatementInfo) : memberModel.GetForEachStatementInfo(node);
-        }
-
         public override ForEachStatementInfo GetForEachStatementInfo(CommonForEachStatementSyntax node)
         {
             MemberSemanticModel memberModel = GetMemberModel(node);

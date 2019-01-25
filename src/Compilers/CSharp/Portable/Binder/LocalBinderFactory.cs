@@ -447,11 +447,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             VisitPossibleEmbeddedStatement(node.Statement, binder);
         }
 
-        public override void VisitForEachStatement(ForEachStatementSyntax node)
-        {
-            VisitCommonForEachStatement(node);
-        }
-
         public override void VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
         {
             VisitCommonForEachStatement(node);

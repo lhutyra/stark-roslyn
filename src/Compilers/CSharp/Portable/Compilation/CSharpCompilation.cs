@@ -587,7 +587,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 if (statement.IsKind(SyntaxKind.ExpressionStatement))
                 {
                     var expressionStatement = (ExpressionStatementSyntax)statement;
-                    if (expressionStatement.SemicolonToken.IsMissing)
+                    if (expressionStatement.EosToken.IsMissing)
                     {
                         var model = GetSemanticModel(tree);
                         var expression = expressionStatement.Expression;

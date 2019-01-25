@@ -387,7 +387,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.ArrowExpressionClause:  // expression-bodied member
                 case SyntaxKind.CatchClause:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachStatement:
                 case SyntaxKind.ForEachVariableStatement:
                 case SyntaxKind.UsingStatement:
 

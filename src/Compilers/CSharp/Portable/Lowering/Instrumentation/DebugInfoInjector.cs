@@ -177,7 +177,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             var doSyntax = (DoStatementSyntax)original.Syntax;
             var span = TextSpan.FromBounds(
                 doSyntax.WhileKeyword.SpanStart,
-                doSyntax.SemicolonToken.Span.End);
+                doSyntax.EosToken.Span.End);
 
             return new BoundSequencePointWithSpan(doSyntax, base.InstrumentDoStatementConditionalGotoStart(original, ifConditionGotoStart), span);
         }
@@ -233,39 +233,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             return new BoundStatementList(forEachSyntax,
                                             ImmutableArray.Create<BoundStatement>(foreachKeywordSequencePoint,
                                                                                 base.InstrumentForEachStatement(original, rewritten)));
-        }
-
-        /// <summary>
-        /// Add sequence point |here|:
-        /// 
-        /// foreach (|Type var| in expr) { }
-        /// </summary>
-        /// <remarks>
-        /// Hit every iteration.
-        /// </remarks>
-        public override BoundStatement InstrumentForEachStatementIterationVarDeclaration(BoundForEachStatement original, BoundStatement iterationVarDecl)
-        {
-            TextSpan iterationVarDeclSpan;
-            switch (original.Syntax.Kind())
-            {
-                case SyntaxKind.ForEachStatement:
-                    {
-                        var forEachSyntax = (ForEachStatementSyntax)original.Syntax;
-                        iterationVarDeclSpan = TextSpan.FromBounds(forEachSyntax.Type.SpanStart, forEachSyntax.Identifier.Span.End);
-                        break;
-                    }
-                case SyntaxKind.ForEachVariableStatement:
-                    {
-                        var forEachSyntax = (ForEachVariableStatementSyntax)original.Syntax;
-                        iterationVarDeclSpan = forEachSyntax.Variable.Span;
-                        break;
-                    }
-                default:
-                    throw ExceptionUtilities.UnexpectedValue(original.Syntax.Kind());
-            }
-            return new BoundSequencePointWithSpan(original.Syntax,
-                                                  base.InstrumentForEachStatementIterationVarDeclaration(original, iterationVarDecl),
-                                                  iterationVarDeclSpan);
         }
 
         public override BoundStatement InstrumentForStatementConditionalGotoStartOrBreak(BoundForStatement original, BoundStatement branchBack)

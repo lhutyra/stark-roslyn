@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// </summary>
         internal static BoundExpression GetTrailingScriptExpression(BoundStatement statement)
         {
-            return (statement.Kind == BoundKind.ExpressionStatement) && ((ExpressionStatementSyntax)statement.Syntax).SemicolonToken.IsMissing ?
+            return (statement.Kind == BoundKind.ExpressionStatement) && ((ExpressionStatementSyntax)statement.Syntax).EosToken.IsMissing ?
                 ((BoundExpressionStatement)statement).Expression :
                 null;
         }
