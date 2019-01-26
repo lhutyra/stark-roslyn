@@ -2964,6 +2964,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                             bool modifierErrors;
                             var modifiers = SourceMemberFieldSymbol.MakeModifiers(this, fieldSyntax.Declaration.Identifier, fieldSyntax.Modifiers, diagnostics, out modifierErrors);
 
+                            // If the field is a let, it is readonly
+                            if (fieldSyntax.Declaration.VariableKeyword.Kind() == SyntaxKind.LetKeyword)
+                            {
+                                modifiers |= DeclarationModifiers.ReadOnly;
+                            }
+
                             //if (fieldSyntax.Declaration.Kind() == SyntaxKind.ValKeyword || (fieldSyntax.Declaration.Type != null && fieldSyntax.Declaration.Type.IsUnmanaged)
                             {
                                 var variable = fieldSyntax.Declaration;
@@ -3097,7 +3103,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                             if (IsImplicitClass && reportMisplacedGlobalCode)
                             {
                                 diagnostics.Add(ErrorCode.ERR_NamespaceUnexpected,
-                                    new SourceLocation(indexerSyntax.ThisKeyword));
+                                    new SourceLocation(indexerSyntax.OperatorKeyword));
                             }
 
                             // We can't create the indexer symbol yet, because we don't know

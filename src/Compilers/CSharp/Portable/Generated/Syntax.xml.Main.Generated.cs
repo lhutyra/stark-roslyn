@@ -3990,14 +3990,16 @@ namespace Microsoft.CodeAnalysis.CSharp
     {
       var attributeLists = this.VisitList(node.AttributeLists);
       var modifiers = this.VisitList(node.Modifiers);
-      var type = (TypeSyntax)this.Visit(node.Type);
+      var funcKeyword = this.VisitToken(node.FuncKeyword);
+      var operatorKeyword = this.VisitToken(node.OperatorKeyword);
       var explicitInterfaceSpecifier = (ExplicitInterfaceSpecifierSyntax)this.Visit(node.ExplicitInterfaceSpecifier);
-      var thisKeyword = this.VisitToken(node.ThisKeyword);
       var parameterList = (BracketedParameterListSyntax)this.Visit(node.ParameterList);
+      var returnToken = this.VisitToken(node.ReturnToken);
+      var type = (TypeSyntax)this.Visit(node.Type);
       var accessorList = (AccessorListSyntax)this.Visit(node.AccessorList);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(attributeLists, modifiers, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, eosToken);
+      return node.Update(attributeLists, modifiers, funcKeyword, operatorKeyword, explicitInterfaceSpecifier, parameterList, returnToken, type, accessorList, expressionBody, eosToken);
     }
 
     public override SyntaxNode VisitAccessorList(AccessorListSyntax node)
@@ -7159,7 +7161,7 @@ namespace Microsoft.CodeAnalysis.CSharp
       switch (variableKeyword.Kind())
       {
         case SyntaxKind.VarKeyword:
-        case SyntaxKind.ValKeyword:
+        case SyntaxKind.LetKeyword:
         case SyntaxKind.ConstKeyword:
           break;
         default:
@@ -9750,19 +9752,34 @@ namespace Microsoft.CodeAnalysis.CSharp
     }
 
     /// <summary>Creates a new IndexerDeclarationSyntax instance.</summary>
-    public static IndexerDeclarationSyntax IndexerDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public static IndexerDeclarationSyntax IndexerDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken funcKeyword, SyntaxToken operatorKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, BracketedParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
-      switch (thisKeyword.Kind())
+      switch (funcKeyword.Kind())
       {
-        case SyntaxKind.ThisKeyword:
+        case SyntaxKind.FuncKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(thisKeyword));
+          throw new ArgumentException(nameof(funcKeyword));
+      }
+      switch (operatorKeyword.Kind())
+      {
+        case SyntaxKind.OperatorKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(operatorKeyword));
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
+      switch (returnToken.Kind())
+      {
+        case SyntaxKind.MinusGreaterThanToken:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(returnToken));
+      }
+      if (type == null)
+        throw new ArgumentNullException(nameof(type));
       switch (eosToken.Kind())
       {
         case SyntaxKind.SemicolonToken:
@@ -9772,20 +9789,20 @@ namespace Microsoft.CodeAnalysis.CSharp
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (IndexerDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.IndexerDeclaration(attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green, explicitInterfaceSpecifier == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExplicitInterfaceSpecifierSyntax)explicitInterfaceSpecifier.Green, (Syntax.InternalSyntax.SyntaxToken)thisKeyword.Node, parameterList == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BracketedParameterListSyntax)parameterList.Green, accessorList == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AccessorListSyntax)accessorList.Green, expressionBody == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrowExpressionClauseSyntax)expressionBody.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (IndexerDeclarationSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.IndexerDeclaration(attributeLists.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)funcKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)operatorKeyword.Node, explicitInterfaceSpecifier == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExplicitInterfaceSpecifierSyntax)explicitInterfaceSpecifier.Green, parameterList == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.BracketedParameterListSyntax)parameterList.Green, (Syntax.InternalSyntax.SyntaxToken)returnToken.Node, type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green, accessorList == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.AccessorListSyntax)accessorList.Green, expressionBody == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ArrowExpressionClauseSyntax)expressionBody.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new IndexerDeclarationSyntax instance.</summary>
-    public static IndexerDeclarationSyntax IndexerDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public static IndexerDeclarationSyntax IndexerDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, BracketedParameterListSyntax parameterList, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-      return SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, type, explicitInterfaceSpecifier, SyntaxFactory.Token(SyntaxKind.ThisKeyword), parameterList, accessorList, expressionBody, eosToken);
+      return SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.FuncKeyword), SyntaxFactory.Token(SyntaxKind.OperatorKeyword), explicitInterfaceSpecifier, parameterList, default(SyntaxToken), type, accessorList, expressionBody, eosToken);
     }
 
     /// <summary>Creates a new IndexerDeclarationSyntax instance.</summary>
     public static IndexerDeclarationSyntax IndexerDeclaration(TypeSyntax type)
     {
-      return SyntaxFactory.IndexerDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), type, default(ExplicitInterfaceSpecifierSyntax), SyntaxFactory.Token(SyntaxKind.ThisKeyword), SyntaxFactory.BracketedParameterList(), default(AccessorListSyntax), default(ArrowExpressionClauseSyntax), default(SyntaxToken));
+      return SyntaxFactory.IndexerDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.FuncKeyword), SyntaxFactory.Token(SyntaxKind.OperatorKeyword), default(ExplicitInterfaceSpecifierSyntax), SyntaxFactory.BracketedParameterList(), default(SyntaxToken), type, default(AccessorListSyntax), default(ArrowExpressionClauseSyntax), default(SyntaxToken));
     }
 
     /// <summary>Creates a new AccessorListSyntax instance.</summary>

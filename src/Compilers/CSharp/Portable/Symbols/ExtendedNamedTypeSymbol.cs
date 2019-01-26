@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using Microsoft.Cci;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Roslyn.Utilities;
 
 namespace Microsoft.CodeAnalysis.CSharp.Symbols
@@ -120,5 +121,23 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         {
             return "Extended" + base.GetDebuggerDisplay();
         }      
+    }
+
+
+    internal static class ExtendedTypeSymbol
+    {
+        public static TypeSymbolWithAnnotations CreateExtendedTypeSymbol(CSharpSyntaxNode syntax, TypeSymbolWithAnnotations baseSymbol, TypeAccessModifiers accessModifiers, DiagnosticBag diagnostics)
+        {
+            if (baseSymbol.Kind == SymbolKind.NamedType)
+            {
+                return TypeSymbolWithAnnotations.Create(new ExtendedNamedTypeSymbol(baseSymbol, accessModifiers));
+            }
+            else if (baseSymbol.Kind == SymbolKind.ArrayType)
+            {
+                return TypeSymbolWithAnnotations.Create(new ExtendedArrayTypeSymbol(baseSymbol, (ArrayTypeSymbol)baseSymbol.TypeSymbol, accessModifiers));
+            }
+            Binder.Error(diagnostics, ErrorCode.ERR_ArrayElementCantBeRefAny, syntax, baseSymbol.TypeSymbol, accessModifiers);
+            return baseSymbol;
+        }
     }
 }

@@ -16,6 +16,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         None,
 
         /// <summary>
+        /// User defined local variable declared by <see cref="LocalDeclarationStatementSyntax"/> but readonly.
+        /// </summary>
+        LetVariable,
+
+        /// <summary>
         /// User defined local variable declared by <see cref="LocalDeclarationStatementSyntax"/>.
         /// </summary>
         RegularVariable,

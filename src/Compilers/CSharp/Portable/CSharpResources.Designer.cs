@@ -232,6 +232,15 @@ namespace Microsoft.CodeAnalysis.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The type `{0}` does not support access modifiers `{1}`.
+        /// </summary>
+        internal static string ERR_AccessModifiersNotSupported {
+            get {
+                return ResourceManager.GetString("ERR_AccessModifiersNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos;: accessibility modifiers on accessors may only be used if the property or indexer has both a get and a set accessor.
         /// </summary>
         internal static string ERR_AccessModMissingAccessor {
@@ -705,6 +714,15 @@ namespace Microsoft.CodeAnalysis.CSharp {
         internal static string ERR_AssgReadonlyStatic2 {
             get {
                 return ResourceManager.GetString("ERR_AssgReadonlyStatic2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot assign to `{0}` variable because it is readonly local variable.
+        /// </summary>
+        internal static string ERR_AssignReadOnlyLocal {
+            get {
+                return ResourceManager.GetString("ERR_AssignReadOnlyLocal", resourceCulture);
             }
         }
         

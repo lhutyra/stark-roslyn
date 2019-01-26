@@ -139,7 +139,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 DeclarationModifiers.AccessibilityMask |
                 DeclarationModifiers.Const |
                 DeclarationModifiers.New |
-                DeclarationModifiers.ReadOnly |
                 DeclarationModifiers.Static |
                 DeclarationModifiers.Volatile |
                 DeclarationModifiers.Fixed |
@@ -469,6 +468,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 else
                 {
                     type = binder.BindType(typeSyntax, diagnostics);
+                }
+
+                // Create a readonly type if required
+                if ((Modifiers & DeclarationModifiers.ReadOnly) != 0 && type.IsValueType && !type.TypeSymbol.IsReadOnly)
+                {
+                    type = ExtendedTypeSymbol.CreateExtendedTypeSymbol(declarator, type, TypeAccessModifiers.ReadOnly, diagnostics);
                 }
 
                 if (IsFixedSizeBuffer)

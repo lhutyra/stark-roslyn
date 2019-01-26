@@ -1724,6 +1724,9 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_ArrayElementCantBeRefAny" xml:space="preserve">
     <value>Array elements cannot be of type '{0}'</value>
   </data>
+  <data name="ERR_AccessModifiersNotSupported" xml:space="preserve">
+    <value>The type `{0}` does not support access modifiers `{1}`</value>
+  </data>  
   <data name="WRN_DeprecatedSymbol" xml:space="preserve">
     <value>'{0}' is obsolete</value>
   </data>
@@ -2898,6 +2901,9 @@ A catch() block after a catch (System.Exception e) block can catch non-CLS excep
   </data>
   <data name="ERR_RefReadonlyNotField" xml:space="preserve">
     <value>Cannot use {0} '{1}' as a ref or out value because it is a readonly variable</value>
+  </data>
+  <data name="ERR_AssignReadOnlyLocal" xml:space="preserve">
+    <value>Cannot assign to `{0}` variable because it is readonly local variable</value>
   </data>
   <data name="ERR_RefReadonlyNotField2" xml:space="preserve">
     <value>Members of {0} '{1}' cannot be used as a ref or out value because it is a readonly variable</value>

@@ -1861,7 +1861,7 @@ tryAgain:
                 switch (this.CurrentToken.Kind)
                 {
                     case SyntaxKind.ConstKeyword:
-                    case SyntaxKind.ValKeyword:
+                    case SyntaxKind.LetKeyword:
                     case SyntaxKind.VarKeyword:
                         return this.ParseFieldDeclaration(attributes, modifiers, parentKind);
 
@@ -1955,7 +1955,14 @@ tryAgain:
             SyntaxListBuilder modifiers,
             SyntaxKind parentKind)
         {
-            var propOrFuncToken = EatToken();
+            var funcToken = EatToken();
+            Debug.Assert(funcToken.Kind == SyntaxKind.FuncKeyword);
+
+            SyntaxToken operatorToken = null;
+            if (CurrentToken.Kind == SyntaxKind.OperatorKeyword)
+            {
+                operatorToken = EatToken();
+            }
 
             // At this point we can either have indexers, methods, or 
             // properties (or something unknown).  Try to break apart
@@ -1967,7 +1974,7 @@ tryAgain:
 
             // First, check if we got absolutely nothing.  If so, then 
             // We need to consume a bad member and try again.
-            if (explicitInterfaceOpt == null && identifierOrThisOpt == null && typeParameterListOpt == null)
+            if (operatorToken == null && explicitInterfaceOpt == null && identifierOrThisOpt == null && typeParameterListOpt == null)
             {
                 if (attributes.Count == 0 && modifiers.Count == 0)
                 {
@@ -1997,13 +2004,17 @@ tryAgain:
                 }
             }
 
-            if (typeParameterListOpt == null && CurrentToken.Kind == SyntaxKind.MinusGreaterThanToken)
+            if (operatorToken != null)
             {
-                return ParsePropertyDeclaration(attributes, modifiers, propOrFuncToken, explicitInterfaceOpt, identifierOrThisOpt);
+                return ParseIndexerDeclaration(attributes, modifiers, funcToken, operatorToken, explicitInterfaceOpt, typeParameterListOpt);
+            }
+            else if (CurrentToken.Kind != SyntaxKind.OpenParenToken)
+            {
+                return ParsePropertyDeclaration(attributes, modifiers, funcToken, explicitInterfaceOpt, identifierOrThisOpt, typeParameterListOpt);
             }
             else
             {
-                return ParseMethodDeclaration(attributes, modifiers, propOrFuncToken, explicitInterfaceOpt, identifierOrThisOpt, typeParameterListOpt);
+                return ParseMethodDeclaration(attributes, modifiers, funcToken, explicitInterfaceOpt, identifierOrThisOpt, typeParameterListOpt);
             }
         }
 
@@ -2624,65 +2635,63 @@ tryAgain:
         private IndexerDeclarationSyntax ParseIndexerDeclaration(
             SyntaxListBuilder<AttributeSyntax> attributes,
             SyntaxListBuilder modifiers,
-            TypeSyntax type,
+            SyntaxToken funcKeyword,
+            SyntaxToken operatorKeyword,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceOpt,
-            SyntaxToken thisKeyword,
             TypeParameterListSyntax typeParameterList)
         {
             // TODO: this part is no longer valid in stark
-
-            Debug.Assert(thisKeyword.Kind == SyntaxKind.ThisKeyword);
-
             // check to see if the user tried to create a generic indexer.
             if (typeParameterList != null)
             {
-                thisKeyword = AddTrailingSkippedSyntax(thisKeyword, typeParameterList);
-                thisKeyword = this.AddError(thisKeyword, ErrorCode.ERR_UnexpectedGenericName);
+                operatorKeyword = AddTrailingSkippedSyntax(operatorKeyword, typeParameterList);
+                operatorKeyword = this.AddError(operatorKeyword, ErrorCode.ERR_UnexpectedGenericName);
             }
 
             var parameterList = this.ParseBracketedParameterList();
 
+            var minusGreaterThanForReturnType = ExpectMinusGreaterThanForReturnType();
+            var returnType = ParseType();
+
             AccessorListSyntax accessorList = null;
             ArrowExpressionClauseSyntax expressionBody = null;
-            SyntaxToken semicolon = null;
+            SyntaxToken eosToken = null;
             // Try to parse accessor list unless there is an expression
             // body and no accessor list
             if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken)
             {
                 expressionBody = this.ParseArrowExpressionClause();
                 expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+                eosToken = this.EatEos(ref expressionBody);
             }
             else
             {
                 accessorList = this.ParseAccessorList(isEvent: false);
-                if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-                {
-                    semicolon = this.EatTokenWithPrejudice(ErrorCode.ERR_UnexpectedSemicolon);
-                }
             }
 
             // If the user has erroneously provided both an accessor list
             // and an expression body, but no semicolon, we want to parse
             // the expression body and report the error (which is done later)
             if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken
-                && semicolon == null)
+                && eosToken == null)
             {
                 expressionBody = this.ParseArrowExpressionClause();
                 expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
-                semicolon = this.EatToken(SyntaxKind.SemicolonToken);
+                eosToken = this.EatEos(ref expressionBody);
             }
             
             return _syntaxFactory.IndexerDeclaration(
                 attributes,
                 modifiers.ToList(),
-                type,
+                funcKeyword,
+                operatorKeyword,
                 explicitInterfaceOpt,
-                thisKeyword,
                 parameterList,
+                minusGreaterThanForReturnType,
+                returnType,
                 accessorList,
                 expressionBody,
-                semicolon);
+                eosToken);
         }
 
         private PropertyDeclarationSyntax ParsePropertyDeclaration(
@@ -2690,15 +2699,16 @@ tryAgain:
             SyntaxListBuilder modifiers,
             SyntaxToken funcKeyword,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceOpt,
-            SyntaxToken identifier
+            SyntaxToken identifier,
+            TypeParameterListSyntax typeParameterList
             )
         {
-            //// check to see if the user tried to create a generic property.
-            //if (typeParameterList != null)
-            //{
-            //    identifier = AddTrailingSkippedSyntax(identifier, typeParameterList);
-            //    identifier = this.AddError(identifier, ErrorCode.ERR_UnexpectedGenericName);
-            //}
+            // check to see if the user tried to create a generic property.
+            if (typeParameterList != null)
+            {
+                identifier = AddTrailingSkippedSyntax(identifier, typeParameterList);
+                identifier = this.AddError(identifier, ErrorCode.ERR_UnexpectedGenericName);
+            }
 
             var minusGreaterThanForReturnType = ExpectMinusGreaterThanForReturnType();
 
@@ -3613,7 +3623,7 @@ tryAgain:
         {
             var variableKeywordToken = EatToken();
             Debug.Assert(variableKeywordToken.Kind == SyntaxKind.VarKeyword ||
-                         variableKeywordToken.Kind == SyntaxKind.ValKeyword ||
+                         variableKeywordToken.Kind == SyntaxKind.LetKeyword ||
                          variableKeywordToken.Kind == SyntaxKind.ConstKeyword);
 
             var name = this.ParseIdentifierToken();
@@ -5837,7 +5847,7 @@ tryAgain:
                     return this.ParseCheckedStatement();
                 case SyntaxKind.ConstKeyword:
                 case SyntaxKind.VarKeyword:
-                case SyntaxKind.ValKeyword:
+                case SyntaxKind.LetKeyword:
                     return ParseLocalDeclarationStatement();
                 case SyntaxKind.DoKeyword:
                     return this.ParseDoStatement();
@@ -6528,7 +6538,7 @@ tryAgain:
                 case SyntaxKind.VolatileKeyword: // TODO: remove
                 case SyntaxKind.ConstKeyword:
                 case SyntaxKind.VarKeyword:
-                case SyntaxKind.ValKeyword:
+                case SyntaxKind.LetKeyword:
                     return true;
 
                 case SyntaxKind.IdentifierToken:

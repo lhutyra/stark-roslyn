@@ -204,6 +204,17 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         }
 
         /// <summary>
+        /// Returns true if this local variable was declared as "let" (i.e. is a non re-assignable declaration).
+        /// </summary>
+        public bool IsLet
+        {
+            get
+            {
+                return this.DeclarationKind == LocalDeclarationKind.LetVariable;
+            }
+        }
+
+        /// <summary>
         /// Returns true if the local variable is declared in resource-acquisition of a 'using statement';
         /// otherwise false
         /// </summary>

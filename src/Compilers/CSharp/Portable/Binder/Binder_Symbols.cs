@@ -20,7 +20,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// </summary>
         /// <param name="syntax">Type syntax to bind.</param>
         /// <param name="diagnostics">Diagnostics.</param>
-        /// <param name="isVar">
+        /// <param name="isTypeUnbound">
         /// Set to false if syntax binds to a type in the current context and true if
         /// syntax is "var" and it binds to "var" keyword in the current context.
         /// </param>
@@ -28,11 +28,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// Bound type if syntax binds to a type in the current context and
         /// null if syntax binds to "var" keyword in the current context.
         /// </returns>
-        internal TypeSymbolWithAnnotations BindTypeOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isVar)
+        internal TypeSymbolWithAnnotations BindTypeOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isTypeUnbound)
         {
-            var symbol = BindTypeOrAliasOrVarKeyword(syntax, diagnostics, out isVar);
-            Debug.Assert(isVar == symbol.IsDefault);
-            return isVar ? default : UnwrapAlias(symbol, diagnostics, syntax).Type;
+            var symbol = BindTypeOrAliasOrVarKeyword(syntax, diagnostics, out isTypeUnbound);
+            Debug.Assert(isTypeUnbound == symbol.IsDefault);
+            return isTypeUnbound ? default : UnwrapAlias(symbol, diagnostics, syntax).Type;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// </summary>
         /// <param name="syntax">Type syntax to bind.</param>
         /// <param name="diagnostics">Diagnostics.</param>
-        /// <param name="isVar">
+        /// <param name="isTypeUnbound">
         /// Set to false if syntax binds to a type in the current context and true if
         /// syntax is "var" and it binds to "var" keyword in the current context.
         /// </param>
@@ -69,11 +69,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// Bound type if syntax binds to a type in the current context and
         /// null if syntax binds to "var" keyword in the current context.
         /// </returns>
-        internal TypeSymbolWithAnnotations BindTypeOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isVar, out AliasSymbol alias)
+        internal TypeSymbolWithAnnotations BindTypeOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isTypeUnbound, out AliasSymbol alias)
         {
-            var symbol = BindTypeOrAliasOrVarKeyword(syntax, diagnostics, out isVar);
-            Debug.Assert(isVar == symbol.IsDefault);
-            if (isVar)
+            var symbol = BindTypeOrAliasOrVarKeyword(syntax, diagnostics, out isTypeUnbound);
+            Debug.Assert(isTypeUnbound == symbol.IsDefault);
+            if (isTypeUnbound)
             {
                 alias = null;
                 return default;
@@ -90,7 +90,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// </summary>
         /// <param name="syntax">Type syntax to bind.</param>
         /// <param name="diagnostics">Diagnostics.</param>
-        /// <param name="isVar">
+        /// <param name="isTypeUnbound">
         /// Set to false if syntax binds to a type or alias to a type in the current context and true if
         /// syntax is "var" and it binds to "var" keyword in the current context.
         /// </param>
@@ -98,16 +98,16 @@ namespace Microsoft.CodeAnalysis.CSharp
         /// Bound type or alias if syntax binds to a type or alias to a type in the current context and
         /// null if syntax binds to "var" keyword in the current context.
         /// </returns>
-        private NamespaceOrTypeOrAliasSymbolWithAnnotations BindTypeOrAliasOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isVar)
+        private NamespaceOrTypeOrAliasSymbolWithAnnotations BindTypeOrAliasOrVarKeyword(TypeSyntax syntax, DiagnosticBag diagnostics, out bool isTypeUnbound)
         {
             if (syntax == null)
             {
-                isVar = true;
+                isTypeUnbound = true;
                 return NamespaceOrTypeOrAliasSymbolWithAnnotations.CreateUnannotated(false, null);
             }
             else
             {
-                isVar = false;
+                isTypeUnbound = false;
                 return BindTypeOrAlias(syntax, diagnostics, basesBeingResolved: null);
             }
         }
@@ -168,7 +168,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             // BREAKING CHANGE:     Case (2)(c) is a breaking change from the native compiler.
             // BREAKING CHANGE:     Native compiler interprets lookup with ambiguous result to correspond to bind
-            // BREAKING CHANGE:     to "var" keyword (isVar = true), rather than reporting an error.
+            // BREAKING CHANGE:     to "var" keyword (isTypeUnbound = true), rather than reporting an error.
             // BREAKING CHANGE:     See test SemanticErrorTests.ErrorMeansSuccess_var() for an example.
 
             switch (lookupResult.Kind)
@@ -520,12 +520,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     }
                     var elementType = BindType(extendedTypeSyntax.ElementType, diagnostics, basesBeingResolved);
 
-                    if (elementType.Kind == SymbolKind.NamedType)
-                    {
-                        return TypeSymbolWithAnnotations.Create(new ExtendedNamedTypeSymbol(elementType, accessModifiers));
-                    }
-
-                    throw new NotImplementedException($"ReadOnly type not implemented for {elementType}");
+                    // Create an extended type symbol
+                    return ExtendedTypeSymbol.CreateExtendedTypeSymbol(extendedTypeSyntax, elementType, accessModifiers, diagnostics);
                 }
 
                 default:

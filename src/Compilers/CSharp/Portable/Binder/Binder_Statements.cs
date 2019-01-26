@@ -636,12 +636,12 @@ namespace Microsoft.CodeAnalysis.CSharp
             var typeSyntax = node.Declaration.Type.SkipRef(out _);
             bool isConst = node.IsConst;
 
-            bool isVar;
+            bool isTypeUnbound;
             AliasSymbol alias;
-            TypeSymbolWithAnnotations declType = BindVariableType(node.Declaration, diagnostics, typeSyntax, ref isConst, isVar: out isVar, alias: out alias);
+            TypeSymbolWithAnnotations declType = BindVariableType(node.Declaration, diagnostics, typeSyntax, ref isConst, isTypeBound: out isTypeUnbound, alias: out alias);
 
             var kind = isConst ? LocalDeclarationKind.Constant : LocalDeclarationKind.RegularVariable;
-            return BindVariableDeclaration(kind, isVar, node.Declaration, typeSyntax, declType, alias, diagnostics, node);
+            return BindVariableDeclaration(kind, isTypeUnbound, node.Declaration, typeSyntax, declType, alias, diagnostics, node);
         }
 
         /// <summary>
@@ -686,7 +686,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             return disposeMethod;
         }
 
-        private TypeSymbolWithAnnotations BindVariableType(CSharpSyntaxNode declarationNode, DiagnosticBag diagnostics, TypeSyntax typeSyntax, ref bool isConst, out bool isVar, out AliasSymbol alias)
+        private TypeSymbolWithAnnotations BindVariableType(CSharpSyntaxNode declarationNode, DiagnosticBag diagnostics, TypeSyntax typeSyntax, ref bool isConst, out bool isTypeBound, out AliasSymbol alias)
         {
             Debug.Assert(
                 declarationNode is VariableDesignationSyntax ||
@@ -698,10 +698,10 @@ namespace Microsoft.CodeAnalysis.CSharp
             // or it might not; if it is not then we do not want to report an error. If it is, then
             // we want to treat the declaration as an explicitly typed declaration.
 
-            TypeSymbolWithAnnotations declType = BindTypeOrVarKeyword(typeSyntax.SkipRef(out _), diagnostics, out isVar, out alias);
-            Debug.Assert(!declType.IsNull || isVar);
+            TypeSymbolWithAnnotations declType = BindTypeOrVarKeyword(typeSyntax.SkipRef(out _), diagnostics, out isTypeBound, out alias);
+            Debug.Assert(!declType.IsNull || isTypeBound);
 
-            if (isVar)
+            if (isTypeBound)
             {
                 // There are a number of ways in which a var decl can be illegal, but in these 
                 // cases we should report an error and then keep right on going with the inference.
@@ -831,7 +831,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         protected BoundLocalDeclaration BindVariableDeclaration(
             LocalDeclarationKind kind,
-            bool isVar,
+            bool isTypeUnbound,
             VariableDeclarationSyntax declarator,
             TypeSyntax typeSyntax,
             TypeSymbolWithAnnotations declTypeOpt,
@@ -843,7 +843,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             return BindVariableDeclaration(LocateDeclaredVariableSymbol(declarator, typeSyntax, kind),
                                            kind,
-                                           isVar,
+                                           isTypeUnbound,
                                            declarator,
                                            typeSyntax,
                                            declTypeOpt,
@@ -855,7 +855,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         protected BoundLocalDeclaration BindVariableDeclaration(
             SourceLocalSymbol localSymbol,
             LocalDeclarationKind kind,
-            bool isVar,
+            bool isTypeUnbound,
             VariableDeclarationSyntax declarator,
             TypeSyntax typeSyntax,
             TypeSymbolWithAnnotations declTypeOpt,
@@ -864,11 +864,14 @@ namespace Microsoft.CodeAnalysis.CSharp
             CSharpSyntaxNode associatedSyntaxNode = null)
         {
             Debug.Assert(declarator != null);
-            Debug.Assert(!declTypeOpt.IsNull || (typeSyntax == null && isVar));
+            Debug.Assert(!declTypeOpt.IsNull || (typeSyntax == null && isTypeUnbound));
 
             var localDiagnostics = DiagnosticBag.GetInstance();
             // if we are not given desired syntax, we use declarator
             associatedSyntaxNode = associatedSyntaxNode ?? declarator;
+
+            bool isLet = declarator.VariableKeyword.Kind() == SyntaxKind.LetKeyword;
+
 
             // Check for variable declaration errors.
             // Use the binder that owns the scope for the local because this (the current) binder
@@ -891,7 +894,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             }
 
             BoundExpression initializerOpt;
-            if (isVar)
+            if (isTypeUnbound)
             {
                 aliasOpt = null;
 
@@ -949,10 +952,16 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             Debug.Assert(!declTypeOpt.IsNull);
 
+            // Handle let variable, replace the type with a readonly type
+            if (isLet && declTypeOpt.IsValueType && !declTypeOpt.TypeSymbol.IsReadOnly)
+            {
+                declTypeOpt = ExtendedTypeSymbol.CreateExtendedTypeSymbol(declarator, declTypeOpt, TypeAccessModifiers.ReadOnly, diagnostics);
+            }
+
             if (kind == LocalDeclarationKind.FixedVariable)
             {
                 // NOTE: this is an error, but it won't prevent further binding.
-                if (isVar)
+                if (isTypeUnbound)
                 {
                     if (!hasErrors)
                     {
@@ -1023,7 +1032,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             diagnostics.AddRangeAndFree(localDiagnostics);
 
 
-            var boundDeclType = new BoundTypeExpression(isVar ? (SyntaxNode)declarator : typeSyntax, aliasOpt, inferredType: isVar, type: declTypeOpt.TypeSymbol);
+            var boundDeclType = new BoundTypeExpression(isTypeUnbound ? (SyntaxNode)declarator : typeSyntax, aliasOpt, inferredType: isTypeUnbound, type: declTypeOpt.TypeSymbol);
             return new BoundLocalDeclaration(associatedSyntaxNode, localSymbol, boundDeclType, initializerOpt, hasErrors);
         }
 
@@ -1268,7 +1277,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             var op2 = BindValue(rhsExpr, diagnostics, rhsKind);
 
             // For transient type, we are checking the same restriction than RefAssignable
-            if (op2.Type.IsRefLikeType)
+            if ((object)op2.Type != null && op2.Type.IsRefLikeType)
             {
                 // TODO: The error message has to be changed
                 CheckValue(op1, BindValueKind.RefAssignable, diagnostics);
@@ -2272,7 +2281,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             var typeSyntax = nodeOpt.Type;
             // Fixed and using variables are not allowed to be ref-like, but regular variables are
-            if (localKind == LocalDeclarationKind.RegularVariable)
+            if (localKind == LocalDeclarationKind.RegularVariable || localKind == LocalDeclarationKind.LetVariable)
             {
                 typeSyntax = typeSyntax.SkipRef(out _);
             }

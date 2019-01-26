@@ -17542,9 +17542,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
   public sealed partial class IndexerDeclarationSyntax : BasePropertyDeclarationSyntax
   {
     private SyntaxNode attributeLists;
-    private TypeSyntax type;
     private ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier;
     private BracketedParameterListSyntax parameterList;
+    private TypeSyntax type;
     private AccessorListSyntax accessorList;
     private ArrowExpressionClauseSyntax expressionBody;
 
@@ -17573,25 +17573,24 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
-    public override TypeSyntax Type 
+    /// <summary>Gets the func keyword.</summary>
+    public SyntaxToken FuncKeyword 
     {
-        get
-        {
-            return this.GetRed(ref this.type, 2);
-        }
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IndexerDeclarationSyntax)this.Green).funcKeyword, this.GetChildPosition(2), this.GetChildIndex(2)); }
+    }
+
+    /// <summary>Gets the operator keyword.</summary>
+    public SyntaxToken OperatorKeyword 
+    {
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IndexerDeclarationSyntax)this.Green).operatorKeyword, this.GetChildPosition(3), this.GetChildIndex(3)); }
     }
 
     public override ExplicitInterfaceSpecifierSyntax ExplicitInterfaceSpecifier 
     {
         get
         {
-            return this.GetRed(ref this.explicitInterfaceSpecifier, 3);
+            return this.GetRed(ref this.explicitInterfaceSpecifier, 4);
         }
-    }
-
-    public SyntaxToken ThisKeyword 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IndexerDeclarationSyntax)this.Green).thisKeyword, this.GetChildPosition(4), this.GetChildIndex(4)); }
     }
 
     /// <summary>Gets the parameter list.</summary>
@@ -17603,11 +17602,32 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         }
     }
 
+    /// <summary>Gets the arrow token.</summary>
+    public SyntaxToken ReturnToken 
+    {
+        get
+        {
+            var slot = ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IndexerDeclarationSyntax)this.Green).returnToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(6), this.GetChildIndex(6));
+
+            return default(SyntaxToken);
+        }
+    }
+
+    public override TypeSyntax Type 
+    {
+        get
+        {
+            return this.GetRed(ref this.type, 7);
+        }
+    }
+
     public override AccessorListSyntax AccessorList 
     {
         get
         {
-            return this.GetRed(ref this.accessorList, 6);
+            return this.GetRed(ref this.accessorList, 8);
         }
     }
 
@@ -17615,7 +17635,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         get
         {
-            return this.GetRed(ref this.expressionBody, 7);
+            return this.GetRed(ref this.expressionBody, 9);
         }
     }
 
@@ -17625,7 +17645,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         {
             var slot = ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.IndexerDeclarationSyntax)this.Green).eosToken;
             if (slot != null)
-                return new SyntaxToken(this, slot, this.GetChildPosition(8), this.GetChildIndex(8));
+                return new SyntaxToken(this, slot, this.GetChildPosition(10), this.GetChildIndex(10));
 
             return default(SyntaxToken);
         }
@@ -17636,11 +17656,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         switch (index)
         {
             case 0: return this.GetRedAtZero(ref this.attributeLists);
-            case 2: return this.GetRed(ref this.type, 2);
-            case 3: return this.GetRed(ref this.explicitInterfaceSpecifier, 3);
+            case 4: return this.GetRed(ref this.explicitInterfaceSpecifier, 4);
             case 5: return this.GetRed(ref this.parameterList, 5);
-            case 6: return this.GetRed(ref this.accessorList, 6);
-            case 7: return this.GetRed(ref this.expressionBody, 7);
+            case 7: return this.GetRed(ref this.type, 7);
+            case 8: return this.GetRed(ref this.accessorList, 8);
+            case 9: return this.GetRed(ref this.expressionBody, 9);
             default: return null;
         }
     }
@@ -17649,11 +17669,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         switch (index)
         {
             case 0: return this.attributeLists;
-            case 2: return this.type;
-            case 3: return this.explicitInterfaceSpecifier;
+            case 4: return this.explicitInterfaceSpecifier;
             case 5: return this.parameterList;
-            case 6: return this.accessorList;
-            case 7: return this.expressionBody;
+            case 7: return this.type;
+            case 8: return this.accessorList;
+            case 9: return this.expressionBody;
             default: return null;
         }
     }
@@ -17668,11 +17688,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitIndexerDeclaration(this);
     }
 
-    public IndexerDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, TypeSyntax type, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken thisKeyword, BracketedParameterListSyntax parameterList, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public IndexerDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken funcKeyword, SyntaxToken operatorKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, BracketedParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || type != this.Type || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || thisKeyword != this.ThisKeyword || parameterList != this.ParameterList || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || operatorKeyword != this.OperatorKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || parameterList != this.ParameterList || returnToken != this.ReturnToken || type != this.Type || accessorList != this.AccessorList || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, type, explicitInterfaceSpecifier, thisKeyword, parameterList, accessorList, expressionBody, eosToken);
+            var newNode = SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, funcKeyword, operatorKeyword, explicitInterfaceSpecifier, parameterList, returnToken, type, accessorList, expressionBody, eosToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -17685,51 +17705,61 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     internal override BasePropertyDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
     public new IndexerDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
-        return this.Update(attributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, this.EosToken);
+        return this.Update(attributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
     }
 
     internal override BasePropertyDeclarationSyntax WithModifiersCore(SyntaxTokenList modifiers) => WithModifiers(modifiers);
     public new IndexerDeclarationSyntax WithModifiers(SyntaxTokenList modifiers)
     {
-        return this.Update(this.AttributeLists, modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, this.EosToken);
+        return this.Update(this.AttributeLists, modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
     }
 
-    internal override BasePropertyDeclarationSyntax WithTypeCore(TypeSyntax type) => WithType(type);
-    public new IndexerDeclarationSyntax WithType(TypeSyntax type)
+    public IndexerDeclarationSyntax WithFuncKeyword(SyntaxToken funcKeyword)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, this.EosToken);
+        return this.Update(this.AttributeLists, this.Modifiers, funcKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
+    }
+
+    public IndexerDeclarationSyntax WithOperatorKeyword(SyntaxToken operatorKeyword)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, operatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
     }
 
     internal override BasePropertyDeclarationSyntax WithExplicitInterfaceSpecifierCore(ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier) => WithExplicitInterfaceSpecifier(explicitInterfaceSpecifier);
     public new IndexerDeclarationSyntax WithExplicitInterfaceSpecifier(ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Type, explicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, this.EosToken);
-    }
-
-    public IndexerDeclarationSyntax WithThisKeyword(SyntaxToken thisKeyword)
-    {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, thisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, this.EosToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, explicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
     }
 
     public IndexerDeclarationSyntax WithParameterList(BracketedParameterListSyntax parameterList)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, parameterList, this.AccessorList, this.ExpressionBody, this.EosToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, parameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
+    }
+
+    public IndexerDeclarationSyntax WithReturnToken(SyntaxToken returnToken)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, returnToken, this.Type, this.AccessorList, this.ExpressionBody, this.EosToken);
+    }
+
+    internal override BasePropertyDeclarationSyntax WithTypeCore(TypeSyntax type) => WithType(type);
+    public new IndexerDeclarationSyntax WithType(TypeSyntax type)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, type, this.AccessorList, this.ExpressionBody, this.EosToken);
     }
 
     internal override BasePropertyDeclarationSyntax WithAccessorListCore(AccessorListSyntax accessorList) => WithAccessorList(accessorList);
     public new IndexerDeclarationSyntax WithAccessorList(AccessorListSyntax accessorList)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, accessorList, this.ExpressionBody, this.EosToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, accessorList, this.ExpressionBody, this.EosToken);
     }
 
     public IndexerDeclarationSyntax WithExpressionBody(ArrowExpressionClauseSyntax expressionBody)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, expressionBody, this.EosToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, expressionBody, this.EosToken);
     }
 
     public IndexerDeclarationSyntax WithEosToken(SyntaxToken eosToken)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Type, this.ExplicitInterfaceSpecifier, this.ThisKeyword, this.ParameterList, this.AccessorList, this.ExpressionBody, eosToken);
+        return this.Update(this.AttributeLists, this.Modifiers, this.FuncKeyword, this.OperatorKeyword, this.ExplicitInterfaceSpecifier, this.ParameterList, this.ReturnToken, this.Type, this.AccessorList, this.ExpressionBody, eosToken);
     }
     internal override BasePropertyDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
 

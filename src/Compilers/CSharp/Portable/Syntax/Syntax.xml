@@ -1975,7 +1975,7 @@
             <summary>Gets the variable keyword.</summary>
         </PropertyComment>
         <Kind Name="VarKeyword"/>
-        <Kind Name="ValKeyword"/>
+        <Kind Name="LetKeyword"/>
         <Kind Name="ConstKeyword"/>
     </Field>
     <Field Name="Identifier" Type="SyntaxToken">
@@ -3648,16 +3648,31 @@
     <Kind Name="IndexerDeclaration"/>
     <Field Name="AttributeLists" Type="SyntaxList&lt;AttributeSyntax&gt;" Override="true"/>
     <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Override="true"/>
-    <Field Name="Type" Type="TypeSyntax" Override="true"/>
-    <Field Name="ExplicitInterfaceSpecifier" Type="ExplicitInterfaceSpecifierSyntax" Optional="true" Override="true"/>
-    <Field Name="ThisKeyword" Type="SyntaxToken">
-      <Kind Name="ThisKeyword"/>
+    <Field Name="FuncKeyword" Type="SyntaxToken">
+        <PropertyComment>
+            <summary>Gets the func keyword.</summary>
+        </PropertyComment>
+        <Kind Name="FuncKeyword"/>
     </Field>
+    <Field Name="OperatorKeyword" Type="SyntaxToken">
+        <PropertyComment>
+            <summary>Gets the operator keyword.</summary>
+        </PropertyComment>
+        <Kind Name="OperatorKeyword"/>
+    </Field>
+    <Field Name="ExplicitInterfaceSpecifier" Type="ExplicitInterfaceSpecifierSyntax" Optional="true" Override="true"/>
     <Field Name="ParameterList" Type="BracketedParameterListSyntax">
       <PropertyComment>
         <summary>Gets the parameter list.</summary>
       </PropertyComment>
     </Field>
+    <Field Name="ReturnToken" Type="SyntaxToken" Optional="true">
+        <PropertyComment>
+            <summary>Gets the arrow token.</summary>
+        </PropertyComment>
+        <Kind Name="MinusGreaterThanToken"/>
+    </Field>
+    <Field Name="Type" Type="TypeSyntax" Override="true"/>
     <Field Name="AccessorList" Type="AccessorListSyntax" Override="true" Optional="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true">

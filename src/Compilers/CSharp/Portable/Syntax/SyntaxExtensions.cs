@@ -263,19 +263,23 @@ namespace Microsoft.CodeAnalysis.CSharp
             this IndexerDeclarationSyntax syntax,
             SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
-            TypeSyntax type,
+            SyntaxToken funcKeyword,
+            SyntaxToken operatorKeyword,
             ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier,
-            SyntaxToken thisKeyword,
+            SyntaxToken minusGreaterThanOrEqualToken,
+            TypeSyntax type,
             BracketedParameterListSyntax parameterList,
             AccessorListSyntax accessorList)
         {
             return syntax.Update(
                 attributeLists,
                 modifiers,
-                type,
+                funcKeyword,
+                operatorKeyword,
                 explicitInterfaceSpecifier,
-                thisKeyword,
                 parameterList,
+                minusGreaterThanOrEqualToken,
+                type,
                 accessorList,
                 default(ArrowExpressionClauseSyntax),
                 default(SyntaxToken));

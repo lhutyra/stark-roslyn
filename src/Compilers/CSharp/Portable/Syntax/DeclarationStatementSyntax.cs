@@ -8,5 +8,9 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         {
             get { return this.Declaration.VariableKeyword.Kind() == SyntaxKind.ConstKeyword; }
         }
+        public bool IsLet
+        {
+            get { return this.Declaration.VariableKeyword.Kind() == SyntaxKind.LetKeyword; }
+        }
     }
 }

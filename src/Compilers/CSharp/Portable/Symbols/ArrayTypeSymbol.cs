@@ -18,7 +18,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
         private readonly TypeSymbolWithAnnotations _elementType;
         private readonly NamedTypeSymbol _baseType;
 
-        private ArrayTypeSymbol(
+        protected ArrayTypeSymbol(
             TypeSymbolWithAnnotations elementType,
             NamedTypeSymbol array)
         {
@@ -95,7 +95,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             return ElementType.IsSameAs(elementType) ? this : WithElementTypeCore(elementType);
         }
 
-        protected abstract ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations elementType);
+        protected internal abstract ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations elementType);
 
         private static ImmutableArray<NamedTypeSymbol> GetSZArrayInterfaces(
             TypeSymbolWithAnnotations elementType,
@@ -228,7 +228,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        public sealed override bool IsRefLikeType
+        public override bool IsRefLikeType
         {
             get
             {
@@ -236,7 +236,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             }
         }
 
-        internal sealed override bool IsReadOnly
+        internal override bool IsReadOnly
         {
             get
             {
@@ -518,7 +518,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 _interfaces = constructedInterfaces;
             }
 
-            protected override ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations newElementType)
+            protected internal override ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations newElementType)
             {
                 var newInterfaces = _interfaces.SelectAsArray((i, t) => i.OriginalDefinition.Construct(t), newElementType.TypeSymbol);
                 return new SZArray(newElementType, BaseTypeNoUseSiteDiagnostics, newInterfaces);
@@ -608,7 +608,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
             {
             }
 
-            protected override ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations elementType)
+            protected internal override ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations elementType)
             {
                 return new MDArrayNoSizesOrBounds(elementType, Rank, BaseTypeNoUseSiteDiagnostics);
             }
@@ -641,7 +641,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                 _lowerBounds = lowerBounds;
             }
 
-            protected override ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations elementType)
+            protected internal override ArrayTypeSymbol WithElementTypeCore(TypeSymbolWithAnnotations elementType)
             {
                 return new MDArrayWithSizesAndBounds(elementType, Rank, _sizes, _lowerBounds, BaseTypeNoUseSiteDiagnostics);
             }

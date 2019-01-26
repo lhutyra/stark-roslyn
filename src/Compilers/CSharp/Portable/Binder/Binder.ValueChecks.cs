@@ -557,6 +557,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                     ReportReadonlyLocalError(node, localSymbol, valueKind, checkingReceiver, diagnostics);
                     return false;
                 }
+
+                if (localSymbol.IsLet && (valueKind & BindValueKind.Assignable) != 0)
+                {
+                    ReportReadonlyLocalError(node, localSymbol, valueKind, checkingReceiver, diagnostics);
+                    return false;
+                }
             }
             else if (RequiresRefAssignableVariable(valueKind))
             {
@@ -1510,6 +1516,14 @@ moreArguments:
             else if (local.IsFixed)
             {
                 cause = MessageID.IDS_FIXEDLOCAL;
+            }
+            else if (local.IsLet)
+            {
+                // TODO: Checking receiver
+                Debug.Assert(!checkingReceiver);
+                // TODO: handle ref, address, kind...etc.
+                Error(diagnostics, ErrorCode.ERR_AssignReadOnlyLocal, node, local);
+                return;
             }
             else
             {

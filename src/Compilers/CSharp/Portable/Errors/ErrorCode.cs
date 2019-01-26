@@ -1686,6 +1686,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         ERR_AccessInvalidEmpty = 9001,
         ERR_OpenBraceExpected = 9002,
         ERR_CloseBraceExpected = 9003,
+        ERR_AccessModifiersNotSupported = 9004,
+        ERR_AssignReadOnlyLocal = 9005,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

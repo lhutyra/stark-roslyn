@@ -213,17 +213,20 @@ namespace Microsoft.CodeAnalysis.CSharp
                             {
                                 kind = LocalDeclarationKind.UsingVariable;
                             }
+                            else if (decl.IsLet)
+                            {
+                                kind = LocalDeclarationKind.LetVariable;
+                            }
                             else
                             {
                                 kind = LocalDeclarationKind.RegularVariable;
                             }
-                            {
-                                var localSymbol = MakeLocal(decl.Declaration, kind, localDeclarationBinder);
-                                locals.Add(localSymbol);
 
-                                // also gather expression-declared variables from the bracketed argument lists and the initializers
-                                ExpressionVariableFinder.FindExpressionVariables(this, locals, decl.Declaration, localDeclarationBinder);
-                            }
+                            var localSymbol = MakeLocal(decl.Declaration, kind, localDeclarationBinder);
+                            locals.Add(localSymbol);
+
+                            // also gather expression-declared variables from the bracketed argument lists and the initializers
+                            ExpressionVariableFinder.FindExpressionVariables(this, locals, decl.Declaration, localDeclarationBinder);
 
                         }
                         break;

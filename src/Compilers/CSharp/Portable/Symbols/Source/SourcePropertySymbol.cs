@@ -458,7 +458,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
 
         internal static SourcePropertySymbol Create(SourceMemberContainerTypeSymbol containingType, Binder bodyBinder, IndexerDeclarationSyntax syntax, DiagnosticBag diagnostics)
         {
-            var location = syntax.ThisKeyword.GetLocation();
+            var location = syntax.OperatorKeyword.GetLocation();
             return new SourcePropertySymbol(containingType, bodyBinder, syntax, DefaultIndexerName, location, diagnostics);
         }
 

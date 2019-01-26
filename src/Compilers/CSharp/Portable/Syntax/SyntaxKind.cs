@@ -165,7 +165,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         ImplicitKeyword = 8384,
 #if STARK        
         VarKeyword = 8390,
-        ValKeyword = 8391,
+        LetKeyword = 8391,
         FuncKeyword = 8392,
         TransientKeyword = 8393,
         ImportKeyword = 8394,
@@ -194,7 +194,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         GroupKeyword = 8423,
         JoinKeyword = 8424,
         IntoKeyword = 8425,
-        LetKeyword = 8426,
         ByKeyword = 8427,
         SelectKeyword = 8428,
         OrderByKeyword = 8429,
