@@ -15,29 +15,29 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             private const UnaryOperatorKind BOL = UnaryOperatorKind.Bool;
             private const UnaryOperatorKind CHR = UnaryOperatorKind.Char;
-            private const UnaryOperatorKind I08 = UnaryOperatorKind.SByte;
-            private const UnaryOperatorKind U08 = UnaryOperatorKind.Byte;
-            private const UnaryOperatorKind I16 = UnaryOperatorKind.Short;
+            private const UnaryOperatorKind I08 = UnaryOperatorKind.Int8;
+            private const UnaryOperatorKind U08 = UnaryOperatorKind.UInt8;
+            private const UnaryOperatorKind I16 = UnaryOperatorKind.Int16;
             private const UnaryOperatorKind U16 = UnaryOperatorKind.UShort;
-            private const UnaryOperatorKind I32 = UnaryOperatorKind.Int;
-            private const UnaryOperatorKind U32 = UnaryOperatorKind.UInt;
-            private const UnaryOperatorKind I64 = UnaryOperatorKind.Long;
-            private const UnaryOperatorKind U64 = UnaryOperatorKind.ULong;
-            private const UnaryOperatorKind R32 = UnaryOperatorKind.Float;
-            private const UnaryOperatorKind R64 = UnaryOperatorKind.Double;
+            private const UnaryOperatorKind I32 = UnaryOperatorKind.Int32;
+            private const UnaryOperatorKind U32 = UnaryOperatorKind.UInt32;
+            private const UnaryOperatorKind I64 = UnaryOperatorKind.Int64;
+            private const UnaryOperatorKind U64 = UnaryOperatorKind.UInt64;
+            private const UnaryOperatorKind R32 = UnaryOperatorKind.Float32;
+            private const UnaryOperatorKind R64 = UnaryOperatorKind.Float64;
             private const UnaryOperatorKind DEC = UnaryOperatorKind.Decimal;
             private const UnaryOperatorKind LBOL = UnaryOperatorKind.Lifted | UnaryOperatorKind.Bool;
             private const UnaryOperatorKind LCHR = UnaryOperatorKind.Lifted | UnaryOperatorKind.Char;
-            private const UnaryOperatorKind LI08 = UnaryOperatorKind.Lifted | UnaryOperatorKind.SByte;
-            private const UnaryOperatorKind LU08 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Byte;
-            private const UnaryOperatorKind LI16 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Short;
+            private const UnaryOperatorKind LI08 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Int8;
+            private const UnaryOperatorKind LU08 = UnaryOperatorKind.Lifted | UnaryOperatorKind.UInt8;
+            private const UnaryOperatorKind LI16 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Int16;
             private const UnaryOperatorKind LU16 = UnaryOperatorKind.Lifted | UnaryOperatorKind.UShort;
-            private const UnaryOperatorKind LI32 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Int;
-            private const UnaryOperatorKind LU32 = UnaryOperatorKind.Lifted | UnaryOperatorKind.UInt;
-            private const UnaryOperatorKind LI64 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Long;
-            private const UnaryOperatorKind LU64 = UnaryOperatorKind.Lifted | UnaryOperatorKind.ULong;
-            private const UnaryOperatorKind LR32 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Float;
-            private const UnaryOperatorKind LR64 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Double;
+            private const UnaryOperatorKind LI32 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Int32;
+            private const UnaryOperatorKind LU32 = UnaryOperatorKind.Lifted | UnaryOperatorKind.UInt32;
+            private const UnaryOperatorKind LI64 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Int64;
+            private const UnaryOperatorKind LU64 = UnaryOperatorKind.Lifted | UnaryOperatorKind.UInt64;
+            private const UnaryOperatorKind LR32 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Float32;
+            private const UnaryOperatorKind LR64 = UnaryOperatorKind.Lifted | UnaryOperatorKind.Float64;
             private const UnaryOperatorKind LDEC = UnaryOperatorKind.Lifted | UnaryOperatorKind.Decimal;
 
 

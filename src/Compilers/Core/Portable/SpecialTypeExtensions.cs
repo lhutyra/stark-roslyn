@@ -42,6 +42,8 @@ namespace Microsoft.CodeAnalysis
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
                 case SpecialType.System_UInt8:
+                case SpecialType.System_Int:
+                case SpecialType.System_UInt:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
@@ -180,6 +182,8 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
+                case SpecialType.System_Int:
+                case SpecialType.System_UInt:
                 case SpecialType.System_UInt8:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
@@ -201,6 +205,7 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
+                case SpecialType.System_UInt:
                 case SpecialType.System_UInt8:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
@@ -215,6 +220,7 @@ namespace Microsoft.CodeAnalysis
         {
             switch (specialType)
             {
+                case SpecialType.System_Int:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:

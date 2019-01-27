@@ -454,7 +454,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 helperCall = new BoundBadExpression(fixedInitializer.Syntax, LookupResultKind.NotInvocable, ImmutableArray<Symbol>.Empty, ImmutableArray<BoundExpression>.Empty, ErrorTypeSymbol.UnknownResultType);
             }
 
-            BoundExpression addition = factory.Binary(BinaryOperatorKind.PointerAndIntAddition, localType, factory.Local(localSymbol), helperCall);
+            BoundExpression addition = factory.Binary(BinaryOperatorKind.PointerAndInt32Addition, localType, factory.Local(localSymbol), helperCall);
             BoundStatement conditionalAdd = factory.If(notNullCheck, factory.Assignment(factory.Local(localSymbol), addition));
 
             return factory.Block(stringTempInit, localInit, conditionalAdd);
@@ -517,7 +517,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             // NOTE: dev10 comment says ">", but code actually checks "!="
             //temp.Length != 0
-            BoundExpression lengthCheck = factory.Binary(BinaryOperatorKind.IntNotEqual, factory.SpecialType(SpecialType.System_Boolean), lengthCall, factory.Literal(0));
+            BoundExpression lengthCheck = factory.Binary(BinaryOperatorKind.Int32NotEqual, factory.SpecialType(SpecialType.System_Boolean), lengthCall, factory.Literal(0));
 
             //((temp = array) != null && temp.Length != 0)
             BoundExpression condition = factory.Binary(BinaryOperatorKind.LogicalBoolAnd, factory.SpecialType(SpecialType.System_Boolean), notNullCheck, lengthCheck);

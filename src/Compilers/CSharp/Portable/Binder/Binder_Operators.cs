@@ -1257,33 +1257,33 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 switch (kind)
                 {
-                    case BinaryOperatorKind.IntAddition:
+                    case BinaryOperatorKind.Int32Addition:
                         return valueLeft.Int32Value + valueRight.Int32Value;
-                    case BinaryOperatorKind.LongAddition:
+                    case BinaryOperatorKind.Int64Addition:
                         return valueLeft.Int64Value + valueRight.Int64Value;
-                    case BinaryOperatorKind.UIntAddition:
+                    case BinaryOperatorKind.UInt32Addition:
                         return valueLeft.UInt32Value + valueRight.UInt32Value;
-                    case BinaryOperatorKind.ULongAddition:
+                    case BinaryOperatorKind.UInt64Addition:
                         return valueLeft.UInt64Value + valueRight.UInt64Value;
-                    case BinaryOperatorKind.IntSubtraction:
+                    case BinaryOperatorKind.Int32Subtraction:
                         return valueLeft.Int32Value - valueRight.Int32Value;
-                    case BinaryOperatorKind.LongSubtraction:
+                    case BinaryOperatorKind.Int64Subtraction:
                         return valueLeft.Int64Value - valueRight.Int64Value;
-                    case BinaryOperatorKind.UIntSubtraction:
+                    case BinaryOperatorKind.UInt32Subtraction:
                         return valueLeft.UInt32Value - valueRight.UInt32Value;
-                    case BinaryOperatorKind.ULongSubtraction:
+                    case BinaryOperatorKind.UInt64Subtraction:
                         return valueLeft.UInt64Value - valueRight.UInt64Value;
-                    case BinaryOperatorKind.IntMultiplication:
+                    case BinaryOperatorKind.Int32Multiplication:
                         return valueLeft.Int32Value * valueRight.Int32Value;
-                    case BinaryOperatorKind.LongMultiplication:
+                    case BinaryOperatorKind.Int64Multiplication:
                         return valueLeft.Int64Value * valueRight.Int64Value;
-                    case BinaryOperatorKind.UIntMultiplication:
+                    case BinaryOperatorKind.UInt32Multiplication:
                         return valueLeft.UInt32Value * valueRight.UInt32Value;
-                    case BinaryOperatorKind.ULongMultiplication:
+                    case BinaryOperatorKind.UInt64Multiplication:
                         return valueLeft.UInt64Value * valueRight.UInt64Value;
 
                     // even in unchecked context division may overflow:
-                    case BinaryOperatorKind.IntDivision:
+                    case BinaryOperatorKind.Int32Division:
                         if (valueLeft.Int32Value == int.MinValue && valueRight.Int32Value == -1)
                         {
                             return int.MinValue;
@@ -1291,7 +1291,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                         return valueLeft.Int32Value / valueRight.Int32Value;
 
-                    case BinaryOperatorKind.LongDivision:
+                    case BinaryOperatorKind.Int64Division:
                         if (valueLeft.Int64Value == long.MinValue && valueRight.Int64Value == -1)
                         {
                             return long.MinValue;
@@ -1313,33 +1313,33 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                 switch (kind)
                 {
-                    case BinaryOperatorKind.IntAddition:
+                    case BinaryOperatorKind.Int32Addition:
                         return valueLeft.Int32Value + valueRight.Int32Value;
-                    case BinaryOperatorKind.LongAddition:
+                    case BinaryOperatorKind.Int64Addition:
                         return valueLeft.Int64Value + valueRight.Int64Value;
-                    case BinaryOperatorKind.UIntAddition:
+                    case BinaryOperatorKind.UInt32Addition:
                         return valueLeft.UInt32Value + valueRight.UInt32Value;
-                    case BinaryOperatorKind.ULongAddition:
+                    case BinaryOperatorKind.UInt64Addition:
                         return valueLeft.UInt64Value + valueRight.UInt64Value;
-                    case BinaryOperatorKind.IntSubtraction:
+                    case BinaryOperatorKind.Int32Subtraction:
                         return valueLeft.Int32Value - valueRight.Int32Value;
-                    case BinaryOperatorKind.LongSubtraction:
+                    case BinaryOperatorKind.Int64Subtraction:
                         return valueLeft.Int64Value - valueRight.Int64Value;
-                    case BinaryOperatorKind.UIntSubtraction:
+                    case BinaryOperatorKind.UInt32Subtraction:
                         return valueLeft.UInt32Value - valueRight.UInt32Value;
-                    case BinaryOperatorKind.ULongSubtraction:
+                    case BinaryOperatorKind.UInt64Subtraction:
                         return valueLeft.UInt64Value - valueRight.UInt64Value;
-                    case BinaryOperatorKind.IntMultiplication:
+                    case BinaryOperatorKind.Int32Multiplication:
                         return valueLeft.Int32Value * valueRight.Int32Value;
-                    case BinaryOperatorKind.LongMultiplication:
+                    case BinaryOperatorKind.Int64Multiplication:
                         return valueLeft.Int64Value * valueRight.Int64Value;
-                    case BinaryOperatorKind.UIntMultiplication:
+                    case BinaryOperatorKind.UInt32Multiplication:
                         return valueLeft.UInt32Value * valueRight.UInt32Value;
-                    case BinaryOperatorKind.ULongMultiplication:
+                    case BinaryOperatorKind.UInt64Multiplication:
                         return valueLeft.UInt64Value * valueRight.UInt64Value;
-                    case BinaryOperatorKind.IntDivision:
+                    case BinaryOperatorKind.Int32Division:
                         return valueLeft.Int32Value / valueRight.Int32Value;
-                    case BinaryOperatorKind.LongDivision:
+                    case BinaryOperatorKind.Int64Division:
                         return valueLeft.Int64Value / valueRight.Int64Value;
                 }
 
@@ -1671,71 +1671,71 @@ namespace Microsoft.CodeAnalysis.CSharp
                     if (valueLeft.IsNull) return !valueRight.IsNull;
                     if (valueRight.IsNull) return true;
                     break;
-                case BinaryOperatorKind.DoubleAddition:
+                case BinaryOperatorKind.Float64Addition:
                     return valueLeft.DoubleValue + valueRight.DoubleValue;
-                case BinaryOperatorKind.FloatAddition:
+                case BinaryOperatorKind.Float32Addition:
                     return valueLeft.SingleValue + valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleSubtraction:
+                case BinaryOperatorKind.Float64Subtraction:
                     return valueLeft.DoubleValue - valueRight.DoubleValue;
-                case BinaryOperatorKind.FloatSubtraction:
+                case BinaryOperatorKind.Float32Subtraction:
                     return valueLeft.SingleValue - valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleMultiplication:
+                case BinaryOperatorKind.Float64Multiplication:
                     return valueLeft.DoubleValue * valueRight.DoubleValue;
-                case BinaryOperatorKind.FloatMultiplication:
+                case BinaryOperatorKind.Float32Multiplication:
                     return valueLeft.SingleValue * valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleDivision:
+                case BinaryOperatorKind.Float64Division:
                     return valueLeft.DoubleValue / valueRight.DoubleValue;
-                case BinaryOperatorKind.FloatDivision:
+                case BinaryOperatorKind.Float32Division:
                     return valueLeft.SingleValue / valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleRemainder:
+                case BinaryOperatorKind.Float64Remainder:
                     return valueLeft.DoubleValue % valueRight.DoubleValue;
-                case BinaryOperatorKind.FloatRemainder:
+                case BinaryOperatorKind.Float32Remainder:
                     return valueLeft.SingleValue % valueRight.SingleValue;
-                case BinaryOperatorKind.IntLeftShift:
+                case BinaryOperatorKind.Int32LeftShift:
                     return valueLeft.Int32Value << valueRight.Int32Value;
-                case BinaryOperatorKind.LongLeftShift:
+                case BinaryOperatorKind.Int64LeftShift:
                     return valueLeft.Int64Value << valueRight.Int32Value;
-                case BinaryOperatorKind.UIntLeftShift:
+                case BinaryOperatorKind.UInt32LeftShift:
                     return valueLeft.UInt32Value << valueRight.Int32Value;
-                case BinaryOperatorKind.ULongLeftShift:
+                case BinaryOperatorKind.UInt64LeftShift:
                     return valueLeft.UInt64Value << valueRight.Int32Value;
-                case BinaryOperatorKind.IntRightShift:
+                case BinaryOperatorKind.Int32RightShift:
                     return valueLeft.Int32Value >> valueRight.Int32Value;
-                case BinaryOperatorKind.LongRightShift:
+                case BinaryOperatorKind.Int64RightShift:
                     return valueLeft.Int64Value >> valueRight.Int32Value;
-                case BinaryOperatorKind.UIntRightShift:
+                case BinaryOperatorKind.UInt32RightShift:
                     return valueLeft.UInt32Value >> valueRight.Int32Value;
-                case BinaryOperatorKind.ULongRightShift:
+                case BinaryOperatorKind.UInt64RightShift:
                     return valueLeft.UInt64Value >> valueRight.Int32Value;
                 case BinaryOperatorKind.BoolAnd:
                     return valueLeft.BooleanValue & valueRight.BooleanValue;
-                case BinaryOperatorKind.IntAnd:
+                case BinaryOperatorKind.Int32And:
                     return valueLeft.Int32Value & valueRight.Int32Value;
-                case BinaryOperatorKind.LongAnd:
+                case BinaryOperatorKind.Int64And:
                     return valueLeft.Int64Value & valueRight.Int64Value;
-                case BinaryOperatorKind.UIntAnd:
+                case BinaryOperatorKind.UInt32And:
                     return valueLeft.UInt32Value & valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongAnd:
+                case BinaryOperatorKind.UInt64And:
                     return valueLeft.UInt64Value & valueRight.UInt64Value;
                 case BinaryOperatorKind.BoolOr:
                     return valueLeft.BooleanValue | valueRight.BooleanValue;
-                case BinaryOperatorKind.IntOr:
+                case BinaryOperatorKind.Int32Or:
                     return valueLeft.Int32Value | valueRight.Int32Value;
-                case BinaryOperatorKind.LongOr:
+                case BinaryOperatorKind.Int64Or:
                     return valueLeft.Int64Value | valueRight.Int64Value;
-                case BinaryOperatorKind.UIntOr:
+                case BinaryOperatorKind.UInt32Or:
                     return valueLeft.UInt32Value | valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongOr:
+                case BinaryOperatorKind.UInt64Or:
                     return valueLeft.UInt64Value | valueRight.UInt64Value;
                 case BinaryOperatorKind.BoolXor:
                     return valueLeft.BooleanValue ^ valueRight.BooleanValue;
-                case BinaryOperatorKind.IntXor:
+                case BinaryOperatorKind.Int32Xor:
                     return valueLeft.Int32Value ^ valueRight.Int32Value;
-                case BinaryOperatorKind.LongXor:
+                case BinaryOperatorKind.Int64Xor:
                     return valueLeft.Int64Value ^ valueRight.Int64Value;
-                case BinaryOperatorKind.UIntXor:
+                case BinaryOperatorKind.UInt32Xor:
                     return valueLeft.UInt32Value ^ valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongXor:
+                case BinaryOperatorKind.UInt64Xor:
                     return valueLeft.UInt64Value ^ valueRight.UInt64Value;
                 case BinaryOperatorKind.LogicalBoolAnd:
                     return valueLeft.BooleanValue && valueRight.BooleanValue;
@@ -1747,17 +1747,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return valueLeft.StringValue == valueRight.StringValue;
                 case BinaryOperatorKind.DecimalEqual:
                     return valueLeft.DecimalValue == valueRight.DecimalValue;
-                case BinaryOperatorKind.FloatEqual:
+                case BinaryOperatorKind.Float32Equal:
                     return valueLeft.SingleValue == valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleEqual:
+                case BinaryOperatorKind.Float64Equal:
                     return valueLeft.DoubleValue == valueRight.DoubleValue;
-                case BinaryOperatorKind.IntEqual:
+                case BinaryOperatorKind.Int32Equal:
                     return valueLeft.Int32Value == valueRight.Int32Value;
-                case BinaryOperatorKind.LongEqual:
+                case BinaryOperatorKind.Int64Equal:
                     return valueLeft.Int64Value == valueRight.Int64Value;
-                case BinaryOperatorKind.UIntEqual:
+                case BinaryOperatorKind.UInt32Equal:
                     return valueLeft.UInt32Value == valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongEqual:
+                case BinaryOperatorKind.UInt64Equal:
                     return valueLeft.UInt64Value == valueRight.UInt64Value;
                 case BinaryOperatorKind.BoolNotEqual:
                     return valueLeft.BooleanValue != valueRight.BooleanValue;
@@ -1765,87 +1765,87 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return valueLeft.StringValue != valueRight.StringValue;
                 case BinaryOperatorKind.DecimalNotEqual:
                     return valueLeft.DecimalValue != valueRight.DecimalValue;
-                case BinaryOperatorKind.FloatNotEqual:
+                case BinaryOperatorKind.Float32NotEqual:
                     return valueLeft.SingleValue != valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleNotEqual:
+                case BinaryOperatorKind.Float64NotEqual:
                     return valueLeft.DoubleValue != valueRight.DoubleValue;
-                case BinaryOperatorKind.IntNotEqual:
+                case BinaryOperatorKind.Int32NotEqual:
                     return valueLeft.Int32Value != valueRight.Int32Value;
-                case BinaryOperatorKind.LongNotEqual:
+                case BinaryOperatorKind.Int64NotEqual:
                     return valueLeft.Int64Value != valueRight.Int64Value;
-                case BinaryOperatorKind.UIntNotEqual:
+                case BinaryOperatorKind.UInt32NotEqual:
                     return valueLeft.UInt32Value != valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongNotEqual:
+                case BinaryOperatorKind.UInt64NotEqual:
                     return valueLeft.UInt64Value != valueRight.UInt64Value;
                 case BinaryOperatorKind.DecimalLessThan:
                     return valueLeft.DecimalValue < valueRight.DecimalValue;
-                case BinaryOperatorKind.FloatLessThan:
+                case BinaryOperatorKind.Float32LessThan:
                     return valueLeft.SingleValue < valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleLessThan:
+                case BinaryOperatorKind.Float64LessThan:
                     return valueLeft.DoubleValue < valueRight.DoubleValue;
-                case BinaryOperatorKind.IntLessThan:
+                case BinaryOperatorKind.Int32LessThan:
                     return valueLeft.Int32Value < valueRight.Int32Value;
-                case BinaryOperatorKind.LongLessThan:
+                case BinaryOperatorKind.Int64LessThan:
                     return valueLeft.Int64Value < valueRight.Int64Value;
-                case BinaryOperatorKind.UIntLessThan:
+                case BinaryOperatorKind.UInt32LessThan:
                     return valueLeft.UInt32Value < valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongLessThan:
+                case BinaryOperatorKind.UInt64LessThan:
                     return valueLeft.UInt64Value < valueRight.UInt64Value;
                 case BinaryOperatorKind.DecimalGreaterThan:
                     return valueLeft.DecimalValue > valueRight.DecimalValue;
-                case BinaryOperatorKind.FloatGreaterThan:
+                case BinaryOperatorKind.Float32GreaterThan:
                     return valueLeft.SingleValue > valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleGreaterThan:
+                case BinaryOperatorKind.Float64GreaterThan:
                     return valueLeft.DoubleValue > valueRight.DoubleValue;
-                case BinaryOperatorKind.IntGreaterThan:
+                case BinaryOperatorKind.Int32GreaterThan:
                     return valueLeft.Int32Value > valueRight.Int32Value;
-                case BinaryOperatorKind.LongGreaterThan:
+                case BinaryOperatorKind.Int64GreaterThan:
                     return valueLeft.Int64Value > valueRight.Int64Value;
-                case BinaryOperatorKind.UIntGreaterThan:
+                case BinaryOperatorKind.UInt32GreaterThan:
                     return valueLeft.UInt32Value > valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongGreaterThan:
+                case BinaryOperatorKind.UInt64GreaterThan:
                     return valueLeft.UInt64Value > valueRight.UInt64Value;
                 case BinaryOperatorKind.DecimalLessThanOrEqual:
                     return valueLeft.DecimalValue <= valueRight.DecimalValue;
-                case BinaryOperatorKind.FloatLessThanOrEqual:
+                case BinaryOperatorKind.Float32LessThanOrEqual:
                     return valueLeft.SingleValue <= valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleLessThanOrEqual:
+                case BinaryOperatorKind.Float64LessThanOrEqual:
                     return valueLeft.DoubleValue <= valueRight.DoubleValue;
-                case BinaryOperatorKind.IntLessThanOrEqual:
+                case BinaryOperatorKind.Int32LessThanOrEqual:
                     return valueLeft.Int32Value <= valueRight.Int32Value;
-                case BinaryOperatorKind.LongLessThanOrEqual:
+                case BinaryOperatorKind.Int64LessThanOrEqual:
                     return valueLeft.Int64Value <= valueRight.Int64Value;
-                case BinaryOperatorKind.UIntLessThanOrEqual:
+                case BinaryOperatorKind.UInt32LessThanOrEqual:
                     return valueLeft.UInt32Value <= valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongLessThanOrEqual:
+                case BinaryOperatorKind.UInt64LessThanOrEqual:
                     return valueLeft.UInt64Value <= valueRight.UInt64Value;
                 case BinaryOperatorKind.DecimalGreaterThanOrEqual:
                     return valueLeft.DecimalValue >= valueRight.DecimalValue;
-                case BinaryOperatorKind.FloatGreaterThanOrEqual:
+                case BinaryOperatorKind.Float32GreaterThanOrEqual:
                     return valueLeft.SingleValue >= valueRight.SingleValue;
-                case BinaryOperatorKind.DoubleGreaterThanOrEqual:
+                case BinaryOperatorKind.Float64GreaterThanOrEqual:
                     return valueLeft.DoubleValue >= valueRight.DoubleValue;
-                case BinaryOperatorKind.IntGreaterThanOrEqual:
+                case BinaryOperatorKind.Int32GreaterThanOrEqual:
                     return valueLeft.Int32Value >= valueRight.Int32Value;
-                case BinaryOperatorKind.LongGreaterThanOrEqual:
+                case BinaryOperatorKind.Int64GreaterThanOrEqual:
                     return valueLeft.Int64Value >= valueRight.Int64Value;
-                case BinaryOperatorKind.UIntGreaterThanOrEqual:
+                case BinaryOperatorKind.UInt32GreaterThanOrEqual:
                     return valueLeft.UInt32Value >= valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongGreaterThanOrEqual:
+                case BinaryOperatorKind.UInt64GreaterThanOrEqual:
                     return valueLeft.UInt64Value >= valueRight.UInt64Value;
-                case BinaryOperatorKind.UIntDivision:
+                case BinaryOperatorKind.UInt32Division:
                     return valueLeft.UInt32Value / valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongDivision:
+                case BinaryOperatorKind.UInt64Division:
                     return valueLeft.UInt64Value / valueRight.UInt64Value;
 
                 // MinValue % -1 always overflows at runtime but never at compile time
-                case BinaryOperatorKind.IntRemainder:
+                case BinaryOperatorKind.Int32Remainder:
                     return (valueRight.Int32Value != -1) ? valueLeft.Int32Value % valueRight.Int32Value : 0;
-                case BinaryOperatorKind.LongRemainder:
+                case BinaryOperatorKind.Int64Remainder:
                     return (valueRight.Int64Value != -1) ? valueLeft.Int64Value % valueRight.Int64Value : 0;
-                case BinaryOperatorKind.UIntRemainder:
+                case BinaryOperatorKind.UInt32Remainder:
                     return valueLeft.UInt32Value % valueRight.UInt32Value;
-                case BinaryOperatorKind.ULongRemainder:
+                case BinaryOperatorKind.UInt64Remainder:
                     return valueLeft.UInt64Value % valueRight.UInt64Value;
             }
 
@@ -2451,31 +2451,31 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 case UnaryOperatorKind.DecimalUnaryMinus:
                     return -value.DecimalValue;
-                case UnaryOperatorKind.DoubleUnaryMinus:
-                case UnaryOperatorKind.FloatUnaryMinus:
+                case UnaryOperatorKind.Float64UnaryMinus:
+                case UnaryOperatorKind.Float32UnaryMinus:
                     return -value.DoubleValue;
                 case UnaryOperatorKind.DecimalUnaryPlus:
                     return +value.DecimalValue;
-                case UnaryOperatorKind.FloatUnaryPlus:
-                case UnaryOperatorKind.DoubleUnaryPlus:
+                case UnaryOperatorKind.Float32UnaryPlus:
+                case UnaryOperatorKind.Float64UnaryPlus:
                     return +value.DoubleValue;
-                case UnaryOperatorKind.LongUnaryPlus:
+                case UnaryOperatorKind.Int64UnaryPlus:
                     return +value.Int64Value;
-                case UnaryOperatorKind.ULongUnaryPlus:
+                case UnaryOperatorKind.UInt64UnaryPlus:
                     return +value.UInt64Value;
-                case UnaryOperatorKind.IntUnaryPlus:
+                case UnaryOperatorKind.Int32UnaryPlus:
                     return +value.Int32Value;
-                case UnaryOperatorKind.UIntUnaryPlus:
+                case UnaryOperatorKind.UInt32UnaryPlus:
                     return +value.UInt32Value;
                 case UnaryOperatorKind.BoolLogicalNegation:
                     return !value.BooleanValue;
-                case UnaryOperatorKind.IntBitwiseComplement:
+                case UnaryOperatorKind.Int32BitwiseComplement:
                     return ~value.Int32Value;
-                case UnaryOperatorKind.LongBitwiseComplement:
+                case UnaryOperatorKind.Int64BitwiseComplement:
                     return ~value.Int64Value;
-                case UnaryOperatorKind.UIntBitwiseComplement:
+                case UnaryOperatorKind.UInt32BitwiseComplement:
                     return ~value.UInt32Value;
-                case UnaryOperatorKind.ULongBitwiseComplement:
+                case UnaryOperatorKind.UInt64BitwiseComplement:
                     return ~value.UInt64Value;
             }
 
@@ -2488,9 +2488,9 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 switch (kind)
                 {
-                    case UnaryOperatorKind.LongUnaryMinus:
+                    case UnaryOperatorKind.Int64UnaryMinus:
                         return -value.Int64Value;
-                    case UnaryOperatorKind.IntUnaryMinus:
+                    case UnaryOperatorKind.Int32UnaryMinus:
                         return -value.Int32Value;
                 }
             }
@@ -2504,9 +2504,9 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 switch (kind)
                 {
-                    case UnaryOperatorKind.LongUnaryMinus:
+                    case UnaryOperatorKind.Int64UnaryMinus:
                         return -value.Int64Value;
-                    case UnaryOperatorKind.IntUnaryMinus:
+                    case UnaryOperatorKind.Int32UnaryMinus:
                         return -value.Int32Value;
                 }
             }
@@ -2638,17 +2638,17 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case BinaryOperatorKind.DecimalDivision:
                 case BinaryOperatorKind.DecimalRemainder:
                     return valueRight.DecimalValue == 0.0m;
-                case BinaryOperatorKind.IntDivision:
-                case BinaryOperatorKind.IntRemainder:
+                case BinaryOperatorKind.Int32Division:
+                case BinaryOperatorKind.Int32Remainder:
                     return valueRight.Int32Value == 0;
-                case BinaryOperatorKind.LongDivision:
-                case BinaryOperatorKind.LongRemainder:
+                case BinaryOperatorKind.Int64Division:
+                case BinaryOperatorKind.Int64Remainder:
                     return valueRight.Int64Value == 0;
-                case BinaryOperatorKind.UIntDivision:
-                case BinaryOperatorKind.UIntRemainder:
+                case BinaryOperatorKind.UInt32Division:
+                case BinaryOperatorKind.UInt32Remainder:
                     return valueRight.UInt32Value == 0;
-                case BinaryOperatorKind.ULongDivision:
-                case BinaryOperatorKind.ULongRemainder:
+                case BinaryOperatorKind.UInt64Division:
+                case BinaryOperatorKind.UInt64Remainder:
                     return valueRight.UInt64Value == 0;
             }
 

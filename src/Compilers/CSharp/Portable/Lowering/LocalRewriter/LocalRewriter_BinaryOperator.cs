@@ -326,16 +326,16 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                         goto default;
 
-                    case BinaryOperatorKind.IntLeftShift:
-                    case BinaryOperatorKind.UIntLeftShift:
-                    case BinaryOperatorKind.IntRightShift:
-                    case BinaryOperatorKind.UIntRightShift:
+                    case BinaryOperatorKind.Int32LeftShift:
+                    case BinaryOperatorKind.UInt32LeftShift:
+                    case BinaryOperatorKind.Int32RightShift:
+                    case BinaryOperatorKind.UInt32RightShift:
                         return RewriteBuiltInShiftOperation(oldNode, syntax, operatorKind, loweredLeft, loweredRight, type, 0x1F);
 
-                    case BinaryOperatorKind.LongLeftShift:
-                    case BinaryOperatorKind.ULongLeftShift:
-                    case BinaryOperatorKind.LongRightShift:
-                    case BinaryOperatorKind.ULongRightShift:
+                    case BinaryOperatorKind.Int64LeftShift:
+                    case BinaryOperatorKind.UInt64LeftShift:
+                    case BinaryOperatorKind.Int64RightShift:
+                    case BinaryOperatorKind.UInt64RightShift:
                         return RewriteBuiltInShiftOperation(oldNode, syntax, operatorKind, loweredLeft, loweredRight, type, 0x3F);
 
                     case BinaryOperatorKind.DecimalAddition:
@@ -351,24 +351,24 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case BinaryOperatorKind.DecimalGreaterThanOrEqual:
                         return RewriteDecimalBinaryOperation(syntax, loweredLeft, loweredRight, operatorKind);
 
-                    case BinaryOperatorKind.PointerAndIntAddition:
-                    case BinaryOperatorKind.PointerAndUIntAddition:
-                    case BinaryOperatorKind.PointerAndLongAddition:
-                    case BinaryOperatorKind.PointerAndULongAddition:
-                    case BinaryOperatorKind.PointerAndIntSubtraction:
-                    case BinaryOperatorKind.PointerAndUIntSubtraction:
-                    case BinaryOperatorKind.PointerAndLongSubtraction:
-                    case BinaryOperatorKind.PointerAndULongSubtraction:
+                    case BinaryOperatorKind.PointerAndInt32Addition:
+                    case BinaryOperatorKind.PointerAndUInt32Addition:
+                    case BinaryOperatorKind.PointerAndInt64Addition:
+                    case BinaryOperatorKind.PointerAndUInt64Addition:
+                    case BinaryOperatorKind.PointerAndInt32Subtraction:
+                    case BinaryOperatorKind.PointerAndUInt32Subtraction:
+                    case BinaryOperatorKind.PointerAndInt64Subtraction:
+                    case BinaryOperatorKind.PointerAndUInt64Subtraction:
                         if (loweredRight.IsDefaultValue())
                         {
                             return loweredLeft;
                         }
                         return RewritePointerNumericOperator(syntax, operatorKind, loweredLeft, loweredRight, type, isPointerElementAccess, isLeftPointer: true);
 
-                    case BinaryOperatorKind.IntAndPointerAddition:
-                    case BinaryOperatorKind.UIntAndPointerAddition:
-                    case BinaryOperatorKind.LongAndPointerAddition:
-                    case BinaryOperatorKind.ULongAndPointerAddition:
+                    case BinaryOperatorKind.Int32AndPointerAddition:
+                    case BinaryOperatorKind.UInt32AndPointerAddition:
+                    case BinaryOperatorKind.Int64AndPointerAddition:
+                    case BinaryOperatorKind.UInt64AndPointerAddition:
                         if (loweredLeft.IsDefaultValue())
                         {
                             return loweredRight;
@@ -378,10 +378,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case BinaryOperatorKind.PointerSubtraction:
                         return RewritePointerSubtraction(operatorKind, loweredLeft, loweredRight, type);
 
-                    case BinaryOperatorKind.IntAddition:
-                    case BinaryOperatorKind.UIntAddition:
-                    case BinaryOperatorKind.LongAddition:
-                    case BinaryOperatorKind.ULongAddition:
+                    case BinaryOperatorKind.Int32Addition:
+                    case BinaryOperatorKind.UInt32Addition:
+                    case BinaryOperatorKind.Int64Addition:
+                    case BinaryOperatorKind.UInt64Addition:
                         if (loweredLeft.IsDefaultValue())
                         {
                             return loweredRight;
@@ -392,20 +392,20 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         goto default;
 
-                    case BinaryOperatorKind.IntSubtraction:
-                    case BinaryOperatorKind.LongSubtraction:
-                    case BinaryOperatorKind.UIntSubtraction:
-                    case BinaryOperatorKind.ULongSubtraction:
+                    case BinaryOperatorKind.Int32Subtraction:
+                    case BinaryOperatorKind.Int64Subtraction:
+                    case BinaryOperatorKind.UInt32Subtraction:
+                    case BinaryOperatorKind.UInt64Subtraction:
                         if (loweredRight.IsDefaultValue())
                         {
                             return loweredLeft;
                         }
                         goto default;
 
-                    case BinaryOperatorKind.IntMultiplication:
-                    case BinaryOperatorKind.LongMultiplication:
-                    case BinaryOperatorKind.UIntMultiplication:
-                    case BinaryOperatorKind.ULongMultiplication:
+                    case BinaryOperatorKind.Int32Multiplication:
+                    case BinaryOperatorKind.Int64Multiplication:
+                    case BinaryOperatorKind.UInt32Multiplication:
+                    case BinaryOperatorKind.UInt64Multiplication:
                         if (loweredLeft.IsDefaultValue())
                         {
                             return _factory.MakeSequence(loweredRight, loweredLeft);
@@ -424,12 +424,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         goto default;
 
-                    case BinaryOperatorKind.IntGreaterThan:
-                    case BinaryOperatorKind.IntLessThanOrEqual:
+                    case BinaryOperatorKind.Int32GreaterThan:
+                    case BinaryOperatorKind.Int32LessThanOrEqual:
                         if (loweredLeft.Kind == BoundKind.ArrayLength && loweredRight.IsDefaultValue())
                         {
                             //array length is never negative
-                            var newOp = operatorKind == BinaryOperatorKind.IntGreaterThan ?
+                            var newOp = operatorKind == BinaryOperatorKind.Int32GreaterThan ?
                                                         BinaryOperatorKind.NotEqual :
                                                         BinaryOperatorKind.Equal;
 
@@ -439,12 +439,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         goto default;
 
-                    case BinaryOperatorKind.IntLessThan:
-                    case BinaryOperatorKind.IntGreaterThanOrEqual:
+                    case BinaryOperatorKind.Int32LessThan:
+                    case BinaryOperatorKind.Int32GreaterThanOrEqual:
                         if (loweredRight.Kind == BoundKind.ArrayLength && loweredLeft.IsDefaultValue())
                         {
                             //array length is never negative
-                            var newOp = operatorKind == BinaryOperatorKind.IntLessThan ?
+                            var newOp = operatorKind == BinaryOperatorKind.Int32LessThan ?
                                                         BinaryOperatorKind.NotEqual :
                                                         BinaryOperatorKind.Equal;
 
@@ -454,8 +454,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         goto default;
 
-                    case BinaryOperatorKind.IntEqual:
-                    case BinaryOperatorKind.IntNotEqual:
+                    case BinaryOperatorKind.Int32Equal:
+                    case BinaryOperatorKind.Int32NotEqual:
                         if (loweredLeft.Kind == BoundKind.ArrayLength && loweredRight.IsDefaultValue())
                         {
                             loweredLeft = UnconvertArrayLength((BoundArrayLength)loweredLeft);
@@ -2151,7 +2151,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                         // we only need to promote one side
 
                         numericOperand = _factory.Convert(nativeIntType, numericOperand, Conversion.IntegerToPointer, isChecked);
-                        multiplicationKind |= BinaryOperatorKind.Int; //i.e. signed
+                        multiplicationKind |= BinaryOperatorKind.Int32; //i.e. signed
                         multiplicationResultType = nativeIntType;
                         convertedMultiplicationResultType = nativeIntType;
                         break;
@@ -2164,7 +2164,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                         // We're multiplying a uint by an int, so promote both to long (same as normal operator overload resolution).
                         numericOperand = _factory.Convert(longType, numericOperand, Conversion.ExplicitNumeric, isChecked);
                         sizeOfExpression = _factory.Convert(longType, sizeOfExpression, Conversion.ExplicitNumeric, isChecked);
-                        multiplicationKind |= BinaryOperatorKind.Long;
+                        multiplicationKind |= BinaryOperatorKind.Int64;
                         multiplicationResultType = longType;
                         convertedMultiplicationResultType = nativeIntType;
                         break;
@@ -2176,7 +2176,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                         // We're multiplying a long by an int, so promote the int to long (same as normal operator overload resolution).
                         sizeOfExpression = _factory.Convert(longType, sizeOfExpression, Conversion.ExplicitNumeric, isChecked);
-                        multiplicationKind |= BinaryOperatorKind.Long;
+                        multiplicationKind |= BinaryOperatorKind.Int64;
                         multiplicationResultType = longType;
                         convertedMultiplicationResultType = nativeIntType;
                         break;
@@ -2188,7 +2188,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                         // We're multiplying a ulong by an int, so promote the int to ulong (same as normal operator overload resolution).
                         sizeOfExpression = _factory.Convert(ulongType, sizeOfExpression, Conversion.ExplicitNumeric, isChecked);
-                        multiplicationKind |= BinaryOperatorKind.ULong;
+                        multiplicationKind |= BinaryOperatorKind.UInt64;
                         multiplicationResultType = ulongType;
                         convertedMultiplicationResultType = nativeUIntType; //unsigned since multiplicationResultType is unsigned
                         break;

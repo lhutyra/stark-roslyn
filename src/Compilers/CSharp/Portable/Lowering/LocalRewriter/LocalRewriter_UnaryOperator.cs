@@ -729,7 +729,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // Early-out for pointer increment - we don't need to convert the operands to a common type.
             if (node.OperatorKind.OperandTypes() == UnaryOperatorKind.Pointer)
             {
-                Debug.Assert(binaryOperatorKind.OperandTypes() == BinaryOperatorKind.PointerAndInt);
+                Debug.Assert(binaryOperatorKind.OperandTypes() == BinaryOperatorKind.PointerAndInt32);
                 Debug.Assert(binaryOperand.Type.IsPointerType());
                 Debug.Assert(boundOne.Type.SpecialType == SpecialType.System_Int32);
                 return MakeBinaryOperator(node.Syntax, binaryOperatorKind, binaryOperand, boundOne, binaryOperand.Type, method: null);
@@ -871,16 +871,16 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (kind)
             {
-                case UnaryOperatorKind.Int:
+                case UnaryOperatorKind.Int32:
                     specialType = SpecialType.System_Int32;
                     break;
-                case UnaryOperatorKind.SByte:
+                case UnaryOperatorKind.Int8:
                     specialType = SpecialType.System_Int8;
                     break;
-                case UnaryOperatorKind.Short:
+                case UnaryOperatorKind.Int16:
                     specialType = SpecialType.System_Int16;
                     break;
-                case UnaryOperatorKind.Byte:
+                case UnaryOperatorKind.UInt8:
                     specialType = SpecialType.System_UInt8;
                     break;
                 case UnaryOperatorKind.UShort:
@@ -889,19 +889,19 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case UnaryOperatorKind.Char:
                     specialType = SpecialType.System_Char;
                     break;
-                case UnaryOperatorKind.UInt:
+                case UnaryOperatorKind.UInt32:
                     specialType = SpecialType.System_UInt32;
                     break;
-                case UnaryOperatorKind.Long:
+                case UnaryOperatorKind.Int64:
                     specialType = SpecialType.System_Int64;
                     break;
-                case UnaryOperatorKind.ULong:
+                case UnaryOperatorKind.UInt64:
                     specialType = SpecialType.System_UInt64;
                     break;
-                case UnaryOperatorKind.Float:
+                case UnaryOperatorKind.Float32:
                     specialType = SpecialType.System_Float32;
                     break;
-                case UnaryOperatorKind.Double:
+                case UnaryOperatorKind.Float64:
                     specialType = SpecialType.System_Float64;
                     break;
                 case UnaryOperatorKind.Decimal:
@@ -936,28 +936,28 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (unaryOperatorKind.OperandTypes())
             {
-                case UnaryOperatorKind.Int:
-                case UnaryOperatorKind.SByte:
-                case UnaryOperatorKind.Short:
-                    result = BinaryOperatorKind.Int;
+                case UnaryOperatorKind.Int32:
+                case UnaryOperatorKind.Int8:
+                case UnaryOperatorKind.Int16:
+                    result = BinaryOperatorKind.Int32;
                     break;
-                case UnaryOperatorKind.Byte:
+                case UnaryOperatorKind.UInt8:
                 case UnaryOperatorKind.UShort:
                 case UnaryOperatorKind.Char:
-                case UnaryOperatorKind.UInt:
-                    result = BinaryOperatorKind.UInt;
+                case UnaryOperatorKind.UInt32:
+                    result = BinaryOperatorKind.UInt32;
                     break;
-                case UnaryOperatorKind.Long:
-                    result = BinaryOperatorKind.Long;
+                case UnaryOperatorKind.Int64:
+                    result = BinaryOperatorKind.Int64;
                     break;
-                case UnaryOperatorKind.ULong:
-                    result = BinaryOperatorKind.ULong;
+                case UnaryOperatorKind.UInt64:
+                    result = BinaryOperatorKind.UInt64;
                     break;
-                case UnaryOperatorKind.Float:
-                    result = BinaryOperatorKind.Float;
+                case UnaryOperatorKind.Float32:
+                    result = BinaryOperatorKind.Float32;
                     break;
-                case UnaryOperatorKind.Double:
-                    result = BinaryOperatorKind.Double;
+                case UnaryOperatorKind.Float64:
+                    result = BinaryOperatorKind.Float64;
                     break;
                 case UnaryOperatorKind.Decimal: //Dev10 special cased this, but we'll let DecimalRewriter handle it
                     result = BinaryOperatorKind.Decimal;
@@ -980,18 +980,18 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Int8:
                             case SpecialType.System_Int16:
                             case SpecialType.System_Int32:
-                                result = BinaryOperatorKind.Int;
+                                result = BinaryOperatorKind.Int32;
                                 break;
                             case SpecialType.System_UInt8:
                             case SpecialType.System_UInt16:
                             case SpecialType.System_UInt32:
-                                result = BinaryOperatorKind.UInt;
+                                result = BinaryOperatorKind.UInt32;
                                 break;
                             case SpecialType.System_Int64:
-                                result = BinaryOperatorKind.Long;
+                                result = BinaryOperatorKind.Int64;
                                 break;
                             case SpecialType.System_UInt64:
-                                result = BinaryOperatorKind.ULong;
+                                result = BinaryOperatorKind.UInt64;
                                 break;
                             default:
                                 throw ExceptionUtilities.UnexpectedValue(underlyingType.SpecialType);
@@ -999,7 +999,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     }
                     break;
                 case UnaryOperatorKind.Pointer:
-                    result = BinaryOperatorKind.PointerAndInt;
+                    result = BinaryOperatorKind.PointerAndInt32;
                     break;
                 case UnaryOperatorKind.UserDefined:
                 case UnaryOperatorKind.Bool:
@@ -1009,11 +1009,11 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (result)
             {
-                case BinaryOperatorKind.UInt:
-                case BinaryOperatorKind.Int:
-                case BinaryOperatorKind.ULong:
-                case BinaryOperatorKind.Long:
-                case BinaryOperatorKind.PointerAndInt:
+                case BinaryOperatorKind.UInt32:
+                case BinaryOperatorKind.Int32:
+                case BinaryOperatorKind.UInt64:
+                case BinaryOperatorKind.Int64:
+                case BinaryOperatorKind.PointerAndInt32:
                     result |= (BinaryOperatorKind)unaryOperatorKind.OverflowChecks();
                     break;
             }
@@ -1031,18 +1031,18 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (binaryOperatorKind.OperandTypes())
             {
-                case BinaryOperatorKind.PointerAndInt:
-                case BinaryOperatorKind.Int:
+                case BinaryOperatorKind.PointerAndInt32:
+                case BinaryOperatorKind.Int32:
                     return ConstantValue.Create(1);
-                case BinaryOperatorKind.UInt:
+                case BinaryOperatorKind.UInt32:
                     return ConstantValue.Create(1U);
-                case BinaryOperatorKind.Long:
+                case BinaryOperatorKind.Int64:
                     return ConstantValue.Create(1L);
-                case BinaryOperatorKind.ULong:
+                case BinaryOperatorKind.UInt64:
                     return ConstantValue.Create(1LU);
-                case BinaryOperatorKind.Float:
+                case BinaryOperatorKind.Float32:
                     return ConstantValue.Create(1f);
-                case BinaryOperatorKind.Double:
+                case BinaryOperatorKind.Float64:
                     return ConstantValue.Create(1.0);
                 case BinaryOperatorKind.Decimal:
                     return ConstantValue.Create(1m);

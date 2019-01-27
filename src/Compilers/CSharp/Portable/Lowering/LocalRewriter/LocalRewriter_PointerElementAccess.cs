@@ -42,16 +42,16 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (rewrittenIndex.Type.SpecialType)
             {
                 case SpecialType.System_Int32:
-                    additionKind |= BinaryOperatorKind.PointerAndIntAddition;
+                    additionKind |= BinaryOperatorKind.PointerAndInt32Addition;
                     break;
                 case SpecialType.System_UInt32:
-                    additionKind |= BinaryOperatorKind.PointerAndUIntAddition;
+                    additionKind |= BinaryOperatorKind.PointerAndUInt32Addition;
                     break;
                 case SpecialType.System_Int64:
-                    additionKind |= BinaryOperatorKind.PointerAndLongAddition;
+                    additionKind |= BinaryOperatorKind.PointerAndInt64Addition;
                     break;
                 case SpecialType.System_UInt64:
-                    additionKind |= BinaryOperatorKind.PointerAndULongAddition;
+                    additionKind |= BinaryOperatorKind.PointerAndUInt64Addition;
                     break;
                 default:
                     throw ExceptionUtilities.UnexpectedValue(rewrittenIndex.Type.SpecialType);

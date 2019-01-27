@@ -127,7 +127,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 return convertedCount;
             }
 
-            BinaryOperatorKind multiplicationKind = BinaryOperatorKind.Checked | BinaryOperatorKind.UIntMultiplication; //"UInt" just to make it unsigned
+            BinaryOperatorKind multiplicationKind = BinaryOperatorKind.Checked | BinaryOperatorKind.UInt32Multiplication; //"UInt" just to make it unsigned
             BoundExpression product = _factory.Binary(multiplicationKind, uintPtrType, convertedCount, sizeOfExpression);
 
             return product;

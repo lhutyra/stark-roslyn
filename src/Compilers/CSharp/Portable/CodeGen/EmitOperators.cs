@@ -513,7 +513,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
             // then the mathematical negation of x is not representable within the operand type. If this occurs within a checked context, 
             // a System.OverflowException is thrown; if it occurs within an unchecked context, 
             // the result is the value of the operand and the overflow is not reported.
-            Debug.Assert(type == UnaryOperatorKind.Int || type == UnaryOperatorKind.Long);
+            Debug.Assert(type == UnaryOperatorKind.Int32 || type == UnaryOperatorKind.Int64);
 
             // ldc.i4.0
             // conv.i8  (when the operand is 64bit)
@@ -522,7 +522,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
 
             _builder.EmitOpCode(ILOpCode.Ldc_i4_0);
 
-            if (type == UnaryOperatorKind.Long)
+            if (type == UnaryOperatorKind.Int64)
             {
                 _builder.EmitOpCode(ILOpCode.Conv_i8);
             }
@@ -702,21 +702,21 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
                 case BinaryOperatorKind.UnderlyingAndEnum:
                     return IsUnsigned(Binder.GetEnumPromotedType(op.Right.Type.GetEnumUnderlyingType().SpecialType));
 
-                case BinaryOperatorKind.UInt:
-                case BinaryOperatorKind.ULong:
-                case BinaryOperatorKind.ULongAndPointer:
-                case BinaryOperatorKind.PointerAndInt:
-                case BinaryOperatorKind.PointerAndUInt:
-                case BinaryOperatorKind.PointerAndLong:
-                case BinaryOperatorKind.PointerAndULong:
+                case BinaryOperatorKind.UInt32:
+                case BinaryOperatorKind.UInt64:
+                case BinaryOperatorKind.UInt64AndPointer:
+                case BinaryOperatorKind.PointerAndInt32:
+                case BinaryOperatorKind.PointerAndUInt32:
+                case BinaryOperatorKind.PointerAndInt64:
+                case BinaryOperatorKind.PointerAndUInt64:
                 case BinaryOperatorKind.Pointer:
                     return true;
 
                 // Dev10 bases signedness on the first operand (see ILGENREC::genOperatorExpr).
-                case BinaryOperatorKind.IntAndPointer:
-                case BinaryOperatorKind.LongAndPointer:
+                case BinaryOperatorKind.Int32AndPointer:
+                case BinaryOperatorKind.Int64AndPointer:
                 // Dev10 converts the uint to a native int, so it counts as signed.
-                case BinaryOperatorKind.UIntAndPointer:
+                case BinaryOperatorKind.UInt32AndPointer:
                 default:
                     return false;
             }
@@ -750,8 +750,8 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
             var type = opKind.OperandTypes();
             switch (type)
             {
-                case BinaryOperatorKind.Float:
-                case BinaryOperatorKind.Double:
+                case BinaryOperatorKind.Float32:
+                case BinaryOperatorKind.Float64:
                     return true;
                 default:
                     return false;

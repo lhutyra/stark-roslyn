@@ -320,20 +320,20 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (kind)
             {
                 case BinaryOperatorKind.Addition:
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndIntAddition, pointerType, Compilation.GetSpecialType(SpecialType.System_Int32), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndUIntAddition, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt32), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndLongAddition, pointerType, Compilation.GetSpecialType(SpecialType.System_Int64), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndULongAddition, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt64), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.IntAndPointerAddition, Compilation.GetSpecialType(SpecialType.System_Int32), pointerType, pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.UIntAndPointerAddition, Compilation.GetSpecialType(SpecialType.System_UInt32), pointerType, pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.LongAndPointerAddition, Compilation.GetSpecialType(SpecialType.System_Int64), pointerType, pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.ULongAndPointerAddition, Compilation.GetSpecialType(SpecialType.System_UInt64), pointerType, pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndInt32Addition, pointerType, Compilation.GetSpecialType(SpecialType.System_Int32), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndUInt32Addition, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt32), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndInt64Addition, pointerType, Compilation.GetSpecialType(SpecialType.System_Int64), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndUInt64Addition, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt64), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.Int32AndPointerAddition, Compilation.GetSpecialType(SpecialType.System_Int32), pointerType, pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.UInt32AndPointerAddition, Compilation.GetSpecialType(SpecialType.System_UInt32), pointerType, pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.Int64AndPointerAddition, Compilation.GetSpecialType(SpecialType.System_Int64), pointerType, pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.UInt64AndPointerAddition, Compilation.GetSpecialType(SpecialType.System_UInt64), pointerType, pointerType));
                     break;
                 case BinaryOperatorKind.Subtraction:
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndIntSubtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_Int32), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndUIntSubtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt32), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndLongSubtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_Int64), pointerType));
-                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndULongSubtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt64), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndInt32Subtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_Int32), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndUInt32Subtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt32), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndInt64Subtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_Int64), pointerType));
+                    operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerAndUInt64Subtraction, pointerType, Compilation.GetSpecialType(SpecialType.System_UInt64), pointerType));
                     operators.Add(new BinaryOperatorSignature(BinaryOperatorKind.PointerSubtraction, pointerType, pointerType, Compilation.GetSpecialType(SpecialType.System_Int64)));
                     break;
             }

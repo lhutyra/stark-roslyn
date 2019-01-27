@@ -213,10 +213,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                     NamedTypeSymbol constructedEqualityComparer = equalityComparerType.Construct(typeParameter);
 
                     // Generate 'retExpression' <= 'retExpression * HASH_FACTOR 
-                    retExpression = F.Binary(BinaryOperatorKind.IntMultiplication, manager.System_Int32, retExpression, boundHashFactor);
+                    retExpression = F.Binary(BinaryOperatorKind.Int32Multiplication, manager.System_Int32, retExpression, boundHashFactor);
 
                     // Generate 'retExpression' <= 'retExpression + EqualityComparer<T_index>.Default.GetHashCode(this.backingFld_index)'
-                    retExpression = F.Binary(BinaryOperatorKind.IntAddition,
+                    retExpression = F.Binary(BinaryOperatorKind.Int32Addition,
                                              manager.System_Int32,
                                              retExpression,
                                              F.Call(

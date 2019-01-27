@@ -94,14 +94,14 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (kind.OperandTypes())
             {
-                case UnaryOperatorKind.SByte:
-                case UnaryOperatorKind.Byte:
-                case UnaryOperatorKind.Short:
+                case UnaryOperatorKind.Int8:
+                case UnaryOperatorKind.UInt8:
+                case UnaryOperatorKind.Int16:
                 case UnaryOperatorKind.UShort:
-                case UnaryOperatorKind.Int:
-                case UnaryOperatorKind.UInt:
-                case UnaryOperatorKind.Long:
-                case UnaryOperatorKind.ULong:
+                case UnaryOperatorKind.Int32:
+                case UnaryOperatorKind.UInt32:
+                case UnaryOperatorKind.Int64:
+                case UnaryOperatorKind.UInt64:
                 case UnaryOperatorKind.Char:
                 case UnaryOperatorKind.Enum:
                 case UnaryOperatorKind.Pointer:
@@ -144,13 +144,13 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (type)
             {
                 case SpecialType.System_Int32:
-                    return kind | BinaryOperatorKind.Int;
+                    return kind | BinaryOperatorKind.Int32;
                 case SpecialType.System_UInt32:
-                    return kind | BinaryOperatorKind.UInt;
+                    return kind | BinaryOperatorKind.UInt32;
                 case SpecialType.System_Int64:
-                    return kind | BinaryOperatorKind.Long;
+                    return kind | BinaryOperatorKind.Int64;
                 case SpecialType.System_UInt64:
-                    return kind | BinaryOperatorKind.ULong;
+                    return kind | BinaryOperatorKind.UInt64;
                 default:
                     throw ExceptionUtilities.UnexpectedValue(type);
             }
@@ -162,13 +162,13 @@ namespace Microsoft.CodeAnalysis.CSharp
             switch (type)
             {
                 case SpecialType.System_Int32:
-                    return kind | UnaryOperatorKind.Int;
+                    return kind | UnaryOperatorKind.Int32;
                 case SpecialType.System_UInt32:
-                    return kind | UnaryOperatorKind.UInt;
+                    return kind | UnaryOperatorKind.UInt32;
                 case SpecialType.System_Int64:
-                    return kind | UnaryOperatorKind.Long;
+                    return kind | UnaryOperatorKind.Int64;
                 case SpecialType.System_UInt64:
-                    return kind | UnaryOperatorKind.ULong;
+                    return kind | UnaryOperatorKind.UInt64;
                 default:
                     throw ExceptionUtilities.UnexpectedValue(type);
             }
@@ -281,23 +281,23 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (kind.OperandTypes())
             {
-                case BinaryOperatorKind.Int:
-                case BinaryOperatorKind.UInt:
-                case BinaryOperatorKind.Long:
-                case BinaryOperatorKind.ULong:
+                case BinaryOperatorKind.Int32:
+                case BinaryOperatorKind.UInt32:
+                case BinaryOperatorKind.Int64:
+                case BinaryOperatorKind.UInt64:
                 case BinaryOperatorKind.Char:
                 case BinaryOperatorKind.Enum:
                 case BinaryOperatorKind.EnumAndUnderlying:
                 case BinaryOperatorKind.UnderlyingAndEnum:
                 case BinaryOperatorKind.Pointer:
-                case BinaryOperatorKind.PointerAndInt:
-                case BinaryOperatorKind.PointerAndUInt:
-                case BinaryOperatorKind.PointerAndLong:
-                case BinaryOperatorKind.PointerAndULong:
-                case BinaryOperatorKind.IntAndPointer:
-                case BinaryOperatorKind.UIntAndPointer:
-                case BinaryOperatorKind.LongAndPointer:
-                case BinaryOperatorKind.ULongAndPointer:
+                case BinaryOperatorKind.PointerAndInt32:
+                case BinaryOperatorKind.PointerAndUInt32:
+                case BinaryOperatorKind.PointerAndInt64:
+                case BinaryOperatorKind.PointerAndUInt64:
+                case BinaryOperatorKind.Int32AndPointer:
+                case BinaryOperatorKind.UInt32AndPointer:
+                case BinaryOperatorKind.Int64AndPointer:
+                case BinaryOperatorKind.UInt64AndPointer:
                     return true;
             }
 

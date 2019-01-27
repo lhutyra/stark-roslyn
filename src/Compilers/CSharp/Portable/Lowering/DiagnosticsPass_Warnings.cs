@@ -479,14 +479,14 @@ namespace Microsoft.CodeAnalysis.CSharp
 
             switch (operatorKind)
             {
-                case BinaryOperatorKind.LiftedUIntOr:
-                case BinaryOperatorKind.LiftedIntOr:
-                case BinaryOperatorKind.LiftedULongOr:
-                case BinaryOperatorKind.LiftedLongOr:
-                case BinaryOperatorKind.UIntOr:
-                case BinaryOperatorKind.IntOr:
-                case BinaryOperatorKind.ULongOr:
-                case BinaryOperatorKind.LongOr:
+                case BinaryOperatorKind.LiftedUInt32Or:
+                case BinaryOperatorKind.LiftedInt32Or:
+                case BinaryOperatorKind.LiftedUInt64Or:
+                case BinaryOperatorKind.LiftedInt64Or:
+                case BinaryOperatorKind.UInt32Or:
+                case BinaryOperatorKind.Int32Or:
+                case BinaryOperatorKind.UInt64Or:
+                case BinaryOperatorKind.Int64Or:
                     break;
                 default:
                     return;

@@ -537,7 +537,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public BoundBinaryOperator IntEqual(BoundExpression left, BoundExpression right)
         {
-            return Binary(BinaryOperatorKind.IntEqual, SpecialType(Microsoft.CodeAnalysis.SpecialType.System_Boolean), left, right);
+            return Binary(BinaryOperatorKind.Int32Equal, SpecialType(Microsoft.CodeAnalysis.SpecialType.System_Boolean), left, right);
         }
 
         public BoundBinaryOperator ObjectEqual(BoundExpression left, BoundExpression right)
@@ -552,17 +552,17 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public BoundBinaryOperator IntNotEqual(BoundExpression left, BoundExpression right)
         {
-            return Binary(BinaryOperatorKind.IntNotEqual, SpecialType(Microsoft.CodeAnalysis.SpecialType.System_Boolean), left, right);
+            return Binary(BinaryOperatorKind.Int32NotEqual, SpecialType(Microsoft.CodeAnalysis.SpecialType.System_Boolean), left, right);
         }
 
         public BoundBinaryOperator IntLessThan(BoundExpression left, BoundExpression right)
         {
-            return Binary(BinaryOperatorKind.IntLessThan, SpecialType(Microsoft.CodeAnalysis.SpecialType.System_Boolean), left, right);
+            return Binary(BinaryOperatorKind.Int32LessThan, SpecialType(Microsoft.CodeAnalysis.SpecialType.System_Boolean), left, right);
         }
 
         public BoundBinaryOperator IntGreaterThanOrEqual(BoundExpression left, BoundExpression right)
         {
-            return Binary(BinaryOperatorKind.IntGreaterThanOrEqual, SpecialType(CodeAnalysis.SpecialType.System_Boolean), left, right);
+            return Binary(BinaryOperatorKind.Int32GreaterThanOrEqual, SpecialType(CodeAnalysis.SpecialType.System_Boolean), left, right);
         }
 
         public BoundLiteral Literal(int value)

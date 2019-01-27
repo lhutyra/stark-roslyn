@@ -547,7 +547,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // p < a.Length
             BoundExpression exitCondition = new BoundBinaryOperator(
                 syntax: forEachSyntax,
-                operatorKind: BinaryOperatorKind.IntLessThan,
+                operatorKind: BinaryOperatorKind.Int32LessThan,
                 left: boundPositionVar,
                 right: arrayLength,
                 constantValueOpt: null,
@@ -754,7 +754,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             // p < a.Length
             BoundExpression exitCondition = new BoundBinaryOperator(
                 syntax: forEachSyntax,
-                operatorKind: BinaryOperatorKind.IntLessThan,
+                operatorKind: BinaryOperatorKind.Int32LessThan,
                 left: boundPositionVar,
                 right: arrayLength,
                 constantValueOpt: null,
@@ -933,7 +933,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 // p_dimension <= q_dimension  //NB: OrEqual
                 BoundExpression exitCondition = new BoundBinaryOperator(
                     syntax: forEachSyntax,
-                    operatorKind: BinaryOperatorKind.IntLessThanOrEqual,
+                    operatorKind: BinaryOperatorKind.Int32LessThanOrEqual,
                     left: boundPositionVar[dimension],
                     right: boundUpperVar[dimension],
                     constantValueOpt: null,
@@ -1029,7 +1029,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     expression: new BoundAssignmentOperator(syntax,
                         left: boundPositionVar,
                         right: new BoundBinaryOperator(syntax,
-                            operatorKind: BinaryOperatorKind.IntAddition, // unchecked, never overflows since array/string index can't be >= Int32.MaxValue
+                            operatorKind: BinaryOperatorKind.Int32Addition, // unchecked, never overflows since array/string index can't be >= Int32.MaxValue
                             left: boundPositionVar,
                             right: MakeLiteral(syntax,
                                 constantValue: ConstantValue.Create(1),

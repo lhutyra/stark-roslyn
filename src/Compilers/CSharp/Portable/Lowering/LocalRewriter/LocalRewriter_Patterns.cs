@@ -284,23 +284,23 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case SpecialType.System_Int16:
                     case SpecialType.System_Int8:
                     case SpecialType.System_UInt16:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.IntEqual, _factory.Convert(intType, input), _factory.Convert(intType, loweredLiteral), booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.Int32Equal, _factory.Convert(intType, input), _factory.Convert(intType, loweredLiteral), booleanType, method: null);
                     case SpecialType.System_Decimal:
                         return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.DecimalEqual, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_Float64:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.DoubleEqual, input, loweredLiteral, booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.Float64Equal, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_Int32:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.IntEqual, input, loweredLiteral, booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.Int32Equal, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_Int64:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.LongEqual, input, loweredLiteral, booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.Int64Equal, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_Float32:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.FloatEqual, input, loweredLiteral, booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.Float32Equal, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_String:
                         return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.StringEqual, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_UInt32:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.UIntEqual, input, loweredLiteral, booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.UInt32Equal, input, loweredLiteral, booleanType, method: null);
                     case SpecialType.System_UInt64:
-                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.ULongEqual, input, loweredLiteral, booleanType, method: null);
+                        return _localRewriter.MakeBinaryOperator(_factory.Syntax, BinaryOperatorKind.UInt64Equal, input, loweredLiteral, booleanType, method: null);
                     default:
                         if (loweredLiteral.Type.IsEnumType())
                         {
