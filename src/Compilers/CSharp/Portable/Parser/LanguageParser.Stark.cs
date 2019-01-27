@@ -5095,6 +5095,11 @@ tryAgain:
         {
             ScanTypeFlags result;
 
+            while (this.CurrentToken.Kind == SyntaxKind.AsteriskToken)
+            {
+                lastTokenOfType = this.EatToken();
+            }
+
             // In Stark the ref is coming before the array
             if (this.CurrentToken.Kind == SyntaxKind.IdentifierToken)
             {
@@ -5156,38 +5161,6 @@ tryAgain:
             {
                 lastTokenOfType = this.EatToken();
                 result = ScanTypeFlags.NullableType;
-            }
-
-            // Now check for pointer type(s)
-            switch (mode)
-            {
-                case ParseTypeMode.FirstElementOfPossibleTupleLiteral:
-                case ParseTypeMode.AfterTupleComma:
-                    // We are parsing the type for a declaration expression in a tuple, which does
-                    // not permit pointer types except as an element type of an array type.
-                    // In that context a `*` is parsed as a multiplication.
-                    if (PointerTypeModsFollowedByRankAndDimensionSpecifier())
-                    {
-                        goto default;
-                    }
-                    break;
-                case ParseTypeMode.DefinitePattern:
-                    // pointer type syntax is not supported in patterns.
-                    break;
-                default:
-                    while (this.CurrentToken.Kind == SyntaxKind.AsteriskToken)
-                    {
-                        lastTokenOfType = this.EatToken();
-                        if (result == ScanTypeFlags.GenericTypeOrExpression || result == ScanTypeFlags.NonGenericTypeOrExpression)
-                        {
-                            result = ScanTypeFlags.PointerOrMultiplication;
-                        }
-                        else if (result == ScanTypeFlags.GenericTypeOrMethod)
-                        {
-                            result = ScanTypeFlags.MustBeType;
-                        }
-                    }
-                    break;
             }
 
             return result;
