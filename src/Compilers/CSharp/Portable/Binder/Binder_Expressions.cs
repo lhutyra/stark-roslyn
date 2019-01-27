@@ -5497,7 +5497,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 for (int i = 0; i < typeArguments.Length; ++i)
                 {
                     var typeArgument = typeArguments[i];
-                    if ((typeArgument.IsPointerType()) || typeArgument.IsRestrictedType())
+                    if (typeArgument.IsRestrictedType())
                     {
                         // "The type '{0}' may not be used as a type argument"
                         Error(diagnostics, ErrorCode.ERR_BadTypeArgument, typeArgumentsSyntax[i], typeArgument.TypeSymbol);
