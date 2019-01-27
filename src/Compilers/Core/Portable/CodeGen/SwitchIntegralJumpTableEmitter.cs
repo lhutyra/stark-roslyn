@@ -474,7 +474,7 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     // See also https://github.com/dotnet/roslyn/issues/18579
                     switch (value.Discriminator)
                     {
-                        case ConstantValueTypeDiscriminator.Byte: return value.ByteValue;
+                        case ConstantValueTypeDiscriminator.UInt8: return value.ByteValue;
                         case ConstantValueTypeDiscriminator.UInt16: return value.UInt16Value;
                         default: return value.Int32Value;
                     }

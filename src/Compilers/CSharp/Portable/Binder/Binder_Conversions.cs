@@ -1094,7 +1094,7 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 switch (value.Discriminator)
                 {
-                    case ConstantValueTypeDiscriminator.Byte:
+                    case ConstantValueTypeDiscriminator.UInt8:
                         byte byteValue = value.ByteValue;
                         switch (destinationType)
                         {
@@ -1102,10 +1102,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Char: return (char)byteValue;
                             case SpecialType.System_UInt16: return (ushort)byteValue;
                             case SpecialType.System_UInt32: return (uint)byteValue;
+                            case SpecialType.System_UInt: return (uint)byteValue;
                             case SpecialType.System_UInt64: return (ulong)byteValue;
                             case SpecialType.System_Int8: return (sbyte)byteValue;
                             case SpecialType.System_Int16: return (short)byteValue;
                             case SpecialType.System_Int32: return (int)byteValue;
+                            case SpecialType.System_Int: return (int)byteValue;
                             case SpecialType.System_Int64: return (long)byteValue;
                             case SpecialType.System_Float32:
                             case SpecialType.System_Float64: return (double)byteValue;
@@ -1138,10 +1140,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Char: return (char)uint16Value;
                             case SpecialType.System_UInt16: return (ushort)uint16Value;
                             case SpecialType.System_UInt32: return (uint)uint16Value;
+                            case SpecialType.System_UInt: return (uint)uint16Value;
                             case SpecialType.System_UInt64: return (ulong)uint16Value;
                             case SpecialType.System_Int8: return (sbyte)uint16Value;
                             case SpecialType.System_Int16: return (short)uint16Value;
                             case SpecialType.System_Int32: return (int)uint16Value;
+                            case SpecialType.System_Int: return (int)uint16Value;
                             case SpecialType.System_Int64: return (long)uint16Value;
                             case SpecialType.System_Float32:
                             case SpecialType.System_Float64: return (double)uint16Value;
@@ -1156,10 +1160,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Char: return (char)uint32Value;
                             case SpecialType.System_UInt16: return (ushort)uint32Value;
                             case SpecialType.System_UInt32: return (uint)uint32Value;
+                            case SpecialType.System_UInt: return (uint)uint32Value;
                             case SpecialType.System_UInt64: return (ulong)uint32Value;
                             case SpecialType.System_Int8: return (sbyte)uint32Value;
                             case SpecialType.System_Int16: return (short)uint32Value;
                             case SpecialType.System_Int32: return (int)uint32Value;
+                            case SpecialType.System_Int: return (int)uint32Value;
                             case SpecialType.System_Int64: return (long)uint32Value;
                             case SpecialType.System_Float32: return (double)(float)uint32Value;
                             case SpecialType.System_Float64: return (double)uint32Value;
@@ -1184,7 +1190,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Decimal: return (decimal)uint64Value;
                             default: throw ExceptionUtilities.UnexpectedValue(destinationType);
                         }
-                    case ConstantValueTypeDiscriminator.SByte:
+                    case ConstantValueTypeDiscriminator.Int8:
                         sbyte sbyteValue = value.SByteValue;
                         switch (destinationType)
                         {
@@ -1192,10 +1198,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Char: return (char)sbyteValue;
                             case SpecialType.System_UInt16: return (ushort)sbyteValue;
                             case SpecialType.System_UInt32: return (uint)sbyteValue;
+                            case SpecialType.System_UInt: return (uint)sbyteValue;
                             case SpecialType.System_UInt64: return (ulong)sbyteValue;
                             case SpecialType.System_Int8: return (sbyte)sbyteValue;
                             case SpecialType.System_Int16: return (short)sbyteValue;
                             case SpecialType.System_Int32: return (int)sbyteValue;
+                            case SpecialType.System_Int: return (int)sbyteValue;
                             case SpecialType.System_Int64: return (long)sbyteValue;
                             case SpecialType.System_Float32:
                             case SpecialType.System_Float64: return (double)sbyteValue;
@@ -1209,11 +1217,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_UInt8: return (byte)int16Value;
                             case SpecialType.System_Char: return (char)int16Value;
                             case SpecialType.System_UInt16: return (ushort)int16Value;
+                            case SpecialType.System_UInt: return (uint)int16Value;
                             case SpecialType.System_UInt32: return (uint)int16Value;
                             case SpecialType.System_UInt64: return (ulong)int16Value;
                             case SpecialType.System_Int8: return (sbyte)int16Value;
                             case SpecialType.System_Int16: return (short)int16Value;
                             case SpecialType.System_Int32: return (int)int16Value;
+                            case SpecialType.System_Int: return (int)int16Value;
                             case SpecialType.System_Int64: return (long)int16Value;
                             case SpecialType.System_Float32:
                             case SpecialType.System_Float64: return (double)int16Value;
@@ -1228,10 +1238,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                             case SpecialType.System_Char: return (char)int32Value;
                             case SpecialType.System_UInt16: return (ushort)int32Value;
                             case SpecialType.System_UInt32: return (uint)int32Value;
+                            case SpecialType.System_UInt: return (uint)int32Value;
                             case SpecialType.System_UInt64: return (ulong)int32Value;
                             case SpecialType.System_Int8: return (sbyte)int32Value;
                             case SpecialType.System_Int16: return (short)int32Value;
                             case SpecialType.System_Int32: return (int)int32Value;
+                            case SpecialType.System_Int: return (int)int32Value;
                             case SpecialType.System_Int64: return (long)int32Value;
                             case SpecialType.System_Float32: return (double)(float)int32Value;
                             case SpecialType.System_Float64: return (double)int32Value;
@@ -1373,11 +1385,11 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (value.Discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte: return (decimal)value.SByteValue;
+                case ConstantValueTypeDiscriminator.Int8: return (decimal)value.SByteValue;
                 case ConstantValueTypeDiscriminator.Int16: return (decimal)value.Int16Value;
                 case ConstantValueTypeDiscriminator.Int32: return (decimal)value.Int32Value;
                 case ConstantValueTypeDiscriminator.Int64: return (decimal)value.Int64Value;
-                case ConstantValueTypeDiscriminator.Byte: return (decimal)value.ByteValue;
+                case ConstantValueTypeDiscriminator.UInt8: return (decimal)value.ByteValue;
                 case ConstantValueTypeDiscriminator.Char: return (decimal)value.CharValue;
                 case ConstantValueTypeDiscriminator.UInt16: return (decimal)value.UInt16Value;
                 case ConstantValueTypeDiscriminator.UInt32: return (decimal)value.UInt32Value;

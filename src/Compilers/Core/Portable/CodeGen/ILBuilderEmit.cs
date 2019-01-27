@@ -570,10 +570,10 @@ namespace Microsoft.CodeAnalysis.CodeGen
                 case ConstantValueTypeDiscriminator.Null:
                     EmitNullConstant();
                     break;
-                case ConstantValueTypeDiscriminator.SByte:
+                case ConstantValueTypeDiscriminator.Int8:
                     EmitSByteConstant(value.SByteValue);
                     break;
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.UInt8:
                     EmitByteConstant(value.ByteValue);
                     break;
                 case ConstantValueTypeDiscriminator.UInt16:
@@ -585,6 +585,8 @@ namespace Microsoft.CodeAnalysis.CodeGen
                 case ConstantValueTypeDiscriminator.Int16:
                     EmitShortConstant(value.Int16Value);
                     break;
+                case ConstantValueTypeDiscriminator.Int:
+                case ConstantValueTypeDiscriminator.UInt:
                 case ConstantValueTypeDiscriminator.Int32:
                 case ConstantValueTypeDiscriminator.UInt32:
                     EmitIntConstant(value.Int32Value);

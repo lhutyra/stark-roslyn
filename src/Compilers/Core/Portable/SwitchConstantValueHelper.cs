@@ -17,8 +17,10 @@ namespace Microsoft.CodeAnalysis
             switch (constant.Discriminator)
             {
                 case ConstantValueTypeDiscriminator.Null:
-                case ConstantValueTypeDiscriminator.SByte:
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.Int:
+                case ConstantValueTypeDiscriminator.UInt:
+                case ConstantValueTypeDiscriminator.Int8:
+                case ConstantValueTypeDiscriminator.UInt8:
                 case ConstantValueTypeDiscriminator.Int16:
                 case ConstantValueTypeDiscriminator.UInt16:
                 case ConstantValueTypeDiscriminator.Int32:
@@ -69,14 +71,14 @@ namespace Microsoft.CodeAnalysis
 
             switch (first.Discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte:
+                case ConstantValueTypeDiscriminator.Int8:
                 case ConstantValueTypeDiscriminator.Int16:
                 case ConstantValueTypeDiscriminator.Int32:
                 case ConstantValueTypeDiscriminator.Int64:
                     return first.Int64Value.CompareTo(second.Int64Value);
 
                 case ConstantValueTypeDiscriminator.Boolean:
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.UInt8:
                 case ConstantValueTypeDiscriminator.UInt16:
                 case ConstantValueTypeDiscriminator.UInt32:
                 case ConstantValueTypeDiscriminator.UInt64:
@@ -132,14 +134,14 @@ namespace Microsoft.CodeAnalysis
                 {
                     switch (constant.Discriminator)
                     {
-                        case ConstantValueTypeDiscriminator.SByte:
+                        case ConstantValueTypeDiscriminator.Int8:
                         case ConstantValueTypeDiscriminator.Int16:
                         case ConstantValueTypeDiscriminator.Int32:
                         case ConstantValueTypeDiscriminator.Int64:
                             return constant.Int64Value.GetHashCode();
 
                         case ConstantValueTypeDiscriminator.Boolean:
-                        case ConstantValueTypeDiscriminator.Byte:
+                        case ConstantValueTypeDiscriminator.UInt8:
                         case ConstantValueTypeDiscriminator.UInt16:
                         case ConstantValueTypeDiscriminator.UInt32:
                         case ConstantValueTypeDiscriminator.UInt64:

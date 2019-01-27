@@ -16,20 +16,24 @@ namespace Microsoft.CodeAnalysis.CSharp
             private const BinaryOperatorKind STR = BinaryOperatorKind.String;
             private const BinaryOperatorKind OSC = BinaryOperatorKind.ObjectAndString;
             private const BinaryOperatorKind SOC = BinaryOperatorKind.StringAndObject;
-            private const BinaryOperatorKind INT = BinaryOperatorKind.Int32;
-            private const BinaryOperatorKind UIN = BinaryOperatorKind.UInt32;
-            private const BinaryOperatorKind LNG = BinaryOperatorKind.Int64;
-            private const BinaryOperatorKind ULG = BinaryOperatorKind.UInt64;
-            private const BinaryOperatorKind FLT = BinaryOperatorKind.Float32;
-            private const BinaryOperatorKind DBL = BinaryOperatorKind.Float64;
+            private const BinaryOperatorKind INT = BinaryOperatorKind.Int;
+            private const BinaryOperatorKind UNT = BinaryOperatorKind.UInt;
+            private const BinaryOperatorKind I32 = BinaryOperatorKind.Int32;
+            private const BinaryOperatorKind U32 = BinaryOperatorKind.UInt32;
+            private const BinaryOperatorKind I64 = BinaryOperatorKind.Int64;
+            private const BinaryOperatorKind U64 = BinaryOperatorKind.UInt64;
+            private const BinaryOperatorKind F32 = BinaryOperatorKind.Float32;
+            private const BinaryOperatorKind F64 = BinaryOperatorKind.Float64;
             private const BinaryOperatorKind DEC = BinaryOperatorKind.Decimal;
             private const BinaryOperatorKind BOL = BinaryOperatorKind.Bool;
-            private const BinaryOperatorKind LIN = BinaryOperatorKind.Lifted | BinaryOperatorKind.Int32;
-            private const BinaryOperatorKind LUN = BinaryOperatorKind.Lifted | BinaryOperatorKind.UInt32;
-            private const BinaryOperatorKind LLG = BinaryOperatorKind.Lifted | BinaryOperatorKind.Int64;
-            private const BinaryOperatorKind LUL = BinaryOperatorKind.Lifted | BinaryOperatorKind.UInt64;
-            private const BinaryOperatorKind LFL = BinaryOperatorKind.Lifted | BinaryOperatorKind.Float32;
-            private const BinaryOperatorKind LDB = BinaryOperatorKind.Lifted | BinaryOperatorKind.Float64;
+            private const BinaryOperatorKind LIT = BinaryOperatorKind.Lifted | BinaryOperatorKind.Int;
+            private const BinaryOperatorKind LUT = BinaryOperatorKind.Lifted | BinaryOperatorKind.UInt;
+            private const BinaryOperatorKind LI2 = BinaryOperatorKind.Lifted | BinaryOperatorKind.Int32;
+            private const BinaryOperatorKind LU2 = BinaryOperatorKind.Lifted | BinaryOperatorKind.UInt32;
+            private const BinaryOperatorKind LI4 = BinaryOperatorKind.Lifted | BinaryOperatorKind.Int64;
+            private const BinaryOperatorKind LU4 = BinaryOperatorKind.Lifted | BinaryOperatorKind.UInt64;
+            private const BinaryOperatorKind LF2 = BinaryOperatorKind.Lifted | BinaryOperatorKind.Float32;
+            private const BinaryOperatorKind LF4 = BinaryOperatorKind.Lifted | BinaryOperatorKind.Float64;
             private const BinaryOperatorKind LDC = BinaryOperatorKind.Lifted | BinaryOperatorKind.Decimal;
             private const BinaryOperatorKind LBL = BinaryOperatorKind.Lifted | BinaryOperatorKind.Bool;
 
@@ -41,190 +45,214 @@ namespace Microsoft.CodeAnalysis.CSharp
             // Overload resolution for Y * / - % < > <= >= X
             private static readonly BinaryOperatorKind[,] s_arithmetic =
             {
-                //                    ----------------regular-------------------                       ----------------nullable-------------------
-                //          obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  
+                //                ----------------regular-------------------                                 ----------------nullable-------------------
+                //      obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt
                 /*  obj */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
-                /*  str */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
-                /* bool */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                /*  str */                                                                              
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                /* bool */                                                                                                                                              
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  chr */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  i08 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /*  i16 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /*  i32 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /*  i64 */
-                      { ERR, ERR, ERR, LNG, LNG, LNG, LNG, LNG, LNG, LNG, LNG, ERR, FLT, DBL, DEC, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I64, I64, I64, I64, I64, I64, I64, I64, ERR, F32, F64, DEC, ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR },
                 /*  u08 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u16 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u32 */
-                      { ERR, ERR, ERR, UIN, LNG, LNG, LNG, LNG, UIN, UIN, UIN, ULG, FLT, DBL, DEC, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, U32, I64, I64, I64, I64, U32, U32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u64 */
-                      { ERR, ERR, ERR, ULG, ERR, ERR, ERR, ERR, ULG, ULG, ULG, ULG, FLT, DBL, DEC, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, U64, ERR, ERR, ERR, ERR, U64, U64, U64, U64, F32, F64, DEC, INT, UNT, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  r32 */
-                      { ERR, ERR, ERR, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, DBL, ERR, ERR, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, ERR },
+                      { ERR, ERR, ERR, F32, F32, F32, F32, F32, F32, F32, F32, F32, F32, F64, ERR, ERR, ERR, ERR, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, ERR, ERR, ERR },
                 /*  r64 */
-                      { ERR, ERR, ERR, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, ERR, ERR, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, ERR },
+                      { ERR, ERR, ERR, F64, F64, F64, F64, F64, F64, F64, F64, F64, F64, F64, ERR, ERR, ERR, ERR, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, ERR, ERR, ERR },
                 /*  dec */
-                      { ERR, ERR, ERR, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, ERR, ERR, DEC, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC },
+                      { ERR, ERR, ERR, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, ERR, ERR, DEC, ERR, ERR, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, ERR },
+                /*  int */
+                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, INT, ERR, ERR, ERR, ERR, INT, UNT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /*  unt */
+                      { ERR, ERR, ERR, UNT, UNT, UNT, UNT, ERR, UNT, UNT, UNT, ERR, ERR, ERR, ERR, UNT, UNT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LIT, LUT },
                 /*nbool */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nchr */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* ni08 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* ni16 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* ni32 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* ni64 */
-                      { ERR, ERR, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* nu08 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu16 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu32 */
-                      { ERR, ERR, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu64 */
-                      { ERR, ERR, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC },
+                      { ERR, ERR, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, ERR, ERR, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, ERR, ERR },
                 /* nr32 */
-                      { ERR, ERR, ERR, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, ERR, ERR, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, ERR },
+                      { ERR, ERR, ERR, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, ERR, ERR, ERR, ERR, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, ERR, ERR, ERR },
                 /* nr64 */
-                      { ERR, ERR, ERR, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, ERR, ERR, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, ERR },
+                      { ERR, ERR, ERR, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, ERR, ERR, ERR, ERR, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, ERR, ERR, ERR },
                 /* ndec */
-                      { ERR, ERR, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC },
+                      { ERR, ERR, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, ERR, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, ERR },
+                /* nint */
+                      { ERR, ERR, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /* nunt */
+                      { ERR, ERR, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LIT, LUT },
             };
 
             // Overload resolution for Y + X
             private static readonly BinaryOperatorKind[,] s_addition =
             {
-                //                    ----------------regular-------------------                       ----------------nullable-------------------
-                //          obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  
+                //                ----------------regular-------------------                                 ----------------nullable-------------------
+                //      obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt
                 /*  obj */
-                      { ERR, OSC, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, OSC, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  str */
-                      { SOC, STR, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC },
+                      { SOC, STR, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC, SOC },
                 /* bool */
-                      { ERR, OSC, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, OSC, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  chr */
-                      { ERR, OSC, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LIT},
                 /*  i08 */
-                      { ERR, OSC, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, INT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /*  i16 */
-                      { ERR, OSC, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, INT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /*  i32 */
-                      { ERR, OSC, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, INT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /*  i64 */
-                      { ERR, OSC, ERR, LNG, LNG, LNG, LNG, LNG, LNG, LNG, LNG, ERR, FLT, DBL, DEC, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I64, I64, I64, I64, I64, I64, I64, I64, ERR, F32, F64, DEC, INT, INT, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /*  u08 */
-                      { ERR, OSC, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u16 */
-                      { ERR, OSC, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u32 */
-                      { ERR, OSC, ERR, UIN, LNG, LNG, LNG, LNG, UIN, UIN, UIN, ULG, FLT, DBL, DEC, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, U32, I64, I64, I64, I64, U32, U32, U32, U64, F32, F64, DEC, INT, UNT, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u64 */
-                      { ERR, OSC, ERR, ULG, ERR, ERR, ERR, ERR, ULG, ULG, ULG, ULG, FLT, DBL, DEC, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, U64, ERR, ERR, ERR, ERR, U64, U64, U64, U64, F32, F64, DEC, ERR, ERR, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, ERR, ERR },
                 /*  r32 */
-                      { ERR, OSC, ERR, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, DBL, ERR, ERR, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, ERR },
+                      { ERR, OSC, ERR, F32, F32, F32, F32, F32, F32, F32, F32, F32, F32, F64, ERR, ERR, ERR, ERR, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, ERR, ERR, ERR },
                 /*  r64 */
-                      { ERR, OSC, ERR, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, ERR, ERR, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, ERR },
+                      { ERR, OSC, ERR, F64, F64, F64, F64, F64, F64, F64, F64, F64, F64, F64, ERR, ERR, ERR, ERR, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, ERR, ERR, ERR },
                 /*  dec */
-                      { ERR, OSC, ERR, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, ERR, ERR, DEC, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC },
+                      { ERR, OSC, ERR, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, ERR, ERR, DEC, ERR, ERR, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, ERR },
+                /*  int */
+                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, INT, ERR, ERR, ERR, ERR, INT, UNT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /*  unt */
+                      { ERR, ERR, ERR, UNT, UNT, UNT, UNT, ERR, UNT, UNT, UNT, ERR, ERR, ERR, ERR, UNT, UNT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LIT, LUT },
                 /*nbool */
-                      { ERR, OSC, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, OSC, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nchr */
-                      { ERR, OSC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* ni08 */
-                      { ERR, OSC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /* ni16 */
-                      { ERR, OSC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /* ni32 */
-                      { ERR, OSC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LIT },
                 /* ni64 */
-                      { ERR, OSC, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR },
                 /* nu08 */
-                      { ERR, OSC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu16 */
-                      { ERR, OSC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu32 */
-                      { ERR, OSC, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu64 */
-                      { ERR, OSC, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC },
+                      { ERR, OSC, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, LIT, LUT, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nr32 */
-                      { ERR, OSC, ERR, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, ERR, ERR, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, ERR },
+                      { ERR, OSC, ERR, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, ERR, ERR, ERR, ERR, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, ERR, ERR, ERR },
                 /* nr64 */
-                      { ERR, OSC, ERR, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, ERR, ERR, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, ERR },
+                      { ERR, OSC, ERR, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, ERR, ERR, ERR, ERR, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, ERR, ERR, ERR },
                 /* ndec */
-                      { ERR, OSC, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC },
+                      { ERR, OSC, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, ERR, ERR, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, ERR, ERR, LDC, ERR, ERR },
+                /* nint */
+                      { ERR, ERR, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /* nunt */
+                      { ERR, ERR, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LIT, LUT },
             };
 
             // Overload resolution for Y << >> X
             private static readonly BinaryOperatorKind[,] s_shift =
             {
-                //                    ----------------regular-------------------                       ----------------nullable-------------------
-                //          obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  
+                //                ----------------regular-------------------                                 ----------------nullable-------------------
+                //      obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt
                 /*  obj */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  str */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* bool */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  chr */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, ERR, I32, I32, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  i08 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, ERR, I32, I32, ERR, ERR, ERR, ERR, ERR, I32, I32, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2},
                 /*  i16 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, ERR, I32, I32, ERR, ERR, ERR, ERR, ERR, I32, I32, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /*  i32 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, ERR, I32, I32, ERR, ERR, ERR, ERR, ERR, I32, I32, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /*  i64 */
-                      { ERR, ERR, ERR, LNG, LNG, LNG, LNG, ERR, LNG, LNG, ERR, ERR, ERR, ERR, ERR, ERR, LLG, LLG, LLG, LLG, ERR, LLG, LLG, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I64, I64, I64, I64, ERR, I64, I64, ERR, ERR, ERR, ERR, ERR, I64, I64, ERR, LI4, LI4, LI4, LI4, ERR, LI4, LI4, ERR, ERR, ERR, ERR, ERR, LI4, LI4 },
                 /*  u08 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, ERR, I32, I32, ERR, ERR, ERR, ERR, ERR, I32, I32, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /*  u16 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, ERR, I32, I32, ERR, ERR, ERR, ERR, ERR, I32, I32, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /*  u32 */
-                      { ERR, ERR, ERR, UIN, UIN, UIN, UIN, ERR, UIN, UIN, ERR, ERR, ERR, ERR, ERR, ERR, LUN, LUN, LUN, LUN, ERR, LUN, LUN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, U32, U32, U32, U32, ERR, U32, U32, ERR, ERR, ERR, ERR, ERR, U32, U32, ERR, LU2, LU2, LU2, LU2, ERR, LU2, LU2, ERR, ERR, ERR, ERR, ERR, LU2, LU2 },
                 /*  u64 */
-                      { ERR, ERR, ERR, ULG, ULG, ULG, ULG, ERR, ULG, ULG, ERR, ERR, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, ERR, LUL, LUL, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, U64, U64, U64, U64, ERR, U64, U64, ERR, ERR, ERR, ERR, ERR, U64, U64, ERR, LU4, LU4, LU4, LU4, ERR, LU4, LU4, ERR, ERR, ERR, ERR, ERR, LU4, LU4 },
                 /*  r32 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  r64 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  dec */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                /*  int */
+                      { ERR, ERR, ERR, INT, INT, INT, INT, ERR, INT, INT, INT, ERR, ERR, ERR, ERR, INT, INT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LIT },
+                /*  unt */
+                      { ERR, ERR, ERR, UNT, UNT, UNT, UNT, ERR, UNT, UNT, UNT, ERR, ERR, ERR, ERR, UNT, UNT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT },
                 /*nbool */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nchr */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /* ni08 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /* ni16 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /* ni32 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /* ni64 */
-                      { ERR, ERR, ERR, LLG, LLG, LLG, LLG, ERR, LLG, LLG, ERR, ERR, ERR, ERR, ERR, ERR, LLG, LLG, LLG, LLG, ERR, LLG, LLG, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI4, LI4, LI4, LI4, ERR, LI4, LI4, ERR, ERR, ERR, ERR, ERR, LI4, LI4, ERR, LI4, LI4, LI4, LI4, ERR, LI4, LI4, ERR, ERR, ERR, ERR, ERR, LI4, LI4 },
                 /* nu08 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /* nu16 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, ERR, LIN, LIN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2, ERR, LI2, LI2, LI2, LI2, ERR, LI2, LI2, ERR, ERR, ERR, ERR, ERR, LI2, LI2 },
                 /* nu32 */
-                      { ERR, ERR, ERR, LUN, LUN, LUN, LUN, ERR, LUN, LUN, ERR, ERR, ERR, ERR, ERR, ERR, LUN, LUN, LUN, LUN, ERR, LUN, LUN, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LU2, LU2, LU2, LU2, ERR, LU2, LU2, ERR, ERR, ERR, ERR, ERR, LU2, LU2, ERR, LU2, LU2, LU2, LU2, ERR, LU2, LU2, ERR, ERR, ERR, ERR, ERR, LU2, LU2 },
                 /* nu64 */
-                      { ERR, ERR, ERR, LUL, LUL, LUL, LUL, ERR, LUL, LUL, ERR, ERR, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, ERR, LUL, LUL, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LU4, LU4, LU4, LU4, ERR, LU4, LU4, ERR, ERR, ERR, ERR, ERR, LU4, LU4, ERR, LU4, LU4, LU4, LU4, ERR, LU4, LU4, ERR, ERR, ERR, ERR, ERR, LU4, LU4 },
                 /* nr32 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nr64 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* ndec */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                /* nint */
+                      { ERR, ERR, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /* nunt */
+                      { ERR, ERR, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT },
             };
 
             // Overload resolution for Y == != X
@@ -234,127 +262,135 @@ namespace Microsoft.CodeAnalysis.CSharp
             // overload resolution has chosen the reference equality operator.
             private static readonly BinaryOperatorKind[,] s_equality =
             {
-                //                    ----------------regular-------------------                       ----------------nullable-------------------
-                //          obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  
+                //                ----------------regular-------------------                                 ----------------nullable-------------------
+                //      obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt
                 /*  obj */
-                      { OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
+                      { OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
                 /*  str */
-                      { OBJ, STR, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
+                      { OBJ, STR, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
                 /* bool */
-                      { OBJ, OBJ, BOL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, LBL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
+                      { OBJ, OBJ, BOL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, LBL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
                 /*  chr */
-                      { OBJ, OBJ, OBJ, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  i08 */
-                      { OBJ, OBJ, OBJ, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, UNT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /*  i16 */
-                      { OBJ, OBJ, OBJ, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, UNT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /*  i32 */
-                      { OBJ, OBJ, OBJ, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, FLT, DBL, DEC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I32, I32, I32, I32, I64, I32, I32, I64, ERR, F32, F64, DEC, INT, UNT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /*  i64 */
-                      { OBJ, OBJ, OBJ, LNG, LNG, LNG, LNG, LNG, LNG, LNG, LNG, ERR, FLT, DBL, DEC, OBJ, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I64, I64, I64, I64, I64, I64, I64, I64, ERR, F32, F64, DEC, ERR, ERR, OBJ, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR },
                 /*  u08 */
-                      { OBJ, OBJ, OBJ, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u16 */
-                      { OBJ, OBJ, OBJ, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, FLT, DBL, DEC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, I32, I32, I32, I32, I64, I32, I32, U32, U64, F32, F64, DEC, INT, UNT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u32 */
-                      { OBJ, OBJ, OBJ, UIN, LNG, LNG, LNG, LNG, UIN, UIN, UIN, ULG, FLT, DBL, DEC, OBJ, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, U32, I64, I64, I64, I64, U32, U32, U32, U64, F32, F64, DEC, INT, UNT, OBJ, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  u64 */
-                      { OBJ, OBJ, OBJ, ULG, ERR, ERR, ERR, ERR, ULG, ULG, ULG, ULG, FLT, DBL, DEC, OBJ, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, U64, ERR, ERR, ERR, ERR, U64, U64, U64, U64, F32, F64, DEC, INT, UNT, OBJ, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, LIT, LUT },
                 /*  r32 */
-                      { OBJ, OBJ, OBJ, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, FLT, DBL, OBJ, OBJ, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, OBJ },
+                      { OBJ, OBJ, OBJ, F32, F32, F32, F32, F32, F32, F32, F32, F32, F32, F64, OBJ, ERR, ERR, OBJ, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, OBJ, ERR, ERR },
                 /*  r64 */
-                      { OBJ, OBJ, OBJ, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, DBL, OBJ, OBJ, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, OBJ },
+                      { OBJ, OBJ, OBJ, F64, F64, F64, F64, F64, F64, F64, F64, F64, F64, F64, OBJ, ERR, ERR, OBJ, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, OBJ, ERR, ERR },
                 /*  dec */
-                      { OBJ, OBJ, OBJ, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, OBJ, OBJ, DEC, OBJ, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, OBJ, OBJ, LDC },
+                      { OBJ, OBJ, OBJ, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, DEC, OBJ, OBJ, DEC, ERR, ERR, OBJ, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, OBJ, OBJ, LDC, ERR, ERR },
                 /*nbool */
-                      { OBJ, OBJ, LBL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, LBL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
+                      { OBJ, OBJ, LBL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, LBL, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ, OBJ },
                 /* nchr */
-                      { OBJ, OBJ, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* ni08 */
-                      { OBJ, OBJ, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* ni16 */
-                      { OBJ, OBJ, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* ni32 */
-                      { OBJ, OBJ, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, LF2, LF4, LDC, LIT, LUT },
                 /* ni64 */
-                      { OBJ, OBJ, OBJ, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC, OBJ, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR, OBJ, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, LF2, LF4, LDC, ERR, ERR },
                 /* nu08 */
-                      { OBJ, OBJ, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu16 */
-                      { OBJ, OBJ, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC, OBJ, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, OBJ, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu32 */
-                      { OBJ, OBJ, OBJ, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC, OBJ, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT, OBJ, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, LF2, LF4, LDC, LIT, LUT },
                 /* nu64 */
-                      { OBJ, OBJ, OBJ, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC, OBJ, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, LFL, LDB, LDC },
+                      { OBJ, OBJ, OBJ, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, ERR, ERR, OBJ, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, LF2, LF4, LDC, ERR, ERR },
                 /* nr32 */
-                      { OBJ, OBJ, OBJ, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, OBJ, OBJ, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LFL, LDB, OBJ },
+                      { OBJ, OBJ, OBJ, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, OBJ, ERR, ERR, OBJ, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF2, LF4, OBJ, ERR, ERR },
                 /* nr64 */
-                      { OBJ, OBJ, OBJ, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, OBJ, OBJ, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, LDB, OBJ },
+                      { OBJ, OBJ, OBJ, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, OBJ, ERR, ERR, OBJ, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, LF4, OBJ, ERR, ERR },
                 /* ndec */
-                      { OBJ, OBJ, OBJ, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, OBJ, OBJ, LDC, OBJ, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, OBJ, OBJ, LDC },
+                      { OBJ, OBJ, OBJ, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, OBJ, OBJ, LDC, ERR, ERR, OBJ, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, LDC, OBJ, OBJ, LDC, ERR, ERR },
+                /* nint */
+                      { ERR, ERR, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /* nunt */
+                      { ERR, ERR, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT },
             };
 
             // Overload resolution for Y | & ^ || && X
             private static readonly BinaryOperatorKind[,] s_logical =
             {
-                //                    ----------------regular-------------------                       ----------------nullable-------------------
-                //          obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  
+                //                ----------------regular-------------------                                 ----------------nullable-------------------
+                //      obj  str  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt  bool chr  i08  i16  i32  i64  u08  u16  u32  u64  r32  r64  dec  int  unt
                 /*  obj */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  str */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* bool */
-                      { ERR, ERR, BOL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LBL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, BOL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LBL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  chr */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, ERR, ERR, ERR, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /*  i08 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, ERR, ERR, ERR, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT },
                 /*  i16 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, ERR, ERR, ERR, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT },
                 /*  i32 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, LNG, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, I64, ERR, ERR, ERR, ERR, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT },
                 /*  i64 */
-                      { ERR, ERR, ERR, LNG, LNG, LNG, LNG, LNG, LNG, LNG, LNG, ERR, ERR, ERR, ERR, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I64, I64, I64, I64, I64, I64, I64, I64, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  u08 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, ERR, ERR, ERR, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /*  u16 */
-                      { ERR, ERR, ERR, INT, INT, INT, INT, LNG, INT, INT, UIN, ULG, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, I32, I32, I32, I32, I64, I32, I32, U32, U64, ERR, ERR, ERR, INT, UNT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /*  u32 */
-                      { ERR, ERR, ERR, UIN, LNG, LNG, LNG, LNG, UIN, UIN, UIN, ULG, ERR, ERR, ERR, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, U32, I64, I64, I64, I64, U32, U32, U32, U64, ERR, ERR, ERR, INT, UNT, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /*  u64 */
-                      { ERR, ERR, ERR, ULG, ERR, ERR, ERR, ERR, ULG, ULG, ULG, ULG, ERR, ERR, ERR, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, U64, ERR, ERR, ERR, ERR, U64, U64, U64, U64, ERR, ERR, ERR, ERR, ERR, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, ERR, ERR, ERR, ERR, ERR },
                 /*  r32 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  r64 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*  dec */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /*nbool */
-                      { ERR, ERR, LBL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LBL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, LBL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LBL, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nchr */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /* ni08 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT },
                 /* ni16 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT },
                 /* ni32 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LI4, ERR, ERR, ERR, ERR, LIT, LUT },
                 /* ni64 */
-                      { ERR, ERR, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, ERR, ERR, ERR, ERR, LLG, LLG, LLG, LLG, LLG, LLG, LLG, LLG, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, ERR, ERR, ERR, ERR, ERR, ERR, LI4, LI4, LI4, LI4, LI4, LI4, LI4, LI4, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nu08 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /* nu16 */
-                      { ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR, ERR, LIN, LIN, LIN, LIN, LLG, LIN, LIN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT, ERR, LI2, LI2, LI2, LI2, LI4, LI2, LI2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /* nu32 */
-                      { ERR, ERR, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, ERR, ERR, ERR, ERR, LUN, LLG, LLG, LLG, LLG, LUN, LUN, LUN, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, ERR, ERR, ERR, LIT, LUT, ERR, LU2, LI4, LI4, LI4, LI4, LU2, LU2, LU2, LU4, ERR, ERR, ERR, LIT, LUT },
                 /* nu64 */
-                      { ERR, ERR, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, ERR, ERR, ERR, ERR, LUL, ERR, ERR, ERR, ERR, LUL, LUL, LUL, LUL, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, ERR, ERR, ERR, ERR, ERR, ERR, LU4, ERR, ERR, ERR, ERR, LU4, LU4, LU4, LU4, ERR, ERR, ERR, ERR, ERR },
                 /* nr32 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* nr64 */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
                 /* ndec */
-                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                      { ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR },
+                /* nint */
+                      { ERR, ERR, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT, ERR, LIT, LIT, LIT, LIT, ERR, LIT, LIT, LIT, ERR, ERR, ERR, ERR, LIT, LUT },
+                /* nunt */
+                      { ERR, ERR, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT, ERR, LUT, LUT, LUT, LUT, ERR, LUT, LUT, LUT, ERR, ERR, ERR, ERR, LUT, LUT },
             };
 
             private static readonly BinaryOperatorKind[][,] s_opkind =
@@ -396,6 +432,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case SpecialType.System_Float32: return 12;
                     case SpecialType.System_Float64: return 13;
                     case SpecialType.System_Decimal: return 14;
+                    case SpecialType.System_Int: return 15;
+                    case SpecialType.System_UInt: return 16;
 
                     case SpecialType.None:
                         if ((object)type != null && type.IsNullableType())
@@ -404,19 +442,21 @@ namespace Microsoft.CodeAnalysis.CSharp
 
                             switch (underlyingType.GetSpecialTypeSafe())
                             {
-                                case SpecialType.System_Boolean: return 15;
-                                case SpecialType.System_Char: return 16;
-                                case SpecialType.System_Int8: return 17;
-                                case SpecialType.System_Int16: return 18;
-                                case SpecialType.System_Int32: return 19;
-                                case SpecialType.System_Int64: return 20;
-                                case SpecialType.System_UInt8: return 21;
-                                case SpecialType.System_UInt16: return 22;
-                                case SpecialType.System_UInt32: return 23;
-                                case SpecialType.System_UInt64: return 24;
-                                case SpecialType.System_Float32: return 25;
-                                case SpecialType.System_Float64: return 26;
-                                case SpecialType.System_Decimal: return 27;
+                                case SpecialType.System_Boolean: return 17;
+                                case SpecialType.System_Char: return 18;
+                                case SpecialType.System_Int8: return 19;
+                                case SpecialType.System_Int16: return 20;
+                                case SpecialType.System_Int32: return 21;
+                                case SpecialType.System_Int64: return 22;
+                                case SpecialType.System_UInt8: return 23;
+                                case SpecialType.System_UInt16: return 24;
+                                case SpecialType.System_UInt32: return 25;
+                                case SpecialType.System_UInt64: return 26;
+                                case SpecialType.System_Float32: return 27;
+                                case SpecialType.System_Float64: return 28;
+                                case SpecialType.System_Decimal: return 29;
+                                case SpecialType.System_Int: return 30;
+                                case SpecialType.System_UInt: return 31;
                             }
                         }
 

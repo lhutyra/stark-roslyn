@@ -378,6 +378,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case BinaryOperatorKind.PointerSubtraction:
                         return RewritePointerSubtraction(operatorKind, loweredLeft, loweredRight, type);
 
+                    case BinaryOperatorKind.IntAddition:
+                    case BinaryOperatorKind.UIntAddition:
                     case BinaryOperatorKind.Int32Addition:
                     case BinaryOperatorKind.UInt32Addition:
                     case BinaryOperatorKind.Int64Addition:
@@ -392,6 +394,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         goto default;
 
+                    case BinaryOperatorKind.IntSubtraction:
+                    case BinaryOperatorKind.UIntSubtraction:
                     case BinaryOperatorKind.Int32Subtraction:
                     case BinaryOperatorKind.Int64Subtraction:
                     case BinaryOperatorKind.UInt32Subtraction:
@@ -402,6 +406,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                         }
                         goto default;
 
+                    case BinaryOperatorKind.IntMultiplication:
+                    case BinaryOperatorKind.UIntMultiplication:
                     case BinaryOperatorKind.Int32Multiplication:
                     case BinaryOperatorKind.Int64Multiplication:
                     case BinaryOperatorKind.UInt32Multiplication:

@@ -268,8 +268,10 @@ namespace Microsoft.CodeAnalysis
         // default value of a value type constant. (reference type constants use Null as default)
         private class ConstantValueDefault : ConstantValueDiscriminated
         {
-            public static readonly ConstantValueDefault SByte = new ConstantValueDefault(ConstantValueTypeDiscriminator.SByte);
-            public static readonly ConstantValueDefault Byte = new ConstantValueDefault(ConstantValueTypeDiscriminator.Byte);
+            public static readonly ConstantValueDefault Int = new ConstantValueDefault(ConstantValueTypeDiscriminator.Int);
+            public static readonly ConstantValueDefault UInt = new ConstantValueDefault(ConstantValueTypeDiscriminator.UInt);
+            public static readonly ConstantValueDefault Int8 = new ConstantValueDefault(ConstantValueTypeDiscriminator.Int8);
+            public static readonly ConstantValueDefault UInt8 = new ConstantValueDefault(ConstantValueTypeDiscriminator.UInt8);
             public static readonly ConstantValueDefault Int16 = new ConstantValueDefault(ConstantValueTypeDiscriminator.Int16);
             public static readonly ConstantValueDefault UInt16 = new ConstantValueDefault(ConstantValueTypeDiscriminator.UInt16);
             public static readonly ConstantValueDefault Int32 = new ConstantValueDefault(ConstantValueTypeDiscriminator.Int32);
@@ -277,8 +279,8 @@ namespace Microsoft.CodeAnalysis
             public static readonly ConstantValueDefault Int64 = new ConstantValueDefault(ConstantValueTypeDiscriminator.Int64);
             public static readonly ConstantValueDefault UInt64 = new ConstantValueDefault(ConstantValueTypeDiscriminator.UInt64);
             public static readonly ConstantValueDefault Char = new ConstantValueDefault(ConstantValueTypeDiscriminator.Char);
-            public static readonly ConstantValueDefault Single = new ConstantValueSingleZero();
-            public static readonly ConstantValueDefault Double = new ConstantValueDoubleZero();
+            public static readonly ConstantValueDefault Float32 = new ConstantValueSingleZero();
+            public static readonly ConstantValueDefault Float64 = new ConstantValueDoubleZero();
             public static readonly ConstantValueDefault Decimal = new ConstantValueDecimalZero();
             public static readonly ConstantValueDefault DateTime = new ConstantValueDefault(ConstantValueTypeDiscriminator.DateTime);
             public static readonly ConstantValueDefault Boolean = new ConstantValueDefault(ConstantValueTypeDiscriminator.Boolean);
@@ -440,10 +442,12 @@ namespace Microsoft.CodeAnalysis
 
         private class ConstantValueOne : ConstantValueDiscriminated
         {
-            public static readonly ConstantValueOne SByte = new ConstantValueOne(ConstantValueTypeDiscriminator.SByte);
-            public static readonly ConstantValueOne Byte = new ConstantValueOne(ConstantValueTypeDiscriminator.Byte);
+            public static readonly ConstantValueOne SByte = new ConstantValueOne(ConstantValueTypeDiscriminator.Int8);
+            public static readonly ConstantValueOne Byte = new ConstantValueOne(ConstantValueTypeDiscriminator.UInt8);
             public static readonly ConstantValueOne Int16 = new ConstantValueOne(ConstantValueTypeDiscriminator.Int16);
             public static readonly ConstantValueOne UInt16 = new ConstantValueOne(ConstantValueTypeDiscriminator.UInt16);
+            public static readonly ConstantValueOne Int = new ConstantValueOne(ConstantValueTypeDiscriminator.Int);
+            public static readonly ConstantValueOne UInt = new ConstantValueOne(ConstantValueTypeDiscriminator.UInt);
             public static readonly ConstantValueOne Int32 = new ConstantValueOne(ConstantValueTypeDiscriminator.Int32);
             public static readonly ConstantValueOne UInt32 = new ConstantValueOne(ConstantValueTypeDiscriminator.UInt32);
             public static readonly ConstantValueOne Int64 = new ConstantValueOne(ConstantValueTypeDiscriminator.Int64);
@@ -546,13 +550,13 @@ namespace Microsoft.CodeAnalysis
             private readonly byte _value;
 
             public ConstantValueI8(sbyte value)
-                : base(ConstantValueTypeDiscriminator.SByte)
+                : base(ConstantValueTypeDiscriminator.Int8)
             {
                 _value = unchecked((byte)value);
             }
 
             public ConstantValueI8(byte value)
-                : base(ConstantValueTypeDiscriminator.Byte)
+                : base(ConstantValueTypeDiscriminator.UInt8)
             {
                 _value = value;
             }
@@ -683,6 +687,51 @@ namespace Microsoft.CodeAnalysis
                 return base.Equals(other) && _value == other.Int32Value;
             }
         }
+
+        private sealed class ConstantValueInt : ConstantValueDiscriminated
+        {
+            private readonly int _value;
+
+            public ConstantValueInt(int value)
+                : base(ConstantValueTypeDiscriminator.Int)
+            {
+                _value = value;
+            }
+
+            public ConstantValueInt(uint value)
+                : base(ConstantValueTypeDiscriminator.UInt)
+            {
+                _value = unchecked((int)value);
+            }
+
+            public override int Int32Value
+            {
+                get
+                {
+                    return _value;
+                }
+            }
+
+            public override uint UInt32Value
+            {
+                get
+                {
+                    return unchecked((uint)_value);
+                }
+            }
+
+            public override int GetHashCode()
+            {
+                return Hash.Combine(base.GetHashCode(), _value.GetHashCode());
+            }
+
+            public override bool Equals(ConstantValue other)
+            {
+                return base.Equals(other) && _value == other.Int32Value;
+            }
+        }
+
+
 
         private sealed class ConstantValueI64 : ConstantValueDiscriminated
         {

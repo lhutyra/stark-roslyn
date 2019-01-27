@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis
             EnumOverflowKind overflowKind;
             switch (constantValue.Discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte:
+                case ConstantValueTypeDiscriminator.Int8:
                     {
                         long previous = constantValue.SByteValue;
                         overflowKind = CheckOverflow(sbyte.MaxValue, previous, offset);
@@ -35,7 +35,7 @@ namespace Microsoft.CodeAnalysis
                         }
                     }
                     break;
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.UInt8:
                     {
                         ulong previous = constantValue.ByteValue;
                         overflowKind = CheckOverflow(byte.MaxValue, previous, offset);

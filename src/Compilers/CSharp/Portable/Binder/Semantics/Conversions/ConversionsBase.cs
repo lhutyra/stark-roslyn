@@ -1715,9 +1715,9 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             switch (value.Discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte:
+                case ConstantValueTypeDiscriminator.Int8:
                     return value.SByteValue == 0;
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.UInt8:
                     return value.ByteValue == 0;
                 case ConstantValueTypeDiscriminator.Int16:
                     return value.Int16Value == 0;

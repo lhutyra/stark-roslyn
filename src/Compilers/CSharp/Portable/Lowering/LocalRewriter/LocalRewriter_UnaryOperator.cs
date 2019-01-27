@@ -907,6 +907,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case UnaryOperatorKind.Decimal:
                     specialType = SpecialType.System_Decimal;
                     break;
+                case UnaryOperatorKind.Int:
+                    specialType = SpecialType.System_Int;
+                    break;
+                case UnaryOperatorKind.UInt:
+                    specialType = SpecialType.System_UInt;
+                    break;
                 case UnaryOperatorKind.Pointer:
                     return node.Type;
                 case UnaryOperatorKind.UserDefined:
@@ -946,6 +952,12 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case UnaryOperatorKind.Char:
                 case UnaryOperatorKind.UInt32:
                     result = BinaryOperatorKind.UInt32;
+                    break;
+                case UnaryOperatorKind.Int:
+                    result = BinaryOperatorKind.Int;
+                    break;
+                case UnaryOperatorKind.UInt:
+                    result = BinaryOperatorKind.UInt;
                     break;
                 case UnaryOperatorKind.Int64:
                     result = BinaryOperatorKind.Int64;
@@ -1013,6 +1025,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case BinaryOperatorKind.Int32:
                 case BinaryOperatorKind.UInt64:
                 case BinaryOperatorKind.Int64:
+                case BinaryOperatorKind.Int:
                 case BinaryOperatorKind.PointerAndInt32:
                     result |= (BinaryOperatorKind)unaryOperatorKind.OverflowChecks();
                     break;
@@ -1034,6 +1047,9 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case BinaryOperatorKind.PointerAndInt32:
                 case BinaryOperatorKind.Int32:
                     return ConstantValue.Create(1);
+                case BinaryOperatorKind.Int:
+                case BinaryOperatorKind.UInt:
+                    return ConstantValue.CreateInt(1);
                 case BinaryOperatorKind.UInt32:
                     return ConstantValue.Create(1U);
                 case BinaryOperatorKind.Int64:

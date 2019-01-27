@@ -23,6 +23,8 @@ namespace Microsoft.CodeAnalysis
                 case Cci.PrimitiveTypeCode.Char:
                 case Cci.PrimitiveTypeCode.Float32:
                 case Cci.PrimitiveTypeCode.Float64:
+                case Cci.PrimitiveTypeCode.IntPtr:
+                case Cci.PrimitiveTypeCode.UIntPtr:
                     return true;
                 default:
                     return false;
@@ -41,6 +43,8 @@ namespace Microsoft.CodeAnalysis
                 case Cci.PrimitiveTypeCode.UInt32:
                 case Cci.PrimitiveTypeCode.Int64:
                 case Cci.PrimitiveTypeCode.UInt64:
+                case Cci.PrimitiveTypeCode.IntPtr:
+                case Cci.PrimitiveTypeCode.UIntPtr:
                     return true;
                 default:
                     return false;
@@ -110,8 +114,10 @@ namespace Microsoft.CodeAnalysis
         {
             switch (type)
             {
-                case Cci.PrimitiveTypeCode.Int8: return ConstantValueTypeDiscriminator.SByte;
-                case Cci.PrimitiveTypeCode.UInt8: return ConstantValueTypeDiscriminator.Byte;
+                case Cci.PrimitiveTypeCode.IntPtr: return ConstantValueTypeDiscriminator.Int8;
+                case Cci.PrimitiveTypeCode.UIntPtr: return ConstantValueTypeDiscriminator.UInt8;
+                case Cci.PrimitiveTypeCode.Int8: return ConstantValueTypeDiscriminator.Int8;
+                case Cci.PrimitiveTypeCode.UInt8: return ConstantValueTypeDiscriminator.UInt8;
                 case Cci.PrimitiveTypeCode.Int16: return ConstantValueTypeDiscriminator.Int16;
                 case Cci.PrimitiveTypeCode.UInt16: return ConstantValueTypeDiscriminator.UInt16;
                 case Cci.PrimitiveTypeCode.Int32: return ConstantValueTypeDiscriminator.Int32;

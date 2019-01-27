@@ -12,8 +12,10 @@ namespace Microsoft.CodeAnalysis
         Nothing,
         Null = Nothing,
         Bad,
-        SByte,
-        Byte,
+        Int,
+        UInt,
+        Int8,
+        UInt8,
         Int16,
         UInt16,
         Int32,
@@ -111,7 +113,8 @@ namespace Microsoft.CodeAnalysis
         {
             if (value == 0)
             {
-                return ConstantValueDefault.SByte;
+                return ConstantValueDefault.
+                    Int8;
             }
             else if (value == 1)
             {
@@ -125,7 +128,7 @@ namespace Microsoft.CodeAnalysis
         {
             if (value == 0)
             {
-                return ConstantValueDefault.Byte;
+                return ConstantValueDefault.UInt8;
             }
             else if (value == 1)
             {
@@ -175,6 +178,35 @@ namespace Microsoft.CodeAnalysis
             }
 
             return new ConstantValueI32(value);
+        }
+
+
+        public static ConstantValue CreateInt(Int32 value)
+        {
+            if (value == 0)
+            {
+                return ConstantValueDefault.Int;
+            }
+            else if (value == 1)
+            {
+                return ConstantValueOne.Int;
+            }
+
+            return new ConstantValueInt(value);
+        }
+
+        public static ConstantValue CreateInt(uint value)
+        {
+            if (value == 0)
+            {
+                return ConstantValueDefault.UInt;
+            }
+            else if (value == 1)
+            {
+                return ConstantValueOne.UInt;
+            }
+
+            return new ConstantValueInt(value);
         }
 
         public static ConstantValue Create(UInt32 value)
@@ -235,7 +267,7 @@ namespace Microsoft.CodeAnalysis
         {
             if (BitConverter.DoubleToInt64Bits(value) == 0)
             {
-                return ConstantValueDefault.Single;
+                return ConstantValueDefault.Float32;
             }
             else if (value == 1)
             {
@@ -249,7 +281,7 @@ namespace Microsoft.CodeAnalysis
         {
             if (BitConverter.DoubleToInt64Bits(value) == 0)
             {
-                return ConstantValueDefault.Single;
+                return ConstantValueDefault.Float32;
             }
             else if (value == 1)
             {
@@ -263,7 +295,7 @@ namespace Microsoft.CodeAnalysis
         {
             if (BitConverter.DoubleToInt64Bits(value) == 0)
             {
-                return ConstantValueDefault.Double;
+                return ConstantValueDefault.Float64;
             }
             else if (value == 1)
             {
@@ -323,8 +355,10 @@ namespace Microsoft.CodeAnalysis
             switch (discriminator)
             {
                 case ConstantValueTypeDiscriminator.Null: return Null;
-                case ConstantValueTypeDiscriminator.SByte: return Create((sbyte)value);
-                case ConstantValueTypeDiscriminator.Byte: return Create((byte)value);
+                case ConstantValueTypeDiscriminator.Int: return CreateInt((int)value);
+                case ConstantValueTypeDiscriminator.UInt: return CreateInt((uint)value);
+                case ConstantValueTypeDiscriminator.Int8: return Create((sbyte)value);
+                case ConstantValueTypeDiscriminator.UInt8: return Create((byte)value);
                 case ConstantValueTypeDiscriminator.Int16: return Create((short)value);
                 case ConstantValueTypeDiscriminator.UInt16: return Create((ushort)value);
                 case ConstantValueTypeDiscriminator.Int32: return Create((int)value);
@@ -360,8 +394,8 @@ namespace Microsoft.CodeAnalysis
             {
                 case ConstantValueTypeDiscriminator.Bad: return Bad;
 
-                case ConstantValueTypeDiscriminator.SByte: return ConstantValueDefault.SByte;
-                case ConstantValueTypeDiscriminator.Byte: return ConstantValueDefault.Byte;
+                case ConstantValueTypeDiscriminator.Int8: return ConstantValueDefault.Int8;
+                case ConstantValueTypeDiscriminator.UInt8: return ConstantValueDefault.UInt8;
                 case ConstantValueTypeDiscriminator.Int16: return ConstantValueDefault.Int16;
                 case ConstantValueTypeDiscriminator.UInt16: return ConstantValueDefault.UInt16;
                 case ConstantValueTypeDiscriminator.Int32: return ConstantValueDefault.Int32;
@@ -370,8 +404,8 @@ namespace Microsoft.CodeAnalysis
                 case ConstantValueTypeDiscriminator.UInt64: return ConstantValueDefault.UInt64;
                 case ConstantValueTypeDiscriminator.Char: return ConstantValueDefault.Char;
                 case ConstantValueTypeDiscriminator.Boolean: return ConstantValueDefault.Boolean;
-                case ConstantValueTypeDiscriminator.Single: return ConstantValueDefault.Single;
-                case ConstantValueTypeDiscriminator.Double: return ConstantValueDefault.Double;
+                case ConstantValueTypeDiscriminator.Single: return ConstantValueDefault.Float32;
+                case ConstantValueTypeDiscriminator.Double: return ConstantValueDefault.Float64;
                 case ConstantValueTypeDiscriminator.Decimal: return ConstantValueDefault.Decimal;
                 case ConstantValueTypeDiscriminator.DateTime: return ConstantValueDefault.DateTime;
 
@@ -386,8 +420,10 @@ namespace Microsoft.CodeAnalysis
         {
             switch (st)
             {
-                case SpecialType.System_Int8: return ConstantValueTypeDiscriminator.SByte;
-                case SpecialType.System_UInt8: return ConstantValueTypeDiscriminator.Byte;
+                case SpecialType.System_Int: return ConstantValueTypeDiscriminator.Int;
+                case SpecialType.System_UInt: return ConstantValueTypeDiscriminator.UInt;
+                case SpecialType.System_Int8: return ConstantValueTypeDiscriminator.Int8;
+                case SpecialType.System_UInt8: return ConstantValueTypeDiscriminator.UInt8;
                 case SpecialType.System_Int16: return ConstantValueTypeDiscriminator.Int16;
                 case SpecialType.System_UInt16: return ConstantValueTypeDiscriminator.UInt16;
                 case SpecialType.System_Int32: return ConstantValueTypeDiscriminator.Int32;
@@ -410,8 +446,10 @@ namespace Microsoft.CodeAnalysis
         {
             switch (discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte: return SpecialType.System_Int8;
-                case ConstantValueTypeDiscriminator.Byte: return SpecialType.System_UInt8;
+                case ConstantValueTypeDiscriminator.Int: return SpecialType.System_Int;
+                case ConstantValueTypeDiscriminator.UInt: return SpecialType.System_UInt;
+                case ConstantValueTypeDiscriminator.Int8: return SpecialType.System_Int8;
+                case ConstantValueTypeDiscriminator.UInt8: return SpecialType.System_UInt8;
                 case ConstantValueTypeDiscriminator.Int16: return SpecialType.System_Int16;
                 case ConstantValueTypeDiscriminator.UInt16: return SpecialType.System_UInt16;
                 case ConstantValueTypeDiscriminator.Int32: return SpecialType.System_Int32;
@@ -437,8 +475,10 @@ namespace Microsoft.CodeAnalysis
                 {
                     case ConstantValueTypeDiscriminator.Bad: return null;
                     case ConstantValueTypeDiscriminator.Null: return null;
-                    case ConstantValueTypeDiscriminator.SByte: return Boxes.Box(SByteValue);
-                    case ConstantValueTypeDiscriminator.Byte: return Boxes.Box(ByteValue);
+                    case ConstantValueTypeDiscriminator.Int: return null;
+                    case ConstantValueTypeDiscriminator.UInt: return null;
+                    case ConstantValueTypeDiscriminator.Int8: return Boxes.Box(SByteValue);
+                    case ConstantValueTypeDiscriminator.UInt8: return Boxes.Box(ByteValue);
                     case ConstantValueTypeDiscriminator.Int16: return Boxes.Box(Int16Value);
                     case ConstantValueTypeDiscriminator.UInt16: return Boxes.Box(UInt16Value);
                     case ConstantValueTypeDiscriminator.Int32: return Boxes.Box(Int32Value);
@@ -461,8 +501,10 @@ namespace Microsoft.CodeAnalysis
         {
             switch (discriminator)
             {
-                case ConstantValueTypeDiscriminator.SByte:
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.Int:
+                case ConstantValueTypeDiscriminator.UInt:
+                case ConstantValueTypeDiscriminator.Int8:
+                case ConstantValueTypeDiscriminator.UInt8:
                 case ConstantValueTypeDiscriminator.Int16:
                 case ConstantValueTypeDiscriminator.UInt16:
                 case ConstantValueTypeDiscriminator.Int32:
@@ -490,7 +532,9 @@ namespace Microsoft.CodeAnalysis
             {
                 switch (this.Discriminator)
                 {
-                    case ConstantValueTypeDiscriminator.SByte:
+                    case ConstantValueTypeDiscriminator.Int:
+                        return SByteValue < 0;
+                    case ConstantValueTypeDiscriminator.Int8:
                         return SByteValue < 0;
                     case ConstantValueTypeDiscriminator.Int16:
                         return Int16Value < 0;
@@ -517,14 +561,14 @@ namespace Microsoft.CodeAnalysis
             {
                 switch (this.Discriminator)
                 {
-                    case ConstantValueTypeDiscriminator.SByte:
+                    case ConstantValueTypeDiscriminator.Int8:
                     case ConstantValueTypeDiscriminator.Int16:
                     case ConstantValueTypeDiscriminator.Int32:
                     case ConstantValueTypeDiscriminator.Int64:
                     case ConstantValueTypeDiscriminator.Single:
                     case ConstantValueTypeDiscriminator.Double:
                     case ConstantValueTypeDiscriminator.Decimal:
-                    case ConstantValueTypeDiscriminator.Byte:
+                    case ConstantValueTypeDiscriminator.UInt8:
                     case ConstantValueTypeDiscriminator.UInt16:
                     case ConstantValueTypeDiscriminator.UInt32:
                     case ConstantValueTypeDiscriminator.UInt64:
@@ -540,7 +584,7 @@ namespace Microsoft.CodeAnalysis
         {
             switch (discriminator)
             {
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.UInt8:
                 case ConstantValueTypeDiscriminator.UInt16:
                 case ConstantValueTypeDiscriminator.UInt32:
                 case ConstantValueTypeDiscriminator.UInt64:
@@ -671,11 +715,11 @@ namespace Microsoft.CodeAnalysis
                     writer.WriteBoolean(this.BooleanValue);
                     break;
 
-                case ConstantValueTypeDiscriminator.SByte:
+                case ConstantValueTypeDiscriminator.Int8:
                     writer.WriteSByte(this.SByteValue);
                     break;
 
-                case ConstantValueTypeDiscriminator.Byte:
+                case ConstantValueTypeDiscriminator.UInt8:
                     writer.WriteByte(this.ByteValue);
                     break;
 
