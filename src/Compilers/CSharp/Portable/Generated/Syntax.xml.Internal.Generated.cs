@@ -6546,73 +6546,63 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
   /// <summary>Class which represents the syntax node for cast expression.</summary>
   internal sealed partial class CastExpressionSyntax : ExpressionSyntax
   {
-    internal readonly SyntaxToken openParenToken;
-    internal readonly TypeSyntax type;
-    internal readonly SyntaxToken closeParenToken;
     internal readonly ExpressionSyntax expression;
+    internal readonly SyntaxToken asKeyword;
+    internal readonly TypeSyntax type;
 
-    internal CastExpressionSyntax(SyntaxKind kind, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal CastExpressionSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 4;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
+        this.SlotCount = 3;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
+        this.AdjustFlagsAndWidth(asKeyword);
+        this.asKeyword = asKeyword;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
     }
 
 
-    internal CastExpressionSyntax(SyntaxKind kind, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression, SyntaxFactoryContext context)
+    internal CastExpressionSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 4;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
+        this.SlotCount = 3;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
+        this.AdjustFlagsAndWidth(asKeyword);
+        this.asKeyword = asKeyword;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
     }
 
 
-    internal CastExpressionSyntax(SyntaxKind kind, SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression)
+    internal CastExpressionSyntax(SyntaxKind kind, ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type)
         : base(kind)
     {
-        this.SlotCount = 4;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
+        this.SlotCount = 3;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
+        this.AdjustFlagsAndWidth(asKeyword);
+        this.asKeyword = asKeyword;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
     }
 
-    /// <summary>SyntaxToken representing the open parenthesis.</summary>
-    public SyntaxToken OpenParenToken { get { return this.openParenToken; } }
-    /// <summary>TypeSyntax node representing the type to which the expression is being cast.</summary>
-    public TypeSyntax Type { get { return this.type; } }
-    /// <summary>SyntaxToken representing the close parenthesis.</summary>
-    public SyntaxToken CloseParenToken { get { return this.closeParenToken; } }
     /// <summary>ExpressionSyntax node representing the expression that is being casted.</summary>
     public ExpressionSyntax Expression { get { return this.expression; } }
+    /// <summary>SyntaxToken representing the as keyword.</summary>
+    public SyntaxToken AsKeyword { get { return this.asKeyword; } }
+    /// <summary>TypeSyntax node representing the type to which the expression is being cast.</summary>
+    public TypeSyntax Type { get { return this.type; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.openParenToken;
-            case 1: return this.type;
-            case 2: return this.closeParenToken;
-            case 3: return this.expression;
+            case 0: return this.expression;
+            case 1: return this.asKeyword;
+            case 2: return this.type;
             default: return null;
         }
     }
@@ -6632,11 +6622,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         visitor.VisitCastExpression(this);
     }
 
-    public CastExpressionSyntax Update(SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression)
+    public CastExpressionSyntax Update(ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type)
     {
-        if (openParenToken != this.OpenParenToken || type != this.Type || closeParenToken != this.CloseParenToken || expression != this.Expression)
+        if (expression != this.Expression || asKeyword != this.AsKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.CastExpression(openParenToken, type, closeParenToken, expression);
+            var newNode = SyntaxFactory.CastExpression(expression, asKeyword, type);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -6651,23 +6641,29 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new CastExpressionSyntax(this.Kind, this.openParenToken, this.type, this.closeParenToken, this.expression, diagnostics, GetAnnotations());
+         return new CastExpressionSyntax(this.Kind, this.expression, this.asKeyword, this.type, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new CastExpressionSyntax(this.Kind, this.openParenToken, this.type, this.closeParenToken, this.expression, GetDiagnostics(), annotations);
+         return new CastExpressionSyntax(this.Kind, this.expression, this.asKeyword, this.type, GetDiagnostics(), annotations);
     }
 
     internal CastExpressionSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 4;
-      var openParenToken = (SyntaxToken)reader.ReadValue();
-      if (openParenToken != null)
+      this.SlotCount = 3;
+      var expression = (ExpressionSyntax)reader.ReadValue();
+      if (expression != null)
       {
-         AdjustFlagsAndWidth(openParenToken);
-         this.openParenToken = openParenToken;
+         AdjustFlagsAndWidth(expression);
+         this.expression = expression;
+      }
+      var asKeyword = (SyntaxToken)reader.ReadValue();
+      if (asKeyword != null)
+      {
+         AdjustFlagsAndWidth(asKeyword);
+         this.asKeyword = asKeyword;
       }
       var type = (TypeSyntax)reader.ReadValue();
       if (type != null)
@@ -6675,27 +6671,14 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
          AdjustFlagsAndWidth(type);
          this.type = type;
       }
-      var closeParenToken = (SyntaxToken)reader.ReadValue();
-      if (closeParenToken != null)
-      {
-         AdjustFlagsAndWidth(closeParenToken);
-         this.closeParenToken = closeParenToken;
-      }
-      var expression = (ExpressionSyntax)reader.ReadValue();
-      if (expression != null)
-      {
-         AdjustFlagsAndWidth(expression);
-         this.expression = expression;
-      }
     }
 
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
-      writer.WriteValue(this.openParenToken);
-      writer.WriteValue(this.type);
-      writer.WriteValue(this.closeParenToken);
       writer.WriteValue(this.expression);
+      writer.WriteValue(this.asKeyword);
+      writer.WriteValue(this.type);
     }
 
     static CastExpressionSyntax()
@@ -37730,11 +37713,10 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
     public override CSharpSyntaxNode VisitCastExpression(CastExpressionSyntax node)
     {
-      var openParenToken = (SyntaxToken)this.Visit(node.OpenParenToken);
-      var type = (TypeSyntax)this.Visit(node.Type);
-      var closeParenToken = (SyntaxToken)this.Visit(node.CloseParenToken);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      return node.Update(openParenToken, type, closeParenToken, expression);
+      var asKeyword = (SyntaxToken)this.Visit(node.AsKeyword);
+      var type = (TypeSyntax)this.Visit(node.Type);
+      return node.Update(expression, asKeyword, type);
     }
 
     public override CSharpSyntaxNode VisitAnonymousMethodExpression(AnonymousMethodExpressionSyntax node)
@@ -40060,7 +40042,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         case SyntaxKind.GreaterThanExpression:
         case SyntaxKind.GreaterThanOrEqualExpression:
         case SyntaxKind.IsExpression:
-        case SyntaxKind.AsExpression:
+        case SyntaxKind.AsOptExpression:
         case SyntaxKind.CoalesceExpression:
           break;
         default:
@@ -40092,7 +40074,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         case SyntaxKind.GreaterThanToken:
         case SyntaxKind.GreaterThanEqualsToken:
         case SyntaxKind.IsKeyword:
-        case SyntaxKind.AsKeyword:
+        case SyntaxKind.AsOptKeyword:
         case SyntaxKind.QuestionQuestionToken:
           break;
         default:
@@ -40788,34 +40770,35 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public CastExpressionSyntax CastExpression(SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression)
+    public CastExpressionSyntax CastExpression(ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type)
     {
 #if DEBUG
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
+      if (expression == null)
+        throw new ArgumentNullException(nameof(expression));
+      if (asKeyword == null)
+        throw new ArgumentNullException(nameof(asKeyword));
+      switch (asKeyword.Kind)
       {
-        case SyntaxKind.OpenParenToken:
+        case SyntaxKind.AsKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(openParenToken));
+          throw new ArgumentException(nameof(asKeyword));
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (expression == null)
-        throw new ArgumentNullException(nameof(expression));
 #endif
 
-      return new CastExpressionSyntax(SyntaxKind.CastExpression, openParenToken, type, closeParenToken, expression, this.context);
+      int hash;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.CastExpression, expression, asKeyword, type, this.context, out hash);
+      if (cached != null) return (CastExpressionSyntax)cached;
+
+      var result = new CastExpressionSyntax(SyntaxKind.CastExpression, expression, asKeyword, type, this.context);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
     }
 
     public AnonymousMethodExpressionSyntax AnonymousMethodExpression(SyntaxToken asyncKeyword, SyntaxToken delegateKeyword, ParameterListSyntax parameterList, CSharpSyntaxNode body)
@@ -47357,7 +47340,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         case SyntaxKind.GreaterThanExpression:
         case SyntaxKind.GreaterThanOrEqualExpression:
         case SyntaxKind.IsExpression:
-        case SyntaxKind.AsExpression:
+        case SyntaxKind.AsOptExpression:
         case SyntaxKind.CoalesceExpression:
           break;
         default:
@@ -47389,7 +47372,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
         case SyntaxKind.GreaterThanToken:
         case SyntaxKind.GreaterThanEqualsToken:
         case SyntaxKind.IsKeyword:
-        case SyntaxKind.AsKeyword:
+        case SyntaxKind.AsOptKeyword:
         case SyntaxKind.QuestionQuestionToken:
           break;
         default:
@@ -48085,34 +48068,35 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
       return result;
     }
 
-    public static CastExpressionSyntax CastExpression(SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression)
+    public static CastExpressionSyntax CastExpression(ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type)
     {
 #if DEBUG
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
+      if (expression == null)
+        throw new ArgumentNullException(nameof(expression));
+      if (asKeyword == null)
+        throw new ArgumentNullException(nameof(asKeyword));
+      switch (asKeyword.Kind)
       {
-        case SyntaxKind.OpenParenToken:
+        case SyntaxKind.AsKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(openParenToken));
+          throw new ArgumentException(nameof(asKeyword));
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (expression == null)
-        throw new ArgumentNullException(nameof(expression));
 #endif
 
-      return new CastExpressionSyntax(SyntaxKind.CastExpression, openParenToken, type, closeParenToken, expression);
+      int hash;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.CastExpression, expression, asKeyword, type, out hash);
+      if (cached != null) return (CastExpressionSyntax)cached;
+
+      var result = new CastExpressionSyntax(SyntaxKind.CastExpression, expression, asKeyword, type);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
     }
 
     public static AnonymousMethodExpressionSyntax AnonymousMethodExpression(SyntaxToken asyncKeyword, SyntaxToken delegateKeyword, ParameterListSyntax parameterList, CSharpSyntaxNode body)

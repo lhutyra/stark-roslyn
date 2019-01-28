@@ -4083,33 +4083,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
   /// <summary>Class which represents the syntax node for cast expression.</summary>
   public sealed partial class CastExpressionSyntax : ExpressionSyntax
   {
-    private TypeSyntax type;
     private ExpressionSyntax expression;
+    private TypeSyntax type;
 
     internal CastExpressionSyntax(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
-    }
-
-    /// <summary>SyntaxToken representing the open parenthesis.</summary>
-    public SyntaxToken OpenParenToken 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CastExpressionSyntax)this.Green).openParenToken, this.Position, 0); }
-    }
-
-    /// <summary>TypeSyntax node representing the type to which the expression is being cast.</summary>
-    public TypeSyntax Type 
-    {
-        get
-        {
-            return this.GetRed(ref this.type, 1);
-        }
-    }
-
-    /// <summary>SyntaxToken representing the close parenthesis.</summary>
-    public SyntaxToken CloseParenToken 
-    {
-      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CastExpressionSyntax)this.Green).closeParenToken, this.GetChildPosition(2), this.GetChildIndex(2)); }
     }
 
     /// <summary>ExpressionSyntax node representing the expression that is being casted.</summary>
@@ -4117,7 +4096,22 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         get
         {
-            return this.GetRed(ref this.expression, 3);
+            return this.GetRedAtZero(ref this.expression);
+        }
+    }
+
+    /// <summary>SyntaxToken representing the as keyword.</summary>
+    public SyntaxToken AsKeyword 
+    {
+      get { return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CastExpressionSyntax)this.Green).asKeyword, this.GetChildPosition(1), this.GetChildIndex(1)); }
+    }
+
+    /// <summary>TypeSyntax node representing the type to which the expression is being cast.</summary>
+    public TypeSyntax Type 
+    {
+        get
+        {
+            return this.GetRed(ref this.type, 2);
         }
     }
 
@@ -4125,8 +4119,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 1: return this.GetRed(ref this.type, 1);
-            case 3: return this.GetRed(ref this.expression, 3);
+            case 0: return this.GetRedAtZero(ref this.expression);
+            case 2: return this.GetRed(ref this.type, 2);
             default: return null;
         }
     }
@@ -4134,8 +4128,8 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
     {
         switch (index)
         {
-            case 1: return this.type;
-            case 3: return this.expression;
+            case 0: return this.expression;
+            case 2: return this.type;
             default: return null;
         }
     }
@@ -4150,11 +4144,11 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         visitor.VisitCastExpression(this);
     }
 
-    public CastExpressionSyntax Update(SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression)
+    public CastExpressionSyntax Update(ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type)
     {
-        if (openParenToken != this.OpenParenToken || type != this.Type || closeParenToken != this.CloseParenToken || expression != this.Expression)
+        if (expression != this.Expression || asKeyword != this.AsKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.CastExpression(openParenToken, type, closeParenToken, expression);
+            var newNode = SyntaxFactory.CastExpression(expression, asKeyword, type);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -4164,24 +4158,19 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax
         return this;
     }
 
-    public CastExpressionSyntax WithOpenParenToken(SyntaxToken openParenToken)
+    public CastExpressionSyntax WithExpression(ExpressionSyntax expression)
     {
-        return this.Update(openParenToken, this.Type, this.CloseParenToken, this.Expression);
+        return this.Update(expression, this.AsKeyword, this.Type);
+    }
+
+    public CastExpressionSyntax WithAsKeyword(SyntaxToken asKeyword)
+    {
+        return this.Update(this.Expression, asKeyword, this.Type);
     }
 
     public CastExpressionSyntax WithType(TypeSyntax type)
     {
-        return this.Update(this.OpenParenToken, type, this.CloseParenToken, this.Expression);
-    }
-
-    public CastExpressionSyntax WithCloseParenToken(SyntaxToken closeParenToken)
-    {
-        return this.Update(this.OpenParenToken, this.Type, closeParenToken, this.Expression);
-    }
-
-    public CastExpressionSyntax WithExpression(ExpressionSyntax expression)
-    {
-        return this.Update(this.OpenParenToken, this.Type, this.CloseParenToken, expression);
+        return this.Update(this.Expression, this.AsKeyword, type);
     }
   }
 

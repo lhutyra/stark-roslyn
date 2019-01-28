@@ -613,7 +613,7 @@
     <Kind Name="GreaterThanExpression"/>
     <Kind Name="GreaterThanOrEqualExpression"/>
     <Kind Name="IsExpression"/>
-    <Kind Name="AsExpression"/>
+    <Kind Name="AsOptExpression"/>
     <Kind Name="CoalesceExpression"/>
     <Field Name="Left" Type="ExpressionSyntax">
       <PropertyComment>
@@ -640,7 +640,7 @@
       <Kind Name="GreaterThanToken"/>
       <Kind Name="GreaterThanEqualsToken"/>
       <Kind Name="IsKeyword"/>
-      <Kind Name="AsKeyword"/>
+      <Kind Name="AsOptKeyword"/>
       <Kind Name="QuestionQuestionToken"/>
       <PropertyComment>
         <summary>SyntaxToken representing the operator of the binary expression.</summary>
@@ -1207,29 +1207,23 @@
   </Node>
   <Node Name="CastExpressionSyntax" Base="ExpressionSyntax">
     <Kind Name="CastExpression"/>
-    <Field Name="OpenParenToken" Type="SyntaxToken">
-      <Kind Name="OpenParenToken"/>
-      <PropertyComment>
-        <summary>SyntaxToken representing the open parenthesis.</summary>
-      </PropertyComment>
+    <Field Name="Expression" Type="ExpressionSyntax">
+        <PropertyComment>
+            <summary>ExpressionSyntax node representing the expression that is being casted.</summary>
+        </PropertyComment>
+    </Field>
+    <Field Name="AsKeyword" Type="SyntaxToken">
+        <Kind Name="AsKeyword"/>
+        <PropertyComment>
+            <summary>SyntaxToken representing the as keyword.</summary>
+        </PropertyComment>
     </Field>
     <Field Name="Type" Type="TypeSyntax">
-      <PropertyComment>
-        <summary>TypeSyntax node representing the type to which the expression is being cast.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="CloseParenToken" Type="SyntaxToken">
-      <Kind Name="CloseParenToken"/>
-      <PropertyComment>
-        <summary>SyntaxToken representing the close parenthesis.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="Expression" Type="ExpressionSyntax">
-      <PropertyComment>
-        <summary>ExpressionSyntax node representing the expression that is being casted.</summary>
-      </PropertyComment>
-    </Field>
-    <TypeComment>
+          <PropertyComment>
+              <summary>TypeSyntax node representing the type to which the expression is being cast.</summary>
+          </PropertyComment>
+      </Field>
+      <TypeComment>
       <summary>Class which represents the syntax node for cast expression.</summary>
     </TypeComment>
     <FactoryComment>

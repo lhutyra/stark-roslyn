@@ -4351,7 +4351,7 @@ tryAgain:
                 case SyntaxKind.LessThanEqualsToken:     // e.g. `e is A<B> <= C`
                 case SyntaxKind.GreaterThanEqualsToken:  // e.g. `e is A<B> >= C`
                 case SyntaxKind.IsKeyword:               // e.g. `e is A<B> is bool`
-                case SyntaxKind.AsKeyword:               // e.g. `e is A<B> as bool`
+                case SyntaxKind.AsOptKeyword:               // e.g. `e is A<B> as bool`
                     // These tokens are added to 7.5.4.2 Grammar Ambiguities in C#7
                     return ScanTypeArgumentListKind.DefiniteTypeArgumentList;
 
@@ -5825,7 +5825,7 @@ tryAgain:
                 case SyntaxKind.DoKeyword:
                     return this.ParseDoStatement();
                 case SyntaxKind.ForKeyword:
-                    return this.ParseForOrForEachStatement();
+                    return this.ParseForStatement();
                 case SyntaxKind.ForEachKeyword:
                     return this.ParseForEachStatement(awaitTokenOpt: default);
                 case SyntaxKind.GotoKeyword:
@@ -6809,45 +6809,6 @@ tryAgain:
                 || this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
         }
 
-        private StatementSyntax ParseForOrForEachStatement()
-        {
-            // Check if the user wrote the following accidentally:
-            //
-            // for (SomeType t in
-            //
-            // instead of
-            //
-            // foreach (SomeType t in
-            //
-            // In that case, parse it as a foreach, but given the appropriate message that a
-            // 'foreach' keyword was expected.
-            var resetPoint = this.GetResetPoint();
-            try
-            {
-                Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ForKeyword);
-                this.EatToken();
-                if (this.EatToken().Kind == SyntaxKind.OpenParenToken &&
-                    this.ScanType() != ScanTypeFlags.NotType &&
-                    this.EatToken().Kind == SyntaxKind.IdentifierToken &&
-                    this.EatToken().Kind == SyntaxKind.InKeyword)
-                {
-                    // Looks like a foreach statement.  Parse it that way instead
-                    this.Reset(ref resetPoint);
-                    return this.ParseForEachStatement(awaitTokenOpt: default);
-                }
-                else
-                {
-                    // Normal for statement.
-                    this.Reset(ref resetPoint);
-                    return this.ParseForStatement();
-                }
-            }
-            finally
-            {
-                this.Release(ref resetPoint);
-            }
-        }
-
         private ForStatementSyntax ParseForStatement()
         {
             Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ForKeyword);
@@ -6866,24 +6827,10 @@ tryAgain:
                 // Here can be either a declaration or an expression statement list.  Scan
                 // for a declaration first.
                 VariableDeclarationSyntax decl = null;
-                bool isDeclaration = false;
-                if (this.CurrentToken.Kind == SyntaxKind.RefKeyword)
-                {
-                    isDeclaration = true;
-                }
-                else
-                {
-                    isDeclaration = !this.IsQueryExpression(mayBeVariableDeclaration: true, mayBeMemberDeclaration: false) &&
-                                    this.ScanType() != ScanTypeFlags.NotType &&
-                                    this.IsTrueIdentifier();
-
-                    this.Reset(ref resetPoint);
-                }
-
-                if (isDeclaration)
+                if (this.CurrentToken.Kind == SyntaxKind.RefKeyword || CurrentToken.Kind == SyntaxKind.VarKeyword || CurrentToken.Kind == SyntaxKind.LetKeyword)
                 {
                     decl = ParseVariableDeclaration();
-                    if (decl.Type.Kind == SyntaxKind.RefType)
+                    if (decl.Type != null && decl.Type.Kind == SyntaxKind.RefType)
                     {
                         decl = decl.Update(decl.VariableKeyword, decl.Identifier, decl.ColonToken, CheckFeatureAvailability(decl.Type, MessageID.IDS_FeatureRefFor), decl.Initializer);
                     }
@@ -7875,7 +7822,7 @@ tryAgain:
                 case SyntaxKind.GreaterThanExpression:
                 case SyntaxKind.GreaterThanOrEqualExpression:
                 case SyntaxKind.IsExpression:
-                case SyntaxKind.AsExpression:
+                case SyntaxKind.AsOptExpression:
                 case SyntaxKind.IsPatternExpression:
                     return Precedence.Relational;
                 case SyntaxKind.LeftShiftExpression:
@@ -8157,10 +8104,15 @@ tryAgain:
                     opToken = SyntaxFactory.Token(opToken.GetLeadingTrivia(), kind, opToken2.GetTrailingTrivia());
                 }
 
-                if (opKind == SyntaxKind.AsExpression)
+                if (opKind == SyntaxKind.AsOptExpression)
                 {
                     var type = this.ParseType(ParseTypeMode.AsExpression);
                     leftOperand = _syntaxFactory.BinaryExpression(opKind, leftOperand, opToken, type);
+                }
+                else if (opKind == SyntaxKind.CastExpression)
+                {
+                    var type = this.ParseType(ParseTypeMode.AsExpression);
+                    leftOperand = _syntaxFactory.CastExpression(leftOperand, opToken, type);
                 }
                 else if (opKind == SyntaxKind.IsExpression)
                 {
@@ -8380,7 +8332,7 @@ tryAgain:
                     expr = this.ParseInterpolatedStringToken();
                     break;
                 case SyntaxKind.OpenParenToken:
-                    expr = this.ParseCastOrParenExpressionOrLambdaOrTuple(precedence);
+                    expr = this.ParseParenExpressionOrLambdaOrTuple(precedence);
                     break;
                 case SyntaxKind.NewKeyword:
                     expr = this.ParseNewExpression();
@@ -9104,7 +9056,7 @@ tryAgain:
             }
         }
 
-        private ExpressionSyntax ParseCastOrParenExpressionOrLambdaOrTuple(Precedence precedence)
+        private ExpressionSyntax ParseParenExpressionOrLambdaOrTuple(Precedence precedence)
         {
             Debug.Assert(this.CurrentToken.Kind == SyntaxKind.OpenParenToken);
 
@@ -9114,24 +9066,6 @@ tryAgain:
                 if (ScanParenthesizedImplicitlyTypedLambda(precedence))
                 {
                     return this.ParseLambdaExpression();
-                }
-
-                // We have a decision to make -- is this a cast, or is it a parenthesized
-                // expression?  Because look-ahead is cheap with our token stream, we check
-                // to see if this "looks like" a cast (without constructing any parse trees)
-                // to help us make the decision.
-                if (this.ScanCast())
-                {
-                    if (!IsCurrentTokenQueryKeywordInQuery())
-                    {
-                        // Looks like a cast, so parse it as one.
-                        this.Reset(ref resetPoint);
-                        var openParen = this.EatToken(SyntaxKind.OpenParenToken);
-                        var type = this.ParseType();
-                        var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-                        var expr = this.ParseSubExpression(Precedence.Cast);
-                        return _syntaxFactory.CastExpression(openParen, type, closeParen, expr);
-                    }
                 }
 
                 this.Reset(ref resetPoint);
@@ -9221,46 +9155,6 @@ tryAgain:
             }
         }
 
-        private bool ScanCast(bool forPattern = false)
-        {
-            if (this.CurrentToken.Kind != SyntaxKind.OpenParenToken)
-            {
-                return false;
-            }
-
-            this.EatToken();
-
-            var type = this.ScanType(forPattern: forPattern);
-            if (type == ScanTypeFlags.NotType)
-            {
-                return false;
-            }
-
-            if (this.CurrentToken.Kind != SyntaxKind.CloseParenToken)
-            {
-                return false;
-            }
-
-            // If we have any of the following, we know it must be a cast:
-            // 1) (Goo*)bar;
-            // 2) (Goo?)bar;
-            // 3) "(int)bar" or "(int[])bar"
-            // 4) (G::Goo)bar
-            if (type == ScanTypeFlags.PointerOrMultiplication ||
-                type == ScanTypeFlags.NullableType ||
-                type == ScanTypeFlags.MustBeType ||
-                type == ScanTypeFlags.AliasQualifiedName)
-            {
-                return true;
-            }
-
-            this.EatToken();
-
-            // check for ambiguous type or expression followed by disambiguating token.  i.e.
-            //
-            // "(A)b" is a cast.  But "(A)+b" is not a cast.  
-            return (type == ScanTypeFlags.GenericTypeOrMethod || type == ScanTypeFlags.GenericTypeOrExpression || type == ScanTypeFlags.NonGenericTypeOrExpression || type == ScanTypeFlags.TupleType) && CanFollowCast(this.CurrentToken.Kind);
-        }
 
         private bool ScanAsyncLambda(Precedence precedence)
         {
@@ -9304,64 +9198,6 @@ tryAgain:
                 this.Release(ref resetPoint);
 
                 return isAsync;
-            }
-        }
-
-        private static bool CanFollowCast(SyntaxKind kind)
-        {
-            switch (kind)
-            {
-                case SyntaxKind.AsKeyword:
-                case SyntaxKind.IsKeyword:
-                case SyntaxKind.SemicolonToken:
-                case SyntaxKind.CloseParenToken:
-                case SyntaxKind.CloseBracketToken:
-                case SyntaxKind.OpenBraceToken:
-                case SyntaxKind.CloseBraceToken:
-                case SyntaxKind.CommaToken:
-                case SyntaxKind.EqualsToken:
-                case SyntaxKind.PlusEqualsToken:
-                case SyntaxKind.MinusEqualsToken:
-                case SyntaxKind.AsteriskEqualsToken:
-                case SyntaxKind.SlashEqualsToken:
-                case SyntaxKind.PercentEqualsToken:
-                case SyntaxKind.AmpersandEqualsToken:
-                case SyntaxKind.CaretEqualsToken:
-                case SyntaxKind.BarEqualsToken:
-                case SyntaxKind.LessThanLessThanEqualsToken:
-                case SyntaxKind.GreaterThanGreaterThanEqualsToken:
-                case SyntaxKind.QuestionToken:
-                case SyntaxKind.ColonToken:
-                case SyntaxKind.BarBarToken:
-                case SyntaxKind.AmpersandAmpersandToken:
-                case SyntaxKind.BarToken:
-                case SyntaxKind.CaretToken:
-                case SyntaxKind.AmpersandToken:
-                case SyntaxKind.EqualsEqualsToken:
-                case SyntaxKind.ExclamationEqualsToken:
-                case SyntaxKind.LessThanToken:
-                case SyntaxKind.LessThanEqualsToken:
-                case SyntaxKind.GreaterThanToken:
-                case SyntaxKind.GreaterThanEqualsToken:
-                case SyntaxKind.QuestionQuestionEqualsToken:
-                case SyntaxKind.LessThanLessThanToken:
-                case SyntaxKind.GreaterThanGreaterThanToken:
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
-                case SyntaxKind.AsteriskToken:
-                case SyntaxKind.SlashToken:
-                case SyntaxKind.PercentToken:
-                case SyntaxKind.PlusPlusToken:
-                case SyntaxKind.MinusMinusToken:
-                case SyntaxKind.OpenBracketToken:
-                case SyntaxKind.DotToken:
-                case SyntaxKind.MinusGreaterThanToken:
-                case SyntaxKind.QuestionQuestionToken:
-                case SyntaxKind.EndOfFileToken:
-                case SyntaxKind.SwitchKeyword:
-                    return false;
-                default:
-                    return true;
             }
         }
 

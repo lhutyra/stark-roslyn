@@ -424,7 +424,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 }
             }
 
-            if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken && (type != null || !looksLikeCast()))
+            if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken)
             {
                 // It is possible this is a parenthesized (constant) expression.
                 // We normalize later.
@@ -505,15 +505,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
                 }
 
                 return false;
-            }
-
-            bool looksLikeCast()
-            {
-                var resetPoint = this.GetResetPoint();
-                bool result = this.ScanCast(forPattern: true);
-                this.Reset(ref resetPoint);
-                this.Release(ref resetPoint);
-                return result;
             }
         }
 

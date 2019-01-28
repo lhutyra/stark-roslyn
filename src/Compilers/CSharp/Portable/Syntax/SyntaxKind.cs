@@ -142,7 +142,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         OutKeyword = 8361,
         InKeyword = 8362,
         IsKeyword = 8363,
-        AsKeyword = 8364,
+        AsOptKeyword = 8364,
         ParamsKeyword = 8365,
         ArgListKeyword = 8366,
         MakeRefKeyword = 8367,
@@ -169,7 +169,8 @@ namespace Microsoft.CodeAnalysis.CSharp
         FuncKeyword = 8392,
         TransientKeyword = 8393,
         ImportKeyword = 8394,
-        ConstructorKeyword = 8395, // Must be always last
+        AsKeyword = 8395,
+        ConstructorKeyword = 8396, // Must be always last
 #endif
 
         // contextual keywords
@@ -378,7 +379,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         GreaterThanExpression = 8684,
         GreaterThanOrEqualExpression = 8685,
         IsExpression = 8686,
-        AsExpression = 8687,
+        AsOptExpression = 8687,
         CoalesceExpression = 8688,
         SimpleMemberAccessExpression = 8689,  // dot access:   a.b
         PointerMemberAccessExpression = 8690,  // arrow access:   a->b

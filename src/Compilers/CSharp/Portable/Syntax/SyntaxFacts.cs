@@ -120,7 +120,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     case CatchDeclaration:
                         return ((CatchDeclarationSyntax)parent).Type == node;
 
-                    case AsExpression:
+                    case AsOptExpression:
                     case IsExpression:
                         return ((BinaryExpressionSyntax)parent).Right == node;
 

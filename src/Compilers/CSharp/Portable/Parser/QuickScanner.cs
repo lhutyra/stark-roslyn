@@ -204,6 +204,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
             var charWindow = TextWindow.CharacterWindow;
             var charPropLength = s_charProperties.Length;
 
+            int j = i;
             for (; i < n; i++)
             {
                 char c = charWindow[i];
@@ -228,7 +229,12 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
             state = QuickScanState.Bad; // ran out of characters in window
 exitWhile:
-
+            // Special case of as?
+            if (state == QuickScanState.Done && charWindow[j] == 'a' && charWindow[j+1] == 's' && charWindow[j+2] == '?')
+            {
+                i++;
+                i++;
+            }
             TextWindow.AdvanceChar(i - TextWindow.Offset);
             Debug.Assert(state == QuickScanState.Bad || state == QuickScanState.Done, "can only exit with Bad or Done");
 

@@ -820,10 +820,32 @@ namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax
 
                     goto default;
 
+                case 'a':
+                    if (TextWindow.PeekChar(1) == 's')
+                    {
+                        var pc2 = TextWindow.PeekChar(2);
+                        if (pc2 == '?')
+                        {
+                            TextWindow.AdvanceChar(); // 'a'
+                            TextWindow.AdvanceChar(); // 's'
+                            TextWindow.AdvanceChar(); // '?'
+                            info.Kind = SyntaxKind.AsOptKeyword;
+                            break;
+                        }
+                        if (!SyntaxFacts.IsIdentifierPartCharacter(pc2))
+                        {
+                            TextWindow.AdvanceChar(); // 'a'
+                            TextWindow.AdvanceChar(); // 's'
+                            info.Kind = SyntaxKind.AsKeyword;
+                            break;
+                        }
+                    }
+                    // else we have a plain identifier
+                    goto case 'b';
+
                 // All the 'common' identifier characters are represented directly in
                 // these switch cases for optimal perf.  Calling IsIdentifierChar() functions is relatively
                 // expensive.
-                case 'a':
                 case 'b':
                 case 'c':
                 case 'd':

@@ -440,7 +440,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.IsExpression:
                     return BindIsOperator((BinaryExpressionSyntax)node, diagnostics);
 
-                case SyntaxKind.AsExpression:
+                case SyntaxKind.AsOptExpression:
                     return BindAsOperator((BinaryExpressionSyntax)node, diagnostics);
 
                 case SyntaxKind.UnaryPlusExpression:

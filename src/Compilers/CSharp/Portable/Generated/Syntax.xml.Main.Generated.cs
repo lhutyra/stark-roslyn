@@ -2929,11 +2929,10 @@ namespace Microsoft.CodeAnalysis.CSharp
 
     public override SyntaxNode VisitCastExpression(CastExpressionSyntax node)
     {
-      var openParenToken = this.VisitToken(node.OpenParenToken);
-      var type = (TypeSyntax)this.Visit(node.Type);
-      var closeParenToken = this.VisitToken(node.CloseParenToken);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
-      return node.Update(openParenToken, type, closeParenToken, expression);
+      var asKeyword = this.VisitToken(node.AsKeyword);
+      var type = (TypeSyntax)this.Visit(node.Type);
+      return node.Update(expression, asKeyword, type);
     }
 
     public override SyntaxNode VisitAnonymousMethodExpression(AnonymousMethodExpressionSyntax node)
@@ -5136,7 +5135,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         case SyntaxKind.GreaterThanExpression:
         case SyntaxKind.GreaterThanOrEqualExpression:
         case SyntaxKind.IsExpression:
-        case SyntaxKind.AsExpression:
+        case SyntaxKind.AsOptExpression:
         case SyntaxKind.CoalesceExpression:
           break;
         default:
@@ -5165,7 +5164,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         case SyntaxKind.GreaterThanToken:
         case SyntaxKind.GreaterThanEqualsToken:
         case SyntaxKind.IsKeyword:
-        case SyntaxKind.AsKeyword:
+        case SyntaxKind.AsOptKeyword:
         case SyntaxKind.QuestionQuestionToken:
           break;
         default:
@@ -5225,8 +5224,8 @@ namespace Microsoft.CodeAnalysis.CSharp
           return SyntaxKind.GreaterThanEqualsToken;
         case SyntaxKind.IsExpression:
           return SyntaxKind.IsKeyword;
-        case SyntaxKind.AsExpression:
-          return SyntaxKind.AsKeyword;
+        case SyntaxKind.AsOptExpression:
+          return SyntaxKind.AsOptKeyword;
         case SyntaxKind.CoalesceExpression:
           return SyntaxKind.QuestionQuestionToken;
         default:
@@ -5895,34 +5894,27 @@ namespace Microsoft.CodeAnalysis.CSharp
 
 
     /// <summary>Creates a new CastExpressionSyntax instance.</summary>
-    public static CastExpressionSyntax CastExpression(SyntaxToken openParenToken, TypeSyntax type, SyntaxToken closeParenToken, ExpressionSyntax expression)
+    public static CastExpressionSyntax CastExpression(ExpressionSyntax expression, SyntaxToken asKeyword, TypeSyntax type)
     {
-      switch (openParenToken.Kind())
+      if (expression == null)
+        throw new ArgumentNullException(nameof(expression));
+      switch (asKeyword.Kind())
       {
-        case SyntaxKind.OpenParenToken:
+        case SyntaxKind.AsKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(openParenToken));
+          throw new ArgumentException(nameof(asKeyword));
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      switch (closeParenToken.Kind())
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (expression == null)
-        throw new ArgumentNullException(nameof(expression));
-      return (CastExpressionSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.CastExpression((Syntax.InternalSyntax.SyntaxToken)openParenToken.Node, type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green, (Syntax.InternalSyntax.SyntaxToken)closeParenToken.Node, expression == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExpressionSyntax)expression.Green).CreateRed();
+      return (CastExpressionSyntax)Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.CastExpression(expression == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.ExpressionSyntax)expression.Green, (Syntax.InternalSyntax.SyntaxToken)asKeyword.Node, type == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new CastExpressionSyntax instance.</summary>
-    public static CastExpressionSyntax CastExpression(TypeSyntax type, ExpressionSyntax expression)
+    public static CastExpressionSyntax CastExpression(ExpressionSyntax expression, TypeSyntax type)
     {
-      return SyntaxFactory.CastExpression(SyntaxFactory.Token(SyntaxKind.OpenParenToken), type, SyntaxFactory.Token(SyntaxKind.CloseParenToken), expression);
+      return SyntaxFactory.CastExpression(expression, SyntaxFactory.Token(SyntaxKind.AsKeyword), type);
     }
 
     /// <summary>Creates a new AnonymousMethodExpressionSyntax instance.</summary>

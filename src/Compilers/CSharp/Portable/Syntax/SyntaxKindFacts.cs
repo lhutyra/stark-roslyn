@@ -595,8 +595,10 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.CoalesceExpression;
                 case SyntaxKind.IsKeyword:
                     return SyntaxKind.IsExpression;
+                case SyntaxKind.AsOptKeyword:
+                    return SyntaxKind.AsOptExpression;
                 case SyntaxKind.AsKeyword:
-                    return SyntaxKind.AsExpression;
+                    return SyntaxKind.CastExpression;
                 case SyntaxKind.BarToken:
                     return SyntaxKind.BitwiseOrExpression;
                 case SyntaxKind.CaretToken:
@@ -934,6 +936,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SyntaxKind.IsKeyword;
                 case "as":
                     return SyntaxKind.AsKeyword;
+                case "as?":
+                    return SyntaxKind.AsOptKeyword;
                 case "params":
                     return SyntaxKind.ParamsKeyword;
                 case "__arglist":
@@ -1494,6 +1498,8 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return "in";
                 case SyntaxKind.IsKeyword:
                     return "is";
+                case SyntaxKind.AsOptKeyword:
+                    return "as?";
                 case SyntaxKind.AsKeyword:
                     return "as";
                 case SyntaxKind.ParamsKeyword:
