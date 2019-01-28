@@ -279,7 +279,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                 case SyntaxKind.IntKeyword:
                 case SyntaxKind.UIntKeyword:
                 case SyntaxKind.BoolKeyword:
-                case SyntaxKind.ByteKeyword:
                 case SyntaxKind.UInt8Keyword:
                 case SyntaxKind.Int8Keyword:
                 case SyntaxKind.Int32Keyword:
@@ -814,31 +813,29 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 case "bool":
                     return SyntaxKind.BoolKeyword;
-                case "int8":
+                case "i8":
                     return SyntaxKind.Int8Keyword;
-                case "uint8":
+                case "u8":
                     return SyntaxKind.UInt8Keyword;
-                case "byte":
-                    return SyntaxKind.ByteKeyword;
-                case "int16":
+                case "i16":
                     return SyntaxKind.Int16Keyword;
-                case "uint16":
+                case "u16":
                     return SyntaxKind.UInt16Keyword;
                 case "int":
                     return SyntaxKind.IntKeyword;
                 case "uint":
                     return SyntaxKind.UIntKeyword;
-                case "int32":
+                case "i32":
                     return SyntaxKind.Int32Keyword;
-                case "uint32":
+                case "u32":
                     return SyntaxKind.UInt32Keyword;
-                case "int64":
+                case "i64":
                     return SyntaxKind.Int64Keyword;
-                case "uint64":
+                case "u64":
                     return SyntaxKind.UInt64Keyword;
-                case "float64":
+                case "f64":
                     return SyntaxKind.Float64Keyword;
-                case "float32":
+                case "f32":
                     return SyntaxKind.Float32Keyword;
                 case "decimal":
                     return SyntaxKind.DecimalKeyword;
@@ -1378,32 +1375,30 @@ namespace Microsoft.CodeAnalysis.CSharp
                 // Keywords
                 case SyntaxKind.BoolKeyword:
                     return "bool";
-                case SyntaxKind.ByteKeyword:
-                    return "byte";
                 case SyntaxKind.UInt8Keyword:
-                    return "uint8";
+                    return "u8";
                 case SyntaxKind.Int8Keyword:
-                    return "int8";
+                    return "i8";
                 case SyntaxKind.Int16Keyword:
-                    return "int16";
+                    return "i16";
                 case SyntaxKind.UInt16Keyword:
-                    return "uint16";
+                    return "u16";
                 case SyntaxKind.IntKeyword:
                     return "int";
                 case SyntaxKind.UIntKeyword:
                     return "uint";
                 case SyntaxKind.Int32Keyword:
-                    return "int32";
+                    return "i32";
                 case SyntaxKind.UInt32Keyword:
-                    return "uint32";
+                    return "u32";
                 case SyntaxKind.Int64Keyword:
-                    return "int64";
+                    return "i64";
                 case SyntaxKind.UInt64Keyword:
-                    return "uint64";
+                    return "u64";
                 case SyntaxKind.Float64Keyword:
-                    return "float64";
+                    return "f64";
                 case SyntaxKind.Float32Keyword:
-                    return "float32";
+                    return "f32";
                 case SyntaxKind.DecimalKeyword:
                     return "decimal";
                 case SyntaxKind.StringKeyword:

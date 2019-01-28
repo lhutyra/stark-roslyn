@@ -4539,7 +4539,6 @@ namespace Microsoft.CodeAnalysis.CSharp
       switch (keyword.Kind())
       {
         case SyntaxKind.BoolKeyword:
-        case SyntaxKind.ByteKeyword:
         case SyntaxKind.UInt8Keyword:
         case SyntaxKind.Int8Keyword:
         case SyntaxKind.IntKeyword:

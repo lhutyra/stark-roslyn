@@ -144,7 +144,6 @@
     <Kind Name="PredefinedType"/>
     <Field Name="Keyword" Type="SyntaxToken">
       <Kind Name="BoolKeyword"/>
-      <Kind Name="ByteKeyword"/>
       <Kind Name="UInt8Keyword"/>
       <Kind Name="Int8Keyword"/>
       <Kind Name="IntKeyword"/>

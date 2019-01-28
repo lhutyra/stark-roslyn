@@ -14,8 +14,6 @@ namespace Microsoft.CodeAnalysis.CSharp
                     return SpecialType.System_Void;
                 case SyntaxKind.BoolKeyword:
                     return SpecialType.System_Boolean;
-                case SyntaxKind.ByteKeyword:
-                    return SpecialType.System_UInt8;
                 case SyntaxKind.UInt8Keyword:
                     return SpecialType.System_UInt8;
                 case SyntaxKind.Int8Keyword:

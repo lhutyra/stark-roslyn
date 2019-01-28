@@ -83,7 +83,6 @@ namespace Microsoft.CodeAnalysis.CSharp
         UInt8Keyword = 8302,
         UIntKeyword = 8303,
         BoolKeyword = 8304,
-        ByteKeyword = 8305,
         Int8Keyword = 8306,
         Int16Keyword = 8307,
         UInt16Keyword = 8308,
