@@ -68,7 +68,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeFixes.GenerateDeconstructMethod
                     throw ExceptionUtilities.Unreachable;
             }
 
-            if (type.Kind != SymbolKind.NamedType)
+            if (type?.Kind != SymbolKind.NamedType)
             {
                 return;
             }

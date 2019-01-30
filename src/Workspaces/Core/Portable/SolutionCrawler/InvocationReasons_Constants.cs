@@ -18,7 +18,8 @@ namespace StarkPlatform.CodeAnalysis.SolutionCrawler
                 ImmutableHashSet.Create<string>(
                                     PredefinedInvocationReasons.DocumentRemoved,
                                     PredefinedInvocationReasons.SyntaxChanged,
-                                    PredefinedInvocationReasons.SemanticChanged));
+                                    PredefinedInvocationReasons.SemanticChanged,
+                                    PredefinedInvocationReasons.HighPriority));
 
         public static readonly InvocationReasons ProjectParseOptionChanged =
             new InvocationReasons(

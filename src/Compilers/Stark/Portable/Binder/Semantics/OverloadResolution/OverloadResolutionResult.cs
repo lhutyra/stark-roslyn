@@ -974,7 +974,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             // formal parameter type.
 
             TypeSymbol formalParameterType = method.ParameterTypes[result.Result.BadParameter].TypeSymbol;
-            formalParameterType.CheckAllConstraints(conversions, location, diagnostics);
+            formalParameterType.CheckAllConstraints((CSharpCompilation)compilation, conversions, location, diagnostics);
 
             return true;
         }

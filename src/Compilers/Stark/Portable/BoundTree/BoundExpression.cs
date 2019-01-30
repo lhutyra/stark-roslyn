@@ -12,6 +12,24 @@ namespace StarkPlatform.CodeAnalysis.Stark
 {
     internal partial class BoundExpression
     {
+        /// <summary>
+        /// Bound nodes with fields that aren't declared in BoundNodes.xml should use `SkipShallowClone="true"` and override <see cref="ShallowClone"/>.
+        /// Note that ShallowClone is not fully implemented (it throws for some nodes at the moment).
+        /// </summary>
+        protected abstract BoundExpression ShallowClone();
+
+        internal BoundExpression WithSuppression()
+        {
+            if (this.IsSuppressed)
+            {
+                return this;
+            }
+
+            var result = ShallowClone();
+            result.IsSuppressed = true;
+            return result;
+        }
+
         public virtual ConstantValue ConstantValue
         {
             get
@@ -354,14 +372,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         //
         // DevDiv 1087283 tracks deciding whether or not to refactor this into BoundNodes.xml.
         public ImmutableArray<MethodSymbol> OriginalUserDefinedOperatorsOpt { get; }
-    }
-
-    internal partial class BoundSuppressNullableWarningExpression
-    {
-        public override ConstantValue ConstantValue
-        {
-            get { return this.Expression.ConstantValue; }
-        }
     }
 
     internal partial class BoundLiteral

@@ -9,8 +9,7 @@ using StarkPlatform.CodeAnalysis.Text;
 namespace StarkPlatform.CodeAnalysis.Stark
 {
     /// <summary>
-    /// An analysis that computes the set of variables that may be used
-    /// before being assigned anywhere within a method.
+    /// An analysis that computes all cases where the address is taken of a variable that has not yet been assigned
     /// </summary>
     internal class UnassignedAddressTakenVariablesWalker : DefiniteAssignmentPass
     {

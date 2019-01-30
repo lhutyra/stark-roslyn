@@ -186,11 +186,6 @@ namespace StarkPlatform.CodeAnalysis.Operations
             DefaultVisit(operation);
         }
 
-        public virtual void VisitSuppressNullableWarningExpression(ISuppressNullableWarningOperation operation)
-        {
-            DefaultVisit(operation);
-        }
-
         // API moved internal for V1
         // https://github.com/dotnet/roslyn/issues/21295
         internal virtual void VisitPointerIndirectionReference(IPointerIndirectionReferenceOperation operation)
@@ -591,11 +586,6 @@ namespace StarkPlatform.CodeAnalysis.Operations
         }
 
         public virtual void VisitRangeOperation(IRangeOperation operation)
-        {
-            DefaultVisit(operation);
-        }
-
-        public virtual void VisitSuppressNullableWarningOperation(ISuppressNullableWarningOperation operation)
         {
             DefaultVisit(operation);
         }
@@ -1199,11 +1189,6 @@ namespace StarkPlatform.CodeAnalysis.Operations
         }
 
         public virtual TResult VisitRangeOperation(IRangeOperation operation, TArgument argument)
-        {
-            return DefaultVisit(operation, argument);
-        }
-
-        public virtual TResult VisitSuppressNullableWarningOperation(ISuppressNullableWarningOperation operation, TArgument argument)
         {
             return DefaultVisit(operation, argument);
         }

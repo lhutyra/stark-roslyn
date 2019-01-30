@@ -9,6 +9,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
     /// </summary>
     internal sealed class AwaitableInfo
     {
+        public static readonly AwaitableInfo Empty = new AwaitableInfo(getAwaiterMethod: null, isCompletedProperty: null, getResultMethod: null);
+
         public readonly MethodSymbol GetAwaiter;
         public readonly PropertySymbol IsCompleted;
         public readonly MethodSymbol GetResult;

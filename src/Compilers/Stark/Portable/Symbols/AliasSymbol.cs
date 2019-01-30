@@ -304,7 +304,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 var corLibrary = this.ContainingAssembly.CorLibrary;
                 var conversions = new TypeConversions(corLibrary);
-                target.CheckAllConstraints(conversions, _locations[0], diagnostics);
+                target.CheckAllConstraints(DeclaringCompilation, conversions, _locations[0], diagnostics);
             }
         }
 

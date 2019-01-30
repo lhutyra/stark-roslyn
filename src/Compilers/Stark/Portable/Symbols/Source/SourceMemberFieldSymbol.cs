@@ -560,7 +560,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             var options = (CSharpParseOptions)SyntaxTree.Options;
             bool includeNullability = options.IsFeatureEnabled(MessageID.IDS_FeatureNullableReferenceTypes);
-            Type.CheckAllConstraints(conversions.WithNullability(includeNullability), ErrorLocation, diagnostics);
+            Type.CheckAllConstraints(DeclaringCompilation, conversions.WithNullability(includeNullability), ErrorLocation, diagnostics);
             base.AfterAddingTypeMembersChecks(conversions, diagnostics);
         }
     }

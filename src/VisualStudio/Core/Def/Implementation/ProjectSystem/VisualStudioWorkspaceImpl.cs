@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using StarkPlatform.CodeAnalysis;
 using StarkPlatform.CodeAnalysis.Diagnostics;
 using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using StarkPlatform.CodeAnalysis.Host.Mef;
 using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using StarkPlatform.CodeAnalysis.SolutionCrawler;
@@ -22,6 +24,7 @@ using Microsoft.VisualStudio.Composition;
 using Microsoft.VisualStudio.Editor;
 using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
 using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.MetadataReferences;
 using StarkPlatform.VisualStudio.LanguageServices.Utilities;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -75,6 +78,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
 
         private OpenFileTracker _openFileTrackerOpt;
         internal FileChangeWatcher FileChangeWatcher { get; }
+        internal FileWatchedPortableExecutableReferenceFactory FileWatchedReferenceFactory { get; }
 
         public VisualStudioWorkspaceImpl(ExportProvider exportProvider, IAsyncServiceProvider asyncServiceProvider)
             : base(VisualStudioMefHostServices.Create(exportProvider))
@@ -98,16 +102,11 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
 
             System.Threading.Tasks.Task.Run(() => ConnectToOpenFileTrackerOnUIThreadAsync(asyncServiceProvider));
 
-            var fileChangeWatcherProvider = exportProvider.GetExportedValue<FileChangeWatcherProvider>();
-
-            FileChangeWatcher = fileChangeWatcherProvider.Watcher;
-            _threadingContext.JoinableTaskFactory.RunAsync(async () =>
-                {
-                    await _threadingContext.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    var fileChangeService = (IVsAsyncFileChangeEx)await asyncServiceProvider.GetServiceAsync(typeof(SVsFileChangeEx)).ConfigureAwait(true);
+            FileChangeWatcher = exportProvider.GetExportedValue<FileChangeWatcherProvider>().Watcher;
+            FileWatchedReferenceFactory = exportProvider.GetExportedValue<FileWatchedPortableExecutableReferenceFactory>();
                     
-                    fileChangeWatcherProvider.SetFileChangeService(fileChangeService);
-                });
+                    
+            FileWatchedReferenceFactory.ReferenceChanged += this.RefreshMetadataReferencesForFile;
         }
 
         public async System.Threading.Tasks.Task ConnectToOpenFileTrackerOnUIThreadAsync(IAsyncServiceProvider asyncServiceProvider)
@@ -1163,16 +1162,11 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
             {
                 _textBufferFactoryService.TextBufferCreated -= AddTextBufferCloneServiceToBuffer;
                 _projectionBufferFactoryService.ProjectionBufferCreated -= AddTextBufferCloneServiceToBuffer;
+                FileWatchedReferenceFactory.ReferenceChanged -= RefreshMetadataReferencesForFile;
             }
 
             // workspace is going away. unregister this workspace from work coordinator
             StopSolutionCrawler();
-
-            // We should consider calling this here. It is commented out because Solution event tracking was
-            // moved from VisualStudioProjectTracker, which is never Dispose()'d.  Rather than risk the
-            // UnadviseSolutionEvents causing another issue (calling into dead COM objects, etc), we'll just
-            // continue to skip it for now.
-            // UnadviseSolutionEvents();
 
             base.Dispose(finalize);
         }
@@ -1420,7 +1414,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
         private void ConvertMetadataReferencesToProjectReferences_NoLock(ProjectId projectId, string outputPath)
         {
             var modifiedSolution = this.CurrentSolution;
-            var projectIdsChanged = new HashSet<ProjectId>();
+            var projectIdsChanged = PooledHashSet<ProjectId>.GetInstance();
 
             foreach (var projectIdToRetarget in this.CurrentSolution.ProjectIds)
             {
@@ -1432,6 +1426,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
                     {
                         if (string.Equals(reference.FilePath, outputPath, StringComparison.OrdinalIgnoreCase))
                         {
+                            FileWatchedReferenceFactory.StopWatchingReference(reference);
+
                             var projectReference = new ProjectReference(projectId, reference.Properties.Aliases, reference.Properties.EmbedInteropTypes);
                             modifiedSolution = modifiedSolution.RemoveMetadataReference(projectIdToRetarget, reference)
                                                                .AddProjectReference(projectIdToRetarget, projectReference);
@@ -1449,6 +1445,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
             }
 
             SetSolutionAndRaiseWorkspaceChanged_NoLock(modifiedSolution, projectIdsChanged);
+            projectIdsChanged.Free();
         }
 
         [PerformanceSensitive("https://github.com/dotnet/roslyn/issues/31306",
@@ -1486,7 +1483,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
         private void ConvertProjectReferencesToMetadataReferences_NoLock(ProjectId projectId, string outputPath)
         {
             var modifiedSolution = this.CurrentSolution;
-            var projectIdsChanged = new HashSet<ProjectId>();
+            var projectIdsChanged = PooledHashSet<ProjectId>.GetInstance();
 
             foreach (var projectIdToRetarget in this.CurrentSolution.ProjectIds)
             {
@@ -1498,7 +1495,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
                         convertedReference.projectReference.ProjectId == projectId)
                     {
                         var metadataReference =
-                            CreatePortableExecutableReference(
+                            FileWatchedReferenceFactory.CreateReferenceAndStartWatchingFile(
                                 convertedReference.path,
                                 new MetadataReferenceProperties(
                                     aliases: convertedReference.projectReference.Aliases,
@@ -1518,6 +1515,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
             }
 
             SetSolutionAndRaiseWorkspaceChanged_NoLock(modifiedSolution, projectIdsChanged);
+            projectIdsChanged.Free();
         }
 
         public ProjectReference TryCreateConvertedProjectReference(ProjectId referencingProject, string path, MetadataReferenceProperties properties)
@@ -1575,6 +1573,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
         {
             if (projectIdsChanged.Count > 0)
             {
+                Debug.Assert(modifiedSolution != CurrentSolution);
+
                 var originalSolution = this.CurrentSolution;
                 SetCurrentSolution(modifiedSolution);
 
@@ -1586,6 +1586,11 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
                 {
                     RaiseWorkspaceChangedEventAsync(WorkspaceChangeKind.SolutionChanged, originalSolution, this.CurrentSolution);
                 }
+            }
+            else
+            {
+                // If they said nothing changed, than definitely nothing should have changed!
+                Debug.Assert(modifiedSolution == CurrentSolution);
             }
         }
 
@@ -1616,6 +1621,43 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
                     // No projects left, we need to convert back to metadata references
                     ConvertProjectReferencesToMetadataReferences_NoLock(projectId, outputPath);
                 }
+            }
+        }
+
+        private void RefreshMetadataReferencesForFile(object sender, string fullFilePath)
+        {
+            lock (_gate)
+            {
+                var newSolution = CurrentSolution;
+                var changedProjectIds = PooledHashSet<ProjectId>.GetInstance();
+
+                foreach (var project in CurrentSolution.Projects)
+                {
+                    // Loop to find each reference with the given path. It's possible that there might be multiple references of the same path;
+                    // the project system could concievably add the same reference multiple times but with different aliases. It's also possible
+                    // we might not find the path at all: when we recieve the file changed event, we aren't checking if the file is still
+                    // in the workspace at that time; it's possible it might have already been removed.
+                    foreach (var portableExecutableReference in project.MetadataReferences.OfType<PortableExecutableReference>())
+                    {
+                        if (portableExecutableReference.FilePath == fullFilePath)
+                        {
+                            FileWatchedReferenceFactory.StopWatchingReference(portableExecutableReference);
+
+                            var newPortableExecutableReference =
+                                FileWatchedReferenceFactory.CreateReferenceAndStartWatchingFile(
+                                    portableExecutableReference.FilePath,
+                                    portableExecutableReference.Properties);
+
+                            newSolution = newSolution.RemoveMetadataReference(project.Id, portableExecutableReference)
+                                                     .AddMetadataReference(project.Id, newPortableExecutableReference);
+
+                            changedProjectIds.Add(project.Id);
+                        }
+                    }
+                }
+
+                SetSolutionAndRaiseWorkspaceChanged_NoLock(newSolution, changedProjectIds);
+                changedProjectIds.Free();
             }
         }
     }

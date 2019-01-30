@@ -585,7 +585,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 {
                     var typeSymbol = (TypeSymbol)@using.NamespaceOrType;
                     var location = @using.ImportDirective?.Name.Location ?? NoLocation.Singleton;
-                    typeSymbol.CheckAllConstraints(conversions, location, semanticDiagnostics);
+                    typeSymbol.CheckAllConstraints(_compilation, conversions, location, semanticDiagnostics);
                 }
             }
 

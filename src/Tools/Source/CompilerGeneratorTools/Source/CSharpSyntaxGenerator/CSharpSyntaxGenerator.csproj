@@ -6,14 +6,14 @@
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>x64</Platforms>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Roslyn.Compilers.CSharp.Internal.CSharpSyntaxGenerator</RootNamespace>
+    <RootNamespace>Roslyn.Compilers.Stark.Internal.CSharpSyntaxGenerator</RootNamespace>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeIdentifiers>$(RoslynPortableRuntimeIdentifiers)</RuntimeIdentifiers>
     <IsShipping>false</IsShipping>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\Compilers\CSharp\Portable\Syntax\Syntax.xml">
+    <Content Include="..\..\..\..\..\Compilers\Stark\Portable\Syntax\Syntax.xml">
       <Link>Syntax.xml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -287,7 +287,7 @@ namespace CSharpSyntaxGenerator
                 WriteLine();
                 WriteLine("    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)");
                 WriteLine("    {");
-                WriteLine("      return new CSharp.Syntax.{0}(this, parent, position);", node.Name);
+                WriteLine("      return new Stark.Syntax.{0}(this, parent, position);", node.Name);
                 WriteLine("    }");
 
                 this.WriteGreenAcceptMethods(nd);

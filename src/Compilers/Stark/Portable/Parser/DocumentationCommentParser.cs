@@ -1408,14 +1408,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
                             // Eat the close brace and we're done.
                             var close = this.EatToken(SyntaxKind.CloseBracketToken);
 
-                            SyntaxToken questionToken = null;
-
-                            if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
-                            {
-                                questionToken = CheckFeatureAvailability(this.EatToken(), MessageID.IDS_FeatureNullableReferenceTypes);
-                            }
-
-                            rankList.Add(SyntaxFactory.ArrayRankSpecifier(open, dimensionList, close, questionToken));
+                            rankList.Add(SyntaxFactory.ArrayRankSpecifier(open, dimensionList, close));
                         }
                         finally
                         {

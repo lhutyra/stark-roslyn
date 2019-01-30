@@ -27,6 +27,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         DeconstructValuePlaceholder,
         TupleOperandPlaceholder,
         AwaitableValuePlaceholder,
+        DisposableValuePlaceholder,
         Dup,
         PassByCopy,
         BadExpression,
@@ -36,7 +37,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         TypeOrValueExpression,
         NamespaceExpression,
         UnaryOperator,
-        SuppressNullableWarningExpression,
         IncrementOperator,
         AddressOfOperator,
         PointerIndirectionOperator,
@@ -272,7 +272,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (field != this.Field || locals != this.Locals || value != this.Value)
             {
                 var result = new BoundFieldEqualsValue(this.Syntax, field, locals, value, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -305,7 +305,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (property != this.Property || locals != this.Locals || value != this.Value)
             {
                 var result = new BoundPropertyEqualsValue(this.Syntax, property, locals, value, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -338,7 +338,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (parameter != this.Parameter || locals != this.Locals || value != this.Value)
             {
                 var result = new BoundParameterEqualsValue(this.Syntax, parameter, locals, value, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -369,7 +369,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (statement != this.Statement)
             {
                 var result = new BoundGlobalStatementInitializer(this.Syntax, statement, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -447,10 +447,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (valEscape != this.ValEscape || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDeconstructValuePlaceholder(this.Syntax, valEscape, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDeconstructValuePlaceholder(this.Syntax, this.ValEscape, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -483,10 +490,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundTupleOperandPlaceholder(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTupleOperandPlaceholder(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -519,10 +533,60 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAwaitableValuePlaceholder(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAwaitableValuePlaceholder(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
+        }
+    }
+
+    internal sealed partial class BoundDisposableValuePlaceholder : BoundValuePlaceholderBase
+    {
+        public BoundDisposableValuePlaceholder(SyntaxNode syntax, TypeSymbol type, bool hasErrors)
+            : base(BoundKind.DisposableValuePlaceholder, syntax, type, hasErrors)
+        {
+
+            Debug.Assert((object)type != null, "Field 'type' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+
+        }
+
+        public BoundDisposableValuePlaceholder(SyntaxNode syntax, TypeSymbol type)
+            : base(BoundKind.DisposableValuePlaceholder, syntax, type)
+        {
+
+            Debug.Assert((object)type != null, "Field 'type' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+
+        }
+
+
+        public override BoundNode Accept(BoundTreeVisitor visitor)
+        {
+            return visitor.VisitDisposableValuePlaceholder(this);
+        }
+
+        public BoundDisposableValuePlaceholder Update(TypeSymbol type)
+        {
+            if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
+            {
+                var result = new BoundDisposableValuePlaceholder(this.Syntax, type, this.HasErrors);
+                result.CopyAttributes(this);
+                return result;
+            }
+            return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDisposableValuePlaceholder(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -553,10 +617,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (refKind != this.RefKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDup(this.Syntax, refKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDup(this.Syntax, this.RefKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -584,10 +655,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundPassByCopy(this.Syntax, expression, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPassByCopy(this.Syntax, this.Expression, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -623,10 +701,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (resultKind != this.ResultKind || symbols != this.Symbols || childBoundNodes != this.ChildBoundNodes || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundBadExpression(this.Syntax, resultKind, symbols, childBoundNodes, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundBadExpression(this.Syntax, this.ResultKind, this.Symbols, this.ChildBoundNodes, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -654,7 +739,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (childBoundNodes != this.ChildBoundNodes)
             {
                 var result = new BoundBadStatement(this.Syntax, childBoundNodes, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -685,7 +770,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (finallyBlock != this.FinallyBlock)
             {
                 var result = new BoundExtractedFinallyBlock(this.Syntax, finallyBlock, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -722,10 +807,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (aliasOpt != this.AliasOpt || inferredType != this.InferredType || boundContainingTypeOpt != this.BoundContainingTypeOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundTypeExpression(this.Syntax, aliasOpt, inferredType, boundContainingTypeOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTypeExpression(this.Syntax, this.AliasOpt, this.InferredType, this.BoundContainingTypeOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -762,10 +854,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (data != this.Data || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundTypeOrValueExpression(this.Syntax, data, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTypeOrValueExpression(this.Syntax, this.Data, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -806,10 +905,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (namespaceSymbol != this.NamespaceSymbol || aliasOpt != this.AliasOpt)
             {
                 var result = new BoundNamespaceExpression(this.Syntax, namespaceSymbol, aliasOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundNamespaceExpression(this.Syntax, this.NamespaceSymbol, this.AliasOpt, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -851,41 +957,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operatorKind != this.OperatorKind || operand != this.Operand || constantValueOpt != this.ConstantValueOpt || methodOpt != this.MethodOpt || resultKind != this.ResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundUnaryOperator(this.Syntax, operatorKind, operand, constantValueOpt, methodOpt, resultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
         }
-    }
 
-    internal sealed partial class BoundSuppressNullableWarningExpression : BoundExpression
-    {
-        public BoundSuppressNullableWarningExpression(SyntaxNode syntax, BoundExpression expression, TypeSymbol type, bool hasErrors = false)
-            : base(BoundKind.SuppressNullableWarningExpression, syntax, type, hasErrors || expression.HasErrors())
+        protected override BoundExpression ShallowClone()
         {
-
-            Debug.Assert((object)expression != null, "Field 'expression' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
-
-            this.Expression = expression;
-        }
-
-
-        public BoundExpression Expression { get; }
-
-        public override BoundNode Accept(BoundTreeVisitor visitor)
-        {
-            return visitor.VisitSuppressNullableWarningExpression(this);
-        }
-
-        public BoundSuppressNullableWarningExpression Update(BoundExpression expression, TypeSymbol type)
-        {
-            if (expression != this.Expression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
-            {
-                var result = new BoundSuppressNullableWarningExpression(this.Syntax, expression, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
-                return result;
-            }
-            return this;
+            var result = new BoundUnaryOperator(this.Syntax, this.OperatorKind, this.Operand, this.ConstantValueOpt, this.MethodOpt, this.ResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -930,10 +1012,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operatorKind != this.OperatorKind || operand != this.Operand || methodOpt != this.MethodOpt || operandConversion != this.OperandConversion || resultConversion != this.ResultConversion || resultKind != this.ResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundIncrementOperator(this.Syntax, operatorKind, operand, methodOpt, operandConversion, resultConversion, resultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundIncrementOperator(this.Syntax, this.OperatorKind, this.Operand, this.MethodOpt, this.OperandConversion, this.ResultConversion, this.ResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -965,10 +1054,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || isManaged != this.IsManaged || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAddressOfOperator(this.Syntax, operand, isManaged, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAddressOfOperator(this.Syntax, this.Operand, this.IsManaged, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -997,10 +1093,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundPointerIndirectionOperator(this.Syntax, operand, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPointerIndirectionOperator(this.Syntax, this.Operand, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1036,10 +1139,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || index != this.Index || @checked != this.Checked || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundPointerElementAccess(this.Syntax, expression, index, @checked, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPointerElementAccess(this.Syntax, this.Expression, this.Index, this.Checked, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1071,10 +1181,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || getTypeFromHandle != this.GetTypeFromHandle || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundRefTypeOperator(this.Syntax, operand, getTypeFromHandle, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundRefTypeOperator(this.Syntax, this.Operand, this.GetTypeFromHandle, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1103,10 +1220,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundMakeRefOperator(this.Syntax, operand, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundMakeRefOperator(this.Syntax, this.Operand, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1135,10 +1259,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundRefValueOperator(this.Syntax, operand, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundRefValueOperator(this.Syntax, this.Operand, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1170,10 +1301,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || methodOpt != this.MethodOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundFromEndIndexExpression(this.Syntax, operand, methodOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundFromEndIndexExpression(this.Syntax, this.Operand, this.MethodOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1207,10 +1345,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (leftOperand != this.LeftOperand || rightOperand != this.RightOperand || methodOpt != this.MethodOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundRangeExpression(this.Syntax, leftOperand, rightOperand, methodOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundRangeExpression(this.Syntax, this.LeftOperand, this.RightOperand, this.MethodOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1270,10 +1415,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operatorKind != this.OperatorKind || constantValueOpt != this.ConstantValueOpt || methodOpt != this.MethodOpt || resultKind != this.ResultKind || left != this.Left || right != this.Right || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundBinaryOperator(this.Syntax, operatorKind, constantValueOpt, methodOpt, resultKind, left, right, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundBinaryOperator(this.Syntax, this.OperatorKind, this.ConstantValueOpt, this.MethodOpt, this.ResultKind, this.Left, this.Right, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1321,10 +1473,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (left != this.Left || right != this.Right || convertedLeft != this.ConvertedLeft || convertedRight != this.ConvertedRight || operatorKind != this.OperatorKind || operators != this.Operators || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundTupleBinaryOperator(this.Syntax, left, right, convertedLeft, convertedRight, operatorKind, operators, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTupleBinaryOperator(this.Syntax, this.Left, this.Right, this.ConvertedLeft, this.ConvertedRight, this.OperatorKind, this.Operators, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1370,10 +1529,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operatorKind != this.OperatorKind || logicalOperator != this.LogicalOperator || trueOperator != this.TrueOperator || falseOperator != this.FalseOperator || resultKind != this.ResultKind || left != this.Left || right != this.Right || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundUserDefinedConditionalLogicalOperator(this.Syntax, operatorKind, logicalOperator, trueOperator, falseOperator, resultKind, left, right, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundUserDefinedConditionalLogicalOperator(this.Syntax, this.OperatorKind, this.LogicalOperator, this.TrueOperator, this.FalseOperator, this.ResultKind, this.Left, this.Right, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1419,10 +1585,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (@operator != this.Operator || left != this.Left || right != this.Right || leftConversion != this.LeftConversion || finalConversion != this.FinalConversion || resultKind != this.ResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundCompoundAssignmentOperator(this.Syntax, @operator, left, right, leftConversion, finalConversion, resultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundCompoundAssignmentOperator(this.Syntax, this.Operator, this.Left, this.Right, this.LeftConversion, this.FinalConversion, this.ResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1456,10 +1629,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (left != this.Left || right != this.Right || isRef != this.IsRef || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAssignmentOperator(this.Syntax, left, right, isRef, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAssignmentOperator(this.Syntax, this.Left, this.Right, this.IsRef, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1495,10 +1675,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (left != this.Left || right != this.Right || isUsed != this.IsUsed || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDeconstructionAssignmentOperator(this.Syntax, left, right, isUsed, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDeconstructionAssignmentOperator(this.Syntax, this.Left, this.Right, this.IsUsed, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1536,10 +1723,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (leftOperand != this.LeftOperand || rightOperand != this.RightOperand || leftConversion != this.LeftConversion || operatorResultKind != this.OperatorResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundNullCoalescingOperator(this.Syntax, leftOperand, rightOperand, leftConversion, operatorResultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundNullCoalescingOperator(this.Syntax, this.LeftOperand, this.RightOperand, this.LeftConversion, this.OperatorResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1571,10 +1765,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (leftOperand != this.LeftOperand || rightOperand != this.RightOperand || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundNullCoalescingAssignmentOperator(this.Syntax, leftOperand, rightOperand, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundNullCoalescingAssignmentOperator(this.Syntax, this.LeftOperand, this.RightOperand, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1617,10 +1818,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (isRef != this.IsRef || condition != this.Condition || consequence != this.Consequence || alternative != this.Alternative || constantValueOpt != this.ConstantValueOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConditionalOperator(this.Syntax, isRef, condition, consequence, alternative, constantValueOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConditionalOperator(this.Syntax, this.IsRef, this.Condition, this.Consequence, this.Alternative, this.ConstantValueOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1653,10 +1861,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || indices != this.Indices || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundArrayAccess(this.Syntax, expression, indices, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundArrayAccess(this.Syntax, this.Expression, this.Indices, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1685,10 +1900,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundArrayLength(this.Syntax, expression, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundArrayLength(this.Syntax, this.Expression, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1721,10 +1943,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || awaitableInfo != this.AwaitableInfo || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAwaitExpression(this.Syntax, expression, awaitableInfo, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAwaitExpression(this.Syntax, this.Expression, this.AwaitableInfo, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1777,10 +2006,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (sourceType != this.SourceType || getTypeFromHandle != this.GetTypeFromHandle || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundTypeOfOperator(this.Syntax, sourceType, getTypeFromHandle, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTypeOfOperator(this.Syntax, this.SourceType, this.GetTypeFromHandle, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1819,10 +2055,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (method != this.Method || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundMethodDefIndex(this.Syntax, method, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundMethodDefIndex(this.Syntax, this.Method, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1855,10 +2098,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundMaximumMethodDefIndex(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundMaximumMethodDefIndex(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1895,10 +2145,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (analysisKind != this.AnalysisKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundInstrumentationPayloadRoot(this.Syntax, analysisKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundInstrumentationPayloadRoot(this.Syntax, this.AnalysisKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1931,10 +2188,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundModuleVersionId(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundModuleVersionId(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -1967,10 +2231,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundModuleVersionIdString(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundModuleVersionIdString(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2009,10 +2280,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (document != this.Document || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundSourceDocumentIndex(this.Syntax, document, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundSourceDocumentIndex(this.Syntax, this.Document, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2055,10 +2333,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (method != this.Method || getMethodFromHandle != this.GetMethodFromHandle || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundMethodInfo(this.Syntax, method, getMethodFromHandle, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundMethodInfo(this.Syntax, this.Method, this.GetMethodFromHandle, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2101,10 +2386,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (field != this.Field || getFieldFromHandle != this.GetFieldFromHandle || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundFieldInfo(this.Syntax, field, getFieldFromHandle, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundFieldInfo(this.Syntax, this.Field, this.GetFieldFromHandle, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2135,10 +2427,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (constantValueOpt != this.ConstantValueOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDefaultExpression(this.Syntax, constantValueOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDefaultExpression(this.Syntax, this.ConstantValueOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2174,10 +2473,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || targetType != this.TargetType || conversion != this.Conversion || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundIsOperator(this.Syntax, operand, targetType, conversion, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundIsOperator(this.Syntax, this.Operand, this.TargetType, this.Conversion, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2213,10 +2519,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || targetType != this.TargetType || conversion != this.Conversion || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAsOperator(this.Syntax, operand, targetType, conversion, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAsOperator(this.Syntax, this.Operand, this.TargetType, this.Conversion, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2248,10 +2561,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (sourceType != this.SourceType || constantValueOpt != this.ConstantValueOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundSizeOfOperator(this.Syntax, sourceType, constantValueOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundSizeOfOperator(this.Syntax, this.SourceType, this.ConstantValueOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2298,10 +2618,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (operand != this.Operand || conversion != this.Conversion || isBaseConversion != this.IsBaseConversion || @checked != this.Checked || explicitCastInCode != this.ExplicitCastInCode || constantValueOpt != this.ConstantValueOpt || conversionGroupOpt != this.ConversionGroupOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConversion(this.Syntax, operand, conversion, isBaseConversion, @checked, explicitCastInCode, constantValueOpt, conversionGroupOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConversion(this.Syntax, this.Operand, this.Conversion, this.IsBaseConversion, this.Checked, this.ExplicitCastInCode, this.ConstantValueOpt, this.ConversionGroupOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2334,10 +2661,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundArgList(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundArgList(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2368,10 +2702,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (arguments != this.Arguments || argumentRefKindsOpt != this.ArgumentRefKindsOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundArgListOperator(this.Syntax, arguments, argumentRefKindsOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundArgListOperator(this.Syntax, this.Arguments, this.ArgumentRefKindsOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2410,10 +2751,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(elementPointerType, this.ElementPointerType, TypeCompareKind.ConsiderEverything) || elementPointerTypeConversion != this.ElementPointerTypeConversion || expression != this.Expression || getPinnableOpt != this.GetPinnableOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundFixedLocalCollectionInitializer(this.Syntax, elementPointerType, elementPointerTypeConversion, expression, getPinnableOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundFixedLocalCollectionInitializer(this.Syntax, this.ElementPointerType, this.ElementPointerTypeConversion, this.Expression, this.GetPinnableOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2452,7 +2800,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (statementOpt != this.StatementOpt)
             {
                 var result = new BoundSequencePoint(this.Syntax, statementOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2483,7 +2831,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (statementOpt != this.StatementOpt || span != this.Span)
             {
                 var result = new BoundSequencePointWithSpan(this.Syntax, statementOpt, span, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2519,7 +2867,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || localFunctions != this.LocalFunctions || statements != this.Statements)
             {
                 var result = new BoundBlock(this.Syntax, locals, localFunctions, statements, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2551,7 +2899,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || statements != this.Statements)
             {
                 var result = new BoundScope(this.Syntax, locals, statements, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2586,7 +2934,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (fields != this.Fields || statement != this.Statement)
             {
                 var result = new BoundStateMachineScope(this.Syntax, fields, statement, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2624,7 +2972,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (localSymbol != this.LocalSymbol || declaredType != this.DeclaredType || initializerOpt != this.InitializerOpt)
             {
                 var result = new BoundLocalDeclaration(this.Syntax, localSymbol, declaredType, initializerOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2664,7 +3012,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (disposeMethodOpt != this.DisposeMethodOpt || iDisposableConversion != this.IDisposableConversion || awaitOpt != this.AwaitOpt || declaration != this.Declaration)
             {
                 var result = new BoundUsingLocalDeclaration(this.Syntax, disposeMethodOpt, iDisposableConversion, awaitOpt, declaration, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2701,7 +3049,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (symbol != this.Symbol || blockBody != this.BlockBody || expressionBody != this.ExpressionBody)
             {
                 var result = new BoundLocalFunctionStatement(this.Syntax, symbol, blockBody, expressionBody, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2735,7 +3083,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (flavor != this.Flavor)
             {
                 var result = new BoundNoOpStatement(this.Syntax, flavor, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2766,7 +3114,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (refKind != this.RefKind || expressionOpt != this.ExpressionOpt)
             {
                 var result = new BoundReturnStatement(this.Syntax, refKind, expressionOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2797,7 +3145,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression)
             {
                 var result = new BoundYieldReturnStatement(this.Syntax, expression, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2844,7 +3192,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expressionOpt != this.ExpressionOpt)
             {
                 var result = new BoundThrowStatement(this.Syntax, expressionOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2875,7 +3223,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression)
             {
                 var result = new BoundExpressionStatement(this.Syntax, expression, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2915,7 +3263,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label)
             {
                 var result = new BoundBreakStatement(this.Syntax, label, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -2955,7 +3303,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label)
             {
                 var result = new BoundContinueStatement(this.Syntax, label, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3009,7 +3357,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || innerLocals != this.InnerLocals || innerLocalFunctions != this.InnerLocalFunctions || switchSections != this.SwitchSections || decisionDag != this.DecisionDag || defaultLabel != this.DefaultLabel || breakLabel != this.BreakLabel)
             {
                 var result = new BoundSwitchStatement(this.Syntax, expression, innerLocals, innerLocalFunctions, switchSections, decisionDag, defaultLabel, breakLabel, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3051,7 +3399,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || cases != this.Cases || defaultLabel != this.DefaultLabel || equalityMethod != this.EqualityMethod)
             {
                 var result = new BoundSwitchDispatch(this.Syntax, expression, cases, defaultLabel, equalityMethod, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3089,7 +3437,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (condition != this.Condition || consequence != this.Consequence || alternativeOpt != this.AlternativeOpt)
             {
                 var result = new BoundIfStatement(this.Syntax, condition, consequence, alternativeOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3176,7 +3524,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || condition != this.Condition || body != this.Body || breakLabel != this.BreakLabel || continueLabel != this.ContinueLabel)
             {
                 var result = new BoundDoStatement(this.Syntax, locals, condition, body, breakLabel, continueLabel, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3208,7 +3556,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || condition != this.Condition || body != this.Body || breakLabel != this.BreakLabel || continueLabel != this.ContinueLabel)
             {
                 var result = new BoundWhileStatement(this.Syntax, locals, condition, body, breakLabel, continueLabel, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3258,7 +3606,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (outerLocals != this.OuterLocals || initializer != this.Initializer || innerLocals != this.InnerLocals || condition != this.Condition || increment != this.Increment || body != this.Body || breakLabel != this.BreakLabel || continueLabel != this.ContinueLabel)
             {
                 var result = new BoundForStatement(this.Syntax, outerLocals, initializer, innerLocals, condition, increment, body, breakLabel, continueLabel, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3321,7 +3669,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (enumeratorInfoOpt != this.EnumeratorInfoOpt || elementConversion != this.ElementConversion || iterationVariableType != this.IterationVariableType || iterationVariables != this.IterationVariables || iterationErrorExpressionOpt != this.IterationErrorExpressionOpt || expression != this.Expression || deconstructionOpt != this.DeconstructionOpt || awaitOpt != this.AwaitOpt || body != this.Body || @checked != this.Checked || breakLabel != this.BreakLabel || continueLabel != this.ContinueLabel)
             {
                 var result = new BoundForEachStatement(this.Syntax, enumeratorInfoOpt, elementConversion, iterationVariableType, iterationVariables, iterationErrorExpressionOpt, expression, deconstructionOpt, awaitOpt, body, @checked, breakLabel, continueLabel, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3356,7 +3704,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (deconstructionAssignment != this.DeconstructionAssignment || targetPlaceholder != this.TargetPlaceholder)
             {
                 var result = new BoundForEachDeconstructStep(this.Syntax, deconstructionAssignment, targetPlaceholder, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3406,7 +3754,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || declarationOpt != this.DeclarationOpt || expressionOpt != this.ExpressionOpt || iDisposableConversion != this.IDisposableConversion || body != this.Body || awaitOpt != this.AwaitOpt || disposeMethodOpt != this.DisposeMethodOpt)
             {
                 var result = new BoundUsingStatement(this.Syntax, locals, declarationOpt, expressionOpt, iDisposableConversion, body, awaitOpt, disposeMethodOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3445,7 +3793,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || declaration != this.Declaration || body != this.Body)
             {
                 var result = new BoundFixedStatement(this.Syntax, locals, declaration, body, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3480,7 +3828,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (argument != this.Argument || body != this.Body)
             {
                 var result = new BoundLockStatement(this.Syntax, argument, body, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3524,7 +3872,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (tryBlock != this.TryBlock || catchBlocks != this.CatchBlocks || finallyBlockOpt != this.FinallyBlockOpt || finallyLabelOpt != this.FinallyLabelOpt || preferFaultHandler != this.PreferFaultHandler)
             {
                 var result = new BoundTryStatement(this.Syntax, tryBlock, catchBlocks, finallyBlockOpt, finallyLabelOpt, preferFaultHandler, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3571,7 +3919,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || exceptionSourceOpt != this.ExceptionSourceOpt || !TypeSymbol.Equals(exceptionTypeOpt, this.ExceptionTypeOpt, TypeCompareKind.ConsiderEverything) || exceptionFilterOpt != this.ExceptionFilterOpt || body != this.Body || isSynthesizedAsyncCatchAll != this.IsSynthesizedAsyncCatchAll)
             {
                 var result = new BoundCatchBlock(this.Syntax, locals, exceptionSourceOpt, exceptionTypeOpt, exceptionFilterOpt, body, isSynthesizedAsyncCatchAll, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -3605,10 +3953,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (constantValueOpt != this.ConstantValueOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundLiteral(this.Syntax, constantValueOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundLiteral(this.Syntax, this.ConstantValueOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3641,10 +3996,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundThisReference(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundThisReference(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3677,10 +4039,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundPreviousSubmissionReference(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPreviousSubmissionReference(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3713,10 +4082,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundHostObjectMemberReference(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundHostObjectMemberReference(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3743,10 +4119,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundBaseReference(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundBaseReference(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3797,10 +4180,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (localSymbol != this.LocalSymbol || declarationKind != this.DeclarationKind || constantValueOpt != this.ConstantValueOpt || isNullableUnknown != this.IsNullableUnknown || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundLocal(this.Syntax, localSymbol, declarationKind, constantValueOpt, isNullableUnknown, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundLocal(this.Syntax, this.LocalSymbol, this.DeclarationKind, this.ConstantValueOpt, this.IsNullableUnknown, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3845,10 +4235,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (localSymbol != this.LocalSymbol || emitExpressions != this.EmitExpressions || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundPseudoVariable(this.Syntax, localSymbol, emitExpressions, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPseudoVariable(this.Syntax, this.LocalSymbol, this.EmitExpressions, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3881,10 +4278,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (rangeVariableSymbol != this.RangeVariableSymbol || value != this.Value || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundRangeVariable(this.Syntax, rangeVariableSymbol, value, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundRangeVariable(this.Syntax, this.RangeVariableSymbol, this.Value, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3923,10 +4327,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (parameterSymbol != this.ParameterSymbol || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundParameter(this.Syntax, parameterSymbol, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundParameter(this.Syntax, this.ParameterSymbol, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -3963,7 +4374,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label)
             {
                 var result = new BoundLabelStatement(this.Syntax, label, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4000,7 +4411,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label || caseExpressionOpt != this.CaseExpressionOpt || labelExpressionOpt != this.LabelExpressionOpt)
             {
                 var result = new BoundGotoStatement(this.Syntax, label, caseExpressionOpt, labelExpressionOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4035,7 +4446,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label || body != this.Body)
             {
                 var result = new BoundLabeledStatement(this.Syntax, label, body, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4075,10 +4486,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundLabel(this.Syntax, label, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundLabel(this.Syntax, this.Label, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -4115,7 +4533,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (statements != this.Statements)
             {
                 var result = new BoundStatementList(this.Syntax, statements, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4153,7 +4571,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (condition != this.Condition || jumpIfTrue != this.JumpIfTrue || label != this.Label)
             {
                 var result = new BoundConditionalGoto(this.Syntax, condition, jumpIfTrue, label, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4198,10 +4616,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || switchArms != this.SwitchArms || decisionDag != this.DecisionDag || defaultLabel != this.DefaultLabel || reportedNotExhaustive != this.ReportedNotExhaustive || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundSwitchExpression(this.Syntax, expression, switchArms, decisionDag, defaultLabel, reportedNotExhaustive, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundSwitchExpression(this.Syntax, this.Expression, this.SwitchArms, this.DecisionDag, this.DefaultLabel, this.ReportedNotExhaustive, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -4244,7 +4669,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || pattern != this.Pattern || whenClause != this.WhenClause || value != this.Value || label != this.Label)
             {
                 var result = new BoundSwitchExpressionArm(this.Syntax, locals, pattern, whenClause, value, label, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4284,7 +4709,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (rootNode != this.RootNode)
             {
                 var result = new BoundDecisionDag(this.Syntax, rootNode, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4333,7 +4758,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (evaluation != this.Evaluation || next != this.Next)
             {
                 var result = new BoundEvaluationDecisionDagNode(this.Syntax, evaluation, next, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4372,7 +4797,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (test != this.Test || whenTrue != this.WhenTrue || whenFalse != this.WhenFalse)
             {
                 var result = new BoundTestDecisionDagNode(this.Syntax, test, whenTrue, whenFalse, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4413,7 +4838,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (bindings != this.Bindings || whenExpression != this.WhenExpression || whenTrue != this.WhenTrue || whenFalse != this.WhenFalse)
             {
                 var result = new BoundWhenDecisionDagNode(this.Syntax, bindings, whenExpression, whenTrue, whenFalse, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4453,7 +4878,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label)
             {
                 var result = new BoundLeafDecisionDagNode(this.Syntax, label, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4505,7 +4930,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything) || source != this.Source || index != this.Index)
             {
                 var result = new BoundDagTemp(this.Syntax, type, source, index, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4537,7 +4962,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything) || input != this.Input)
             {
                 var result = new BoundDagTypeTest(this.Syntax, type, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4565,7 +4990,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (input != this.Input)
             {
                 var result = new BoundDagNonNullTest(this.Syntax, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4593,7 +5018,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (input != this.Input)
             {
                 var result = new BoundDagNullTest(this.Syntax, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4625,7 +5050,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (value != this.Value || input != this.Input)
             {
                 var result = new BoundDagValueTest(this.Syntax, value, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4669,7 +5094,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (deconstructMethod != this.DeconstructMethod || input != this.Input)
             {
                 var result = new BoundDagDeconstructEvaluation(this.Syntax, deconstructMethod, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4701,7 +5126,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything) || input != this.Input)
             {
                 var result = new BoundDagTypeEvaluation(this.Syntax, type, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4733,7 +5158,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (field != this.Field || input != this.Input)
             {
                 var result = new BoundDagFieldEvaluation(this.Syntax, field, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4765,7 +5190,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (property != this.Property || input != this.Input)
             {
                 var result = new BoundDagPropertyEvaluation(this.Syntax, property, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4800,7 +5225,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (property != this.Property || index != this.Index || input != this.Input)
             {
                 var result = new BoundDagIndexEvaluation(this.Syntax, property, index, input, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4836,7 +5261,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || switchLabels != this.SwitchLabels || statements != this.Statements)
             {
                 var result = new BoundSwitchSection(this.Syntax, locals, switchLabels, statements, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4874,7 +5299,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (label != this.Label || pattern != this.Pattern || whenClause != this.WhenClause)
             {
                 var result = new BoundSwitchLabel(this.Syntax, label, pattern, whenClause, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -4921,10 +5346,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundSequencePointExpression(this.Syntax, expression, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundSequencePointExpression(this.Syntax, this.Expression, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -4961,10 +5393,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || sideEffects != this.SideEffects || value != this.Value || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundSequence(this.Syntax, locals, sideEffects, value, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundSequence(this.Syntax, this.Locals, this.SideEffects, this.Value, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5001,10 +5440,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || sideEffects != this.SideEffects || value != this.Value || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundSpillSequence(this.Syntax, locals, sideEffects, value, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundSpillSequence(this.Syntax, this.Locals, this.SideEffects, this.Value, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5046,10 +5492,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiver != this.Receiver || typeArgumentsOpt != this.TypeArgumentsOpt || name != this.Name || invoked != this.Invoked || indexed != this.Indexed || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDynamicMemberAccess(this.Syntax, receiver, typeArgumentsOpt, name, invoked, indexed, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDynamicMemberAccess(this.Syntax, this.Receiver, this.TypeArgumentsOpt, this.Name, this.Invoked, this.Indexed, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5105,10 +5558,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || applicableMethods != this.ApplicableMethods || expression != this.Expression || arguments != this.Arguments || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDynamicInvocation(this.Syntax, argumentNamesOpt, argumentRefKindsOpt, applicableMethods, expression, arguments, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDynamicInvocation(this.Syntax, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.ApplicableMethods, this.Expression, this.Arguments, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5141,10 +5601,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiver != this.Receiver || accessExpression != this.AccessExpression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConditionalAccess(this.Syntax, receiver, accessExpression, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConditionalAccess(this.Syntax, this.Receiver, this.AccessExpression, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5186,10 +5653,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiver != this.Receiver || hasValueMethodOpt != this.HasValueMethodOpt || whenNotNull != this.WhenNotNull || whenNullOpt != this.WhenNullOpt || id != this.Id || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundLoweredConditionalAccess(this.Syntax, receiver, hasValueMethodOpt, whenNotNull, whenNullOpt, id, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundLoweredConditionalAccess(this.Syntax, this.Receiver, this.HasValueMethodOpt, this.WhenNotNull, this.WhenNullOpt, this.Id, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5226,10 +5700,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (id != this.Id || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConditionalReceiver(this.Syntax, id, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConditionalReceiver(this.Syntax, this.Id, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5262,10 +5743,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (valueTypeReceiver != this.ValueTypeReceiver || referenceTypeReceiver != this.ReferenceTypeReceiver || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundComplexConditionalReceiver(this.Syntax, valueTypeReceiver, referenceTypeReceiver, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundComplexConditionalReceiver(this.Syntax, this.ValueTypeReceiver, this.ReferenceTypeReceiver, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5309,10 +5797,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (typeArgumentsOpt != this.TypeArgumentsOpt || name != this.Name || methods != this.Methods || lookupSymbolOpt != this.LookupSymbolOpt || lookupError != this.LookupError || flags != this.Flags || receiverOpt != this.ReceiverOpt || resultKind != this.ResultKind)
             {
                 var result = new BoundMethodGroup(this.Syntax, typeArgumentsOpt, name, methods, lookupSymbolOpt, lookupError, flags, receiverOpt, resultKind, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundMethodGroup(this.Syntax, this.TypeArgumentsOpt, this.Name, this.Methods, this.LookupSymbolOpt, this.LookupError, this.Flags, this.ReceiverOpt, this.ResultKind, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5340,10 +5835,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (properties != this.Properties || receiverOpt != this.ReceiverOpt || resultKind != this.ResultKind)
             {
                 var result = new BoundPropertyGroup(this.Syntax, properties, receiverOpt, resultKind, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPropertyGroup(this.Syntax, this.Properties, this.ReceiverOpt, this.ResultKind, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5404,10 +5906,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiverOpt != this.ReceiverOpt || method != this.Method || arguments != this.Arguments || argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || isDelegateCall != this.IsDelegateCall || expanded != this.Expanded || invokedAsExtensionMethod != this.InvokedAsExtensionMethod || argsToParamsOpt != this.ArgsToParamsOpt || resultKind != this.ResultKind || binderOpt != this.BinderOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundCall(this.Syntax, receiverOpt, method, arguments, argumentNamesOpt, argumentRefKindsOpt, isDelegateCall, expanded, invokedAsExtensionMethod, argsToParamsOpt, resultKind, binderOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundCall(this.Syntax, this.ReceiverOpt, this.Method, this.Arguments, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.IsDelegateCall, this.Expanded, this.InvokedAsExtensionMethod, this.ArgsToParamsOpt, this.ResultKind, this.BinderOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5449,10 +5958,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (@event != this.Event || isAddition != this.IsAddition || isDynamic != this.IsDynamic || receiverOpt != this.ReceiverOpt || argument != this.Argument || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundEventAssignmentOperator(this.Syntax, @event, isAddition, isDynamic, receiverOpt, argument, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundEventAssignmentOperator(this.Syntax, this.Event, this.IsAddition, this.IsDynamic, this.ReceiverOpt, this.Argument, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5495,10 +6011,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (constructor != this.Constructor || constructorArguments != this.ConstructorArguments || constructorArgumentNamesOpt != this.ConstructorArgumentNamesOpt || namedArguments != this.NamedArguments || resultKind != this.ResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAttribute(this.Syntax, constructor, constructorArguments, constructorArgumentNamesOpt, namedArguments, resultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAttribute(this.Syntax, this.Constructor, this.ConstructorArguments, this.ConstructorArgumentNamesOpt, this.NamedArguments, this.ResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5556,10 +6079,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (constructor != this.Constructor || constructorsGroup != this.ConstructorsGroup || arguments != this.Arguments || argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || expanded != this.Expanded || argsToParamsOpt != this.ArgsToParamsOpt || constantValueOpt != this.ConstantValueOpt || initializerExpressionOpt != this.InitializerExpressionOpt || binderOpt != this.BinderOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundObjectCreationExpression(this.Syntax, constructor, constructorsGroup, arguments, argumentNamesOpt, argumentRefKindsOpt, expanded, argsToParamsOpt, constantValueOpt, initializerExpressionOpt, binderOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundObjectCreationExpression(this.Syntax, this.Constructor, this.ConstructorsGroup, this.Arguments, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.Expanded, this.ArgsToParamsOpt, this.ConstantValueOpt, this.InitializerExpressionOpt, this.BinderOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5605,10 +6135,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (argumentNamesOpt != this.ArgumentNamesOpt || inferredNamesOpt != this.InferredNamesOpt || arguments != this.Arguments || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundTupleLiteral(this.Syntax, argumentNamesOpt, inferredNamesOpt, arguments, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTupleLiteral(this.Syntax, this.ArgumentNamesOpt, this.InferredNamesOpt, this.Arguments, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5637,10 +6174,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(naturalTypeOpt, this.NaturalTypeOpt, TypeCompareKind.ConsiderEverything) || arguments != this.Arguments || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConvertedTupleLiteral(this.Syntax, naturalTypeOpt, arguments, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConvertedTupleLiteral(this.Syntax, this.NaturalTypeOpt, this.Arguments, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5686,10 +6230,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (name != this.Name || arguments != this.Arguments || argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || initializerExpressionOpt != this.InitializerExpressionOpt || applicableMethods != this.ApplicableMethods || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDynamicObjectCreationExpression(this.Syntax, name, arguments, argumentNamesOpt, argumentRefKindsOpt, initializerExpressionOpt, applicableMethods, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDynamicObjectCreationExpression(this.Syntax, this.Name, this.Arguments, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.InitializerExpressionOpt, this.ApplicableMethods, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5720,10 +6271,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (guidString != this.GuidString || initializerExpressionOpt != this.InitializerExpressionOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundNoPiaObjectCreationExpression(this.Syntax, guidString, initializerExpressionOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundNoPiaObjectCreationExpression(this.Syntax, this.GuidString, this.InitializerExpressionOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5765,10 +6323,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (initializers != this.Initializers || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundObjectInitializerExpression(this.Syntax, initializers, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundObjectInitializerExpression(this.Syntax, this.Initializers, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5823,10 +6388,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (memberSymbol != this.MemberSymbol || arguments != this.Arguments || argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || expanded != this.Expanded || argsToParamsOpt != this.ArgsToParamsOpt || resultKind != this.ResultKind || !TypeSymbol.Equals(receiverType, this.ReceiverType, TypeCompareKind.ConsiderEverything) || binderOpt != this.BinderOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundObjectInitializerMember(this.Syntax, memberSymbol, arguments, argumentNamesOpt, argumentRefKindsOpt, expanded, argsToParamsOpt, resultKind, receiverType, binderOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundObjectInitializerMember(this.Syntax, this.MemberSymbol, this.Arguments, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.Expanded, this.ArgsToParamsOpt, this.ResultKind, this.ReceiverType, this.BinderOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5871,10 +6443,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (memberName != this.MemberName || !TypeSymbol.Equals(receiverType, this.ReceiverType, TypeCompareKind.ConsiderEverything) || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDynamicObjectInitializerMember(this.Syntax, memberName, receiverType, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDynamicObjectInitializerMember(this.Syntax, this.MemberName, this.ReceiverType, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5900,10 +6479,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (initializers != this.Initializers || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundCollectionInitializerExpression(this.Syntax, initializers, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundCollectionInitializerExpression(this.Syntax, this.Initializers, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5955,10 +6541,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (addMethod != this.AddMethod || arguments != this.Arguments || implicitReceiverOpt != this.ImplicitReceiverOpt || expanded != this.Expanded || argsToParamsOpt != this.ArgsToParamsOpt || invokedAsExtensionMethod != this.InvokedAsExtensionMethod || resultKind != this.ResultKind || binderOpt != this.BinderOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundCollectionElementInitializer(this.Syntax, addMethod, arguments, implicitReceiverOpt, expanded, argsToParamsOpt, invokedAsExtensionMethod, resultKind, binderOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundCollectionElementInitializer(this.Syntax, this.AddMethod, this.Arguments, this.ImplicitReceiverOpt, this.Expanded, this.ArgsToParamsOpt, this.InvokedAsExtensionMethod, this.ResultKind, this.BinderOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -5989,10 +6582,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (applicableMethods != this.ApplicableMethods || expression != this.Expression || arguments != this.Arguments || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDynamicCollectionElementInitializer(this.Syntax, applicableMethods, expression, arguments, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDynamicCollectionElementInitializer(this.Syntax, this.ApplicableMethods, this.Expression, this.Arguments, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6025,10 +6625,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundImplicitReceiver(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundImplicitReceiver(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6065,10 +6672,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (constructor != this.Constructor || arguments != this.Arguments || declarations != this.Declarations || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAnonymousObjectCreationExpression(this.Syntax, constructor, arguments, declarations, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAnonymousObjectCreationExpression(this.Syntax, this.Constructor, this.Arguments, this.Declarations, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6107,10 +6721,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (property != this.Property || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundAnonymousPropertyDeclaration(this.Syntax, property, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundAnonymousPropertyDeclaration(this.Syntax, this.Property, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6138,10 +6759,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (initializerExpressionOpt != this.InitializerExpressionOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundNewT(this.Syntax, initializerExpressionOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundNewT(this.Syntax, this.InitializerExpressionOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6176,10 +6804,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (argument != this.Argument || methodOpt != this.MethodOpt || isExtensionMethod != this.IsExtensionMethod || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDelegateCreationExpression(this.Syntax, argument, methodOpt, isExtensionMethod, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDelegateCreationExpression(this.Syntax, this.Argument, this.MethodOpt, this.IsExtensionMethod, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6211,10 +6846,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (bounds != this.Bounds || initializerOpt != this.InitializerOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundArrayCreation(this.Syntax, bounds, initializerOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundArrayCreation(this.Syntax, this.Bounds, this.InitializerOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6242,10 +6884,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (initializers != this.Initializers)
             {
                 var result = new BoundArrayInitialization(this.Syntax, initializers, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundArrayInitialization(this.Syntax, this.Initializers, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6292,10 +6941,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(elementType, this.ElementType, TypeCompareKind.ConsiderEverything) || count != this.Count || initializerOpt != this.InitializerOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundStackAllocArrayCreation(this.Syntax, elementType, count, initializerOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundStackAllocArrayCreation(this.Syntax, this.ElementType, this.Count, this.InitializerOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6322,10 +6978,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(elementType, this.ElementType, TypeCompareKind.ConsiderEverything) || count != this.Count || initializerOpt != this.InitializerOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConvertedStackAllocExpression(this.Syntax, elementType, count, initializerOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConvertedStackAllocExpression(this.Syntax, this.ElementType, this.Count, this.InitializerOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6370,10 +7033,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiverOpt != this.ReceiverOpt || fieldSymbol != this.FieldSymbol || constantValueOpt != this.ConstantValueOpt || resultKind != this.ResultKind || isByValue != this.IsByValue || isDeclaration != this.IsDeclaration || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundFieldAccess(this.Syntax, receiverOpt, fieldSymbol, constantValueOpt, resultKind, isByValue, isDeclaration, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundFieldAccess(this.Syntax, this.ReceiverOpt, this.FieldSymbol, this.ConstantValueOpt, this.ResultKind, this.IsByValue, this.IsDeclaration, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6412,10 +7082,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (fieldSymbol != this.FieldSymbol || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundHoistedFieldAccess(this.Syntax, fieldSymbol, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundHoistedFieldAccess(this.Syntax, this.FieldSymbol, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6451,10 +7128,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiverOpt != this.ReceiverOpt || propertySymbol != this.PropertySymbol || resultKind != this.ResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundPropertyAccess(this.Syntax, receiverOpt, propertySymbol, resultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundPropertyAccess(this.Syntax, this.ReceiverOpt, this.PropertySymbol, this.ResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6493,10 +7177,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiverOpt != this.ReceiverOpt || eventSymbol != this.EventSymbol || isUsableAsField != this.IsUsableAsField || resultKind != this.ResultKind || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundEventAccess(this.Syntax, receiverOpt, eventSymbol, isUsableAsField, resultKind, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundEventAccess(this.Syntax, this.ReceiverOpt, this.EventSymbol, this.IsUsableAsField, this.ResultKind, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6550,10 +7241,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiverOpt != this.ReceiverOpt || indexer != this.Indexer || arguments != this.Arguments || argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || expanded != this.Expanded || argsToParamsOpt != this.ArgsToParamsOpt || binderOpt != this.BinderOpt || useSetterForDefaultArgumentGeneration != this.UseSetterForDefaultArgumentGeneration || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundIndexerAccess(this.Syntax, receiverOpt, indexer, arguments, argumentNamesOpt, argumentRefKindsOpt, expanded, argsToParamsOpt, binderOpt, useSetterForDefaultArgumentGeneration, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundIndexerAccess(this.Syntax, this.ReceiverOpt, this.Indexer, this.Arguments, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.Expanded, this.ArgsToParamsOpt, this.BinderOpt, this.UseSetterForDefaultArgumentGeneration, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6595,10 +7293,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (receiverOpt != this.ReceiverOpt || arguments != this.Arguments || argumentNamesOpt != this.ArgumentNamesOpt || argumentRefKindsOpt != this.ArgumentRefKindsOpt || applicableIndexers != this.ApplicableIndexers || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDynamicIndexerAccess(this.Syntax, receiverOpt, arguments, argumentNamesOpt, argumentRefKindsOpt, applicableIndexers, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDynamicIndexerAccess(this.Syntax, this.ReceiverOpt, this.Arguments, this.ArgumentNamesOpt, this.ArgumentRefKindsOpt, this.ApplicableIndexers, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6642,7 +7347,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (unboundLambda != this.UnboundLambda || symbol != this.Symbol || body != this.Body || diagnostics != this.Diagnostics || binder != this.Binder || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundLambda(this.Syntax, unboundLambda, symbol, body, diagnostics, binder, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -6682,10 +7387,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (data != this.Data)
             {
                 var result = new UnboundLambda(this.Syntax, data, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new UnboundLambda(this.Syntax, this.Data, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6721,7 +7433,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (value != this.Value || definedSymbol != this.DefinedSymbol || binder != this.Binder || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundQueryClause(this.Syntax, value, definedSymbol, binder, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -6749,7 +7461,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (statements != this.Statements)
             {
                 var result = new BoundTypeOrInstanceInitializers(this.Syntax, statements, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -6785,10 +7497,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (argument != this.Argument || constantValueOpt != this.ConstantValueOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundNameOfOperator(this.Syntax, argument, constantValueOpt, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundNameOfOperator(this.Syntax, this.Argument, this.ConstantValueOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6816,10 +7535,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (parts != this.Parts || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundInterpolatedString(this.Syntax, parts, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundInterpolatedString(this.Syntax, this.Parts, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6853,10 +7579,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (value != this.Value || alignment != this.Alignment || format != this.Format || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundStringInsert(this.Syntax, value, alignment, format, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundStringInsert(this.Syntax, this.Value, this.Alignment, this.Format, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6900,10 +7633,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || pattern != this.Pattern || decisionDag != this.DecisionDag || whenTrueLabel != this.WhenTrueLabel || whenFalseLabel != this.WhenFalseLabel || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundIsPatternExpression(this.Syntax, expression, pattern, decisionDag, whenTrueLabel, whenFalseLabel, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundIsPatternExpression(this.Syntax, this.Expression, this.Pattern, this.DecisionDag, this.WhenTrueLabel, this.WhenFalseLabel, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -6960,7 +7700,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (value != this.Value || constantValue != this.ConstantValue || !TypeSymbol.Equals(inputType, this.InputType, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundConstantPattern(this.Syntax, value, constantValue, inputType, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -6996,7 +7736,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(inputType, this.InputType, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDiscardPattern(this.Syntax, inputType, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7036,7 +7776,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (variable != this.Variable || variableAccess != this.VariableAccess || declaredType != this.DeclaredType || isVar != this.IsVar || !TypeSymbol.Equals(inputType, this.InputType, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDeclarationPattern(this.Syntax, variable, variableAccess, declaredType, isVar, inputType, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7082,7 +7822,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (declaredType != this.DeclaredType || deconstructMethod != this.DeconstructMethod || deconstruction != this.Deconstruction || properties != this.Properties || variable != this.Variable || variableAccess != this.VariableAccess || !TypeSymbol.Equals(inputType, this.InputType, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundRecursivePattern(this.Syntax, declaredType, deconstructMethod, deconstruction, properties, variable, variableAccess, inputType, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7122,7 +7862,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (getLengthMethod != this.GetLengthMethod || getItemMethod != this.GetItemMethod || subpatterns != this.Subpatterns || !TypeSymbol.Equals(inputType, this.InputType, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundITuplePattern(this.Syntax, getLengthMethod, getItemMethod, subpatterns, inputType, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7156,7 +7896,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (symbol != this.Symbol || pattern != this.Pattern)
             {
                 var result = new BoundSubpattern(this.Syntax, symbol, pattern, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7186,10 +7926,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (!TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundDiscardExpression(this.Syntax, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundDiscardExpression(this.Syntax, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -7217,10 +7964,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundThrowExpression(this.Syntax, expression, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundThrowExpression(this.Syntax, this.Expression, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -7263,10 +8017,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (variableSymbol != this.VariableSymbol || receiverOpt != this.ReceiverOpt)
             {
                 var result = new OutVariablePendingInference(this.Syntax, variableSymbol, receiverOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new OutVariablePendingInference(this.Syntax, this.VariableSymbol, this.ReceiverOpt, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -7291,10 +8052,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (variableSymbol != this.VariableSymbol || receiverOpt != this.ReceiverOpt)
             {
                 var result = new DeconstructionVariablePendingInference(this.Syntax, variableSymbol, receiverOpt, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new DeconstructionVariablePendingInference(this.Syntax, this.VariableSymbol, this.ReceiverOpt, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -7355,7 +8123,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (blockBody != this.BlockBody || expressionBody != this.ExpressionBody)
             {
                 var result = new BoundNonConstructorMethodBody(this.Syntax, blockBody, expressionBody, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7389,7 +8157,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (locals != this.Locals || initializer != this.Initializer || blockBody != this.BlockBody || expressionBody != this.ExpressionBody)
             {
                 var result = new BoundConstructorMethodBody(this.Syntax, locals, initializer, blockBody, expressionBody, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
@@ -7423,10 +8191,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (expression != this.Expression || nullableAnnotation != this.NullableAnnotation || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
             {
                 var result = new BoundExpressionWithNullability(this.Syntax, expression, nullableAnnotation, type, this.HasErrors);
-                result.WasCompilerGenerated = this.WasCompilerGenerated;
+                result.CopyAttributes(this);
                 return result;
             }
             return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundExpressionWithNullability(this.Syntax, this.Expression, this.NullableAnnotation, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -7452,6 +8227,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return VisitTupleOperandPlaceholder(node as BoundTupleOperandPlaceholder, arg);
                 case BoundKind.AwaitableValuePlaceholder: 
                     return VisitAwaitableValuePlaceholder(node as BoundAwaitableValuePlaceholder, arg);
+                case BoundKind.DisposableValuePlaceholder: 
+                    return VisitDisposableValuePlaceholder(node as BoundDisposableValuePlaceholder, arg);
                 case BoundKind.Dup: 
                     return VisitDup(node as BoundDup, arg);
                 case BoundKind.PassByCopy: 
@@ -7470,8 +8247,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return VisitNamespaceExpression(node as BoundNamespaceExpression, arg);
                 case BoundKind.UnaryOperator: 
                     return VisitUnaryOperator(node as BoundUnaryOperator, arg);
-                case BoundKind.SuppressNullableWarningExpression: 
-                    return VisitSuppressNullableWarningExpression(node as BoundSuppressNullableWarningExpression, arg);
                 case BoundKind.IncrementOperator: 
                     return VisitIncrementOperator(node as BoundIncrementOperator, arg);
                 case BoundKind.AddressOfOperator: 
@@ -7834,6 +8609,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return this.DefaultVisit(node, arg);
         }
+        public virtual R VisitDisposableValuePlaceholder(BoundDisposableValuePlaceholder node, A arg)
+        {
+            return this.DefaultVisit(node, arg);
+        }
         public virtual R VisitDup(BoundDup node, A arg)
         {
             return this.DefaultVisit(node, arg);
@@ -7867,10 +8646,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node, arg);
         }
         public virtual R VisitUnaryOperator(BoundUnaryOperator node, A arg)
-        {
-            return this.DefaultVisit(node, arg);
-        }
-        public virtual R VisitSuppressNullableWarningExpression(BoundSuppressNullableWarningExpression node, A arg)
         {
             return this.DefaultVisit(node, arg);
         }
@@ -8558,6 +9333,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return this.DefaultVisit(node);
         }
+        public virtual BoundNode VisitDisposableValuePlaceholder(BoundDisposableValuePlaceholder node)
+        {
+            return this.DefaultVisit(node);
+        }
         public virtual BoundNode VisitDup(BoundDup node)
         {
             return this.DefaultVisit(node);
@@ -8591,10 +9370,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node);
         }
         public virtual BoundNode VisitUnaryOperator(BoundUnaryOperator node)
-        {
-            return this.DefaultVisit(node);
-        }
-        public virtual BoundNode VisitSuppressNullableWarningExpression(BoundSuppressNullableWarningExpression node)
         {
             return this.DefaultVisit(node);
         }
@@ -9286,6 +10061,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return null;
         }
+        public override BoundNode VisitDisposableValuePlaceholder(BoundDisposableValuePlaceholder node)
+        {
+            return null;
+        }
         public override BoundNode VisitDup(BoundDup node)
         {
             return null;
@@ -9326,11 +10105,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public override BoundNode VisitUnaryOperator(BoundUnaryOperator node)
         {
             this.Visit(node.Operand);
-            return null;
-        }
-        public override BoundNode VisitSuppressNullableWarningExpression(BoundSuppressNullableWarningExpression node)
-        {
-            this.Visit(node.Expression);
             return null;
         }
         public override BoundNode VisitIncrementOperator(BoundIncrementOperator node)
@@ -10232,6 +11006,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
             TypeSymbol type = this.VisitType(node.Type);
             return node.Update(type);
         }
+        public override BoundNode VisitDisposableValuePlaceholder(BoundDisposableValuePlaceholder node)
+        {
+            TypeSymbol type = this.VisitType(node.Type);
+            return node.Update(type);
+        }
         public override BoundNode VisitDup(BoundDup node)
         {
             TypeSymbol type = this.VisitType(node.Type);
@@ -10280,12 +11059,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundExpression operand = (BoundExpression)this.Visit(node.Operand);
             TypeSymbol type = this.VisitType(node.Type);
             return node.Update(node.OperatorKind, operand, node.ConstantValueOpt, node.MethodOpt, node.ResultKind, type);
-        }
-        public override BoundNode VisitSuppressNullableWarningExpression(BoundSuppressNullableWarningExpression node)
-        {
-            BoundExpression expression = (BoundExpression)this.Visit(node.Expression);
-            TypeSymbol type = this.VisitType(node.Type);
-            return node.Update(expression, type);
         }
         public override BoundNode VisitIncrementOperator(BoundIncrementOperator node)
         {
@@ -11324,7 +12097,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("deconstructValuePlaceholder", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("valEscape", node.ValEscape, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11332,7 +12106,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("tupleOperandPlaceholder", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11340,7 +12115,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("awaitableValuePlaceholder", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
+            }
+            );
+        }
+        public override TreeDumperNode VisitDisposableValuePlaceholder(BoundDisposableValuePlaceholder node, object arg)
+        {
+            return new TreeDumperNode("disposableValuePlaceholder", null, new TreeDumperNode[]
+            {
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11349,7 +12134,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("dup", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("refKind", node.RefKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11358,7 +12144,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("passByCopy", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11369,7 +12156,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("symbols", node.Symbols, null),
                 new TreeDumperNode("childBoundNodes", null, from x in node.ChildBoundNodes select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11396,7 +12184,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("aliasOpt", node.AliasOpt, null),
                 new TreeDumperNode("inferredType", node.InferredType, null),
                 new TreeDumperNode("boundContainingTypeOpt", null, new TreeDumperNode[] { Visit(node.BoundContainingTypeOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11405,7 +12194,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("typeOrValueExpression", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("data", node.Data, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11415,7 +12205,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("namespaceSymbol", node.NamespaceSymbol, null),
                 new TreeDumperNode("aliasOpt", node.AliasOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11428,16 +12219,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
                 new TreeDumperNode("methodOpt", node.MethodOpt, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
-            }
-            );
-        }
-        public override TreeDumperNode VisitSuppressNullableWarningExpression(BoundSuppressNullableWarningExpression node, object arg)
-        {
-            return new TreeDumperNode("suppressNullableWarningExpression", null, new TreeDumperNode[]
-            {
-                new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11451,7 +12234,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("operandConversion", node.OperandConversion, null),
                 new TreeDumperNode("resultConversion", node.ResultConversion, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11461,7 +12245,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
                 new TreeDumperNode("isManaged", node.IsManaged, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11470,7 +12255,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("pointerIndirectionOperator", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11481,7 +12267,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("index", null, new TreeDumperNode[] { Visit(node.Index, null) }),
                 new TreeDumperNode("@checked", node.Checked, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11491,7 +12278,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
                 new TreeDumperNode("getTypeFromHandle", node.GetTypeFromHandle, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11500,7 +12288,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("makeRefOperator", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11509,7 +12298,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("refValueOperator", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11519,7 +12309,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
                 new TreeDumperNode("methodOpt", node.MethodOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11530,7 +12321,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("leftOperand", null, new TreeDumperNode[] { Visit(node.LeftOperand, null) }),
                 new TreeDumperNode("rightOperand", null, new TreeDumperNode[] { Visit(node.RightOperand, null) }),
                 new TreeDumperNode("methodOpt", node.MethodOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11544,7 +12336,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("left", null, new TreeDumperNode[] { Visit(node.Left, null) }),
                 new TreeDumperNode("right", null, new TreeDumperNode[] { Visit(node.Right, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11558,7 +12351,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("convertedRight", null, new TreeDumperNode[] { Visit(node.ConvertedRight, null) }),
                 new TreeDumperNode("operatorKind", node.OperatorKind, null),
                 new TreeDumperNode("operators", node.Operators, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11573,7 +12367,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("left", null, new TreeDumperNode[] { Visit(node.Left, null) }),
                 new TreeDumperNode("right", null, new TreeDumperNode[] { Visit(node.Right, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11587,7 +12382,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("leftConversion", node.LeftConversion, null),
                 new TreeDumperNode("finalConversion", node.FinalConversion, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11598,7 +12394,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("left", null, new TreeDumperNode[] { Visit(node.Left, null) }),
                 new TreeDumperNode("right", null, new TreeDumperNode[] { Visit(node.Right, null) }),
                 new TreeDumperNode("isRef", node.IsRef, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11609,7 +12406,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("left", null, new TreeDumperNode[] { Visit(node.Left, null) }),
                 new TreeDumperNode("right", null, new TreeDumperNode[] { Visit(node.Right, null) }),
                 new TreeDumperNode("isUsed", node.IsUsed, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11621,7 +12419,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("rightOperand", null, new TreeDumperNode[] { Visit(node.RightOperand, null) }),
                 new TreeDumperNode("leftConversion", node.LeftConversion, null),
                 new TreeDumperNode("operatorResultKind", node.OperatorResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11631,7 +12430,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("leftOperand", null, new TreeDumperNode[] { Visit(node.LeftOperand, null) }),
                 new TreeDumperNode("rightOperand", null, new TreeDumperNode[] { Visit(node.RightOperand, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11644,7 +12444,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("consequence", null, new TreeDumperNode[] { Visit(node.Consequence, null) }),
                 new TreeDumperNode("alternative", null, new TreeDumperNode[] { Visit(node.Alternative, null) }),
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11654,7 +12455,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("indices", null, from x in node.Indices select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11663,7 +12465,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("arrayLength", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11673,7 +12476,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("awaitableInfo", node.AwaitableInfo, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11683,7 +12487,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("sourceType", null, new TreeDumperNode[] { Visit(node.SourceType, null) }),
                 new TreeDumperNode("getTypeFromHandle", node.GetTypeFromHandle, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11692,7 +12497,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("methodDefIndex", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("method", node.Method, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11700,7 +12506,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("maximumMethodDefIndex", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11709,7 +12516,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("instrumentationPayloadRoot", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("analysisKind", node.AnalysisKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11717,7 +12525,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("moduleVersionId", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11725,7 +12534,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("moduleVersionIdString", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11734,7 +12544,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("sourceDocumentIndex", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("document", node.Document, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11744,7 +12555,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("method", node.Method, null),
                 new TreeDumperNode("getMethodFromHandle", node.GetMethodFromHandle, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11754,7 +12566,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("field", node.Field, null),
                 new TreeDumperNode("getFieldFromHandle", node.GetFieldFromHandle, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11763,7 +12576,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("defaultExpression", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11774,7 +12588,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
                 new TreeDumperNode("targetType", null, new TreeDumperNode[] { Visit(node.TargetType, null) }),
                 new TreeDumperNode("conversion", node.Conversion, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11785,7 +12600,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("operand", null, new TreeDumperNode[] { Visit(node.Operand, null) }),
                 new TreeDumperNode("targetType", null, new TreeDumperNode[] { Visit(node.TargetType, null) }),
                 new TreeDumperNode("conversion", node.Conversion, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11795,7 +12611,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("sourceType", null, new TreeDumperNode[] { Visit(node.SourceType, null) }),
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11810,7 +12627,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("explicitCastInCode", node.ExplicitCastInCode, null),
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
                 new TreeDumperNode("conversionGroupOpt", node.ConversionGroupOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11818,7 +12636,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("argList", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11828,7 +12647,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("arguments", null, from x in node.Arguments select Visit(x, null)),
                 new TreeDumperNode("argumentRefKindsOpt", node.ArgumentRefKindsOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -11840,7 +12660,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("elementPointerTypeConversion", node.ElementPointerTypeConversion, null),
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("getPinnableOpt", node.GetPinnableOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12147,7 +12968,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("literal", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12155,7 +12977,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("thisReference", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12163,7 +12986,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("previousSubmissionReference", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12171,7 +12995,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("hostObjectMemberReference", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12179,7 +13004,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("baseReference", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12191,7 +13017,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("declarationKind", node.DeclarationKind, null),
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
                 new TreeDumperNode("isNullableUnknown", node.IsNullableUnknown, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12201,7 +13028,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("localSymbol", node.LocalSymbol, null),
                 new TreeDumperNode("emitExpressions", node.EmitExpressions, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12211,7 +13039,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("rangeVariableSymbol", node.RangeVariableSymbol, null),
                 new TreeDumperNode("value", null, new TreeDumperNode[] { Visit(node.Value, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12220,7 +13049,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("parameter", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("parameterSymbol", node.ParameterSymbol, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12256,7 +13086,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("label", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("label", node.Label, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12287,7 +13118,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("decisionDag", null, new TreeDumperNode[] { Visit(node.DecisionDag, null) }),
                 new TreeDumperNode("defaultLabel", node.DefaultLabel, null),
                 new TreeDumperNode("reportedNotExhaustive", node.ReportedNotExhaustive, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12464,7 +13296,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("sequencePointExpression", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12475,7 +13308,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("locals", node.Locals, null),
                 new TreeDumperNode("sideEffects", null, from x in node.SideEffects select Visit(x, null)),
                 new TreeDumperNode("value", null, new TreeDumperNode[] { Visit(node.Value, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12486,7 +13320,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("locals", node.Locals, null),
                 new TreeDumperNode("sideEffects", null, from x in node.SideEffects select Visit(x, null)),
                 new TreeDumperNode("value", null, new TreeDumperNode[] { Visit(node.Value, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12499,7 +13334,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("name", node.Name, null),
                 new TreeDumperNode("invoked", node.Invoked, null),
                 new TreeDumperNode("indexed", node.Indexed, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12512,7 +13348,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("applicableMethods", node.ApplicableMethods, null),
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("arguments", null, from x in node.Arguments select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12522,7 +13359,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("receiver", null, new TreeDumperNode[] { Visit(node.Receiver, null) }),
                 new TreeDumperNode("accessExpression", null, new TreeDumperNode[] { Visit(node.AccessExpression, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12535,7 +13373,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("whenNotNull", null, new TreeDumperNode[] { Visit(node.WhenNotNull, null) }),
                 new TreeDumperNode("whenNullOpt", null, new TreeDumperNode[] { Visit(node.WhenNullOpt, null) }),
                 new TreeDumperNode("id", node.Id, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12544,7 +13383,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("conditionalReceiver", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("id", node.Id, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12554,7 +13394,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("valueTypeReceiver", null, new TreeDumperNode[] { Visit(node.ValueTypeReceiver, null) }),
                 new TreeDumperNode("referenceTypeReceiver", null, new TreeDumperNode[] { Visit(node.ReferenceTypeReceiver, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12570,7 +13411,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("flags", node.Flags, null),
                 new TreeDumperNode("receiverOpt", null, new TreeDumperNode[] { Visit(node.ReceiverOpt, null) }),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12581,7 +13423,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("properties", node.Properties, null),
                 new TreeDumperNode("receiverOpt", null, new TreeDumperNode[] { Visit(node.ReceiverOpt, null) }),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12600,7 +13443,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("argsToParamsOpt", node.ArgsToParamsOpt, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("binderOpt", node.BinderOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12613,7 +13457,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("isDynamic", node.IsDynamic, null),
                 new TreeDumperNode("receiverOpt", null, new TreeDumperNode[] { Visit(node.ReceiverOpt, null) }),
                 new TreeDumperNode("argument", null, new TreeDumperNode[] { Visit(node.Argument, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12626,7 +13471,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("constructorArgumentNamesOpt", node.ConstructorArgumentNamesOpt, null),
                 new TreeDumperNode("namedArguments", null, from x in node.NamedArguments select Visit(x, null)),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12644,7 +13490,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
                 new TreeDumperNode("initializerExpressionOpt", null, new TreeDumperNode[] { Visit(node.InitializerExpressionOpt, null) }),
                 new TreeDumperNode("binderOpt", node.BinderOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12655,7 +13502,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("argumentNamesOpt", node.ArgumentNamesOpt, null),
                 new TreeDumperNode("inferredNamesOpt", node.InferredNamesOpt, null),
                 new TreeDumperNode("arguments", null, from x in node.Arguments select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12665,7 +13513,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("naturalTypeOpt", node.NaturalTypeOpt, null),
                 new TreeDumperNode("arguments", null, from x in node.Arguments select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12679,7 +13528,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("argumentRefKindsOpt", node.ArgumentRefKindsOpt, null),
                 new TreeDumperNode("initializerExpressionOpt", null, new TreeDumperNode[] { Visit(node.InitializerExpressionOpt, null) }),
                 new TreeDumperNode("applicableMethods", node.ApplicableMethods, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12689,7 +13539,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("guidString", node.GuidString, null),
                 new TreeDumperNode("initializerExpressionOpt", null, new TreeDumperNode[] { Visit(node.InitializerExpressionOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12698,7 +13549,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("objectInitializerExpression", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("initializers", null, from x in node.Initializers select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12715,7 +13567,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("receiverType", node.ReceiverType, null),
                 new TreeDumperNode("binderOpt", node.BinderOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12725,7 +13578,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("memberName", node.MemberName, null),
                 new TreeDumperNode("receiverType", node.ReceiverType, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12734,7 +13588,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("collectionInitializerExpression", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("initializers", null, from x in node.Initializers select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12750,7 +13605,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("invokedAsExtensionMethod", node.InvokedAsExtensionMethod, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("binderOpt", node.BinderOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12761,7 +13617,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("applicableMethods", node.ApplicableMethods, null),
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("arguments", null, from x in node.Arguments select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12769,7 +13626,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("implicitReceiver", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12780,7 +13638,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("constructor", node.Constructor, null),
                 new TreeDumperNode("arguments", null, from x in node.Arguments select Visit(x, null)),
                 new TreeDumperNode("declarations", null, from x in node.Declarations select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12789,7 +13648,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("anonymousPropertyDeclaration", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("property", node.Property, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12798,7 +13658,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("newT", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("initializerExpressionOpt", null, new TreeDumperNode[] { Visit(node.InitializerExpressionOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12809,7 +13670,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("argument", null, new TreeDumperNode[] { Visit(node.Argument, null) }),
                 new TreeDumperNode("methodOpt", node.MethodOpt, null),
                 new TreeDumperNode("isExtensionMethod", node.IsExtensionMethod, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12819,7 +13681,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("bounds", null, from x in node.Bounds select Visit(x, null)),
                 new TreeDumperNode("initializerOpt", null, new TreeDumperNode[] { Visit(node.InitializerOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12828,7 +13691,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("arrayInitialization", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("initializers", null, from x in node.Initializers select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12839,7 +13703,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("elementType", node.ElementType, null),
                 new TreeDumperNode("count", null, new TreeDumperNode[] { Visit(node.Count, null) }),
                 new TreeDumperNode("initializerOpt", null, new TreeDumperNode[] { Visit(node.InitializerOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12850,7 +13715,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("elementType", node.ElementType, null),
                 new TreeDumperNode("count", null, new TreeDumperNode[] { Visit(node.Count, null) }),
                 new TreeDumperNode("initializerOpt", null, new TreeDumperNode[] { Visit(node.InitializerOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12864,7 +13730,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("resultKind", node.ResultKind, null),
                 new TreeDumperNode("isByValue", node.IsByValue, null),
                 new TreeDumperNode("isDeclaration", node.IsDeclaration, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12873,7 +13740,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("hoistedFieldAccess", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("fieldSymbol", node.FieldSymbol, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12884,7 +13752,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("receiverOpt", null, new TreeDumperNode[] { Visit(node.ReceiverOpt, null) }),
                 new TreeDumperNode("propertySymbol", node.PropertySymbol, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12896,7 +13765,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("eventSymbol", node.EventSymbol, null),
                 new TreeDumperNode("isUsableAsField", node.IsUsableAsField, null),
                 new TreeDumperNode("resultKind", node.ResultKind, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12913,7 +13783,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("argsToParamsOpt", node.ArgsToParamsOpt, null),
                 new TreeDumperNode("binderOpt", node.BinderOpt, null),
                 new TreeDumperNode("useSetterForDefaultArgumentGeneration", node.UseSetterForDefaultArgumentGeneration, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12926,7 +13797,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("argumentNamesOpt", node.ArgumentNamesOpt, null),
                 new TreeDumperNode("argumentRefKindsOpt", node.ArgumentRefKindsOpt, null),
                 new TreeDumperNode("applicableIndexers", node.ApplicableIndexers, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12939,7 +13811,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("body", null, new TreeDumperNode[] { Visit(node.Body, null) }),
                 new TreeDumperNode("diagnostics", node.Diagnostics, null),
                 new TreeDumperNode("binder", node.Binder, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12948,7 +13821,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("unboundLambda", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("data", node.Data, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12959,7 +13833,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("value", null, new TreeDumperNode[] { Visit(node.Value, null) }),
                 new TreeDumperNode("definedSymbol", node.DefinedSymbol, null),
                 new TreeDumperNode("binder", node.Binder, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12977,7 +13852,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("argument", null, new TreeDumperNode[] { Visit(node.Argument, null) }),
                 new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12986,7 +13862,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("interpolatedString", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("parts", null, from x in node.Parts select Visit(x, null)),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -12997,7 +13874,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("value", null, new TreeDumperNode[] { Visit(node.Value, null) }),
                 new TreeDumperNode("alignment", null, new TreeDumperNode[] { Visit(node.Alignment, null) }),
                 new TreeDumperNode("format", null, new TreeDumperNode[] { Visit(node.Format, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13010,7 +13888,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("decisionDag", null, new TreeDumperNode[] { Visit(node.DecisionDag, null) }),
                 new TreeDumperNode("whenTrueLabel", node.WhenTrueLabel, null),
                 new TreeDumperNode("whenFalseLabel", node.WhenFalseLabel, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13082,7 +13961,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("discardExpression", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13091,7 +13971,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new TreeDumperNode("throwExpression", null, new TreeDumperNode[]
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13101,7 +13982,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("variableSymbol", node.VariableSymbol, null),
                 new TreeDumperNode("receiverOpt", null, new TreeDumperNode[] { Visit(node.ReceiverOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13111,7 +13993,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("variableSymbol", node.VariableSymbol, null),
                 new TreeDumperNode("receiverOpt", null, new TreeDumperNode[] { Visit(node.ReceiverOpt, null) }),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13119,7 +14002,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return new TreeDumperNode("outDeconstructVarPendingInference", null, new TreeDumperNode[]
             {
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }
@@ -13149,7 +14033,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("nullableAnnotation", node.NullableAnnotation, null),
-                new TreeDumperNode("type", node.Type, null)
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }
             );
         }

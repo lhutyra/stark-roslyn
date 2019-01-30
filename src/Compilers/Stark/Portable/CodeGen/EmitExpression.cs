@@ -3359,6 +3359,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
 
         private void EmitBox(TypeSymbol type, SyntaxNode syntaxNode)
         {
+            Debug.Assert(!type.IsRefLikeType);
+
             _builder.EmitOpCode(ILOpCode.Box);
             EmitSymbolToken(type, syntaxNode);
         }

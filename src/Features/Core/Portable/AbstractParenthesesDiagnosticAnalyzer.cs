@@ -4,6 +4,7 @@ using StarkPlatform.CodeAnalysis.CodeStyle;
 using StarkPlatform.CodeAnalysis.LanguageServices;
 using StarkPlatform.CodeAnalysis.Options;
 using Roslyn.Utilities;
+using System.Collections.Immutable;
 
 namespace StarkPlatform.CodeAnalysis.RemoveUnnecessaryParentheses
 {
@@ -12,6 +13,11 @@ namespace StarkPlatform.CodeAnalysis.RemoveUnnecessaryParentheses
         protected AbstractParenthesesDiagnosticAnalyzer(
             string descriptorId, LocalizableString title, LocalizableString message)
             : base(descriptorId, title, message)
+        {
+        }
+
+        protected AbstractParenthesesDiagnosticAnalyzer(ImmutableArray<DiagnosticDescriptor> diagnosticDescriptors)
+            : base(diagnosticDescriptors)
         {
         }
 

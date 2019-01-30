@@ -270,7 +270,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                 if (!diagnostics.Add(location, useSiteDiagnostics))
                 {
-                    constraintType.CheckAllConstraints(conversions, location, diagnostics);
+                    constraintType.CheckAllConstraints(DeclaringCompilation, conversions, location, diagnostics);
                 }
             }
         }

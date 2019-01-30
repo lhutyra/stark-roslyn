@@ -11,10 +11,5 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
                 return this.Sizes.Count;
             }
         }
-
-        public ArrayRankSpecifierSyntax Update(SyntaxToken openBracketToken, SeparatedSyntaxList<ExpressionSyntax> sizes, SyntaxToken closeBracketToken)
-        {
-            return this.Update(openBracketToken, sizes, closeBracketToken, this.QuestionToken);
-        }
     }
 }

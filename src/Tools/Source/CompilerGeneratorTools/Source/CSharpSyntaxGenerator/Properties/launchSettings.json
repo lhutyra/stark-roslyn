@@ -2,7 +2,7 @@
   "profiles": {
     "CSharpSyntaxGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "Syntax.xml C:\\Code\\stark\\stark-lang\\ext\\roslyn\\src\\Compilers\\CSharp\\Portable\\Generated\\"
+      "commandLineArgs": "Syntax.xml C:\\Code\\stark\\stark-lang\\ext\\roslyn\\src\\Compilers\\Stark\\Portable\\Generated\\"
     }
   }
 }

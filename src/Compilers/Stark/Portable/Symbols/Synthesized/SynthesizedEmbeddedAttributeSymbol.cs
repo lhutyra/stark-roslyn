@@ -90,7 +90,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         public override bool IsImplicitlyDeclared => true;
 
-        internal override bool IsManagedType => false;
+        internal override ManagedKind ManagedKind => ManagedKind.Managed;
 
         public override NamedTypeSymbol ConstructedFrom => this;
 

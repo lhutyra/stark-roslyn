@@ -88,6 +88,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             AwaitableInfo awaitOpt = null;
             TypeSymbol declarationTypeOpt = null;
             MethodSymbol disposeMethodOpt = null;
+            TypeSymbol awaitableTypeOpt = null;
 
             if (isExpression)
             {
@@ -114,11 +115,19 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             if (hasAwait)
             {
-                TypeSymbol taskType = originalBinder.Compilation.GetWellKnownType(WellKnownType.System_Threading_Tasks_ValueTask);
-                hasErrors |= ReportUseSiteDiagnostics(taskType, diagnostics, awaitKeyword);
+                BoundAwaitableValuePlaceholder placeholderOpt;
+                if (awaitableTypeOpt is null)
+                {
+                    placeholderOpt = null;
+                }
+                else
+                {
+                    hasErrors |= ReportUseSiteDiagnostics(awaitableTypeOpt, diagnostics, awaitKeyword);
+                    placeholderOpt = new BoundAwaitableValuePlaceholder(syntax, awaitableTypeOpt).MakeCompilerGenerated();
+                }
 
-                BoundExpression placeholder = new BoundAwaitableValuePlaceholder(syntax, taskType).MakeCompilerGenerated();
-                awaitOpt = originalBinder.BindAwaitInfo(placeholder, syntax, awaitKeyword.GetLocation(), diagnostics, ref hasErrors);
+                // even if we don't have a proper value to await, we'll still report bad usages of `await`
+                awaitOpt = originalBinder.BindAwaitInfo(placeholderOpt, syntax, awaitKeyword.GetLocation(), diagnostics, ref hasErrors);
             }
 
             // This is not awesome, but its factored. 
@@ -143,6 +152,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     hasErrors);
             }
 
+            // initializes iDisposableConversion, awaitableTypeOpt and disposeMethodOpt
             bool populateDisposableConversionOrDisposeMethod(bool fromExpression)
             {
                 HashSet<DiagnosticInfo> useSiteDiagnostics = null;
@@ -152,14 +162,18 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                 if (iDisposableConversion.IsImplicit)
                 {
+                    if (hasAwait)
+                    {
+                        awaitableTypeOpt = originalBinder.Compilation.GetWellKnownType(WellKnownType.System_Threading_Tasks_ValueTask);
+                    }
                     return true;
                 }
 
                 TypeSymbol type = fromExpression ? expressionOpt.Type : declarationTypeOpt;
 
-                // If this is a ref struct, try binding via pattern.
+                // If this is a ref struct, or we're in a valid asynchronous using, try binding via pattern.
                 // We won't need to try and bind a second time if it fails, as async dispose can't be pattern based (ref structs are not allowed in async methods)
-                if (!(type is null) && type.IsValueType && type.IsRefLikeType)
+                if (!(type is null) && (type.IsRefLikeType || hasAwait))
                 {
                     BoundExpression receiver = fromExpression
                                                ? expressionOpt
@@ -168,6 +182,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     disposeMethodOpt = originalBinder.TryFindDisposePatternMethod(receiver, syntax, hasAwait, diagnostics);
                     if (!(disposeMethodOpt is null))
                     {
+                        if (hasAwait)
+                        {
+                            awaitableTypeOpt = disposeMethodOpt.ReturnType.TypeSymbol;
+                        }
                         return true;
                     }
                 }

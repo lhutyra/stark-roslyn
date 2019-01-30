@@ -2498,12 +2498,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 eosToken: Token(SyntaxKind.SemicolonToken));
         }
 
-        /// <summary>Creates a new ArrayRankSpecifierSyntax instance.</summary>
-        public static ArrayRankSpecifierSyntax ArrayRankSpecifier(SyntaxToken openBracketToken, SeparatedSyntaxList<ExpressionSyntax> sizes, SyntaxToken closeBracketToken)
-        {
-            return ArrayRankSpecifier(openBracketToken, sizes, closeBracketToken, questionToken: default(SyntaxToken));
-        }
-
         /// <summary>Creates a new ClassOrStructConstraintSyntax instance.</summary>
         public static ClassOrStructConstraintSyntax ClassOrStructConstraint(SyntaxKind kind, SyntaxToken classOrStructKeyword)
         {

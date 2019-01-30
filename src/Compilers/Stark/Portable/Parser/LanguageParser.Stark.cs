@@ -5575,14 +5575,7 @@ tryAgain:
 
                 // Eat the close brace and we're done.
                 var close = this.EatToken(SyntaxKind.CloseBracketToken);
-
-                SyntaxToken questionToken = null;
-                if (questionTokenModeOpt != null && this.CurrentToken.Kind == SyntaxKind.QuestionToken)
-                {
-                    questionToken = EatNullableQualifierIfApplicable(questionTokenModeOpt.GetValueOrDefault());
-                }
-
-                return _syntaxFactory.ArrayRankSpecifier(open, list, close, questionToken);
+                return _syntaxFactory.ArrayRankSpecifier(open, list, close);
             }
             finally
             {

@@ -78,7 +78,7 @@ namespace CSharpSyntaxGenerator
                     var outputSyntaxFile = Path.Combine(outputPath, $"{prefix}.Syntax.Generated.cs");
 
                     WriteToFile(tree, SourceWriter.WriteMain, outputMainFile);
-                    WriteToFile(tree, SourceWriter.WriteInternal, outputInternalFile);
+                    WriteToFile(tree, SourceWriter.WriteInternal, outputInternalFile);                
                     WriteToFile(tree, SourceWriter.WriteSyntax, outputSyntaxFile);
                 }
                 if (writeTests)

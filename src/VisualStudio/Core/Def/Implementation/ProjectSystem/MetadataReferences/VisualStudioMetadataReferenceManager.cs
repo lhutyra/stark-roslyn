@@ -82,9 +82,9 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
             return null;
         }
 
-        public PortableExecutableReference CreateMetadataReferenceSnapshot(string filePath, MetadataReferenceProperties properties)
+        public PortableExecutableReference CreateMetadataReference(string filePath, MetadataReferenceProperties properties)
         {
-            return new VisualStudioMetadataReference.Snapshot(this, properties, filePath, fileChangeTrackerOpt: null);
+            return new VisualStudioPortableExecutableReference(this, properties, filePath, fileChangeTrackerOpt: null);
         }
 
         public void ClearCache()

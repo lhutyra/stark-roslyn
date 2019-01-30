@@ -59,6 +59,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
         }
 
+        internal override bool IsNestedFunctionBinder => true;
+
         internal override bool IsDirectlyInIterator
         {
             get

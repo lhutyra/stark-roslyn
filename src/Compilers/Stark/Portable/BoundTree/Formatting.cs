@@ -38,11 +38,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         }
     }
 
-    internal sealed partial class BoundSuppressNullableWarningExpression
-    {
-        public override object Display => Expression.Display;
-    }
-
     internal sealed partial class BoundLambda
     {
         public override object Display

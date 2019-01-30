@@ -16,6 +16,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
     /// </summary>
     internal sealed class FileChangeWatcher
     {
+        internal const uint FileChangeFlags = (uint)(_VSFILECHANGEFLAGS.VSFILECHG_Time | _VSFILECHANGEFLAGS.VSFILECHG_Add | _VSFILECHANGEFLAGS.VSFILECHG_Del | _VSFILECHANGEFLAGS.VSFILECHG_Size);
+
         /// <summary>
         /// Gate that is used to guard modifications to <see cref="_taskQueue"/>.
         /// </summary>
@@ -201,7 +203,9 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
 
                 _fileChangeWatcher.EnqueueWork(async service =>
                 {
-                    token.Cookie = await service.AdviseFileChangeAsync(filePath, _VSFILECHANGEFLAGS.VSFILECHG_Size | _VSFILECHANGEFLAGS.VSFILECHG_Time, this).ConfigureAwait(false);
+                    uint cookie;
+                    cookie = await service.AdviseFileChangeAsync(filePath, (_VSFILECHANGEFLAGS)FileChangeFlags, this);
+                    token.Cookie = cookie;        
                 });
 
                 return token;

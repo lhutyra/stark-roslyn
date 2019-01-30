@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using System.Diagnostics;
 using System.Linq;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using StarkPlatform.CodeAnalysis.Stark.Syntax;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using StarkPlatform.CodeAnalysis.Text;
-using Roslyn.Utilities;
 using static StarkPlatform.CodeAnalysis.Stark.Binder;
 
 namespace StarkPlatform.CodeAnalysis.Stark
@@ -234,8 +232,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             switch (expr.Kind)
             {
-                case BoundKind.SuppressNullableWarningExpression:
-                    return NullableAnnotation.Unknown;
                 case BoundKind.Local:
                     {
                         var local = (BoundLocal)expr;

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -183,9 +182,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             BoundStatement result;
 
-            if (enumeratorInfo.NeedsDisposeMethod && TryGetDisposeMethod(forEachSyntax, enumeratorInfo, out MethodSymbol disposeMethod))
+            if (enumeratorInfo.NeedsDisposal)
             {
-                BoundStatement tryFinally = WrapWithTryFinallyDispose(forEachSyntax, enumeratorInfo, enumeratorType, boundEnumeratorVar, whileLoop, disposeMethod);
+                BoundStatement tryFinally = WrapWithTryFinallyDispose(forEachSyntax, enumeratorInfo, enumeratorType, boundEnumeratorVar, whileLoop);
 
                 // E e = ((C)(x)).GetEnumerator();
                 // try {
@@ -224,9 +223,33 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return Binder.TryGetSpecialTypeMember(_compilation, SpecialMember.System_IDisposable__Dispose, forEachSyntax, _diagnostics, out disposeMethod);
         }
 
+        /// <summary>
+        /// There are three possible cases where we need disposal:
+        /// - pattern-based disposal (we have a Dispose/DisposeAsync method)
+        /// - interface-based disposal (the enumerator type converts to IDisposable/IAsyncDisposable)
+        /// - we need to do a runtime check for IDisposable
+        /// </summary>
         private BoundStatement WrapWithTryFinallyDispose(CommonForEachStatementSyntax forEachSyntax, ForEachEnumeratorInfo enumeratorInfo,
-            TypeSymbol enumeratorType, BoundLocal boundEnumeratorVar, BoundStatement rewrittenBody, MethodSymbol disposeMethod)
+            TypeSymbol enumeratorType, BoundLocal boundEnumeratorVar, BoundStatement rewrittenBody)
         {
+            Debug.Assert(enumeratorInfo.NeedsDisposal);
+
+            NamedTypeSymbol idisposableTypeSymbol = null;
+            bool isImplicit = false;
+            MethodSymbol disposeMethod = enumeratorInfo.DisposeMethod; // pattern-based
+
+            if (disposeMethod is null)
+            {
+                TryGetDisposeMethod(forEachSyntax, enumeratorInfo, out disposeMethod); // interface-based
+
+                idisposableTypeSymbol = disposeMethod.ContainingType;
+                var conversions = new TypeConversions(_factory.CurrentFunction.ContainingAssembly.CorLibrary);
+
+                HashSet<DiagnosticInfo> useSiteDiagnostics = null;
+                isImplicit = conversions.ClassifyImplicitConversionFromType(enumeratorType, idisposableTypeSymbol, ref useSiteDiagnostics).IsImplicit;
+                _diagnostics.Add(forEachSyntax, useSiteDiagnostics);
+            }
+
             Binder.ReportDiagnosticsIfObsolete(_diagnostics, disposeMethod, forEachSyntax,
                                                hasBaseReceiver: false,
                                                containingMember: _factory.CurrentFunction,
@@ -234,30 +257,24 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                                location: enumeratorInfo.Location);
 
             BoundBlock finallyBlockOpt;
-            var idisposableTypeSymbol = disposeMethod.ContainingType;
-            var conversions = new TypeConversions(_factory.CurrentFunction.ContainingAssembly.CorLibrary);
-            var disposeAwaitableInfoOpt = enumeratorInfo.DisposeAwaitableInfo;
-
-            HashSet<DiagnosticInfo> useSiteDiagnostics = null;
-            var isImplicit = conversions.ClassifyImplicitConversionFromType(enumeratorType, idisposableTypeSymbol, ref useSiteDiagnostics).IsImplicit;
-            _diagnostics.Add(forEachSyntax, useSiteDiagnostics);
-
-            if (isImplicit)
+            if (isImplicit || !(enumeratorInfo.DisposeMethod is null))
             {
-                Debug.Assert(enumeratorInfo.NeedsDisposeMethod);
-
                 Conversion receiverConversion = enumeratorType.IsStructType() ?
                     Conversion.Boxing :
                     Conversion.ImplicitReference;
 
+                BoundExpression receiver = enumeratorInfo.DisposeMethod is null ?
+                    ConvertReceiverForInvocation(forEachSyntax, boundEnumeratorVar, disposeMethod, receiverConversion, idisposableTypeSymbol) :
+                    boundEnumeratorVar;
+
                 // ((IDisposable)e).Dispose() or e.Dispose() or await ((IAsyncDisposable)e).DisposeAsync() or await e.DisposeAsync()
-                // Note: pattern-based async disposal is not allowed (cannot use ref structs in async methods), so the arguments are known to be empty even for async case
-                BoundExpression disposeCall = BoundCall.Synthesized(
+                BoundExpression disposeCall = MakeCallWithNoExplicitArgument(
                     forEachSyntax,
-                    ConvertReceiverForInvocation(forEachSyntax, boundEnumeratorVar, disposeMethod, receiverConversion, idisposableTypeSymbol),
-                    disposeMethod,
-                    ImmutableArray<BoundExpression>.Empty);
+                    receiver,
+                    disposeMethod);
+
                 BoundStatement disposeCallStatement;
+                var disposeAwaitableInfoOpt = enumeratorInfo.DisposeAwaitableInfo;
                 if (disposeAwaitableInfoOpt != null)
                 {
                     // await /* disposeCall */
@@ -311,7 +328,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
             else
             {
+                // If we couldn't find either pattern-based or interface-based disposal, and the enumerator type isn't sealed,
+                // and the loop isn't async, then we include a runtime check.
                 Debug.Assert(!enumeratorType.IsSealed);
+                Debug.Assert(!enumeratorInfo.IsAsync);
 
                 // IDisposable d
                 LocalSymbol disposableVar = _factory.SynthesizedLocal(idisposableTypeSymbol);
@@ -333,19 +353,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 // IDisposable d = e as IDisposable;
                 BoundStatement disposableVarDecl = MakeLocalDeclaration(forEachSyntax, disposableVar, disposableVarInitValue);
 
-                // d.Dispose() or async variant
+                // d.Dispose()
                 BoundExpression disposeCall = BoundCall.Synthesized(syntax: forEachSyntax, receiverOpt: boundDisposableVar, method: disposeMethod);
-                BoundStatement disposeCallStatement;
-                if (disposeAwaitableInfoOpt != null)
-                {
-                    // await d.DisposeAsync()
-                    disposeCallStatement = WrapWithAwait(forEachSyntax, disposeCall, disposeAwaitableInfoOpt);
-                    _sawAwaitInExceptionHandler = true;
-                }
-                else
-                {
-                    disposeCallStatement = new BoundExpressionStatement(forEachSyntax, expression: disposeCall);
-                }
+                BoundStatement disposeCallStatement = new BoundExpressionStatement(forEachSyntax, expression: disposeCall);
 
                 // if (d != null) d.Dispose();
                 BoundStatement ifStmt = RewriteIfStatement(

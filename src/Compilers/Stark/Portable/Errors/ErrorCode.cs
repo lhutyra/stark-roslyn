@@ -1627,6 +1627,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_DiscardPatternInSwitchStatement = 8523,
         #endregion diagnostics introduced for recursive patterns
 
+        ERR_IllegalSuppression = 8598,
         WRN_IllegalPPWarningSafeOnly = 8599,
         WRN_ConvertingNullableToNonNullable = 8600,
         WRN_NullReferenceAssignment = 8601,
@@ -1678,6 +1679,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_UsingVarInSwitchCase = 8647,
         ERR_GoToForwardJumpOverUsingVar = 8648,
         ERR_GoToBackwardJumpOverUsingVar = 8649,
+        ERR_IsNullableType = 8650,
+        ERR_AsNullableType = 8651,
+
         #endregion diagnostics introduced for C# 8.0
 
 

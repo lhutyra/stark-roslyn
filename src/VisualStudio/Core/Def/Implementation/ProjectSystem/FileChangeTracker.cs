@@ -15,7 +15,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
 {
     internal sealed class FileChangeTracker : IVsFreeThreadedFileChangeEvents2, IDisposable
     {
-        private const _VSFILECHANGEFLAGS FileChangeFlags = _VSFILECHANGEFLAGS.VSFILECHG_Time | _VSFILECHANGEFLAGS.VSFILECHG_Add | _VSFILECHANGEFLAGS.VSFILECHG_Del | _VSFILECHANGEFLAGS.VSFILECHG_Size;
+        internal const uint FileChangeFlags = (uint)(_VSFILECHANGEFLAGS.VSFILECHG_Time | _VSFILECHANGEFLAGS.VSFILECHG_Add | _VSFILECHANGEFLAGS.VSFILECHG_Del | _VSFILECHANGEFLAGS.VSFILECHG_Size);
 
         private static readonly AsyncLazy<uint?> s_none = new AsyncLazy<uint?>(ct => null, cacheResult: true);
 
@@ -106,7 +106,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
             {
                 try
                 {
-                    return await ((IVsAsyncFileChangeEx)_fileChangeService).AdviseFileChangeAsync(_filePath, FileChangeFlags, this).ConfigureAwait(false);
+                    return await ((IVsAsyncFileChangeEx)_fileChangeService).AdviseFileChangeAsync(_filePath, (_VSFILECHANGEFLAGS) FileChangeFlags, this).ConfigureAwait(false);
                 }
                 catch (Exception e) when (ReportException(e))
                 {
@@ -117,7 +117,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSyst
                 try
                 {
                     Marshal.ThrowExceptionForHR(
-                        _fileChangeService.AdviseFileChange(_filePath, (uint)FileChangeFlags, this, out var newCookie));
+                        _fileChangeService.AdviseFileChange(_filePath, FileChangeWatcher.FileChangeFlags, this, out var newCookie));
                     return newCookie;
                 }
                 catch (Exception e) when (ReportException(e))

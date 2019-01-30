@@ -1,3 +1,7 @@
+StarkPlatform.CodeAnalysis.Editing.DeclarationModifiers.WithIsRef(bool isRef) -> StarkPlatform.CodeAnalysis.Editing.DeclarationModifiers
+StarkPlatform.CodeAnalysis.Solution.WithProjectDocumentsOrder(StarkPlatform.CodeAnalysis.ProjectId projectId, System.Collections.Immutable.ImmutableList<StarkPlatform.CodeAnalysis.DocumentId> documentIds) -> StarkPlatform.CodeAnalysis.Solution
+StarkPlatform.CodeAnalysis.Workspace.ClearOpenDocument(StarkPlatform.CodeAnalysis.DocumentId documentId) -> void
+StarkPlatform.CodeAnalysis.Workspace.ClearOpenDocument(StarkPlatform.CodeAnalysis.DocumentId documentId, bool isSolutionClosing) -> void
 *REMOVED*StarkPlatform.CodeAnalysis.Workspace.ClearOpenDocument(StarkPlatform.CodeAnalysis.DocumentId documentId, bool isSolutionClosing = false) -> void
 abstract StarkPlatform.CodeAnalysis.Editing.SyntaxGenerator.AliasImportDeclaration(string aliasIdentifierName, StarkPlatform.CodeAnalysis.SyntaxNode name) -> StarkPlatform.CodeAnalysis.SyntaxNode
 abstract StarkPlatform.CodeAnalysis.Editing.SyntaxGenerator.NameExpression(StarkPlatform.CodeAnalysis.INamespaceOrTypeSymbol namespaceOrTypeSymbol) -> StarkPlatform.CodeAnalysis.SyntaxNode
@@ -26,9 +30,6 @@ StarkPlatform.CodeAnalysis.FileTextLoader.FileTextLoader(string path, System.Tex
 StarkPlatform.CodeAnalysis.FileTextLoader.Path.get -> string
 StarkPlatform.CodeAnalysis.ProjectChanges.GetChangedDocuments(bool onlyGetDocumentsWithTextChanges) -> System.Collections.Generic.IEnumerable<StarkPlatform.CodeAnalysis.DocumentId>
 StarkPlatform.CodeAnalysis.Solution.AddDocuments(System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.DocumentInfo> documentInfos) -> StarkPlatform.CodeAnalysis.Solution
-StarkPlatform.CodeAnalysis.Solution.WithProjectDocumentsOrder(StarkPlatform.CodeAnalysis.ProjectId projectId, System.Collections.Immutable.ImmutableList<StarkPlatform.CodeAnalysis.DocumentId> documentIds) -> StarkPlatform.CodeAnalysis.Solution
-StarkPlatform.CodeAnalysis.Workspace.ClearOpenDocument(StarkPlatform.CodeAnalysis.DocumentId documentId) -> void
-StarkPlatform.CodeAnalysis.Workspace.ClearOpenDocument(StarkPlatform.CodeAnalysis.DocumentId documentId, bool isSolutionClosing) -> void
 StarkPlatform.CodeAnalysis.Workspace.OnDocumentsAdded(System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.DocumentInfo> documentInfos) -> void
 StarkPlatform.CodeAnalysis.Workspace.OnOutputRefFilePathChanged(StarkPlatform.CodeAnalysis.ProjectId projectId, string outputFilePath) -> void
 override StarkPlatform.CodeAnalysis.FileTextLoader.LoadTextAndVersionAsync(StarkPlatform.CodeAnalysis.Workspace workspace, StarkPlatform.CodeAnalysis.DocumentId documentId, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<StarkPlatform.CodeAnalysis.TextAndVersion>

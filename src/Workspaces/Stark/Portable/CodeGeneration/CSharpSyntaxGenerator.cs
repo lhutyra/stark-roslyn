@@ -1474,7 +1474,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
         private static readonly DeclarationModifiers s_eventFieldModifiers = DeclarationModifiers.New | DeclarationModifiers.Static;
         private static readonly DeclarationModifiers s_indexerModifiers = DeclarationModifiers.Abstract | DeclarationModifiers.New | DeclarationModifiers.Override | DeclarationModifiers.ReadOnly | DeclarationModifiers.Sealed | DeclarationModifiers.Static | DeclarationModifiers.Virtual;
         private static readonly DeclarationModifiers s_classModifiers = DeclarationModifiers.Abstract | DeclarationModifiers.New | DeclarationModifiers.Partial | DeclarationModifiers.Sealed | DeclarationModifiers.Static;
-        private static readonly DeclarationModifiers s_structModifiers = DeclarationModifiers.New | DeclarationModifiers.Partial;
+        private static readonly DeclarationModifiers s_structModifiers = DeclarationModifiers.New | DeclarationModifiers.Partial | DeclarationModifiers.ReadOnly | DeclarationModifiers.Ref;
         private static readonly DeclarationModifiers s_interfaceModifiers = DeclarationModifiers.New | DeclarationModifiers.Partial;
         private static readonly DeclarationModifiers s_accessorModifiers = DeclarationModifiers.Abstract | DeclarationModifiers.New | DeclarationModifiers.Override | DeclarationModifiers.Virtual;
 
@@ -1758,14 +1758,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             }
 
             // partial and ref must be last
-            if (modifiers.IsPartial)
-            {
-                list = list.Add(SyntaxFactory.Token(SyntaxKind.PartialKeyword));
-            }
-
             if (modifiers.IsRef)
             {
                 list = list.Add(SyntaxFactory.Token(SyntaxKind.RefKeyword));
+            }
+
+            if (modifiers.IsPartial)
+            {
+                list = list.Add(SyntaxFactory.Token(SyntaxKind.PartialKeyword));
             }
 
             return list;

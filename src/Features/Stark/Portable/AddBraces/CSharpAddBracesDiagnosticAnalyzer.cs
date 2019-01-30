@@ -2,11 +2,13 @@
 
 using System.Diagnostics;
 using StarkPlatform.CodeAnalysis.CodeStyle;
+using System.Threading;
 using StarkPlatform.CodeAnalysis.Stark.CodeStyle;
 using StarkPlatform.CodeAnalysis.Stark.Extensions;
 using StarkPlatform.CodeAnalysis.Stark.Syntax;
 using StarkPlatform.CodeAnalysis.Diagnostics;
 using FormattingRangeHelper = StarkPlatform.CodeAnalysis.Stark.Utilities.FormattingRangeHelper;
+using StarkPlatform.CodeAnalysis.Text;
 
 namespace StarkPlatform.CodeAnalysis.Stark.Diagnostics.AddBraces
 {
@@ -98,6 +100,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Diagnostics.AddBraces
                 return;
             }
 
+            if (ContainsInterleavedDirective(statement, embeddedStatement, cancellationToken))
+            {
+                return;
+            }
+
             var firstToken = statement.GetFirstToken();
             context.ReportDiagnostic(DiagnosticHelper.Create(
                 Descriptor,
@@ -106,6 +113,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Diagnostics.AddBraces
                 additionalLocations: null,
                 properties: null,
                 SyntaxFacts.GetText(firstToken.Kind())));
+        }
+
+        /// <summary>
+        /// Check if there are interleaved directives on the statement.
+        /// Handles special case with if/else.
+        /// </summary>
+        private static bool ContainsInterleavedDirective(SyntaxNode statement, StatementSyntax embeddedStatement, CancellationToken cancellationToken)
+        {
+            if (statement.Kind() == SyntaxKind.IfStatement)
+            {
+                var ifStatementNode = (IfStatementSyntax)statement;
+                var elseNode = ifStatementNode.Else;
+                if (elseNode != null && !embeddedStatement.IsMissing)
+                {
+                    // For IF/ELSE statements, only the IF part should be checked for interleaved directives when the diagnostic is triggered on the IF.
+                    // A separate diagnostic will be triggered to handle the ELSE part.
+                    var ifStatementSpanWithoutElse = TextSpan.FromBounds(statement.Span.Start, embeddedStatement.Span.End);
+                    return statement.ContainsInterleavedDirective(ifStatementSpanWithoutElse, cancellationToken);
+                }
+            }
+
+            return statement.ContainsInterleavedDirective(cancellationToken);
         }
 
         /// <summary>
