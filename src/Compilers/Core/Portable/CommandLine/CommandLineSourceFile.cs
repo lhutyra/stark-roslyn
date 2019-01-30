@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Describes a source file specification stored on command line arguments.

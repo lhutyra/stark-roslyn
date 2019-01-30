@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Async
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Async
 {
 #pragma warning disable RS1016 // Code fix providers should provide FixAll support. https://github.com/dotnet/roslyn/issues/23528
     internal abstract partial class AbstractAsyncCodeFix : CodeFixProvider

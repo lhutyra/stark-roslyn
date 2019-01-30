@@ -15,15 +15,15 @@ using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGen;
-using Microsoft.CodeAnalysis.Collections;
-using Microsoft.CodeAnalysis.Emit;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGen;
+using StarkPlatform.CodeAnalysis.Collections;
+using StarkPlatform.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Microsoft.DiaSymReader;
 using Roslyn.Utilities;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal abstract partial class MetadataWriter
     {

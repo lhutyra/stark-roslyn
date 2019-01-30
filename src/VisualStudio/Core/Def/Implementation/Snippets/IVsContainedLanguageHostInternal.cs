@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Snippets
 {
     /// <summary>
     /// Redefine IVsContainedLanguageHost so we can call InsertImportsDirective which would 

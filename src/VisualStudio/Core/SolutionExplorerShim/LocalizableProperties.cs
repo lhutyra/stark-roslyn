@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     /// <summary>
     /// This is a verbatim copy of Microsoft.VisualStudio.Shell.LocalizableProperties.

@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Enumeration for possible kinds of type symbols.

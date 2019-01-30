@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     internal interface INavigationBarControllerFactoryService
     {

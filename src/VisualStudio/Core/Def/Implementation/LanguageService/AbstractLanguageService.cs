@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService
 {
     internal abstract partial class AbstractLanguageService
     {

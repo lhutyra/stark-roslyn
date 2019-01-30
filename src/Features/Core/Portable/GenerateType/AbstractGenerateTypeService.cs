@@ -6,19 +6,19 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.LanguageServices.ProjectInfoService;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.LanguageServices.ProjectInfoService;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.GenerateType
+namespace StarkPlatform.CodeAnalysis.GenerateType
 {
     internal abstract partial class AbstractGenerateTypeService<TService, TSimpleNameSyntax, TObjectCreationExpressionSyntax, TExpressionSyntax, TTypeDeclarationSyntax, TArgumentSyntax> :
         IGenerateTypeService

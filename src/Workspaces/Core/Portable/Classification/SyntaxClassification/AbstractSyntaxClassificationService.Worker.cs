@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Classification.Classifiers;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Classification.Classifiers;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Classification
+namespace StarkPlatform.CodeAnalysis.Classification
 {
     internal partial class AbstractSyntaxClassificationService
     {

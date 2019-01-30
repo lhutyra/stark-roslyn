@@ -7,8 +7,8 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
 
 namespace Roslyn.Utilities
 {

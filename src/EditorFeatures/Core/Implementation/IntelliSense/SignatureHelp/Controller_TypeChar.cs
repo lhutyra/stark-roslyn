@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.SignatureHelp;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.SignatureHelp;
 using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp
 {
     internal partial class Controller
     {

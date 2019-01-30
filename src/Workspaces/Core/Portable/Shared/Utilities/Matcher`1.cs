@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     /// <summary>
     /// Helper class to allow one to do simple regular expressions over a sequence of objects (as

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.Remote;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Serialization
+namespace StarkPlatform.CodeAnalysis.Serialization
 {
     internal sealed class SolutionStateChecksums : ChecksumWithChildren
     {

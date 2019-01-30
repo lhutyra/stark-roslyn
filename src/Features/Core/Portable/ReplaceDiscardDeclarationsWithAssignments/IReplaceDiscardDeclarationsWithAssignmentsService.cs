@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.ReplaceDiscardDeclarationsWithAssignments
+namespace StarkPlatform.CodeAnalysis.ReplaceDiscardDeclarationsWithAssignments
 {
     internal interface IReplaceDiscardDeclarationsWithAssignmentsService : ILanguageService
     {

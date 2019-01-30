@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ExtractMethod
+namespace StarkPlatform.CodeAnalysis.ExtractMethod
 {
     internal abstract partial class AbstractSyntaxTriviaService : ISyntaxTriviaService
     {

@@ -10,11 +10,11 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Emit;
-using Microsoft.CodeAnalysis.Collections;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis.Collections;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// TypeDefinition that represents &lt;PrivateImplementationDetails&gt; class.

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Organizing.Organizers
+namespace StarkPlatform.CodeAnalysis.Organizing.Organizers
 {
     internal abstract class AbstractSyntaxNodeOrganizer<TSyntaxNode> : ISyntaxOrganizer
         where TSyntaxNode : SyntaxNode

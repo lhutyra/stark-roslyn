@@ -3,9 +3,9 @@
 using System;
 using System.Globalization;
 using System.Threading;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A class used to provide XML documentation to the compiler for members from metadata. A

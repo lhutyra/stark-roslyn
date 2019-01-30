@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using Microsoft.CodeAnalysis.Editor.Tagging;
+using StarkPlatform.CodeAnalysis.Editor.Tagging;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text.Editor;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging
 {
     internal partial class TaggerEventSources
     {

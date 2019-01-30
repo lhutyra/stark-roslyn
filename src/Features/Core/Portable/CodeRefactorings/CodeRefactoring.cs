@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings
 {
     /// <summary>
     /// Represents a set of transformations that can be applied to a piece of code.

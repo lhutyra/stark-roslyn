@@ -3,13 +3,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements
 {
     public abstract class AbstractExternalCodeType : AbstractExternalCodeElement, EnvDTE.CodeType
     {

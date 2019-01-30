@@ -2,9 +2,9 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A program location in source code.

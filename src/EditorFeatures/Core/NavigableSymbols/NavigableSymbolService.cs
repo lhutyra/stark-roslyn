@@ -3,18 +3,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.NavigableSymbols
+namespace StarkPlatform.CodeAnalysis.Editor.NavigableSymbols
 {
     [Export(typeof(INavigableSymbolSourceProvider))]
     [Name(nameof(NavigableSymbolService))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     internal partial class NavigableSymbolService : INavigableSymbolSourceProvider
     {
         private static readonly object s_key = new object();

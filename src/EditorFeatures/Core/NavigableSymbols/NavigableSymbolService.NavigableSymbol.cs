@@ -3,14 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Editor.GoToDefinition;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.Editor.GoToDefinition;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.FindUsages;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.NavigableSymbols
+namespace StarkPlatform.CodeAnalysis.Editor.NavigableSymbols
 {
     internal partial class NavigableSymbolService
     {

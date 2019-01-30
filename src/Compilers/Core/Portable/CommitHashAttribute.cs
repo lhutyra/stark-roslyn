@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
     internal sealed class CommitHashAttribute : Attribute

@@ -8,11 +8,11 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using Microsoft.Cci;
-using Microsoft.CodeAnalysis.Interop;
+using StarkPlatform.Cci;
+using StarkPlatform.CodeAnalysis.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Provides strong name and signs source assemblies.

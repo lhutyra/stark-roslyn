@@ -3,11 +3,11 @@
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Remote;
-using Microsoft.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     [ExportIncrementalAnalyzerProvider(nameof(RemoteSolutionPopulatorProvider), workspaceKinds: new[] { WorkspaceKind.Host }), Shared]
     internal class RemoteSolutionPopulatorProvider : IIncrementalAnalyzerProvider

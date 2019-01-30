@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Represents a non source code file.

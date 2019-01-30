@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents a set of rules as specified in a ruleset file.

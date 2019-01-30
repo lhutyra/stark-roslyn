@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp
 {
     internal partial class Controller
     {

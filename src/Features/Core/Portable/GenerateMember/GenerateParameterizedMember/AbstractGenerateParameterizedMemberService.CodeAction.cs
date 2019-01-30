@@ -2,12 +2,12 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Editing;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.GenerateMember.GenerateParameterizedMember
+namespace StarkPlatform.CodeAnalysis.GenerateMember.GenerateParameterizedMember
 {
     internal abstract partial class AbstractGenerateParameterizedMemberService<TService, TSimpleNameSyntax, TExpressionSyntax, TInvocationExpressionSyntax>
     {

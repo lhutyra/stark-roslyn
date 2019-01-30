@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     /// <summary>
     /// it holds onto space and wrapping operation need to run between two tokens.

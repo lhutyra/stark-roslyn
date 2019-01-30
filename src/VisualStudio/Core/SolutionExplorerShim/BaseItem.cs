@@ -10,7 +10,7 @@ using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     /// <summary>
     /// Abstract base class for a custom node in Solution Explorer. This utilizes the core

@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Reflection;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// Represents a file referenced by an assembly.

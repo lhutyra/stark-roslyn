@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
     internal struct ClosureDebugInfo : IEquatable<ClosureDebugInfo>

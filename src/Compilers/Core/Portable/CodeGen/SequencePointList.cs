@@ -6,12 +6,12 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
-using Cci = Microsoft.Cci;
+using Cci = StarkPlatform.Cci;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// Maintains a list of sequence points in a space efficient way. Most of the time sequence points

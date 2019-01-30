@@ -6,21 +6,22 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.FindUsages;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.ErrorReporting;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.FindUsages;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using IServiceProvider = System.IServiceProvider;
 using Task = System.Threading.Tasks.Task;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
 {
     internal abstract partial class AbstractObjectBrowserLibraryManager : AbstractLibraryManager, IDisposable
     {

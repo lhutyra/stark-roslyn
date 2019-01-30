@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     /// <summary>
     /// Context for code fixes provided by a <see cref="CodeFixProvider"/>.

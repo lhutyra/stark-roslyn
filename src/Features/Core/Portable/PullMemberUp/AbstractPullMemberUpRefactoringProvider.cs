@@ -4,15 +4,15 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp.Dialog;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.PullMemberUp;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeRefactorings.PullMemberUp.Dialog;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.CodeActions.CodeAction;
+using static StarkPlatform.CodeAnalysis.CodeActions.CodeAction;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings.PullMemberUp
 {
     internal abstract partial class AbstractPullMemberUpRefactoringProvider : CodeRefactoringProvider
     {

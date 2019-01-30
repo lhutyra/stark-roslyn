@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Common;
+using StarkPlatform.CodeAnalysis.Common;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     internal class DiagnosticsUpdatedArgs : UpdatedEventArgs
     {

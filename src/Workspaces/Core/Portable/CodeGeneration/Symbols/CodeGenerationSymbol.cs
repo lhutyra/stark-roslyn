@@ -6,12 +6,12 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal abstract class CodeGenerationSymbol : ISymbol
     {

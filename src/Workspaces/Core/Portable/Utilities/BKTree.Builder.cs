@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Utilities;
 
 namespace Roslyn.Utilities
 {

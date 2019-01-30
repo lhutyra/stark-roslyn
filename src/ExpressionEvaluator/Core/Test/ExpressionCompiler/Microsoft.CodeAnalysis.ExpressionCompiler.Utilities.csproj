@@ -3,8 +3,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExpressionEvaluator.UnitTests</RootNamespace>
-    <AssemblyName>Microsoft.CodeAnalysis.ExpressionEvaluator.ExpressionCompiler.Utilities</AssemblyName>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExpressionEvaluator.UnitTests</RootNamespace>
+    <AssemblyName>StarkPlatform.CodeAnalysis.ExpressionEvaluator.ExpressionCompiler.Utilities</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFramework>net472</TargetFramework>
     <IsShipping>false</IsShipping>
@@ -15,15 +15,15 @@
   </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\..\..\..\Test\Utilities\Portable\Roslyn.Test.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
-    <ProjectReference Include="..\..\..\Core\Source\ExpressionCompiler\Microsoft.CodeAnalysis.ExpressionCompiler.csproj" />
+    <ProjectReference Include="..\..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Core\Source\ExpressionCompiler\StarkPlatform.CodeAnalysis.ExpressionCompiler.csproj" />
     <ProjectReference Include="..\..\..\..\Test\PdbUtilities\Roslyn.Test.PdbUtilities.csproj">
       <Aliases>PDB</Aliases>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">

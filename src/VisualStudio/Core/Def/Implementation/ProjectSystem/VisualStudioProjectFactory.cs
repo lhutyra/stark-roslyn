@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.IO;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.VisualStudio.LanguageServices.Implementation.TaskList;
-using Microsoft.VisualStudio.LanguageServices.Storage;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList;
+using StarkPlatform.VisualStudio.LanguageServices.Storage;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     [Export(typeof(VisualStudioProjectFactory))]
     internal sealed class VisualStudioProjectFactory
@@ -69,7 +70,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
                 // HACK: update this since we're still on the UI thread. Note we can only update this if we don't have projects -- the workspace
                 // only lets us really do this with OnSolutionAdded for now.
                 string solutionPathToSetWithOnSolutionAdded = null;
-                var solution = (IVsSolution)Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsSolution));
+                var solution = (IVsSolution)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsSolution));
                 if (solution != null && ErrorHandler.Succeeded(solution.GetSolutionInfo(out _, out var solutionFilePath, out _)))
                 {
                     if (w.CurrentSolution.FilePath != solutionFilePath && w.CurrentSolution.ProjectIds.Count == 0)

@@ -2,11 +2,11 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.ExtractMethod
+namespace StarkPlatform.CodeAnalysis.ExtractMethod
 {
     internal static class ExtractMethodService
     {

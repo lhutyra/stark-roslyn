@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.Common
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common
 {
     internal struct EmbeddedSyntaxNodeOrToken<TSyntaxKind, TSyntaxNode>
         where TSyntaxKind : struct

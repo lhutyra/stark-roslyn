@@ -2,12 +2,12 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Microsoft.VisualStudio.CodingConventions;
 
-namespace Microsoft.CodeAnalysis.Editor.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Options
 {
     [Export(typeof(IDocumentOptionsProviderFactory)), Shared]
     class EditorConfigDocumentOptionsProviderFactory : IDocumentOptionsProviderFactory

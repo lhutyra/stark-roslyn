@@ -5,9 +5,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.FlowAnalysis;
+using StarkPlatform.CodeAnalysis.FlowAnalysis;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Scope for setting up analyzers for an entire session, automatically associating actions with analyzers.

@@ -4,19 +4,19 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Editor.Undo;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Undo;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     internal partial class GlobalUndoServiceFactory
     {

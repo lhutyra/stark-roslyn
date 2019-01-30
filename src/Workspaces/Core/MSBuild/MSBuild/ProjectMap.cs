@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     /// <summary>
     /// A map of projects that can be optionally used with <see cref="MSBuildProjectLoader.LoadProjectInfoAsync"/> when loading a

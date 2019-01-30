@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// solution branch Id

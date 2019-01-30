@@ -3,12 +3,12 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     internal class AnalyzersFolderItemSource : IAttachedCollectionSource
     {

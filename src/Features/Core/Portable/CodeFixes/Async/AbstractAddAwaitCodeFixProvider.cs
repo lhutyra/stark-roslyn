@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Async
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Async
 {
     internal abstract partial class AbstractAddAwaitCodeFixProvider : AbstractAsyncCodeFix
     {

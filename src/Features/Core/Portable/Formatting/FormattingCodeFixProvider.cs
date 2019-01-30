@@ -5,14 +5,14 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editing;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, LanguageNames.VisualBasic, Name = PredefinedCodeFixProviderNames.FixFormatting)]
+    [ExportCodeFixProvider(LanguageNames.Stark, Name = PredefinedCodeFixProviderNames.FixFormatting)]
     [Shared]
     internal class FormattingCodeFixProvider : SyntaxEditorBasedCodeFixProvider
     {

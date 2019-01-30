@@ -3,9 +3,9 @@
 using System;
 using System.IO;
 using System.Linq;
-using Microsoft.CodeAnalysis.CommandLine;
+using StarkPlatform.CodeAnalysis.CommandLine;
 
-namespace Microsoft.CodeAnalysis.CSharp.CommandLine
+namespace StarkPlatform.CodeAnalysis.Stark.CommandLine
 {
     internal sealed class Skc : CSharpCompiler
     {

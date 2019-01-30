@@ -3,17 +3,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Formatting.Rules;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.BraceCompletion;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Operations;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.AutomaticCompletion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.AutomaticCompletion
 {
     internal static class Extensions
     {

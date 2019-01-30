@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.Completion.Providers
+namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal sealed class RecommendedKeyword
     {

@@ -3,12 +3,12 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExternalAccess.TypeScript</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExternalAccess.TypeScript</RootNamespace>
     <TargetFramework>net472</TargetFramework>
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.ExternalAccess.TypeScript</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.ExternalAccess.TypeScript</PackageId>
     <PackageDescription>
       A supporting package for TypeScript:
       https://devdiv.visualstudio.com/DevDiv/_git/TypeScript-VS
@@ -19,13 +19,13 @@
     <!--
       ⚠ ONLY TYPESCRIPT ASSEMBLIES MAY BE ADDED HERE ⚠
     -->
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.TypeScript.EditorFeatures" Key="$(TypeScriptKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.TypeScript.EditorFeatures" Key="$(TypeScriptKey)" />
     <InternalsVisibleTo Include="Microsoft.VisualStudio.LanguageServices.TypeScript" Key="$(TypeScriptKey)" />
     <InternalsVisibleTo Include="Roslyn.Services.Editor.TypeScript.UnitTests" Key="$(TypeScriptKey)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

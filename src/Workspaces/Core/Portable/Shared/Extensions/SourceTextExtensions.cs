@@ -5,12 +5,12 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static partial class SourceTextExtensions
     {

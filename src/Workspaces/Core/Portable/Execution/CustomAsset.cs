@@ -3,11 +3,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Serialization;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Serialization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     /// <summary>
     /// Asset that is not part of solution, but want to participate in <see cref="IRemotableDataService"/>

@@ -2,13 +2,13 @@
 
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     internal abstract class ObjectListItem
     {

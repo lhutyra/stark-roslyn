@@ -3,7 +3,7 @@
 using System;
 using System.Reflection.PortableExecutable;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// This class is used to store the module serialization properties for a compilation.

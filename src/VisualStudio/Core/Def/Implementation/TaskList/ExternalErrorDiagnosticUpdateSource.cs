@@ -8,20 +8,20 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.Shared.Options;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Venus;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Shared.Options;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
 using Microsoft.VisualStudio.Shell;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TaskList
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     [Export(typeof(ExternalErrorDiagnosticUpdateSource))]
     internal class ExternalErrorDiagnosticUpdateSource : IDiagnosticUpdateSource

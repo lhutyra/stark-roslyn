@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Progression
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Progression
 {
     internal interface IProgressionLanguageService : ILanguageService
     {

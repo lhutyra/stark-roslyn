@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.GraphModel.Schemas;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Progression.CodeSchema;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Progression
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Progression
 {
     /// <summary>
     /// A helper class that implements the creation of GraphNodeIds that matches the .dgml creation
@@ -516,13 +516,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Progression
             foreach (var reference in symbol.ContainingSymbol.DeclaringSyntaxReferences)
             {
                 var currentNode = await reference.GetSyntaxAsync(cancellationToken).ConfigureAwait(false);
-
-                // For VB, we have to ask its parent to get local variables within this method body
-                // since DeclaringSyntaxReferences return statement rather than enclosing block.
-                if (currentNode != null && symbol.Language == LanguageNames.VisualBasic)
-                {
-                    currentNode = currentNode.Parent;
-                }
 
                 if (currentNode != null)
                 {

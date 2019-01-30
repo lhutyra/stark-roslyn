@@ -7,7 +7,7 @@ using System.IO;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal static class NativeResourceWriter
     {

@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal partial class SymbolEquivalenceComparer
     {

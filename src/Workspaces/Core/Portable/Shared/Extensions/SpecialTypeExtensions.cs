@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static class SpecialTypeExtensions
     {
@@ -18,10 +18,10 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
                     return PredefinedType.Boolean;
                 case SpecialType.System_Char:
                     return PredefinedType.Char;
-                case SpecialType.System_SByte:
-                    return PredefinedType.SByte;
-                case SpecialType.System_Byte:
-                    return PredefinedType.Byte;
+                case SpecialType.System_Int8:
+                    return PredefinedType.Int8;
+                case SpecialType.System_UInt8:
+                    return PredefinedType.UInt8;
                 case SpecialType.System_Int16:
                     return PredefinedType.Int16;
                 case SpecialType.System_UInt16:
@@ -36,10 +36,10 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
                     return PredefinedType.UInt64;
                 case SpecialType.System_Decimal:
                     return PredefinedType.Decimal;
-                case SpecialType.System_Single:
-                    return PredefinedType.Single;
-                case SpecialType.System_Double:
-                    return PredefinedType.Double;
+                case SpecialType.System_Float32:
+                    return PredefinedType.Float32;
+                case SpecialType.System_Float64:
+                    return PredefinedType.Float64;
                 case SpecialType.System_String:
                     return PredefinedType.String;
                 case SpecialType.System_DateTime:

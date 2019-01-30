@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.ImplementInterface
+namespace StarkPlatform.CodeAnalysis.ImplementInterface
 {
     internal abstract partial class AbstractImplementInterfaceService
     {

@@ -2,21 +2,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Editor.Tagging;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.Text.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Tagging;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text.Shared.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Classification
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Classification
 {
     internal static class SemanticClassificationUtilities
     {

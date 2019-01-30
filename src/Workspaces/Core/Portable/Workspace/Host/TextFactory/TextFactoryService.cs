@@ -4,11 +4,11 @@ using System.Composition;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     [ExportWorkspaceService(typeof(ITextFactoryService), ServiceLayer.Default), Shared]
     internal class TextFactoryService : ITextFactoryService

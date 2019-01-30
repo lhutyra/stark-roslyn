@@ -6,17 +6,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Rename.ConflictEngine
+namespace StarkPlatform.CodeAnalysis.Rename.ConflictEngine
 {
     internal static partial class ConflictResolver
     {

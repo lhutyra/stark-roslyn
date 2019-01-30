@@ -3,18 +3,17 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor.Commanding;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     [Export(typeof(VSCommanding.ICommandHandler))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
-    [ContentType(ContentTypeNames.XamlContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [Name(PredefinedCommandHandlerNames.Rename)]
     // Line commit and rename are both executed on Save. Ensure any rename session is committed
     // before line commit runs to ensure changes from both are correctly applied.

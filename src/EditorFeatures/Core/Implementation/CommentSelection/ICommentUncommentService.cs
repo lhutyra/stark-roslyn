@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.CommentSelection
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.CommentSelection
 {
-    [Obsolete("Use Microsoft.CodeAnalysis.CommentSelection.ICommentSelectionService instead")]
+    [Obsolete("Use StarkPlatform.CodeAnalysis.CommentSelection.ICommentSelectionService instead")]
     internal interface ICommentUncommentService : ILanguageService
     {
         string SingleLineCommentString { get; }

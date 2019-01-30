@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// An object corresponding to a metadata entity such as a type or a field.

@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Information on vsix that contains diagnostic analyzers

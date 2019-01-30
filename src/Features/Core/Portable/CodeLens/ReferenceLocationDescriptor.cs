@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.CodeLens
+namespace StarkPlatform.CodeAnalysis.CodeLens
 {
     /// <summary>
     /// Holds information required to display and navigate to individual references

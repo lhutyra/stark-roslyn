@@ -3,11 +3,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     public abstract partial class Workspace
     {

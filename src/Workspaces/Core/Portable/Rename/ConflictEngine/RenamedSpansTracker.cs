@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Simplification;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Rename.ConflictEngine
+namespace StarkPlatform.CodeAnalysis.Rename.ConflictEngine
 {
     /// <summary>
     /// Tracks the text spans that were modified as part of a rename operation

@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Roslyn.Utilities;
-using TextSpan = Microsoft.CodeAnalysis.Text.TextSpan;
+using TextSpan = StarkPlatform.CodeAnalysis.Text.TextSpan;
 using VsTextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets.SnippetFunctions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Snippets.SnippetFunctions
 {
     internal abstract class AbstractSnippetFunctionSimpleTypeName : AbstractSnippetFunction
     {

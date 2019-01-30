@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using System.Diagnostics;
 using BYTE = System.Byte;
 using DWORD = System.UInt32;
@@ -14,7 +14,7 @@ using WORD = System.UInt16;
 using System.Reflection.PortableExecutable;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal class RESOURCE
     {
@@ -173,7 +173,7 @@ namespace Microsoft.CodeAnalysis
                 throw new ResourceException(CodeAnalysisResources.CoffResourceInvalidSectionSize);
         }
 
-        static internal Microsoft.Cci.ResourceSection ReadWin32ResourcesFromCOFF(Stream stream)
+        static internal StarkPlatform.Cci.ResourceSection ReadWin32ResourcesFromCOFF(Stream stream)
         {
             var peHeaders = new PEHeaders(stream);
             var rsrc1 = new SectionHeader();

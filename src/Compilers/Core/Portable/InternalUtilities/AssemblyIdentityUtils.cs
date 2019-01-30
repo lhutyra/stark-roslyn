@@ -8,7 +8,7 @@ using System.Reflection.PortableExecutable;
 using Roslyn.Utilities;
 using System.IO;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class AssemblyIdentityUtils
     {

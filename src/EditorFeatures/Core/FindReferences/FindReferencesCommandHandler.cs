@@ -6,27 +6,27 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.FindUsages;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.FindUsages;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.FindUsages;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Utilities;
 using Roslyn.Utilities;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.FindReferences
+namespace StarkPlatform.CodeAnalysis.Editor.FindReferences
 {
     [Export(typeof(VSCommanding.ICommandHandler))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [Name(PredefinedCommandHandlerNames.FindReferences)]
     internal class FindReferencesCommandHandler : VSCommanding.ICommandHandler<FindReferencesCommandArgs>
     {

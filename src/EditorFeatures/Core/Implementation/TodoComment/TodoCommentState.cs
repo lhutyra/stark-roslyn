@@ -3,12 +3,12 @@
 using System.Collections.Immutable;
 using System.IO;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.SolutionCrawler;
-using Microsoft.CodeAnalysis.SolutionCrawler.State;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis.SolutionCrawler.State;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.TodoComments
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.TodoComments
 {
     internal partial class TodoCommentIncrementalAnalyzer : IIncrementalAnalyzer
     {

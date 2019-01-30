@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.FindSymbols
+namespace StarkPlatform.CodeAnalysis.FindSymbols
 {
     internal sealed partial class SyntaxTreeIndex
     {

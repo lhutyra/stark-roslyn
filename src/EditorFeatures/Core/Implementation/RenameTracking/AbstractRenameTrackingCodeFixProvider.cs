@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Editor.Host;
 using Microsoft.VisualStudio.Text.Operations;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.RenameTracking
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.RenameTracking
 {
     internal abstract class AbstractRenameTrackingCodeFixProvider : CodeFixProvider
     {

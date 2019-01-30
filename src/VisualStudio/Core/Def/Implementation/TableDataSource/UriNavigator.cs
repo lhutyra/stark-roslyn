@@ -4,12 +4,12 @@ using System;
 using System.Linq;
 using System.Windows.Documents;
 using System.Windows.Navigation;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Diagnostics.Log;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Diagnostics.Log;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     internal class UriNavigator
     {

@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal static class EnumValueUtilities
     {
@@ -56,9 +56,9 @@ namespace Microsoft.CodeAnalysis.Shared.Utilities
         {
             switch (specialType)
             {
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return (sbyte)1;
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     return (byte)1;
                 case SpecialType.System_Int16:
                     return (short)1;

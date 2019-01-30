@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Threading;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using Microsoft.VisualStudio;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
 {
     public sealed class CodeFunctionWithEventHandler : CodeFunction, Interop.IEventHandler
     {

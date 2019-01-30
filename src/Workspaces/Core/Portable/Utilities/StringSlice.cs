@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Utilities
+namespace StarkPlatform.CodeAnalysis.Utilities
 {
     internal struct StringSlice : IEquatable<StringSlice>
     {

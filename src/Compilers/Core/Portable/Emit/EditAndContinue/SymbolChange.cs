@@ -2,7 +2,7 @@
 
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     internal enum SymbolChange
     {

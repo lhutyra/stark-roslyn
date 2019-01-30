@@ -9,11 +9,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.ComponentModel.Design;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor;
 using System.Threading;
+using Microsoft.VisualStudio;
 using Task = System.Threading.Tasks.Task;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Interactive
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Interactive
 {
     internal abstract class AbstractResetInteractiveMenuCommand
     {

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Operations
+namespace StarkPlatform.CodeAnalysis.Operations
 {
     /// <summary>
     /// Obsolete interface that used to represent a collection element initializer. It has been replaced by

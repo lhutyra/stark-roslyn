@@ -2,7 +2,7 @@
 
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SignatureHelp
+namespace StarkPlatform.CodeAnalysis.SignatureHelp
 {
     internal struct SignatureHelpTriggerInfo
     {

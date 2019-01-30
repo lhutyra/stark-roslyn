@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     [ExportWorkspaceServiceFactory(typeof(IDocumentTrackingService), ServiceLayer.Host), Shared]
     internal sealed class VisualStudioDocumentTrackingServiceFactory : IWorkspaceServiceFactory

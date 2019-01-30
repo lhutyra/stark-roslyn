@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Suppression
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Suppression
 {
     internal static class SuppressionHelpers
     {

@@ -2,12 +2,12 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Microsoft.VisualStudio.GraphModel;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Progression
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Progression
 {
     internal sealed class OverridesGraphQuery : IGraphQuery
     {

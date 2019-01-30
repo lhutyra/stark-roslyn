@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     /// <summary>
     /// A read-only, non-seekable <see cref="Stream"/> over a <see cref="SourceText"/>.

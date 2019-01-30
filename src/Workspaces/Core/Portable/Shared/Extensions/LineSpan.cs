@@ -3,7 +3,7 @@
 using System;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     // Like Span, except it has a start/end line instead of a start/end position.
     internal struct LineSpan : IEquatable<LineSpan>

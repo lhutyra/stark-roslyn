@@ -2,7 +2,7 @@
 
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     internal struct GlobalNodeKey
     {

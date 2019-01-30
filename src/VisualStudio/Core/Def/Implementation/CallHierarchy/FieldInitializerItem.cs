@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Language.CallHierarchy;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.CallHierarchy
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.CallHierarchy
 {
     internal class FieldInitializerItem : ICallHierarchyNameItem
     {

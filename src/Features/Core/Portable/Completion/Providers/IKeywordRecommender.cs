@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Completion.Providers
+namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal interface IKeywordRecommender<TContext>
     {

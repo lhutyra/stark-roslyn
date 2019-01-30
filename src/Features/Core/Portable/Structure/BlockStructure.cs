@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Structure
+namespace StarkPlatform.CodeAnalysis.Structure
 {
     internal class BlockStructure
     {

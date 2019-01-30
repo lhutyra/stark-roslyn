@@ -4,20 +4,20 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Shared.Naming;
+using StarkPlatform.CodeAnalysis.Shared.Naming;
 
-namespace Microsoft.CodeAnalysis.InitializeParameter
+namespace StarkPlatform.CodeAnalysis.InitializeParameter
 {
     internal abstract partial class AbstractInitializeMemberFromParameterCodeRefactoringProvider<
         TParameterSyntax,

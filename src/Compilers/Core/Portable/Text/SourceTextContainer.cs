@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     /// <summary>
     /// An object that contains an instance of an SourceText and raises events when its current instance

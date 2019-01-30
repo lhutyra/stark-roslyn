@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal sealed class MergedAliases
     {

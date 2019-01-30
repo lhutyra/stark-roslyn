@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.RemoteControl;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     /// <summary>
     /// Used so we can mock out the remote control service in unit tests.

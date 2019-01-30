@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars
 {
     /// <summary>
     /// Helper service that takes the raw text of a string token and produces the individual

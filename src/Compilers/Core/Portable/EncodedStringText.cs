@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     internal static class EncodedStringText
     {

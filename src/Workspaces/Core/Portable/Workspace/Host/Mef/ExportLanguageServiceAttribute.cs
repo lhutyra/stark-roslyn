@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     /// <summary>
     /// Use this attribute to declare a <see cref="ILanguageService"/> implementation for inclusion in a MEF-based workspace.

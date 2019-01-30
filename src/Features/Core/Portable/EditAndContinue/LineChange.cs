@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     internal struct LineChange : IEquatable<LineChange>
     {

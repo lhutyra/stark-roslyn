@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
 {
     [ComImport]
     [Guid("64F7CF8B-8800-4DD7-B472-2090C90DDB64")]

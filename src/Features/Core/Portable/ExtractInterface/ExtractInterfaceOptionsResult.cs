@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.ExtractInterface
+namespace StarkPlatform.CodeAnalysis.ExtractInterface
 {
     internal class ExtractInterfaceOptionsResult
     {

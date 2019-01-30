@@ -3,15 +3,15 @@
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping.BinaryExpression
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping.BinaryExpression
 {
     internal partial class AbstractBinaryExpressionWrapper<TBinaryExpressionSyntax> where TBinaryExpressionSyntax : SyntaxNode
     {

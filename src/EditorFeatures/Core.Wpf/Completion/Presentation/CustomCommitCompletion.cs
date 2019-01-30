@@ -4,16 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Editor.Wpf;
-using Microsoft.CodeAnalysis.Tags;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Editor.Wpf;
+using StarkPlatform.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Roslyn.Utilities;
-using CompletionItem = Microsoft.CodeAnalysis.Completion.CompletionItem;
+using CompletionItem = StarkPlatform.CodeAnalysis.Completion.CompletionItem;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {
     internal sealed class CustomCommitCompletion : Completion4, ICustomCommit
     {

@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.Shell.TableManager;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     internal class TableEntriesFactory<TData> : ITableEntriesSnapshotFactory
     {

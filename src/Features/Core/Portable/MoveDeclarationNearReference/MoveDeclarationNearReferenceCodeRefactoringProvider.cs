@@ -5,15 +5,15 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
+namespace StarkPlatform.CodeAnalysis.MoveDeclarationNearReference
 {
-    [ExportCodeRefactoringProvider(LanguageNames.CSharp, LanguageNames.VisualBasic, Name = PredefinedCodeRefactoringProviderNames.MoveDeclarationNearReference), Shared]
+    [ExportCodeRefactoringProvider(LanguageNames.Stark, Name = PredefinedCodeRefactoringProviderNames.MoveDeclarationNearReference), Shared]
     [ExtensionOrder(After = PredefinedCodeRefactoringProviderNames.InlineTemporary)]
     internal sealed class MoveDeclarationNearReferenceCodeRefactoringProvider : CodeRefactoringProvider
     {
@@ -36,13 +36,9 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
 
             var syntaxFacts = document.GetLanguageService<ISyntaxFactsService>();
             var variables = syntaxFacts.GetVariablesOfLocalDeclarationStatement(statement);
-            if (variables.Count != 1)
-            {
-                return;
-            }
 
             // Don't offer the refactoring inside the initializer for the variable.
-            var initializer = syntaxFacts.GetInitializerOfVariableDeclaration(variables[0]);
+            var initializer = syntaxFacts.GetInitializerOfVariableDeclaration(variables);
             var applicableSpan = initializer == null
                 ? statement.Span
                 : TextSpan.FromBounds(statement.SpanStart, initializer.SpanStart);

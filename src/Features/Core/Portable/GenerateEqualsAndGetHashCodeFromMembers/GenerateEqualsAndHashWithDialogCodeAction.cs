@@ -5,11 +5,11 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.PickMembers;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.PickMembers;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.GenerateEqualsAndGetHashCodeFromMembers
+namespace StarkPlatform.CodeAnalysis.GenerateEqualsAndGetHashCodeFromMembers
 {
     internal partial class GenerateEqualsAndGetHashCodeFromMembersCodeRefactoringProvider
     {

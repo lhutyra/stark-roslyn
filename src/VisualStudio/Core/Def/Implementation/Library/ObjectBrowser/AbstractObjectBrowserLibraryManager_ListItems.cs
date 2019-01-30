@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
 {
     internal abstract partial class AbstractObjectBrowserLibraryManager
     {

@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {
     internal sealed class CompletionSource : ForegroundThreadAffinitizedObject, ICompletionSource
     {

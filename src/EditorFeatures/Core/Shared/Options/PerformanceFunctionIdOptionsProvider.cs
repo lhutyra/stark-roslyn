@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Options.Providers;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options.Providers;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Options
 {
     [ExportOptionProvider, Shared]
     internal class PerformanceFunctionIdOptionsProvider : IOptionProvider

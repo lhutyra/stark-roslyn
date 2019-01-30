@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     /// <summary>
     /// When we are generating literals, we sometimes want to emit code vs. the numeric literal. This class

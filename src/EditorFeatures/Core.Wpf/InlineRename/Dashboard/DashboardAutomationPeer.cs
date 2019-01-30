@@ -3,7 +3,7 @@
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     /// <summary>
     /// Custom AutomationPeer to announce that an Inline Rename session has begun.

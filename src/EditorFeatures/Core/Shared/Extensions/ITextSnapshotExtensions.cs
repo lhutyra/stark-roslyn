@@ -3,14 +3,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Formatting.Rules;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Extensions
 {
     internal static partial class ITextSnapshotExtensions
     {

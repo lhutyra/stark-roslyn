@@ -11,14 +11,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor;
 using Microsoft.CodeAnalysis.Elfie.Model;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Microsoft.VisualStudio.RemoteControl;
 using Roslyn.Utilities;
 using static System.FormattableString;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     /// <summary>
     /// A service which enables searching for packages matching certain criteria.

@@ -4,11 +4,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     [Export(typeof(IProjectCodeModelFactory))]
     [Export(typeof(ProjectCodeModelFactory))]

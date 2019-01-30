@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Classification
+namespace StarkPlatform.CodeAnalysis.Classification
 {
     public static class ClassificationTypeNames
     {

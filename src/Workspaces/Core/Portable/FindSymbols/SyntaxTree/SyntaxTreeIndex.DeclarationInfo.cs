@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FindSymbols
+namespace StarkPlatform.CodeAnalysis.FindSymbols
 {
     internal partial class SyntaxTreeIndex
     {

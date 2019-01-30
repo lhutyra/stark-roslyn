@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.DiagnosticComments.CodeFixes
+namespace StarkPlatform.CodeAnalysis.DiagnosticComments.CodeFixes
 {
     internal abstract class AbstractRemoveDocCommentNodeCodeFixProvider<TXmlElementSyntax, TXmlTextSyntax> : CodeFixProvider
         where TXmlElementSyntax : SyntaxNode

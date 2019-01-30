@@ -5,12 +5,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Microsoft.CodeAnalysis.Diagnostics.Telemetry;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Diagnostics.Telemetry;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Roslyn.Utilities;
 using System.Security.Cryptography;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Log
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Log
 {
     internal class DiagnosticAnalyzerLogger
     {

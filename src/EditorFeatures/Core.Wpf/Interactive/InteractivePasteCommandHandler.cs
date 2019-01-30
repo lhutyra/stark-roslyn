@@ -15,13 +15,13 @@ using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Commanding;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.CommandHandlers
+namespace StarkPlatform.CodeAnalysis.Editor.CommandHandlers
 {
     // This command handler must be invoked after the handlers specified in `Order` attribute
     // (those handlers also implement `ICommandHandler<PasteCommandArgs>`),
     // because it will intercept the paste command and skip the rest of handlers in chain.  
     [Export(typeof(VSCommanding.ICommandHandler))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [Name(PredefinedCommandHandlerNames.InteractivePaste)]
     [Order(After = PredefinedCommandHandlerNames.Rename)]
     [Order(After = PredefinedCommandHandlerNames.FormatDocument)]

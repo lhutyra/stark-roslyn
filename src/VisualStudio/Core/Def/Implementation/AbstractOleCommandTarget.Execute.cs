@@ -2,14 +2,15 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.Editor.Commands;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Editor.Commands;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal abstract partial class AbstractOleCommandTarget
     {
@@ -39,7 +40,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
                 {
                     return ExecuteVisualStudio2000(ref pguidCmdGroup, commandId, executeInformation, pvaIn, pvaOut, subjectBuffer, contentType);
                 }
-                else if (pguidCmdGroup == Guids.CSharpGroupId)
+                else if (pguidCmdGroup == Guids.StarkGroupId)
                 {
                     return ExecuteCSharpGroup(ref pguidCmdGroup, commandId, executeInformation, pvaIn, pvaOut, subjectBuffer, contentType);
                 }

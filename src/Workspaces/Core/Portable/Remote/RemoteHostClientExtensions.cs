@@ -2,14 +2,14 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Experiments;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Execution;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Experiments;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Execution;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Roslyn.Utilities;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     internal static class RemoteHostClientExtensions
     {

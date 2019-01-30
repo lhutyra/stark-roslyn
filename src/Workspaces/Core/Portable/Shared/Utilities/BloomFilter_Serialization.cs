@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal partial class BloomFilter : IObjectWritable
     {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.MSBuild.Logging
+namespace StarkPlatform.CodeAnalysis.MSBuild.Logging
 {
     internal class MSBuildDiagnosticLogItem : DiagnosticLogItem
     {

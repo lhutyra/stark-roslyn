@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FindUsages
+namespace StarkPlatform.CodeAnalysis.FindUsages
 {
     /// <summary>
     /// A collection of <see cref="DefinitionItem"/>s and <see cref="SourceReferenceItem"/>s

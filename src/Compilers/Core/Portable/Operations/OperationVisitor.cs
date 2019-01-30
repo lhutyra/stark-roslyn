@@ -2,9 +2,9 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.FlowAnalysis;
+using StarkPlatform.CodeAnalysis.FlowAnalysis;
 
-namespace Microsoft.CodeAnalysis.Operations
+namespace StarkPlatform.CodeAnalysis.Operations
 {
     /// <summary>
     /// Represents a <see cref="IOperation"/> visitor that visits only the single IOperation

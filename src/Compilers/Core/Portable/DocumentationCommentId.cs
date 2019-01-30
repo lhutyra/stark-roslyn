@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// APIs for constructing documentation comment id's, and finding symbols that match ids.
@@ -284,7 +284,7 @@ namespace Microsoft.CodeAnalysis
         private static string DecodePropertyName(string name, string language)
         {
             // special case, csharp names indexers 'this[]', not 'Item'
-            if (language == LanguageNames.CSharp)
+            if (language == LanguageNames.Stark)
             {
                 if (name == "Item")
                 {

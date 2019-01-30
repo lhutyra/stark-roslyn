@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting.Rules
+namespace StarkPlatform.CodeAnalysis.Formatting.Rules
 {
     /// <summary>
     /// preserve relative spaces between anchor token and first tokens on lines within the given text span 

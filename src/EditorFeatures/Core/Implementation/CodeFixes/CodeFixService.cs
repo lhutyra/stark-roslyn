@@ -9,19 +9,19 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeFixes.Suppression;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.ErrorLogger;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeFixes.Suppression;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.ErrorLogger;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     using Editor.Shared.Utilities;
     using DiagnosticId = String;

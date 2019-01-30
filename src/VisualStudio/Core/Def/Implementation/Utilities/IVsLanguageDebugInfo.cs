@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities
 {
     [ComImport]
     [Guid("F30A6A07-5340-4C0E-B312-5772558B0E63")]

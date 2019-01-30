@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal static partial class ExtensionOrderer
     {

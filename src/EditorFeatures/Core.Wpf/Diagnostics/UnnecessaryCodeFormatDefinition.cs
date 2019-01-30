@@ -6,11 +6,11 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Implementation.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Diagnostics;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Editor.Diagnostics
 {
     [Export(typeof(EditorFormatDefinition))]
     [ClassificationType(ClassificationTypeNames = ClassificationTypeDefinitions.UnnecessaryCode)]

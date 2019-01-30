@@ -13,7 +13,7 @@
 
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// 
     /// The XmlCharType class is used for quick character type recognition

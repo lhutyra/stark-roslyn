@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Concurrent;
 
-namespace Microsoft.CodeAnalysis.Simplification
+namespace StarkPlatform.CodeAnalysis.Simplification
 {
     internal class SpecialTypeAnnotation
     {

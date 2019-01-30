@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Microsoft.VisualStudio.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Commands
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Commands
 {
     /// <summary>
     /// A service representing a handlers of command handlers for a view or buffer.

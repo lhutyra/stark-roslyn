@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Combines a value, <see cref="Value"/>, and a flag, <see cref="HasValue"/>, 

@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeFixes.Suppression;
+using StarkPlatform.CodeAnalysis.CodeFixes.Suppression;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     /// <summary>
     /// Contains computed information for a given <see cref="CodeFixes.FixAllProvider"/>, such as supported diagnostic Ids and supported <see cref="FixAllScope"/>.

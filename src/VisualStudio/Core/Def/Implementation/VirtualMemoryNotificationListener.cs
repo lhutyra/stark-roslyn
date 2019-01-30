@@ -3,20 +3,21 @@
 using System;
 using System.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Options;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Shared.Options;
-using Microsoft.VisualStudio.LanguageServices.Implementation;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Options;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Shared.Options;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     /// <summary>
     /// Listens to broadcast notifications from the Visual Studio Shell indicating that the application is running

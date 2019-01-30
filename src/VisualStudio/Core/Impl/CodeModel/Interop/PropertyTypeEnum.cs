@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
 {
     [ComVisible(true)]
     [Guid("3078feac-b063-3f25-9796-bb0cbbc88980")]

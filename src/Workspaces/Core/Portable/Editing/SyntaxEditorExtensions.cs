@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Editing
+namespace StarkPlatform.CodeAnalysis.Editing
 {
     public static class SyntaxEditorExtensions
     {

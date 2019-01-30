@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.CodeAnalysis {
+namespace StarkPlatform.CodeAnalysis {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.CodeAnalysis.WorkspaceMSBuildResources", typeof(WorkspaceMSBuildResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StarkPlatform.CodeAnalysis.WorkspaceMSBuildResources", typeof(WorkspaceMSBuildResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

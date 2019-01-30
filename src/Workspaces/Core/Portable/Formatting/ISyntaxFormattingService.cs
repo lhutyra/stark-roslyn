@@ -2,15 +2,15 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis.Formatting.Rules;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.Text;
 
 #if !CODE_STYLE
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Options;
 #endif
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     internal interface ISyntaxFormattingService
 #if !CODE_STYLE

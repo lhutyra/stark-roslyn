@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.DocumentationComments;
+using StarkPlatform.CodeAnalysis.DocumentationComments;
 
-namespace Microsoft.CodeAnalysis.MetadataAsSource
+namespace StarkPlatform.CodeAnalysis.MetadataAsSource
 {
     internal partial class AbstractMetadataAsSourceService
     {

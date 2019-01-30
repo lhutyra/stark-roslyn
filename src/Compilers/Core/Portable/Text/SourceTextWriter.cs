@@ -3,7 +3,7 @@
 using System.IO;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     internal abstract class SourceTextWriter : TextWriter
     {

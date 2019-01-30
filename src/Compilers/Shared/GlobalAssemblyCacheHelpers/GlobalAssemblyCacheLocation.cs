@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class GlobalAssemblyCacheLocation
     {

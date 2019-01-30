@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Organizing.Organizers;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Organizing.Organizers;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.Organizing
+namespace StarkPlatform.CodeAnalysis.Organizing
 {
     internal static partial class OrganizingService
     {

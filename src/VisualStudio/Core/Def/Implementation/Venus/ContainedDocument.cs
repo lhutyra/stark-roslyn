@@ -7,19 +7,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Formatting.Rules;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.Text.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text.Shared.Extensions;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Differencing;
@@ -30,7 +30,7 @@ using Roslyn.Utilities;
 using IVsContainedLanguageHost = Microsoft.VisualStudio.TextManager.Interop.IVsContainedLanguageHost;
 using IVsTextBufferCoordinator = Microsoft.VisualStudio.TextManager.Interop.IVsTextBufferCoordinator;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus
 {
 #pragma warning disable CS0618 // Type or member is obsolete
     internal sealed partial class ContainedDocument : ForegroundThreadAffinitizedObject, IVisualStudioHostDocument
@@ -961,7 +961,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
                     // in both subject and surface buffer and there is no easy way to figure out who owns } just typed.
                     // in this case, we let razor owns it. later razor will remove } from subject buffer if it is something
                     // razor owns.
-                    if (_project.Language == LanguageNames.CSharp)
+                    if (_project.Language == LanguageNames.Stark)
                     {
                         var textSpan = GetVisibleTextSpan(text, span);
                         var end = textSpan.End - 1;
@@ -974,31 +974,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
                                 if (syntaxFact.TryGetCorrespondingOpenBrace(token, out var openBrace) && !textSpan.Contains(openBrace.Span))
                                 {
                                     return 0;
-                                }
-                            }
-                        }
-                    }
-
-                    // same as C#, but different text is in the buffer
-                    if (_project.Language == LanguageNames.VisualBasic)
-                    {
-                        var textSpan = GetVisibleTextSpan(text, span);
-                        var subjectSnapshot = SubjectBuffer.CurrentSnapshot;
-                        var end = textSpan.End - 1;
-                        if (end >= 0)
-                        {
-                            var ch = subjectSnapshot[end];
-                            if (CheckCode(subjectSnapshot, textSpan.End, ch, VBRazorBlock, checkAt: false) ||
-                                CheckCode(subjectSnapshot, textSpan.End, ch, FunctionsRazor, checkAt: false))
-                            {
-                                var token = root.FindToken(end, findInsideTrivia: true);
-                                var syntaxFact = _workspace.Services.GetLanguageServices(_project.Language).GetService<ISyntaxFactsService>();
-                                if (token.Span.End == textSpan.End && syntaxFact != null)
-                                {
-                                    if (syntaxFact.IsSkippedTokensTrivia(token.Parent))
-                                    {
-                                        return 0;
-                                    }
                                 }
                             }
                         }
@@ -1049,16 +1024,10 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
 
         private bool IsCodeBlock(ITextSnapshot surfaceSnapshot, int position, char ch)
         {
-            if (_project.Language == LanguageNames.CSharp)
+            if (_project.Language == LanguageNames.Stark)
             {
                 return CheckCode(surfaceSnapshot, position, ch, CSharpRazorBlock) ||
                        CheckCode(surfaceSnapshot, position, ch, FunctionsRazor, CSharpRazorBlock);
-            }
-
-            if (_project.Language == LanguageNames.VisualBasic)
-            {
-                return CheckCode(surfaceSnapshot, position, ch, VBRazorBlock) ||
-                       CheckCode(surfaceSnapshot, position, ch, FunctionsRazor);
             }
 
             return false;

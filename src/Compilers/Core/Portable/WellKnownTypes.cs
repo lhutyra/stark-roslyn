@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Ids of well known runtime types.
@@ -649,7 +649,7 @@ namespace Microsoft.CodeAnalysis
                     typeIdName = typeIdName.Substring(0, separator);
                 }
 
-                Debug.Assert(name == typeIdName, "Enum name and type name must match");
+                Debug.Assert(name == typeIdName, $"Enum name and type name must match {name} != {typeIdName}");
             }
 
             Debug.Assert((int)WellKnownType.ExtSentinel == 255);

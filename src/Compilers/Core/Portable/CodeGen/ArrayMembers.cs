@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
 
 // Contains support for pseudo-methods on multidimensional arrays.
@@ -47,7 +47,7 @@ using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
 //managed pointer to a specific element of the array where the arguments specify the index into each
 //dimension, beginning with the first, of the element whose address is to be returned.
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// Constructs and caches already created pseudo-methods.

@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ConvertForToForEach
+namespace StarkPlatform.CodeAnalysis.ConvertForToForEach
 {
     internal abstract class AbstractConvertForToForEachCodeRefactoringProvider<
         TStatementSyntax,
@@ -386,21 +386,17 @@ namespace Microsoft.CodeAnalysis.ConvertForToForEach
                     var firstStatement = bodyStatements[0];
                     if (syntaxFacts.IsLocalDeclarationStatement(firstStatement))
                     {
-                        var variables = syntaxFacts.GetVariablesOfLocalDeclarationStatement(firstStatement);
-                        if (variables.Count == 1)
+                        var firstVariable = (TVariableDeclarationSyntax)syntaxFacts.GetVariablesOfLocalDeclarationStatement(firstStatement);
+                        if (IsValidVariableDeclaration(firstVariable))
                         {
-                            var firstVariable = (TVariableDeclarationSyntax)variables[0];
-                            if (IsValidVariableDeclaration(firstVariable))
+                            var firstVariableInitializer = syntaxFacts.GetValueOfEqualsValueClause(
+                                syntaxFacts.GetInitializerOfVariableDeclaration(firstVariable));
+                            if (syntaxFacts.AreEquivalent(firstVariableInitializer, indexExpression))
                             {
-                                var firstVariableInitializer = syntaxFacts.GetValueOfEqualsValueClause(
-                                    syntaxFacts.GetInitializerOfVariableDeclaration(firstVariable));
-                                if (syntaxFacts.AreEquivalent(firstVariableInitializer, indexExpression))
-                                {
-                                    var type = (TTypeNode)syntaxFacts.GetTypeOfVariableDeclaration(firstVariable)?.WithoutLeadingTrivia();
-                                    var identifier = syntaxFacts.GetIdentifierOfVariableDeclaration(firstVariable);
-                                    var statement = firstStatement;
-                                    return (type, identifier, statement);
-                                }
+                                var type = (TTypeNode)syntaxFacts.GetTypeOfVariableDeclaration(firstVariable)?.WithoutLeadingTrivia();
+                                var identifier = syntaxFacts.GetIdentifierOfVariableDeclaration(firstVariable);
+                                var statement = firstStatement;
+                                return (type, identifier, statement);
                             }
                         }
                     }

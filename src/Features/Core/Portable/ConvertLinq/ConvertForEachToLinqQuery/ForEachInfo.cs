@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.ConvertLinq.ConvertForEachToLinqQuery
+namespace StarkPlatform.CodeAnalysis.ConvertLinq.ConvertForEachToLinqQuery
 {
     internal struct ForEachInfo<TForEachStatement, TStatement>
     {

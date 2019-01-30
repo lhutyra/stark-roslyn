@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Options.Providers
+namespace StarkPlatform.CodeAnalysis.Options.Providers
 {
     internal interface IOptionProvider
     {

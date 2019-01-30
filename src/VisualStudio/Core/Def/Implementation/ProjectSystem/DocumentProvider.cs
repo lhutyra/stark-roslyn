@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     [Obsolete("This is a compatibility shim for TypeScript and Live Share; please do not use it.")]
     internal sealed class DocumentProvider

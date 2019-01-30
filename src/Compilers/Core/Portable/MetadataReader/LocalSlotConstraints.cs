@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     [Flags]
     internal enum LocalSlotConstraints : byte

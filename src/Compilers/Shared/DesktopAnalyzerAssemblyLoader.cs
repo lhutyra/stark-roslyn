@@ -4,7 +4,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Loads analyzer assemblies from their original locations in the file system.

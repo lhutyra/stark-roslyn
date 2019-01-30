@@ -6,13 +6,13 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Extensions.ContextQuery;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions.ContextQuery;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Completion.Providers
+namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal abstract partial class AbstractPartialTypeCompletionProvider : CommonCompletionProvider
     {

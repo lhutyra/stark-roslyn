@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities
 {
     /// <summary>
     /// Converter for bool properties from an enum value.

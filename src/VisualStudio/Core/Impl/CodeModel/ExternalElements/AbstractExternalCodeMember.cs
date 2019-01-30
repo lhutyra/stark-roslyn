@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements
 {
     public abstract class AbstractExternalCodeMember : AbstractExternalCodeElement
     {

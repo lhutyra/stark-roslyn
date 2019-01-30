@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     /// <summary>
     /// Maps from hierarchy items to project IDs.

@@ -2,11 +2,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindSymbols.Finders;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.FindSymbols.Finders;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FindSymbols
+namespace StarkPlatform.CodeAnalysis.FindSymbols
 {
     using DocumentMap = MultiDictionary<Document, (SymbolAndProjectId symbolAndProjectId, IReferenceFinder finder)>;
 

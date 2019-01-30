@@ -2,9 +2,9 @@
 
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal partial struct SymbolKey
     {

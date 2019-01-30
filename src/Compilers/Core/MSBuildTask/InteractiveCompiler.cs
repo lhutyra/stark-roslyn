@@ -6,7 +6,7 @@ using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// This class defines all of the common stuff that is shared between the Vbc and Csc tasks.

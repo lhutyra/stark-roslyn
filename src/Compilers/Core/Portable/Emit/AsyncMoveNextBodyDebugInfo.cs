@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     /// <summary>
     /// Represents additional info needed by async method implementation methods 

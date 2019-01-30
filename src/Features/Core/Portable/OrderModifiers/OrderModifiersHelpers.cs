@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.OrderModifiers
+namespace StarkPlatform.CodeAnalysis.OrderModifiers
 {
     internal abstract class AbstractOrderModifiersHelpers
     {

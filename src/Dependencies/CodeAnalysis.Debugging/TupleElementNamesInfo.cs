@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace StarkPlatform.CodeAnalysis.Debugging
 {
     internal struct TupleElementNamesInfo
     {

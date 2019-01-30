@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.SQLite.Interop;
-using Microsoft.CodeAnalysis.Storage;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.SQLite.Interop;
+using StarkPlatform.CodeAnalysis.Storage;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     /// <summary>
     /// Implementation of an <see cref="IPersistentStorage"/> backed by SQLite.

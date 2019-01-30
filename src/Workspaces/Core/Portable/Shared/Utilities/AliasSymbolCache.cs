@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     using SymbolMap = ImmutableDictionary<INamespaceOrTypeSymbol, IAliasSymbol>;
     using TreeMap = ConcurrentDictionary<(SyntaxTree tree, int namespaceId), ImmutableDictionary<INamespaceOrTypeSymbol, IAliasSymbol>>;

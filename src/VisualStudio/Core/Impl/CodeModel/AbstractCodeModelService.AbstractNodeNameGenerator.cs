@@ -3,9 +3,9 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     internal partial class AbstractCodeModelService : ICodeModelService
     {

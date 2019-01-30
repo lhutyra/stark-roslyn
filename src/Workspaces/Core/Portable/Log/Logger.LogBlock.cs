@@ -2,10 +2,10 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     internal static partial class Logger
     {

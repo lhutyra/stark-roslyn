@@ -5,11 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.Debugging;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Debugging;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     internal partial class ILBuilder
     {

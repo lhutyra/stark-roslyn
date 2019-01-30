@@ -3,7 +3,7 @@
 using System;
 using System.Reflection;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Handles loading analyzer assemblies and their dependencies.

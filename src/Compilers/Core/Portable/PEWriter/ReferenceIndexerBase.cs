@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
-using Microsoft.CodeAnalysis.Emit;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
+using StarkPlatform.CodeAnalysis.Emit;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal abstract class ReferenceIndexerBase : MetadataVisitor
     {

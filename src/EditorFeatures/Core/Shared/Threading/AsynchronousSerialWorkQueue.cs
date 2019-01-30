@@ -3,11 +3,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Threading
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Threading
 {
     // A helper class primarily used for the AsynchronousTagger that can handle the job of
     // scheduling work to be done on the UI thread and on a background thread.  This class wraps the

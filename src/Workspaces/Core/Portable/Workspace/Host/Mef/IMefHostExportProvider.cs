@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     internal interface IMefHostExportProvider
     {

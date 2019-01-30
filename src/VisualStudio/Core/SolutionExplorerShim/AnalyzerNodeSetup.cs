@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Design;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     [Export(typeof(IAnalyzerNodeSetup))]
     internal sealed class AnalyzerNodeSetup : IAnalyzerNodeSetup

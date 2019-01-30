@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     internal class SolutionPreviewResult : ForegroundThreadAffinitizedObject
     {

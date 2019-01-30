@@ -6,17 +6,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.SemanticModelWorkspaceService;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.SemanticModelWorkspaceService;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.GeneratedCodeRecognition;
+using StarkPlatform.CodeAnalysis.GeneratedCodeRecognition;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static partial class DocumentExtensions
     {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     /// <summary>
     /// This interface is implemented by a class that implements at least one strongly-typed

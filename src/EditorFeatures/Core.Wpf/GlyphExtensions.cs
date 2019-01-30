@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+﻿using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
 using Microsoft.VisualStudio.Imaging.Interop;
 
-namespace Microsoft.CodeAnalysis.Editor.Wpf
+namespace StarkPlatform.CodeAnalysis.Editor.Wpf
 {
     internal static class GlyphExtensions
     {

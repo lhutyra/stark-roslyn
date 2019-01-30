@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.SQLite.Interop
+namespace StarkPlatform.CodeAnalysis.SQLite.Interop
 {
     internal class SqlException : Exception
     {

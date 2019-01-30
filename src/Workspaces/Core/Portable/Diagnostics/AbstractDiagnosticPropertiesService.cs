@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
 
     internal abstract class AbstractDiagnosticPropertiesService : IDiagnosticPropertiesService

@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Notification
+namespace StarkPlatform.CodeAnalysis.Notification
 {
     internal class GlobalOperationNotificationService : AbstractGlobalOperationNotificationService
     {

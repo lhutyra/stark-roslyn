@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Editing
+namespace StarkPlatform.CodeAnalysis.Editing
 {
     /// <summary>
     /// An editor for making changes to a document's syntax tree. 

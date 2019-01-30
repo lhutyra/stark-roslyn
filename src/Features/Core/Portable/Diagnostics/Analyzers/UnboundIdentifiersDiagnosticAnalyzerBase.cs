@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.AddImport
+namespace StarkPlatform.CodeAnalysis.Diagnostics.AddImport
 {
     internal abstract class UnboundIdentifiersDiagnosticAnalyzerBase<TLanguageKindEnum, TSimpleNameSyntax, TQualifiedNameSyntax, TIncompleteMemberSyntax, TLambdaExpressionSyntax> : DiagnosticAnalyzer, IBuiltInAnalyzer
         where TLanguageKindEnum : struct

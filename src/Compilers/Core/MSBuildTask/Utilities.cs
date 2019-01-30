@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Security;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// General utilities.

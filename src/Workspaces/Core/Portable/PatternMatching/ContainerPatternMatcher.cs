@@ -3,9 +3,9 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.PatternMatching
+namespace StarkPlatform.CodeAnalysis.PatternMatching
 {
     internal partial class PatternMatcher
     {

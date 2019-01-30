@@ -12,11 +12,10 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     [Export(typeof(ITextViewConnectionListener))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
-    [ContentType(ContentTypeNames.XamlContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [TextViewRole(PredefinedTextViewRoles.Interactive)]
     [Export(typeof(ITextBufferAssociatedViewService))]
     internal class TextBufferAssociatedViewService : ITextViewConnectionListener, ITextBufferAssociatedViewService
@@ -74,8 +73,7 @@ namespace Microsoft.CodeAnalysis.Editor
         private static bool IsSupportedContentType(IContentType contentType)
         {
             // This list should match the list of exported content types above
-            return contentType.IsOfType(ContentTypeNames.RoslynContentType) ||
-                   contentType.IsOfType(ContentTypeNames.XamlContentType);
+            return contentType.IsOfType(ContentTypeNames.StarkRoslynContentType);
         }
 
         private static IList<ITextView> GetTextViews(ITextBuffer textBuffer)

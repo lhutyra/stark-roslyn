@@ -4,9 +4,9 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     /// <summary>
     /// TemporaryStorage can be used to read and write text to a temporary storage location.

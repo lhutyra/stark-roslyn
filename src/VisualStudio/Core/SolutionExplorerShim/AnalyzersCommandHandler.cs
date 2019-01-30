@@ -8,23 +8,24 @@ using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using EnvDTE;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.Internal.VisualStudio.PlatformUI;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.CodeAnalysis;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
-using Microsoft.VisualStudio.LanguageServices.SolutionExplorer;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 using VSLangProj140;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     [Export]
     internal class AnalyzersCommandHandler : IAnalyzersCommandHandler, IVsUpdateSolutionEvents

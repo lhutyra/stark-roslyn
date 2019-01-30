@@ -2,20 +2,20 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {
     [Export(typeof(IIntelliSensePresenter<ICompletionPresenterSession, ICompletionSession>))]
     [Export(typeof(ICompletionSourceProvider))]
     [Name(PredefinedCompletionPresenterNames.RoslynCompletionPresenter)]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     internal sealed class CompletionPresenter : ForegroundThreadAffinitizedObject, IIntelliSensePresenter<ICompletionPresenterSession, ICompletionSession>, ICompletionSourceProvider
     {
         private readonly ICompletionBroker _completionBroker;

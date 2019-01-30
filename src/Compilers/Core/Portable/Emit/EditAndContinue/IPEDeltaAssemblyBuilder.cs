@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     internal interface IPEDeltaAssemblyBuilder
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal class CodeGenerationNamespaceInfo
     {

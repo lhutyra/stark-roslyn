@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     /// <summary>
     /// Workspace service for cache implementations.

@@ -2,16 +2,16 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.QuickInfo
+namespace StarkPlatform.CodeAnalysis.Editor.QuickInfo
 {
     internal static class Extensions
     {
         /// <summary>
         /// clone content of <paramref name="sourceText"/> to new <see cref="ITextBuffer"/>
-        /// with <see cref="ContentTypeNames.RoslynContentType"/>
+        /// with <see cref="ContentTypeNames.StarkRoslynContentType"/>
         /// </summary>
         public static ITextBuffer CreateTextBufferWithRoslynContentType(this SourceText sourceText, Workspace workspace)
         {

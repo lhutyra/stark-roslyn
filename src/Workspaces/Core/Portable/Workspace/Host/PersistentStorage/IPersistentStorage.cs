@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     public interface IPersistentStorage : IDisposable
     {

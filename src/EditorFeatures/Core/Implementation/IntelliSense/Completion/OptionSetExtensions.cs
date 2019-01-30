@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Editor.Options;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Editor.Options;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
 {
     internal static class OptionSetExtensions
     {

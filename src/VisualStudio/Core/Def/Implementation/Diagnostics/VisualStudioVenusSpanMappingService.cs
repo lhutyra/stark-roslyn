@@ -3,15 +3,15 @@
 using System;
 using System.Composition;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Venus;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Diagnostics
 {
     [ExportWorkspaceService(typeof(IWorkspaceVenusSpanMappingService), ServiceLayer.Default), Shared]
     internal partial class VisualStudioVenusSpanMappingService : IWorkspaceVenusSpanMappingService
@@ -134,7 +134,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
             return position1 > position2 ? position1 : position2;
         }
 
-        public static LinePosition GetAdjustedLineColumn(Microsoft.CodeAnalysis.Workspace workspace, DocumentId documentId, int originalLine, int originalColumn, int mappedLine, int mappedColumn)
+        public static LinePosition GetAdjustedLineColumn(StarkPlatform.CodeAnalysis.Workspace workspace, DocumentId documentId, int originalLine, int originalColumn, int mappedLine, int mappedColumn)
         {
             var vsWorkspace = workspace as VisualStudioWorkspaceImpl;
             if (vsWorkspace == null)
@@ -165,7 +165,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
                 return false;
             }
 
-            var originalSpanOnSecondaryBuffer = new TextManager.Interop.TextSpan()
+            var originalSpanOnSecondaryBuffer = new Microsoft.VisualStudio.TextManager.Interop.TextSpan()
             {
                 iStartLine = originalLine,
                 iStartIndex = originalColumn,
@@ -176,8 +176,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
             var bufferCoordinator = containedDocument.BufferCoordinator;
             var containedLanguageHost = containedDocument.ContainedLanguageHost;
 
-            var spansOnPrimaryBuffer = new TextManager.Interop.TextSpan[1];
-            if (VSConstants.S_OK == bufferCoordinator.MapSecondaryToPrimarySpan(originalSpanOnSecondaryBuffer, spansOnPrimaryBuffer))
+            var spansOnPrimaryBuffer = new Microsoft.VisualStudio.TextManager.Interop.TextSpan[1];
+            if (Microsoft.VisualStudio.VSConstants.S_OK == bufferCoordinator.MapSecondaryToPrimarySpan(originalSpanOnSecondaryBuffer, spansOnPrimaryBuffer))
             {
                 // easy case, we can map span in subject buffer to surface buffer. no need to adjust any span
                 mappedSpan = new MappedSpan(originalLine, originalColumn, spansOnPrimaryBuffer[0].iStartLine, spansOnPrimaryBuffer[0].iStartIndex);
@@ -186,7 +186,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
 
             // we can't directly map span in subject buffer to surface buffer. see whether there is any visible span we can use from the subject buffer span
             if (containedLanguageHost != null &&
-                VSConstants.S_OK != containedLanguageHost.GetNearestVisibleToken(originalSpanOnSecondaryBuffer, spansOnPrimaryBuffer))
+                Microsoft.VisualStudio.VSConstants.S_OK != containedLanguageHost.GetNearestVisibleToken(originalSpanOnSecondaryBuffer, spansOnPrimaryBuffer))
             {
                 // no visible span we can use.
                 return false;
@@ -194,7 +194,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
 
             // We need to map both the original and mapped location into visible code so that features such as error list, squiggle, etc. points to user visible area
             // We have the mapped location in the primary buffer.
-            var nearestVisibleSpanOnPrimaryBuffer = new TextManager.Interop.TextSpan()
+            var nearestVisibleSpanOnPrimaryBuffer = new Microsoft.VisualStudio.TextManager.Interop.TextSpan()
             {
                 iStartLine = spansOnPrimaryBuffer[0].iStartLine,
                 iStartIndex = spansOnPrimaryBuffer[0].iStartIndex,
@@ -203,8 +203,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
             };
 
             // Map this location back to the secondary span to re-adjust the original location to be in user-code in secondary buffer.
-            var spansOnSecondaryBuffer = new TextManager.Interop.TextSpan[1];
-            if (VSConstants.S_OK != bufferCoordinator.MapPrimaryToSecondarySpan(nearestVisibleSpanOnPrimaryBuffer, spansOnSecondaryBuffer))
+            var spansOnSecondaryBuffer = new Microsoft.VisualStudio.TextManager.Interop.TextSpan[1];
+            if (Microsoft.VisualStudio.VSConstants.S_OK != bufferCoordinator.MapPrimaryToSecondarySpan(nearestVisibleSpanOnPrimaryBuffer, spansOnSecondaryBuffer))
             {
                 // we can't adjust original position but we can adjust mapped one
                 mappedSpan = new MappedSpan(originalLine, originalColumn, nearestVisibleSpanOnPrimaryBuffer.iStartLine, nearestVisibleSpanOnPrimaryBuffer.iStartIndex);
@@ -231,7 +231,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
         }
 
         private static bool TryFixUpNearestVisibleSpan(
-            TextManager.Interop.IVsContainedLanguageHost containedLanguageHost, TextManager.Interop.IVsTextBufferCoordinator bufferCoordinator,
+            Microsoft.VisualStudio.TextManager.Interop.IVsContainedLanguageHost containedLanguageHost, Microsoft.VisualStudio.TextManager.Interop.IVsTextBufferCoordinator bufferCoordinator,
             int originalLine, int originalColumn, out LinePosition adjustedPosition)
         {
             // GetNearestVisibleToken gives us the position right at the end of visible span.
@@ -244,8 +244,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
 
             if (originalLine > 1)
             {
-                if (VSConstants.S_OK == bufferCoordinator.GetSecondaryBuffer(out var secondaryBuffer) &&
-                    VSConstants.S_OK == secondaryBuffer.GetLengthOfLine(originalLine - 1, out var length))
+                if (Microsoft.VisualStudio.VSConstants.S_OK == bufferCoordinator.GetSecondaryBuffer(out var secondaryBuffer) &&
+                    Microsoft.VisualStudio.VSConstants.S_OK == secondaryBuffer.GetLengthOfLine(originalLine - 1, out var length))
                 {
                     adjustedPosition = new LinePosition(originalLine - 1, length);
                     return true;

@@ -5,13 +5,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Workspaces
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Workspaces
 {
     [ExportWorkspaceService(typeof(ITextFactoryService), ServiceLayer.Editor), Shared]
     internal class EditorTextFactoryService : ITextFactoryService

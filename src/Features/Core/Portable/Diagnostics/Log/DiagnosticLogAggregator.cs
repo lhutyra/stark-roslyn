@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Diagnostics.Telemetry;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Diagnostics.Telemetry;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Log
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Log
 {
     internal class DiagnosticLogAggregator : LogAggregator
     {

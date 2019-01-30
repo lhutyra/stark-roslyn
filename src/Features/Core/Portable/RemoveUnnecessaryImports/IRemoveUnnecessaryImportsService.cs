@@ -3,9 +3,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.RemoveUnnecessaryImports
+namespace StarkPlatform.CodeAnalysis.RemoveUnnecessaryImports
 {
     internal interface IRemoveUnnecessaryImportsService : ILanguageService
     {

@@ -2,9 +2,9 @@
 
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.PullMemberUp
+namespace StarkPlatform.CodeAnalysis.PullMemberUp
 {
     internal static class MemberAndDestinationValidator
     {

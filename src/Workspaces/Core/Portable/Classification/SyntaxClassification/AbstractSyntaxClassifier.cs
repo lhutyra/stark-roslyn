@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Classification.Classifiers
+namespace StarkPlatform.CodeAnalysis.Classification.Classifiers
 {
     internal abstract class AbstractSyntaxClassifier : ISyntaxClassifier
     {

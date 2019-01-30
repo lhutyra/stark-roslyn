@@ -3,16 +3,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     /// <summary>
     /// A Workspace specific to Visual Studio.

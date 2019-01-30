@@ -5,9 +5,9 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class ModifiedTypeReference : IModifiedTypeReference
     {

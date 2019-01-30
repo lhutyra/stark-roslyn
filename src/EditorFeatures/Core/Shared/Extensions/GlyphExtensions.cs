@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Tags;
 using Microsoft.VisualStudio.Core.Imaging;
 using Microsoft.VisualStudio.Imaging;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Extensions
 {
     internal static class GlyphExtensions
     {
@@ -42,9 +42,9 @@ namespace Microsoft.CodeAnalysis.Editor.Shared.Extensions
                 case Glyph.ClassInternal:
                     return new ImageId(ImageCatalogGuid, KnownImageIds.ClassInternal);
 
-                case Glyph.CSharpFile:
+                case Glyph.StarkFile:
                     return new ImageId(ImageCatalogGuid, KnownImageIds.CSFileNode);
-                case Glyph.CSharpProject:
+                case Glyph.StarkProject:
                     return new ImageId(ImageCatalogGuid, KnownImageIds.CSProjectNode);
 
                 case Glyph.ConstantPublic:

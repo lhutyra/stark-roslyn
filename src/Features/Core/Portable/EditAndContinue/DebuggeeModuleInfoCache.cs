@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     /// <summary>
     /// A cache of metadata blobs loaded into processes being debugged.

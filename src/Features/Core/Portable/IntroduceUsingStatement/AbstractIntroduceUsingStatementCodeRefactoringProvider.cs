@@ -5,17 +5,17 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Utilities;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.CodeActions.CodeAction;
+using static StarkPlatform.CodeAnalysis.CodeActions.CodeAction;
 
-namespace Microsoft.CodeAnalysis.IntroduceUsingStatement
+namespace StarkPlatform.CodeAnalysis.IntroduceUsingStatement
 {
     internal abstract class AbstractIntroduceUsingStatementCodeRefactoringProvider<TStatementSyntax, TLocalDeclarationSyntax> : CodeRefactoringProvider
         where TStatementSyntax : SyntaxNode
@@ -73,12 +73,7 @@ namespace Microsoft.CodeAnalysis.IntroduceUsingStatement
             }
 
             var localDeclaration = operation.Declarations[0];
-            if (localDeclaration.Declarators.Length != 1)
-            {
-                return default;
-            }
-
-            var declarator = localDeclaration.Declarators[0];
+            var declarator = localDeclaration;
 
             var localType = declarator.Symbol?.Type;
             if (localType is null)

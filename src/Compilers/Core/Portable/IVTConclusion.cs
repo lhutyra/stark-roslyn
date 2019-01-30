@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// The result of <see cref="ISymbolExtensions.PerformIVTCheck(AssemblyIdentity, ImmutableArray{byte}, ImmutableArray{byte})"/>

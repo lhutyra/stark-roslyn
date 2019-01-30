@@ -4,9 +4,9 @@ using System;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.GenerateEqualsAndGetHashCodeFromMembers
+namespace StarkPlatform.CodeAnalysis.GenerateEqualsAndGetHashCodeFromMembers
 {
     /// <summary>
     /// Service that can be used to generate <see cref="object.Equals(object)"/> and

@@ -2,17 +2,17 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.GeneratedCodeRecognition;
-using Microsoft.CodeAnalysis.GenerateType;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.ProjectManagement;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.GeneratedCodeRecognition;
+using StarkPlatform.CodeAnalysis.GenerateType;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.ProjectManagement;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.GenerateType
 {
     [ExportWorkspaceServiceFactory(typeof(IGenerateTypeOptionsService), ServiceLayer.Host), Shared]
     internal class VisualStudioGenerateTypeOptionsServiceFactory : IWorkspaceServiceFactory
@@ -43,7 +43,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
                     syntaxFactsService,
                     generateTypeDialogOptions,
                     typeName,
-                    document.Project.Language == LanguageNames.CSharp ? ".cs" : ".vb",
+                    document.Project.Language == LanguageNames.Stark ? ".cs" : ".vb",
                     _isNewFile,
                     _accessSelectString,
                     _typeKindSelectString);

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Checksum of data can be used later to see whether two data are same or not

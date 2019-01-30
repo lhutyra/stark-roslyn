@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     /// <summary>
     /// Utility class that can be used to track the progress of an operation in a threadsafe manner.

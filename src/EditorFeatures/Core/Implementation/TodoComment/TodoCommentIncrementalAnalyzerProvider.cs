@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.CodeAnalysis.Common;
-using Microsoft.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis.Common;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.TodoComments
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.TodoComments
 {
     [Shared]
     [Export(typeof(ITodoListProvider))]

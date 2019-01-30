@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FindSymbols
+namespace StarkPlatform.CodeAnalysis.FindSymbols
 {
     /// <summary>
     /// A class that reports the current progress made when finding references to symbols.  

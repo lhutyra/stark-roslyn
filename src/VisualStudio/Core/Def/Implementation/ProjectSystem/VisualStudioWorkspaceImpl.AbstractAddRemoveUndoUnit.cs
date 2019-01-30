@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.AddImport;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.AddImport;
 using Microsoft.VisualStudio.OLE.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     internal partial class VisualStudioWorkspaceImpl
     {

@@ -8,7 +8,7 @@ using System.Reflection;
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
 #if DEBUG || BOOTSTRAP
     /// <summary>

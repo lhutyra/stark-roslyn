@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeCleanup.Providers
+namespace StarkPlatform.CodeAnalysis.CodeCleanup.Providers
 {
     /// <summary>
     /// Helper class that implements <see cref="ICodeCleanupProvider"/> using delegates passed to its constructor.

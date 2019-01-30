@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Formatting.Rules
+namespace StarkPlatform.CodeAnalysis.Formatting.Rules
 {
     internal interface IActionHolder<TArgument>
     {

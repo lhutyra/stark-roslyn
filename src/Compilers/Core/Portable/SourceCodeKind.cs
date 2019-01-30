@@ -2,9 +2,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Specifies the C# or VB source code kind.

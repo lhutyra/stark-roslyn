@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
 {
     internal abstract partial class AbstractLegacyProject : IProjectSiteEx
     {

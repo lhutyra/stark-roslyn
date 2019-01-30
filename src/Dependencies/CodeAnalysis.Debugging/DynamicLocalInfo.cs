@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace StarkPlatform.CodeAnalysis.Debugging
 {
     internal struct DynamicLocalInfo
     {

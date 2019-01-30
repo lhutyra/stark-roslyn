@@ -3,7 +3,7 @@
 using System.Diagnostics;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.MSBuild.Logging
+namespace StarkPlatform.CodeAnalysis.MSBuild.Logging
 {
     internal class MSBuildDiagnosticLogger : MSB.Framework.ILogger
     {

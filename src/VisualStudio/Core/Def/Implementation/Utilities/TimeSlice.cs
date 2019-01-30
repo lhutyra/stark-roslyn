@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities
 {
     internal class TimeSlice
     {

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Completion;
 using Microsoft.VisualStudio.Text;
 using AsyncCompletionData = Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion.Data;
-using RoslynTrigger = Microsoft.CodeAnalysis.Completion.CompletionTrigger;
+using RoslynTrigger = StarkPlatform.CodeAnalysis.Completion.CompletionTrigger;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.AsyncCompletion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.AsyncCompletion
 {
     internal static class Helpers
     {

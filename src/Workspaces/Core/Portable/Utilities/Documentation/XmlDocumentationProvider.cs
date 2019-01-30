@@ -10,7 +10,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A class used to provide XML documentation to the compiler for members from metadata from an XML document source.

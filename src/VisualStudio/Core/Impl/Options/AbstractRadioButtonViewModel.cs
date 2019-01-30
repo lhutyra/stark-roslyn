@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     internal abstract class AbstractRadioButtonViewModel : AbstractNotifyPropertyChanged
     {

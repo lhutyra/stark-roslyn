@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     /// <summary>
     /// Represents a single fix. This is essentially a tuple

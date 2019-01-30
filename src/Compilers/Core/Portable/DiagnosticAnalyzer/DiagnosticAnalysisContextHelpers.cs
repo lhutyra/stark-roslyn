@@ -5,11 +5,11 @@ using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.CodeAnalysis.FlowAnalysis;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.FlowAnalysis;
+using StarkPlatform.CodeAnalysis.Operations;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     internal static class DiagnosticAnalysisContextHelpers
     {

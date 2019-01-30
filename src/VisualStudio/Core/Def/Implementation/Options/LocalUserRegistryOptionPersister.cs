@@ -5,14 +5,14 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     /// <summary>
     /// Serializes options marked with <see cref="LocalUserProfileStorageLocation"/> to the local hive-specific registry.

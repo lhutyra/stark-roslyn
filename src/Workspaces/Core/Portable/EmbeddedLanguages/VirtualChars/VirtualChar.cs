@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars
 {
     /// <summary>
     /// The Regex and Json parsers wants to work over an array of characters, however this array of

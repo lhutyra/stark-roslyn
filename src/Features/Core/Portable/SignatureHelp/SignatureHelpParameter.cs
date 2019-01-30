@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SignatureHelp
+namespace StarkPlatform.CodeAnalysis.SignatureHelp
 {
     /// <summary>
     /// Used for C#/VB sig help providers so they can build up information using SymbolDisplayParts.

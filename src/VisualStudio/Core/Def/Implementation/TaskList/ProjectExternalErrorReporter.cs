@@ -6,17 +6,18 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Venus;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TaskList
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList
 {
     internal class ProjectExternalErrorReporter : IVsReportExternalErrors, IVsLanguageServiceBuildErrorReporter2
     {
@@ -53,8 +54,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.TaskList
             // this error
             if (errorId == null)
             {
-                // record NFW to see who violates contract.
-                WatsonReporter.Report(new Exception("errorId is null"));
                 return false;
             }
 

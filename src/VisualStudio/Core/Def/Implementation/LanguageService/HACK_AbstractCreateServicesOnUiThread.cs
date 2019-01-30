@@ -2,15 +2,15 @@
 
 using System;
 using System.Collections.ObjectModel;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Snippets;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Snippets;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService
 {
     /// <summary>
     /// Ensures services that must be constructed on the UI thread are appropriately created during

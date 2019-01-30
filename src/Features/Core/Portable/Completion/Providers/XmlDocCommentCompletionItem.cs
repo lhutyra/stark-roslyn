@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Completion.Providers
+namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal static class XmlDocCommentCompletionItem
     {

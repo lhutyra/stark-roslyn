@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace StarkPlatform.CodeAnalysis.Syntax.InternalSyntax
 {
     internal struct SeparatedSyntaxList<TNode> : IEquatable<SeparatedSyntaxList<TNode>> where TNode : GreenNode
     {

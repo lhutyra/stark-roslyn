@@ -2,18 +2,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Editor.Tagging;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Tagging;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging
 {
     internal static partial class TaggerEventSources
     {

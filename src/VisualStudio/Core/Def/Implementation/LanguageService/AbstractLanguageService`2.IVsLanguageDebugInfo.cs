@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Roslyn.Utilities;
 using IVsEnumBSTR = Microsoft.VisualStudio.TextManager.Interop.IVsEnumBSTR;
 using IVsTextBuffer = Microsoft.VisualStudio.TextManager.Interop.IVsTextBuffer;
 using TextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService
 {
     internal partial class AbstractLanguageService<TPackage, TLanguageService> : IVsLanguageDebugInfo
     {

@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
 {
     internal class CodeElementSnapshot : Snapshot
     {

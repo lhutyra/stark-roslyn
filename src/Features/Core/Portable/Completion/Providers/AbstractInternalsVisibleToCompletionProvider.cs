@@ -5,14 +5,14 @@ using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Completion.Providers
+namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal abstract class AbstractInternalsVisibleToCompletionProvider : CommonCompletionProvider
     {
@@ -195,7 +195,7 @@ namespace Microsoft.CodeAnalysis.Completion.Providers
 
                     if (await CheckTypeInfoOfAttributeAsync(document, attribute, completionContext.CancellationToken).ConfigureAwait(false))
                     {
-                        // See Microsoft.CodeAnalysis.PEAssembly.BuildInternalsVisibleToMap for reference on how
+                        // See StarkPlatform.CodeAnalysis.PEAssembly.BuildInternalsVisibleToMap for reference on how
                         // the 'real' InternalsVisibleTo logic extracts and compares the assemblyName:
                         // * Extract the assemblyName by AssemblyIdentity.TryParseDisplayName
                         // * Compare with StringComparer.OrdinalIgnoreCase

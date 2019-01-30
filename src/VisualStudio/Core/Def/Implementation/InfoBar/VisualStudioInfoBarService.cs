@@ -4,17 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     [ExportWorkspaceService(typeof(IInfoBarService), layer: ServiceLayer.Host), Shared]
     internal class VisualStudioInfoBarService : ForegroundThreadAffinitizedObject, IInfoBarService

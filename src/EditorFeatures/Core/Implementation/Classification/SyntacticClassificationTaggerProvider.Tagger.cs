@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Classification
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Classification
 {
     internal partial class SyntacticClassificationTaggerProvider
     {

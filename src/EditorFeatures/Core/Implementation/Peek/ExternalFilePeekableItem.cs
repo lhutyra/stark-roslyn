@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Peek
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Peek
 {
     internal class ExternalFilePeekableItem : PeekableItem
     {

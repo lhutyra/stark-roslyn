@@ -3,10 +3,10 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.SolutionCrawler.State
+namespace StarkPlatform.CodeAnalysis.SolutionCrawler.State
 {
     internal abstract class AbstractDocumentAnalyzerState<T> : AbstractAnalyzerState<DocumentId, Document, T>
     {

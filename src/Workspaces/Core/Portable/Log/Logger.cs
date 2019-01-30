@@ -3,9 +3,9 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     /// <summary>
     /// provide a way to log activities to various back end such as etl, code marker and etc

@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Operations;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     [ExportWorkspaceServiceFactory(typeof(IInlineRenameUndoManager), ServiceLayer.Default), Shared]
     internal class UndoManagerServiceFactory : IWorkspaceServiceFactory

@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal abstract partial class CommonCompiler
     {

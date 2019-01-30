@@ -11,8 +11,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.CodeAnalysis.CommandLine.BuildProtocolConstants;
-using static Microsoft.CodeAnalysis.CommandLine.CompilerServerLogger;
+using static StarkPlatform.CodeAnalysis.CommandLine.BuildProtocolConstants;
+using static StarkPlatform.CodeAnalysis.CommandLine.CompilerServerLogger;
 
 // This file describes data structures about the protocol from client program to server that is 
 // used. The basic protocol is this.
@@ -23,7 +23,7 @@ using static Microsoft.CodeAnalysis.CommandLine.CompilerServerLogger;
 // it handles the request, sends a response (described by Response class) back to the client, then
 // disconnects the pipe and ends the thread.
 
-namespace Microsoft.CodeAnalysis.CommandLine
+namespace StarkPlatform.CodeAnalysis.CommandLine
 {
     /// <summary>
     /// Represents a request from the client. A request is as follows.
@@ -114,7 +114,7 @@ namespace Microsoft.CodeAnalysis.CommandLine
         public static BuildRequest CreateShutdown()
         {
             var requestArgs = new[] { new Argument(ArgumentId.Shutdown, argumentIndex: 0, value: "") };
-            return new BuildRequest(BuildProtocolConstants.ProtocolVersion, RequestLanguage.CSharpCompile, GetCommitHash(), requestArgs);
+            return new BuildRequest(BuildProtocolConstants.ProtocolVersion, RequestLanguage.StarkCompile, GetCommitHash(), requestArgs);
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace Microsoft.CodeAnalysis.CommandLine
     // that won't occur accidentally for debugging.
     internal enum RequestLanguage
     {
-        CSharpCompile = 0x44532521,
+        StarkCompile = 0x44532521,
         VisualBasicCompile = 0x44532522,
     }
 

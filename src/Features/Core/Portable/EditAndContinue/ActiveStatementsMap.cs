@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     internal readonly struct ActiveStatementsMap
     {

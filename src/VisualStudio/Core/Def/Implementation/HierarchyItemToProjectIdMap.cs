@@ -2,13 +2,14 @@
 
 using System.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Venus;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     [ExportWorkspaceService(typeof(IHierarchyItemToProjectIdMap), ServiceLayer.Host), Shared]
     internal class HierarchyItemToProjectIdMap : IHierarchyItemToProjectIdMap
@@ -47,8 +48,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
                     // The properties supported and the interpretation of their values varies from one project system
                     // to another. This code is designed with C# and VB in mind, so we need to filter out everything
                     // else.
-                    if (p.Language != LanguageNames.CSharp
-                        && p.Language != LanguageNames.VisualBasic)
+                    if (p.Language != LanguageNames.Stark)
                     {
                         return false;
                     }

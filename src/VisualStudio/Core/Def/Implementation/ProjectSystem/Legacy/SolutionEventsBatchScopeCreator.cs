@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
 {
     /// <summary>
     /// Creates batch scopes for projects based on IVsSolutionEvents. This is useful for projects types that don't otherwise have

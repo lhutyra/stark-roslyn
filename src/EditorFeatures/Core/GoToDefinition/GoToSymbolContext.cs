@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis.FindUsages;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.GoToDefinition
+namespace StarkPlatform.CodeAnalysis.Editor.GoToDefinition
 {
     internal class GoToSymbolContext
     {

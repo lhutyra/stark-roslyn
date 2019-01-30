@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.FindSymbols.Finders
+namespace StarkPlatform.CodeAnalysis.FindSymbols.Finders
 {
     /// <summary>
     /// Extensibility interface to allow individual languages to extend the 'Find References' service. 

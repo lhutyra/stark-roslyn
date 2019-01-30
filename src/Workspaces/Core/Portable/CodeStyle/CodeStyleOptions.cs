@@ -2,11 +2,11 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.CodeStyle.CodeStyleHelpers;
+using static StarkPlatform.CodeAnalysis.CodeStyle.CodeStyleHelpers;
 
-namespace Microsoft.CodeAnalysis.CodeStyle
+namespace StarkPlatform.CodeAnalysis.CodeStyle
 {
     public class CodeStyleOptions
     {

@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Organizing.Organizers;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Organizing.Organizers;
 
-namespace Microsoft.CodeAnalysis.Organizing
+namespace StarkPlatform.CodeAnalysis.Organizing
 {
     /// <summary>
     /// internal interface used to use language specific service from common service layer

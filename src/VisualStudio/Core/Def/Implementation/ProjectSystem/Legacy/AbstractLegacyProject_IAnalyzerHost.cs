@@ -2,9 +2,9 @@
 
 using System;
 using System.IO;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
 {
     internal abstract partial class AbstractLegacyProject : IAnalyzerHost
     {

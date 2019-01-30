@@ -9,7 +9,7 @@ using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents an immutable snapshot of module CLI metadata.

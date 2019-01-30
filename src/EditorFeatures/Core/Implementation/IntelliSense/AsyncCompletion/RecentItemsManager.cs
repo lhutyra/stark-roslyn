@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.AsyncCompletion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.AsyncCompletion
 {
     [Export]
     internal class RecentItemsManager

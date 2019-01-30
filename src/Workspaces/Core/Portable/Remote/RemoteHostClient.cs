@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     /// <summary>
     /// This represents client in client/servier model.

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     /// <summary>
     /// Specifies that the option should be stored into a roamed profile across machines.
@@ -21,8 +21,7 @@ namespace Microsoft.CodeAnalysis.Options
             }
             else
             {
-                string substituteLanguageName = languageName == LanguageNames.CSharp ? "CSharp" :
-                                                languageName == LanguageNames.VisualBasic ? "VisualBasic" :
+                string substituteLanguageName = languageName == LanguageNames.Stark ? "stark" :
                                                 languageName;
 
                 return unsubstitutedKeyName.Replace("%LANGUAGE%", substituteLanguageName);

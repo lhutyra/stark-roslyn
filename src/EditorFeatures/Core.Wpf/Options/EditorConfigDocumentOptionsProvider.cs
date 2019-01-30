@@ -6,14 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ErrorLogger;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorLogger;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Microsoft.VisualStudio.CodingConventions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Options
 {
     // This class is currently linked into both EditorFeatures.Wpf (VS in-process) and RemoteWorkspaces (Roslyn out-of-process).
     internal sealed partial class EditorConfigDocumentOptionsProvider : IDocumentOptionsProvider

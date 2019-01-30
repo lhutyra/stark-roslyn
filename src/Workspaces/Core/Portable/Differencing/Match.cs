@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Differencing
+namespace StarkPlatform.CodeAnalysis.Differencing
 {
     public sealed partial class Match<TNode>
     {

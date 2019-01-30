@@ -5,11 +5,11 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
 {
     internal static partial class SymbolUsageAnalysis
     {

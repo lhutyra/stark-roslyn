@@ -6,11 +6,11 @@ using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Reflection;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Diagnostics
 {
     /// <summary>
     /// This service provides diagnostic analyzers from the analyzer assets specified in the manifest files of installed VSIX extensions.
@@ -19,8 +19,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
     [Export(typeof(IWorkspaceDiagnosticAnalyzerProviderService))]
     internal partial class VisualStudioWorkspaceDiagnosticAnalyzerProviderService : IWorkspaceDiagnosticAnalyzerProviderService
     {
-        public const string MicrosoftCodeAnalysisCSharp = "Microsoft.CodeAnalysis.CSharp.dll";
-        public const string MicrosoftCodeAnalysisVisualBasic = "Microsoft.CodeAnalysis.VisualBasic.dll";
+        public const string MicrosoftCodeAnalysisCSharp = "StarkPlatform.CodeAnalysis.Stark.dll";
+        public const string MicrosoftCodeAnalysisVisualBasic = "StarkPlatform.CodeAnalysis.VisualBasic.dll";
 
         private const string AnalyzerContentTypeName = "Microsoft.VisualStudio.Analyzer";
 

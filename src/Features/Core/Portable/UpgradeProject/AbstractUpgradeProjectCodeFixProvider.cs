@@ -6,11 +6,11 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using static Microsoft.CodeAnalysis.CodeActions.CodeAction;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using static StarkPlatform.CodeAnalysis.CodeActions.CodeAction;
 
-namespace Microsoft.CodeAnalysis.UpgradeProject
+namespace StarkPlatform.CodeAnalysis.UpgradeProject
 {
     internal abstract partial class AbstractUpgradeProjectCodeFixProvider : CodeFixProvider
     {

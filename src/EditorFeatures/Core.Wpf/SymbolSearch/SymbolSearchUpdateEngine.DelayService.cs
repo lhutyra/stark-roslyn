@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     internal partial class SymbolSearchUpdateEngine
     {

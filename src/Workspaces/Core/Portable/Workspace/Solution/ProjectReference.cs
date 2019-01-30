@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
     public sealed class ProjectReference : IEquatable<ProjectReference>

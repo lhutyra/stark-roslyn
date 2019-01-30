@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Features.EmbeddedLanguages;
+using StarkPlatform.CodeAnalysis.Features.EmbeddedLanguages;
 
-namespace Microsoft.CodeAnalysis.Editor.EmbeddedLanguages
+namespace StarkPlatform.CodeAnalysis.Editor.EmbeddedLanguages
 {
     /// <summary>
     /// Service that returns all the embedded languages supported.  Each embedded language can expose

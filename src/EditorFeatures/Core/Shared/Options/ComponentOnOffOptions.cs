@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Options.Providers;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options.Providers;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Options
 {
     /// <summary>
     /// options to indicate whether a certain component in Roslyn is enabled or not

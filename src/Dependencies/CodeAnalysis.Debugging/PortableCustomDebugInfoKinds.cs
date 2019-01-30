@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace StarkPlatform.CodeAnalysis.Debugging
 {
     internal static class PortableCustomDebugInfoKinds
     {

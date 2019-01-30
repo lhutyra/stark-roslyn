@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
 {
     internal class PrioritizedTaskScheduler : TaskScheduler
     {

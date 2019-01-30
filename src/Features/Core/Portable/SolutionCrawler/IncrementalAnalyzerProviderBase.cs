@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.SolutionCrawler
+namespace StarkPlatform.CodeAnalysis.SolutionCrawler
 {
     internal class IncrementalAnalyzerProviderBase : IIncrementalAnalyzerProvider
     {

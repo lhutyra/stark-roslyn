@@ -8,42 +8,42 @@
     <RoslynProjectType>UnitTest</RoslynProjectType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
-    <ProjectReference Include="..\..\..\Compilers\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.csproj" />
-    <ProjectReference Include="..\..\..\Compilers\Test\Resources\Core\Microsoft.CodeAnalysis.Compiler.Test.Resources.csproj" />
-    <ProjectReference Include="..\..\..\Compilers\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.vbproj" />
-    <ProjectReference Include="..\..\..\EditorFeatures\Core\Microsoft.CodeAnalysis.EditorFeatures.csproj" />
-    <ProjectReference Include="..\..\..\EditorFeatures\Core.Wpf\Microsoft.CodeAnalysis.EditorFeatures.Wpf.csproj" />
-    <ProjectReference Include="..\..\..\EditorFeatures\CSharp\Microsoft.CodeAnalysis.CSharp.EditorFeatures.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Test\Resources\Core\StarkPlatform.CodeAnalysis.Compiler.Test.Resources.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.vbproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\Core\StarkPlatform.CodeAnalysis.EditorFeatures.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\Core.Wpf\StarkPlatform.CodeAnalysis.EditorFeatures.Wpf.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\CSharp\StarkPlatform.CodeAnalysis.CSharp.EditorFeatures.csproj" />
     <ProjectReference Include="..\..\..\EditorFeatures\TestUtilities\Roslyn.Services.Test.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\EditorFeatures\Text\Microsoft.CodeAnalysis.EditorFeatures.Text.csproj" />
-    <ProjectReference Include="..\..\..\EditorFeatures\VisualBasic\Microsoft.CodeAnalysis.VisualBasic.EditorFeatures.vbproj" />
-    <ProjectReference Include="..\..\..\Features\Core\Portable\Microsoft.CodeAnalysis.Features.csproj" />
-    <ProjectReference Include="..\..\..\Features\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.Features.csproj" />
-    <ProjectReference Include="..\..\..\Features\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.Features.vbproj" />
-    <ProjectReference Include="..\..\..\Interactive\EditorFeatures\Core\Microsoft.CodeAnalysis.InteractiveEditorFeatures.csproj" />
-    <ProjectReference Include="..\..\..\Interactive\EditorFeatures\CSharp\Microsoft.CodeAnalysis.CSharp.InteractiveEditorFeatures.csproj" />
-    <ProjectReference Include="..\..\..\Interactive\EditorFeatures\VisualBasic\Microsoft.CodeAnalysis.VisualBasic.InteractiveEditorFeatures.vbproj" />
-    <ProjectReference Include="..\..\..\Interactive\Features\Microsoft.CodeAnalysis.InteractiveFeatures.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\Text\StarkPlatform.CodeAnalysis.EditorFeatures.Text.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\VisualBasic\StarkPlatform.CodeAnalysis.VisualBasic.EditorFeatures.vbproj" />
+    <ProjectReference Include="..\..\..\Features\Core\Portable\StarkPlatform.CodeAnalysis.Features.csproj" />
+    <ProjectReference Include="..\..\..\Features\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.Features.csproj" />
+    <ProjectReference Include="..\..\..\Features\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.Features.vbproj" />
+    <ProjectReference Include="..\..\..\Interactive\EditorFeatures\Core\StarkPlatform.CodeAnalysis.InteractiveEditorFeatures.csproj" />
+    <ProjectReference Include="..\..\..\Interactive\EditorFeatures\CSharp\StarkPlatform.CodeAnalysis.CSharp.InteractiveEditorFeatures.csproj" />
+    <ProjectReference Include="..\..\..\Interactive\EditorFeatures\VisualBasic\StarkPlatform.CodeAnalysis.VisualBasic.InteractiveEditorFeatures.vbproj" />
+    <ProjectReference Include="..\..\..\Interactive\Features\StarkPlatform.CodeAnalysis.InteractiveFeatures.csproj" />
     <ProjectReference Include="..\..\..\Interactive\Host\InteractiveHost32.csproj" />
-    <ProjectReference Include="..\..\..\Scripting\Core\Microsoft.CodeAnalysis.Scripting.csproj" />
-    <ProjectReference Include="..\..\..\Scripting\CSharp\Microsoft.CodeAnalysis.CSharp.Scripting.csproj" />
-    <ProjectReference Include="..\..\..\Scripting\VisualBasic\Microsoft.CodeAnalysis.VisualBasic.Scripting.vbproj" />
+    <ProjectReference Include="..\..\..\Scripting\Core\StarkPlatform.CodeAnalysis.Scripting.csproj" />
+    <ProjectReference Include="..\..\..\Scripting\CSharp\StarkPlatform.CodeAnalysis.CSharp.Scripting.csproj" />
+    <ProjectReference Include="..\..\..\Scripting\VisualBasic\StarkPlatform.CodeAnalysis.VisualBasic.Scripting.vbproj" />
     <ProjectReference Include="..\..\..\Test\Diagnostics\Roslyn.Hosting.Diagnostics.csproj" />
     <ProjectReference Include="..\..\..\Test\PdbUtilities\Roslyn.Test.PdbUtilities.csproj" />
     <ProjectReference Include="..\..\..\Test\Utilities\Portable\Roslyn.Test.Utilities.csproj" />
     <ProjectReference Include="..\..\..\Workspaces\CoreTestUtilities\Roslyn.Services.UnitTests.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\Workspaces\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.Workspaces.csproj" />
-    <ProjectReference Include="..\..\..\Workspaces\Remote\Core\Microsoft.CodeAnalysis.Remote.Workspaces.csproj" />
-    <ProjectReference Include="..\..\..\Workspaces\Remote\ServiceHub\Microsoft.CodeAnalysis.Remote.ServiceHub.csproj" />
-    <ProjectReference Include="..\..\..\Workspaces\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
+    <ProjectReference Include="..\..\..\Workspaces\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.Workspaces.csproj" />
+    <ProjectReference Include="..\..\..\Workspaces\Remote\Core\StarkPlatform.CodeAnalysis.Remote.Workspaces.csproj" />
+    <ProjectReference Include="..\..\..\Workspaces\Remote\ServiceHub\StarkPlatform.CodeAnalysis.Remote.ServiceHub.csproj" />
+    <ProjectReference Include="..\..\..\Workspaces\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
     <ProjectReference Include="..\..\Core\Def\Microsoft.VisualStudio.LanguageServices.csproj" />
     <ProjectReference Include="..\..\Core\Impl\Microsoft.VisualStudio.LanguageServices.Implementation.csproj" />
     <ProjectReference Include="..\..\CSharp\Repl\Microsoft.VisualStudio.CSharp.Repl.csproj" />
     <ProjectReference Include="..\..\InteractiveServices\Microsoft.VisualStudio.InteractiveServices.csproj" />
     <ProjectReference Include="..\IntegrationService\Microsoft.VisualStudio.IntegrationTest.IntegrationService.csproj" />
     <ProjectReference Include="..\TestUtilities\Microsoft.VisualStudio.IntegrationTest.Utilities.csproj" />
-    <ProjectReference Include="..\..\..\Workspaces\Core\Portable\Microsoft.CodeAnalysis.Workspaces.csproj" />
+    <ProjectReference Include="..\..\..\Workspaces\Core\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

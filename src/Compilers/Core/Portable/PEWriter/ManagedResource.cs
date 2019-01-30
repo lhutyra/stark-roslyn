@@ -6,10 +6,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Roslyn.Utilities;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class ManagedResource
     {

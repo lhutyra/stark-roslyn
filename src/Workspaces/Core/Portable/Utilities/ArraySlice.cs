@@ -2,7 +2,7 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
 namespace Roslyn.Utilities
 {

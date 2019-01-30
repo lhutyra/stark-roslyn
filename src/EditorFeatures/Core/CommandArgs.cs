@@ -4,7 +4,7 @@ using System;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     /// <summary>
     /// The base class of all command argument types used by ICommandHandler.

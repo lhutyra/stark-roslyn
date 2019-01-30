@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     /// <summary>
     /// a logger that aggregate multiple loggers

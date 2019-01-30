@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.CodingConventions;
-using Microsoft.CodeAnalysis.ErrorLogger;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.ErrorLogger;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
 
-namespace Microsoft.CodeAnalysis.Editor.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Options
 {
     internal sealed partial class EditorConfigDocumentOptionsProvider : IDocumentOptionsProvider
     {

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.Rename
+namespace StarkPlatform.CodeAnalysis.Rename
 {
     internal interface IRenameRewriterLanguageService : ILanguageService
     {

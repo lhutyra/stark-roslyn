@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Formatting.Rules
+namespace StarkPlatform.CodeAnalysis.Formatting.Rules
 {
     /// <summary>
     /// Represents a next operation to run in a continuation style chaining.

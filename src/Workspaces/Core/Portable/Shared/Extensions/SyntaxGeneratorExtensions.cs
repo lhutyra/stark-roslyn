@@ -5,14 +5,14 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Simplification;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static partial class SyntaxGeneratorExtensions
     {
@@ -311,7 +311,7 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
                 getBody = statement;
                 setBody = statement;
             }
-            else if (overriddenProperty.IsIndexer() && document.Project.Language == LanguageNames.CSharp)
+            else if (overriddenProperty.IsIndexer() && document.Project.Language == LanguageNames.Stark)
             {
                 // Indexer: return or set base[]. Only in C#, since VB must refer to these by name.
 
@@ -330,33 +330,6 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
             }
             else if (overriddenProperty.GetParameters().Any())
             {
-                // Call accessors directly if C# overriding VB
-                if (document.Project.Language == LanguageNames.CSharp
-                    && (await SymbolFinder.FindSourceDefinitionAsync(overriddenProperty, document.Project.Solution, cancellationToken).ConfigureAwait(false))
-                        .Language == LanguageNames.VisualBasic)
-                {
-                    var getName = overriddenProperty.GetMethod?.Name;
-                    var setName = overriddenProperty.SetMethod?.Name;
-
-                    getBody = getName == null
-                        ? null
-                        : codeFactory.ReturnStatement(
-                    codeFactory.InvocationExpression(
-                        codeFactory.MemberAccessExpression(
-                            codeFactory.BaseExpression(),
-                            codeFactory.IdentifierName(getName)),
-                        codeFactory.CreateArguments(overriddenProperty.Parameters)));
-
-                    setBody = setName == null
-                        ? null
-                        : codeFactory.ExpressionStatement(
-                        codeFactory.InvocationExpression(
-                            codeFactory.MemberAccessExpression(
-                                codeFactory.BaseExpression(),
-                                codeFactory.IdentifierName(setName)),
-                            codeFactory.CreateArguments(overriddenProperty.SetMethod.GetParameters())));
-                }
-                else
                 {
                     getBody = codeFactory.ReturnStatement(
                         WrapWithRefIfNecessary(codeFactory, overriddenProperty,

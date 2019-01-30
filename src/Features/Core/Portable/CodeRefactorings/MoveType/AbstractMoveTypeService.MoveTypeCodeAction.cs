@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings.MoveType
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings.MoveType
 {
     internal abstract partial class AbstractMoveTypeService<TService, TTypeDeclarationSyntax, TNamespaceDeclarationSyntax, TMemberDeclarationSyntax, TCompilationUnitSyntax>
     {

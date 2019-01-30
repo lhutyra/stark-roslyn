@@ -6,12 +6,12 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.VisualStudio.LanguageServices.ProjectSystem;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.VisualStudio.LanguageServices.ProjectSystem;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
 {
     [Export(typeof(ITempPECompiler))]
     internal class TempPECompiler : ITempPECompiler

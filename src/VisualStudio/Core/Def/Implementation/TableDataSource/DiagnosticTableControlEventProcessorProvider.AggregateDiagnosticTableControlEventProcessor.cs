@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using Microsoft.VisualStudio.Shell.TableControl;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     internal partial class DiagnosticTableControlEventProcessorProvider
     {

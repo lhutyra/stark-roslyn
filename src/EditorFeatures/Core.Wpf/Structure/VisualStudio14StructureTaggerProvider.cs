@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.Structure;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Structure;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Projection;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Structure
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Structure
 {
     /// <summary>
     /// Shared implementation of the outliner tagger provider.
@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.Structure
     [Export(typeof(ITaggerProvider))]
     [Export(typeof(VisualStudio14StructureTaggerProvider))]
     [TagType(typeof(IOutliningRegionTag))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     internal partial class VisualStudio14StructureTaggerProvider :
         AbstractStructureTaggerProvider<IOutliningRegionTag>
     {

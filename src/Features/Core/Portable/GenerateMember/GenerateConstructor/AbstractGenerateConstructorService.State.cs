@@ -6,14 +6,14 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 
-namespace Microsoft.CodeAnalysis.GenerateMember.GenerateConstructor
+namespace StarkPlatform.CodeAnalysis.GenerateMember.GenerateConstructor
 {
     internal abstract partial class AbstractGenerateConstructorService<TService, TArgumentSyntax, TAttributeArgumentSyntax>
     {
@@ -247,13 +247,13 @@ namespace Microsoft.CodeAnalysis.GenerateMember.GenerateConstructor
                 switch (type.SpecialType)
                 {
                     case SpecialType.System_Boolean:
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_UInt8:
                     case SpecialType.System_Char:
                     case SpecialType.System_Int16:
                     case SpecialType.System_Int32:
                     case SpecialType.System_Int64:
-                    case SpecialType.System_Double:
-                    case SpecialType.System_Single:
+                    case SpecialType.System_Float64:
+                    case SpecialType.System_Float32:
                     case SpecialType.System_String:
                         return true;
 

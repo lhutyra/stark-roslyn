@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.IntroduceVariable
+namespace StarkPlatform.CodeAnalysis.IntroduceVariable
 {
     internal partial class AbstractIntroduceVariableService<TService, TExpressionSyntax, TTypeSyntax, TTypeDeclarationSyntax, TQueryExpressionSyntax, TNameSyntax>
     {

@@ -2,11 +2,11 @@
 
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Options;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Options.Providers;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Options;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options.Providers;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     internal static class RemoteHostOptions
     {

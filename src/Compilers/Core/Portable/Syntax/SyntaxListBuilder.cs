@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace StarkPlatform.CodeAnalysis.Syntax
 {
     internal class SyntaxListBuilder
     {

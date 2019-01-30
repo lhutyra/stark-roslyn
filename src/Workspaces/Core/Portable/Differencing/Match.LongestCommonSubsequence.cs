@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Differencing
+namespace StarkPlatform.CodeAnalysis.Differencing
 {
     public partial class Match<TNode>
     {

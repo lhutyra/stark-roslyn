@@ -3,13 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Preview
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Preview
 {
     internal class TopLevelChange : AbstractChange
     {

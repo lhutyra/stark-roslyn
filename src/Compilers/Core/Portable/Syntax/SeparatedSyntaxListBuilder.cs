@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace StarkPlatform.CodeAnalysis.Syntax
 {
     internal struct SeparatedSyntaxListBuilder<TNode> where TNode : SyntaxNode
     {

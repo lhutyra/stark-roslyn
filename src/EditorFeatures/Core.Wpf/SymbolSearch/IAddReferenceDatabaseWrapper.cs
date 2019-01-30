@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Elfie.Model;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     // Wrapper types to ensure we delay load the elfie database.
     internal interface IAddReferenceDatabaseWrapper

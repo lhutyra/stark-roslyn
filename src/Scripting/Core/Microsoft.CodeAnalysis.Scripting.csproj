@@ -3,21 +3,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.Scripting</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.Scripting</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFramework>netstandard2.0</TargetFramework>
     <DefineConstants>$(DefineConstants);SCRIPTING</DefineConstants>
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.Scripting.Common</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.Scripting.Common</PackageId>
     <PackageDescription>
       Microsoft .NET Compiler Platform ("Roslyn") shared scripting package.
       Do not install this package manually, it will be added as a prerequisite by other packages that require it.
     </PackageDescription>
   </PropertyGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- 
@@ -59,25 +59,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Scripting.Desktop" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Scripting" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Scripting" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.Desktop" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Scripting" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Scripting" />
     <InternalsVisibleTo Include="csi" />
     <InternalsVisibleTo Include="vbi" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.InteractiveFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.InteractiveFeatures" />
     <!-- TODO: remove, see https://github.com/dotnet/roslyn/issues/5661 -->
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.InteractiveEditorFeatures" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.InteractiveEditorFeatures" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.InteractiveEditorFeatures" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.UnitTests" />
     <!-- /TODO -->
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Scripting.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Scripting.TestUtilities" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Scripting.Desktop.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Scripting.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Scripting.Desktop.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Scripting.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Scripting.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.TestUtilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Scripting.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Scripting.Desktop.UnitTests" />
     <InternalsVisibleTo Include="RoslynTaoActions" />
     <InternalsVisibleTo Include="RoslynETAHost" />
   </ItemGroup>

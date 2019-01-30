@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.SolutionSize
+﻿namespace StarkPlatform.CodeAnalysis.SolutionSize
 {
     internal interface ISolutionSizeTracker
     {

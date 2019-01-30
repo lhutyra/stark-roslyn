@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Features.RQName.SimpleTree
+namespace StarkPlatform.CodeAnalysis.Features.RQName.SimpleTree
 {
     internal class SimpleGroupNode : SimpleTreeNode
     {

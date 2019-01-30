@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.PullMemberUp
+namespace StarkPlatform.CodeAnalysis.PullMemberUp
 {
     /// <summary>
     /// This class contains all the operations needs to be done on members and destination to complete the pull up operation.

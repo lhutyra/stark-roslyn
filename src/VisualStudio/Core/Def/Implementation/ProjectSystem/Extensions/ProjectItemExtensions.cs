@@ -3,7 +3,7 @@
 using System;
 using EnvDTE;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions
 {
     internal static class ProjectItemExtensions
     {

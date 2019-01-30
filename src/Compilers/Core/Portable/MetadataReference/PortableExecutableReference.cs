@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Collections.Immutable;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Reference to metadata stored in the standard ECMA-335 metadata format.

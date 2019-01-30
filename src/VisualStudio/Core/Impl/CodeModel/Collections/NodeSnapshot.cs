@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
 {
     internal class NodeSnapshot : Snapshot
     {

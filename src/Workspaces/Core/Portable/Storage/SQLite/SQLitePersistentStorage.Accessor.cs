@@ -7,12 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.SQLite.Interop;
-using Microsoft.CodeAnalysis.Storage;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.SQLite.Interop;
+using StarkPlatform.CodeAnalysis.Storage;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     internal partial class SQLitePersistentStorage
     {

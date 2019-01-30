@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static class LocationExtensions
     {

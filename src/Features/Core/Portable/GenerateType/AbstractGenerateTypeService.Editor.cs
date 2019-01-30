@@ -6,17 +6,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.ProjectManagement;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.ProjectManagement;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.GenerateType
+namespace StarkPlatform.CodeAnalysis.GenerateType
 {
     internal abstract partial class AbstractGenerateTypeService<TService, TSimpleNameSyntax, TObjectCreationExpressionSyntax, TExpressionSyntax, TTypeDeclarationSyntax, TArgumentSyntax>
     {
@@ -120,7 +120,7 @@ namespace Microsoft.CodeAnalysis.GenerateType
                     if (_semanticDocument.Project.Language != _generateTypeOptionsResult.Project.Language)
                     {
                         _targetProjectChangeInLanguage =
-                            _generateTypeOptionsResult.Project.Language == LanguageNames.CSharp
+                            _generateTypeOptionsResult.Project.Language == LanguageNames.Stark
                             ? TargetProjectChangeInLanguage.VisualBasicToCSharp
                             : TargetProjectChangeInLanguage.CSharpToVisualBasic;
 
@@ -170,52 +170,6 @@ namespace Microsoft.CodeAnalysis.GenerateType
             private string GetNamespaceToGenerateIntoForUsageWithNamespace(Project targetProject, Project triggeringProject)
             {
                 var namespaceToGenerateInto = _state.NamespaceToGenerateInOpt.Trim();
-
-                if (targetProject.Language == LanguageNames.CSharp ||
-                    targetProject == triggeringProject)
-                {
-                    // If the target project is C# project then we don't have to make any modification to the namespace
-                    // or
-                    // This is a VB project generation into itself which requires no change as well
-                    return namespaceToGenerateInto;
-                }
-
-                // If the target Project is VB then we have to check if the RootNamespace of the VB project is the parent most namespace of the type being generated
-                // True, Remove the RootNamespace
-                // False, Add Global to the Namespace
-                Debug.Assert(targetProject.Language == LanguageNames.VisualBasic);
-                IGenerateTypeService targetLanguageService = null;
-                if (_semanticDocument.Project.Language == LanguageNames.VisualBasic)
-                {
-                    targetLanguageService = _service;
-                }
-                else
-                {
-                    Debug.Assert(_targetLanguageService != null);
-                    targetLanguageService = _targetLanguageService;
-                }
-
-                var rootNamespace = targetLanguageService.GetRootNamespace(targetProject.CompilationOptions).Trim();
-                if (!string.IsNullOrWhiteSpace(rootNamespace))
-                {
-                    var rootNamespaceLength = CheckIfRootNamespacePresentInNamespace(namespaceToGenerateInto, rootNamespace);
-                    if (rootNamespaceLength > -1)
-                    {
-                        // True, Remove the RootNamespace
-                        namespaceToGenerateInto = namespaceToGenerateInto.Substring(rootNamespaceLength);
-                    }
-                    else
-                    {
-                        // False, Add Global to the Namespace
-                        namespaceToGenerateInto = AddGlobalDotToTheNamespace(namespaceToGenerateInto);
-                    }
-                }
-                else
-                {
-                    // False, Add Global to the Namespace
-                    namespaceToGenerateInto = AddGlobalDotToTheNamespace(namespaceToGenerateInto);
-                }
-
                 return namespaceToGenerateInto;
             }
 
@@ -494,8 +448,8 @@ namespace Microsoft.CodeAnalysis.GenerateType
                     // Case 2 : If the type is generated from a C# project to a C# Project
                     // Case 3 : If the Type is generated from a VB Project to a C# Project
                     // Using and Namespace will be the DefaultNamespace + Folder Structure
-                    if ((_semanticDocument.Project == _generateTypeOptionsResult.Project && _semanticDocument.Project.Language == LanguageNames.CSharp) ||
-                        (_targetProjectChangeInLanguage == TargetProjectChangeInLanguage.NoChange && _generateTypeOptionsResult.Project.Language == LanguageNames.CSharp) ||
+                    if ((_semanticDocument.Project == _generateTypeOptionsResult.Project && _semanticDocument.Project.Language == LanguageNames.Stark) ||
+                        (_targetProjectChangeInLanguage == TargetProjectChangeInLanguage.NoChange && _generateTypeOptionsResult.Project.Language == LanguageNames.Stark) ||
                         _targetProjectChangeInLanguage == TargetProjectChangeInLanguage.VisualBasicToCSharp)
                     {
                         if (!string.IsNullOrWhiteSpace(defaultNamespace))
@@ -508,26 +462,6 @@ namespace Microsoft.CodeAnalysis.GenerateType
 
                         containers = containerList.ToArray();
                         includeUsingsOrImports = string.Join(".", containerList.ToArray());
-                    }
-
-                    // Case 4 : If the type is generated into the same VB project or
-                    // Case 5 : If Type is generated from a VB Project to VB Project
-                    // Case 6 : If Type is generated from a C# Project to VB Project 
-                    // Namespace will be Folder Structure and Import will have the RootNamespace of the project generated into as part of the Imports
-                    if ((_semanticDocument.Project == _generateTypeOptionsResult.Project && _semanticDocument.Project.Language == LanguageNames.VisualBasic) ||
-                        (_semanticDocument.Project != _generateTypeOptionsResult.Project && _targetProjectChangeInLanguage == TargetProjectChangeInLanguage.NoChange && _generateTypeOptionsResult.Project.Language == LanguageNames.VisualBasic) ||
-                        _targetProjectChangeInLanguage == TargetProjectChangeInLanguage.CSharpToVisualBasic)
-                    {
-                        // Populate the ContainerList
-                        AddFoldersToNamespaceContainers(containerList, folders);
-                        containers = containerList.ToArray();
-                        includeUsingsOrImports = string.Join(".", containerList.ToArray());
-                        if (!string.IsNullOrWhiteSpace(rootNamespaceOfTheProjectGeneratedInto))
-                        {
-                            includeUsingsOrImports = string.IsNullOrEmpty(includeUsingsOrImports) ?
-                                                     rootNamespaceOfTheProjectGeneratedInto :
-                                                     rootNamespaceOfTheProjectGeneratedInto + "." + includeUsingsOrImports;
-                        }
                     }
 
                     Debug.Assert(includeUsingsOrImports != null);

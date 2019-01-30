@@ -5,11 +5,11 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SolutionCrawler.State
+namespace StarkPlatform.CodeAnalysis.SolutionCrawler.State
 {
     internal abstract class AbstractAnalyzerState<TKey, TValue, TData>
     {

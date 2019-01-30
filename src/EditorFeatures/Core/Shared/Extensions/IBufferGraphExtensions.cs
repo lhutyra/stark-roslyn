@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Projection;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Extensions
 {
     internal enum BufferMapDirection
     {

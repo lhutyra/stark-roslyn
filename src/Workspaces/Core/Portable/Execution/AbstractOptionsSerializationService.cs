@@ -5,14 +5,14 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Simplification;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     internal abstract class AbstractOptionsSerializationService : IOptionsSerializationService
     {

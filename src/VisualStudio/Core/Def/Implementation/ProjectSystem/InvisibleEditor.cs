@@ -3,15 +3,15 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
 using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     internal partial class InvisibleEditor : IInvisibleEditor
     {
@@ -25,7 +25,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
         private ITextBuffer _buffer;
         private IVsTextLines _vsTextLines;
         private IVsInvisibleEditor _invisibleEditor;
-        private OLE.Interop.IOleUndoManager _manager;
+        private Microsoft.VisualStudio.OLE.Interop.IOleUndoManager _manager;
         private readonly bool _needsUndoRestored;
 
         [Obsolete("This is a compatibility shim for Live Share; please do not use it.")]
@@ -101,8 +101,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
                 return null;
             }
 
-            if (!ErrorHandler.Succeeded(hierarchyOpt.GetGuidProperty(
-                (uint)VSConstants.VSITEMID.Root,
+            if (!Microsoft.VisualStudio.ErrorHandler.Succeeded(hierarchyOpt.GetGuidProperty(
+                (uint)Microsoft.VisualStudio.VSConstants.VSITEMID.Root,
                 (int)__VSHPROPID.VSHPROPID_ProjectIDGuid,
                 out var projectId)))
             {
@@ -110,7 +110,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
             }
 
             var solution = (IVsSolution)_serviceProvider.GetService(typeof(SVsSolution));
-            if (!ErrorHandler.Succeeded(solution.GetProjectOfGuid(projectId, out var projectHierarchy)))
+            if (!Microsoft.VisualStudio.ErrorHandler.Succeeded(solution.GetProjectOfGuid(projectId, out var projectHierarchy)))
             {
                 return null;
             }
@@ -164,7 +164,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
 
                         // Old cslangsvc.dll requested not to add to MRU for, and I quote, "performance!". Makes sense not
                         // to include it in the MRU anyways.
-                        ErrorHandler.ThrowOnFailure(runningDocumentTable.ModifyDocumentFlags(cookie, (uint)_VSRDTFLAGS.RDT_DontAddToMRU, fSet: 1));
+                        Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(runningDocumentTable.ModifyDocumentFlags(cookie, (uint)_VSRDTFLAGS.RDT_DontAddToMRU, fSet: 1));
 
                         runningDocumentTable.SaveDocuments((uint)__VSRDTSAVEOPTIONS.RDTSAVEOPT_SaveIfDirty, pHier: null, itemid: 0, docCookie: cookie);
                     }

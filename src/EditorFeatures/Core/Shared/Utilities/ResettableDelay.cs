@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     internal class ResettableDelay
     {

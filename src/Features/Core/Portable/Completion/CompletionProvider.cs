@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     /// <summary>
     /// Implement a subtype of this class and export it to provide completions during typing in an editor.

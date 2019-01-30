@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal partial struct SymbolKey
     {
@@ -93,10 +93,6 @@ namespace Microsoft.CodeAnalysis
                     }
 
                     var node = declaringLocation.GetSyntax(cancellationToken);
-                    if (node.Language == LanguageNames.VisualBasic)
-                    {
-                        node = node.Parent;
-                    }
 
                     var semanticModel = compilation.GetSemanticModel(node.SyntaxTree);
 

@@ -3,10 +3,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop
 {
     /// <summary>
-    /// An internal redefinition of ICompilerOptionsHostObject from Microsoft.CodeAnalysis.BuildTasks. We cannot take
+    /// An internal redefinition of ICompilerOptionsHostObject from StarkPlatform.CodeAnalysis.BuildTasks. We cannot take
     /// a binary dependency on the build task because no component in Visual Studio may do so -- we cannot rely that any
     /// specific version of the build task is present since the customer may have a NuGet package installed that contains
     /// different versions. Since this a COM interface, it's easiest to redefine.

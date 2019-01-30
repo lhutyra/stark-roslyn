@@ -6,10 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     public partial class MSBuildProjectLoader
     {

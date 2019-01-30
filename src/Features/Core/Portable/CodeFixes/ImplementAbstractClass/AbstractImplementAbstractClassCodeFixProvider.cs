@@ -4,11 +4,11 @@ using System;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.ImplementAbstractClass;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.ImplementAbstractClass;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.ImplementAbstractClass
+namespace StarkPlatform.CodeAnalysis.CodeFixes.ImplementAbstractClass
 {
     internal abstract class AbstractImplementAbstractClassCodeFixProvider<TClassNode> : CodeFixProvider
         where TClassNode : SyntaxNode

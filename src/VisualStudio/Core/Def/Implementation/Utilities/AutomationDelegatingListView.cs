@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities
 {
     internal class AutomationDelegatingListView : ListView
     {

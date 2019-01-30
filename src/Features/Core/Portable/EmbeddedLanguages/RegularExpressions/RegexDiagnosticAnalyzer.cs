@@ -2,13 +2,13 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.LanguageServices;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.LanguageServices;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.Features.EmbeddedLanguages.RegularExpressions
+namespace StarkPlatform.CodeAnalysis.Features.EmbeddedLanguages.RegularExpressions
 {
     /// <summary>
     /// Analyzer that reports diagnostics in strings that we know are regex text.

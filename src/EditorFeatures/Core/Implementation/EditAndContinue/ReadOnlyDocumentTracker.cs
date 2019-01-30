@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.EditAndContinue;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.EditAndContinue
 {
     internal sealed class ReadOnlyDocumentTracker : ForegroundThreadAffinitizedObject, IDisposable
     {

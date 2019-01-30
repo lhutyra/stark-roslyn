@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.InternalUtilities
+namespace StarkPlatform.CodeAnalysis.InternalUtilities
 {
     /// <summary>
     /// Cache with a fixed size that evicts the least recently used members.

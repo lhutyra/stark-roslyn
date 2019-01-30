@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
 {
     internal partial class Controller
     {

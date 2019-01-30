@@ -6,7 +6,7 @@
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.EditorFeatures</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.EditorFeatures</PackageId>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageDescription>
       .NET Compiler Platform ("Roslyn") support for editor features inside the Visual Studio editor.
@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EditorFeatures\Core\Microsoft.CodeAnalysis.EditorFeatures.csproj" />
-    <ProjectReference Include="..\EditorFeatures\CSharp\Microsoft.CodeAnalysis.CSharp.EditorFeatures.csproj" />
-    <ProjectReference Include="..\EditorFeatures\VisualBasic\Microsoft.CodeAnalysis.VisualBasic.EditorFeatures.vbproj" />
+    <ProjectReference Include="..\EditorFeatures\Core\StarkPlatform.CodeAnalysis.EditorFeatures.csproj" />
+    <ProjectReference Include="..\EditorFeatures\CSharp\StarkPlatform.CodeAnalysis.CSharp.EditorFeatures.csproj" />
+    <ProjectReference Include="..\EditorFeatures\VisualBasic\StarkPlatform.CodeAnalysis.VisualBasic.EditorFeatures.vbproj" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     /// <summary>
     /// a logger that doesn't do anything

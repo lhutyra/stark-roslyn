@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal class ReiteratedVersionSnapshotTracker
     {

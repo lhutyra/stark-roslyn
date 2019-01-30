@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Tags;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FindUsages
+namespace StarkPlatform.CodeAnalysis.FindUsages
 {
     /// <summary>
     /// Information about a symbol's definition that can be displayed in an editor

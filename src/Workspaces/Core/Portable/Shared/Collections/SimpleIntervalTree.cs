@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Shared.Collections
+namespace StarkPlatform.CodeAnalysis.Shared.Collections
 {
     internal class SimpleIntervalTree
     {

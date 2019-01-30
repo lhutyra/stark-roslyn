@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     internal class BackgroundCompiler : IDisposable
     {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Operations
+namespace StarkPlatform.CodeAnalysis.Operations
 {
     /// <summary>
     /// Represents a type conversion.
@@ -33,8 +33,8 @@ namespace Microsoft.CodeAnalysis.Operations
         /// </summary>
         /// <remarks>
         /// If you need conversion information that is language specific, use either
-        /// <see cref="T:Microsoft.CodeAnalysis.CSharp.CSharpExtensions.GetConversion(IConversionOperation)"/> or
-        /// <see cref="T:Microsoft.CodeAnalysis.VisualBasic.VisualBasicExtensions.GetConversion(IConversionOperation)"/>.
+        /// <see cref="T:StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetConversion(IConversionOperation)"/> or
+        /// <see cref="T:StarkPlatform.CodeAnalysis.VisualBasic.VisualBasicExtensions.GetConversion(IConversionOperation)"/>.
         /// </remarks>
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
         CommonConversion Conversion { get; }

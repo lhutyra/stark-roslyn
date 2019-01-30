@@ -2,7 +2,7 @@
 
 using Microsoft.CodeAnalysis.Elfie.Model;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     internal interface IDatabaseFactoryService
     {

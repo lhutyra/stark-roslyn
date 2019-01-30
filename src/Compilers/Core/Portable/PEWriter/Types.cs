@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using StarkPlatform.CodeAnalysis;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal enum PlatformType
     {
-        SystemObject = CodeAnalysis.SpecialType.System_Object,
-        SystemDecimal = CodeAnalysis.SpecialType.System_Decimal,
-        SystemTypedReference = CodeAnalysis.SpecialType.System_TypedReference,
-        SystemType = CodeAnalysis.WellKnownType.System_Type,
-        SystemInt32 = CodeAnalysis.SpecialType.System_Int32,
-        SystemVoid = CodeAnalysis.SpecialType.System_Void,
-        SystemString = CodeAnalysis.SpecialType.System_String,
+        SystemObject = StarkPlatform.CodeAnalysis.SpecialType.System_Object,
+        SystemDecimal = StarkPlatform.CodeAnalysis.SpecialType.System_Decimal,
+        SystemTypedReference = StarkPlatform.CodeAnalysis.SpecialType.System_TypedReference,
+        SystemType = StarkPlatform.CodeAnalysis.WellKnownType.System_Type,
+        SystemInt32 = StarkPlatform.CodeAnalysis.SpecialType.System_Int32,
+        SystemVoid = StarkPlatform.CodeAnalysis.SpecialType.System_Void,
+        SystemString = StarkPlatform.CodeAnalysis.SpecialType.System_String,
     }
 
     /// <summary>

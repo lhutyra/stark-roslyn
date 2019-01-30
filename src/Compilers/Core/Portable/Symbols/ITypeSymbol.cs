@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents a type.
@@ -81,7 +81,7 @@ namespace Microsoft.CodeAnalysis
 
         /// <summary>
         /// An enumerated value that identifies certain 'special' types such as <see cref="System.Object"/>. 
-        /// Returns <see cref="Microsoft.CodeAnalysis.SpecialType.None"/> if the type is not special.
+        /// Returns <see cref="StarkPlatform.CodeAnalysis.SpecialType.None"/> if the type is not special.
         /// </summary>
         SpecialType SpecialType { get; }
 

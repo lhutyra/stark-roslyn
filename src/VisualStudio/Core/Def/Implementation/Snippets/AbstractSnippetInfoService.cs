@@ -8,16 +8,16 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.Snippets;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Snippets;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Snippets
 {
     /// <summary>
     /// This service is created on the UI thread during package initialization, but it must not
@@ -44,7 +44,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets
 
         public AbstractSnippetInfoService(
             IThreadingContext threadingContext,
-            Shell.SVsServiceProvider serviceProvider,
+            Microsoft.VisualStudio.Shell.SVsServiceProvider serviceProvider,
             Guid languageGuidForSnippets,
             IAsynchronousOperationListenerProvider listenerProvider)
             : base(threadingContext)
@@ -54,7 +54,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets
             if (serviceProvider != null)
             {
                 var textManager = (IVsTextManager2)serviceProvider.GetService(typeof(SVsTextManager));
-                if (textManager.GetExpansionManager(out _expansionManager) == VSConstants.S_OK)
+                if (textManager.GetExpansionManager(out _expansionManager) == Microsoft.VisualStudio.VSConstants.S_OK)
                 {
                     ComEventSink.Advise<IVsExpansionEvents>(_expansionManager, this);
                     _waiter = listenerProvider.GetListener(FeatureAttribute.Snippets);
@@ -73,12 +73,12 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets
                 PopulateSnippetCaches();
             }
 
-            return VSConstants.S_OK;
+            return Microsoft.VisualStudio.VSConstants.S_OK;
         }
 
         public int OnAfterSnippetsKeyBindingChange([ComAliasName("Microsoft.VisualStudio.OLE.Interop.DWORD")]uint dwCmdGuid, [ComAliasName("Microsoft.VisualStudio.OLE.Interop.DWORD")]uint dwCmdId, [ComAliasName("Microsoft.VisualStudio.OLE.Interop.BOOL")]int fBound)
         {
-            return VSConstants.S_OK;
+            return Microsoft.VisualStudio.VSConstants.S_OK;
         }
 
         public IEnumerable<SnippetInfo> GetSnippetsIfAvailable()

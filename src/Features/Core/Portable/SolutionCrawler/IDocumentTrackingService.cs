@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal interface IDocumentTrackingService : IWorkspaceService
     {

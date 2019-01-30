@@ -3,7 +3,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.FindUsages
+namespace StarkPlatform.CodeAnalysis.FindUsages
 {
     internal interface IFindUsagesContext
     {

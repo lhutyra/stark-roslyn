@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.QuickInfo
+namespace StarkPlatform.CodeAnalysis.QuickInfo
 {
     /// <summary>
     /// Use this attribute to export a <see cref="QuickInfoProvider"/> so that it will

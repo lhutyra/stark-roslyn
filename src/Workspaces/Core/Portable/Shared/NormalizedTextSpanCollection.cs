@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Shared
+namespace StarkPlatform.CodeAnalysis.Shared
 {
     internal class NormalizedTextSpanCollection : ReadOnlyCollection<TextSpan>
     {

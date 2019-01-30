@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Remote;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Remote;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     /// <summary>
     /// Helper type to show remote host crash info bar

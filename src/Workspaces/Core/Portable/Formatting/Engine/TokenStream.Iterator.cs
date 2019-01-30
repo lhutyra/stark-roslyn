@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     internal partial class TokenStream
     {

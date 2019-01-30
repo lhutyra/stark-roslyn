@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     internal class ActionCache<TArgument> : IActionHolder<TArgument>
     {

@@ -3,13 +3,13 @@
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Remote;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     [ExportWorkspaceService(typeof(IRemoteHostClientFactory)), Shared]
     internal class RemoteHostClientFactory : IRemoteHostClientFactory

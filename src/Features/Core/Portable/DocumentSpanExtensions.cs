@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Navigation;
+using StarkPlatform.CodeAnalysis.Navigation;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class DocumentSpanExtensions
     {

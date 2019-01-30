@@ -7,8 +7,8 @@
     ComponentId="ManagedEditAndContinueServiceId"
     ComponentLevel="9991500"
     Synchronized="true"
-    AssemblyName="Microsoft.VisualStudio.LanguageServices">
-    <Class Name="Microsoft.VisualStudio.LanguageServices.EditAndContinue.DebuggeeModuleMetadataProvider+DebuggerService">
+    AssemblyName="StarkPlatform.VisualStudio.LanguageServices">
+    <Class Name="StarkPlatform.VisualStudio.LanguageServices.EditAndContinue.DebuggeeModuleMetadataProvider+DebuggerService">
       <Implements>
         <InterfaceGroup>
           <Filter>

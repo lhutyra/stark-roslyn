@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     internal partial class AbstractAnonymousTypeDisplayService
     {

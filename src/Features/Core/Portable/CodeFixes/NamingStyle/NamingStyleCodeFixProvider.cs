@@ -8,19 +8,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeActions.WorkspaceServices;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.NamingStyles;
-using Microsoft.CodeAnalysis.Rename;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions.WorkspaceServices;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.Rename;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.NamingStyles
+namespace StarkPlatform.CodeAnalysis.CodeFixes.NamingStyles
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, LanguageNames.VisualBasic,
-        Name = PredefinedCodeFixProviderNames.ApplyNamingStyle), Shared]
+    [ExportCodeFixProvider(LanguageNames.Stark, Name = PredefinedCodeFixProviderNames.ApplyNamingStyle), Shared]
 #pragma warning disable RS1016 // Code fix providers should provide FixAll support. https://github.com/dotnet/roslyn/issues/23528
     internal class NamingStyleCodeFixProvider : CodeFixProvider
 #pragma warning restore RS1016 // Code fix providers should provide FixAll support.

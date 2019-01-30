@@ -6,12 +6,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Extensions.ContextQuery;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions.ContextQuery;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Recommendations
+namespace StarkPlatform.CodeAnalysis.Recommendations
 {
     internal abstract class AbstractRecommendationService : IRecommendationService
     {

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     internal class PropertyDictionary : Dictionary<string, object>
     {

@@ -2,10 +2,10 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
 {
     /// <summary>
     /// Interaction logic for NamingStyleDialog.xaml

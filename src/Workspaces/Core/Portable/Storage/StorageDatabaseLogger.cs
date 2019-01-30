@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Concurrent;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 
-namespace Microsoft.CodeAnalysis.Storage
+namespace StarkPlatform.CodeAnalysis.Storage
 {
     internal class StorageDatabaseLogger
     {

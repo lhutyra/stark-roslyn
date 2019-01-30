@@ -2,7 +2,7 @@
 
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting.Rules
+namespace StarkPlatform.CodeAnalysis.Formatting.Rules
 {
     /// <summary>
     /// indicate how many lines are needed between two tokens

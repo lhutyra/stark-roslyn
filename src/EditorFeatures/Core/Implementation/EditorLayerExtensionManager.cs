@@ -4,22 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Editor.Options;
-using Microsoft.CodeAnalysis.ErrorLogger;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.Editor.Options;
+using StarkPlatform.CodeAnalysis.ErrorLogger;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.Internal.Log.FunctionId;
-using static Microsoft.CodeAnalysis.Internal.Log.Logger;
-using static Microsoft.CodeAnalysis.RoslynAssemblyHelper;
+using static StarkPlatform.CodeAnalysis.Internal.Log.FunctionId;
+using static StarkPlatform.CodeAnalysis.Internal.Log.Logger;
+using static StarkPlatform.CodeAnalysis.RoslynAssemblyHelper;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     [ExportWorkspaceServiceFactory(typeof(IExtensionManager), ServiceLayer.Editor), Shared]
     internal class EditorLayerExtensionManager : IWorkspaceServiceFactory

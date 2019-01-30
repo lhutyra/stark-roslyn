@@ -7,10 +7,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Microsoft.CodeAnalysis.Rename;
+using StarkPlatform.CodeAnalysis.Rename;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     internal class DashboardViewModel : INotifyPropertyChanged, IDisposable
     {

@@ -3,7 +3,7 @@
 using System;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SolutionCrawler
+namespace StarkPlatform.CodeAnalysis.SolutionCrawler
 {
     /// <summary>
     /// Provide a way to see whether solution crawler is started or not

@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.PatternMatching
+namespace StarkPlatform.CodeAnalysis.PatternMatching
 {
     internal struct PatternMatch : IComparable<PatternMatch>
     {

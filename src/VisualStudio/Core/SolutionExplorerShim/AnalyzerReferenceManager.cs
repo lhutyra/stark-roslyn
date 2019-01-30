@@ -3,13 +3,14 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.SolutionExplorer;
+using Microsoft.VisualStudio;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using VSLangProj140;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     /// <summary>
     /// This class is responsible for showing an add analyzer dialog to the user and adding the analyzer

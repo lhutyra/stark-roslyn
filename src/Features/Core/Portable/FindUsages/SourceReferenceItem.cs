@@ -4,7 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.FindUsages
+namespace StarkPlatform.CodeAnalysis.FindUsages
 {
     using ReferenceInfoMap = ImmutableDictionary<string, ImmutableArray<string>>;
 

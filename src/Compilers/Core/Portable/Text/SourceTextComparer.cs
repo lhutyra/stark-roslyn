@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     internal class SourceTextComparer : IEqualityComparer<SourceText>
     {

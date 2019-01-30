@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.PooledObjects
+namespace StarkPlatform.CodeAnalysis.PooledObjects
 {
     internal class PooledStopwatch : Stopwatch
     {

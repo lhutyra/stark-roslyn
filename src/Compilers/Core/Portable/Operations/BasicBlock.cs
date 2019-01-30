@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     /// <summary>
     /// Represents a basic block in a <see cref="ControlFlowGraph"/> with a sequence of <see cref="Operations"/>.

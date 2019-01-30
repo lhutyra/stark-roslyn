@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Suggestions
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Suggestions
 {
     internal interface ISuggestedActionCallback
     {

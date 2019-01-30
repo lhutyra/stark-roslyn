@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(ICodeElements))]

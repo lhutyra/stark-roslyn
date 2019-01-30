@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Execution;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Execution;
+using StarkPlatform.CodeAnalysis.Text;
 using Newtonsoft.Json;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     internal partial class AggregateJsonConverter : JsonConverter
     {

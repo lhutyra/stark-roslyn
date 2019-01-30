@@ -3,7 +3,7 @@
 using System;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     internal interface ICommandHandlerService
     {

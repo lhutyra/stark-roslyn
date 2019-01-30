@@ -3,14 +3,14 @@
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Roslyn.Utilities;
 using VsTextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets.SnippetFunctions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Snippets.SnippetFunctions
 {
     internal abstract class AbstractSnippetFunctionGenerateSwitchCases : AbstractSnippetFunction
     {

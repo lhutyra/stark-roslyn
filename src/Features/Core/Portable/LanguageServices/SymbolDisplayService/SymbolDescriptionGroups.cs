@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     [Flags]
     internal enum SymbolDescriptionGroups

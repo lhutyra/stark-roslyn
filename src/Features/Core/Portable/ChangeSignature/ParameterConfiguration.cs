@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.ChangeSignature
+namespace StarkPlatform.CodeAnalysis.ChangeSignature
 {
     internal sealed class ParameterConfiguration
     {

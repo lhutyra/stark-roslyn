@@ -7,15 +7,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.RemoveUnusedMembers
+namespace StarkPlatform.CodeAnalysis.RemoveUnusedMembers
 {
     internal abstract class AbstractRemoveUnusedMembersCodeFixProvider<TFieldDeclarationSyntax> : SyntaxEditorBasedCodeFixProvider
         where TFieldDeclarationSyntax : SyntaxNode
@@ -93,29 +93,21 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedMembers
         /// the removes the <paramref name="childDeclarators"/> from <paramref name="declarators"/>, and
         /// adds the <paramref name="parentDeclaration"/> to the <paramref name="declarators"/>.
         /// </summary>
-        protected static void AdjustAndAddAppropriateDeclaratorsToRemove(SyntaxNode parentDeclaration, IEnumerable<SyntaxNode> childDeclarators, HashSet<SyntaxNode> declarators)
+        protected static void AdjustAndAddAppropriateDeclaratorsToRemove(SyntaxNode parentDeclaration, SyntaxNode childDeclarator, HashSet<SyntaxNode> declarators)
         {
             if (declarators.Contains(parentDeclaration))
             {
-                Debug.Assert(childDeclarators.All(c => !declarators.Contains(c)));
+                Debug.Assert(!declarators.Contains(childDeclarator));
                 return;
             }
 
-            var declaratorsContainsAllChildren = true;
-            foreach (var childDeclarator in childDeclarators)
-            {
-                if (!declarators.Contains(childDeclarator))
-                {
-                    declaratorsContainsAllChildren = false;
-                    break;
-                }
-            }
+            bool declaratorsContainsAllChildren = declarators.Contains(childDeclarator);
 
             if (declaratorsContainsAllChildren)
             {
                 // Remove the entire parent declaration instead of individual child declarators within it.
                 declarators.Add(parentDeclaration);
-                declarators.RemoveAll(childDeclarators);
+                declarators.Remove(childDeclarator);
             }
         }
 

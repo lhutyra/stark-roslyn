@@ -4,10 +4,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Structure
+namespace StarkPlatform.CodeAnalysis.Structure
 {
     internal abstract class BlockStructureServiceWithProviders : BlockStructureService
     {

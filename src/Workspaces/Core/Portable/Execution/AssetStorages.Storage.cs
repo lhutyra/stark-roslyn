@@ -5,10 +5,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Serialization;
+using StarkPlatform.CodeAnalysis.Serialization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     /// <summary>
     /// This is collection of root checksum tree node

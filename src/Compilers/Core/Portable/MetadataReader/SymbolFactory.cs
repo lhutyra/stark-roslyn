@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal abstract class SymbolFactory<ModuleSymbol, TypeSymbol>
         where TypeSymbol : class

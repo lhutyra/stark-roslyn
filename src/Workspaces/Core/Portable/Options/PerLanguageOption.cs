@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     /// <summary>
     /// An option that can be specified once per language.

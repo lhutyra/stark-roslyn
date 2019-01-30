@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     internal interface IRuleSetFile
     {

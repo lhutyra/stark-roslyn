@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging
 {
     internal class ConflictTag : TextMarkerTag
     {

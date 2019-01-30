@@ -8,7 +8,7 @@ using System.Reflection.Metadata;
 using Roslyn.Utilities;
 using static System.Linq.ImmutableArrayExtensions;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     internal partial class ILBuilder
     {
@@ -370,7 +370,7 @@ namespace Microsoft.CodeAnalysis.CodeGen
         /// <summary>
         /// Generates code that creates an instance of multidimensional array
         /// </summary>
-        internal void EmitArrayCreation(Microsoft.Cci.IArrayTypeReference arrayType, SyntaxNode syntaxNode, DiagnosticBag diagnostics)
+        internal void EmitArrayCreation(StarkPlatform.Cci.IArrayTypeReference arrayType, SyntaxNode syntaxNode, DiagnosticBag diagnostics)
         {
             Debug.Assert(!arrayType.IsSZArray, "should be used only with multidimensional arrays");
 
@@ -384,7 +384,7 @@ namespace Microsoft.CodeAnalysis.CodeGen
         /// <summary>
         /// Generates code that loads an element of a multidimensional array
         /// </summary>
-        internal void EmitArrayElementLoad(Microsoft.Cci.IArrayTypeReference arrayType, SyntaxNode syntaxNode, DiagnosticBag diagnostics)
+        internal void EmitArrayElementLoad(StarkPlatform.Cci.IArrayTypeReference arrayType, SyntaxNode syntaxNode, DiagnosticBag diagnostics)
         {
             Debug.Assert(!arrayType.IsSZArray, "should be used only with multidimensional arrays");
 
@@ -398,7 +398,7 @@ namespace Microsoft.CodeAnalysis.CodeGen
         /// <summary>
         /// Generates code that loads an address of an element of a multidimensional array.
         /// </summary>
-        internal void EmitArrayElementAddress(Microsoft.Cci.IArrayTypeReference arrayType, SyntaxNode syntaxNode, DiagnosticBag diagnostics)
+        internal void EmitArrayElementAddress(StarkPlatform.Cci.IArrayTypeReference arrayType, SyntaxNode syntaxNode, DiagnosticBag diagnostics)
         {
             Debug.Assert(!arrayType.IsSZArray, "should be used only with multidimensional arrays");
 

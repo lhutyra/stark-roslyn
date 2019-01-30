@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     internal partial class AbstractCodeModelService
     {

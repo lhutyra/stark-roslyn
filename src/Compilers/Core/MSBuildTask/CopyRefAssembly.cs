@@ -5,7 +5,7 @@ using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// By default, this task copies the source over to the destination. 

@@ -3,13 +3,13 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TaskStatusCenter;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Diagnostics
 {
     [Export(typeof(DiagnosticProgressReporter))]
     internal sealed class DiagnosticProgressReporter

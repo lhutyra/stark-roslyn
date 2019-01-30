@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// Unique identification of an emitted entity (method, lambda, closure) used for debugging purposes (EnC).

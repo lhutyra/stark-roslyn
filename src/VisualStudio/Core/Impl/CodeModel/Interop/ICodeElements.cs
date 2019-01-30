@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
 {
     /// <summary>
     /// A redefinition of the EnvDTE.CodeElements interface. The interface, as defined in the PIA does not do

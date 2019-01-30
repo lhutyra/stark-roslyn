@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     internal static partial class ControlFlowGraphExtensions
     {

@@ -4,18 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Classification;
-using Microsoft.CodeAnalysis.Editor.Implementation.Classification;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Preview;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Classification;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Classification;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Preview;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Preview
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Preview
 {
     /// <summary>
     /// This tagger assumes content of the buffer never get changed. 
@@ -24,8 +24,7 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.Preview
     /// </summary>
     [Export(typeof(ITaggerProvider))]
     [TagType(typeof(IClassificationTag))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
-    [ContentType(ContentTypeNames.XamlContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [TextViewRole(TextViewRoles.PreviewRole)]
     internal class PreviewStaticClassificationTaggerProvider : ITaggerProvider
     {

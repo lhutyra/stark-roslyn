@@ -3,7 +3,7 @@
 using Roslyn.Utilities;
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     public struct PreprocessingSymbolInfo : IEquatable<PreprocessingSymbolInfo>
     {

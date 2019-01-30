@@ -6,15 +6,16 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Experimentation;
-using Microsoft.CodeAnalysis.Experiments;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.VisualStudio.LanguageServices.Experimentation;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
-using Microsoft.VisualStudio.LanguageServices.Utilities;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Experimentation;
+using StarkPlatform.CodeAnalysis.Experiments;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.VisualStudio.LanguageServices.Experimentation;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Utilities;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.PlatformUI.OleComponentSupport;
 using Microsoft.VisualStudio.Shell;
@@ -22,7 +23,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 using Task = System.Threading.Tasks.Task;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Experimentation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Experimentation
 {
     /// <summary>
     /// Detects if keybindings have been messed up by ReSharper disable, and offers the user the ability
@@ -392,7 +393,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Experimentation
             // Technically can be called on any thread, though VS will only ever call it on the UI thread.
             ThisCanBeCalledOnAnyThread();
             // We don't care about query status, only when the command is actually executed
-            return (int)OLE.Interop.Constants.OLECMDERR_E_NOTSUPPORTED;
+            return (int)Microsoft.VisualStudio.OLE.Interop.Constants.OLECMDERR_E_NOTSUPPORTED;
         }
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
@@ -406,7 +407,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Experimentation
             }
 
             // No matter the command, we never actually want to respond to it, so always return not supported. We're just monitoring.
-            return (int)OLE.Interop.Constants.OLECMDERR_E_NOTSUPPORTED;
+            return (int)Microsoft.VisualStudio.OLE.Interop.Constants.OLECMDERR_E_NOTSUPPORTED;
         }
 
         private void OnModalStateChanged(object sender, StateChangedEventArgs args)

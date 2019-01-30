@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents a type other than an array, a pointer, a type parameter.

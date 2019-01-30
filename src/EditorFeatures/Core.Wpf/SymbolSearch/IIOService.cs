@@ -2,7 +2,7 @@
 
 using System.IO;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     /// <summary>
     /// Used so we can mock out how the search service does IO for testing purposes.

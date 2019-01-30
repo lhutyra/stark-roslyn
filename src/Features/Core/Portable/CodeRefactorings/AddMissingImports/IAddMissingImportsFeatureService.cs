@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.AddMissingImports
+namespace StarkPlatform.CodeAnalysis.AddMissingImports
 {
     internal interface IAddMissingImportsFeatureService : ILanguageService
     {

@@ -6,14 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ChangeNamespace;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.ChangeNamespace;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings.SyncNamespace
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings.SyncNamespace
 {
     internal abstract partial class AbstractSyncNamespaceCodeRefactoringProvider<TNamespaceDeclarationSyntax, TCompilationUnitSyntax, TMemberDeclarationSyntax>
         : CodeRefactoringProvider
@@ -135,7 +135,7 @@ namespace Microsoft.CodeAnalysis.CodeRefactorings.SyncNamespace
                 }
 
                 // Only provide "move file" action if default namespace contains declared namespace.
-                // For example, if the default namespace is `Microsoft.CodeAnalysis`, and declared
+                // For example, if the default namespace is `StarkPlatform.CodeAnalysis`, and declared
                 // namespace is `System.Diagnostics`, it's very likely this document is an outlier  
                 // in the project and user probably has some special rule for it.
                 var relativeNamespace = GetRelativeNamespace(defaultNamespace, declaredNamespace, syntaxFacts);

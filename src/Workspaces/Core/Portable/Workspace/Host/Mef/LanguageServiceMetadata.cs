@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     /// <summary>
     /// MEF metadata class used for finding <see cref="ILanguageService"/> and <see cref="ILanguageServiceFactory"/> exports.

@@ -4,17 +4,17 @@ using System;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.Common;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.LanguageServices;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions.LanguageServices;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.LanguageServices;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions.LanguageServices;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Features.EmbeddedLanguages.RegularExpressions
+namespace StarkPlatform.CodeAnalysis.Features.EmbeddedLanguages.RegularExpressions
 {
     using RegexToken = EmbeddedSyntaxToken<RegexKind>;
     using RegexTrivia = EmbeddedSyntaxTrivia<RegexKind>;

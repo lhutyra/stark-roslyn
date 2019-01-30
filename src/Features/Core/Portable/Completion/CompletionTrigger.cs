@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     /// <summary>
     /// The action that triggered completion to start.

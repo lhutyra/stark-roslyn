@@ -3,14 +3,14 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.MakeFieldReadonly
+namespace StarkPlatform.CodeAnalysis.MakeFieldReadonly
 {
-    [DiagnosticAnalyzer(LanguageNames.CSharp, LanguageNames.VisualBasic)]
+    [DiagnosticAnalyzer(LanguageNames.Stark)]
     internal sealed class MakeFieldReadonlyDiagnosticAnalyzer
         : AbstractBuiltInCodeStyleDiagnosticAnalyzer
     {

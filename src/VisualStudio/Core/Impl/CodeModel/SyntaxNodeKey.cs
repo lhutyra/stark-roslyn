@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     /// <summary>
     /// Uniquely identifies a top-level syntax declaration within a SyntaxTree.

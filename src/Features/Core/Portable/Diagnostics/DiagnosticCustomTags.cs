@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     internal static class DiagnosticCustomTags
     {

@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis.Emit;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     // HashBucket used when emitting hash table based string switch.
     // Each hash bucket contains the list of "<string constant, label>" key-value pairs

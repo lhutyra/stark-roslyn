@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     /// <summary>
     /// CodeFixProvider factory. if an analyzer reference implements this, we call this to get CodeFixProviders

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace StarkPlatform.CodeAnalysis.Syntax.InternalSyntax
 {
     internal struct SeparatedSyntaxListBuilder<TNode> where TNode : GreenNode
     {

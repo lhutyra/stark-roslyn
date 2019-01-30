@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename.HighlightTags
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename.HighlightTags
 {
     internal class RenameConflictTag : TextMarkerTag
     {

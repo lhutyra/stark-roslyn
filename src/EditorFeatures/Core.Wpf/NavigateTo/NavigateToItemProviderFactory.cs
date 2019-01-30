@@ -2,10 +2,10 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Microsoft.VisualStudio.Language.NavigateTo.Interfaces;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.NavigateTo
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.NavigateTo
 {
     [Export(typeof(INavigateToItemProviderFactory)), Shared]
     internal class NavigateToItemProviderFactory : INavigateToItemProviderFactory

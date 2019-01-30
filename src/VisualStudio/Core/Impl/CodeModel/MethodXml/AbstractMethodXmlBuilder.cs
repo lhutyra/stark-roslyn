@@ -4,10 +4,10 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.MethodXml
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.MethodXml
 {
     internal abstract partial class AbstractMethodXmlBuilder
     {

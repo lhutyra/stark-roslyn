@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     /// <summary>
     /// A generator used for creating or modifying member declarations in source.
@@ -19,14 +19,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         private static ICodeGenerationService GetCodeGenerationService(Workspace workspace, string language)
         {
             return workspace.Services.GetLanguageServices(language).GetService<ICodeGenerationService>();
-        }
-
-        /// <summary>
-        /// Returns a newly created event declaration node from the provided event.
-        /// </summary>
-        public static SyntaxNode CreateEventDeclaration(IEventSymbol @event, Workspace workspace, CodeGenerationDestination destination = CodeGenerationDestination.Unspecified, CodeGenerationOptions options = null)
-        {
-            return GetCodeGenerationService(workspace, @event.Language).CreateEventDeclaration(@event, destination, options);
         }
 
         /// <summary>
@@ -67,14 +59,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         public static SyntaxNode CreateNamespaceDeclaration(INamespaceSymbol @namespace, Workspace workspace, CodeGenerationDestination destination = CodeGenerationDestination.Unspecified, CodeGenerationOptions options = null)
         {
             return GetCodeGenerationService(workspace, @namespace.Language).CreateNamespaceDeclaration(@namespace, destination, options);
-        }
-
-        /// <summary>
-        /// Create a new declaration node with an event declaration of the same signature as the specified symbol added to it.
-        /// </summary>
-        public static TDeclarationNode AddEventDeclaration<TDeclarationNode>(TDeclarationNode destination, IEventSymbol @event, Workspace workspace, CodeGenerationOptions options = default) where TDeclarationNode : SyntaxNode
-        {
-            return GetCodeGenerationService(workspace, destination.Language).AddEvent(destination, @event, options);
         }
 
         /// <summary>
@@ -175,15 +159,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         public static TDeclarationNode AddStatements<TDeclarationNode>(TDeclarationNode destinationMember, IEnumerable<SyntaxNode> statements, Workspace workspace, CodeGenerationOptions options = default) where TDeclarationNode : SyntaxNode
         {
             return GetCodeGenerationService(workspace, destinationMember.Language).AddStatements(destinationMember, statements, options);
-        }
-
-        /// <summary>
-        /// Create a new solution where the declaration of the destination symbol has an additional event of the same signature as the specified event symbol.
-        /// Returns the document in the new solution where the destination symbol is declared.
-        /// </summary>
-        public static Task<Document> AddEventDeclarationAsync(Solution solution, INamedTypeSymbol destination, IEventSymbol @event, CodeGenerationOptions options = default, CancellationToken cancellationToken = default)
-        {
-            return GetCodeGenerationService(solution.Workspace, destination.Language).AddEventAsync(solution, destination, @event, options, cancellationToken);
         }
 
         /// <summary>

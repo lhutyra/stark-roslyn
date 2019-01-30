@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     internal struct AnonymousTypeDisplayInfo
     {

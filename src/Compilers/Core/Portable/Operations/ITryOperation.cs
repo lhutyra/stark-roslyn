@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Operations
+namespace StarkPlatform.CodeAnalysis.Operations
 {
     /// <summary>
     /// Represents a try operation for exception handling code with a body, catch clauses and a finally handler.

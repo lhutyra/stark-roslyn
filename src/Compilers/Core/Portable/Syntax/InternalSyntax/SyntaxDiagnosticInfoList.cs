@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace StarkPlatform.CodeAnalysis.Syntax.InternalSyntax
 {
     // Avoid implementing IEnumerable so we do not get any unintentional boxing.
     internal struct SyntaxDiagnosticInfoList

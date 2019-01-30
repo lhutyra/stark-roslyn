@@ -2,15 +2,15 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Tags;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     /// <summary>
     /// The set of well known tags used for the <see cref="CompletionItem.Tags"/> property.
     /// These tags influence the presentation of items in the list.
     /// </summary>
-    [Obsolete("Use Microsoft.CodeAnalysis.Tags.WellKnownTags instead.")]
+    [Obsolete("Use StarkPlatform.CodeAnalysis.Tags.WellKnownTags instead.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class CompletionTags
     {

@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.ReplacePropertyWithMethods
+namespace StarkPlatform.CodeAnalysis.ReplacePropertyWithMethods
 {
     internal interface IReplacePropertyWithMethodsService : ILanguageService
     {

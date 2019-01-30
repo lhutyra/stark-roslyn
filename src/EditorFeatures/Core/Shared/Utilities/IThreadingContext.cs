@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Threading;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     /// <summary>
     /// Provides a <see cref="VisualStudio.Threading.JoinableTaskContext"/> which Roslyn code can use for transitioning

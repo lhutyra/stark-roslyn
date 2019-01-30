@@ -4,10 +4,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     /// <summary>
     /// An XML parser that is designed to parse small fragments of XML such as those that appear in documentation comments.

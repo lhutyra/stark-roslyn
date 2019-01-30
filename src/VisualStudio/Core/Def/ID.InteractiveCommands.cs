@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     internal static partial class ID
     {

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Packaging;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Packaging;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Tags;
 
-namespace Microsoft.CodeAnalysis.AddPackage
+namespace StarkPlatform.CodeAnalysis.AddPackage
 {
     /// <summary>
     /// This is the top level 'Install Nuget Package' code action we show in 

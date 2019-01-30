@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.CodeAnalysis.Editor {
+namespace StarkPlatform.CodeAnalysis.Editor {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Editor {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.CodeAnalysis.Editor.EditorFeaturesResources", typeof(EditorFeaturesResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StarkPlatform.CodeAnalysis.Editor.EditorFeaturesResources", typeof(EditorFeaturesResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

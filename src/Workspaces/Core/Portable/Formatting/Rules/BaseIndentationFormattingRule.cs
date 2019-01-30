@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting.Rules
+namespace StarkPlatform.CodeAnalysis.Formatting.Rules
 {
     internal class BaseIndentationFormattingRule : AbstractFormattingRule
     {

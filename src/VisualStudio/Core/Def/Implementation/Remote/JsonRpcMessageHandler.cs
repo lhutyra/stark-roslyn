@@ -3,7 +3,7 @@
 using System.IO;
 using StreamJsonRpc;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     // This is a workaround for a limitation in vs-threading.
     // https://github.com/dotnet/roslyn/issues/19042

@@ -2,107 +2,63 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     internal static class Guids
     {
         // Deprecated, and can be removed once https://github.com/dotnet/roslyn/pull/9186 is merged
         // and the closed solution no longer depends on this.
-        public const string CSharpOptionPageFormattingIdString = "13c3bbb4-f18f-4111-9f54-a0fb010d9194";
+        public const string CSharpOptionPageFormattingIdString = "17ABFCEB-2A0C-44F8-9A85-A92B08F6E3B3";
 
-        public const string CSharpPackageIdString = "13c3bbb4-f18f-4111-9f54-a0fb010d9194";
-        public const string CSharpProjectIdString = "fae04ec0-301f-11d3-bf4b-00c04f79efbc";
-        public const string CSharpLanguageServiceIdString = "694dd9b6-b865-4c5b-ad85-86356e9c88dc";
-        public const string CSharpEditorFactoryIdString = "a6c744a8-0e4a-4fc6-886a-064283054674";
-        public const string CSharpCodePageEditorFactoryIdString = "08467b34-b90f-4d91-bdca-eb8c8cf3033a";
-        public const string CSharpCommandSetIdString = "d91af2f7-61f6-4d90-be23-d057d2ea961b";
-        public const string CSharpGroupIdString = "5d7e7f65-a63f-46ee-84f1-990b2cab23f9";
-        public const string CSharpRefactorIconIdString = "b293db8b-3c72-4720-9966-2083af84dd82";
-        public const string CSharpGenerateIconIdString = "ac9a0910-d9fd-4f2e-b9a1-acdc5d514437";
-        public const string CSharpOrganizeIconIdString = "9420a4b2-b48b-449d-a4c0-335d6e864b82";
-        public const string CSharpLibraryIdString = "58F1BAD0-2288-45b9-AC3A-D56398F7781D";
-        public const string CSharpReplPackageIdString = "c5edd1ee-c43b-4360-9ce4-6b993ca12897";
+        public const string StarkPackageIdString = "17ABFCEB-2A0C-44F8-9A85-A92B08F6E3B3";
+        public const string StarkProjectIdString = "0D82155C-3060-4DDC-9D49-06522FEDE816";
+        public const string StarkLanguageServiceIdString = "79E2E70D-E9F9-475F-8F90-F18209CBDD00";
+        public const string StarkEditorFactoryIdString = "5A3D871C-9840-46DA-9697-77776471C765";
+        public const string StarkCodePageEditorFactoryIdString = "040E3492-803E-41F8-8883-31E6ED37F186";
+        public const string StarkCommandSetIdString = "07433E79-1C5D-4CE0-9109-DFA80340657C";
+        public const string StarkGroupIdString = "67DB5C4C-6484-4439-8FE9-57C6C854A334";
+        public const string StarkRefactorIconIdString = "8E12B3CF-7DE0-4AD8-8B65-241D61DF2591";
+        public const string StarkGenerateIconIdString = "6A6A1EF4-790F-48B6-BE12-171B81A86237";
+        public const string StarkOrganizeIconIdString = "0B82213C-CFB7-42E1-975B-A0FA5463A022";
+        public const string StarkLibraryIdString = "55362EC7-6C73-468B-BE07-87608661AE52";
+        public const string StarkReplPackageIdString = "762A23B5-C4F3-4045-9863-4D1D8DD200CA";
 
-        public const string CSharpProjectRootIdString = "C7FEDB89-B36D-4a62-93F4-DC7A95999921";
+        public const string StarkProjectRootIdString = "C7FEDB89-B36D-4a62-93F4-DC7A95999921";
 
         // from debugger\idl\makeapi\guid.c  
-        public const string CSharpDebuggerLanguageIdString = "3f5162f8-07c6-11d3-9053-00c04fa302a1";
+        public const string StarkDebuggerLanguageIdString = "3525D260-DE03-40A5-A4E5-E3650FB6AA16";
 
-        public static readonly Guid CSharpPackageId = new Guid(CSharpPackageIdString);
-        public static readonly Guid CSharpProjectId = new Guid(CSharpProjectIdString);
-        public static readonly Guid CSharpLanguageServiceId = new Guid(CSharpLanguageServiceIdString);
-        public static readonly Guid CSharpEditorFactoryId = new Guid(CSharpEditorFactoryIdString);
-        public static readonly Guid CSharpCodePageEditorFactoryId = new Guid(CSharpCodePageEditorFactoryIdString);
-        public static readonly Guid CSharpCommandSetId = new Guid(CSharpCommandSetIdString);     // guidCSharpCmdId
-        public static readonly Guid CSharpGroupId = new Guid(CSharpGroupIdString);               // guidCSharpGrpId
-        public static readonly Guid CSharpRefactorIconId = new Guid(CSharpRefactorIconIdString); // guidCSharpRefactorIcon
-        public static readonly Guid CSharpGenerateIconId = new Guid(CSharpGenerateIconIdString); // guidCSharpGenerateIcon
-        public static readonly Guid CSharpOrganizeIconId = new Guid(CSharpOrganizeIconIdString); // guidCSharpOrganizeIcon
-        public static readonly Guid CSharpDebuggerLanguageId = new Guid(CSharpDebuggerLanguageIdString);
-        public static readonly Guid CSharpLibraryId = new Guid(CSharpLibraryIdString);
+        public static readonly Guid StarkPackageId = new Guid(StarkPackageIdString);
+        public static readonly Guid StarkProjectId = new Guid(StarkProjectIdString);
+        public static readonly Guid StarkLanguageServiceId = new Guid(StarkLanguageServiceIdString);
+        public static readonly Guid StarkEditorFactoryId = new Guid(StarkEditorFactoryIdString);
+        public static readonly Guid StarkCodePageEditorFactoryId = new Guid(StarkCodePageEditorFactoryIdString);
+        public static readonly Guid StarkCommandSetId = new Guid(StarkCommandSetIdString);     // guidCSharpCmdId
+        public static readonly Guid StarkGroupId = new Guid(StarkGroupIdString);               // guidCSharpGrpId
+        public static readonly Guid StarkRefactorIconId = new Guid(StarkRefactorIconIdString); // guidCSharpRefactorIcon
+        public static readonly Guid StarkGenerateIconId = new Guid(StarkGenerateIconIdString); // guidCSharpGenerateIcon
+        public static readonly Guid StarkOrganizeIconId = new Guid(StarkOrganizeIconIdString); // guidCSharpOrganizeIcon
+        public static readonly Guid StarkDebuggerLanguageId = new Guid(StarkDebuggerLanguageIdString);
+        public static readonly Guid StarkLibraryId = new Guid(StarkLibraryIdString);
 
         // option page guids from csharp\rad\pkg\guids.h
-        public const string CSharpOptionPageAdvancedIdString = "8FD0B177-B244-4A97-8E37-6FB7B27DE3AF";
-        public const string CSharpOptionPageNamingStyleIdString = "294FBC9C-EF70-4AA0-BD4F-EB0C6A5908D7";
-        public const string CSharpOptionPageIntelliSenseIdString = "EDE66829-7A36-4c5d-8E20-9290195DCF80";
-        public const string CSharpOptionPageCodeStyleIdString = "EAE577A7-ACB9-40F5-A7B1-D2878C3C7D6F";
-        public const string CSharpOptionPageFormattingGeneralIdString = "DA0446DD-55BA-401F-A364-7D3238412AE4";
-        public const string CSharpOptionPageFormattingIndentationIdString = "5E21D017-6D2A-4114-A1F1-C923F001CBBB";
-        public const string CSharpOptionPageFormattingNewLinesIdString = "607D8062-68D1-41E4-9A35-B5E7F14D0481";
-        public const string CSharpOptionPageFormattingSpacingIdString = "234FB566-73DD-4612-8DE4-29031FF27052";
-        public const string CSharpOptionPageFormattingWrappingIdString = "8E334D9C-B7DC-4CF3-B7B7-014B831FE76B";
-
-        public const string VisualBasicPackageIdString = "574fc912-f74f-4b4e-92c3-f695c208a2bb";
-
-        public const string VisualBasicReplPackageIdString = "F5C61C13-7037-4C50-98E6-ACC313359A34";
-
-        public const string VbCompilerProjectIdString = "12C8A7D2-4681-11D2-B48A-0000F87572EB";
-
-        public const string VisualBasicProjectIdString = "F184B08F-C81C-45F6-A57F-5ABD9991F28F";
-
-        public const string VisualBasicCompilerServiceIdString = "019971d6-4685-11d2-b48a-0000f87572eb";
-        public const string VisualBasicLanguageServiceIdString = "e34acdc0-baae-11d0-88bf-00a0c9110049";
-        public const string VisualBasicEditorFactoryIdString = "2c015c70-c72c-11d0-88c3-00a0c9110049";
-        public const string VisualBasicCodePageEditorFactoryIdString = "6c33e1aa-1401-4536-ab67-0e21e6e569da";
-        public const string VisualBasicDebuggerLanguageIdString = "3a12d0b8-c26c-11d0-b442-00a0244a1dd2";
-        public const string VisualBasicLibraryIdString = "414AC972-9829-4b6a-A8D7-A08152FEB8AA";
-        public const string VisualBasicOptionPageCodeStyleIdString = "10C168E1-3470-448A-A1AC-73D6BC070750";
-
-        public static readonly Guid VisualBasicPackageId = new Guid(VisualBasicPackageIdString);
-        public static readonly Guid VisualBasicCompilerServiceId = new Guid(VisualBasicCompilerServiceIdString);
-        public static readonly Guid VisualBasicLanguageServiceId = new Guid(VisualBasicLanguageServiceIdString);
-        public static readonly Guid VisualBasicEditorFactoryId = new Guid(VisualBasicEditorFactoryIdString);
-        public static readonly Guid VisualBasicCodePageEditorFactoryId = new Guid(VisualBasicCodePageEditorFactoryIdString);
-        public static readonly Guid VisualBasicLibraryId = new Guid(VisualBasicLibraryIdString);
-
-        public static readonly Guid VisualBasicProjectId = new Guid(VisualBasicProjectIdString);
-
-        // from debugger\idl\makeapi\guid.c  
-        public static readonly Guid VisualBasicDebuggerLanguageId = new Guid(VisualBasicDebuggerLanguageIdString);
-
-        // option page guid from setupauthoring\vb\components\vblanguageservice.pkgdef
-        public const string VisualBasicOptionPageVBSpecificIdString = "F1E1021E-A781-4862-9F4B-88746A288A67";
-        public const string VisualBasicOptionPageNamingStyleIdString = "BCA454E0-95E4-4877-B4CB-B1D642B7BAFA";
-        public const string VisualBasicOptionPageIntelliSenseIdString = "04460A3B-1B5F-4402-BC6D-89A4F6F0A8D7";
-
-        public const string FSharpPackageIdString = "871D2A70-12A2-4e42-9440-425DD92A4116";
-
-        public static readonly Guid FSharpPackageId = new Guid(FSharpPackageIdString);
+        public const string StarkOptionPageAdvancedIdString = "BE7D630F-2A60-425C-88A3-F98D5DBD9118";
+        public const string StarkOptionPageNamingStyleIdString = "47E75C83-0EEE-4E67-B902-0E55FB88C9F1";
+        public const string StarkOptionPageIntelliSenseIdString = "8C940E9A-4F9A-4472-8C7A-22B20B93E711";
+        public const string StarkOptionPageCodeStyleIdString = "367ABEF5-72E6-4DC7-93FC-A18336671C60";
+        public const string StarkOptionPageFormattingGeneralIdString = "FE7A04DC-16AB-49DA-A9D8-3B7049C25DA1";
+        public const string StarkOptionPageFormattingIndentationIdString = "9AC3957C-3417-4F55-8904-DF98F1F78F13";
+        public const string StarkOptionPageFormattingNewLinesIdString = "7C18F77B-1098-446A-AA14-AE399B04441D";
+        public const string StarkOptionPageFormattingSpacingIdString = "2E7642ED-C558-400F-949B-2A7974D0FC92";
+        public const string StarkOptionPageFormattingWrappingIdString = "1DBE2F1C-7BBF-4248-8BB9-AE10203BEB92";
 
         // from vscommon\inc\textmgruuids.h
         public const string TextManagerPackageString = "F5E7E720-1401-11D1-883B-0000F87579D2";
 
         // Roslyn guids
-        public const string RoslynPackageIdString = "6cf2e545-6109-4730-8883-cf43d7aec3e1";
-        public const string RoslynCommandSetIdString = "9ed8fbd1-02d6-4223-a99c-a938f97e6dbe";
-        public const string RoslynGroupIdString = "b61e1a20-8c13-49a9-a727-a0ec091647dd";
-
-        public const string RoslynOptionPageFeatureManagerComponentsIdString = "6F738951-348C-4816-9BA4-F60D92D3E98E";
-        public const string RoslynOptionPageFeatureManagerFeaturesIdString = "67989704-F8D7-454A-9053-8E1D3CFF679C";
-        public const string RoslynOptionPagePerformanceFunctionIdIdString = "0C537218-3BDD-4CC8-AC4B-CEC152D4871A";
-        public const string RoslynOptionPagePerformanceLoggersIdString = "236AC96F-A60D-4BD6-A480-D315151EDC2B";
-        public const string RoslynOptionPageInternalDiagnosticsIdString = "48993C4C-C619-42AD-B1C8-79378AD8BEF2";
-        public const string RoslynOptionPageInternalSolutionCrawlerIdString = "9702D3BD-F06C-4A6A-974B-7D0C2BC89A72";
+        public const string RoslynPackageIdString = "5617BD02-DB4F-4843-AF48-04134A7B438C";
+        public const string RoslynCommandSetIdString = "1BD14407-118D-4AB6-A7D2-2B4374ADF03C";
+        public const string RoslynGroupIdString = "3F0A6609-6135-4399-B1F7-22D780CD110B";
 
         public static readonly Guid RoslynPackageId = new Guid(RoslynPackageIdString);
         public static readonly Guid RoslynCommandSetId = new Guid(RoslynCommandSetIdString);
@@ -110,7 +66,7 @@ namespace Microsoft.VisualStudio.LanguageServices
 
         // TODO: Remove pending https://github.com/dotnet/roslyn/issues/8927 .
         // Interactive guids
-        public const string InteractiveCommandSetIdString = "00B8868B-F9F5-4970-A048-410B05508506";
+        public const string InteractiveCommandSetIdString = "FD377604-F2C2-44B1-B893-FF3F51586464";
         public static readonly Guid InteractiveCommandSetId = new Guid(InteractiveCommandSetIdString);
     }
 }

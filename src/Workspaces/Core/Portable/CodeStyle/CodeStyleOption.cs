@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeStyle
+namespace StarkPlatform.CodeAnalysis.CodeStyle
 {
     internal interface ICodeStyleOption
     {

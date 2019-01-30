@@ -3,7 +3,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class TypeAttributesExtensions
     {

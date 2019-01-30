@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.ProjectSystem
 {
     /// <summary>
     /// Project context to initialize properties and items of a Workspace project created with <see cref="IWorkspaceProjectContextFactory.CreateProjectContext(string, string, string, Guid, object, string)"/>. 

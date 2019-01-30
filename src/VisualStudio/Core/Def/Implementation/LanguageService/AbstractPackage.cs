@@ -4,7 +4,7 @@ using System.Threading;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService
 {
     internal abstract class AbstractPackage : AsyncPackage
     {

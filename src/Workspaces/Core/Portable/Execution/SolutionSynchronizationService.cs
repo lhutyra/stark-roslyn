@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Serialization;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Serialization;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     [ExportWorkspaceServiceFactory(typeof(IRemotableDataService)), Shared]
     internal class RemotableDataServiceFactory : IWorkspaceServiceFactory

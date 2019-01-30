@@ -4,13 +4,13 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     internal class SymbolSpecification
     {

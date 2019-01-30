@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editing
+namespace StarkPlatform.CodeAnalysis.Editing
 {
     public struct DeclarationModifiers : IEquatable<DeclarationModifiers>
     {

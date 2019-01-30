@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Notification;
 
-namespace Microsoft.CodeAnalysis.ChangeSignature
+namespace StarkPlatform.CodeAnalysis.ChangeSignature
 {
     internal interface IChangeSignatureOptionsService : IWorkspaceService
     {

@@ -3,7 +3,7 @@
 using System.Windows;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
 {
     /// <summary>
     /// Interaction logic for NamingStyleDialog.xaml

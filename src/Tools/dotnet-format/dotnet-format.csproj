@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.Tools.CodeFormatter</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.Tools.CodeFormatter</RootNamespace>
     <Description>Command line tool for formatting code files.</Description>
 
     <ServerGarbageCollection>true</ServerGarbageCollection>
@@ -34,13 +34,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
-    <ProjectReference Include="..\..\Compilers\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.csproj" />
-    <ProjectReference Include="..\..\Compilers\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.vbproj" />
-    <ProjectReference Include="..\..\Workspaces\Core\MSBuild\Microsoft.CodeAnalysis.Workspaces.MSBuild.csproj" />
-    <ProjectReference Include="..\..\Workspaces\Core\Portable\Microsoft.CodeAnalysis.Workspaces.csproj" />
-    <ProjectReference Include="..\..\Workspaces\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.Workspaces.csproj" />
-    <ProjectReference Include="..\..\Workspaces\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
+    <ProjectReference Include="..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\Compilers\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.csproj" />
+    <ProjectReference Include="..\..\Compilers\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.vbproj" />
+    <ProjectReference Include="..\..\Workspaces\Core\MSBuild\StarkPlatform.CodeAnalysis.Workspaces.MSBuild.csproj" />
+    <ProjectReference Include="..\..\Workspaces\Core\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
+    <ProjectReference Include="..\..\Workspaces\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.Workspaces.csproj" />
+    <ProjectReference Include="..\..\Workspaces\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

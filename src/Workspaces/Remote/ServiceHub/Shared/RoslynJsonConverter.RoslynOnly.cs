@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.AddImport;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.DesignerAttributes;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.DocumentHighlighting;
-using Microsoft.CodeAnalysis.Packaging;
-using Microsoft.CodeAnalysis.SymbolSearch;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.TodoComments;
+using StarkPlatform.CodeAnalysis.AddImport;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.DesignerAttributes;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.DocumentHighlighting;
+using StarkPlatform.CodeAnalysis.Packaging;
+using StarkPlatform.CodeAnalysis.SymbolSearch;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.TodoComments;
 using Newtonsoft.Json;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     internal partial class AggregateJsonConverter : JsonConverter
     {

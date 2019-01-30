@@ -3,9 +3,9 @@
 using System;
 using System.Diagnostics.Tracing;
 using System.Threading;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     /// <summary>
     /// A logger that publishes events to ETW using an EventSource.

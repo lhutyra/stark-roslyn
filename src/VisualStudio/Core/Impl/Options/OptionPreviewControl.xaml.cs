@@ -7,10 +7,10 @@ using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     internal partial class OptionPreviewControl : AbstractOptionPageControl
     {

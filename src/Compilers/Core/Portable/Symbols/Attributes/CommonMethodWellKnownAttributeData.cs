@@ -3,10 +3,10 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.Text;
-using Cci = Microsoft.Cci;
+using StarkPlatform.CodeAnalysis.Text;
+using Cci = StarkPlatform.Cci;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Information decoded from well-known custom attributes applied on a method.

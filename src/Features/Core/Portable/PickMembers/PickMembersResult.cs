@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.PickMembers
+namespace StarkPlatform.CodeAnalysis.PickMembers
 {
     internal class PickMembersResult
     {

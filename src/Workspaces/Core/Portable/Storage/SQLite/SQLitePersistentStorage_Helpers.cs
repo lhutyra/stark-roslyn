@@ -6,7 +6,7 @@ using System.IO;
 using Roslyn.Utilities;
 using static System.FormattableString;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     internal partial class SQLitePersistentStorage
     {

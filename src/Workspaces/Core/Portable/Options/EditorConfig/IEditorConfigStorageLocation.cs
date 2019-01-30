@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     internal interface IEditorConfigStorageLocation
     {

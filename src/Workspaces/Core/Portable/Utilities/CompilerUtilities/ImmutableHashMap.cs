@@ -1153,7 +1153,7 @@ namespace Roslyn.Collections.Immutable
 
         private static class Strings
         {
-            public static string DuplicateKey => Microsoft.CodeAnalysis.WorkspacesResources.An_element_with_the_same_key_but_a_different_value_already_exists;
+            public static string DuplicateKey => StarkPlatform.CodeAnalysis.WorkspacesResources.An_element_with_the_same_key_but_a_different_value_already_exists;
         }
     }
 }

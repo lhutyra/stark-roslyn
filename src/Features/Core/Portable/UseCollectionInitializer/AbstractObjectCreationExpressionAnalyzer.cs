@@ -3,11 +3,11 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.UseCollectionInitializer
+namespace StarkPlatform.CodeAnalysis.UseCollectionInitializer
 {
     internal abstract class AbstractObjectCreationExpressionAnalyzer<
         TExpressionSyntax,

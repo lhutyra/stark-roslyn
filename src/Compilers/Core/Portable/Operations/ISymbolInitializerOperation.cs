@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Operations
+namespace StarkPlatform.CodeAnalysis.Operations
 {
     /// <summary>
     /// Represents an initializer for a field, property, parameter or a local variable declaration.

@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ImplementAbstractClass
+namespace StarkPlatform.CodeAnalysis.ImplementAbstractClass
 {
     internal abstract partial class AbstractImplementAbstractClassService<TClassSyntax> :
         IImplementAbstractClassService

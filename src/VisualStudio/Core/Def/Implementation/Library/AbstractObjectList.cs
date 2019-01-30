@@ -2,10 +2,11 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library
 {
     internal abstract class AbstractObjectList<TLibraryManager> : IVsCoTaskMemFreeMyStrings, IVsSimpleObjectList2, IVsBrowseContainersList
         where TLibraryManager : AbstractLibraryManager

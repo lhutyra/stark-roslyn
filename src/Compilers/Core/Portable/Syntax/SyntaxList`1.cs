@@ -5,11 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.Syntax;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Syntax;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A list of <see cref="SyntaxNode"/>.

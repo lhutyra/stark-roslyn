@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.Editor;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Editor;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus
 {
     internal partial class ContainedLanguage<TPackage, TLanguageService> : IVsContainedLanguage
     {

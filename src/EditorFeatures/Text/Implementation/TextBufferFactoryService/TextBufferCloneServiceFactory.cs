@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Composition;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text.Implementation.TextBufferFactoryService
+namespace StarkPlatform.CodeAnalysis.Text.Implementation.TextBufferFactoryService
 {
     [ExportWorkspaceServiceFactory(typeof(ITextBufferCloneService), ServiceLayer.Editor), Shared]
     internal class TextBufferCloneServiceFactory : IWorkspaceServiceFactory
@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Text.Implementation.TextBufferFactoryService
             {
                 _textBufferFactoryService = textBufferFactoryService;
 
-                _roslynContentType = contentTypeRegistryService.GetContentType(ContentTypeNames.RoslynContentType);
+                _roslynContentType = contentTypeRegistryService.GetContentType(ContentTypeNames.StarkRoslynContentType);
                 _unknownContentType = contentTypeRegistryService.UnknownContentType;
             }
 

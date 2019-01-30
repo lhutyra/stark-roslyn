@@ -2,7 +2,7 @@
 
 using System.Windows.Controls;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
 {
     /// <summary>
     /// A check box used to imitate the behavior of select all check box of VS.

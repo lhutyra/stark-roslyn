@@ -3,7 +3,7 @@
 using System.Collections.Concurrent;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     internal partial class TokenStream
     {

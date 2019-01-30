@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Classification.Classifiers
+namespace StarkPlatform.CodeAnalysis.Classification.Classifiers
 {
     internal interface ISyntaxClassifier
     {

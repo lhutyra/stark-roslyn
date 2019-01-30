@@ -7,7 +7,7 @@ using System.Linq;
 using System.Xml;
 using XmlNames = Roslyn.Utilities.DocumentationCommentXmlNames;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     /// <summary>
     /// A documentation comment derived from either source text or metadata.

@@ -2,12 +2,12 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Editor.Tagging;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Tagging;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging
 {
     internal partial class TaggerEventSources
     {

@@ -9,7 +9,7 @@ using System.Reflection;
 using Roslyn.Utilities;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A DiagnosticInfo object has information about a diagnostic, but without any attached location information.

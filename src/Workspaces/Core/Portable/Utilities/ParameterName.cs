@@ -1,7 +1,7 @@
 ﻿using System;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Utilities
+namespace StarkPlatform.CodeAnalysis.Utilities
 {
     internal struct ParameterName : IEquatable<ParameterName>
     {

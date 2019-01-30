@@ -3,7 +3,7 @@
 using System.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     internal static class StringBuilderPool
     {

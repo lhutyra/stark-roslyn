@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Operations;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     /// <summary>
     /// a merge policy that should be used for any automatic code changes that could happen in sequences so that

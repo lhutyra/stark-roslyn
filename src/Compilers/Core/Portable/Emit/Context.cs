@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     internal struct EmitContext
     {

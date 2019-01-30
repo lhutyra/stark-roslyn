@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.Imaging;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     /// <summary>
     /// This class acts as a base for any view model that  binds to the codestyle options UI.

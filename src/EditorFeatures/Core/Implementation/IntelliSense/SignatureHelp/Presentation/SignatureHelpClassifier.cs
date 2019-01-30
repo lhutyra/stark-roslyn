@@ -2,14 +2,14 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp.Presentation
 {
     internal class SignatureHelpClassifier : IClassifier
     {

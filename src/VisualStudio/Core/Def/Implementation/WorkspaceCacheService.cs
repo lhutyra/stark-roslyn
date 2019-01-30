@@ -2,10 +2,10 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     [ExportWorkspaceService(typeof(IWorkspaceCacheService), ServiceLayer.Host), Shared]
     internal sealed class WorkspaceCacheService : IWorkspaceCacheService

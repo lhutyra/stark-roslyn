@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     /// <summary>
     /// Specifies that an option should be read from an .editorconfig file.

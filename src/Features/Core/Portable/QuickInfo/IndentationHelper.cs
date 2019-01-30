@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Classification;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Classification;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.QuickInfo
+namespace StarkPlatform.CodeAnalysis.QuickInfo
 {
     // Reproduces logic in IProjectionBufferFactoryServiceExtensions (editor layer) 
     // Used for tests currenty, but probably needed for other non-vs-editor API consumers.

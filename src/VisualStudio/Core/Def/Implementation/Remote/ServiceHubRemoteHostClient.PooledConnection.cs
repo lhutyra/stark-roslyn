@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.Remote;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     internal sealed partial class ServiceHubRemoteHostClient : RemoteHostClient
     {

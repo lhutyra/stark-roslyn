@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Execution;
+using StarkPlatform.CodeAnalysis.Execution;
 
-namespace Microsoft.CodeAnalysis.TodoComments
+namespace StarkPlatform.CodeAnalysis.TodoComments
 {
     /// <summary>
     /// interface exist to strongly type todo comment remote service

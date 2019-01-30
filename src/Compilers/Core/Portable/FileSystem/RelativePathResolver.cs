@@ -9,7 +9,7 @@ using System.Linq;
 using Roslyn.Utilities;
 using System.IO;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal class RelativePathResolver : IEquatable<RelativePathResolver>
     {

@@ -2,7 +2,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Structure
+namespace StarkPlatform.CodeAnalysis.Structure
 {
     internal abstract class BlockStructureProvider
     {

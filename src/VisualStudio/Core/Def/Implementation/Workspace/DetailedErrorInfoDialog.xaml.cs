@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal partial class DetailedErrorInfoDialog : DialogWindow
     {

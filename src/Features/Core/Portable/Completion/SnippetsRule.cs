@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.Completion
+﻿namespace StarkPlatform.CodeAnalysis.Completion
 {
     public enum SnippetsRule
     {

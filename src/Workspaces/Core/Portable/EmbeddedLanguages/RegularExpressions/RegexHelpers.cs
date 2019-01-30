@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.Common;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions
 {
     using RegexToken = EmbeddedSyntaxToken<RegexKind>;
     using RegexTrivia = EmbeddedSyntaxTrivia<RegexKind>;

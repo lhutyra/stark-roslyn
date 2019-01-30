@@ -4,14 +4,14 @@ using System.Collections.Immutable;
 using System;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using System.Diagnostics;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class DebugSourceDocument
     {
-        internal static readonly Guid CorSymLanguageTypeCSharp = new Guid("{3f5162f8-07c6-11d3-9053-00c04fa302a1}");
+        internal static readonly Guid CorSymLanguageTypeCSharp = new Guid("{3525D260-DE03-40A5-A4E5-E3650FB6AA16}");
         internal static readonly Guid CorSymLanguageTypeBasic = new Guid("{3a12d0b8-c26c-11d0-b442-00a0244a1dd2}");
         private static readonly Guid s_corSymLanguageVendorMicrosoft = new Guid("{994b45c4-e6e9-11d2-903f-00c04fa302a1}");
         private static readonly Guid s_corSymDocumentTypeText = new Guid("{5a869d0b-6611-11d3-bd2a-0000f80849bd}");

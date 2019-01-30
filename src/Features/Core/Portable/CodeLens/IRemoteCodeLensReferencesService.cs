@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.CodeLens
+namespace StarkPlatform.CodeAnalysis.CodeLens
 {
     internal interface IRemoteCodeLensReferencesService
     {

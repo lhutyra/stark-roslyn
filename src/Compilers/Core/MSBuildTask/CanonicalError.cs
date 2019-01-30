@@ -4,7 +4,7 @@ using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// Functions for dealing with the specially formatted errors returned by

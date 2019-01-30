@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// The compilation object is an immutable representation of a single invocation of the

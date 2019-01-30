@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class IDocumentTrackingServiceExtensions
     {

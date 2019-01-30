@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     /// <summary>
     /// A class that provides host services via classes instances exported via a MEF version 1 composition.

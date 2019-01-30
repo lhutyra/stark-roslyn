@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Formatting;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Suppression
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Suppression
 {
     internal abstract partial class AbstractSuppressionCodeFixProvider : ISuppressionFixProvider
     {

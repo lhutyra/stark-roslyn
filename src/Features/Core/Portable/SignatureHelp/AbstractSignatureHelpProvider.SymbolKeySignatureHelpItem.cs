@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.SignatureHelp
+namespace StarkPlatform.CodeAnalysis.SignatureHelp
 {
     internal abstract partial class AbstractSignatureHelpProvider
     {

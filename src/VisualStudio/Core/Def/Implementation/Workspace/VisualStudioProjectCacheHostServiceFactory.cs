@@ -2,11 +2,11 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.VisualStudio.LanguageServices;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.VisualStudio.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Workspaces
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Workspaces
 {
     [ExportWorkspaceServiceFactory(typeof(IProjectCacheHostService), ServiceLayer.Host)]
     [Shared]

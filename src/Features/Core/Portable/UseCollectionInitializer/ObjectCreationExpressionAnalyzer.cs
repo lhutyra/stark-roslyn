@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.UseCollectionInitializer
+namespace StarkPlatform.CodeAnalysis.UseCollectionInitializer
 {
     internal class ObjectCreationExpressionAnalyzer<
         TExpressionSyntax,

@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// A metadata custom attribute.

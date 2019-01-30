@@ -2,11 +2,11 @@
 
 using System;
 using System.Windows;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.QuickInfo
+namespace StarkPlatform.CodeAnalysis.Editor.QuickInfo
 {
     internal interface IContentControlService : IWorkspaceService
     {

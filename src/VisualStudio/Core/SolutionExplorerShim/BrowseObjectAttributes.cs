@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.VisualStudio.LanguageServices.SolutionExplorer;
+using StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer;
 using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     /// <summary>
     /// The attribute used for adding localized display names to properties

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="f6d4ae9d-5ca3-4e0b-9035-9457cccf53fa" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft" />
+    <Identity Id="7A0F00E3-E5F9-400B-892A-CA4EE82916FC" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft" />
     <DisplayName>Roslyn Insiders (Without Tool Window)</DisplayName>
     <Description>Pre-release build of Roslyn compilers and language services.</Description>
   </Metadata>
@@ -10,40 +10,22 @@
   </Installation>
   <Dependencies>
     <Dependency d:ProjectName="CompilerExtension" 
-                DisplayName="Roslyn Compilers" 
+                DisplayName="Stark Compilers" 
                 Version="[|%CurrentProject%;GetVsixVersion|,)"
                 d:Source="Project" 
                 d:InstallSource="Embed" 
                 d:VsixSubPath="Vsixes" 
                 Location="|CompilerExtension;VSIXContainerProjectOutputGroup|" 
-                Id="7922692f-f018-45e7-8f3f-d3b7c0262841" />
+                Id="49C65E7A-F2E3-46F7-AC11-05B585986962" />
     
-    <Dependency d:ProjectName="VisualStudioSetup"
-                DisplayName="Roslyn Language Services"
+    <Dependency d:ProjectName="StarkVisualStudioSetup"
+                DisplayName="Stark Language Services"
                 Version="[|%CurrentProject%;GetVsixVersion|,)"
                 d:Source="Project"
                 d:InstallSource="Embed"
                 d:VsixSubPath="Vsixes"
-                Location="|VisualStudioSetup;VSIXContainerProjectOutputGroup|"
-                Id="0b5e8ddb-f12d-4131-a71d-77acc26a798f" />
-    
-    <Dependency d:ProjectName="VisualStudioInteractiveComponents" 
-                DisplayName="Roslyn Interactive Components" 
-                Version="[|%CurrentProject%;GetVsixVersion|,)"
-                d:Source="Project"  
-                d:InstallSource="Embed" 
-                d:VsixSubPath="Vsixes" 
-                Location="|VisualStudioInteractiveComponents;VSIXContainerProjectOutputGroup|" 
-                Id="500fff63-afcf-4195-8db4-3fa8a5180e79" />
-    
-    <Dependency  d:ProjectName="ExpressionEvaluatorPackage" 
-                 DisplayName="Roslyn Expression Evaluators" 
-                 Version="[|%CurrentProject%;GetVsixVersion|,)"
-                 d:Source="Project" 
-                 d:InstallSource="Embed" 
-                 d:VsixSubPath="Vsixes" 
-                 Location="|ExpressionEvaluatorPackage;VSIXContainerProjectOutputGroup|" 
-                 Id="21BAC26D-2935-4D0D-A282-AD647E2592B5" />
+                Location="|StarkVisualStudioSetup;VSIXContainerProjectOutputGroup|"
+                Id="5F8BB530-E8CC-46DA-A6D9-88A7084982CD" />
   </Dependencies>
   <Prerequisites>
     <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,17.0)" DisplayName="Visual Studio core editor" />

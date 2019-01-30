@@ -9,27 +9,27 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.Packaging;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.SymbolSearch;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Packaging;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.SymbolSearch;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.SymbolSearch;
-using Microsoft.VisualStudio.LanguageServices.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.SymbolSearch;
+using StarkPlatform.VisualStudio.LanguageServices.Utilities;
 using Microsoft.VisualStudio.Shell.Interop;
 using NuGet.VisualStudio;
 using Roslyn.Utilities;
 using SVsServiceProvider = Microsoft.VisualStudio.Shell.SVsServiceProvider;
 
-namespace Microsoft.VisualStudio.LanguageServices.Packaging
+namespace StarkPlatform.VisualStudio.LanguageServices.Packaging
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     /// <summary>
     /// Free threaded wrapper around the NuGet.VisualStudio STA package installer interfaces.
@@ -466,8 +466,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Packaging
             // Also, the NuGet APIs may throw on some projects that don't implement the 
             // full set of DTE APIs they expect.  So we filter down to just C# and VB here
             // as we know these languages are safe to build up this index for.
-            if (project.Language != LanguageNames.CSharp &&
-                project.Language != LanguageNames.VisualBasic)
+            if (project.Language != LanguageNames.Stark)
             {
                 return;
             }

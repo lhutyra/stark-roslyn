@@ -6,22 +6,22 @@
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis</PackageId>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageDescription>
       .NET Compiler Platform ("Roslyn").
 
       This is the all-in-one package (a superset of all assemblies). You can install any of these sub-packages if you only want part of the functionality:
-      - "Microsoft.CodeAnalysis.CSharp.Workspaces" (C# compiler + services)
-      - "Microsoft.CodeAnalysis.VisualBasic.Workspaces" (VB compiler + services)
-      - "Microsoft.CodeAnalysis.Compilers" (both compilers)
-      - "Microsoft.CodeAnalysis.CSharp" (only the C# compiler)
-      - "Microsoft.CodeAnalysis.VisualBasic (only the VB compiler)
+      - "StarkPlatform.CodeAnalysis.CSharp.Workspaces" (C# compiler + services)
+      - "StarkPlatform.CodeAnalysis.VisualBasic.Workspaces" (VB compiler + services)
+      - "StarkPlatform.CodeAnalysis.Compilers" (both compilers)
+      - "StarkPlatform.CodeAnalysis.CSharp" (only the C# compiler)
+      - "StarkPlatform.CodeAnalysis.VisualBasic (only the VB compiler)
     </PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Workspaces\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.Workspaces.csproj" />
-    <ProjectReference Include="..\Workspaces\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
+    <ProjectReference Include="..\Workspaces\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.Workspaces.csproj" />
+    <ProjectReference Include="..\Workspaces\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
   </ItemGroup>
 </Project>

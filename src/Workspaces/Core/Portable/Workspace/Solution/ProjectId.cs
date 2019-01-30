@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// An identifier that can be used to refer to the same <see cref="Project"/> across versions.

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.AddConstructorParametersFromMembers
+namespace StarkPlatform.CodeAnalysis.AddConstructorParametersFromMembers
 {
     internal partial class AddConstructorParametersFromMembersCodeRefactoringProvider
     {

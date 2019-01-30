@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     /// <summary>
     /// Use this attribute to declare a <see cref="CodeFixProvider"/> implementation so that it can be discovered by the host.

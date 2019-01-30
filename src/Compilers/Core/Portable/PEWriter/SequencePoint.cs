@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Roslyn.Utilities;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     [SuppressMessage("Performance", "CA1067", Justification = "Equality not actually implemented")]
     [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]

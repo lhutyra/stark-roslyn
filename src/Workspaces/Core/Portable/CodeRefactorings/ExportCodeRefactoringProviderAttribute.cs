@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings
 {
     /// <summary>
     /// Use this attribute to declare a <see cref="CodeRefactoringProvider"/> implementation so that it can be discovered by the host.

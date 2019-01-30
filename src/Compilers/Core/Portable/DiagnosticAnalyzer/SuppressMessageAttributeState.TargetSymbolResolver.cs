@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     internal partial class SuppressMessageAttributeState
     {
@@ -93,7 +93,7 @@ namespace Microsoft.CodeAnalysis.Diagnostics
                     if (segment == "Item" && PeekNextChar() == '[')
                     {
                         isIndexerProperty = true;
-                        if (_compilation.Language == LanguageNames.CSharp)
+                        if (_compilation.Language == LanguageNames.Stark)
                         {
                             segment = "this[]";
                         }

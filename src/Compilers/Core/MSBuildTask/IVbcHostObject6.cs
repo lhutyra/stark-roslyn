@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.Build.Tasks.Hosting;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// Defines an interface that proffers a free threaded host object that

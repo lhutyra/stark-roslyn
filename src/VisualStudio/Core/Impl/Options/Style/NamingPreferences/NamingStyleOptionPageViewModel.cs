@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
-using Microsoft.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.NamingStyles;
 using Microsoft.VisualStudio.Imaging;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style
 {
     internal class NamingStyleOptionPageViewModel : AbstractNotifyPropertyChanged
     {

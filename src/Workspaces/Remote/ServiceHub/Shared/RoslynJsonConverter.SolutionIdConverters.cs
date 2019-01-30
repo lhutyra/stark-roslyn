@@ -4,7 +4,7 @@ using System;
 using Newtonsoft.Json;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     internal partial class AggregateJsonConverter : JsonConverter
     {

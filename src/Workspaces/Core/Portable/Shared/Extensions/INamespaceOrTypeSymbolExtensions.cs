@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static partial class INamespaceOrTypeSymbolExtensions
     {

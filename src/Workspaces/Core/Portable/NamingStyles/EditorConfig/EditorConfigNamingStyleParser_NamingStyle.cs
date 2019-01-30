@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.NamingStyles;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     internal static partial class EditorConfigNamingStyleParser
     {

@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     [Export(typeof(IDiagnosticUpdateSourceRegistrationService))]
     internal partial class DiagnosticService : IDiagnosticUpdateSourceRegistrationService

@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.NavigationBar
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.NavigationBar
 {
     internal sealed class NavigationBarModel
     {

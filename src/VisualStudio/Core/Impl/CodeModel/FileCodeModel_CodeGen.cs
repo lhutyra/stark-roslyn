@@ -6,13 +6,13 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     /// <summary>
     /// Implementations of EnvDTE.FileCodeModel for both languages.
@@ -270,17 +270,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
 
         public EnvDTE80.CodeEvent AddEvent(SyntaxNode containerNode, string name, string fullDelegateName, bool createPropertyStyleEvent, object position, EnvDTE.vsCMAccess access)
         {
-            var containerNodePosition = containerNode.SpanStart;
-            var semanticModel = GetSemanticModel();
-
-            var eventType = (INamedTypeSymbol)CodeModelService.GetTypeSymbol(fullDelegateName, semanticModel, containerNodePosition);
-
-            var newEvent = CreateEventDeclaration(containerNode, CodeModelService.GetUnescapedName(name), access, eventType, createPropertyStyleEvent);
-            var insertionIndex = CodeModelService.PositionVariantToMemberInsertionIndex(position, containerNode, fileCodeModel: this);
-
-            newEvent = InsertMember(containerNode, newEvent, insertionIndex);
-
-            return (EnvDTE80.CodeEvent)CreateInternalCodeMember(this.State, fileCodeModel: this, node: newEvent);
+            throw new NotImplementedException();
         }
 
         internal EnvDTE.CodeFunction AddFunction(SyntaxNode containerNode, string name, EnvDTE.vsCMFunction kind, object type, object position, EnvDTE.vsCMAccess access)

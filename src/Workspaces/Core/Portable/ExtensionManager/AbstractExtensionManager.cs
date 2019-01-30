@@ -3,7 +3,7 @@
 using System;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Extensions
+namespace StarkPlatform.CodeAnalysis.Extensions
 {
     internal abstract class AbstractExtensionManager : IExtensionManager
     {

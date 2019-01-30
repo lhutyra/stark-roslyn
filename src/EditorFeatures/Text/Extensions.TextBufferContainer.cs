@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     public static partial class Extensions
     {

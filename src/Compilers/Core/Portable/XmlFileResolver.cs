@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Resolves references to XML files specified in the source.

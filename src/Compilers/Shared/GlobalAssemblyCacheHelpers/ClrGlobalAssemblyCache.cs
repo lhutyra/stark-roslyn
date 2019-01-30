@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     using ASM_CACHE = GlobalAssemblyCacheLocation.ASM_CACHE;
 
@@ -156,7 +156,7 @@ namespace Microsoft.CodeAnalysis
                 {
                     // for some reason it might happen that CreateAssemblyEnum returns non-zero HR that doesn't correspond to any exception:
 #if SCRIPTING
-                    throw new ArgumentException(Microsoft.CodeAnalysis.Scripting.ScriptingResources.InvalidAssemblyName);
+                    throw new ArgumentException(StarkPlatform.CodeAnalysis.Scripting.ScriptingResources.InvalidAssemblyName);
 #else
                     throw new ArgumentException(Editor.EditorFeaturesResources.Invalid_assembly_name);
 #endif

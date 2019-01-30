@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(ICodeElements))]

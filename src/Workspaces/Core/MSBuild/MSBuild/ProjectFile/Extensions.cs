@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     internal static class Extensions
     {

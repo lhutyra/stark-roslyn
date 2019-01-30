@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     /// <summary>
     /// this is a workaround to get different workspace per host without text buffer
@@ -17,6 +17,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplore
     /// </summary>
     internal interface ISolutionExplorerWorkspaceProvider
     {
-        Microsoft.CodeAnalysis.Workspace GetWorkspace();
+        StarkPlatform.CodeAnalysis.Workspace GetWorkspace();
     }
 }

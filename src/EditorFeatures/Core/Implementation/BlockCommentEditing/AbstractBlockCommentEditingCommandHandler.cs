@@ -2,19 +2,19 @@
 
 
 using System;
-using Microsoft.CodeAnalysis.Editor.Commands;
+using StarkPlatform.CodeAnalysis.Editor.Commands;
 using Microsoft.VisualStudio.Text.Operations;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 using VSEditorCommands = Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.BlockCommentEditing
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.BlockCommentEditing
 {
     /// <summary>
     /// This class implements both legacy and modern editor command handler becuase TypeScript
-    /// uses it to implement legacy Microsoft.CodeAnalysis.Editor.ICommandHandler based command.
+    /// uses it to implement legacy StarkPlatform.CodeAnalysis.Editor.ICommandHandler based command.
     /// Once TypeScript migrates to the modern editor commanding (tracked by
     /// https://devdiv.visualstudio.com/DevDiv/_workitems/edit/548409), the part implementing
-    /// Microsoft.CodeAnalysis.Editor.ICommandHandler can be deleted.
+    /// StarkPlatform.CodeAnalysis.Editor.ICommandHandler can be deleted.
     /// </summary>
     internal abstract class AbstractBlockCommentEditingCommandHandler : BaseAbstractBlockCommentEditingCommandHandler,
         ICommandHandler<ReturnKeyCommandArgs>,

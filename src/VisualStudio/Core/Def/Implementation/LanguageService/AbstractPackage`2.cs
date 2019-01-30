@@ -4,22 +4,24 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Packaging;
-using Microsoft.CodeAnalysis.Remote;
-using Microsoft.CodeAnalysis.SymbolSearch;
+using Microsoft;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Packaging;
+using StarkPlatform.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.SymbolSearch;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Packaging;
-using Microsoft.VisualStudio.LanguageServices.Remote;
-using Microsoft.VisualStudio.LanguageServices.SymbolSearch;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Packaging;
+using StarkPlatform.VisualStudio.LanguageServices.Remote;
+using StarkPlatform.VisualStudio.LanguageServices.SymbolSearch;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Threading;
 using Task = System.Threading.Tasks.Task;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     internal abstract partial class AbstractPackage<TPackage, TLanguageService> : AbstractPackage
         where TPackage : AbstractPackage<TPackage, TLanguageService>

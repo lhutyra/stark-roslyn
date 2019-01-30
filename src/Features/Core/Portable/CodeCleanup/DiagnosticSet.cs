@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.CodeCleanup
+namespace StarkPlatform.CodeAnalysis.CodeCleanup
 {
     /// <summary>
     /// Indicates which code fixes are enabled for a Code Cleanup operation. Each code fix in the set is triggered by

@@ -8,7 +8,7 @@ using System.Linq;
 using Roslyn.Utilities;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     internal abstract class CommandLineArgumentReader
     {

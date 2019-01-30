@@ -1,8 +1,8 @@
-Microsoft.CodeAnalysis.Editor.Peek.IPeekableItemFactory
-Microsoft.CodeAnalysis.Editor.Peek.IPeekableItemFactory.GetPeekableItemsAsync(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.Project project, Microsoft.VisualStudio.Language.Intellisense.IPeekResultFactory peekResultFactory, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Microsoft.VisualStudio.Language.Intellisense.IPeekableItem>>
-Microsoft.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute
-Microsoft.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute.ExportImageMonikerServiceAttribute() -> void
-Microsoft.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute.Name.get -> string
-Microsoft.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute.Name.set -> void
-Microsoft.CodeAnalysis.Editor.Tags.IImageMonikerService
-Microsoft.CodeAnalysis.Editor.Tags.IImageMonikerService.TryGetImageMoniker(System.Collections.Immutable.ImmutableArray<string> tags, out Microsoft.VisualStudio.Imaging.Interop.ImageMoniker imageMoniker) -> bool
+StarkPlatform.CodeAnalysis.Editor.Peek.IPeekableItemFactory
+StarkPlatform.CodeAnalysis.Editor.Peek.IPeekableItemFactory.GetPeekableItemsAsync(StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.Project project, Microsoft.VisualStudio.Language.Intellisense.IPeekResultFactory peekResultFactory, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Microsoft.VisualStudio.Language.Intellisense.IPeekableItem>>
+StarkPlatform.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute
+StarkPlatform.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute.ExportImageMonikerServiceAttribute() -> void
+StarkPlatform.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute.Name.get -> string
+StarkPlatform.CodeAnalysis.Editor.Tags.ExportImageMonikerServiceAttribute.Name.set -> void
+StarkPlatform.CodeAnalysis.Editor.Tags.IImageMonikerService
+StarkPlatform.CodeAnalysis.Editor.Tags.IImageMonikerService.TryGetImageMoniker(System.Collections.Immutable.ImmutableArray<string> tags, out Microsoft.VisualStudio.Imaging.Interop.ImageMoniker imageMoniker) -> bool

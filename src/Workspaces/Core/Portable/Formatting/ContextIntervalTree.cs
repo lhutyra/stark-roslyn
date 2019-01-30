@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Shared.Collections;
+using StarkPlatform.CodeAnalysis.Shared.Collections;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     /// <summary>
     /// a tweaked version of our interval tree to meet the formatting engine's need

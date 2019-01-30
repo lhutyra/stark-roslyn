@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.Organizing.Organizers
+namespace StarkPlatform.CodeAnalysis.Organizing.Organizers
 {
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class)]

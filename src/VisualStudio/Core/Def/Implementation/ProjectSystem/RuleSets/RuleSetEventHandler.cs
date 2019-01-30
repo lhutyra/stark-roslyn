@@ -7,12 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 using VSLangProj;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.RuleSets
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.RuleSets
 {
     [Export(typeof(RuleSetEventHandler))]
     internal sealed class RuleSetEventHandler : IVsTrackProjectDocumentsEvents2, IVsTrackProjectDocumentsEvents3, IVsTrackProjectDocumentsEvents4

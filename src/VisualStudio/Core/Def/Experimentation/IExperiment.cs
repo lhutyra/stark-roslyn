@@ -2,7 +2,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.VisualStudio.LanguageServices.Experimentation
+namespace StarkPlatform.VisualStudio.LanguageServices.Experimentation
 {
     /// <summary>
     /// Experiments that need to be initialized on VS startup, after the solution has been loaded.

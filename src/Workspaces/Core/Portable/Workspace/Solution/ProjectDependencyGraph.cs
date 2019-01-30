@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A <see cref="ProjectDependencyGraph"/> models the dependencies between projects in a solution.

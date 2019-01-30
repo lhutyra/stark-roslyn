@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     /// <summary>
     /// Implemented to provide options that apply to specific documents, like from .editorconfig files.

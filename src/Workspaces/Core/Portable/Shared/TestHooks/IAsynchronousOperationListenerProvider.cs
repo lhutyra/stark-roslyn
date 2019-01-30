@@ -7,10 +7,10 @@ using System.Composition;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.TestHooks
+namespace StarkPlatform.CodeAnalysis.Shared.TestHooks
 {
     /// <summary>
     /// Return <see cref="IAsynchronousOperationListener"/> for the given featureName

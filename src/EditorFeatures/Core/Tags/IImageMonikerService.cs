@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using Microsoft.VisualStudio.Imaging.Interop;
 
-namespace Microsoft.CodeAnalysis.Editor.Tags
+namespace StarkPlatform.CodeAnalysis.Editor.Tags
 {
     /// <summary>
     /// Extensibility point for hosts to display <see cref="ImageMoniker"/>s for items with Tags.

@@ -2,10 +2,10 @@
 
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// Handles storage of items referenced via tokens in metadata. When items are stored 

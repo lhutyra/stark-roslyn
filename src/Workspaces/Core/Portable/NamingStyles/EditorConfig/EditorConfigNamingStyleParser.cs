@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.NamingStyles;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     internal static partial class EditorConfigNamingStyleParser
     {

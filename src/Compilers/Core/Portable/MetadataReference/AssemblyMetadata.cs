@@ -10,7 +10,7 @@ using System.Threading;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents an immutable snapshot of assembly CLI metadata.

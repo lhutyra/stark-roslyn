@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.Simplification
+﻿namespace StarkPlatform.CodeAnalysis.Simplification
 {
     /// <summary>
     /// When applied to a SyntaxNode, prevents the simplifier from converting a type to 'var'.

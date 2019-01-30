@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.FindSymbols.Finders
+namespace StarkPlatform.CodeAnalysis.FindSymbols.Finders
 {
     /// <summary>
     /// Extensibility interface to allow extending the IFindReferencesService service.  Implementations

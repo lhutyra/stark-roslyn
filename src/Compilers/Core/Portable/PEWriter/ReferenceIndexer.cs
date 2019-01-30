@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis.Emit;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal abstract class ReferenceIndexer : ReferenceIndexerBase
     {

@@ -4,10 +4,10 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Case-insensitive operations (mostly comparison) on unicode strings.

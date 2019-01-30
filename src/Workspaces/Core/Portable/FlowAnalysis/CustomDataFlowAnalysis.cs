@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     internal static class CustomDataFlowAnalysis<TBlockAnalysisData>
     {

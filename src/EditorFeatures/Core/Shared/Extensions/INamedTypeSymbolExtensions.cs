@@ -3,7 +3,7 @@
 using Microsoft.VisualStudio.Language.Intellisense;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Extensions
 {
     internal static partial class INamedTypeSymbolExtensions
     {

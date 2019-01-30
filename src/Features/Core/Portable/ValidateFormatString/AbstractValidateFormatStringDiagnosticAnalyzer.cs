@@ -3,11 +3,11 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ValidateFormatString
+namespace StarkPlatform.CodeAnalysis.ValidateFormatString
 {
     internal abstract class AbstractValidateFormatStringDiagnosticAnalyzer<TSyntaxKind>
         : DiagnosticAnalyzer

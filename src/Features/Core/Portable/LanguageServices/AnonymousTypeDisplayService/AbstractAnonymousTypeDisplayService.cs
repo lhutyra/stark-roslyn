@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     internal abstract partial class AbstractAnonymousTypeDisplayService : IAnonymousTypeDisplayService
     {

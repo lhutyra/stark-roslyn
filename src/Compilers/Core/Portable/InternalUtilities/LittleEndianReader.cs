@@ -4,7 +4,7 @@ using System;
 using Roslyn.Utilities;
 using static System.Buffers.Binary.BinaryPrimitives;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A Span-compatible version of <see cref="System.IO.BinaryReader"/>.

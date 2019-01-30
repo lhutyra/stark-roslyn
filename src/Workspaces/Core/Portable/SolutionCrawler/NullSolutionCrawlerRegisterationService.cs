@@ -2,9 +2,9 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.SolutionCrawler
+namespace StarkPlatform.CodeAnalysis.SolutionCrawler
 {
     /// <summary>
     /// null implementation of the service. it doesn't do anything since there is no way to observe

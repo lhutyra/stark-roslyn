@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.NavigationBar
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.NavigationBar
 {
     /// <summary>
     /// A little helper to produce indexes when producing NavigationBarItems when we have multiple

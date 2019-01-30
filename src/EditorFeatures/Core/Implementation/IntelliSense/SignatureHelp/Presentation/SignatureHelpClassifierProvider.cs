@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.SignatureHelp.Presentation
 {
     [Export(typeof(IClassifierProvider))]
-    [ContentType(ContentTypeNames.CSharpSignatureHelpContentType)]
-    [ContentType(ContentTypeNames.VisualBasicSignatureHelpContentType)]
+    [ContentType(ContentTypeNames.StarkSignatureHelpContentType)]
     internal partial class SignatureHelpClassifierProvider : IClassifierProvider
     {
         private readonly ClassificationTypeMap _typeMap;

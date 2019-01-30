@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
 {
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

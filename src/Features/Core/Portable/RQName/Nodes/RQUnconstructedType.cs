@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.CodeAnalysis.Features.RQName.SimpleTree;
+using StarkPlatform.CodeAnalysis.Features.RQName.SimpleTree;
 
-namespace Microsoft.CodeAnalysis.Features.RQName.Nodes
+namespace StarkPlatform.CodeAnalysis.Features.RQName.Nodes
 {
     internal class RQUnconstructedType : RQTypeOrNamespace<ITypeSymbol>
     {

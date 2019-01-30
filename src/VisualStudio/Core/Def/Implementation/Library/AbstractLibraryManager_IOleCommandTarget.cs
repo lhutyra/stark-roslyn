@@ -4,7 +4,7 @@ using System;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library
 {
     internal partial class AbstractLibraryManager : IOleCommandTarget
     {

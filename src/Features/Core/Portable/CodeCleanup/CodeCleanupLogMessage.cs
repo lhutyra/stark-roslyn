@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.CodeCleanup
+namespace StarkPlatform.CodeAnalysis.CodeCleanup
 {
     internal static class CodeCleanupLogMessage
     {
@@ -13,7 +13,7 @@ namespace Microsoft.CodeAnalysis.CodeCleanup
             {
                 foreach (var option in CodeCleanupOptionsProvider.SingletonOptions)
                 {
-                    m[option.Name] = optionSet.GetOption((PerLanguageOption<bool>)option, LanguageNames.CSharp);
+                    m[option.Name] = optionSet.GetOption((PerLanguageOption<bool>)option, LanguageNames.Stark);
                 }
             });
         }

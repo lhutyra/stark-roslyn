@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     internal class ContentTypeMetadata : IContentTypeMetadata
     {

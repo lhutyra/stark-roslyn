@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     internal sealed partial class ControlFlowGraphBuilder
     {

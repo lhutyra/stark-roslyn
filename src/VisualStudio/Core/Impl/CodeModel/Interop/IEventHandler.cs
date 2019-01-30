@@ -3,7 +3,7 @@
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
 {
     [ComImport]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeActions.WorkspaceServices;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions.WorkspaceServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.AddMissingReference
+namespace StarkPlatform.CodeAnalysis.AddMissingReference
 {
     internal class AddMissingReferenceCodeAction : CodeAction
     {

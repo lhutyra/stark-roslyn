@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StarkPlatform.CodeAnalysis</RootNamespace>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.EditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Features" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Stark" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Implementation" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Razor.RemoteClient" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.VisualBasic" />
+    <InternalsVisibleTo Include="Microsoft.VisualStudio.InteractiveServices" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.InteractiveFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Remote.Workspaces" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Remote.Razor.ServiceHub" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Remote.ServiceHub" />
+    <InternalsVisibleTo Include="Roslyn.Hosting.Diagnostics" />
+    <InternalsVisibleTo Include="Roslyn.VisualStudio.Setup" />
+    <InternalsVisibleTo Include="Roslyn.VisualStudio.DiagnosticsWindow" />
+    <InternalsVisibleTo Include="Roslyn.VisualStudio.RemoteHostClientMock" />
+    <InternalsVisibleTo Include="MonoDevelop.Ide" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.Refactoring" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.VBNetBinding" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.Ide.Tests" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.Refactoring.Tests" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.CSharpBinding.Tests" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="MonoDevelop.VBNetBinding.Tests" Key="$(MonoDevelopKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures2.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="Roslyn.Services.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="Roslyn.Services.UnitTests.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Stark.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Test.Utilities2" />
+    <InternalsVisibleTo Include="RoslynETAHost" />
+    <InternalsVisibleTo Include="RoslynTaoActions" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" Key="$(MoqPublicKey)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublicAPI Include="PublicAPI.Shipped.txt" />
+    <PublicAPI Include="PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+</Project>

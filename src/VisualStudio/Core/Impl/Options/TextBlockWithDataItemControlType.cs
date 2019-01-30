@@ -3,7 +3,7 @@
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     internal class TextBlockWithDataItemControlType : TextBlock
     {

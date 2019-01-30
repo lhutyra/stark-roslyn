@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Threading;
-using static Microsoft.CodeAnalysis.Utilities.ForegroundThreadDataKind;
+using static StarkPlatform.CodeAnalysis.Utilities.ForegroundThreadDataKind;
 
-namespace Microsoft.CodeAnalysis.Utilities
+namespace StarkPlatform.CodeAnalysis.Utilities
 {
     internal enum ForegroundThreadDataKind
     {

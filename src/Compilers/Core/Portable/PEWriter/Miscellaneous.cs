@@ -5,9 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// A container for static helper methods that are used for manipulating and computing iterators.

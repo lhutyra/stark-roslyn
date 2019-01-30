@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Implementation.ExtractInterface;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.ExtractInterface;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.ExtractInterface;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ExtractInterface;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ExtractInterface
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ExtractInterface
 {
     [ExportWorkspaceService(typeof(IExtractInterfaceOptionsService), ServiceLayer.Host), Shared]
     internal class VisualStudioExtractInterfaceOptionsService : IExtractInterfaceOptionsService
@@ -51,7 +51,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ExtractInterfac
                 defaultNamespace,
                 generatedNameTypeParameterSuffix,
                 languageName,
-                languageName == LanguageNames.CSharp ? ".cs" : ".vb");
+                languageName == LanguageNames.Stark ? ".cs" : ".vb");
 
             var dialog = new ExtractInterfaceDialog(viewModel);
             var result = dialog.ShowModal();

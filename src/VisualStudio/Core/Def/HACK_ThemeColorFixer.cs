@@ -3,15 +3,15 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Classification;
-using Microsoft.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Classification;
+using StarkPlatform.CodeAnalysis.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     /// <summary>
     /// This class works around the fact that shell theme changes are not fully propagated into an
@@ -22,7 +22,7 @@ namespace Microsoft.VisualStudio.LanguageServices
     /// and update the classification format maps that we care about.
     /// </summary>
     [Export(typeof(IWpfTextViewConnectionListener))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [TextViewRole(PredefinedTextViewRoles.Analyzable)]
     internal sealed class HACK_ThemeColorFixer : IWpfTextViewConnectionListener
     {

@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.UseNullPropagation
+namespace StarkPlatform.CodeAnalysis.UseNullPropagation
 {
     internal static class UseNullPropagationConstants
     {

@@ -2,7 +2,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
 {
     internal interface IManageNamingStylesInfoDialogViewModel
     {

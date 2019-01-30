@@ -10,7 +10,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// This type is responsible for parsing a ruleset xml file and producing a <see cref="RuleSet"/> object.

@@ -3,17 +3,16 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     [Export(typeof(IWpfTextViewConnectionListener))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
-    [ContentType(ContentTypeNames.XamlContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [TextViewRole(PredefinedTextViewRoles.Interactive)]
     internal class DashboardAdornmentProvider : IWpfTextViewConnectionListener
     {
@@ -50,7 +49,7 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
         public void SubjectBuffersDisconnected(IWpfTextView textView, ConnectionReason reason, Collection<ITextBuffer> subjectBuffers)
         {
             // Do we still have any buffers alive?
-            if (textView.BufferGraph.GetTextBuffers(b => b.ContentType.IsOfType(ContentTypeNames.RoslynContentType)).Any())
+            if (textView.BufferGraph.GetTextBuffers(b => b.ContentType.IsOfType(ContentTypeNames.StarkRoslynContentType)).Any())
             {
                 // Yep, some are still attached
                 return;

@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis.Completion;
+﻿using StarkPlatform.CodeAnalysis.Completion;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {
     internal class IntellisenseFilter2 : IntellisenseFilter
     {

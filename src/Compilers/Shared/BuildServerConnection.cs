@@ -16,10 +16,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32.SafeHandles;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.CommandLine.CompilerServerLogger;
-using static Microsoft.CodeAnalysis.CommandLine.NativeMethods;
+using static StarkPlatform.CodeAnalysis.CommandLine.CompilerServerLogger;
+using static StarkPlatform.CodeAnalysis.CommandLine.NativeMethods;
 
-namespace Microsoft.CodeAnalysis.CommandLine
+namespace StarkPlatform.CodeAnalysis.CommandLine
 {
     internal struct BuildPathsAlt
     {

@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.CodeCleanup
+namespace StarkPlatform.CodeAnalysis.CodeCleanup
 {
     /// <summary>
     /// Indicates which features are enabled for a code cleanup operation.

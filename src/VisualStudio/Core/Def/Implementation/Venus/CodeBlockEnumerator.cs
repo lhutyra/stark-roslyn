@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus
 {
     /// <summary>
     /// An implementation of IVsEnumCodeBlocks used in the implementation of

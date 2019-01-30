@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Emit;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using StarkPlatform.CodeAnalysis.Emit;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// Visitor to force translation of all symbols that will be referred to

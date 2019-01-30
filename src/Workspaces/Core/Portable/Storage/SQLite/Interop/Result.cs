@@ -3,7 +3,7 @@
 
 using SQLitePCL;
 
-namespace Microsoft.CodeAnalysis.SQLite.Interop
+namespace StarkPlatform.CodeAnalysis.SQLite.Interop
 {
     // From https://sqlite.org/c3ref/c_abort.html
     // Uncomment what you need.  Leave the rest commented out to make it clear

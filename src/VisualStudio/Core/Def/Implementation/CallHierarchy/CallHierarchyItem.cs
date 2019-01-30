@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.Editor.Implementation.CallHierarchy.Finders;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.CallHierarchy.Finders;
 using Microsoft.VisualStudio.Language.CallHierarchy;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.CallHierarchy
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.CallHierarchy
 {
     internal class CallHierarchyItem : ICallHierarchyMemberItem
     {

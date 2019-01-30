@@ -3,10 +3,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Collections
+namespace StarkPlatform.CodeAnalysis.Collections
 {
     internal sealed class OrderedSet<T> : IEnumerable<T>, IReadOnlySet<T>, IReadOnlyList<T>, IOrderedReadOnlySet<T>
     {

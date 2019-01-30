@@ -6,7 +6,7 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.EditAndContinue
 {
     [Export(typeof(EditorFormatDefinition))]
     [Name(ActiveStatementTag.TagId)]

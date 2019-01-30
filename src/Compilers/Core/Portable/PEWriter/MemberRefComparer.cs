@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class MemberRefComparer : IEqualityComparer<ITypeMemberReference>
     {

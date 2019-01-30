@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PickMembers
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PickMembers
 {
     /// <summary>
     /// Interaction logic for ExtractInterfaceDialog.xaml

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     /// <summary>
     /// Use this attribute to declare a <see cref="IDynamicFileInfoProvider"/> implementation for MEF

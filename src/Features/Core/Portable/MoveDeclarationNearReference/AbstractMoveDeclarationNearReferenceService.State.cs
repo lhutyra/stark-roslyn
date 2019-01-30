@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
+namespace StarkPlatform.CodeAnalysis.MoveDeclarationNearReference
 {
     internal partial class AbstractMoveDeclarationNearReferenceService<
         TService,
@@ -57,12 +57,7 @@ namespace Microsoft.CodeAnalysis.MoveDeclarationNearReference
                 this.DeclarationStatement = node;
 
                 var variables = syntaxFacts.GetVariablesOfLocalDeclarationStatement(this.DeclarationStatement);
-                if (variables.Count != 1)
-                {
-                    return false;
-                }
-
-                this.VariableDeclaration = (TVariableDeclarationSyntax)variables[0];
+                this.VariableDeclaration = (TVariableDeclarationSyntax)variables;
                 if (!service.IsValidVariableDeclaration(this.VariableDeclaration))
                 {
                     return false;

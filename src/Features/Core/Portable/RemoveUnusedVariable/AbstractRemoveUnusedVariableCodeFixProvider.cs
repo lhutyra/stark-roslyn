@@ -6,20 +6,19 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.RemoveUnusedVariable
+namespace StarkPlatform.CodeAnalysis.RemoveUnusedVariable
 {
-    internal abstract class AbstractRemoveUnusedVariableCodeFixProvider<TLocalDeclarationStatement, TVariableDeclaration, TVariableDeclaration> : SyntaxEditorBasedCodeFixProvider
+    internal abstract class AbstractRemoveUnusedVariableCodeFixProvider<TLocalDeclarationStatement, TVariableDeclaration> : SyntaxEditorBasedCodeFixProvider
         where TLocalDeclarationStatement : SyntaxNode
-        where TVariableDeclaration : SyntaxNode
         where TVariableDeclaration : SyntaxNode
     {
         protected abstract bool IsCatchDeclarationIdentifier(SyntaxToken token);
@@ -28,7 +27,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedVariable
 
         protected abstract void RemoveOrReplaceNode(SyntaxEditor editor, SyntaxNode node, ISyntaxFactsService syntaxFacts);
 
-        protected abstract SeparatedSyntaxList<SyntaxNode> GetVariables(TLocalDeclarationStatement localDeclarationStatement);
+        protected abstract SyntaxNode GetVariables(TLocalDeclarationStatement localDeclarationStatement);
 
         public sealed override Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -159,8 +158,8 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedVariable
             foreach (var candidate in candidateLocalDeclarationsToRemove)
             {
                 var hasUsedLocal = false;
-                foreach (var variable in GetVariables(candidate))
                 {
+                    var variable = GetVariables(candidate);
                     if (!nodesToRemove.Contains(variable))
                     {
                         hasUsedLocal = true;
@@ -171,7 +170,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedVariable
                 if (!hasUsedLocal)
                 {
                     nodesToRemove.Add(candidate);
-                    foreach (var variable in GetVariables(candidate))
+                    var variable = GetVariables(candidate);
                     {
                         nodesToRemove.Remove(variable);
                     }

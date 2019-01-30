@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Simplification;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.CodeCleanup.Providers
+namespace StarkPlatform.CodeAnalysis.CodeCleanup.Providers
 {
     internal class SimplificationCodeCleanupProvider : ICodeCleanupProvider
     {

@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.QuickInfo
+namespace StarkPlatform.CodeAnalysis.QuickInfo
 {
     internal abstract class CommonQuickInfoProvider : QuickInfoProvider
     {

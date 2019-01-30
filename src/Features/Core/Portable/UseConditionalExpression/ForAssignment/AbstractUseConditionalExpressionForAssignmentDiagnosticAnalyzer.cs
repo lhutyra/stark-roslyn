@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Operations;
 
-namespace Microsoft.CodeAnalysis.UseConditionalExpression
+namespace StarkPlatform.CodeAnalysis.UseConditionalExpression
 {
     internal abstract class AbstractUseConditionalExpressionForAssignmentDiagnosticAnalyzer<
         TIfStatementSyntax>

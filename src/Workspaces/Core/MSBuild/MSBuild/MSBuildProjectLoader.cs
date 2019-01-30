@@ -5,11 +5,11 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.MSBuild.Build;
+using StarkPlatform.CodeAnalysis.MSBuild.Build;
 using Roslyn.Utilities;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     /// <summary>
     /// An API for loading msbuild project files.

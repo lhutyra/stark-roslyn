@@ -5,14 +5,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Utilities;
 
-namespace Microsoft.CodeAnalysis.SplitOrMergeIfStatements
+namespace StarkPlatform.CodeAnalysis.SplitOrMergeIfStatements
 {
     internal abstract class AbstractMergeNestedIfStatementsCodeRefactoringProvider
         : AbstractMergeIfStatementsCodeRefactoringProvider

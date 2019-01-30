@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.PooledObjects
+namespace StarkPlatform.CodeAnalysis.PooledObjects
 {
     internal partial class ArrayBuilder<T>
     {

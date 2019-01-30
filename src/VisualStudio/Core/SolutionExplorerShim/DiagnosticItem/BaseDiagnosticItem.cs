@@ -3,14 +3,14 @@
 using System;
 using System.ComponentModel;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Imaging.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     internal abstract partial class BaseDiagnosticItem : BaseItem
     {
@@ -35,7 +35,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplore
             }
         }
 
-        protected abstract Microsoft.CodeAnalysis.Workspace Workspace { get; }
+        protected abstract StarkPlatform.CodeAnalysis.Workspace Workspace { get; }
         public abstract ProjectId ProjectId { get; }
         protected abstract AnalyzerReference AnalyzerReference { get; }
 

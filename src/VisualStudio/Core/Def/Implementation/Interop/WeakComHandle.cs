@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop
 {
     internal struct WeakComHandle<THandle, TObject>
         where THandle : class

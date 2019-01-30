@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.GenerateEqualsAndGetHashCodeFromMembers
+namespace StarkPlatform.CodeAnalysis.GenerateEqualsAndGetHashCodeFromMembers
 {
     internal static class IGenerateEqualsAndGetHashCodeServiceExtensions
     {

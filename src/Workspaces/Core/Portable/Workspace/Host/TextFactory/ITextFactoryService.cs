@@ -3,9 +3,9 @@
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     /// <summary>
     /// A factory for creating <see cref="SourceText"/> instances.

@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Preview
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Preview
 {
     internal class AbstractPreviewTaggerProvider<TTag> : ITaggerProvider
             where TTag : ITag

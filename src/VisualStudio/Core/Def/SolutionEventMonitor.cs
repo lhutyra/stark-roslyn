@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     /// <summary>
     /// Monitors Visual Studio's UIContext for SolutionBuilding and notifies the GlobalOperationService.

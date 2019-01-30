@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Editor.Implementation.Structure;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Structure;
-using Microsoft.CodeAnalysis.Text.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Structure;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Structure;
+using StarkPlatform.CodeAnalysis.Text.Shared.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Projection;
@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Text.Tagging;
 using Roslyn.Utilities;
 
 #pragma warning disable CS0618 // Type or member is obsolete
-namespace Microsoft.CodeAnalysis.Editor.Structure
+namespace StarkPlatform.CodeAnalysis.Editor.Structure
 {
     internal class RoslynBlockTag : BlockTag
     {

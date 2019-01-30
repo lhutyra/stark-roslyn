@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Rename.ConflictEngine;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Rename.ConflictEngine;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Rename
+namespace StarkPlatform.CodeAnalysis.Rename
 {
     public static class Renamer
     {

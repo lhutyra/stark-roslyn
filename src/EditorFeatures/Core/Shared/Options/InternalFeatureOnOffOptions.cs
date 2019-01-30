@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Options.Providers;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options.Providers;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Options
 {
     internal static class InternalFeatureOnOffOptions
     {

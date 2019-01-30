@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     /// <summary>
     /// Base class that allows some helpers for detecting whether we're on the main WPF foreground thread, or

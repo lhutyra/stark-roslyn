@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Tags;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class GlyphTags
     {
@@ -12,14 +12,12 @@ namespace Microsoft.CodeAnalysis
             switch (glyph)
             {
                 case Glyph.Assembly: return WellKnownTagArrays.Assembly;
-                case Glyph.BasicFile: return WellKnownTagArrays.VisualBasicFile;
-                case Glyph.BasicProject: return WellKnownTagArrays.VisualBasicProject;
                 case Glyph.ClassPublic: return WellKnownTagArrays.ClassPublic;
                 case Glyph.ClassProtected: return WellKnownTagArrays.ClassProtected;
                 case Glyph.ClassPrivate: return WellKnownTagArrays.ClassPrivate;
                 case Glyph.ClassInternal: return WellKnownTagArrays.ClassInternal;
-                case Glyph.CSharpFile: return WellKnownTagArrays.CSharpFile;
-                case Glyph.CSharpProject: return WellKnownTagArrays.CSharpProject;
+                case Glyph.StarkFile: return WellKnownTagArrays.StarkFile;
+                case Glyph.StarkProject: return WellKnownTagArrays.StarkProject;
                 case Glyph.ConstantPublic: return WellKnownTagArrays.ConstantPublic;
                 case Glyph.ConstantProtected: return WellKnownTagArrays.ConstantProtected;
                 case Glyph.ConstantPrivate: return WellKnownTagArrays.ConstantPrivate;

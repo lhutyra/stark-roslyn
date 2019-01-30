@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.FindUsages;
 
-namespace Microsoft.CodeAnalysis.Editor.FindUsages
+namespace StarkPlatform.CodeAnalysis.Editor.FindUsages
 {
     internal abstract partial class AbstractFindUsagesService
     {

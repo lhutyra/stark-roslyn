@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Editor.Implementation.InlineRename.HighlightTags;
-using Microsoft.CodeAnalysis.Editor.Shared.Tagging;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename.HighlightTags;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Tagging;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     internal sealed partial class RenameTagger : AbstractRenameTagger<ITextMarkerTag>
     {

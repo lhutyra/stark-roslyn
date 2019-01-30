@@ -2,7 +2,7 @@
 
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Packaging
+namespace StarkPlatform.VisualStudio.LanguageServices.Packaging
 {
     internal partial class PackageInstallerService
     {

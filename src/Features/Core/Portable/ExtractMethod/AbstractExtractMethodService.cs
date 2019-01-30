@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.ExtractMethod
+namespace StarkPlatform.CodeAnalysis.ExtractMethod
 {
     internal abstract class AbstractExtractMethodService<TValidator, TExtractor, TResult> : IExtractMethodService
         where TValidator : SelectionValidator

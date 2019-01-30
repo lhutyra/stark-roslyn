@@ -3,10 +3,10 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.Common
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common
 {
     /// <summary>
     /// Root of the embedded language syntax hierarchy.  EmbeddedSyntaxNodes are very similar to 

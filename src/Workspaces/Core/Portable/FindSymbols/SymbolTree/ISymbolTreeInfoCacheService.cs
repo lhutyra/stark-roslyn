@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.FindSymbols.SymbolTree
+namespace StarkPlatform.CodeAnalysis.FindSymbols.SymbolTree
 {
     internal interface ISymbolTreeInfoCacheService : IWorkspaceService
     {

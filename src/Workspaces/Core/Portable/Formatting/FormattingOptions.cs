@@ -2,14 +2,14 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 using Roslyn.Utilities;
 
 #if CODE_STYLE
-using WorkspacesResources = Microsoft.CodeAnalysis.CodeStyleResources;
+using WorkspacesResources = StarkPlatform.CodeAnalysis.CodeStyleResources;
 #endif
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     public static class FormattingOptions
     {

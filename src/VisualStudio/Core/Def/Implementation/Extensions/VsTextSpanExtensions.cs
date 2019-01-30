@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Venus;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
 using VsTextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Extensions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Extensions
 {
     internal static class VsTextSpanExtensions
     {
-        public static bool TryMapSpanFromSecondaryBufferToPrimaryBuffer(this VsTextSpan spanInSecondaryBuffer, Microsoft.CodeAnalysis.Workspace workspace, DocumentId documentId, out VsTextSpan spanInPrimaryBuffer)
+        public static bool TryMapSpanFromSecondaryBufferToPrimaryBuffer(this VsTextSpan spanInSecondaryBuffer, StarkPlatform.CodeAnalysis.Workspace workspace, DocumentId documentId, out VsTextSpan spanInPrimaryBuffer)
         {
             spanInPrimaryBuffer = default;
 

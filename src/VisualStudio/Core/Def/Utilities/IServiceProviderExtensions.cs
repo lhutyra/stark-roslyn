@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Utilities
 {
     internal static class IServiceProviderExtensions
     {

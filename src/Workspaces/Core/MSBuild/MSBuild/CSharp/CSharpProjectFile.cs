@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.MSBuild;
-using Microsoft.CodeAnalysis.MSBuild.Build;
-using Microsoft.CodeAnalysis.MSBuild.Logging;
+using StarkPlatform.CodeAnalysis.MSBuild;
+using StarkPlatform.CodeAnalysis.MSBuild.Build;
+using StarkPlatform.CodeAnalysis.MSBuild.Logging;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.CSharp
+namespace StarkPlatform.CodeAnalysis.Stark
 {
     internal class CSharpProjectFile : ProjectFile
     {

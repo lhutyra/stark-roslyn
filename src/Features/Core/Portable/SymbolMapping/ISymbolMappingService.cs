@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.SymbolMapping
+namespace StarkPlatform.CodeAnalysis.SymbolMapping
 {
     internal interface ISymbolMappingService : IWorkspaceService
     {

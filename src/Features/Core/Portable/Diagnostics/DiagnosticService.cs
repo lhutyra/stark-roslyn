@@ -6,11 +6,11 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.Common;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Common;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     [Export(typeof(IDiagnosticService)), Shared]
     internal partial class DiagnosticService : IDiagnosticService

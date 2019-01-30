@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Text.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Text.Shared.Extensions
 {
     internal static class SnapshotPointExtensions
     {

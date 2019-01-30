@@ -2,10 +2,10 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.CodeGen;
+using StarkPlatform.CodeAnalysis.CodeGen;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
     internal struct EncHoistedLocalInfo : IEquatable<EncHoistedLocalInfo>

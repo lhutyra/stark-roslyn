@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.GenerateMember.GenerateConstructor
+namespace StarkPlatform.CodeAnalysis.GenerateMember.GenerateConstructor
 {
     internal static class GenerateConstructorHelpers
     {

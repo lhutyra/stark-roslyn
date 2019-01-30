@@ -3,9 +3,9 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping
 {
     /// <summary>
     /// Base type for the C# and VB wrapping refactorings.  The only responsibility of this type is

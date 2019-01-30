@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Globalization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Abstracts the ability to classify and load messages for error codes. Allows the error

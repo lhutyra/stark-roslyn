@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Common
+namespace StarkPlatform.CodeAnalysis.Common
 {
     internal class UpdatedEventArgs : EventArgs
     {

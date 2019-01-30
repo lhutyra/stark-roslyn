@@ -12,17 +12,17 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Serialization;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Serialization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     internal abstract class AbstractReferenceSerializationService : IReferenceSerializationService
     {
         private const int MetadataFailed = int.MaxValue;
-        private const string VisualStudioUnresolvedAnalyzerReference = "Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.VisualStudioAnalyzer+VisualStudioUnresolvedAnalyzerReference";
+        private const string VisualStudioUnresolvedAnalyzerReference = "StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.VisualStudioAnalyzer+VisualStudioUnresolvedAnalyzerReference";
 
         protected const byte NoEncodingSerialization = 0;
         protected const byte EncodingSerialization = 1;

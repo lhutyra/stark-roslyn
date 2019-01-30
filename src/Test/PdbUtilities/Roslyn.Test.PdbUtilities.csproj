@@ -10,31 +10,31 @@
     <IsShipping>false</IsShipping>
   </PropertyGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.CommandLine.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Emit.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.WinRT.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.CommandLine.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Emit.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.WinRT.UnitTests" />
     <InternalsVisibleTo Include="Roslyn.Compilers.CSharp.PerformanceTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Semantic.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Symbol.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Syntax.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Semantic.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Symbol.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Syntax.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.Test.Utilities" />
     <InternalsVisibleTo Include="Roslyn.Compilers.CSharp.Test.Utilities.Desktop" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.CommandLine.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Emit.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.CommandLine.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Emit.UnitTests" />
     <InternalsVisibleTo Include="Roslyn.Compilers.VisualBasic.EnC.UnitTests" />
     <InternalsVisibleTo Include="Roslyn.Compilers.VisualBasic.PerformanceTests" />
     <InternalsVisibleTo Include="Roslyn.Compilers.VisualBasic.IOperation.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Semantic.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Symbol.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Syntax.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.Test.Utilities" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator.ResultProvider.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.ExpressionEvaluator.ExpressionCompiler.Utilities" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.ExpressionEvaluator.FunctionResolver.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.ExpressionEvaluator.ResultProvider.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Semantic.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Symbol.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Syntax.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.ExpressionEvaluator.ResultProvider.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.ExpressionEvaluator.ExpressionCompiler.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.ExpressionEvaluator.FunctionResolver.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.ResultProvider.UnitTests" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DiaSymReader.Native" Version="$(MicrosoftDiaSymReaderNativeVersion)" />
@@ -57,7 +57,7 @@
     <PackageReference Include="System.Text.Encoding.Extensions" Version="$(SystemTextEncodingExtensionsVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
     <ProjectReference Include="..\Utilities\Portable\Roslyn.Test.Utilities.csproj" />
   </ItemGroup>
   <!-- Workaround for https://github.com/NuGet/Home/issues/4989 -->

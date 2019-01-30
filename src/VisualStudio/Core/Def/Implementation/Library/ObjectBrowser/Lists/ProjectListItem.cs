@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists
 {
     internal class ProjectListItem : ObjectListItem
     {
@@ -20,10 +20,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectB
         {
             switch (project.Language)
             {
-                case LanguageNames.CSharp:
+                case LanguageNames.Stark:
                     return StandardGlyphGroup.GlyphCoolProject;
-                case LanguageNames.VisualBasic:
-                    return StandardGlyphGroup.GlyphVBProject;
                 default:
                     throw new InvalidOperationException("Unsupported language: " + project.Language);
             }

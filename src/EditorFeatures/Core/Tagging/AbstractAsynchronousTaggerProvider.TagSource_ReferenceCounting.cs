@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Tagging
 {
     internal partial class AbstractAsynchronousTaggerProvider<TTag>
     {

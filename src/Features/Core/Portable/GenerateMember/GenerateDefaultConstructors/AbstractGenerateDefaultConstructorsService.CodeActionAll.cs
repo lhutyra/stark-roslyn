@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.GenerateMember.GenerateDefaultConstructors
+namespace StarkPlatform.CodeAnalysis.GenerateMember.GenerateDefaultConstructors
 {
     internal abstract partial class AbstractGenerateDefaultConstructorsService<TService>
     {

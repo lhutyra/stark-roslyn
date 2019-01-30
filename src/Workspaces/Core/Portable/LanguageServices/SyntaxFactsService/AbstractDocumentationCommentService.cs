@@ -6,7 +6,7 @@ using System.Threading;
 using Roslyn.Utilities;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     internal abstract class AbstractDocumentationCommentService<
         TDocumentationCommentTriviaSyntax,

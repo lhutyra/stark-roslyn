@@ -5,7 +5,7 @@ using System.IO;
 using System.Security;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal static class IOUtilities
     {

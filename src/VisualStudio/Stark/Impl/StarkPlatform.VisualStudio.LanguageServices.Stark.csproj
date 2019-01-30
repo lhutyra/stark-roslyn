@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StackPlatform.VisualStudio.LanguageServices.Stark</RootNamespace>
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <DeployExtension>false</DeployExtension>
+    <TargetFramework>net472</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplyPartialNgenOptimization>true</ApplyPartialNgenOptimization>
+  </PropertyGroup>
+  <ItemGroup Label="Project References">
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Stark\Portable\StarkPlatform.CodeAnalysis.Stark.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\Core\StarkPlatform.CodeAnalysis.EditorFeatures.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\Stark\StarkPlatform.CodeAnalysis.Stark.EditorFeatures.csproj" />
+    <ProjectReference Include="..\..\..\EditorFeatures\Text\StarkPlatform.CodeAnalysis.EditorFeatures.Text.csproj" />
+    <ProjectReference Include="..\..\..\Features\Core\Portable\StarkPlatform.CodeAnalysis.Features.csproj" />
+    <ProjectReference Include="..\..\..\Features\Stark\Portable\StarkPlatform.CodeAnalysis.Stark.Features.csproj" />
+    <ProjectReference Include="..\..\..\Workspaces\Core\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
+    <ProjectReference Include="..\..\..\Workspaces\Stark\Portable\StarkPlatform.CodeAnalysis.Stark.Workspaces.csproj" />
+    <ProjectReference Include="..\..\Core\Def\StarkPlatform.VisualStudio.LanguageServices.csproj" />
+    <ProjectReference Include="..\..\Core\Impl\StarkPlatform.VisualStudio.LanguageServices.Implementation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <PackageReference Include="EnvDTE" Version="$(EnvDTEVersion)" />
+    <PackageReference Include="EnvDTE80" Version="$(EnvDTE80Version)" />
+    <PackageReference Include="Microsoft.MSXML" Version="$(MicrosoftMSXMLVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Editor" Version="$(MicrosoftVisualStudioEditorVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.Intellisense" Version="$(MicrosoftVisualStudioLanguageIntellisenseVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="$(MicrosoftVisualStudioShell150Version)" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Design" Version="$(MicrosoftVisualStudioShellDesignVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Framework" Version="$(MicrosoftVisualStudioShellFrameworkVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.GraphModel" Version="$(MicrosoftVisualStudioGraphModelVersion)" />
+    <PackageReference Include="Microsoft.Internal.VisualStudio.Shell.Interop.14.0.DesignTime" Version="$(MicrosoftInternalVisualStudioShellInterop140DesignTimeVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.ComponentModelHost" Version="$(MicrosoftVisualStudioComponentModelHostVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Design" Version="$(MicrosoftVisualStudioShellDesignVersion)" />
+    <PackageReference Include="VSLangProj80" Version="$(VSLangProj80Version)" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK.EmbedInteropTypes" Version="$(MicrosoftVisualStudioSDKEmbedInteropTypesVersion)" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="$(MicrosoftVSSDKBuildToolsVersion)" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CSharpVSResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CSharpVSResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Options\AdvancedOptionPageControl.xaml.cs">
+      <DependentUpon>AdvancedOptionPageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Options\Formatting\FormattingOptionPageControl.xaml.cs">
+      <DependentUpon>FormattingOptionPageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Options\IntelliSenseOptionPageControl.xaml.cs">
+      <DependentUpon>IntelliSenseOptionPageControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="CSharpVSResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>CSharpVSResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="VSPackage.resx">
+      <MergeWithCTO>true</MergeWithCTO>
+      <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.ProjectSystem.Stark" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Stark.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Test.Utilities2" />
+    <InternalsVisibleTo Include="RoslynETAHost" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Options\AdvancedOptionPageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Options\Formatting\FormattingOptionPageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Options\IntelliSenseOptionPageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="StarkPackageRegistration.pkgdef"/>
+  </ItemGroup>
+</Project>

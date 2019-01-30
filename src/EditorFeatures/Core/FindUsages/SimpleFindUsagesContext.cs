@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.FindUsages;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.FindUsages
+namespace StarkPlatform.CodeAnalysis.Editor.FindUsages
 {
     /// <summary>
     /// Simple implementation of a <see cref="FindUsagesContext"/> that just aggregates the results

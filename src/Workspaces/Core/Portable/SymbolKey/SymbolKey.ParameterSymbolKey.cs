@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal partial struct SymbolKey
     {

@@ -2,10 +2,10 @@
 
 using System;
 using System.Reflection;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Information decoded from well-known custom attributes applied on an assembly.

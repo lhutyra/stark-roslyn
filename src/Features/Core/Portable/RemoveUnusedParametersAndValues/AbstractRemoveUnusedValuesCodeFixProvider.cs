@@ -7,24 +7,24 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.MoveDeclarationNearReference;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.ReplaceDiscardDeclarationsWithAssignments;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.MoveDeclarationNearReference;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.ReplaceDiscardDeclarationsWithAssignments;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Simplification;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
+namespace StarkPlatform.CodeAnalysis.RemoveUnusedParametersAndValues
 {
     /// <summary>
     /// Code fixer for unused expression value diagnostics reported by <see cref="AbstractRemoveUnusedParametersAndValuesDiagnosticAnalyzer"/>.
@@ -329,16 +329,6 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
                 var expression = syntaxFacts.GetExpressionOfExpressionStatement(expressionStatement);
                 switch (preference)
                 {
-                    case UnusedValuePreference.DiscardVariable:
-                        Debug.Assert(semanticModel.Language != LanguageNames.VisualBasic);
-                        var discardAssignmentExpression = (TExpressionSyntax)editor.Generator.AssignmentStatement(
-                                                                left: editor.Generator.IdentifierName(AbstractRemoveUnusedParametersAndValuesDiagnosticAnalyzer.DiscardVariableName),
-                                                                right: expression.WithoutTrivia())
-                                                            .WithTriviaFrom(expression)
-                                                            .WithAdditionalAnnotations(Simplifier.Annotation, Formatter.Annotation);
-                        editor.ReplaceNode(expression, discardAssignmentExpression);
-                        break;
-
                     case UnusedValuePreference.UnusedLocalVariable:
                         // Add Simplifier annotation so that 'var'/explicit type is correctly added based on user options.
                         var localDecl = editor.Generator.LocalDeclarationStatement(
@@ -510,7 +500,6 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
                     if (ShouldRemoveStatement(localDeclarationStatement, out var variables))
                     {
                         nodesToRemove.Add(localDeclarationStatement);
-                        nodesToRemove.RemoveRange(variables);
                     }
                 }
 
@@ -523,8 +512,7 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
                     foreach (var localDeclarationStatement in containingMemberDeclaration.DescendantNodes().OfType<TLocalDeclarationStatementSyntax>())
                     {
                         var variables = syntaxFacts.GetVariablesOfLocalDeclarationStatement(localDeclarationStatement);
-                        if (variables.Count == 1 &&
-                            syntaxFacts.GetInitializerOfVariableDeclaration(variables[0]) == null &&
+                        if (syntaxFacts.GetInitializerOfVariableDeclaration(variables) == null &&
                             !(await IsLocalDeclarationWithNoReferencesAsync(localDeclarationStatement, document, cancellationToken).ConfigureAwait(false)))
                         {
                             nodeReplacementMap.Add(localDeclarationStatement, localDeclarationStatement.WithAdditionalAnnotations(s_existingLocalDeclarationWithoutInitializerAnnotation));
@@ -586,21 +574,13 @@ namespace Microsoft.CodeAnalysis.RemoveUnusedParametersAndValues
                 }
             }
 
-            bool ShouldRemoveStatement(TLocalDeclarationStatementSyntax localDeclarationStatement, out SeparatedSyntaxList<SyntaxNode> variables)
+            bool ShouldRemoveStatement(TLocalDeclarationStatementSyntax localDeclarationStatement, out SyntaxNode variables)
             {
                 Debug.Assert(removeAssignments);
 
                 // We should remove the entire local declaration statement if all its variables are marked for removal.
                 variables = syntaxFacts.GetVariablesOfLocalDeclarationStatement(localDeclarationStatement);
-                foreach (var variable in variables)
-                {
-                    if (!nodesToRemove.Contains(variable))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
+                return nodesToRemove.Contains(variables);
             }
         }
 

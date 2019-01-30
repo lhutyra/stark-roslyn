@@ -2,10 +2,10 @@
 
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
 {
     internal static partial class SymbolUsageAnalysis
     {

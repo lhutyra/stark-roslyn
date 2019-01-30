@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Formatting;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal static class CodeGenerationHelpers
     {
@@ -158,9 +158,9 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
             {
                 switch (type.SpecialType)
                 {
-                    case SpecialType.System_SByte:
+                    case SpecialType.System_Int8:
                         return value is sbyte;
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_UInt8:
                         return value is byte;
                     case SpecialType.System_Int16:
                         return value is short;
@@ -176,9 +176,9 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
                         return value is ulong;
                     case SpecialType.System_Decimal:
                         return value is decimal;
-                    case SpecialType.System_Single:
+                    case SpecialType.System_Float32:
                         return value is float;
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float64:
                         return value is double;
                 }
             }

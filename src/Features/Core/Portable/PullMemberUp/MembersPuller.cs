@@ -5,16 +5,16 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.PullMemberUp;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.CodeActions.CodeAction;
+using static StarkPlatform.CodeAnalysis.CodeActions.CodeAction;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings.PullMemberUp
 {
     internal static class MembersPuller
     {
@@ -169,60 +169,8 @@ namespace Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp
             ISymbol member)
         {
             var modifiers = DeclarationModifiers.From(member).WithIsStatic(false);
-            // Event is different since several events may be declared in one line.
-            if (member is IEventSymbol eventSymbol)
-            {
-                ChangeEventToPublicAndNonStatic(
-                    codeGenerationService,
-                    editor,
-                    eventSymbol,
-                    memberDeclaration,
-                    modifiers);
-            }
-            else
-            {
-                editor.SetAccessibility(memberDeclaration, Accessibility.Public);
-                editor.SetModifiers(memberDeclaration, modifiers);
-            }
-        }
-
-        private static void ChangeEventToPublicAndNonStatic(
-            ICodeGenerationService codeGenerationService,
-            DocumentEditor editor,
-            IEventSymbol eventSymbol,
-            SyntaxNode eventDeclaration,
-            DeclarationModifiers modifiers)
-        {
-            var declaration = editor.Generator.GetDeclaration(eventDeclaration);
-            var isEventHasExplicitAddOrRemoveMethod =
-                (eventSymbol.AddMethod != null && !eventSymbol.AddMethod.IsImplicitlyDeclared) ||
-                (eventSymbol.RemoveMethod != null && !eventSymbol.RemoveMethod.IsImplicitlyDeclared);
-            // There are three situations here:
-            // 1. Single Event.
-            // 2. Several events exist in one declaration.
-            // 3. Event has add or remove method(user declared).
-            // For situation 1, declaration is EventFieldDeclaration, eventDeclaration is variableDeclaration.
-            // For situation 2, declaration and eventDeclaration are both EventDeclaration, which are same.
-            // For situation 3, it is same as situation 2, but has add or remove method.
-            if (declaration.Equals(eventDeclaration) && !isEventHasExplicitAddOrRemoveMethod)
-            {
-                // Several events are declared in same line
-                var publicAndNonStaticSymbol = CodeGenerationSymbolFactory.CreateEventSymbol(
-                    eventSymbol,
-                    accessibility: Accessibility.Public,
-                    modifiers: modifiers);
-                var options = new CodeGenerationOptions(generateMethodBodies: false);
-                var publicAndNonStaticSyntax = codeGenerationService.CreateEventDeclaration(publicAndNonStaticSymbol, destination: CodeGenerationDestination.ClassType, options: options);
-                // Insert a new declaration and remove the orginal declaration
-                editor.InsertAfter(declaration, publicAndNonStaticSyntax);
-                editor.RemoveNode(eventDeclaration);
-            }
-            else
-            {
-                // Handle both single event and event has add or remove method
-                editor.SetAccessibility(declaration, Accessibility.Public);
-                editor.SetModifiers(declaration, modifiers);
-            }
+            editor.SetAccessibility(memberDeclaration, Accessibility.Public);
+            editor.SetModifiers(memberDeclaration, modifiers);
         }
 
         private static async Task<Solution> PullMembersIntoClassAsync(

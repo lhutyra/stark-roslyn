@@ -3,7 +3,7 @@
 using Roslyn.Utilities;
 using System.Reflection.Metadata;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class MetadataTypeCodeExtensions
     {

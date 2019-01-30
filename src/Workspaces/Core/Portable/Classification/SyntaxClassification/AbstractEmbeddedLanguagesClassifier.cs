@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.LanguageServices;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.LanguageServices;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Classification.Classifiers
+namespace StarkPlatform.CodeAnalysis.Classification.Classifiers
 {
     internal abstract class AbstractEmbeddedLanguagesClassifier : AbstractSyntaxClassifier
     {

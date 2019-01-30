@@ -2,7 +2,7 @@
 
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     internal class SolutionChangeSummary
     {

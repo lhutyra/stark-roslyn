@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Differencing
+namespace StarkPlatform.CodeAnalysis.Differencing
 {
     // Based on general algorithm described in  
     // "Change Detection in Hierarchically Structured Information"

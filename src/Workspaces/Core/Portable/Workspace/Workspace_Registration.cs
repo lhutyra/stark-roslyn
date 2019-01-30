@@ -2,9 +2,9 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /* This is the static API on Workspace that lets you associate text containers with workspace instances */
     public abstract partial class Workspace

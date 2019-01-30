@@ -6,10 +6,10 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.ComponentModelHost;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     [System.ComponentModel.DesignerCategory("code")] // this must be fully qualified
     public abstract class AbstractOptionPageControl : UserControl

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StarkPlatform.CodeAnalysis.Editor</RootNamespace>
+    <TargetFramework>net472</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);EDITOR_FEATURES</DefineConstants>
+    <ApplyPartialNgenOptimization>true</ApplyPartialNgenOptimization>
+
+    <!-- NuGet -->
+    <PackageId>StarkPlatform.CodeAnalysis.EditorFeatures.Common</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>
+      .NET Compiler Platform ("Roslyn") support for editor features inside the Visual Studio editor.       
+    </PackageDescription>
+  </PropertyGroup>
+  <ItemGroup Label="Project References">
+    <ProjectReference Include="..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\Features\Core\Portable\StarkPlatform.CodeAnalysis.Features.csproj" />
+    <ProjectReference Include="..\..\Workspaces\Core\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
+    <ProjectReference Include="..\Text\StarkPlatform.CodeAnalysis.EditorFeatures.Text.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.StandardClassification" Version="$(MicrosoftVisualStudioLanguageStandardClassificationVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Language.Intellisense" Version="$(MicrosoftVisualStudioLanguageIntellisenseVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Text.UI" Version="$(MicrosoftVisualStudioTextUIVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="$(MicrosoftVisualStudioThreadingVersion)" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Elfie" Version="$(MicrosoftCodeAnalysisElfieVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="InteractiveHost" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.EditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.Wpf" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.EditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Stark" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Implementation" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.ExternalDependencyServices" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.VisualBasic" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Xaml" />
+    <InternalsVisibleTo Include="csi" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="Microsoft.VisualStudio.Stark.Repl" />
+    <InternalsVisibleTo Include="Microsoft.VisualStudio.InteractiveServices" />
+    <InternalsVisibleTo Include="Roslyn.VisualStudio.Setup" />
+    <InternalsVisibleTo Include="Microsoft.VisualStudio.VisualBasic.Repl" />
+    <InternalsVisibleTo Include="Roslyn.VisualStudio.DiagnosticsWindow" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Remote.ServiceHub" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Editor.UI.Wpf" />
+    <InternalsVisibleTo Include="Roslyn.Hosting.Diagnostics" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures2.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="Roslyn.Services.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.Test.Utilities" />
+    <InternalsVisibleTo Include="Roslyn.Services.UnitTests.Utilities" />
+    <InternalsVisibleTo Include="Roslyn.Test.Utilities.Desktop" />
+    <InternalsVisibleTo Include="Roslyn.VisualStudio.Next.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Stark.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.UnitTests" />
+    <InternalsVisibleTo Include="Microsoft.VisualStudio.IntegrationTest.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.IntegrationTests" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Test.Utilities2" />
+    <!-- Eventually a bunch of these unit tests should move into Roslyn.Services.Implementation.UnitTests
+         and this should be removed. -->
+    <InternalsVisibleTo Include="RoslynETAHost" />
+    <InternalsVisibleTo Include="RoslynTaoActions" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.TypeScript.EditorFeatures" Key="$(TypeScriptKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.TypeScript" Key="$(TypeScriptKey)" />
+    <InternalsVisibleTo Include="Microsoft.Test.Apex.VisualStudio" Key="$(TypeScriptKey)" />
+    <InternalsVisibleTo Include="Roslyn.Services.Editor.TypeScript.UnitTests" Key="$(TypeScriptKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.15.7" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.15.8" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.16.0" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.Stark" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.Stark.15.7" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.Stark.15.8" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices.Remote.Stark.16.0" Key="$(RemoteLanguageServiceKey)" />
+    <InternalsVisibleTo Include="FSharp.Editor" Key="$(FSharpKey)" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" Key="$(MoqPublicKey)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Compilers\Shared\GlobalAssemblyCacheHelpers\GlobalAssemblyCacheLocation.cs" Link="Shared\GlobalAssemblyCacheHelpers\GlobalAssemblyCacheLocation.cs" />
+    <Compile Include="..\..\Compilers\Shared\GlobalAssemblyCacheHelpers\ClrGlobalAssemblyCache.cs" Link="Shared\GlobalAssemblyCacheHelpers\ClrGlobalAssemblyCache.cs" />
+    <Compile Include="..\..\Compilers\Shared\GlobalAssemblyCacheHelpers\FusionAssemblyIdentity.cs" Link="Shared\GlobalAssemblyCacheHelpers\FusionAssemblyIdentity.cs" />
+    <Compile Include="..\..\Compilers\Shared\GlobalAssemblyCacheHelpers\GlobalAssemblyCache.cs" Link="Shared\GlobalAssemblyCacheHelpers\GlobalAssemblyCache.cs" />
+    <Compile Include="..\..\Compilers\Shared\GlobalAssemblyCacheHelpers\MonoGlobalAssemblyCache.cs" Link="Shared\GlobalAssemblyCacheHelpers\MonoGlobalAssemblyCache.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="EditorFeaturesResources.Designer.cs">
+      <DependentUpon>EditorFeaturesResources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Shared\Extensions\ITextViewExtensions.AutoClosingViewProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="EditorFeaturesResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditorFeaturesResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PublicAPI Include="PublicAPI.Shipped.txt" />
+    <PublicAPI Include="PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+</Project>

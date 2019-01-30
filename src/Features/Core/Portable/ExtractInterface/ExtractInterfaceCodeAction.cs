@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ExtractInterface
+namespace StarkPlatform.CodeAnalysis.ExtractInterface
 {
     internal class ExtractInterfaceCodeAction : CodeActionWithOptions
     {

@@ -5,11 +5,11 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     /// <summary>
     /// A <see cref="SourceText"/> optimized for very large sources. The text is stored as

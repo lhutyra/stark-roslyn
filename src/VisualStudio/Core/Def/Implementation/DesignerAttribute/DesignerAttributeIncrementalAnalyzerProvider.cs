@@ -2,15 +2,15 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DesignerAttribute
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DesignerAttribute
 {
     [ExportIncrementalAnalyzerProvider(Name, new[] { WorkspaceKind.Host }), Shared]
     internal class DesignerAttributeIncrementalAnalyzerProvider : IIncrementalAnalyzerProvider

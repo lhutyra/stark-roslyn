@@ -7,17 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     /// <summary>
     /// This EventSource exposes our events to ETW.
     /// RoslynEventSource GUID is {bf965e67-c7fb-5c5b-d98f-cdf68f8154c2}.
     /// 
     /// When updating this class, use the following to also update Main\Source\Test\Performance\Log\RoslynEventSourceParser.cs:
-    /// Main\Tools\Source\TraceParserGen\bin\Debug\TraceParserGen.exe Microsoft.CodeAnalysis.Workspaces.dll -eventsource:RoslynEventSource
+    /// Main\Tools\Source\TraceParserGen\bin\Debug\TraceParserGen.exe StarkPlatform.CodeAnalysis.Workspaces.dll -eventsource:RoslynEventSource
     /// 
     /// Use this command to register the ETW manifest on any machine where you need to decode events in xperf/etlstackbrowse:
-    /// "\\clrmain\tools\managed\etw\eventRegister\bin\Debug\eventRegister.exe" Microsoft.CodeAnalysis.Workspaces.dll
+    /// "\\clrmain\tools\managed\etw\eventRegister\bin\Debug\eventRegister.exe" StarkPlatform.CodeAnalysis.Workspaces.dll
     /// </summary>
     [EventSource(Name = "RoslynEventSource")]
     internal sealed class RoslynEventSource : EventSource
@@ -143,7 +143,7 @@ namespace Microsoft.CodeAnalysis.Internal.Log
             }
 
             // Note that changing the format of this output string will break any ETW listeners
-            // that don't have a direct reference to Microsoft.CodeAnalysis.Workspaces.dll
+            // that don't have a direct reference to StarkPlatform.CodeAnalysis.Workspaces.dll
             return output.ToString();
         }
     }

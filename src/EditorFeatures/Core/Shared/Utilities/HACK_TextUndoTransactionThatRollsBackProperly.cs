@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.Text.Operations;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     /// <summary>
     /// An implementation of <see cref="ITextUndoTransaction" /> that wraps another

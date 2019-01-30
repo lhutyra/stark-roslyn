@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.SolutionSize;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.SolutionSize;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Storage
+namespace StarkPlatform.CodeAnalysis.Storage
 {
     /// <summary>
     /// A service that enables storing and retrieving of information associated with solutions,

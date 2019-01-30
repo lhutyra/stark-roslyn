@@ -3,7 +3,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.UnitTests</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.UnitTests</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworks>$(RoslynPortableTargetFrameworks)</TargetFrameworks>
     <RoslynProjectType>UnitTestPortable</RoslynProjectType>
@@ -20,10 +20,10 @@
       <Aliases>PDB</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Test\Utilities\Portable\Roslyn.Test.Utilities.csproj" />
-    <ProjectReference Include="..\..\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.csproj" />
-    <ProjectReference Include="..\..\Test\Resources\Core\Microsoft.CodeAnalysis.Compiler.Test.Resources.csproj" />
-    <ProjectReference Include="..\..\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.vbproj" />
-    <ProjectReference Include="..\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.csproj" />
+    <ProjectReference Include="..\..\Test\Resources\Core\StarkPlatform.CodeAnalysis.Compiler.Test.Resources.csproj" />
+    <ProjectReference Include="..\..\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.vbproj" />
+    <ProjectReference Include="..\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Moq" Version="$(MoqVersion)" />

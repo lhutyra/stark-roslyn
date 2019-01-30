@@ -8,7 +8,7 @@ using System.Security;
 using System.Xml;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents a Include tag in a RuleSet file.

@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.Imaging.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Extensions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Extensions
 {
     internal static class VisualStudioWorkspaceImplExtensions
     {

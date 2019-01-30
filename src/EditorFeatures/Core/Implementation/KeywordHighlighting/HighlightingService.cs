@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Highlighting
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Highlighting
 {
     [Export(typeof(IHighlightingService))]
     [Shared]

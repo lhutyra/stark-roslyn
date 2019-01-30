@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.SQLite.Interop;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.SQLite.Interop;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     internal partial class SQLitePersistentStorage : AbstractPersistentStorage
     {

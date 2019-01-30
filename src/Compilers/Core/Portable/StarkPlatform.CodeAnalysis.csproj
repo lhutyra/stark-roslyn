@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StarkPlatform.CodeAnalysis</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DefineConstants>$(DefineConstants);COMPILERCORE</DefineConstants>
+    <CodeAnalysisRuleSet>..\CodeAnalysisRules.ruleset</CodeAnalysisRuleSet>
+    <NoStdLib>true</NoStdLib>
+    <ApplyPartialNgenOptimization>true</ApplyPartialNgenOptimization>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>StarkPlatform.CodeAnalysis.Common</PackageId>
+    <PackageDescription>
+      A shared package used by the Microsoft .NET Compiler Platform ("Roslyn").
+      Do not install this package manually, it will be added as a prerequisite by other packages that require it.
+    </PackageDescription>
+  </PropertyGroup>
+
+  <!--Stark-->
+  <PropertyGroup Condition="'$(Stark)' == 'true'">
+    <AssemblyName>StarkPlatform.CodeAnalysis</AssemblyName>
+    <PackageId>StarkPlatform.CodeAnalysis.Common</PackageId>
+    <PackageDescription>
+      A shared package used by the Stark Compiler Platform ("Stark").
+      Do not install this package manually, it will be added as a prerequisite by other packages that require it.
+    </PackageDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="$(NuGetPackageRoot)\microsoft.diasymreader.native\$(MicrosoftDiaSymReaderNativeVersion)\runtimes\win\native\Microsoft.DiaSymReader.Native.x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+      <Pack>false</Pack>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)\microsoft.diasymreader.native\$(MicrosoftDiaSymReaderNativeVersion)\runtimes\win\native\Microsoft.DiaSymReader.Native.amd64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+      <Pack>false</Pack>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Shared\DesktopShim.cs" />
+    <Compile Update="CodeAnalysisResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeAnalysisResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Analyzers that will be used to analyze projects that references 
+      StarkPlatform.CodeAnalysis project or StarkPlatform.CodeAnalysis.Common package.
+      
+      Note: PrivateAssets="ContentFiles" ensures that projects referencing StarkPlatform.CodeAnalysis.Common package 
+      will import everything but content files from StarkPlatform.CodeAnalysis.Analyzers, specifically, analyzers.
+    -->
+
+    <PackageReference Include="Microsoft.DiaSymReader.Native" Version="$(MicrosoftDiaSymReaderNativeVersion)" PrivateAssets="all" />
+    <PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
+    <PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
+    <PackageReference Include="System.Reflection.Metadata" Version="$(SystemReflectionMetadataVersion)" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafeVersion)" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="$(SystemThreadingTasksExtensionsVersion)" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="$(SystemTextEncodingCodePagesVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.ExpressionEvaluator.ExpressionCompiler" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.ExpressionEvaluator.ExpressionCompiler" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.ExpressionCompiler" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Scripting" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CompilerServer" />
+    <InternalsVisibleTo Include="StarkPlatform.Build.Tasks.CodeAnalysis" />
+    <InternalsVisibleTo Include="starkc" />
+    <InternalsVisibleTo Include="StarkCompiler" />
+    <InternalsVisibleTo Include="StarkCompilerPortable" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.CommandLine.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Emit.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.WinRT.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.Compilers.Stark.EnC.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.IOperation.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Semantic.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Symbol.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Syntax.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.Compilers.Stark.Test.Utilities.Desktop" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.DebuggerVisualizers" />
+    <InternalsVisibleTo Include="StarkPlatform.Diagnostics.Analyzers.FxCop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.Diagnostics.Analyzers.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.Diagnostics.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.ExpressionEvaluator.ExpressionCompiler.Utilities" />
+    <InternalsVisibleTo Include="InteractiveHost.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Scripting.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.Test.Utilities.CoreClr" />
+    <InternalsVisibleTo Include="StarkPlatform.Test.Utilities.Desktop" />
+    <InternalsVisibleTo Include="StarkPlatform.Test.Utilities.FX45" />
+    <InternalsVisibleTo Include="StarkPlatform.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.Test.PdbUtilities" />
+    <InternalsVisibleTo Include="StarkCompiler.UnitTests" />
+    <InternalsVisibleTo Include="CompilerBenchmarks" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="CodeAnalysisResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>CodeAnalysisResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\default.win32manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CodeAnalysisRules.ruleset">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="RuleSet\RuleSetSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <PublicAPI Include="PublicAPI.Shipped.txt" />
+    <PublicAPI Include="PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+  <Import Project="..\AnalyzerDriver\AnalyzerDriver.projitems" Label="Shared" />
+  <Import Project="..\..\..\Dependencies\CodeAnalysis.Debugging\StarkPlatform.CodeAnalysis.Debugging.projitems" Label="Shared" />
+  <Import Project="..\..\..\Dependencies\PooledObjects\StarkPlatform.CodeAnalysis.PooledObjects.projitems" Label="Shared" />
+</Project>

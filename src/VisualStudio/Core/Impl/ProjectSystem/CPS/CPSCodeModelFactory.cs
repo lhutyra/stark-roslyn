@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.LanguageServices.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.ProjectSystem;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
 {
     [Export(typeof(ICodeModelFactory))]
     internal partial class CPSCodeModelFactory : ICodeModelFactory

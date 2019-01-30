@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.Common
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common
 {
     /// <summary>
     /// Trivia on an <see cref="EmbeddedSyntaxToken{TSyntaxKind}"/>.

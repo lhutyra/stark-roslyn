@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.RuntimeMembers
+namespace StarkPlatform.CodeAnalysis.RuntimeMembers
 {
     /// <summary>
     /// Helper class to match signatures in format of 

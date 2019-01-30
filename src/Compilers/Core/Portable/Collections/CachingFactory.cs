@@ -3,10 +3,10 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     // Implements simple cache of limited size that could hold 
     // a number of previously created/mapped items.

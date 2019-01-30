@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.NavigateTo;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.NavigateTo;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Microsoft.VisualStudio.Language.NavigateTo.Interfaces;
 using Roslyn.Utilities;
-using INavigateToSearchService = Microsoft.CodeAnalysis.NavigateTo.INavigateToSearchService;
-using INavigateToSearchService_RemoveInterfaceAboveAndRenameThisAfterInternalsVisibleToUsersUpdate = Microsoft.CodeAnalysis.NavigateTo.INavigateToSearchService_RemoveInterfaceAboveAndRenameThisAfterInternalsVisibleToUsersUpdate;
+using INavigateToSearchService = StarkPlatform.CodeAnalysis.NavigateTo.INavigateToSearchService;
+using INavigateToSearchService_RemoveInterfaceAboveAndRenameThisAfterInternalsVisibleToUsersUpdate = StarkPlatform.CodeAnalysis.NavigateTo.INavigateToSearchService_RemoveInterfaceAboveAndRenameThisAfterInternalsVisibleToUsersUpdate;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.NavigateTo
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.NavigateTo
 {
     internal partial class NavigateToItemProvider : INavigateToItemProvider2
     {

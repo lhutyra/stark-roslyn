@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.MetadataAsSource
+namespace StarkPlatform.CodeAnalysis.MetadataAsSource
 {
     internal static class DocumentationCommentUtilities
     {

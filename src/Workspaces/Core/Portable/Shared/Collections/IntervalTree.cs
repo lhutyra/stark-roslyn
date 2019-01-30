@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Collections
+namespace StarkPlatform.CodeAnalysis.Shared.Collections
 {
     internal static class IntervalTree
     {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Rename.ConflictEngine
+namespace StarkPlatform.CodeAnalysis.Rename.ConflictEngine
 {
     [Flags]
     internal enum RelatedLocationType

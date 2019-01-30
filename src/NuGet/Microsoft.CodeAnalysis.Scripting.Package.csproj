@@ -6,7 +6,7 @@
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.Scripting</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.Scripting</PackageId>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageDescription>
       Microsoft .NET Compiler Platform ("Roslyn") CSharp and VB scripting package.
@@ -14,6 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Scripting\CSharp\Microsoft.CodeAnalysis.CSharp.Scripting.csproj" />
+    <ProjectReference Include="..\Scripting\CSharp\StarkPlatform.CodeAnalysis.CSharp.Scripting.csproj" />
   </ItemGroup>
 </Project>

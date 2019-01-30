@@ -5,15 +5,15 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.EditAndContinue;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Debugger;
 using Microsoft.VisualStudio.Debugger.Clr;
 using Microsoft.VisualStudio.Debugger.Symbols;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.EditAndContinue
+namespace StarkPlatform.VisualStudio.LanguageServices.EditAndContinue
 {
     [Export(typeof(IActiveStatementProvider)), Shared]
     internal sealed partial class VisualStudioActiveStatementProvider : IActiveStatementProvider

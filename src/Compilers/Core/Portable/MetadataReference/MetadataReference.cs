@@ -7,10 +7,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
-using Microsoft.CodeAnalysis.InternalUtilities;
+using StarkPlatform.CodeAnalysis.InternalUtilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents metadata image reference.

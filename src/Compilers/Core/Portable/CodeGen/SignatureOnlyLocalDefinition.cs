@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// A local whose type is represented by a metadata signature instead of a type symbol.

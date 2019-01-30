@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
 {
     internal static class DebuggerIntelliSenseHelpers
     {

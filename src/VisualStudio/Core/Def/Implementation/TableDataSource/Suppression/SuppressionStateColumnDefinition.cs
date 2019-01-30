@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Shell.TableControl;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     /// <summary>
     /// Error list column for Suppression state of a diagnostic.

@@ -3,7 +3,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.SignatureHelp
+namespace StarkPlatform.CodeAnalysis.SignatureHelp
 {
     internal interface ISignatureHelpProvider
     {

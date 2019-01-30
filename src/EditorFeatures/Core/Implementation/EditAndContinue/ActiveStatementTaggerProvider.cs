@@ -2,18 +2,18 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.EditAndContinue
 {
     [Export(typeof(ITaggerProvider))]
     [TagType(typeof(TextMarkerTag))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [TextViewRole(PredefinedTextViewRoles.Editable)] // TODO (tomat): ?
     internal sealed class ActiveStatementTaggerProvider : ITaggerProvider
     {

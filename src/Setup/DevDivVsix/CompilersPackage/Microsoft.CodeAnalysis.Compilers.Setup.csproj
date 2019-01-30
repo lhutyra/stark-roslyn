@@ -6,8 +6,8 @@
     <ApplyPartialNgenOptimization>true</ApplyPartialNgenOptimization>
 
     <!-- VS Insertion -->
-    <TargetVsixContainerName>Microsoft.CodeAnalysis.Compilers.vsix</TargetVsixContainerName>
-    <VisualStudioInsertionComponent>Microsoft.CodeAnalysis.Compilers</VisualStudioInsertionComponent>
+    <TargetVsixContainerName>StarkPlatform.CodeAnalysis.Compilers.vsix</TargetVsixContainerName>
+    <VisualStudioInsertionComponent>StarkPlatform.CodeAnalysis.Compilers</VisualStudioInsertionComponent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
 
   <Target Name="_SetSwrFilePath">
     <PropertyGroup>
-      <_SwrFilePath>$(IntermediateOutputPath)Microsoft.CodeAnalysis.Compilers.swr</_SwrFilePath>
+      <_SwrFilePath>$(IntermediateOutputPath)StarkPlatform.CodeAnalysis.Compilers.swr</_SwrFilePath>
     </PropertyGroup>
   </Target>
 
@@ -71,11 +71,11 @@
       <_FileEntries Include='file source="%(_File.Path)"%(_File.NGenArchitectureString)%(_File.NGenPriorityString)%(_File.NGenApplicationString)'/>
 
       <!-- Satellite assemblies -->
-      <_SatelliteAssembly Include="$(ArtifactsBinDir)Microsoft.CodeAnalysis\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
-      <_SatelliteAssembly Include="$(ArtifactsBinDir)Microsoft.CodeAnalysis.CSharp\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
-      <_SatelliteAssembly Include="$(ArtifactsBinDir)Microsoft.CodeAnalysis.Scripting\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
-      <_SatelliteAssembly Include="$(ArtifactsBinDir)Microsoft.CodeAnalysis.CSharp.Scripting\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
-      <_SatelliteAssembly Include="$(ArtifactsBinDir)Microsoft.CodeAnalysis.VisualBasic\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
+      <_SatelliteAssembly Include="$(ArtifactsBinDir)StarkPlatform.CodeAnalysis\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
+      <_SatelliteAssembly Include="$(ArtifactsBinDir)StarkPlatform.CodeAnalysis.CSharp\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
+      <_SatelliteAssembly Include="$(ArtifactsBinDir)StarkPlatform.CodeAnalysis.Scripting\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
+      <_SatelliteAssembly Include="$(ArtifactsBinDir)StarkPlatform.CodeAnalysis.CSharp.Scripting\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
+      <_SatelliteAssembly Include="$(ArtifactsBinDir)StarkPlatform.CodeAnalysis.VisualBasic\$(Configuration)\netstandard2.0\**\*.resources.dll"/>
       <_SatelliteAssembly Include="$(ArtifactsBinDir)Microsoft.Build.Tasks.CodeAnalysis\$(Configuration)\net472\**\*.resources.dll"/>
 
       <_CsSatellite Include="@(_SatelliteAssembly)" Condition="'%(_SatelliteAssembly.RecursiveDir)' == 'cs\'">

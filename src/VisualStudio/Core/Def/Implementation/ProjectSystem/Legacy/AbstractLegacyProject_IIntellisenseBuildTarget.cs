@@ -2,13 +2,13 @@
 
 using System;
 using System.IO;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
 {
     internal partial class AbstractLegacyProject : IIntellisenseBuildTarget
     {

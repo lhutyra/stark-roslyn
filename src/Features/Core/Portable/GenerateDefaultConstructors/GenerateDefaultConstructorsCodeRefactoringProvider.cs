@@ -2,11 +2,11 @@
 
 using System.Composition;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.GenerateMember.GenerateDefaultConstructors;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.GenerateMember.GenerateDefaultConstructors;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.GenerateDefaultConstructors
+namespace StarkPlatform.CodeAnalysis.GenerateDefaultConstructors
 {
     /// <summary>
     /// This <see cref="CodeRefactoringProvider"/> gives users a way to generate constructors for
@@ -20,8 +20,7 @@ namespace Microsoft.CodeAnalysis.GenerateDefaultConstructors
     /// for a type based on the fields/properties of that type. Both of those are handled by other 
     /// services.
     /// </summary>
-    [ExportCodeRefactoringProvider(LanguageNames.CSharp, LanguageNames.VisualBasic,
-        Name = PredefinedCodeRefactoringProviderNames.GenerateDefaultConstructors), Shared]
+    [ExportCodeRefactoringProvider(LanguageNames.Stark, Name = PredefinedCodeRefactoringProviderNames.GenerateDefaultConstructors), Shared]
     internal class GenerateDefaultConstructorsCodeRefactoringProvider : CodeRefactoringProvider
     {
         public override async Task ComputeRefactoringsAsync(CodeRefactoringContext context)

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static partial class INamedTypeSymbolExtensions
     {

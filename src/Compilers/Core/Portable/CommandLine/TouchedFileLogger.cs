@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Used for logging all the paths which are "touched" (used) in any way

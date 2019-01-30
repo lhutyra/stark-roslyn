@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     /// <summary>
     /// Capture Id is an opaque identifier to represent an intermediate result from an <see cref="IFlowCaptureOperation"/>.

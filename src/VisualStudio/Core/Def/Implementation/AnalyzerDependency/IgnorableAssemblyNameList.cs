@@ -2,9 +2,9 @@
 
 using System.Diagnostics;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal sealed class IgnorableAssemblyNameList : IIgnorableAssemblyList
     {

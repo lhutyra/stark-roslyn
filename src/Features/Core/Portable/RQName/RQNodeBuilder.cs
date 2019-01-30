@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Features.RQName.Nodes;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Features.RQName.Nodes;
 
-namespace Microsoft.CodeAnalysis.Features.RQName
+namespace StarkPlatform.CodeAnalysis.Features.RQName
 {
     internal static class RQNodeBuilder
     {

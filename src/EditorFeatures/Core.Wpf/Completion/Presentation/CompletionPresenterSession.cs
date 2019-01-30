@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Roslyn.Utilities;
-using RoslynCompletion = Microsoft.CodeAnalysis.Completion;
+using RoslynCompletion = StarkPlatform.CodeAnalysis.Completion;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {
-    using CompletionItem = Microsoft.CodeAnalysis.Completion.CompletionItem;
+    using CompletionItem = StarkPlatform.CodeAnalysis.Completion.CompletionItem;
 
     internal sealed class CompletionPresenterSession : ForegroundThreadAffinitizedObject, ICompletionPresenterSession
     {

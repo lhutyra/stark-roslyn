@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
     internal readonly struct ActiveInstructionId : IEquatable<ActiveInstructionId>

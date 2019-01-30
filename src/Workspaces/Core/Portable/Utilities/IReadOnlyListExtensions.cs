@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Utilities
+namespace StarkPlatform.CodeAnalysis.Utilities
 {
     internal static class IReadOnlyListExtensions
     {

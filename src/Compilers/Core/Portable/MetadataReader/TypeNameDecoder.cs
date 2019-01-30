@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal abstract class TypeNameDecoder<ModuleSymbol, TypeSymbol>
         where ModuleSymbol : class
@@ -103,7 +103,7 @@ namespace Microsoft.CodeAnalysis
             return _factory.IsAcceptedUnmanagedTypeModifierType(type);
         }
 
-        protected Microsoft.Cci.PrimitiveTypeCode GetPrimitiveTypeCode(TypeSymbol type)
+        protected StarkPlatform.Cci.PrimitiveTypeCode GetPrimitiveTypeCode(TypeSymbol type)
         {
             return _factory.GetPrimitiveTypeCode(this.moduleSymbol, type);
         }

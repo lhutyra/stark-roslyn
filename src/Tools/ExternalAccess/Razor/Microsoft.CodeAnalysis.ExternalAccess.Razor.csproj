@@ -3,12 +3,12 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExternalAccess.Razor</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExternalAccess.Razor</RootNamespace>
     <TargetFramework>net472</TargetFramework>
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.ExternalAccess.Razor</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.ExternalAccess.Razor</PackageId>
     <PackageDescription>
       A supporting package for Razor:
       https://github.com/aspnet/AspNetCore-Tooling
@@ -19,13 +19,13 @@
     <!--
       ⚠ ONLY RAZOR ASSEMBLIES MAY BE ADDED HERE ⚠
     -->
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Razor.Workspaces" Key="$(RazorKey)" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Razor.Workspaces" Key="$(RazorKey)" />
     <InternalsVisibleTo Include="Microsoft.VisualStudio.Editor.Razor" Key="$(RazorKey)" />
     <InternalsVisibleTo Include="Microsoft.VisualStudio.LanguageServices.Razor" Key="$(RazorKey)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
-using Microsoft.CodeAnalysis.NamingStyles;
-using static Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles.SymbolSpecification;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.NamingStyles;
+using static StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles.SymbolSpecification;
 
-namespace Microsoft.CodeAnalysis.Shared.Naming
+namespace StarkPlatform.CodeAnalysis.Shared.Naming
 {
     internal static class FallbackNamingRules
     {

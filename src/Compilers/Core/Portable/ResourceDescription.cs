@@ -3,13 +3,13 @@
 using System;
 using System.IO;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis.Emit;
 using System.Reflection;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Representation of a resource whose contents are to be embedded in the output assembly.

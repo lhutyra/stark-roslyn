@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class SpecialTypes
     {
@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis
 
         private readonly static Dictionary<string, SpecialType> s_nameToTypeIdMap;
 
-        private static readonly Microsoft.Cci.PrimitiveTypeCode[] s_typeIdToTypeCodeMap;
+        private static readonly StarkPlatform.Cci.PrimitiveTypeCode[] s_typeIdToTypeCodeMap;
         private static readonly SpecialType[] s_typeCodeToTypeIdMap;
 
         static SpecialTypes()
@@ -84,53 +84,53 @@ namespace Microsoft.CodeAnalysis
                 s_nameToTypeIdMap.Add(s_emittedNames[i], (SpecialType)i);
             }
 
-            s_typeIdToTypeCodeMap = new Microsoft.Cci.PrimitiveTypeCode[(int)SpecialType.Count + 1];
+            s_typeIdToTypeCodeMap = new StarkPlatform.Cci.PrimitiveTypeCode[(int)SpecialType.Count + 1];
 
             for (i = 0; i < s_typeIdToTypeCodeMap.Length; i++)
             {
-                s_typeIdToTypeCodeMap[i] = Microsoft.Cci.PrimitiveTypeCode.NotPrimitive;
+                s_typeIdToTypeCodeMap[i] = StarkPlatform.Cci.PrimitiveTypeCode.NotPrimitive;
             }
 
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Boolean] = Microsoft.Cci.PrimitiveTypeCode.Boolean;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Char] = Microsoft.Cci.PrimitiveTypeCode.Char;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Void] = Microsoft.Cci.PrimitiveTypeCode.Void;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_String] = Microsoft.Cci.PrimitiveTypeCode.String;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int64] = Microsoft.Cci.PrimitiveTypeCode.Int64;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int32] = Microsoft.Cci.PrimitiveTypeCode.Int32;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int16] = Microsoft.Cci.PrimitiveTypeCode.Int16;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int8] = Microsoft.Cci.PrimitiveTypeCode.Int8;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt64] = Microsoft.Cci.PrimitiveTypeCode.UInt64;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt32] = Microsoft.Cci.PrimitiveTypeCode.UInt32;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt16] = Microsoft.Cci.PrimitiveTypeCode.UInt16;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt8] = Microsoft.Cci.PrimitiveTypeCode.UInt8;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Float32] = Microsoft.Cci.PrimitiveTypeCode.Float32;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Float64] = Microsoft.Cci.PrimitiveTypeCode.Float64;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int] = Microsoft.Cci.PrimitiveTypeCode.IntPtr;
-            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt] = Microsoft.Cci.PrimitiveTypeCode.UIntPtr;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Boolean] = StarkPlatform.Cci.PrimitiveTypeCode.Boolean;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Char] = StarkPlatform.Cci.PrimitiveTypeCode.Char;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Void] = StarkPlatform.Cci.PrimitiveTypeCode.Void;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_String] = StarkPlatform.Cci.PrimitiveTypeCode.String;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int64] = StarkPlatform.Cci.PrimitiveTypeCode.Int64;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int32] = StarkPlatform.Cci.PrimitiveTypeCode.Int32;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int16] = StarkPlatform.Cci.PrimitiveTypeCode.Int16;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int8] = StarkPlatform.Cci.PrimitiveTypeCode.Int8;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt64] = StarkPlatform.Cci.PrimitiveTypeCode.UInt64;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt32] = StarkPlatform.Cci.PrimitiveTypeCode.UInt32;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt16] = StarkPlatform.Cci.PrimitiveTypeCode.UInt16;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt8] = StarkPlatform.Cci.PrimitiveTypeCode.UInt8;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Float32] = StarkPlatform.Cci.PrimitiveTypeCode.Float32;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Float64] = StarkPlatform.Cci.PrimitiveTypeCode.Float64;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_Int] = StarkPlatform.Cci.PrimitiveTypeCode.IntPtr;
+            s_typeIdToTypeCodeMap[(int)SpecialType.System_UInt] = StarkPlatform.Cci.PrimitiveTypeCode.UIntPtr;
 
-            s_typeCodeToTypeIdMap = new SpecialType[(int)Microsoft.Cci.PrimitiveTypeCode.Invalid + 1];
+            s_typeCodeToTypeIdMap = new SpecialType[(int)StarkPlatform.Cci.PrimitiveTypeCode.Invalid + 1];
 
             for (i = 0; i < s_typeCodeToTypeIdMap.Length; i++)
             {
                 s_typeCodeToTypeIdMap[i] = SpecialType.None;
             }
 
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Boolean] = SpecialType.System_Boolean;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Char] = SpecialType.System_Char;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Void] = SpecialType.System_Void;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.String] = SpecialType.System_String;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Int64] = SpecialType.System_Int64;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Int32] = SpecialType.System_Int32;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Int16] = SpecialType.System_Int16;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Int8] = SpecialType.System_Int8;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.UInt64] = SpecialType.System_UInt64;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.UInt32] = SpecialType.System_UInt32;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.UInt16] = SpecialType.System_UInt16;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.UInt8] = SpecialType.System_UInt8;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Float32] = SpecialType.System_Float32;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.Float64] = SpecialType.System_Float64;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.IntPtr] = SpecialType.System_Int;
-            s_typeCodeToTypeIdMap[(int)Microsoft.Cci.PrimitiveTypeCode.UIntPtr] = SpecialType.System_UInt;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Boolean] = SpecialType.System_Boolean;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Char] = SpecialType.System_Char;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Void] = SpecialType.System_Void;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.String] = SpecialType.System_String;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Int64] = SpecialType.System_Int64;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Int32] = SpecialType.System_Int32;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Int16] = SpecialType.System_Int16;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Int8] = SpecialType.System_Int8;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.UInt64] = SpecialType.System_UInt64;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.UInt32] = SpecialType.System_UInt32;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.UInt16] = SpecialType.System_UInt16;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.UInt8] = SpecialType.System_UInt8;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Float32] = SpecialType.System_Float32;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.Float64] = SpecialType.System_Float64;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.IntPtr] = SpecialType.System_Int;
+            s_typeCodeToTypeIdMap[(int)StarkPlatform.Cci.PrimitiveTypeCode.UIntPtr] = SpecialType.System_UInt;
         }
 
         /// <summary>
@@ -153,12 +153,12 @@ namespace Microsoft.CodeAnalysis
             return SpecialType.None;
         }
 
-        public static SpecialType GetTypeFromMetadataName(Microsoft.Cci.PrimitiveTypeCode typeCode)
+        public static SpecialType GetTypeFromMetadataName(StarkPlatform.Cci.PrimitiveTypeCode typeCode)
         {
             return s_typeCodeToTypeIdMap[(int)typeCode];
         }
 
-        public static Microsoft.Cci.PrimitiveTypeCode GetTypeCode(SpecialType typeId)
+        public static StarkPlatform.Cci.PrimitiveTypeCode GetTypeCode(SpecialType typeId)
         {
             return s_typeIdToTypeCodeMap[(int)typeId];
         }

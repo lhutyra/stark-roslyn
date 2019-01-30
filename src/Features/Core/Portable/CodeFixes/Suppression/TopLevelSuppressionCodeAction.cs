@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Suppression
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Suppression
 {
     internal sealed class TopLevelSuppressionCodeAction : CodeAction.CodeActionWithNestedActions
     {

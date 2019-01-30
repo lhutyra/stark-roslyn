@@ -3,17 +3,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal interface ICodeGenerationService : ILanguageService
     {
-        /// <summary>
-        /// Returns a newly created event declaration node from the provided event.
-        /// </summary>
-        SyntaxNode CreateEventDeclaration(IEventSymbol @event, CodeGenerationDestination destination = CodeGenerationDestination.Unspecified, CodeGenerationOptions options = null);
-
         /// <summary>
         /// Returns a newly created field declaration node from the provided field.
         /// </summary>
@@ -38,11 +33,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         /// Returns a newly created namespace declaration node from the provided namespace.
         /// </summary>
         SyntaxNode CreateNamespaceDeclaration(INamespaceSymbol @namespace, CodeGenerationDestination destination = CodeGenerationDestination.Unspecified, CodeGenerationOptions options = null, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Adds an event into destination.
-        /// </summary>
-        TDeclarationNode AddEvent<TDeclarationNode>(TDeclarationNode destination, IEventSymbol @event, CodeGenerationOptions options = null, CancellationToken cancellationToken = default) where TDeclarationNode : SyntaxNode;
 
         /// <summary>
         /// Adds a field into destination.
@@ -120,11 +110,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         TDeclarationNode AddStatements<TDeclarationNode>(TDeclarationNode destination, IEnumerable<SyntaxNode> statements, CodeGenerationOptions options = null, CancellationToken cancellationToken = default) where TDeclarationNode : SyntaxNode;
 
         Task<Document> AddImportsAsync(Document document, CodeGenerationOptions options, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Adds a field with the provided signature into destination.
-        /// </summary>
-        Task<Document> AddEventAsync(Solution solution, INamedTypeSymbol destination, IEventSymbol @event, CodeGenerationOptions options = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a field with the provided signature into destination.

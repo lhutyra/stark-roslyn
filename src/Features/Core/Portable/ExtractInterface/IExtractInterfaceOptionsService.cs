@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Notification;
 
-namespace Microsoft.CodeAnalysis.ExtractInterface
+namespace StarkPlatform.CodeAnalysis.ExtractInterface
 {
     internal interface IExtractInterfaceOptionsService : IWorkspaceService
     {

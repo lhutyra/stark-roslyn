@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.Common
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common
 {
     internal struct EmbeddedSyntaxToken<TSyntaxKind> where TSyntaxKind : struct
     {

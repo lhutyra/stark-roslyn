@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.FlowAnalysis;
+using StarkPlatform.CodeAnalysis.FlowAnalysis;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Operations
+namespace StarkPlatform.CodeAnalysis.Operations
 {
     internal sealed class OperationCloner : OperationVisitor<object, IOperation>
     {

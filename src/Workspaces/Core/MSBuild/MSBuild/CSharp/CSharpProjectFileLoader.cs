@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.MSBuild;
-using Microsoft.CodeAnalysis.MSBuild.Build;
-using Microsoft.CodeAnalysis.MSBuild.Logging;
+using StarkPlatform.CodeAnalysis.MSBuild;
+using StarkPlatform.CodeAnalysis.MSBuild.Build;
+using StarkPlatform.CodeAnalysis.MSBuild.Logging;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.CSharp
+namespace StarkPlatform.CodeAnalysis.Stark
 {
     internal partial class CSharpProjectFileLoader : ProjectFileLoader
     {
@@ -15,7 +15,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         public override string Language
         {
-            get { return LanguageNames.CSharp; }
+            get { return LanguageNames.Stark; }
         }
 
         protected override ProjectFile CreateProjectFile(MSB.Evaluation.Project project, ProjectBuildManager buildManager, DiagnosticLog log)

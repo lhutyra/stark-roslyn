@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.AddParameter
+namespace StarkPlatform.CodeAnalysis.AddParameter
 {
     internal struct ArgumentInsertPositionData<TArgumentSyntax> where TArgumentSyntax : SyntaxNode
     {

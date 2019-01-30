@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.MSBuild.Build;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.MSBuild.Build;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     internal interface IProjectFileLoader : ILanguageService
     {

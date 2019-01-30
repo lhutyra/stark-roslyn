@@ -2,11 +2,11 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.F1Help
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.F1Help
 {
     internal interface IHelpContextService : ILanguageService
     {

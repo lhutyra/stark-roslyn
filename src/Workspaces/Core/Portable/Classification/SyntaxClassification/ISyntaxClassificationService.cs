@@ -4,12 +4,12 @@ using System;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Classification.Classifiers;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Classification.Classifiers;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Classification
+namespace StarkPlatform.CodeAnalysis.Classification
 {
     internal interface ISyntaxClassificationService : ILanguageService
     {

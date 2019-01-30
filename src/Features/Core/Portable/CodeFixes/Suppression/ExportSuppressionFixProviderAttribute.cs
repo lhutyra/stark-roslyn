@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Suppression
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Suppression
 {
     /// <summary>
     /// Use this attribute to declare a <see cref="ISuppressionFixProvider"/> implementation so that it can be discovered by the host.

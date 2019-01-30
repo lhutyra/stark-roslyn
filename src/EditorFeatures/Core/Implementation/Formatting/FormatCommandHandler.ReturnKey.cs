@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Formatting
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Formatting
 {
     internal partial class FormatCommandHandler
     {

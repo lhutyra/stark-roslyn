@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Notification
+namespace StarkPlatform.CodeAnalysis.Notification
 {
     internal class GlobalOperationEventArgs : EventArgs
     {

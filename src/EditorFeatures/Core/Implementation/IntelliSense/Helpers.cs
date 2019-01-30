@@ -5,7 +5,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.Text.Adornments;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense
 {
     internal static class Helpers
     {

@@ -1,5 +1,5 @@
 ﻿<vs:DialogWindow x:Uid="NamingPreferences"
-             x:Class="Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences.SymbolSpecificationDialog"
+             x:Class="StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences.SymbolSpecificationDialog"
              x:ClassModifier="internal"
              x:Name="dialog"
              xmlns:vs="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"

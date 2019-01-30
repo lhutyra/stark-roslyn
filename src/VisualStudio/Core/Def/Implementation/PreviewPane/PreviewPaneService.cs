@@ -6,22 +6,22 @@ using System.Composition;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Simplification;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Imaging.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.Shell;
 using IVsUIShell = Microsoft.VisualStudio.Shell.Interop.IVsUIShell;
 using SVsUIShell = Microsoft.VisualStudio.Shell.Interop.SVsUIShell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PreviewPane
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PreviewPane
 {
     [ExportWorkspaceServiceFactory(typeof(IPreviewPaneService), ServiceLayer.Host), Shared]
     internal class PreviewPaneService : ForegroundThreadAffinitizedObject, IPreviewPaneService, IWorkspaceServiceFactory
@@ -140,24 +140,16 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.PreviewPane
         {
             if (optionName == nameof(SimplificationOptions.NamingPreferences))
             {
-                if (optionLanguage == LanguageNames.CSharp)
+                if (optionLanguage == LanguageNames.Stark)
                 {
-                    return Guid.Parse(Guids.CSharpOptionPageNamingStyleIdString);
-                }
-                else if (optionLanguage == LanguageNames.VisualBasic)
-                {
-                    return Guid.Parse(Guids.VisualBasicOptionPageNamingStyleIdString);
+                    return Guid.Parse(Guids.StarkOptionPageNamingStyleIdString);
                 }
             }
             else if (optionName == nameof(CodeStyleOptions.PreferIntrinsicPredefinedTypeKeywordInDeclaration))
             {
-                if (optionLanguage == LanguageNames.CSharp)
+                if (optionLanguage == LanguageNames.Stark)
                 {
-                    return Guid.Parse(Guids.CSharpOptionPageCodeStyleIdString);
-                }
-                else if (optionLanguage == LanguageNames.VisualBasic)
-                {
-                    return Guid.Parse(Guids.VisualBasicOptionPageVBSpecificIdString);
+                    return Guid.Parse(Guids.StarkOptionPageCodeStyleIdString);
                 }
             }
 

@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     internal abstract class VariableSlotAllocator
     {

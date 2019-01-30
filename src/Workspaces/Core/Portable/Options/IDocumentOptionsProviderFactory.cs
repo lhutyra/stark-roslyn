@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.Options
+﻿namespace StarkPlatform.CodeAnalysis.Options
 {
     /// <remarks>
     /// This interface exists so the Visual Studio workspace can create the .editorconfig provider,

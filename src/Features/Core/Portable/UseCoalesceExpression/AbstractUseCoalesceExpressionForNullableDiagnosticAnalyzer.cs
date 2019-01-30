@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.UseCoalesceExpression
+namespace StarkPlatform.CodeAnalysis.UseCoalesceExpression
 {
     internal abstract class AbstractUseCoalesceExpressionForNullableDiagnosticAnalyzer<
         TSyntaxKind,

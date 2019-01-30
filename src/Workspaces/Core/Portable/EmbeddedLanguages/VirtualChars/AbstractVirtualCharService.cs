@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.VirtualChars
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.VirtualChars
 {
     internal abstract class AbstractVirtualCharService : IVirtualCharService
     {

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Debugging
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Debugging
 {
     // Used by TypeScript.
     internal interface IBreakpointResolutionService : ILanguageService

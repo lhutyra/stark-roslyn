@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.RemoveUnnecessaryImports
+namespace StarkPlatform.CodeAnalysis.RemoveUnnecessaryImports
 {
     internal interface IUnnecessaryImportsService : ILanguageService
     {

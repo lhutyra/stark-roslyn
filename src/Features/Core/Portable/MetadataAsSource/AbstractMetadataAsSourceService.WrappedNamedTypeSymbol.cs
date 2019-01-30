@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.DocumentationComments;
+using StarkPlatform.CodeAnalysis.DocumentationComments;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.MetadataAsSource
+namespace StarkPlatform.CodeAnalysis.MetadataAsSource
 {
     internal partial class AbstractMetadataAsSourceService
     {

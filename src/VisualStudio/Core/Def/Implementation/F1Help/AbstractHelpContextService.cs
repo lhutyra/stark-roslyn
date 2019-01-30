@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.F1Help
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.F1Help
 {
     internal abstract class AbstractHelpContextService : IHelpContextService
     {

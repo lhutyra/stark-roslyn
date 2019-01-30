@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace StarkPlatform.CodeAnalysis.Syntax.InternalSyntax
 {
     internal partial struct ChildSyntaxList
     {

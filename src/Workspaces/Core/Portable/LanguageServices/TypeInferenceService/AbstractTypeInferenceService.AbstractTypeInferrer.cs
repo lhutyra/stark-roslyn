@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.LanguageServices.TypeInferenceService
+namespace StarkPlatform.CodeAnalysis.LanguageServices.TypeInferenceService
 {
     internal partial class AbstractTypeInferenceService : ITypeInferenceService
     {

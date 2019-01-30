@@ -3,11 +3,11 @@
 using System.Collections.Immutable;
 using System.Composition;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Scripting;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Scripting;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     /// <summary>
     /// Environment corresponding to csi running a script with default command line arguments.

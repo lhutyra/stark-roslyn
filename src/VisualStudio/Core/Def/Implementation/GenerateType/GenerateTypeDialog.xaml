@@ -1,6 +1,6 @@
 ﻿<vs:DialogWindow 
             x:Uid="GenerateTypeDialog" AutomationProperties.AutomationId="GenerateTypeDialog"
-            x:Class="Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType.GenerateTypeDialog"
+            x:Class="StarkPlatform.VisualStudio.LanguageServices.Implementation.GenerateType.GenerateTypeDialog"
             x:ClassModifier="internal"
             x:Name="dialog"
             xmlns:vs="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"

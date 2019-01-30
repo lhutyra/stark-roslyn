@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.CommandHandlers
+namespace StarkPlatform.CodeAnalysis.Editor.CommandHandlers
 {
     /// <summary>
     /// There are two forms of intellisense that may be active at the same time.  Completion and

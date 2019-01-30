@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGen;
-using Microsoft.CodeAnalysis.Debugging;
-using Microsoft.CodeAnalysis.Emit;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGen;
+using StarkPlatform.CodeAnalysis.Debugging;
+using StarkPlatform.CodeAnalysis.Emit;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// Specifies how the caller passes parameters to the callee and who cleans up the stack.

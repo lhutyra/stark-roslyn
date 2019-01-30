@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.ChangeSignature;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.ChangeSignature;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.VisualStudio.Text.Classification;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ChangeSignature
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ChangeSignature
 {
     [ExportWorkspaceService(typeof(IChangeSignatureOptionsService), ServiceLayer.Host), Shared]
     internal class VisualStudioChangeSignatureOptionsService : IChangeSignatureOptionsService

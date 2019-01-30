@@ -8,20 +8,20 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Common;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Common;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Imaging.Interop;
 using Microsoft.VisualStudio.Shell.TableControl;
 using Microsoft.VisualStudio.Shell.TableManager;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     internal abstract partial class VisualStudioBaseDiagnosticListTable
     {
@@ -405,7 +405,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
                             //
                             // any build errors mixed with live errors will show up at the end. when live errors are on, some of errors
                             // still left as build errors such as errors produced after CompilationStages.Compile or ones listed here
-                            // http://source.roslyn.io/#Microsoft.CodeAnalysis.CSharp/Compilation/CSharpCompilerDiagnosticAnalyzer.cs,23 or similar ones for VB
+                            // http://source.roslyn.io/#StarkPlatform.CodeAnalysis.Stark/Compilation/CSharpCompilerDiagnosticAnalyzer.cs,23 or similar ones for VB
                             // and etc.
                             return ErrorRank.PostBuild;
                         case nameof(ErrorRank.Lexical):

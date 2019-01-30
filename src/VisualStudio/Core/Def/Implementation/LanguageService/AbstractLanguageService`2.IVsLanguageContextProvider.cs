@@ -2,14 +2,15 @@
 
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.VisualStudio.LanguageServices.Implementation.F1Help;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.F1Help;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService
 {
     internal abstract partial class AbstractLanguageService<TPackage, TLanguageService> : IVsLanguageContextProvider
     {
@@ -31,7 +32,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService
 
             var start = textBuffer.CurrentSnapshot.GetLineFromLineNumber(ptsSelection[0].iStartLine).Start + ptsSelection[0].iStartIndex;
             var end = textBuffer.CurrentSnapshot.GetLineFromLineNumber(ptsSelection[0].iEndLine).Start + ptsSelection[0].iEndIndex;
-            var span = Microsoft.CodeAnalysis.Text.TextSpan.FromBounds(start, end);
+            var span = StarkPlatform.CodeAnalysis.Text.TextSpan.FromBounds(start, end);
 
             var helpService = document.GetLanguageService<IHelpContextService>();
             if (helpService == null)

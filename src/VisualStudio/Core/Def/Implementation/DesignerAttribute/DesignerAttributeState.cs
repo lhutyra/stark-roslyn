@@ -4,12 +4,12 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.SolutionCrawler;
-using Microsoft.CodeAnalysis.SolutionCrawler.State;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis.SolutionCrawler.State;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DesignerAttribute
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DesignerAttribute
 {
     internal partial class DesignerAttributeIncrementalAnalyzer : IIncrementalAnalyzer
     {

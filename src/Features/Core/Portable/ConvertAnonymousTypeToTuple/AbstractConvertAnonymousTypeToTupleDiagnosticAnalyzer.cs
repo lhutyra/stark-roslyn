@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.ConvertAnonymousTypeToTuple
+namespace StarkPlatform.CodeAnalysis.ConvertAnonymousTypeToTuple
 {
     internal abstract class AbstractConvertAnonymousTypeToTupleDiagnosticAnalyzer<
         TSyntaxKind,

@@ -2,12 +2,12 @@
 
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Tags;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.AddImport
+namespace StarkPlatform.CodeAnalysis.AddImport
 {
     internal abstract partial class AbstractAddImportFeatureService<TSimpleNameSyntax>
     {
@@ -36,11 +36,9 @@ namespace Microsoft.CodeAnalysis.AddImport
             {
                 return document.Project.Id == _project.Id
                     ? ImmutableArray<string>.Empty
-                    : _project.Language == LanguageNames.CSharp
-                        ? WellKnownTagArrays.CSharpProject
-                        : _project.Language == LanguageNames.VisualBasic
-                            ? WellKnownTagArrays.VisualBasicProject
-                            : WellKnownTagArrays.AddReference;
+                    : _project.Language == LanguageNames.Stark
+                        ? WellKnownTagArrays.StarkProject
+                        : WellKnownTagArrays.AddReference;
             }
 
             /// <summary>

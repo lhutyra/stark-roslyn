@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.EditAndContinue
 {
     internal sealed class ActiveStatementTag : TextMarkerTag
     {

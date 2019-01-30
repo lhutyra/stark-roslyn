@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     // Note - these methods are called in fairly hot paths in the IDE, so we try to be responsible about allocations.
     internal static class SymbolInfoExtensions

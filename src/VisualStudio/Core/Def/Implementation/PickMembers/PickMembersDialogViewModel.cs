@@ -5,16 +5,16 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.PickMembers;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.PickMembers;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Microsoft.VisualStudio.Language.Intellisense;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
-using Microsoft.VisualStudio.LanguageServices.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PickMembers
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PickMembers
 {
     internal class PickMembersDialogViewModel : AbstractNotifyPropertyChanged
     {

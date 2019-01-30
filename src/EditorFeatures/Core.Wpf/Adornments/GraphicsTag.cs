@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Adornments
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Adornments
 {
     /// <summary>
     /// This needs to be public for testing the AdornmentManager

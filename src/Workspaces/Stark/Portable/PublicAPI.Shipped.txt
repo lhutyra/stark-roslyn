@@ -1,0 +1,56 @@
+StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions.Ignore = 1 -> StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions.Remove = 2 -> StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions.Single = 0 -> StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions.LeftMost = 0 -> StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions.NoIndent = 2 -> StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions
+StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions.OneLess = 1 -> StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.IndentBlock.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.IndentBraces.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.IndentSwitchCaseSection.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.IndentSwitchCaseSectionWhenBlock.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.IndentSwitchSection.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.LabelPositioning.get -> StarkPlatform.CodeAnalysis.Options.Option<StarkPlatform.CodeAnalysis.Stark.Formatting.LabelPositionOptions>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLineForCatch.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLineForClausesInQuery.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLineForElse.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLineForFinally.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLineForMembersInAnonymousTypes.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLineForMembersInObjectInit.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInAccessors.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInAnonymousMethods.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInAnonymousTypes.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInControlBlocks.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInLambdaExpressionBody.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInMethods.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInObjectCollectionArrayInitializers.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInProperties.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.NewLinesForBracesInTypes.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterCast.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterColonInBaseTypeDeclaration.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterComma.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterControlFlowStatementKeyword.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterDot.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterMethodCallName.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceAfterSemicolonsInForStatement.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBeforeColonInBaseTypeDeclaration.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBeforeComma.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBeforeDot.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBeforeOpenSquareBracket.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBeforeSemicolonsInForStatement.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBetweenEmptyMethodCallParentheses.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBetweenEmptyMethodDeclarationParentheses.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceBetweenEmptySquareBrackets.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpacesIgnoreAroundVariableDeclaration.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceWithinCastParentheses.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceWithinExpressionParentheses.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceWithinMethodCallParentheses.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceWithinMethodDeclarationParenthesis.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceWithinOtherParentheses.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpaceWithinSquareBrackets.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpacingAfterMethodDeclarationName.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.SpacingAroundBinaryOperator.get -> StarkPlatform.CodeAnalysis.Options.Option<StarkPlatform.CodeAnalysis.Stark.Formatting.BinaryOperatorSpacingOptions>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.WrappingKeepStatementsOnSingleLine.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>
+static StarkPlatform.CodeAnalysis.Stark.Formatting.CSharpFormattingOptions.WrappingPreserveSingleLine.get -> StarkPlatform.CodeAnalysis.Options.Option<bool>

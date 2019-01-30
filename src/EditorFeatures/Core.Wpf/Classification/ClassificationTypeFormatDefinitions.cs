@@ -5,12 +5,12 @@
 using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.Classification;
+using StarkPlatform.CodeAnalysis.Classification;
 using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Classification
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Classification
 {
     internal sealed class ClassificationTypeFormatDefinitions
     {

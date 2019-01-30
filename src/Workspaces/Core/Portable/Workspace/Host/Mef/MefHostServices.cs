@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     public class MefHostServices : HostServices, IMefHostExportProvider
     {
@@ -129,12 +129,12 @@ namespace Microsoft.CodeAnalysis.Host.Mef
             // updated: includes feature assemblies since they now have public API's.
             var assemblyNames = new string[]
             {
-                "Microsoft.CodeAnalysis.Workspaces",
-                "Microsoft.CodeAnalysis.CSharp.Workspaces",
-                "Microsoft.CodeAnalysis.VisualBasic.Workspaces",
-                "Microsoft.CodeAnalysis.Features",
-                "Microsoft.CodeAnalysis.CSharp.Features",
-                "Microsoft.CodeAnalysis.VisualBasic.Features"
+                "StarkPlatform.CodeAnalysis.Workspaces",
+                "StarkPlatform.CodeAnalysis.Stark.Workspaces",
+                "StarkPlatform.CodeAnalysis.VisualBasic.Workspaces",
+                "StarkPlatform.CodeAnalysis.Features",
+                "StarkPlatform.CodeAnalysis.Stark.Features",
+                "StarkPlatform.CodeAnalysis.VisualBasic.Features"
             };
 
             return LoadNearbyAssemblies(assemblyNames);

@@ -3,7 +3,7 @@
 using System;
 using System.Windows;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Adornments
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Adornments
 {
     internal class GraphicsResult : IDisposable
     {

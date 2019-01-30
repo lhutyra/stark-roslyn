@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class ArrayBuilderExtensions
     {

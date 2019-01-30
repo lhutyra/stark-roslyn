@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Language.CodeCleanUp;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeCleanup
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeCleanup
 {
     /// <summary>
     /// Roslyn implementations of <see cref="ICodeCleanUpFixer"/> extend this class. Since other extensions could also

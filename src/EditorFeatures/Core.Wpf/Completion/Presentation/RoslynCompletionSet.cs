@@ -6,15 +6,15 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using RoslynCompletionItem = Microsoft.CodeAnalysis.Completion.CompletionItem;
+using RoslynCompletionItem = StarkPlatform.CodeAnalysis.Completion.CompletionItem;
 using VSCompletion = Microsoft.VisualStudio.Language.Intellisense.Completion;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {
     internal class RoslynCompletionSet : CompletionSet2
     {

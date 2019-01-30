@@ -6,10 +6,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal sealed class FusionAssemblyIdentity
     {
@@ -440,9 +440,9 @@ namespace Microsoft.CodeAnalysis
 #if SCRIPTING
                     throw new ArgumentException(Scripting.ScriptingResources.InvalidCharactersInAssemblyName, nameof(name));
 #elif EDITOR_FEATURES
-                    throw new ArgumentException(Microsoft.CodeAnalysis.Editor.EditorFeaturesResources.Invalid_characters_in_assembly_name, nameof(name));
+                    throw new ArgumentException(StarkPlatform.CodeAnalysis.Editor.EditorFeaturesResources.Invalid_characters_in_assembly_name, nameof(name));
 #else
-                    throw new ArgumentException(Microsoft.CodeAnalysis.CodeAnalysisResources.InvalidCharactersInAssemblyName, nameof(name));
+                    throw new ArgumentException(StarkPlatform.CodeAnalysis.CodeAnalysisResources.InvalidCharactersInAssemblyName, nameof(name));
 #endif
                 }
 
@@ -463,11 +463,11 @@ namespace Microsoft.CodeAnalysis
                 if (cultureName.IndexOf('\0') >= 0)
                 {
 #if SCRIPTING
-                    throw new ArgumentException(Microsoft.CodeAnalysis.Scripting.ScriptingResources.InvalidCharactersInAssemblyName, nameof(name));
+                    throw new ArgumentException(StarkPlatform.CodeAnalysis.Scripting.ScriptingResources.InvalidCharactersInAssemblyName, nameof(name));
 #elif EDITOR_FEATURES
-                    throw new ArgumentException(Microsoft.CodeAnalysis.Editor.EditorFeaturesResources.Invalid_characters_in_assembly_name, nameof(name));
+                    throw new ArgumentException(StarkPlatform.CodeAnalysis.Editor.EditorFeaturesResources.Invalid_characters_in_assembly_name, nameof(name));
 #else
-                    throw new ArgumentException(Microsoft.CodeAnalysis.CodeAnalysisResources.InvalidCharactersInAssemblyName, nameof(name));
+                    throw new ArgumentException(StarkPlatform.CodeAnalysis.CodeAnalysisResources.InvalidCharactersInAssemblyName, nameof(name));
 #endif
                 }
 

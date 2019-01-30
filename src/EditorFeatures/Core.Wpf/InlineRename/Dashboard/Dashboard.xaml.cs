@@ -8,12 +8,12 @@ using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.Editor.Implementation.InlineRename.HighlightTags;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename.HighlightTags;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     internal partial class Dashboard : UserControl, IDisposable
     {

@@ -3,7 +3,7 @@
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
 {
     internal sealed partial class CPSProject : IVsReportExternalErrors, IVsLanguageServiceBuildErrorReporter2
     {

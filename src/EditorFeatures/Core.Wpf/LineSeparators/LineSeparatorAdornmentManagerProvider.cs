@@ -2,21 +2,21 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Implementation.Adornments;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Adornments;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.LineSeparators
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.LineSeparators
 {
     /// <summary>
     /// This factory is called to create the view service that will manage line separators.
     /// </summary>
     [Export(typeof(IWpfTextViewCreationListener))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [TextViewRole(PredefinedTextViewRoles.Document)]
     internal class LineSeparatorAdornmentManagerProvider :
         AbstractAdornmentManagerProvider<LineSeparatorTag>
@@ -25,7 +25,7 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.LineSeparators
 
         [Export]
         [Name(LayerName)]
-        [ContentType(ContentTypeNames.RoslynContentType)]
+        [ContentType(ContentTypeNames.StarkRoslynContentType)]
         [Order(After = PredefinedAdornmentLayers.Selection, Before = PredefinedAdornmentLayers.Squiggle)]
 #pragma warning disable 0169
         private readonly AdornmentLayerDefinition _lineSeparatorLayer;

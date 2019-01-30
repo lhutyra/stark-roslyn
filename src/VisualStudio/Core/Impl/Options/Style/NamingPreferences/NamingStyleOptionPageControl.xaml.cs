@@ -5,18 +5,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
-using Microsoft.CodeAnalysis.NamingStyles;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Simplification;
 using Microsoft.VisualStudio.Imaging;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style
 {
     internal partial class NamingStyleOptionPageControl : AbstractOptionPageControl
     {

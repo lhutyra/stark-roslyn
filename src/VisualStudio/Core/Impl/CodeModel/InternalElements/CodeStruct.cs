@@ -2,10 +2,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(EnvDTE80.CodeStruct2))]

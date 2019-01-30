@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.UseCoalesceExpression
+namespace StarkPlatform.CodeAnalysis.UseCoalesceExpression
 {
     /// <summary>
     /// Looks for code of the form "x == null ? y : x" and offers to convert it to "x ?? y";

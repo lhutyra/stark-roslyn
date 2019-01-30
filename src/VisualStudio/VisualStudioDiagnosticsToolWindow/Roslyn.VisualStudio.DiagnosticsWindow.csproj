@@ -19,16 +19,16 @@
     <EmbeddedResource Remove="RemoteHost\**" />
   </ItemGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj">
+    <ProjectReference Include="..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj">
       <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Features\Core\Portable\Microsoft.CodeAnalysis.Features.csproj">
+    <ProjectReference Include="..\..\Features\Core\Portable\StarkPlatform.CodeAnalysis.Features.csproj">
       <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Workspaces\Core\Portable\Microsoft.CodeAnalysis.Workspaces.csproj">
+    <ProjectReference Include="..\..\Workspaces\Core\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj">
       <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\EditorFeatures\Core\Microsoft.CodeAnalysis.EditorFeatures.csproj">
+    <ProjectReference Include="..\..\EditorFeatures\Core\StarkPlatform.CodeAnalysis.EditorFeatures.csproj">
       <Private>false</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Test\Diagnostics\Roslyn.Hosting.Diagnostics.csproj">

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Collections
+namespace StarkPlatform.CodeAnalysis.Collections
 {
     /// <summary>
     /// The CachingLookup class provides a convenient representation of an ILookup that is based

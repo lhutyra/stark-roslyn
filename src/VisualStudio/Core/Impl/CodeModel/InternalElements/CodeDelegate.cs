@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(EnvDTE80.CodeDelegate2))]

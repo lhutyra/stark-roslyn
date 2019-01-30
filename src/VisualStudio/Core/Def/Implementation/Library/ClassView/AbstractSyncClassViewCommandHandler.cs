@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Commanding;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Extensions;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ClassView
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ClassView
 {
     internal abstract class AbstractSyncClassViewCommandHandler : ForegroundThreadAffinitizedObject,
         ICommandHandler<SyncClassViewCommandArgs>
@@ -118,7 +118,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ClassVi
 
         public CommandState GetCommandState(SyncClassViewCommandArgs args)
         {
-            return Commanding.CommandState.Unspecified;
+            return Microsoft.VisualStudio.Commanding.CommandState.Unspecified;
         }
     }
 }

@@ -3,13 +3,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Collections
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(ICodeElements))]

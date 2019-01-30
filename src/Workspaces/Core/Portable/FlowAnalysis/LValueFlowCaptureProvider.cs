@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Operations;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     /// <summary>
     /// Helper class to detect <see cref="IFlowCaptureOperation"/>s that are l-value captures.

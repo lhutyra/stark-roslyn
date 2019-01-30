@@ -2,11 +2,11 @@
 
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.LanguageServices.Implementation.TaskList;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
 {
     internal partial class AbstractLegacyProject : IVsReportExternalErrors, IVsLanguageServiceBuildErrorReporter2
     {

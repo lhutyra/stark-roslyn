@@ -2,13 +2,13 @@
 
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     internal interface ICodeModelService : ICodeModelNavigationPointService
     {
@@ -99,7 +99,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
         bool IsOptionNode(SyntaxNode node);
         bool IsImportNode(SyntaxNode node);
 
-        ISymbol ResolveSymbol(Microsoft.CodeAnalysis.Workspace workspace, ProjectId projectId, SymbolKey symbolId);
+        ISymbol ResolveSymbol(StarkPlatform.CodeAnalysis.Workspace workspace, ProjectId projectId, SymbolKey symbolId);
 
         string GetUnescapedName(string name);
 

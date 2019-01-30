@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Reflection;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Provides APIs to enumerate and look up assemblies stored in the Global Assembly Cache.

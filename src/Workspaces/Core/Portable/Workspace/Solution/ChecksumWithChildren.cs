@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Serialization
+namespace StarkPlatform.CodeAnalysis.Serialization
 {
     /// <summary>
     /// this is a collection that has its own checksum and contains only checksum or checksum collection as its children.

@@ -3,11 +3,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions.ContextQuery
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions.ContextQuery
 {
     internal abstract class SyntaxContext
     {

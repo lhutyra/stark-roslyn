@@ -6,7 +6,7 @@ using System.IO;
 using System.Xml;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal partial class XmlDocumentationCommentTextReader
     {

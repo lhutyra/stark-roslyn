@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.BraceMatching
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.BraceMatching
 {
     internal class BraceHighlightTag : TextMarkerTag
     {

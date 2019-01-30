@@ -6,14 +6,14 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Formatting;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.MakeFieldReadonly
+namespace StarkPlatform.CodeAnalysis.MakeFieldReadonly
 {
     internal abstract class AbstractMakeFieldReadonlyCodeFixProvider<TSymbolSyntax, TFieldDeclarationSyntax>
         : SyntaxEditorBasedCodeFixProvider
@@ -24,7 +24,7 @@ namespace Microsoft.CodeAnalysis.MakeFieldReadonly
             => ImmutableArray.Create(IDEDiagnosticIds.MakeFieldReadonlyDiagnosticId);
 
         protected abstract SyntaxNode GetInitializerNode(TSymbolSyntax declaration);
-        protected abstract ImmutableList<TSymbolSyntax> GetVariableDeclarations(TFieldDeclarationSyntax declaration);
+        protected abstract TSymbolSyntax GetVariableDeclarations(TFieldDeclarationSyntax declaration);
 
         public override Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -59,36 +59,9 @@ namespace Microsoft.CodeAnalysis.MakeFieldReadonly
 
             foreach (var fieldDeclarators in declaratorsByField)
             {
-                var declarationDeclarators = GetVariableDeclarations(fieldDeclarators.Key);
-
-                if (declarationDeclarators.Count == fieldDeclarators.Count())
-                {
-                    editor.SetModifiers(fieldDeclarators.Key, editor.Generator.GetModifiers(fieldDeclarators.Key) | DeclarationModifiers.ReadOnly);
-                }
-                else
-                {
-                    var model = await document.GetSemanticModelAsync().ConfigureAwait(false);
-                    var generator = editor.Generator;
-
-                    foreach (var declarator in declarationDeclarators.Reverse())
-                    {
-                        var symbol = (IFieldSymbol)model.GetDeclaredSymbol(declarator);
-                        var modifiers = generator.GetModifiers(fieldDeclarators.Key);
-
-                        var newDeclaration = generator.FieldDeclaration(symbol.Name,
-                                                                        generator.TypeExpression(symbol.Type),
-                                                                        Accessibility.Private,
-                                                                        fieldDeclarators.Contains(declarator)
-                                                                            ? modifiers | DeclarationModifiers.ReadOnly
-                                                                            : modifiers,
-                                                                        GetInitializerNode(declarator))
-                                                      .WithAdditionalAnnotations(Formatter.Annotation);
-
-                        editor.InsertAfter(fieldDeclarators.Key, newDeclaration);
-                    }
-
-                    editor.RemoveNode(fieldDeclarators.Key);
-                }
+                //var declarationDeclarators = GetVariableDeclarations(fieldDeclarators.Key);
+                // TODO: readonly is not workling like this now
+                editor.SetModifiers(fieldDeclarators.Key, editor.Generator.GetModifiers(fieldDeclarators.Key) | DeclarationModifiers.ReadOnly);
             }
         }
 

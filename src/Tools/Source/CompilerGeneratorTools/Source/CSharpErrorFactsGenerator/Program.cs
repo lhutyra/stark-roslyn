@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.CSharp.Internal.CSharpErrorFactsGenerator
+namespace StarkPlatform.CodeAnalysis.Stark.Internal.CSharpErrorFactsGenerator
 {
     public static class Program
     {
@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Internal.CSharpErrorFactsGenerator
             string outputPath = args[1];
 
             var outputText = new StringBuilder();
-            outputText.AppendLine("namespace Microsoft.CodeAnalysis.CSharp");
+            outputText.AppendLine("namespace StarkPlatform.CodeAnalysis.Stark");
             outputText.AppendLine("{");
             outputText.AppendLine("    internal static partial class ErrorFacts");
             outputText.AppendLine("    {");

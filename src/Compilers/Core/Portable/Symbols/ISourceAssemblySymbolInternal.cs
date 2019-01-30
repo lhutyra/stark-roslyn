@@ -3,7 +3,7 @@
 using System;
 using System.Reflection;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal interface ISourceAssemblySymbolInternal : ISourceAssemblySymbol
     {

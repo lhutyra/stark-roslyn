@@ -3,7 +3,7 @@
 using Microsoft.VisualStudio.Shell.TableControl;
 using Microsoft.VisualStudio.Shell.TableManager;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     internal abstract class AbstractTableControlEventProcessorProvider<TData> : ITableControlEventProcessorProvider
     {

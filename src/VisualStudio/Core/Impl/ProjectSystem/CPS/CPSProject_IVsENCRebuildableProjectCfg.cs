@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using EncInterop = Microsoft.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop;
+using Microsoft.VisualStudio;
+using EncInterop = StarkPlatform.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop;
 using ShellInterop = Microsoft.VisualStudio.Shell.Interop;
 using VsTextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
 {
     internal partial class CPSProject : EncInterop.IVsENCRebuildableProjectCfg2, EncInterop.IVsENCRebuildableProjectCfg4
     {

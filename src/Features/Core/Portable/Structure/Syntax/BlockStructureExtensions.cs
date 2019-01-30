@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Structure
+namespace StarkPlatform.CodeAnalysis.Structure
 {
     internal static class BlockStructureExtensions
     {

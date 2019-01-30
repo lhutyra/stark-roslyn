@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Represents a token in the syntax tree. This is the language agnostic equivalent of <see
-    /// cref="T:Microsoft.CodeAnalysis.CSharp.SyntaxToken"/> and <see cref="T:Microsoft.CodeAnalysis.VisualBasic.SyntaxToken"/>.
+    /// cref="T:StarkPlatform.CodeAnalysis.Stark.SyntaxToken"/> and <see cref="T:StarkPlatform.CodeAnalysis.VisualBasic.SyntaxToken"/>.
     /// </summary>
 #pragma warning restore CA1200 // Avoid using cref tags with a prefix
     [StructLayout(LayoutKind.Auto)]

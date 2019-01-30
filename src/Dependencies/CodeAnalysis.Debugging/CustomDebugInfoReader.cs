@@ -6,11 +6,11 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace StarkPlatform.CodeAnalysis.Debugging
 {
     /// <summary>
     /// A collection of utility method for consuming custom debug info from a PDB.

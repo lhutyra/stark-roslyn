@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Suggestions
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Suggestions
 {
     internal partial class SuggestedActionWithNestedFlavors
     {

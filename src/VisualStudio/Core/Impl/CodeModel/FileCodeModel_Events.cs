@@ -2,12 +2,12 @@
 
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     public sealed partial class FileCodeModel
     {

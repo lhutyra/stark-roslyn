@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     internal abstract partial class BaseDiagnosticItemSource
     {

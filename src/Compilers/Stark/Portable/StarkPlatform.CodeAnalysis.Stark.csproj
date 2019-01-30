@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StarkPlatform.CodeAnalysis.Stark</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <CodeAnalysisRuleSet>..\CSharpCodeAnalysisRules.ruleset</CodeAnalysisRuleSet>
+    <GenerateMicrosoftCodeAnalysisCommitHashAttribute>true</GenerateMicrosoftCodeAnalysisCommitHashAttribute>
+    <ApplyPartialNgenOptimization>true</ApplyPartialNgenOptimization>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageDescription>
+      .NET Compiler Platform ("Roslyn") support for C#, StarkPlatform.CodeAnalysis.Stark.dll.
+    </PackageDescription>
+  </PropertyGroup>
+
+  <!--Stark-->
+  <PropertyGroup Condition="'$(Stark)' == 'true'">
+    <AssemblyName>StarkPlatform.CodeAnalysis.Stark</AssemblyName>
+    <PackageId>$(AssemblyName)</PackageId>
+    <PackageDescription>
+      Stark Compiler Platform support for Stark, StarkPlatform.CodeAnalysis.Stark.dll.
+    </PackageDescription>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="CSharpResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CSharpResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BoundTree\BoundNodes.xml" />
+    <None Include="Syntax\Syntax.xml" />
+    <None Include="UseSiteDiagnosticsCheckEnforcer\BaseLine.txt" />
+    <None Include="UseSiteDiagnosticsCheckEnforcer\Run.bat" />
+    <None Include="FlowAnalysis\Flow Analysis Design.docx" />
+    <None Include="Symbols\PublicSymbolTable.cd" />
+    <None Include="..\CSharpCodeAnalysisRules.ruleset">
+      <SubType>Designer</SubType>
+    </None>
+    <PublicAPI Include="PublicAPI.Shipped.txt" />
+    <PublicAPI Include="PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="CSharpResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CSharpResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Stark)' == 'true'">
+    <InternalsVisibleTo Include="starkc" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.ExpressionEvaluator.ExpressionCompiler" />
+    <InternalsVisibleTo Include="csc" />
+    <InternalsVisibleTo Include="csi" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Scripting" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.InteractiveEditorFeatures" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CompilerServer" />
+    <InternalsVisibleTo Include="StarkCompiler" />
+    <InternalsVisibleTo Include="StarkCompilerPortable" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.UnitTests" />
+    <InternalsVisibleTo Include="StarkCompiler.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.CommandLine.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Emit.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.WinRT.UnitTests" />
+    <InternalsVisibleTo Include="Roslyn.Compilers.CSharp.EnC.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.IOperation.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Semantic.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Symbol.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Syntax.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Test.Utilities" />
+    <InternalsVisibleTo Include="Roslyn.Compilers.CSharp.Test.Utilities.Desktop" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.ExpressionEvaluator.ExpressionCompiler.UnitTests" />
+    <InternalsVisibleTo Include="Roslyn.Test.Utilities.Desktop" />
+    <InternalsVisibleTo Include="Roslyn.Test.Utilities.FX45" />
+    <InternalsVisibleTo Include="Roslyn.Test.Utilities" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Scripting.Destkop.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Scripting.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.Scripting.Desktop.UnitTests" />
+    <InternalsVisibleTo Include="InteractiveHost.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Stark.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures2.UnitTests" />
+    <InternalsVisibleTo Include="CompilerBenchmarks" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+  </ItemGroup>
+  <Import Project="..\CSharpAnalyzerDriver\CSharpAnalyzerDriver.projitems" Label="Shared" />
+</Project>

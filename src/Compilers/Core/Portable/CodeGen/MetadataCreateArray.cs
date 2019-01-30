@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Text;
-using Cci = Microsoft.Cci;
+using StarkPlatform.CodeAnalysis.Text;
+using Cci = StarkPlatform.Cci;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     /// <summary>
     /// An expression that creates an array instance in metadata. Only for use in custom attributes.

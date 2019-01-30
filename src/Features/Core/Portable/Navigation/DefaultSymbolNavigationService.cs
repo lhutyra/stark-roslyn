@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Threading;
-using Microsoft.CodeAnalysis.FindUsages;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Navigation
+namespace StarkPlatform.CodeAnalysis.Navigation
 {
     internal class DefaultSymbolNavigationService : ISymbolNavigationService
     {

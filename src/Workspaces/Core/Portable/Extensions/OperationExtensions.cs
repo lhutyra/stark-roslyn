@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Operations;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static partial class OperationExtensions
     {
@@ -94,14 +94,6 @@ namespace Microsoft.CodeAnalysis
             else if (operation.Parent is IIncrementOrDecrementOperation)
             {
                 return ValueUsageInfo.ReadWrite;
-            }
-            else if (operation.Parent is IParenthesizedOperation parenthesizedOperation)
-            {
-                // Note: IParenthesizedOperation is specific to VB, where the parens cause a copy, so this cannot be classified as a write.
-                Debug.Assert(parenthesizedOperation.Language == LanguageNames.VisualBasic);
-
-                return parenthesizedOperation.GetValueUsageInfo() &
-                    ~(ValueUsageInfo.Write | ValueUsageInfo.Reference);
             }
             else if (operation.Parent is INameOfOperation ||
                      operation.Parent is ITypeOfOperation ||

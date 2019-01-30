@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.MSBuild;
+using StarkPlatform.CodeAnalysis.MSBuild;
 using MSB = Microsoft.Build;
 
-namespace Microsoft.CodeAnalysis.CSharp
+namespace StarkPlatform.CodeAnalysis.Stark
 {
     internal class CSharpCommandLineArgumentReader : CommandLineArgumentReader
     {

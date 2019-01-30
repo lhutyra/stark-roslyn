@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Reflection.Emit;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal static class InstructionOperandTypes
     {

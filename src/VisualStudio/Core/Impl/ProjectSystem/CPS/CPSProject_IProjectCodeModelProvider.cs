@@ -2,10 +2,10 @@
 
 using System;
 using System.Threading;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
 {
     internal sealed partial class CPSProject
     {

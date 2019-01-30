@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Structure
+namespace StarkPlatform.CodeAnalysis.Structure
 {
     internal class BlockStructureContext
     {

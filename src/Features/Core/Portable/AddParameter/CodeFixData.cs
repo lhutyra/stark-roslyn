@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.AddParameter
+namespace StarkPlatform.CodeAnalysis.AddParameter
 {
     internal struct CodeFixData
     {

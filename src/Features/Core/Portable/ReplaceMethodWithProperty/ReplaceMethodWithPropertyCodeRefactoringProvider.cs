@@ -7,17 +7,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ReplaceMethodWithProperty
+namespace StarkPlatform.CodeAnalysis.ReplaceMethodWithProperty
 {
-    [ExportCodeRefactoringProvider(LanguageNames.CSharp, LanguageNames.VisualBasic,
-        Name = nameof(ReplaceMethodWithPropertyCodeRefactoringProvider)), Shared]
+    [ExportCodeRefactoringProvider(LanguageNames.Stark, Name = nameof(ReplaceMethodWithPropertyCodeRefactoringProvider)), Shared]
     internal class ReplaceMethodWithPropertyCodeRefactoringProvider : CodeRefactoringProvider
     {
         private const string GetPrefix = "Get";

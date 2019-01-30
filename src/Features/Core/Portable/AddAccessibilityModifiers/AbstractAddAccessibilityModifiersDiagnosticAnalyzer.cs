@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editing;
 
-namespace Microsoft.CodeAnalysis.AddAccessibilityModifiers
+namespace StarkPlatform.CodeAnalysis.AddAccessibilityModifiers
 {
     internal abstract class AbstractAddAccessibilityModifiersDiagnosticAnalyzer<TCompilationUnitSyntax>
         : AbstractBuiltInCodeStyleDiagnosticAnalyzer

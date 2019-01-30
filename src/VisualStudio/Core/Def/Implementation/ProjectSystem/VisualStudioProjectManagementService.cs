@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using EnvDTE;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.ProjectManagement;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.ProjectManagement;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
 using Roslyn.Utilities;
 
 namespace Roslyn.VisualStudio.Services.Implementation.ProjectSystem
@@ -25,14 +25,9 @@ namespace Roslyn.VisualStudio.Services.Implementation.ProjectSystem
         {
         }
 
-        public string GetDefaultNamespace(Microsoft.CodeAnalysis.Project project, Workspace workspace)
+        public string GetDefaultNamespace(StarkPlatform.CodeAnalysis.Project project, Workspace workspace)
         {
             this.AssertIsForeground();
-
-            if (project.Language == LanguageNames.VisualBasic)
-            {
-                return "";
-            }
 
             var folders = new List<string>();
             var defaultNamespace = "";

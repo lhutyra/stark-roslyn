@@ -3,7 +3,7 @@
 using System;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.SolutionCrawler
+namespace StarkPlatform.CodeAnalysis.SolutionCrawler
 {
     internal static class Extensions
     {

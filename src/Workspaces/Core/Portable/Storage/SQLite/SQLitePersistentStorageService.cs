@@ -3,14 +3,14 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.SolutionSize;
-using Microsoft.CodeAnalysis.Storage;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.SolutionSize;
+using StarkPlatform.CodeAnalysis.Storage;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     internal partial class SQLitePersistentStorageService : AbstractPersistentStorageService
     {

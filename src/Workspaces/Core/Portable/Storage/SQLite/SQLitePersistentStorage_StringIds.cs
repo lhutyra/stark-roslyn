@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Concurrent;
-using Microsoft.CodeAnalysis.SQLite.Interop;
-using Microsoft.CodeAnalysis.Storage;
+using StarkPlatform.CodeAnalysis.SQLite.Interop;
+using StarkPlatform.CodeAnalysis.Storage;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     internal partial class SQLitePersistentStorage
     {

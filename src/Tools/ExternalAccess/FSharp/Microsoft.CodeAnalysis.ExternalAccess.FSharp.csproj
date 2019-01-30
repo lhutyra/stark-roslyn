@@ -3,12 +3,12 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExternalAccess.FSharp</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExternalAccess.FSharp</RootNamespace>
     <TargetFramework>net472</TargetFramework>
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.ExternalAccess.FSharp</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.ExternalAccess.FSharp</PackageId>
     <PackageDescription>
       A supporting package for F#:
       https://github.com/Microsoft/visualfsharp
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

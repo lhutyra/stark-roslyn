@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis.Rename.ConflictEngine;
+using StarkPlatform.CodeAnalysis.Rename.ConflictEngine;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     internal abstract partial class AbstractEditorInlineRenameService : IEditorInlineRenameService
     {

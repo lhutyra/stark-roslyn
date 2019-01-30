@@ -3,9 +3,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using Microsoft.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct LINEUPDATE

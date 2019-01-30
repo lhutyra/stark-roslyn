@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.LanguageServices.TypeInferenceService
+namespace StarkPlatform.CodeAnalysis.LanguageServices.TypeInferenceService
 {
     internal abstract partial class AbstractTypeInferenceService : ITypeInferenceService
     {

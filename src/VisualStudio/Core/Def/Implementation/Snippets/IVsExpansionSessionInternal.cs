@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Snippets
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Snippets
 {
     /// <summary>
     /// This allows us to get pNode as an IntPtr instead of a via a RCW. Otherwise, a second 

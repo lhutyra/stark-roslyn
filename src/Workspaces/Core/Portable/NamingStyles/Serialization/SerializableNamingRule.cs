@@ -3,7 +3,7 @@
 using System;
 using System.Xml.Linq;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     internal class SerializableNamingRule
     {

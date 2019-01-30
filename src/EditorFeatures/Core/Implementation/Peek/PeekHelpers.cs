@@ -2,11 +2,11 @@
 
 using System.IO;
 using System.Threading;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Peek
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Peek
 {
     internal static class PeekHelpers
     {

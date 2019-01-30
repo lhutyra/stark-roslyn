@@ -2,11 +2,11 @@
 
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.AddImport;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.AddImport;
 using Microsoft.VisualStudio.OLE.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     internal partial class VisualStudioWorkspaceImpl
     {

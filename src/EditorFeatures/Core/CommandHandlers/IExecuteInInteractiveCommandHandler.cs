@@ -3,7 +3,7 @@
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.CommandHandlers
+namespace StarkPlatform.CodeAnalysis.Editor.CommandHandlers
 {
     /// <summary>
     /// Interface for the ExecuteInInteractiveCommand handler.

@@ -3,21 +3,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.UnitTests</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.UnitTests</RootNamespace>
     <TargetFramework>net472</TargetFramework>
     <IsShipping>false</IsShipping>
   </PropertyGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
-    <ProjectReference Include="..\..\Compilers\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.csproj" />
-    <ProjectReference Include="..\..\Compilers\Test\Resources\Core\Microsoft.CodeAnalysis.Compiler.Test.Resources.csproj" />
-    <ProjectReference Include="..\..\Compilers\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.vbproj" />
-    <ProjectReference Include="..\..\EditorFeatures\Core\Microsoft.CodeAnalysis.EditorFeatures.csproj" />
+    <ProjectReference Include="..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\Compilers\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.csproj" />
+    <ProjectReference Include="..\..\Compilers\Test\Resources\Core\StarkPlatform.CodeAnalysis.Compiler.Test.Resources.csproj" />
+    <ProjectReference Include="..\..\Compilers\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.vbproj" />
+    <ProjectReference Include="..\..\EditorFeatures\Core\StarkPlatform.CodeAnalysis.EditorFeatures.csproj" />
     <ProjectReference Include="..\..\Test\Utilities\Portable\Roslyn.Test.Utilities.csproj" />
-    <ProjectReference Include="..\CSharp\Portable\Microsoft.CodeAnalysis.CSharp.Workspaces.csproj" />
-    <ProjectReference Include="..\VisualBasic\Portable\Microsoft.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
-    <ProjectReference Include="..\Core\Portable\Microsoft.CodeAnalysis.Workspaces.csproj" />
-    <ProjectReference Include="..\Remote\Core\Microsoft.CodeAnalysis.Remote.Workspaces.csproj" />
+    <ProjectReference Include="..\CSharp\Portable\StarkPlatform.CodeAnalysis.CSharp.Workspaces.csproj" />
+    <ProjectReference Include="..\VisualBasic\Portable\StarkPlatform.CodeAnalysis.VisualBasic.Workspaces.vbproj" />
+    <ProjectReference Include="..\Core\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
+    <ProjectReference Include="..\Remote\Core\StarkPlatform.CodeAnalysis.Remote.Workspaces.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -36,12 +36,12 @@
     <PackageReference Include="xunit.extensibility.execution" Version="$(xunitextensibilityexecutionVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Workspaces.MSBuild.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.EditorFeatures.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.EditorFeatures.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.EditorFeatures2.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.MSBuild.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.EditorFeatures2.UnitTests" />
     <InternalsVisibleTo Include="Roslyn.Services.Test.Utilities" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.Workspaces.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.UnitTests" />
     <InternalsVisibleTo Include="Microsoft.VisualStudio.LanguageServices.UnitTests" />
   </ItemGroup>
   <ItemGroup>

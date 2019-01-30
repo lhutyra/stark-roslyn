@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.Implementation.Structure;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Structure;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Text.Shared.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Adornments;
 using Microsoft.VisualStudio.Text.Editor;
@@ -19,11 +19,11 @@ using Microsoft.VisualStudio.Utilities;
 using Roslyn.Utilities;
 
 #pragma warning disable CS0618 // Type or member is obsolete
-namespace Microsoft.CodeAnalysis.Editor.Structure
+namespace StarkPlatform.CodeAnalysis.Editor.Structure
 {
     [Name(nameof(RoslynBlockContextProvider)), Order]
     [Export(typeof(IBlockContextProvider))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     internal class RoslynBlockContextProvider : ForegroundThreadAffinitizedObject, IBlockContextProvider
     {
         private readonly ITextEditorFactoryService _textEditorFactoryService;

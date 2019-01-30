@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal struct CodeAnalysisResourcesLocalizableErrorArgument : IFormattable
     {

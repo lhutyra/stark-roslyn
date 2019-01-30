@@ -13,13 +13,13 @@
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(EnvDTE.CodeTypeRef))]
@@ -88,11 +88,11 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
             get
             {
                 var typeSymbol = LookupTypeSymbol();
-                if (typeSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Array)
+                if (typeSymbol.TypeKind == StarkPlatform.CodeAnalysis.TypeKind.Array)
                 {
                     return CodeTypeRef.Create(this.State, this, _projectId, ((IArrayTypeSymbol)typeSymbol).ElementType);
                 }
-                else if (typeSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Pointer)
+                else if (typeSymbol.TypeKind == StarkPlatform.CodeAnalysis.TypeKind.Pointer)
                 {
                     return CodeTypeRef.Create(this.State, this, _projectId, ((IPointerTypeSymbol)typeSymbol).PointedAtType);
                 }
@@ -129,7 +129,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
             get
             {
                 var typeSymbol = LookupTypeSymbol();
-                if (typeSymbol.TypeKind == Microsoft.CodeAnalysis.TypeKind.Array)
+                if (typeSymbol.TypeKind == StarkPlatform.CodeAnalysis.TypeKind.Array)
                 {
                     return ((IArrayTypeSymbol)typeSymbol).Rank;
                 }

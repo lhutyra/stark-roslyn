@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Text.Shared.Extensions
 {
     internal static class TextSpanExtensions
     {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.MethodXml
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.MethodXml
 {
     internal abstract partial class AbstractMethodXmlBuilder
     {

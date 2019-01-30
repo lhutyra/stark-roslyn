@@ -3,12 +3,12 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExternalAccess.MonoDevelop</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExternalAccess.MonoDevelop</RootNamespace>
     <TargetFramework>net472</TargetFramework>
 
     <!-- NuGet -->
     <IsPackable>true</IsPackable>
-    <PackageId>Microsoft.CodeAnalysis.ExternalAccess.MonoDevelop</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.ExternalAccess.MonoDevelop</PackageId>
     <PackageDescription>
       A supporting package for MonoDevelop:
       https://github.com/mono/monodevelop
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Compilers\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

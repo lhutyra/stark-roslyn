@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 
-namespace Microsoft.CodeAnalysis.EncapsulateField
+namespace StarkPlatform.CodeAnalysis.EncapsulateField
 {
     internal class EncapsulateFieldCodeAction : CodeAction
     {

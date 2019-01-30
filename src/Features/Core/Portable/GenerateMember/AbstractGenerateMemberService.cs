@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.GenerateMember
+namespace StarkPlatform.CodeAnalysis.GenerateMember
 {
     internal abstract partial class AbstractGenerateMemberService<TSimpleNameSyntax, TExpressionSyntax>
         where TSimpleNameSyntax : TExpressionSyntax

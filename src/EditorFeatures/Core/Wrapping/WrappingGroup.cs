@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping
 {
     /// <summary>
     /// A group of wrapping actions placed under a common title.  For example:

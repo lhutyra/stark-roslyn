@@ -5,7 +5,7 @@ using System.Composition;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     [Export(typeof(PrimaryWorkspace)), Shared]
     internal sealed class PrimaryWorkspace

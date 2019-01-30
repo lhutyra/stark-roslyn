@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FindSymbols.Finders
+namespace StarkPlatform.CodeAnalysis.FindSymbols.Finders
 {
     internal class MethodTypeParameterSymbolReferenceFinder : AbstractReferenceFinder<ITypeParameterSymbol>
     {

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal abstract class AnalyzerAssemblyLoader : IAnalyzerAssemblyLoader
     {

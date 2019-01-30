@@ -3,12 +3,12 @@
 using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.PickMembers;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.PickMembers;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PickMembers
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PickMembers
 {
     [ExportWorkspaceService(typeof(IPickMembersService), ServiceLayer.Host), Shared]
     internal class VisualStudioPickMembersService : IPickMembersService

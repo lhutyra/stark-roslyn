@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     [Flags]
     internal enum TypeLibTypeFlags

@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.MSBuild.Logging;
+using StarkPlatform.CodeAnalysis.MSBuild.Logging;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     /// <summary>
     /// Provides information about a project that has been loaded from disk and

@@ -6,12 +6,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Remote;
 using Roslyn.Utilities;
 using StreamJsonRpc;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     /// <summary>
     /// Helper type that abstract out JsonRpc communication with extra capability of

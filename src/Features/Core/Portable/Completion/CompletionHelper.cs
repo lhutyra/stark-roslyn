@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
-using Microsoft.CodeAnalysis.PatternMatching;
-using Microsoft.CodeAnalysis.Tags;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.PatternMatching;
+using StarkPlatform.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     internal sealed class CompletionHelper
     {

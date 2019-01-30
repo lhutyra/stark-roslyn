@@ -8,12 +8,12 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using System.Reflection;
 using System.Diagnostics;
 using SystemMetadataReader = System.Reflection.Metadata.MetadataReader;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal static class AnalyzerDependencyChecker
     {

@@ -3,9 +3,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 
-namespace Microsoft.CodeAnalysis.CodeFixes.Async
+namespace StarkPlatform.CodeAnalysis.CodeFixes.Async
 {
     internal abstract partial class AbstractChangeToAsyncCodeFixProvider : AbstractAsyncCodeFix
     {

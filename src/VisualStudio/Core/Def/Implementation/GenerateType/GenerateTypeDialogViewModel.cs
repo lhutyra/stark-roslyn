@@ -7,18 +7,18 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.GeneratedCodeRecognition;
-using Microsoft.CodeAnalysis.GenerateType;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.ProjectManagement;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.GeneratedCodeRecognition;
+using StarkPlatform.CodeAnalysis.GenerateType;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.ProjectManagement;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.GenerateType
 {
     internal class GenerateTypeDialogViewModel : AbstractNotifyPropertyChanged
     {
@@ -160,16 +160,10 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
                 _csharpAccessList.Add(key);
                 _visualBasicAccessList.Add(key);
             }
-            else if (languageName == LanguageNames.CSharp)
+            else if (languageName == LanguageNames.Stark)
             {
                 _csharpAccessList.Add(key);
             }
-            else
-            {
-                Debug.Assert(languageName == LanguageNames.VisualBasic, "Currently only C# and VB are supported");
-                _visualBasicAccessList.Add(key);
-            }
-
             _accessListMap.Add(key, accessibility);
         }
 
@@ -186,12 +180,10 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
             if (!_generateTypeDialogOptions.IsPublicOnlyAccessibility)
             {
                 PopulateAccessList("Default", Accessibility.NotApplicable);
-                PopulateAccessList("internal", Accessibility.Internal, LanguageNames.CSharp);
-                PopulateAccessList("Friend", Accessibility.Internal, LanguageNames.VisualBasic);
+                PopulateAccessList("internal", Accessibility.Internal, LanguageNames.Stark);
             }
 
-            PopulateAccessList("public", Accessibility.Public, LanguageNames.CSharp);
-            PopulateAccessList("Public", Accessibility.Public, LanguageNames.VisualBasic);
+            PopulateAccessList("public", Accessibility.Public, LanguageNames.Stark);
 
             // Populate the TypeKind
             PopulateTypeKind();
@@ -441,7 +433,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
                     // Update the TypeKindList if required
                     if (previousProject != null && previousProject.Language != _selectedProject.Language)
                     {
-                        if (_selectedProject.Language == LanguageNames.CSharp)
+                        if (_selectedProject.Language == LanguageNames.Stark)
                         {
                             var previousSelectedIndex = _kindSelectIndex;
                             this.KindList = _csharpTypeKindList;
@@ -675,7 +667,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
             var currentFileName = this.FileName.Trim();
             if (!string.IsNullOrWhiteSpace(currentFileName) && !currentFileName.EndsWith("\\", StringComparison.Ordinal))
             {
-                if (this.SelectedProject.Language == LanguageNames.CSharp)
+                if (this.SelectedProject.Language == LanguageNames.Stark)
                 {
                     // For CSharp
                     currentFileName = UpdateExtension(currentFileName, _csharpExtension, _visualBasicExtension);
@@ -749,14 +741,14 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
             this.SelectedDocument = document;
             _notificationService = notificationService;
 
-            this.AccessList = document.Project.Language == LanguageNames.CSharp
+            this.AccessList = document.Project.Language == LanguageNames.Stark
                 ? _csharpAccessList
                 : _visualBasicAccessList;
             this.AccessSelectIndex = this.AccessList.Contains(accessSelectString)
                 ? this.AccessList.IndexOf(accessSelectString) : 0;
             this.IsAccessListEnabled = true;
 
-            this.KindList = document.Project.Language == LanguageNames.CSharp
+            this.KindList = document.Project.Language == LanguageNames.Stark
                 ? _csharpTypeKindList
                 : _visualBasicTypeKindList;
             this.KindSelectIndex = this.KindList.Contains(typeKindSelectString)

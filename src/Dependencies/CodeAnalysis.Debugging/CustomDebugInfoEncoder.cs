@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace StarkPlatform.CodeAnalysis.Debugging
 {
     internal struct CustomDebugInfoEncoder
     {

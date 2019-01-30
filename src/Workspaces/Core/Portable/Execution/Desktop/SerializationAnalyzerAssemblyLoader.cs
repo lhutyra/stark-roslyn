@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Reflection;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     /// <summary>
     /// This is assembly loader for serialized analyzer reference. 

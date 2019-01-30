@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editor.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Tagging
 {
     /// <summary>
     /// The events that the <see cref="AbstractAsynchronousTaggerProvider{TTag}"/> listens to, to know when 

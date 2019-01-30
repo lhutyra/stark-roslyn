@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     /// <summary>
     /// An interface to be implemented in the SolutionExplorerShim project to register the stuff needed there.

@@ -3,11 +3,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Packaging;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Packaging;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 
-namespace Microsoft.CodeAnalysis.AddPackage
+namespace StarkPlatform.CodeAnalysis.AddPackage
 {
     /// <summary>
     /// Operation responsible purely for installing a nuget package with a specific 

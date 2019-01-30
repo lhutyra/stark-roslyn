@@ -2,19 +2,19 @@
 
 using System.ComponentModel.Composition;
 using System.Threading;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.BraceCompletion;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.AutomaticCompletion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.AutomaticCompletion
 {
     [Export(typeof(IBraceCompletionSessionProvider))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [BracePair(CurlyBrace.OpenCharacter, CurlyBrace.CloseCharacter)]
     [BracePair(Bracket.OpenCharacter, Bracket.CloseCharacter)]
     [BracePair(SingleQuote.OpenCharacter, SingleQuote.CloseCharacter)]

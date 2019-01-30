@@ -6,18 +6,18 @@ extern alias CodeStyle;
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
 #if CODE_STYLE
-using Formatter = CodeStyle::Microsoft.CodeAnalysis.Formatting.Formatter;
-using FormatterState = Microsoft.CodeAnalysis.Formatting.ISyntaxFormattingService;
+using Formatter = CodeStyle::StarkPlatform.CodeAnalysis.Formatting.Formatter;
+using FormatterState = StarkPlatform.CodeAnalysis.Formatting.ISyntaxFormattingService;
 #else
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Options;
-using FormatterState = Microsoft.CodeAnalysis.Workspace;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Options;
+using FormatterState = StarkPlatform.CodeAnalysis.Workspace;
 #endif
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class FormattingCodeFixHelper
     {

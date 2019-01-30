@@ -7,10 +7,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Organizing.Organizers;
+using StarkPlatform.CodeAnalysis.Organizing.Organizers;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Organizing
+namespace StarkPlatform.CodeAnalysis.Organizing
 {
     internal abstract class AbstractOrganizingService : IOrganizingService
     {

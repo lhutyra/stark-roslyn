@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Wrapper over the core <see cref="AnalysisValueProvider{TKey, TValue}"/> which holds a strong reference to key-value pairs for the lifetime of a compilation that this provider is associated with.

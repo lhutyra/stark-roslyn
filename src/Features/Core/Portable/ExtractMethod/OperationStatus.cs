@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ExtractMethod
+namespace StarkPlatform.CodeAnalysis.ExtractMethod
 {
     internal partial class OperationStatus
     {

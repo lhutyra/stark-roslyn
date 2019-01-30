@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.Common
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common
 {
     /// <summary>
     /// Represents an error in a embedded language snippet.  The error contains the message to show 

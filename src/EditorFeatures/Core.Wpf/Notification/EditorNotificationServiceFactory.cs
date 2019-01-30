@@ -3,11 +3,11 @@
 using System;
 using System.Composition;
 using System.Windows;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Notification;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Notification
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Notification
 {
     [ExportWorkspaceServiceFactory(typeof(INotificationService), ServiceLayer.Editor)]
     [Shared]

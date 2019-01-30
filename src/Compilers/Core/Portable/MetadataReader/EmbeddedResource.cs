@@ -2,7 +2,7 @@
 
 using System.Reflection;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal struct EmbeddedResource
     {

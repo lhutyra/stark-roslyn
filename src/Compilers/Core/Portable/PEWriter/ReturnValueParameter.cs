@@ -2,10 +2,10 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeGen;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using StarkPlatform.CodeAnalysis.CodeGen;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal class ReturnValueParameter : IParameterDefinition
     {

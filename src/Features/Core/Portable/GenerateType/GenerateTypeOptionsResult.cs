@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.GenerateType
+namespace StarkPlatform.CodeAnalysis.GenerateType
 {
     internal class GenerateTypeOptionsResult
     {

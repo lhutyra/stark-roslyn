@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static class SyntaxNodeOrTokenExtensions
     {

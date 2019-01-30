@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.Completion.Providers
+﻿namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal class SymbolMatchPriority
     {

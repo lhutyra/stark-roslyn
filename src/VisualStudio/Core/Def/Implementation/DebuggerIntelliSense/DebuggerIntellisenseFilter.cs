@@ -2,11 +2,12 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
@@ -14,7 +15,7 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
 {
     internal class DebuggerIntelliSenseFilter<TPackage, TLanguageService> : AbstractVsTextViewFilter<TPackage, TLanguageService>, IDisposable
         where TPackage : AbstractPackage<TPackage, TLanguageService>

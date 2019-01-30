@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.MetadataAsSource
+namespace StarkPlatform.CodeAnalysis.MetadataAsSource
 {
     internal interface IMetadataAsSourceService : ILanguageService
     {

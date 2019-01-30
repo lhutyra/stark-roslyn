@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Packaging
+namespace StarkPlatform.CodeAnalysis.Packaging
 {
     internal interface IPackageInstallerService : IWorkspaceService
     {

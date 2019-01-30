@@ -2,10 +2,10 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting
+namespace StarkPlatform.CodeAnalysis.Formatting
 {
     internal abstract partial class AbstractTriviaDataFactory
     {

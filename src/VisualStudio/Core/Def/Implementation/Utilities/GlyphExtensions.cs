@@ -2,10 +2,10 @@
 
 using System;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities
 {
     internal static class GlyphExtensions
     {
@@ -32,10 +32,10 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
                 case Glyph.ConstantInternal:
                     return StandardGlyphGroup.GlyphGroupConstant;
 
-                case Glyph.CSharpFile:
+                case Glyph.StarkFile:
                     return StandardGlyphGroup.GlyphCSharpFile;
 
-                case Glyph.CSharpProject:
+                case Glyph.StarkProject:
                     return StandardGlyphGroup.GlyphCoolProject;
 
                 case Glyph.DelegatePublic:

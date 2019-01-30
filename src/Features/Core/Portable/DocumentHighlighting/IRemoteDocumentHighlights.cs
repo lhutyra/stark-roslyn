@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.DocumentHighlighting
+namespace StarkPlatform.CodeAnalysis.DocumentHighlighting
 {
     internal interface IRemoteDocumentHighlights
     {

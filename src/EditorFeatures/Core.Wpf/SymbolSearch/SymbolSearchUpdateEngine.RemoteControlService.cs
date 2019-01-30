@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.RemoteControl;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     internal partial class SymbolSearchUpdateEngine
     {

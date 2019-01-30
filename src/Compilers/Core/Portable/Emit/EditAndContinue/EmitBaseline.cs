@@ -10,7 +10,7 @@ using System.Reflection.Metadata;
 using System.Reflection.Metadata.Ecma335;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     // A MethodImpl entry is a pair of implementing method and implemented
     // method. However, the implemented method is a MemberRef rather

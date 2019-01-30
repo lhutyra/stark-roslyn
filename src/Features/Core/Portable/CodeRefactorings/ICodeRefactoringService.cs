@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings
 {
     internal interface ICodeRefactoringService
     {

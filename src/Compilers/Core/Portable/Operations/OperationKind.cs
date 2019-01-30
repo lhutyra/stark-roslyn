@@ -2,10 +2,10 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.CodeAnalysis.FlowAnalysis;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.FlowAnalysis;
+using StarkPlatform.CodeAnalysis.Operations;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// All of the kinds of operations, including statements and expressions.

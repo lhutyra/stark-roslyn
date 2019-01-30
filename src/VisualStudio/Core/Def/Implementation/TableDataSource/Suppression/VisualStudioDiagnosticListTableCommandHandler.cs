@@ -3,10 +3,10 @@
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Design;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Suppression;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Suppression;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     [Export(typeof(VisualStudioDiagnosticListTableCommandHandler))]
     internal partial class VisualStudioDiagnosticListTableCommandHandler

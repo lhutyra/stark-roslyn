@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Shared.Options
+namespace StarkPlatform.CodeAnalysis.Shared.Options
 {
     internal static class ServiceFeatureOnOffOptions
     {
@@ -28,7 +28,7 @@ namespace Microsoft.CodeAnalysis.Shared.Options
             var option = options.GetOption(ClosedFileDiagnostic, language);
             if (!option.HasValue)
             {
-                return language == LanguageNames.CSharp ?
+                return language == LanguageNames.Stark ?
                     CSharpClosedFileDiagnosticsEnabledByDefault :
                     DefaultClosedFileDiagnosticsEnabledByDefault;
             }

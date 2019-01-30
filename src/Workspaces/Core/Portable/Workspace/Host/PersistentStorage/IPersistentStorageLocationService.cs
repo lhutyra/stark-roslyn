@@ -2,9 +2,9 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     interface IPersistentStorageLocationService : IWorkspaceService
     {

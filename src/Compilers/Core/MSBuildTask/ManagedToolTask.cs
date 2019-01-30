@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using Microsoft.Build.Utilities;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     public abstract class ManagedToolTask : ToolTask
     {

@@ -5,16 +5,16 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.ChangeSignature;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.ChangeSignature;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.Text.Classification;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ChangeSignature
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ChangeSignature
 {
     internal class ChangeSignatureDialogViewModel : AbstractNotifyPropertyChanged
     {
@@ -458,10 +458,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ChangeSignature
                 {
                     switch (ParameterSymbol.Language)
                     {
-                        case LanguageNames.CSharp:
+                        case LanguageNames.Stark:
                             return ModifierText("out", "ref", "in", "params", "this");
-                        case LanguageNames.VisualBasic:
-                            return ModifierText(@ref: "ByRef", @params: "ParamArray", @this: "Me");
                         default:
                             return string.Empty;
                     }
@@ -507,10 +505,8 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ChangeSignature
                     }
                     switch (ParameterSymbol.Language)
                     {
-                        case LanguageNames.CSharp:
+                        case LanguageNames.Stark:
                             return NullText("null");
-                        case LanguageNames.VisualBasic:
-                            return NullText("Nothing");
                     }
                     return string.Empty;
 

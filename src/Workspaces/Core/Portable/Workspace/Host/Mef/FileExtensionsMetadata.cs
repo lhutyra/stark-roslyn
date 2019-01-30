@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     /// <summary>
     /// MEF metadata class used to find exports declared for a specific file extensions.

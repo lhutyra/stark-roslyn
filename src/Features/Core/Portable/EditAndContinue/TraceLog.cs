@@ -6,7 +6,7 @@ using System.Threading;
 using Roslyn.Utilities;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     /// <summary>
     /// Fixed size rolling tracing log. 

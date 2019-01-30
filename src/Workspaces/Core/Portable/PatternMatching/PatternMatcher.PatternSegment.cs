@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.PatternMatching
+namespace StarkPlatform.CodeAnalysis.PatternMatching
 {
     internal partial class PatternMatcher
     {

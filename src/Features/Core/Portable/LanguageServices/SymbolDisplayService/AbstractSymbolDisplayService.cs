@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     internal abstract partial class AbstractSymbolDisplayService : ISymbolDisplayService
     {

@@ -8,12 +8,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Diagnostics.Telemetry;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Diagnostics.Telemetry;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.Diagnostics.AnalyzerDriver;
+using static StarkPlatform.CodeAnalysis.Diagnostics.AnalyzerDriver;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Stores the partial analysis state for analyzers executed on a specific compilation.

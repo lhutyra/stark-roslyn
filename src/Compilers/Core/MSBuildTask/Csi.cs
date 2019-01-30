@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using Microsoft.Build.Framework;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     public class Csi : InteractiveCompiler
     {
@@ -29,7 +29,7 @@ namespace Microsoft.CodeAnalysis.BuildTasks
             commandLine.AppendSwitchIfNotNull("/loadpaths:", AdditionalLoadPaths, ",");
             commandLine.AppendSwitchIfNotNull("/imports:", Imports, ";");
 
-            Csc.AddReferencesToCommandLine(commandLine, References, isInteractive: true);
+            Starkc.AddReferencesToCommandLine(commandLine, References, isInteractive: true);
 
             base.AddResponseFileCommands(commandLine);
         }

@@ -2,13 +2,13 @@
 
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Editor.Tagging;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.Tagging;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging
 {
     internal partial class TaggerEventSources
     {

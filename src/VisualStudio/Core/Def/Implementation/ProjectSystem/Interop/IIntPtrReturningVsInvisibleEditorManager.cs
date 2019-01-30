@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Interop
 {
     /// <remarks>
     /// A redefinition of Microsoft.VisualStudio.Shell.Interop.IVsInvisibleEditorManager. One critical difference

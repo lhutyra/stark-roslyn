@@ -2,11 +2,11 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.RemoveUnnecessaryParentheses
+namespace StarkPlatform.CodeAnalysis.RemoveUnnecessaryParentheses
 {
     internal abstract class AbstractRemoveUnnecessaryParenthesesDiagnosticAnalyzer<
         TLanguageKindEnum,

@@ -2,10 +2,10 @@
 
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SymbolDisplay
+namespace StarkPlatform.CodeAnalysis.SymbolDisplay
 {
     internal abstract partial class AbstractSymbolDisplayVisitor : SymbolVisitor
     {

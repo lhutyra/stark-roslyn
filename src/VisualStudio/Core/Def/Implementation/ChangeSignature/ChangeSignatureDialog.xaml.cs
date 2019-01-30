@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ChangeSignature
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ChangeSignature
 {
     /// <summary>
     /// Interaction logic for ExtractInterfaceDialog.xaml

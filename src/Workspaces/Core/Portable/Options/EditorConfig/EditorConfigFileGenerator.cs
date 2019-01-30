@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     internal static class EditorConfigFileGenerator
     {
@@ -21,15 +21,10 @@ namespace Microsoft.CodeAnalysis.Options
             editorconfig.AppendLine("root = true");
             editorconfig.AppendLine();
 
-            if (language == LanguageNames.CSharp)
+            if (language == LanguageNames.Stark)
             {
-                editorconfig.AppendLine($"# {WorkspacesResources.CSharp_files}");
-                editorconfig.AppendLine("[*.cs]");
-            }
-            else if (language == LanguageNames.VisualBasic)
-            {
-                editorconfig.AppendLine($"# {WorkspacesResources.Visual_Basic_files}");
-                editorconfig.AppendLine("[*.vb]");
+                editorconfig.AppendLine($"# {WorkspacesResources.Stark_files}");
+                editorconfig.AppendLine("[*.sk]");
             }
             editorconfig.AppendLine();
 

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.VisualStudio.LanguageServices.Implementation.TaskList;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 
-namespace Microsoft.VisualStudio.LanguageServices.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.ProjectSystem
 {
     /// <summary>
     /// Factory to create a project context for a new Workspace project that can be initialized on a background thread.

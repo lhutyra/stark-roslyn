@@ -2,10 +2,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using VsTextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.EditAndContinue.Interop
 {
     // IVsENCRebuildableProjectCfg2 is buggy in the VS SDK
 

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Telemetry
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Telemetry
 {
     /// <summary>
     /// Contains telemetry info for a specific analyzer, such as count of registered actions, the total execution time, etc.

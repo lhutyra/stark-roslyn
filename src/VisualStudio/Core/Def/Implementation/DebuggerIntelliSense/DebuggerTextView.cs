@@ -3,7 +3,7 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Formatting;
@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Text.Projection;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
 {
     internal partial class DebuggerTextView : IWpfTextView, IDebuggerTextView, ITextView2
     {

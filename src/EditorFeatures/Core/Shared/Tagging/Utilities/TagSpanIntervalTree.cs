@@ -3,12 +3,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.Shared.Collections;
+using StarkPlatform.CodeAnalysis.Shared.Collections;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging
 {
     /// <summary>
     /// A tag span interval tree represents an ordered tree data structure to store tag spans in.  It

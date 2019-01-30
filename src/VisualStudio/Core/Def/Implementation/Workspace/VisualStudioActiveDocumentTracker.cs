@@ -5,12 +5,13 @@ using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -20,7 +21,7 @@ using Microsoft.VisualStudio.Threading;
 using Roslyn.Utilities;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     /// <summary>
     /// A singleton that tracks the open IVsWindowFrames and can report which documents are visible or active in a given <see cref="Workspace"/>.
@@ -233,7 +234,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
                     {
                         _textBuffer = _documentTracker._editorAdaptersFactoryService.GetDocumentBuffer(bufferAdapter);
 
-                        if (!_textBuffer.ContentType.IsOfType(ContentTypeNames.RoslynContentType))
+                        if (!_textBuffer.ContentType.IsOfType(ContentTypeNames.StarkRoslynContentType))
                         {
                             _textBuffer.Changed += NonRoslynTextBuffer_Changed;
                         }

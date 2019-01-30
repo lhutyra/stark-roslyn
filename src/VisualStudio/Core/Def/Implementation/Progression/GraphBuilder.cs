@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.GraphModel;
 using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.GraphModel.Schemas;
 using Microsoft.VisualStudio.Progression.CodeSchema;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Progression
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Progression
 {
     internal sealed partial class GraphBuilder
     {
@@ -389,7 +389,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Progression
                     node.Label = symbol.MetadataName;
 
                     var propertySymbol = (IPropertySymbol)symbol;
-                    if (propertySymbol.IsIndexer && LanguageNames.CSharp == propertySymbol.Language)
+                    if (propertySymbol.IsIndexer && LanguageNames.Stark == propertySymbol.Language)
                     {
                         // For C# indexer, we will strip off the "[]"
                         node.Label = symbol.Name.Replace("[]", string.Empty);

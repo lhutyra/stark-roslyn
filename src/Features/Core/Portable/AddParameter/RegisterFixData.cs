@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.AddParameter
+namespace StarkPlatform.CodeAnalysis.AddParameter
 {
     internal class RegisterFixData<TArgumentSyntax>
         where TArgumentSyntax : SyntaxNode

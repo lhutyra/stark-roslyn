@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Reflection.Metadata;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class ModuleExtensions
     {

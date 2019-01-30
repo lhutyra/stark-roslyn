@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeActions
+namespace StarkPlatform.CodeAnalysis.CodeActions
 {
     /// <summary>
     /// A <see cref="CodeAction"/> that can vary with user specified options.

@@ -1,7 +1,7 @@
 ﻿<vs:DialogWindow 
     x:Uid="ChangeSignatureDialog"
     x:Name="dialog"
-    x:Class="Microsoft.VisualStudio.LanguageServices.Implementation.ChangeSignature.ChangeSignatureDialog"
+    x:Class="StarkPlatform.VisualStudio.LanguageServices.Implementation.ChangeSignature.ChangeSignatureDialog"
     x:ClassModifier="internal"         
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

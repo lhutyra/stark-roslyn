@@ -6,11 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Emit;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class SigningUtilities
     {

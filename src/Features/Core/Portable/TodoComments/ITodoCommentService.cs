@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.TodoComments
+namespace StarkPlatform.CodeAnalysis.TodoComments
 {
     /// <summary>
     /// Description of a TODO comment type to find in a user's comments.

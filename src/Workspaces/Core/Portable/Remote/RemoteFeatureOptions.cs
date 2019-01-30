@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.Experiments;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Experiments;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     internal static class RemoteFeatureOptions
     {

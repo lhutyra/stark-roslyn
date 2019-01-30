@@ -4,11 +4,11 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Microsoft.CodeAnalysis.PullMemberUp;
-using Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp.WarningDialog;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp.WarningDialog;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
 {
     /// <summary>
     /// Interaction logic for PullMemberUpDialog.xaml

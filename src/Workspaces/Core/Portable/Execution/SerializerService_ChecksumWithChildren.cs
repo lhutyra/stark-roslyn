@@ -3,10 +3,10 @@
 using System;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Execution;
+using StarkPlatform.CodeAnalysis.Execution;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Serialization
+namespace StarkPlatform.CodeAnalysis.Serialization
 {
     /// <summary>
     /// serialize and deserialize objects to straem.

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// A class that provides constants for common language names.
@@ -8,18 +8,8 @@ namespace Microsoft.CodeAnalysis
     public static class LanguageNames
     {
         /// <summary>
-        /// The common name used for the C# language.
+        /// The common name used for the Stark language.
         /// </summary>
-        public const string CSharp = "C#";
-
-        /// <summary>
-        /// The common name used for the Visual Basic language.
-        /// </summary>
-        public const string VisualBasic = "Visual Basic";
-
-        /// <summary>
-        /// The common name used for the F# language.
-        /// </summary>
-        public const string FSharp = "F#";
+        public const string Stark = "stark";
     }
 }

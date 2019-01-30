@@ -4,15 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Roslyn.Utilities;
-using static Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles.SymbolSpecification;
+using static StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles.SymbolSpecification;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
 {
     internal class SymbolSpecificationViewModel : AbstractNotifyPropertyChanged, INamingStylesInfoDialogViewModel
     {
@@ -40,7 +40,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.N
             ID = specification.ID;
 
             // The list of supported SymbolKinds is limited due to https://github.com/dotnet/roslyn/issues/8753.
-            if (languageName == LanguageNames.CSharp)
+            if (languageName == LanguageNames.Stark)
             {
                 SymbolKindList = new List<SymbolKindViewModel>
                 {
@@ -78,46 +78,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.N
                     new ModifierViewModel(DeclarationModifiers.Const, "const", specification),
                     new ModifierViewModel(DeclarationModifiers.ReadOnly, "readonly", specification),
                     new ModifierViewModel(DeclarationModifiers.Static, "static", specification)
-                };
-            }
-            else if (languageName == LanguageNames.VisualBasic)
-            {
-                SymbolKindList = new List<SymbolKindViewModel>
-                {
-                    new SymbolKindViewModel(SymbolKind.Namespace, "Namespace", specification),
-                    new SymbolKindViewModel(TypeKind.Class, "Class", specification),
-                    new SymbolKindViewModel(TypeKind.Struct, "Structure", specification),
-                    new SymbolKindViewModel(TypeKind.Interface, "Interface", specification),
-                    new SymbolKindViewModel(TypeKind.Enum, "Enum", specification),
-                    new SymbolKindViewModel(TypeKind.Module, "Module", specification),
-                    new SymbolKindViewModel(SymbolKind.Property, "Property", specification),
-                    new SymbolKindViewModel(SymbolKind.Method, "Method", specification),
-                    new SymbolKindViewModel(SymbolKind.Field, "Field", specification),
-                    new SymbolKindViewModel(SymbolKind.Event, "Event", specification),
-                    new SymbolKindViewModel(TypeKind.Delegate, "Delegate", specification),
-                    new SymbolKindViewModel(SymbolKind.Parameter, "Parameter", specification),
-                    new SymbolKindViewModel(SymbolKind.TypeParameter, "Type Parameter", specification),
-                    new SymbolKindViewModel(SymbolKind.Local, "Local", specification)
-                };
-
-                AccessibilityList = new List<AccessibilityViewModel>
-                {
-                    new AccessibilityViewModel(Accessibility.Public, "Public", specification),
-                    new AccessibilityViewModel(Accessibility.Friend, "Friend", specification),
-                    new AccessibilityViewModel(Accessibility.Private, "Private", specification),
-                    new AccessibilityViewModel(Accessibility.Protected , "Protected", specification),
-                    new AccessibilityViewModel(Accessibility.ProtectedOrInternal, "Protected Friend", specification),
-                    new AccessibilityViewModel(Accessibility.ProtectedAndInternal, "Private Protected", specification),
-                    new AccessibilityViewModel(Accessibility.NotApplicable, "Local", specification),
-                };
-
-                ModifierList = new List<ModifierViewModel>
-                {
-                    new ModifierViewModel(DeclarationModifiers.Abstract, "MustInherit", specification),
-                    new ModifierViewModel(DeclarationModifiers.Async, "Async", specification),
-                    new ModifierViewModel(DeclarationModifiers.Const, "Const", specification),
-                    new ModifierViewModel(DeclarationModifiers.ReadOnly, "ReadOnly", specification),
-                    new ModifierViewModel(DeclarationModifiers.Static, "Shared", specification)
                 };
             }
             else

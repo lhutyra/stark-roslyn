@@ -2,11 +2,11 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Editor.EmbeddedLanguages;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.EmbeddedLanguages;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.BraceMatching
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.BraceMatching
 {
     // Note: this type could be concrete, but we cannot export IBraceMatcher's for multiple
     // languages at once.  So all logic is contained here.  The derived types only exist for

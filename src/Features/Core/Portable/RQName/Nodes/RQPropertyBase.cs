@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Features.RQName.Nodes
+namespace StarkPlatform.CodeAnalysis.Features.RQName.Nodes
 {
     internal abstract class RQPropertyBase : RQMethodOrProperty
     {

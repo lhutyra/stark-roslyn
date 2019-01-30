@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
 using System.Diagnostics;
 
 namespace Roslyn.Utilities

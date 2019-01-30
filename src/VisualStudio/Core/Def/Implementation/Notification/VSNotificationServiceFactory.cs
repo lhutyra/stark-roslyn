@@ -3,14 +3,14 @@
 using System;
 using System.Composition;
 using System.Windows.Forms;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Notification;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Notification
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Notification
 {
     [ExportWorkspaceServiceFactory(typeof(INotificationService), ServiceLayer.Host), Shared]
     internal class VSNotificationServiceFactory : IWorkspaceServiceFactory

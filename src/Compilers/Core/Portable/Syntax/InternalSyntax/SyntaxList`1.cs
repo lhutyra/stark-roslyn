@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Syntax.InternalSyntax
+namespace StarkPlatform.CodeAnalysis.Syntax.InternalSyntax
 {
     internal partial struct SyntaxList<TNode> : IEquatable<SyntaxList<TNode>>
         where TNode : GreenNode

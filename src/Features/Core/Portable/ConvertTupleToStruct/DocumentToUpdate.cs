@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.ConvertTupleToStruct
+namespace StarkPlatform.CodeAnalysis.ConvertTupleToStruct
 {
     internal struct DocumentToUpdate
     {

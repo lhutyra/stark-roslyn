@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Reflection;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Host.Mef
+namespace StarkPlatform.CodeAnalysis.Host.Mef
 {
     public static class DesktopMefHostServices
     {

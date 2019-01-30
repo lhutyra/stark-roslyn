@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Tags
+namespace StarkPlatform.CodeAnalysis.Tags
 {
     public static class WellKnownTags
     {
@@ -129,10 +129,7 @@ namespace Microsoft.CodeAnalysis.Tags
         internal static readonly ImmutableArray<string> AddReference = ImmutableArray.Create(WellKnownTags.AddReference);
         internal static readonly ImmutableArray<string> NuGet = ImmutableArray.Create(WellKnownTags.NuGet);
 
-        internal static readonly ImmutableArray<string> CSharpFile = ImmutableArray.Create(WellKnownTags.File, LanguageNames.CSharp);
-        internal static readonly ImmutableArray<string> VisualBasicFile = ImmutableArray.Create(WellKnownTags.File, LanguageNames.VisualBasic);
-
-        internal static readonly ImmutableArray<string> CSharpProject = ImmutableArray.Create(WellKnownTags.Project, LanguageNames.CSharp);
-        internal static readonly ImmutableArray<string> VisualBasicProject = ImmutableArray.Create(WellKnownTags.Project, LanguageNames.VisualBasic);
+        internal static readonly ImmutableArray<string> StarkFile = ImmutableArray.Create(WellKnownTags.File, LanguageNames.Stark);
+        internal static readonly ImmutableArray<string> StarkProject = ImmutableArray.Create(WellKnownTags.Project, LanguageNames.Stark);
     }
 }

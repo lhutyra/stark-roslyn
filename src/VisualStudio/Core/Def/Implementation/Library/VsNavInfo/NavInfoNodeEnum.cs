@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.VsNavInfo
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.VsNavInfo
 {
     internal class NavInfoNodeEnum : IVsEnumNavInfoNodes
     {

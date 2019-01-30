@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Completion.Providers
+namespace StarkPlatform.CodeAnalysis.Completion.Providers
 {
     internal sealed class CompletionProviderMetadata : OrderableLanguageMetadata
     {

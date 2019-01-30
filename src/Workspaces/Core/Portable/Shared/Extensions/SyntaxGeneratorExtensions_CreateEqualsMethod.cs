@@ -4,14 +4,14 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal static partial class SyntaxGeneratorExtensions
     {
@@ -337,8 +337,8 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
                 {
                     case SpecialType.System_Boolean:
                     case SpecialType.System_Char:
-                    case SpecialType.System_SByte:
-                    case SpecialType.System_Byte:
+                    case SpecialType.System_Int8:
+                    case SpecialType.System_UInt8:
                     case SpecialType.System_Int16:
                     case SpecialType.System_UInt16:
                     case SpecialType.System_Int32:
@@ -346,8 +346,8 @@ namespace Microsoft.CodeAnalysis.Shared.Extensions
                     case SpecialType.System_Int64:
                     case SpecialType.System_UInt64:
                     case SpecialType.System_Decimal:
-                    case SpecialType.System_Single:
-                    case SpecialType.System_Double:
+                    case SpecialType.System_Float32:
+                    case SpecialType.System_Float64:
                     case SpecialType.System_String:
                     case SpecialType.System_Nullable_T:
                     case SpecialType.System_DateTime:

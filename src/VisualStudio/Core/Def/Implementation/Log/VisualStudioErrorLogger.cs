@@ -2,13 +2,13 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.ErrorLogger;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.ErrorLogger;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.Shell;
-using static Microsoft.CodeAnalysis.RoslynAssemblyHelper;
+using static StarkPlatform.CodeAnalysis.RoslynAssemblyHelper;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Log
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Log
 {
     [ExportWorkspaceService(typeof(IErrorLoggerService), ServiceLayer.Host), Export(typeof(IErrorLoggerService)), Shared]
     internal class VisualStudioErrorLogger : IErrorLoggerService
@@ -17,11 +17,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Log
         {
             var name = source.GetType().Name;
             ActivityLog.LogError(name, ToLogFormat(exception));
-
-            if (ShouldReportCrashDumps(source))
-            {
-                WatsonReporter.Report(name, exception);
-            }
         }
 
         private bool ShouldReportCrashDumps(object source) => HasRoslynPublicKey(source);

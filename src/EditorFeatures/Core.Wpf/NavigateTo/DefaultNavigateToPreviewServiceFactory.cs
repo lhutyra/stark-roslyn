@@ -2,10 +2,10 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.NavigateTo
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.NavigateTo
 {
     [ExportWorkspaceServiceFactory(typeof(INavigateToPreviewService), ServiceLayer.Editor), Shared]
     internal sealed class DefaultNavigateToPreviewServiceFactory : IWorkspaceServiceFactory

@@ -3,20 +3,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.CSharp</RootNamespace>
+    <RootNamespace>StarkPlatform.CodeAnalysis.CSharp</RootNamespace>
     <TargetFramework>netstandard1.3</TargetFramework>
     <DefineConstants>$(DefineConstants),CODE_STYLE</DefineConstants>
-    <PackageId>Microsoft.CodeAnalysis.CSharp.CodeStyle.NewNameSinceWeReferenceTheAnalyzersAndNuGetCannotFigureItOut</PackageId>
+    <PackageId>StarkPlatform.CodeAnalysis.CSharp.CodeStyle.NewNameSinceWeReferenceTheAnalyzersAndNuGetCannotFigureItOut</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpFixedVersion)" />
+    <PackageReference Include="StarkPlatform.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpFixedVersion)" />
   </ItemGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\Core\Analyzers\Microsoft.CodeAnalysis.CodeStyle.csproj" />
+    <ProjectReference Include="..\..\Core\Analyzers\StarkPlatform.CodeAnalysis.CodeStyle.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.CodeStyle.Fixes" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.CodeStyle.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.CodeStyle.Fixes" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.CodeStyle.UnitTests" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\Workspaces\CSharp\Portable\Extensions\ContextQuery\SyntaxTokenExtensions_SharedWithCodeStyle.cs" Link="Formatting\ContextQuery\SyntaxTokenExtensions_SharedWithCodeStyle.cs" />

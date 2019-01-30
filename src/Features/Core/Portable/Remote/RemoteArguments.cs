@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.NavigateTo;
-using Microsoft.CodeAnalysis.Navigation;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.NavigateTo;
+using StarkPlatform.CodeAnalysis.Navigation;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     #region NavigateTo
 

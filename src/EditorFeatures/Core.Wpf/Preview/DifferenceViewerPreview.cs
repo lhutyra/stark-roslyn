@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
 using Microsoft.VisualStudio.Text.Differencing;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Preview
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Preview
 {
     internal class DifferenceViewerPreview : IDisposable
     {

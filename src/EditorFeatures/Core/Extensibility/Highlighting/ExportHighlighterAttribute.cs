@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class)]

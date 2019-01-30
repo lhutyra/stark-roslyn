@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Shell.TableManager;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     [Export(typeof(MiscellaneousTodoListTable))]
     internal class MiscellaneousTodoListTable : VisualStudioBaseTodoListTable
@@ -21,7 +21,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
         }
 
         // only for test
-        public MiscellaneousTodoListTable(Microsoft.CodeAnalysis.Workspace workspace, ITodoListProvider todoListProvider, ITableManagerProvider provider) :
+        public MiscellaneousTodoListTable(StarkPlatform.CodeAnalysis.Workspace workspace, ITodoListProvider todoListProvider, ITableManagerProvider provider) :
             base(workspace, todoListProvider, IdentifierString, provider)
         {
         }

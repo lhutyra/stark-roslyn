@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     /// <summary>
     /// Error type symbols should be replaced with an object of this class 

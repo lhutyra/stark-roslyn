@@ -12,7 +12,7 @@ using System.Reflection.PortableExecutable;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Represents analyzers stored in an analyzer assembly file.

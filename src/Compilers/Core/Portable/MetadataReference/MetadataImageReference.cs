@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents an in-memory Portable-Executable image.

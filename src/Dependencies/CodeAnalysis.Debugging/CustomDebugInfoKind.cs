@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.Debugging
+﻿namespace StarkPlatform.CodeAnalysis.Debugging
 {
     /// <summary>
     /// The kinds of custom debug info that we know how to interpret.

@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal abstract class AbstractLookupSymbolsInfo<TSymbol>
         where TSymbol : class, ISymbol

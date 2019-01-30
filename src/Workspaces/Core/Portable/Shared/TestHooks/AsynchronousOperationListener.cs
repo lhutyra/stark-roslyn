@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.TestHooks
+namespace StarkPlatform.CodeAnalysis.Shared.TestHooks
 {
     internal sealed partial class AsynchronousOperationListener : IAsynchronousOperationListener, IAsynchronousOperationWaiter
     {

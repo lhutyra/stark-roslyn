@@ -2,11 +2,11 @@
 
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis.Editor.Wpf;
+using StarkPlatform.CodeAnalysis.Editor.Wpf;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Imaging.Interop;
 
-namespace Microsoft.CodeAnalysis.Editor.Tags
+namespace StarkPlatform.CodeAnalysis.Editor.Tags
 {
     [ExportImageMonikerService(Name = Name), Shared]
     internal class DefaultImageMonikerService : IImageMonikerService

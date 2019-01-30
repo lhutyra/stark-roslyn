@@ -4,9 +4,9 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.QuickInfo
+namespace StarkPlatform.CodeAnalysis.Editor.QuickInfo
 {
     internal partial class ContentControlService
     {

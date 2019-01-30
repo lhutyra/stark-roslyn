@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Extensions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Extensions
 {
     internal static class ServiceProviderExtensions
     {

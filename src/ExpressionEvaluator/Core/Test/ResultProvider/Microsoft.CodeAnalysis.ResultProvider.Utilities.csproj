@@ -3,8 +3,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExpressionEvaluator</RootNamespace>
-    <AssemblyName>Microsoft.CodeAnalysis.ExpressionEvaluator.ResultProvider.Utilities</AssemblyName>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExpressionEvaluator</RootNamespace>
+    <AssemblyName>StarkPlatform.CodeAnalysis.ExpressionEvaluator.ResultProvider.Utilities</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFramework>net472</TargetFramework>
     <IsShipping>false</IsShipping>
@@ -77,15 +77,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator.ResultProvider.UnitTests" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.ExpressionEvaluator.ResultProvider.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.ExpressionEvaluator.ResultProvider.UnitTests" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.ResultProvider.UnitTests" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\..\Source\ResultProvider\Portable\Resources.resx">
       <Link>Resources.resx</Link>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Microsoft.CodeAnalysis.ExpressionEvaluator</CustomToolNamespace>
+      <CustomToolNamespace>StarkPlatform.CodeAnalysis.ExpressionEvaluator</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\..\Source\ResultProvider\ResultProvider.projitems" Label="Shared" />

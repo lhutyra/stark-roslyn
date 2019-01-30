@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal static class IntegerUtilities
     {
@@ -61,9 +61,9 @@ namespace Microsoft.CodeAnalysis.Shared.Utilities
         {
             switch (type)
             {
-                case SpecialType.System_SByte:
+                case SpecialType.System_Int8:
                     return unchecked((sbyte)v);
-                case SpecialType.System_Byte:
+                case SpecialType.System_UInt8:
                     return unchecked((byte)v);
                 case SpecialType.System_Int16:
                     return unchecked((short)v);

@@ -2,10 +2,10 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Completion.SuggestionMode
+namespace StarkPlatform.CodeAnalysis.Completion.SuggestionMode
 {
     internal abstract class SuggestionModeCompletionProvider : CommonCompletionProvider
     {

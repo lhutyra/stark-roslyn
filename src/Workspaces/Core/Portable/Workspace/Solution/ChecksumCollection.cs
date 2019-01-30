@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Serialization
+namespace StarkPlatform.CodeAnalysis.Serialization
 {
     /// <summary>
     /// collection which children is checksum.

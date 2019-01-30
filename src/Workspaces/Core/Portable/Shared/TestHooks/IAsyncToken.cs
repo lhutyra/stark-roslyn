@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Shared.TestHooks
+namespace StarkPlatform.CodeAnalysis.Shared.TestHooks
 {
     internal interface IAsyncToken : IDisposable
     {

@@ -3,9 +3,9 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.SQLite.Interop;
+using StarkPlatform.CodeAnalysis.SQLite.Interop;
 
-namespace Microsoft.CodeAnalysis.SQLite
+namespace StarkPlatform.CodeAnalysis.SQLite
 {
     internal partial class SQLitePersistentStorage
     {

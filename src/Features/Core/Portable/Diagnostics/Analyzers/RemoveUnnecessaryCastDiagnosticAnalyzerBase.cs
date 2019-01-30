@@ -3,11 +3,11 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.RemoveUnnecessaryCast
+namespace StarkPlatform.CodeAnalysis.Diagnostics.RemoveUnnecessaryCast
 {
     internal abstract class RemoveUnnecessaryCastDiagnosticAnalyzerBase<
         TLanguageKindEnum,

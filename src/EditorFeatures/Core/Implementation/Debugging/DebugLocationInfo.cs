@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Debugging
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Debugging
 {
     internal struct DebugLocationInfo
     {

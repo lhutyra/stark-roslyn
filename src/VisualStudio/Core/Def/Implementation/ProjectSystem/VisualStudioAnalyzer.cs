@@ -4,12 +4,12 @@ using System;
 using System.Collections.Immutable;
 using System.IO;
 using System.Reflection;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.VisualStudio.LanguageServices.Implementation.TaskList;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     internal sealed class VisualStudioAnalyzer : IDisposable
     {

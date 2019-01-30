@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.Differencing
+namespace StarkPlatform.CodeAnalysis.Differencing
 {
     /// <summary>
     /// Calculates Longest Common Subsequence for immutable arrays.

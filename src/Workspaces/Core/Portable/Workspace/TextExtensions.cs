@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     // The parts of a workspace that deal with open documents
     internal static class TextExtensions

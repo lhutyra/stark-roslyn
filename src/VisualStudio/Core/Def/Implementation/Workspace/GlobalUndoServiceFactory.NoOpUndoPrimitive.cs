@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Operations;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal partial class GlobalUndoServiceFactory
     {

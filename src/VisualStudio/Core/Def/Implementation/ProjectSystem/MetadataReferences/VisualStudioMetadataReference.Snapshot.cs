@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Execution;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.VisualStudio.LanguageServices.Implementation.DocumentationComments;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Execution;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.DocumentationComments;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     // TODO: This class is now an empty container just to hold onto the nested type. Renaming that is an invasive change that will be it's own commit.
     internal static class VisualStudioMetadataReference

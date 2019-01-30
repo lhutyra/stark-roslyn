@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Rename.ConflictEngine
+namespace StarkPlatform.CodeAnalysis.Rename.ConflictEngine
 {
     internal static class DeclarationConflictHelpers
     {

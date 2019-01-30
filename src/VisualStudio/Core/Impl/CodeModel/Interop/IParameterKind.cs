@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop
 {
     internal enum PARAMETER_PASSING_MODE
     {

@@ -4,7 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Converters
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Converters
 {
     public class MarginConverter : IValueConverter
     {

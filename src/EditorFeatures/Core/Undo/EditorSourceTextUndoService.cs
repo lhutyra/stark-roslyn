@@ -2,13 +2,13 @@
 
 using System.Collections.Generic;
 using System.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text.Operations;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Undo
+namespace StarkPlatform.CodeAnalysis.Editor.Undo
 {
     [ExportWorkspaceService(typeof(ISourceTextUndoService), ServiceLayer.Editor), Shared]
     internal sealed class EditorSourceTextUndoService : ISourceTextUndoService

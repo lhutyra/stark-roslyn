@@ -3,11 +3,11 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.UseIsNullCheck
+namespace StarkPlatform.CodeAnalysis.UseIsNullCheck
 {
     internal abstract class AbstractUseIsNullCheckForReferenceEqualsDiagnosticAnalyzer<
         TLanguageKindEnum>

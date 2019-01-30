@@ -4,10 +4,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection.PortableExecutable;
-using Microsoft.CodeAnalysis.Interop;
+using StarkPlatform.CodeAnalysis.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     public abstract partial class Compilation
     {

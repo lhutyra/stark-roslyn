@@ -1,15 +1,15 @@
-abstract Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.DisplayReferencedSymbols(Microsoft.CodeAnalysis.Solution solution, System.Collections.Generic.IEnumerable<Microsoft.CodeAnalysis.FindSymbols.ReferencedSymbol> referencedSymbols) -> void
-abstract Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.GetFileCodeModel(Microsoft.CodeAnalysis.DocumentId documentId) -> EnvDTE.FileCodeModel
-virtual Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.GetFilePath(Microsoft.CodeAnalysis.DocumentId documentId) -> string
-abstract Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.GetHierarchy(Microsoft.CodeAnalysis.ProjectId projectId) -> Microsoft.VisualStudio.Shell.Interop.IVsHierarchy
-abstract Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.TryFindAllReferences(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.Project project, System.Threading.CancellationToken cancellationToken) -> bool
-abstract Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.TryGoToDefinition(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.Project project, System.Threading.CancellationToken cancellationToken) -> bool
-Microsoft.VisualStudio.LanguageServices.Progression.GraphNodeCreation
-Microsoft.VisualStudio.LanguageServices.RQName
-Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace
-Microsoft.VisualStudio.LanguageServices.VisualStudioWorkspace.CreatePortableExecutableReference(string filePath, Microsoft.CodeAnalysis.MetadataReferenceProperties properties) -> Microsoft.CodeAnalysis.PortableExecutableReference
-static Microsoft.VisualStudio.LanguageServices.Progression.GraphNodeCreation.CreateNodeAsync(this Microsoft.VisualStudio.GraphModel.Graph graph, Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.Solution solution, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Microsoft.VisualStudio.GraphModel.GraphNode>
-static Microsoft.VisualStudio.LanguageServices.Progression.GraphNodeCreation.CreateNodeIdAsync(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.Solution solution, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Microsoft.VisualStudio.GraphModel.GraphNodeId>
-static Microsoft.VisualStudio.LanguageServices.RQName.From(Microsoft.CodeAnalysis.ISymbol symbol) -> string
+abstract StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.DisplayReferencedSymbols(StarkPlatform.CodeAnalysis.Solution solution, System.Collections.Generic.IEnumerable<StarkPlatform.CodeAnalysis.FindSymbols.ReferencedSymbol> referencedSymbols) -> void
+abstract StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.GetFileCodeModel(StarkPlatform.CodeAnalysis.DocumentId documentId) -> EnvDTE.FileCodeModel
+virtual StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.GetFilePath(StarkPlatform.CodeAnalysis.DocumentId documentId) -> string
+abstract StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.GetHierarchy(StarkPlatform.CodeAnalysis.ProjectId projectId) -> Microsoft.VisualStudio.Shell.Interop.IVsHierarchy
+abstract StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.TryFindAllReferences(StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.Project project, System.Threading.CancellationToken cancellationToken) -> bool
+abstract StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.TryGoToDefinition(StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.Project project, System.Threading.CancellationToken cancellationToken) -> bool
+StarkPlatform.VisualStudio.LanguageServices.Progression.GraphNodeCreation
+StarkPlatform.VisualStudio.LanguageServices.RQName
+StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace
+StarkPlatform.VisualStudio.LanguageServices.VisualStudioWorkspace.CreatePortableExecutableReference(string filePath, StarkPlatform.CodeAnalysis.MetadataReferenceProperties properties) -> StarkPlatform.CodeAnalysis.PortableExecutableReference
+static StarkPlatform.VisualStudio.LanguageServices.Progression.GraphNodeCreation.CreateNodeAsync(this Microsoft.VisualStudio.GraphModel.Graph graph, StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.Solution solution, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Microsoft.VisualStudio.GraphModel.GraphNode>
+static StarkPlatform.VisualStudio.LanguageServices.Progression.GraphNodeCreation.CreateNodeIdAsync(StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.Solution solution, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<Microsoft.VisualStudio.GraphModel.GraphNodeId>
+static StarkPlatform.VisualStudio.LanguageServices.RQName.From(StarkPlatform.CodeAnalysis.ISymbol symbol) -> string
 XamlGeneratedNamespace.GeneratedInternalTypeHelper
 XamlGeneratedNamespace.GeneratedInternalTypeHelper.GeneratedInternalTypeHelper() -> void

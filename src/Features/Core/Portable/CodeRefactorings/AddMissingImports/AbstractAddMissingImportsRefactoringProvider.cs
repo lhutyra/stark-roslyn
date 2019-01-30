@@ -3,12 +3,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.PasteTracking;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.PasteTracking;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.AddMissingImports
+namespace StarkPlatform.CodeAnalysis.AddMissingImports
 {
     internal abstract class AbstractAddMissingImportsRefactoringProvider : CodeRefactoringProvider
     {

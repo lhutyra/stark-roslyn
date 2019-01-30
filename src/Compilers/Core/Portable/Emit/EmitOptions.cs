@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     /// <summary>
     /// Represents compilation emit options.

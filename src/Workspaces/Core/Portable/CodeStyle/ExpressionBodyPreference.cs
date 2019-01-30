@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-namespace Microsoft.CodeAnalysis.CodeStyle
+namespace StarkPlatform.CodeAnalysis.CodeStyle
 {
     /// <remarks>
     /// Note: the order of this enum is important.  We originally only supported two values,

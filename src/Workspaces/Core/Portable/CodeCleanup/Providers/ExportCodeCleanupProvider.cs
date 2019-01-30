@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.CodeCleanup.Providers
+namespace StarkPlatform.CodeAnalysis.CodeCleanup.Providers
 {
     /// <summary>
     /// Specifies the exact type of the code cleanup exported.

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.SQLite.Interop
+namespace StarkPlatform.CodeAnalysis.SQLite.Interop
 {
     /// <summary>
     /// Simple wrapper struct for a <see cref="SqlStatement"/> that helps ensure that the statement

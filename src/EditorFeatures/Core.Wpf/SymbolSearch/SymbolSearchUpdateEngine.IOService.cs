@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Microsoft.CodeAnalysis.SymbolSearch
+namespace StarkPlatform.CodeAnalysis.SymbolSearch
 {
     internal partial class SymbolSearchUpdateEngine
     {

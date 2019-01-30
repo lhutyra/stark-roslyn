@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Tags;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     internal sealed class CompletionItemFilter
     {

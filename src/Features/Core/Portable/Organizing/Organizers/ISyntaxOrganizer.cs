@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Organizing.Organizers
+namespace StarkPlatform.CodeAnalysis.Organizing.Organizers
 {
     internal interface ISyntaxOrganizer
     {

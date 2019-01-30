@@ -4,7 +4,7 @@ using Roslyn.Utilities;
 using System;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// This class associates a symbol with particular format for display.

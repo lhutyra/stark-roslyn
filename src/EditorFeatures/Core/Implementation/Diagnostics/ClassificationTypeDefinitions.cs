@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Diagnostics
 {
     internal sealed class ClassificationTypeDefinitions
     {

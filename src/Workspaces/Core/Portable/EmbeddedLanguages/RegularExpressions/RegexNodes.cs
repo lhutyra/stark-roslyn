@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.EmbeddedLanguages.Common;
+using StarkPlatform.CodeAnalysis.EmbeddedLanguages.Common;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions
 {
     using RegexNodeOrToken = EmbeddedSyntaxNodeOrToken<RegexKind, RegexNode>;
     using RegexToken = EmbeddedSyntaxToken<RegexKind>;

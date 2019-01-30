@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.Language.Intellisense;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Peek
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Peek
 {
     internal abstract class PeekableItem : IPeekableItem
     {

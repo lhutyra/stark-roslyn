@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Commanding.Commands;
+using StarkPlatform.CodeAnalysis.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Editor.Commanding;
-using Microsoft.VisualStudio.LanguageServices;
+using StarkPlatform.VisualStudio.LanguageServices;
 
 namespace Microsoft.VisualStudio.Editor.Implementation
 {
@@ -12,11 +12,11 @@ namespace Microsoft.VisualStudio.Editor.Implementation
         internal CommandBindingDefinition gotoImplementationCommandBinding;
 
         [Export]
-        [CommandBinding(Guids.CSharpGroupIdString, ID.CSharpCommands.OrganizeRemoveAndSort, typeof(SortAndRemoveUnnecessaryImportsCommandArgs))]
+        [CommandBinding(Guids.StarkGroupIdString, ID.CSharpCommands.OrganizeRemoveAndSort, typeof(SortAndRemoveUnnecessaryImportsCommandArgs))]
         internal CommandBindingDefinition organizeRemoveAndSortCommandBinding;
 
         [Export]
-        [CommandBinding(Guids.CSharpGroupIdString, ID.CSharpCommands.ContextOrganizeRemoveAndSort, typeof(SortAndRemoveUnnecessaryImportsCommandArgs))]
+        [CommandBinding(Guids.StarkGroupIdString, ID.CSharpCommands.ContextOrganizeRemoveAndSort, typeof(SortAndRemoveUnnecessaryImportsCommandArgs))]
         internal CommandBindingDefinition contextOrganizeRemoveAndSortCommandBinding;
     }
 }

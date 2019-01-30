@@ -753,8 +753,8 @@
   <data name="Core_EditorConfig_Options" xml:space="preserve">
     <value>Core EditorConfig Options</value>
   </data>
-  <data name="CSharp_files" xml:space="preserve">
-    <value>C# files</value>
+  <data name="Stark_files" xml:space="preserve">
+    <value>Stark files</value>
   </data>
   <data name="dot_NET_Coding_Conventions" xml:space="preserve">
     <value>.NET Coding Conventions</value>

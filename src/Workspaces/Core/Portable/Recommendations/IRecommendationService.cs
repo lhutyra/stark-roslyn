@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Recommendations
+namespace StarkPlatform.CodeAnalysis.Recommendations
 {
     internal interface IRecommendationService : ILanguageService
     {

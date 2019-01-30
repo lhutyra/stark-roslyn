@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Editor.Shared.Tagging;
-using Microsoft.CodeAnalysis.Editor.Tagging;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Tagging;
+using StarkPlatform.CodeAnalysis.Editor.Tagging;
 using Microsoft.VisualStudio.Text.Classification;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.LineSeparators
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.LineSeparators
 {
     internal sealed class EditorFormatMapChangedEventSource : AbstractTaggerEventSource
     {

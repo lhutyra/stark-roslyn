@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.VisualStudio.LanguageServices.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.ProjectSystem
 {
     /// <summary>
     /// Provides TempPE compiler access

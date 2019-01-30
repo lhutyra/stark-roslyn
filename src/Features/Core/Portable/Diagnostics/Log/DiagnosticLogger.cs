@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Log
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Log
 {
     internal static class DiagnosticLogger
     {

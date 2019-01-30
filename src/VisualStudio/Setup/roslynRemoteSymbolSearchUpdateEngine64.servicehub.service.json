@@ -3,8 +3,8 @@
   "hostId": "RoslynCodeAnalysisService",
   "hostGroupAllowed": true,
   "entryPoint": {
-    "assemblyPath": "Microsoft.CodeAnalysis.Remote.ServiceHub.dll",
-    "fullClassName": "Microsoft.CodeAnalysis.Remote.RemoteSymbolSearchUpdateEngine",
+    "assemblyPath": "StarkPlatform.CodeAnalysis.Remote.ServiceHub.dll",
+    "fullClassName": "StarkPlatform.CodeAnalysis.Remote.RemoteSymbolSearchUpdateEngine",
     "appBasePath": "%VSAPPIDDIR%",
     "configPath": "%PkgDefApplicationConfigFile%"
   }

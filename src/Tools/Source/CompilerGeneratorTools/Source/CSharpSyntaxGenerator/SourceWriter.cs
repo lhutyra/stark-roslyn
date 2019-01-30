@@ -30,7 +30,7 @@ namespace CSharpSyntaxGenerator
             WriteLine("using System.Collections.Generic;");
             WriteLine("using System.Linq;");
             WriteLine("using System.Threading;");
-            WriteLine("using Microsoft.CodeAnalysis.Syntax.InternalSyntax;");
+            WriteLine("using StarkPlatform.CodeAnalysis.Syntax.InternalSyntax;");
             WriteLine("using Roslyn.Utilities;");
             WriteLine();
         }
@@ -39,7 +39,7 @@ namespace CSharpSyntaxGenerator
         {
             WriteFileHeader();
 
-            WriteLine("namespace Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax");
+            WriteLine("namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax");
             WriteLine("{");
             WriteLine();
             this.WriteGreenTypes();
@@ -55,7 +55,7 @@ namespace CSharpSyntaxGenerator
             WriteFileHeader();
 
             WriteLine();
-            WriteLine("namespace Microsoft.CodeAnalysis.CSharp.Syntax");
+            WriteLine("namespace StarkPlatform.CodeAnalysis.Stark.Syntax");
             WriteLine("{");
             WriteLine();
             this.WriteRedTypes();
@@ -67,9 +67,9 @@ namespace CSharpSyntaxGenerator
             WriteFileHeader();
 
             WriteLine();
-            WriteLine("namespace Microsoft.CodeAnalysis.CSharp");
+            WriteLine("namespace StarkPlatform.CodeAnalysis.Stark");
             WriteLine("{");
-            WriteLine("    using Microsoft.CodeAnalysis.CSharp.Syntax;");
+            WriteLine("    using StarkPlatform.CodeAnalysis.Stark.Syntax;");
             WriteLine();
             this.WriteRedVisitors();
             this.WriteRedRewriter();
@@ -143,7 +143,7 @@ namespace CSharpSyntaxGenerator
                         if (IsSeparatedNodeList(field.Type) ||
                             IsNodeList(field.Type))
                         {
-                            WriteLine("    public abstract {0}Microsoft.CodeAnalysis.Syntax.InternalSyntax.{1} {2} {{ get; }}",
+                            WriteLine("    public abstract {0}StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.{1} {2} {{ get; }}",
                                 (IsNew(field) ? "new " : ""), field.Type, field.Name);
                         }
                         else
@@ -236,19 +236,19 @@ namespace CSharpSyntaxGenerator
                     WriteComment(field.PropertyComment, "    ");
                     if (IsNodeList(field.Type))
                     {
-                        WriteLine("    public {0}Microsoft.CodeAnalysis.Syntax.InternalSyntax.{1} {2} {{ get {{ return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.{1}(this.{3}); }} }}",
+                        WriteLine("    public {0}StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.{1} {2} {{ get {{ return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.{1}(this.{3}); }} }}",
                             OverrideOrNewModifier(field), field.Type, field.Name, CamelCase(field.Name)
                             );
                     }
                     else if (IsSeparatedNodeList(field.Type))
                     {
-                        WriteLine("    public {0}Microsoft.CodeAnalysis.Syntax.InternalSyntax.{1} {2} {{ get {{ return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.{1}(new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.{3})); }} }}",
+                        WriteLine("    public {0}StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.{1} {2} {{ get {{ return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.{1}(new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.{3})); }} }}",
                             OverrideOrNewModifier(field), field.Type, field.Name, CamelCase(field.Name), i
                             );
                     }
                     else if (field.Type == "SyntaxNodeOrTokenList")
                     {
-                        WriteLine("    public {0}Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode> {1} {{ get {{ return new Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.{2}); }} }}",
+                        WriteLine("    public {0}StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode> {1} {{ get {{ return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.{2}); }} }}",
                             OverrideOrNewModifier(field), field.Name, CamelCase(field.Name)
                             );
                     }
@@ -537,10 +537,10 @@ namespace CSharpSyntaxGenerator
                     Write(", ");
 
                 var type =
-                    field.Type == "SyntaxNodeOrTokenList" ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>" :
-                    field.Type == "SyntaxTokenList" ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>" :
-                    IsNodeList(field.Type) ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax." + field.Type :
-                    IsSeparatedNodeList(field.Type) ? "Microsoft.CodeAnalysis.Syntax.InternalSyntax." + field.Type :
+                    field.Type == "SyntaxNodeOrTokenList" ? "StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>" :
+                    field.Type == "SyntaxTokenList" ? "StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>" :
+                    IsNodeList(field.Type) ? "StarkPlatform.CodeAnalysis.Syntax.InternalSyntax." + field.Type :
+                    IsSeparatedNodeList(field.Type) ? "StarkPlatform.CodeAnalysis.Syntax.InternalSyntax." + field.Type :
                     field.Type;
 
                 Write("{0} {1}", type, CamelCase(field.Name));
@@ -868,12 +868,12 @@ namespace CSharpSyntaxGenerator
                 var type = field.Type;
                 if (type == "SyntaxNodeOrTokenList")
                 {
-                    type = "Microsoft.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>";
+                    type = "StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>";
                 }
                 else if (IsSeparatedNodeList(field.Type) ||
                          IsNodeList(field.Type))
                 {
-                    type = "Microsoft.CodeAnalysis.Syntax.InternalSyntax." + type;
+                    type = "StarkPlatform.CodeAnalysis.Syntax.InternalSyntax." + type;
                 }
                 Write("{0} {1}", type, CamelCase(field.Name));
             }
@@ -943,7 +943,7 @@ namespace CSharpSyntaxGenerator
                 AbstractNode nd = (AbstractNode)node;
                 WriteLine("  public abstract partial class {0} : {1}", node.Name, node.Base);
                 WriteLine("  {");
-                WriteLine("    internal {0}(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)", node.Name);
+                WriteLine("    internal {0}(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)", node.Name);
                 WriteLine("      : base(green, parent, position)");
                 WriteLine("    {");
                 WriteLine("    }");
@@ -1077,7 +1077,7 @@ namespace CSharpSyntaxGenerator
 
                 // write constructor
                 WriteLine();
-                WriteLine("    internal {0}(Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)", node.Name);
+                WriteLine("    internal {0}(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)", node.Name);
                 WriteLine("        : base(green, parent, position)");
                 WriteLine("    {");
                 WriteLine("    }");
@@ -1096,7 +1096,7 @@ namespace CSharpSyntaxGenerator
                         {
                             WriteLine("        get");
                             WriteLine("        {");
-                            WriteLine("            var slot = ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.{0})this.Green).{1};", node.Name, CamelCase(field.Name));
+                            WriteLine("            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.{0})this.Green).{1};", node.Name, CamelCase(field.Name));
                             WriteLine("            if (slot != null)");
                             WriteLine("                return new SyntaxToken(this, slot, {0}, {1});", GetChildPosition(i), GetChildIndex(i));
                             WriteLine();
@@ -1105,7 +1105,7 @@ namespace CSharpSyntaxGenerator
                         }
                         else
                         {
-                            WriteLine("      get {{ return new SyntaxToken(this, ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.{0})this.Green).{1}, {2}, {3}); }}", node.Name, CamelCase(field.Name), GetChildPosition(i), GetChildIndex(i));
+                            WriteLine("      get {{ return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.{0})this.Green).{1}, {2}, {3}); }}", node.Name, CamelCase(field.Name), GetChildPosition(i), GetChildIndex(i));
                         }
                         WriteLine("    }");
                     }
@@ -1169,7 +1169,7 @@ namespace CSharpSyntaxGenerator
                 {
                     var field = valueFields[i];
                     WriteComment(field.PropertyComment, "    ");
-                    WriteLine("    {0} {1}{2} {3} {{ get {{ return ((Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.{4})this.Green).{3}; }} }}",
+                    WriteLine("    {0} {1}{2} {3} {{ get {{ return ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.{4})this.Green).{3}; }} }}",
                         "public", OverrideOrNewModifier(field), field.Type, field.Name, node.Name
                         );
                     WriteLine();
@@ -1784,7 +1784,7 @@ namespace CSharpSyntaxGenerator
                 }
             }
 
-            Write("      return ({0})Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxFactory.{1}(", nd.Name, StripPost(nd.Name, "Syntax"));
+            Write("      return ({0})StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.{1}(", nd.Name, StripPost(nd.Name, "Syntax"));
             if (nd.Kinds.Count > 1)
             {
                 Write("kind, ");
@@ -1800,23 +1800,23 @@ namespace CSharpSyntaxGenerator
                 }
                 else if (field.Type == "SyntaxList<SyntaxToken>")
                 {
-                    Write("{0}.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.SyntaxToken>()", CamelCase(field.Name));
+                    Write("{0}.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>()", CamelCase(field.Name));
                 }
                 else if (IsNodeList(field.Type))
                 {
-                    Write("{0}.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.{1}>()", CamelCase(field.Name), GetElementType(field.Type));
+                    Write("{0}.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.{1}>()", CamelCase(field.Name), GetElementType(field.Type));
                 }
                 else if (IsSeparatedNodeList(field.Type))
                 {
-                    Write("{0}.Node.ToGreenSeparatedList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.{1}>()", CamelCase(field.Name), GetElementType(field.Type));
+                    Write("{0}.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.{1}>()", CamelCase(field.Name), GetElementType(field.Type));
                 }
                 else if (field.Type == "SyntaxNodeOrTokenList")
                 {
-                    Write("{0}.Node.ToGreenList<Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.CSharpSyntaxNode>()", CamelCase(field.Name));
+                    Write("{0}.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode>()", CamelCase(field.Name));
                 }
                 else
                 {
-                    Write("{0} == null ? null : (Microsoft.CodeAnalysis.CSharp.Syntax.InternalSyntax.{1}){0}.Green", CamelCase(field.Name), field.Type);
+                    Write("{0} == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.{1}){0}.Green", CamelCase(field.Name), field.Type);
                 }
             }
 

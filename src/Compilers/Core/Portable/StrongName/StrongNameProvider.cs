@@ -6,10 +6,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
-using Microsoft.Cci;
+using StarkPlatform.Cci;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Provides strong name and signs source assemblies.

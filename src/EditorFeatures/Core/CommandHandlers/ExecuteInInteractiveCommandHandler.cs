@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Utilities;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.CommandHandlers
+namespace StarkPlatform.CodeAnalysis.Editor.CommandHandlers
 {
     /// <summary>
     /// Implements a execute in interactive command handler.
@@ -19,7 +19,7 @@ namespace Microsoft.CodeAnalysis.Editor.CommandHandlers
     /// to load any of the interactive dll files just to get the command's status.
     /// </summary>
     [Export(typeof(VSCommanding.ICommandHandler))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [Name("Interactive Command Handler")]
     internal class ExecuteInInteractiveCommandHandler
         : VSCommanding.ICommandHandler<ExecuteInInteractiveCommandArgs>

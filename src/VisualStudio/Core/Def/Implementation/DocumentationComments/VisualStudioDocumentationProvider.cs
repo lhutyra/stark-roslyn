@@ -4,13 +4,13 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Xml;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DocumentationComments
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DocumentationComments
 {
     internal class VisualStudioDocumentationProvider : DocumentationProvider
     {

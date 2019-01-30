@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Roslyn.Utilities;
 using System.Threading;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
 {
     internal static class ObjectBrowserTaskExtensions
     {

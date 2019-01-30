@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.UseCompoundAssignment
+namespace StarkPlatform.CodeAnalysis.UseCompoundAssignment
 {
     internal static class Utilities
     {

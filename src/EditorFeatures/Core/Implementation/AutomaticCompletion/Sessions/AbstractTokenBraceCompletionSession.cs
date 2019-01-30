@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Threading;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Text.BraceCompletion;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.AutomaticCompletion.Sessions
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.AutomaticCompletion.Sessions
 {
     internal abstract class AbstractTokenBraceCompletionSession : IEditorBraceCompletionSession
     {

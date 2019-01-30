@@ -6,12 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
 using Microsoft.VisualStudio.Telemetry;
 using Roslyn.Utilities;
 using StreamJsonRpc;
 
-namespace Microsoft.CodeAnalysis.Remote
+namespace StarkPlatform.CodeAnalysis.Remote
 {
     internal static partial class Extensions
     {
@@ -250,8 +250,6 @@ namespace Microsoft.CodeAnalysis.Remote
             {
                 return;
             }
-
-            WatsonReporter.Report(message, exception, ReportDetailServiceHubLogs);
         }
 
         private static int ReportDetailServiceHubLogs(IFaultUtility faultUtility)

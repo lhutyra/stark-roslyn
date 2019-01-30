@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping
 {
     /// <summary>
     /// Common implementation of all <see cref="ISyntaxWrapper"/>.  This type takes care of a lot of common logic for

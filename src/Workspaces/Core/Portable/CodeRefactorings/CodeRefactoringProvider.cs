@@ -2,7 +2,7 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings
 {
     /// <summary>
     /// Inherit this type to provide source code refactorings.

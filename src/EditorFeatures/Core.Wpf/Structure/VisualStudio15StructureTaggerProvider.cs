@@ -2,11 +2,11 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Implementation.Structure;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.Structure;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Structure;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Structure;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Projection;
@@ -14,12 +14,12 @@ using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
 #pragma warning disable CS0618 // Type or member is obsolete
-namespace Microsoft.CodeAnalysis.Editor.Structure
+namespace StarkPlatform.CodeAnalysis.Editor.Structure
 {
     [Export(typeof(ITaggerProvider))]
     [Export(typeof(VisualStudio15StructureTaggerProvider))]
     [TagType(typeof(IBlockTag))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     internal partial class VisualStudio15StructureTaggerProvider :
         AbstractStructureTaggerProvider<IBlockTag>
     {

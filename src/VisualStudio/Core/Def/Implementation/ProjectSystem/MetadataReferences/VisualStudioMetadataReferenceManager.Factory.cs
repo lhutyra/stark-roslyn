@@ -3,12 +3,12 @@
 using System;
 using System.Composition;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     // TODO: Remove this type. This factory is needed just to instantiate a singleton of VisualStudioMetadataReferenceProvider.
     // We should be able to MEF-instantiate a singleton of VisualStudioMetadataReferenceProvider without creating this factory.

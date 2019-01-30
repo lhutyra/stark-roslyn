@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// Create an RCW for the current context/apartment. 

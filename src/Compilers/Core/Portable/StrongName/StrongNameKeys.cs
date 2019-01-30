@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal sealed class StrongNameKeys
     {

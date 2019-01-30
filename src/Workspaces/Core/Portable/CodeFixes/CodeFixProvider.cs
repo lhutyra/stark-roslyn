@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.CodeFixes
+namespace StarkPlatform.CodeAnalysis.CodeFixes
 {
     /// <summary>
     /// Implement this type to provide fixes for source code problems.

@@ -7,14 +7,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Navigation;
-using Microsoft.CodeAnalysis.Diagnostics.Log;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis.Diagnostics.Log;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.Editor.Implementation.Preview;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Preview;
 using IVsUIShell = Microsoft.VisualStudio.Shell.Interop.IVsUIShell;
 using OLECMDEXECOPT = Microsoft.VisualStudio.OLE.Interop.OLECMDEXECOPT;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PreviewPane
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PreviewPane
 {
     internal partial class PreviewPane : UserControl, IDisposable
     {

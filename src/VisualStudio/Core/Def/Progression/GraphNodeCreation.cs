@@ -3,11 +3,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 using Microsoft.VisualStudio.GraphModel;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Progression;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Progression;
 
-namespace Microsoft.VisualStudio.LanguageServices.Progression
+namespace StarkPlatform.VisualStudio.LanguageServices.Progression
 {
     /// <summary>
     /// A helper class that implements the creation of <see cref="GraphNode"/>s.

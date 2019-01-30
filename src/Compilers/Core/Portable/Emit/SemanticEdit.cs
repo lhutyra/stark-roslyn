@@ -3,7 +3,7 @@
 using Roslyn.Utilities;
 using System;
 
-namespace Microsoft.CodeAnalysis.Emit
+namespace StarkPlatform.CodeAnalysis.Emit
 {
     /// <summary>
     /// Describes a symbol edit between two compilations. 

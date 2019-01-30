@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editor.Undo
+namespace StarkPlatform.CodeAnalysis.Editor.Undo
 {
     /// <summary>
     /// This represents workspace global undo transaction

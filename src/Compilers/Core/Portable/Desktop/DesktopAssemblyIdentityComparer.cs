@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     public sealed partial class DesktopAssemblyIdentityComparer : AssemblyIdentityComparer
     {

@@ -2,10 +2,10 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 
-namespace Microsoft.CodeAnalysis.ErrorLogger
+namespace StarkPlatform.CodeAnalysis.ErrorLogger
 {
     [ExportWorkspaceService(typeof(IErrorLoggerService)), Export(typeof(IErrorLoggerService)), Shared]
     internal class WorkspaceErrorLogger : IErrorLoggerService

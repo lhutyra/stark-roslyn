@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="0b5e8ddb-f12d-4131-a71d-77acc26a798f" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft" />
-    <DisplayName>Roslyn Language Services</DisplayName>
-    <Description>C# and VB.NET language services for Visual Studio.</Description>
-    <PackageId>Microsoft.CodeAnalysis.VisualStudio.Setup</PackageId>
+    <Identity Id="5F8BB530-E8CC-46DA-A6D9-88A7084982CD" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Stackrift" />
+    <DisplayName>Stark Language Services</DisplayName>
+    <Description>Stark language services for Visual Studio.</Description>
+    <PackageId>StarkPlatform.CodeAnalysis.VisualStudio.Setup</PackageId>
   </Metadata>
-  <Installation Experimental="true">
+  <Installation InstalledByMsi="false">
     <InstallationTarget Version="[15.0,]" Id="Microsoft.VisualStudio.Pro" />
     <InstallationTarget Version="[15.0,]" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
     <InstallationTarget Version="[15.0,]" Id="Microsoft.VisualStudio.VWDExpress" />
@@ -16,35 +16,27 @@
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
   </Dependencies>
   <Assets>
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.Workspaces.dll" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.EditorFeatures.dll" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.Features.dll" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.CSharp.Features.dll" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.CSharp.Workspaces.dll" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.CSharp.EditorFeatures.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.Workspaces.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.EditorFeatures.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.Features.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.Stark.Features.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.Stark.Workspaces.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.Stark.EditorFeatures.dll" />
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="EditorFeatures.Wpf" Path="|EditorFeatures.Wpf|" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.CodeAnalysis.EditorFeatures.Text.dll" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="Microsoft.VisualStudio.LanguageServices.dll" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynRemoteHost.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynSnapshot.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynCodeAnalysis.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynRemoteSymbolSearchUpdateEngine.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynRemoteHost64.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynSnapshot64.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynCodeAnalysis64.servicehub.service.json" />
-    <Asset Type="Microsoft.ServiceHub.Service" d:Source="File" Path="roslynRemoteSymbolSearchUpdateEngine64.servicehub.service.json" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="CSharpVisualStudio" Path="|CSharpVisualStudio|" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.CodeAnalysis.EditorFeatures.Text.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="StarkPlatform.VisualStudio.LanguageServices.dll" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="StarkVisualStudio" Path="|StarkVisualStudio|" />
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="SolutionExplorerShim" Path="|SolutionExplorerShim|" />
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="ServicesVisualStudioImpl" Path="|ServicesVisualStudioImpl|" />
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="ServicesVisualStudio" Path="|ServicesVisualStudio;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="CSharpVisualStudio" Path="|CSharpVisualStudio;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="CSharpVisualStudio" Path="CSharpPackageRegistration.pkgdef" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="StarkVisualStudio" Path="|StarkVisualStudio;PkgdefProjectOutputGroup|" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="StarkVisualStudio" Path="StarkPackageRegistration.pkgdef" />
     <Asset Type="DebuggerEngineExtension" d:Source="Project" d:ProjectName="ServicesVisualStudio" Path="|ServicesVisualStudio;VsdConfigOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="Microsoft.CodeAnalysis.CSharp.dll" />
-    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="Microsoft.CodeAnalysis.EditorFeatures.dll" />
-    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="Microsoft.CodeAnalysis.Features.dll" />
-    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="Microsoft.CodeAnalysis.CSharp.Features.dll" />
-    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="Microsoft.CodeAnalysis.CSharp.EditorFeatures.dll" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="StarkPlatform.CodeAnalysis.Stark.dll" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="StarkPlatform.CodeAnalysis.EditorFeatures.dll" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="StarkPlatform.CodeAnalysis.Features.dll" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="StarkPlatform.CodeAnalysis.Stark.Features.dll" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" Path="StarkPlatform.CodeAnalysis.Stark.EditorFeatures.dll" />
   </Assets>
   <Prerequisites>
     <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,17.0)" DisplayName="Visual Studio core editor" />

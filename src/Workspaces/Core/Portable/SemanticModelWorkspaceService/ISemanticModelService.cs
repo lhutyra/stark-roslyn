@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.SemanticModelWorkspaceService
+namespace StarkPlatform.CodeAnalysis.SemanticModelWorkspaceService
 {
     /// <summary>
     /// a service that provides a semantic model that will re-use last known compilation if

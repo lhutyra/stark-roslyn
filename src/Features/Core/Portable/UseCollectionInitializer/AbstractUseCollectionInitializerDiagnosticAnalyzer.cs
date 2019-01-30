@@ -3,13 +3,13 @@
 using System;
 using System.Collections;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.UseCollectionInitializer
+namespace StarkPlatform.CodeAnalysis.UseCollectionInitializer
 {
     internal abstract partial class AbstractUseCollectionInitializerDiagnosticAnalyzer<
         TSyntaxKind,

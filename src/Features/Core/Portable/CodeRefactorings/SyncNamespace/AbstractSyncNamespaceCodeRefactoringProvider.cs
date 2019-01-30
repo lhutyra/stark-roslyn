@@ -3,12 +3,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.ChangeNamespace;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using static Microsoft.CodeAnalysis.CodeActions.CodeAction;
+using StarkPlatform.CodeAnalysis.ChangeNamespace;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using static StarkPlatform.CodeAnalysis.CodeActions.CodeAction;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings.SyncNamespace
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings.SyncNamespace
 {
     internal abstract partial class AbstractSyncNamespaceCodeRefactoringProvider<TNamespaceDeclarationSyntax, TCompilationUnitSyntax, TMemberDeclarationSyntax>
         : CodeRefactoringProvider

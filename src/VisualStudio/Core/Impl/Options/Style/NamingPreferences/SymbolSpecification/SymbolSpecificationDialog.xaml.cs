@@ -7,10 +7,10 @@ using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options.Style.NamingPreferences
 {
     internal partial class SymbolSpecificationDialog : DialogWindow
     {

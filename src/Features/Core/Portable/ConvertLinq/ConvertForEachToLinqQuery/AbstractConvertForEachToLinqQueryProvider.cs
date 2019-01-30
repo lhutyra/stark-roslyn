@@ -4,11 +4,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.Editing;
 
-namespace Microsoft.CodeAnalysis.ConvertLinq.ConvertForEachToLinqQuery
+namespace StarkPlatform.CodeAnalysis.ConvertLinq.ConvertForEachToLinqQuery
 {
     internal abstract class AbstractConvertForEachToLinqQueryProvider<TForEachStatement, TStatement> : CodeRefactoringProvider
         where TForEachStatement : TStatement

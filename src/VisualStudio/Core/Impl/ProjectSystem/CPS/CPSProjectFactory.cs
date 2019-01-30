@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.IO;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel;
-using Microsoft.VisualStudio.LanguageServices.Implementation.TaskList;
-using Microsoft.VisualStudio.LanguageServices.ProjectSystem;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList;
+using StarkPlatform.VisualStudio.LanguageServices.ProjectSystem;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.CPS
 {
     [Export(typeof(IWorkspaceProjectContextFactory))]
     internal partial class CPSProjectFactory : IWorkspaceProjectContextFactory
@@ -26,9 +26,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.C
         private static readonly ImmutableDictionary<string, string> s_projectLanguageToErrorCodePrefixMap =
             ImmutableDictionary.CreateRange(StringComparer.OrdinalIgnoreCase, new[]
             {
-                new KeyValuePair<string, string> (LanguageNames.CSharp, "CS"),
-                new KeyValuePair<string, string> (LanguageNames.VisualBasic, "BC"),
-                new KeyValuePair<string, string> (LanguageNames.FSharp, "FS"),
+                new KeyValuePair<string, string> (LanguageNames.Stark, "stark"),
             });
 
         [ImportingConstructor]
@@ -89,17 +87,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.C
             };
 
             var visualStudioProject = _projectFactory.CreateAndAddToWorkspace(projectUniqueName, languageName, creationInfo);
-
-            if (languageName == LanguageNames.FSharp)
-            {
-                var shell = (IVsShell)ServiceProvider.GlobalProvider.GetService(typeof(SVsShell));
-
-                // Force the F# package to load; this is necessary because the F# package listens to WorkspaceChanged to 
-                // set up some items, and the F# project system doesn't guarantee that the F# package has been loaded itself
-                // so we're caught in the middle doing this.
-                shell.LoadPackage(Guids.FSharpPackageId, out var unused);
-            }
-
             return visualStudioProject;
         }
     }

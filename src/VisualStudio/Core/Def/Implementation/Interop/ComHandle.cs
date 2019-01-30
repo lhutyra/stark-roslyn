@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Interop
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop
 {
     /// <summary>
     /// Holds onto a managed object as well as the CCW for that object if there is one.

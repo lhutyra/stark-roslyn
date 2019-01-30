@@ -3,9 +3,9 @@
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.FindUsages;
 
-namespace Microsoft.CodeAnalysis.Editor.Host
+namespace StarkPlatform.CodeAnalysis.Editor.Host
 {
     /// <summary>
     /// API for hosts to provide if they can present FindUsages results in a streaming manner.

@@ -4,9 +4,9 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Controls;
-using Microsoft.CodeAnalysis.Editor.Shared.Preview;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Preview;
 
-namespace Microsoft.CodeAnalysis.Editor.QuickInfo
+namespace StarkPlatform.CodeAnalysis.Editor.QuickInfo
 {
     internal sealed class DisposableToolTip : IDisposable
     {

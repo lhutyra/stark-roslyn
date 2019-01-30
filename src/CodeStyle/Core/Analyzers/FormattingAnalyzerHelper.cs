@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Text;
 
 #if CODE_STYLE
-using FormatterState = Microsoft.CodeAnalysis.Formatting.ISyntaxFormattingService;
+using FormatterState = StarkPlatform.CodeAnalysis.Formatting.ISyntaxFormattingService;
 #else
-using Microsoft.CodeAnalysis.Options;
-using FormatterState = Microsoft.CodeAnalysis.Workspace;
+using StarkPlatform.CodeAnalysis.Options;
+using FormatterState = StarkPlatform.CodeAnalysis.Workspace;
 #endif
 
-namespace Microsoft.CodeAnalysis.CodeStyle
+namespace StarkPlatform.CodeAnalysis.CodeStyle
 {
     internal static class FormattingAnalyzerHelper
     {

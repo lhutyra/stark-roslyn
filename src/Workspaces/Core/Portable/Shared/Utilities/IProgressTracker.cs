@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.Shared.Utilities
+﻿namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal interface IProgressTracker
     {

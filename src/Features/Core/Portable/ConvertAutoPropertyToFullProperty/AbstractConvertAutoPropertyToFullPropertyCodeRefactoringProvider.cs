@@ -4,15 +4,15 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Options;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.ConvertAutoPropertyToFullProperty
+namespace StarkPlatform.CodeAnalysis.ConvertAutoPropertyToFullProperty
 {
     internal abstract class AbstractConvertAutoPropertyToFullPropertyCodeRefactoringProvider
         : CodeRefactoringProvider

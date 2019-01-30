@@ -4,15 +4,16 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualStudio.LanguageServices.Implementation.F1Help;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Library.VsNavInfo;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.F1Help;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser.Lists;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.VsNavInfo;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.ObjectBrowser
 {
     internal class ObjectList : AbstractObjectList<AbstractObjectBrowserLibraryManager>
     {

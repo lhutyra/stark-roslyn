@@ -5,12 +5,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio.CodingConventions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Options
 {
     internal sealed partial class EditorConfigDocumentOptionsProvider
     {

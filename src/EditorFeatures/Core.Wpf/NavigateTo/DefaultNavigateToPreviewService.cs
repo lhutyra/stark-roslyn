@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Language.NavigateTo.Interfaces;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.NavigateTo
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.NavigateTo
 {
     internal sealed class DefaultNavigateToPreviewService : INavigateToPreviewService
     {

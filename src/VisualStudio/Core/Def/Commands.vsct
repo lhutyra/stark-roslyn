@@ -400,21 +400,21 @@
   </UsedCommands>
 
   <Symbols>
-    <GuidSymbol name="guidRoslynPkgId" value="{6cf2e545-6109-4730-8883-cf43d7aec3e1}" />
+    <GuidSymbol name="guidRoslynPkgId" value="{5617BD02-DB4F-4843-AF48-04134A7B438C}" />
 
-    <GuidSymbol name="guidCSharpEditorFactory" value="{a6c744a8-0e4a-4fc6-886a-064283054674}" />
-    <GuidSymbol name="guidCSharpCodePageEditorFactory" value="{08467b34-b90f-4d91-bdca-eb8c8cf3033a}" />
+    <GuidSymbol name="guidCSharpEditorFactory" value="{5A3D871C-9840-46DA-9697-77776471C765}" />
+    <GuidSymbol name="guidCSharpCodePageEditorFactory" value="{040E3492-803E-41F8-8883-31E6ED37F186}" />
     <GuidSymbol name="guidVisualBasicEditorFactory" value="{2c015c70-c72c-11d0-88c3-00a0c9110049}" />
     <GuidSymbol name="guidVisualBasicCodePageEditorFactory" value="{6c33e1aa-1401-4536-ab67-0e21e6e569da}" />
 
-    <GuidSymbol name ="guidCSharpGrpId" value ="{5d7e7f65-a63f-46ee-84f1-990b2cab23f9}">
+    <GuidSymbol name ="guidCSharpGrpId" value ="{67DB5C4C-6484-4439-8FE9-57C6C854A334}">
       <IDSymbol name="IDG_CSHARP_CODEGEN" value="0x3490"/>
 
       <IDSymbol name="cmdidContextOrganizeRemoveAndSort" value="0x1913"/>
       <IDSymbol name="cmdidCSharpOrganizeRemoveAndSort" value="0x1923"/>
     </GuidSymbol>
 
-    <GuidSymbol name="guidRoslynGrpId" value="{b61e1a20-8c13-49a9-a727-a0ec091647dd}">
+    <GuidSymbol name="guidRoslynGrpId" value="{3F0A6609-6135-4399-B1F7-22D780CD110B}">
       <IDSymbol name="IDG_ROSLYN_HIDDEN_COMMANDS" value="0x3002" />
 
       <IDSymbol name="cmdidAnalyzerContextMenu"       value="0x0103" />

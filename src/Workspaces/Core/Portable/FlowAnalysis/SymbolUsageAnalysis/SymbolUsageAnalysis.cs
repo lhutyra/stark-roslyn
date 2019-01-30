@@ -3,10 +3,10 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Operations;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
 {
     /// <summary>
     /// Analysis to compute all the symbol writes for local and parameter

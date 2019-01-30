@@ -2,7 +2,7 @@
 
 using System.Collections.Immutable;
 
-namespace Microsoft.CodeAnalysis.PreferFrameworkType
+namespace StarkPlatform.CodeAnalysis.PreferFrameworkType
 {
     internal static class PreferFrameworkTypeConstants
     {

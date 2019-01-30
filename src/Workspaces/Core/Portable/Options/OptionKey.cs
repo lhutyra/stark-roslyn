@@ -4,10 +4,10 @@ using System;
 using Roslyn.Utilities;
 
 #if CODE_STYLE
-using WorkspacesResources = Microsoft.CodeAnalysis.CodeStyleResources;
+using WorkspacesResources = StarkPlatform.CodeAnalysis.CodeStyleResources;
 #endif
 
-namespace Microsoft.CodeAnalysis.Options
+namespace StarkPlatform.CodeAnalysis.Options
 {
     public struct OptionKey : IEquatable<OptionKey>
     {

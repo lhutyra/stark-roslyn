@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     /// <summary>
     /// DataGridTemplateColumns have custom controls that should be focused instead of the cell.

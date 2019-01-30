@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal enum ConstantValueTypeDiscriminator : byte
     {

@@ -2,10 +2,11 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using Microsoft;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     /// <summary>
     /// An adapter between editor's <see cref="IUIThreadOperationScope"/> (which supports reporting

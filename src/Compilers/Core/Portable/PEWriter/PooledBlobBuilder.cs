@@ -2,10 +2,10 @@
 
 using System;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class PooledBlobBuilder : BlobBuilder, IDisposable
     {

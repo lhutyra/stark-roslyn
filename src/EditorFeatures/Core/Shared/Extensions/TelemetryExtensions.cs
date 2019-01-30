@@ -3,9 +3,9 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using Microsoft.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.CodeFixes;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Extensions
 {
     internal static class TelemetryExtensions
     {

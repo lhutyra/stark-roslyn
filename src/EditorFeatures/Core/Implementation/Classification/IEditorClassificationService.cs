@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Classification;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Classification;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
-    [Obsolete("Use Microsoft.CodeAnalysis.Classification.IClassificationService instead")]
+    [Obsolete("Use StarkPlatform.CodeAnalysis.Classification.IClassificationService instead")]
     internal interface IEditorClassificationService : ILanguageService
     {
         /// <summary>

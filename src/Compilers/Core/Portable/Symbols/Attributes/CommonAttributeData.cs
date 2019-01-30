@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     public abstract class AttributeData
     {
@@ -346,7 +346,7 @@ namespace Microsoft.CodeAnalysis
             int? alignment = null;
             bool hasErrors = false;
 
-            LayoutKind kind = attribute.CommonConstructorArguments[0].DecodeValue<LayoutKind>(Microsoft.CodeAnalysis.SpecialType.System_Enum);
+            LayoutKind kind = attribute.CommonConstructorArguments[0].DecodeValue<LayoutKind>(StarkPlatform.CodeAnalysis.SpecialType.System_Enum);
             switch (kind)
             {
                 case LayoutKind.Auto:
@@ -399,7 +399,7 @@ namespace Microsoft.CodeAnalysis
                         break;
 
                     case "Size":
-                        size = namedArg.Value.DecodeValue<int>(Microsoft.CodeAnalysis.SpecialType.System_Int32);
+                        size = namedArg.Value.DecodeValue<int>(StarkPlatform.CodeAnalysis.SpecialType.System_Int32);
                         if (size < 0)
                         {
                             messageProvider.ReportInvalidNamedArgument(arguments.Diagnostics, arguments.AttributeSyntaxOpt, position, attribute.AttributeClass, namedArg.Key);

@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Implementation.TodoComments;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.TodoComments;
+using StarkPlatform.CodeAnalysis.Options;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TaskList
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList
 {
     [Export(typeof(IOptionPersister))]
     internal class CommentTaskTokenSerializer : IOptionPersister

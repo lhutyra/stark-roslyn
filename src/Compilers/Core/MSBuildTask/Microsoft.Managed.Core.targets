@@ -4,7 +4,7 @@
   <!--
     Common targets for managed compilers.
   -->
-  <UsingTask TaskName="Microsoft.CodeAnalysis.BuildTasks.MapSourceRoots" AssemblyFile="$(MSBuildThisFileDirectory)Microsoft.Build.Tasks.CodeAnalysis.dll" />
+  <UsingTask TaskName="StarkPlatform.CodeAnalysis.BuildTasks.MapSourceRoots" AssemblyFile="$(MSBuildThisFileDirectory)Microsoft.Build.Tasks.CodeAnalysis.dll" />
 
   <Target Name="ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies"
           BeforeTargets="CoreCompile"
@@ -87,9 +87,9 @@
       <_MappedSourceRoot Remove="@(_MappedSourceRoot)" />
     </ItemGroup>
 
-    <Microsoft.CodeAnalysis.BuildTasks.MapSourceRoots SourceRoots="@(SourceRoot)" Deterministic="$(DeterministicSourcePaths)">
+    <StarkPlatform.CodeAnalysis.BuildTasks.MapSourceRoots SourceRoots="@(SourceRoot)" Deterministic="$(DeterministicSourcePaths)">
       <Output TaskParameter="MappedSourceRoots" ItemName="_MappedSourceRoot" />
-    </Microsoft.CodeAnalysis.BuildTasks.MapSourceRoots>
+    </StarkPlatform.CodeAnalysis.BuildTasks.MapSourceRoots>
 
     <ItemGroup>
       <SourceRoot Remove="@(SourceRoot)" />

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     internal sealed class ProvideAutomationPropertiesAttribute : RegistrationAttribute

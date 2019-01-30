@@ -5,7 +5,7 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.ReferenceHighlighting
+namespace StarkPlatform.CodeAnalysis.Editor.ReferenceHighlighting
 {
     [Export(typeof(EditorFormatDefinition))]
     [Name(DefinitionHighlightTag.TagId)]

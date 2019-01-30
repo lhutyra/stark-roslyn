@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Execution
+namespace StarkPlatform.CodeAnalysis.Execution
 {
     /// <summary>
     /// This is just internal utility type to reduce allocations and reduntant code

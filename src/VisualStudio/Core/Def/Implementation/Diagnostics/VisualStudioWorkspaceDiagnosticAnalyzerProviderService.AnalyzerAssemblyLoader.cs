@@ -2,10 +2,10 @@
 
 using System;
 using System.Reflection;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Diagnostics
 {
     internal partial class VisualStudioWorkspaceDiagnosticAnalyzerProviderService : IWorkspaceDiagnosticAnalyzerProviderService
     {

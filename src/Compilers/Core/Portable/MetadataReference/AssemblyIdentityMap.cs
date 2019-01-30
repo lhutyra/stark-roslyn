@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Implements a map from an assembly identity to a value. The map allows to look up the value by an identity

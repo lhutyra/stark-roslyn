@@ -4,9 +4,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Composition;
 using System.IO;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     [ExportWorkspaceServiceFactory(typeof(IDocumentationProviderService), ServiceLayer.Default), Shared]
     internal sealed class DocumentationProviderServiceFactory : IWorkspaceServiceFactory

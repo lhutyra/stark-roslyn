@@ -7,7 +7,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// The compiler needs to take advantage of features on named pipes which require target framework

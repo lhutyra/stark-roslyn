@@ -4,11 +4,11 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.Editor.Implementation.Adornments;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.Adornments;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.LineSeparators
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.LineSeparators
 {
     /// <summary>
     /// Tag that specifies line separator.

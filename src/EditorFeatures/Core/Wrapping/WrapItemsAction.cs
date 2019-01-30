@@ -6,10 +6,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using static Microsoft.CodeAnalysis.CodeActions.CodeAction;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using static StarkPlatform.CodeAnalysis.CodeActions.CodeAction;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping
 {
     /// <summary>
     /// Code action for actually wrapping items.  Provided as a special subclass because it will

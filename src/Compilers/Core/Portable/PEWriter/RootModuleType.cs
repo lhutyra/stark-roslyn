@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// Special type &lt;Module&gt;

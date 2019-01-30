@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Composition;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Options.Providers;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options.Providers;
 
-namespace Microsoft.CodeAnalysis.ImplementType
+namespace StarkPlatform.CodeAnalysis.ImplementType
 {
     [ExportOptionProvider, Shared]
     internal class ImplementTypeOptionsProvider : IOptionProvider

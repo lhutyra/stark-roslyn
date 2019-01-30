@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Simplification
+namespace StarkPlatform.CodeAnalysis.Simplification
 {
     // When applied to a SyntaxNode, prevents AbstractImportsAdder from adding imports for this
     // node. Applied alongside SymbolAnnotation when a type should be simplified without adding a

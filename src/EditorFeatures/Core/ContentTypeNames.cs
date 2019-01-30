@@ -2,5 +2,5 @@
 
 using System.Runtime.CompilerServices;
 
-// Microsoft.CodeAnalysis.Editor.ContentTypeNames has been moved to Microsoft.CodeAnalysis.Editor.Text.dll
-[assembly: TypeForwardedTo(typeof(Microsoft.CodeAnalysis.Editor.ContentTypeNames))]
+// StarkPlatform.CodeAnalysis.Editor.ContentTypeNames has been moved to StarkPlatform.CodeAnalysis.Editor.Text.dll
+[assembly: TypeForwardedTo(typeof(StarkPlatform.CodeAnalysis.Editor.ContentTypeNames))]

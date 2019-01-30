@@ -2,11 +2,11 @@
 
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Classification;
-using Microsoft.CodeAnalysis.Classification.Classifiers;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Classification;
+using StarkPlatform.CodeAnalysis.Classification.Classifiers;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.LanguageServices
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.LanguageServices
 {
     internal partial class FallbackEmbeddedLanguage
     {

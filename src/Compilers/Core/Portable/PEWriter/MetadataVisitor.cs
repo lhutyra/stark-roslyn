@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Emit;
-using Microsoft.CodeAnalysis.CodeGen;
+using StarkPlatform.CodeAnalysis.Emit;
+using StarkPlatform.CodeAnalysis.CodeGen;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// A visitor base class that traverses the object model in depth first, left to right order.

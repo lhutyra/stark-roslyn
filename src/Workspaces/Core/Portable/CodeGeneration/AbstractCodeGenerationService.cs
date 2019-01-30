@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal abstract partial class AbstractCodeGenerationService : ICodeGenerationService
     {
@@ -23,11 +23,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         {
             _symbolDeclarationService = symbolDeclarationService;
             Workspace = workspace;
-        }
-
-        public TDeclarationNode AddEvent<TDeclarationNode>(TDeclarationNode destination, IEventSymbol @event, CodeGenerationOptions options, CancellationToken cancellationToken) where TDeclarationNode : SyntaxNode
-        {
-            return AddEvent(destination, @event, options ?? CodeGenerationOptions.Default, GetAvailableInsertionIndices(destination, cancellationToken));
         }
 
         public TDeclarationNode AddField<TDeclarationNode>(TDeclarationNode destination, IFieldSymbol field, CodeGenerationOptions options, CancellationToken cancellationToken) where TDeclarationNode : SyntaxNode
@@ -61,7 +56,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
             return AddMembers(destination, members, GetAvailableInsertionIndices(destination, cancellationToken), options ?? CodeGenerationOptions.Default, cancellationToken);
         }
 
-        protected abstract TDeclarationNode AddEvent<TDeclarationNode>(TDeclarationNode destination, IEventSymbol @event, CodeGenerationOptions options, IList<bool> availableIndices) where TDeclarationNode : SyntaxNode;
         protected abstract TDeclarationNode AddField<TDeclarationNode>(TDeclarationNode destination, IFieldSymbol field, CodeGenerationOptions options, IList<bool> availableIndices) where TDeclarationNode : SyntaxNode;
         protected abstract TDeclarationNode AddMethod<TDeclarationNode>(TDeclarationNode destination, IMethodSymbol method, CodeGenerationOptions options, IList<bool> availableIndices) where TDeclarationNode : SyntaxNode;
         protected abstract TDeclarationNode AddProperty<TDeclarationNode>(TDeclarationNode destination, IPropertySymbol property, CodeGenerationOptions options, IList<bool> availableIndices) where TDeclarationNode : SyntaxNode;
@@ -81,7 +75,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         public abstract TDeclarationNode UpdateDeclarationMembers<TDeclarationNode>(TDeclarationNode declaration, IList<ISymbol> newMembers, CodeGenerationOptions options = null, CancellationToken cancellationToken = default) where TDeclarationNode : SyntaxNode;
 
         public abstract CodeGenerationDestination GetDestination(SyntaxNode node);
-        public abstract SyntaxNode CreateEventDeclaration(IEventSymbol @event, CodeGenerationDestination destination, CodeGenerationOptions options);
         public abstract SyntaxNode CreateFieldDeclaration(IFieldSymbol field, CodeGenerationDestination destination, CodeGenerationOptions options);
         public abstract SyntaxNode CreateMethodDeclaration(IMethodSymbol method, CodeGenerationDestination destination, CodeGenerationOptions options);
         public abstract SyntaxNode CreatePropertyDeclaration(IPropertySymbol property, CodeGenerationDestination destination, CodeGenerationOptions options);
@@ -293,7 +286,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         {
             switch (member)
             {
-                case IEventSymbol @event: return this.CreateEventDeclaration(@event, codeGenerationDestination, options);
                 case IFieldSymbol field: return this.CreateFieldDeclaration(field, codeGenerationDestination, options);
                 case IPropertySymbol property: return this.CreatePropertyDeclaration(property, codeGenerationDestination, options);
                 case IMethodSymbol method: return this.CreateMethodDeclaration(method, codeGenerationDestination, options);
@@ -313,7 +305,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         {
             switch (member)
             {
-                case IEventSymbol @event: return this.AddEvent(currentDestination, @event, options, availableIndices);
                 case IFieldSymbol field: return this.AddField(currentDestination, field, options, availableIndices);
                 case IPropertySymbol property: return this.AddProperty(currentDestination, property, options, availableIndices);
                 case IMethodSymbol method: return this.AddMethod(currentDestination, method, options, availableIndices);
@@ -354,19 +345,6 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
                 reuseSyntax: options.ReuseSyntax,
                 sortMembers: options.SortMembers);
             return options;
-        }
-
-        public virtual Task<Document> AddEventAsync(
-            Solution solution, INamedTypeSymbol destination, IEventSymbol @event,
-            CodeGenerationOptions options, CancellationToken cancellationToken)
-        {
-            return GetEditAsync(
-                solution,
-                destination,
-                (t, opts, ai, ct) => AddEvent(t, @event, opts, ai),
-                options,
-                new[] { @event },
-                cancellationToken);
         }
 
         public Task<Document> AddFieldAsync(Solution solution, INamedTypeSymbol destination, IFieldSymbol field, CodeGenerationOptions options, CancellationToken cancellationToken)

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.DocumentationComments
+namespace StarkPlatform.CodeAnalysis.DocumentationComments
 {
     internal abstract class AbstractDocumentationCommentFormattingService : IDocumentationCommentFormattingService
     {

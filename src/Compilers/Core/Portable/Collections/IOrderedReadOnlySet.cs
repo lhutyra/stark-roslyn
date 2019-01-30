@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Collections
+namespace StarkPlatform.CodeAnalysis.Collections
 {
     internal interface IOrderedReadOnlySet<T> : IReadOnlySet<T>, IReadOnlyList<T>
     {

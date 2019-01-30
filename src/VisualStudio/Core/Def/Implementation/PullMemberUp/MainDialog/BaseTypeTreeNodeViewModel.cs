@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.PullMemberUp;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
 using Microsoft.VisualStudio.Language.Intellisense;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
 {
     /// <summary>
     /// View model used to represent and display the inheritance graph as a tree. This tree is constructed by breadth first searching.

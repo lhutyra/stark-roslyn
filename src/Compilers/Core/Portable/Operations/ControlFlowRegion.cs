@@ -2,10 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Operations;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     /// <summary>
     /// Encapsulates information about regions of <see cref="BasicBlock"/>s in a <see cref="ControlFlowGraph"/>.

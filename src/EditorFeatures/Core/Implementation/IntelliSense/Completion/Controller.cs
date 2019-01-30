@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
@@ -14,13 +14,13 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Text.Operations;
 using Roslyn.Utilities;
-using RoslynCompletionTrigger = Microsoft.CodeAnalysis.Completion.CompletionTrigger;
-using RoslynCompletionItem = Microsoft.CodeAnalysis.Completion.CompletionItem;
+using RoslynCompletionTrigger = StarkPlatform.CodeAnalysis.Completion.CompletionTrigger;
+using RoslynCompletionItem = StarkPlatform.CodeAnalysis.Completion.CompletionItem;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
 {
-    using CompletionTrigger = Microsoft.CodeAnalysis.Completion.CompletionTrigger;
-    using CompletionItem = Microsoft.CodeAnalysis.Completion.CompletionItem;
+    using CompletionTrigger = StarkPlatform.CodeAnalysis.Completion.CompletionTrigger;
+    using CompletionItem = StarkPlatform.CodeAnalysis.Completion.CompletionItem;
 
     internal partial class Controller :
         AbstractController<Controller.Session, Model, ICompletionPresenterSession, ICompletionSession>,

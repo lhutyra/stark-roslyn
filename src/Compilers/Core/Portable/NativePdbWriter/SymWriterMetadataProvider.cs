@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.DiaSymReader;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class SymWriterMetadataProvider : ISymWriterMetadataProvider
     {

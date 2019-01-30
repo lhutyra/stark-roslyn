@@ -3,9 +3,10 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Legacy
 {
     internal partial class AbstractLegacyProject : IVsHierarchyEvents
     {

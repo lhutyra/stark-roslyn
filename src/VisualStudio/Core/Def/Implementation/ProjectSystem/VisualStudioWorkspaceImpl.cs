@@ -8,20 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using EnvDTE;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.SolutionCrawler;
-using Microsoft.CodeAnalysis.Text;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Composition;
 using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Venus;
-using Microsoft.VisualStudio.LanguageServices.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus;
+using StarkPlatform.VisualStudio.LanguageServices.Utilities;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
@@ -33,7 +34,7 @@ using VSLangProj80;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 using OleInterop = Microsoft.VisualStudio.OLE.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem
 {
     /// <summary>
     /// The Workspace for running inside Visual Studio.
@@ -242,7 +243,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
         }
 
         internal override bool TryApplyChanges(
-            Microsoft.CodeAnalysis.Solution newSolution,
+            StarkPlatform.CodeAnalysis.Solution newSolution,
             IProgressTracker progressTracker)
         {
             if (!ThreadHelper.JoinableTaskContext.IsOnMainThread)
@@ -1035,14 +1036,10 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem
             // No extension was provided.  Pick a good one based on the type of host project.
             switch (CurrentSolution.GetProject(documentId.ProjectId).Language)
             {
-                case LanguageNames.CSharp:
+                case LanguageNames.Stark:
                     // TODO: uncomment when fixing https://github.com/dotnet/roslyn/issues/5325
                     //return sourceCodeKind == SourceCodeKind.Regular ? ".cs" : ".csx";
-                    return ".cs";
-                case LanguageNames.VisualBasic:
-                    // TODO: uncomment when fixing https://github.com/dotnet/roslyn/issues/5325
-                    //return sourceCodeKind == SourceCodeKind.Regular ? ".vb" : ".vbx";
-                    return ".vb";
+                    return ".sk";
                 default:
                     throw new InvalidOperationException();
             }

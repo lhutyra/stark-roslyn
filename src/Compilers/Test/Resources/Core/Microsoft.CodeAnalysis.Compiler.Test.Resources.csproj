@@ -9,7 +9,7 @@
     <IsShipping>false</IsShipping>
   </PropertyGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\..\Core\Portable\Microsoft.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\..\..\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Analyzers\FaultyAnalyzer.cs" />

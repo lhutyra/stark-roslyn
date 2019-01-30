@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.DiaSymReader;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     internal sealed class DebuggeeModuleInfo : IDisposable
     {

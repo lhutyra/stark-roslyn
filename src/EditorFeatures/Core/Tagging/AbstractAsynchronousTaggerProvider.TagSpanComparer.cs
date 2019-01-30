@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.CodeAnalysis.Editor.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Tagging
 {
     internal abstract partial class AbstractAsynchronousTaggerProvider<TTag>
     {

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.PullMemberUp;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeRefactorings.PullMemberUp;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp.MainDialog
 {
     internal class PullMemberUpDialogViewModel : AbstractNotifyPropertyChanged
     {

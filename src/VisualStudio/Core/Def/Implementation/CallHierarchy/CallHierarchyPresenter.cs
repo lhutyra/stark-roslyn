@@ -2,14 +2,14 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Editor.Implementation.CallHierarchy;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.CallHierarchy;
 using Microsoft.VisualStudio.CallHierarchy.Package.Definitions;
 using Microsoft.VisualStudio.Language.CallHierarchy;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CallHierarchy
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CallHierarchy
 {
     [Export(typeof(ICallHierarchyPresenter))]
     internal class CallHierarchyPresenter : ICallHierarchyPresenter

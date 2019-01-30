@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
 
-namespace Microsoft.CodeAnalysis.ConvertLinq.ConvertForEachToLinqQuery
+namespace StarkPlatform.CodeAnalysis.ConvertLinq.ConvertForEachToLinqQuery
 {
     internal struct ExtendedSyntaxNode
     {

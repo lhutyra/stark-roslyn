@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Represents a <see cref="TextSpan"/> location in a <see cref="Document"/>.

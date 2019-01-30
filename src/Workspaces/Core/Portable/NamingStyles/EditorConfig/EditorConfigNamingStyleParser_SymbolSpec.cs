@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.PooledObjects;
-using static Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles.SymbolSpecification;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using static StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles.SymbolSpecification;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     internal static partial class EditorConfigNamingStyleParser
     {

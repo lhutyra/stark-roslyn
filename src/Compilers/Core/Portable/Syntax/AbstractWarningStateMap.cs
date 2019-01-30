@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis.Syntax
+namespace StarkPlatform.CodeAnalysis.Syntax
 {
     internal abstract class AbstractWarningStateMap<WarningState>
     {

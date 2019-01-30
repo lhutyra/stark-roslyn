@@ -3,7 +3,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.PooledObjects
+namespace StarkPlatform.CodeAnalysis.PooledObjects
 {
     /// <summary>
     /// The usage is:

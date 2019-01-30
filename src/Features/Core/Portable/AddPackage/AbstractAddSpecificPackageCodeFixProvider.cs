@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Packaging;
-using Microsoft.CodeAnalysis.SymbolSearch;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Packaging;
+using StarkPlatform.CodeAnalysis.SymbolSearch;
 
-namespace Microsoft.CodeAnalysis.AddPackage
+namespace StarkPlatform.CodeAnalysis.AddPackage
 {
     internal abstract partial class AbstractAddSpecificPackageCodeFixProvider : AbstractAddPackageCodeFixProvider
     {

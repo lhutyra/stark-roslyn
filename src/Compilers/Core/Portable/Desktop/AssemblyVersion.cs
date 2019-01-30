@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal struct AssemblyVersion : IEquatable<AssemblyVersion>, IComparable<AssemblyVersion>
     {

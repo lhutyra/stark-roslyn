@@ -7,9 +7,9 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.BraceMatching
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.BraceMatching
 {
     [Export(typeof(IBraceMatchingService))]
     internal class BraceMatchingService : IBraceMatchingService

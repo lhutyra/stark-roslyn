@@ -6,15 +6,15 @@ using System.Collections.Immutable;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.Editor.Host;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeFixes;
+using StarkPlatform.CodeAnalysis.Editor.Host;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Suggestions
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Suggestions
 {
     [ExportWorkspaceServiceFactory(typeof(IFixAllGetFixesService), ServiceLayer.Host), Shared]
     internal class FixAllGetFixesService : IFixAllGetFixesService, IWorkspaceServiceFactory
@@ -152,8 +152,8 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.Suggestions
                 var previewService = workspace.Services.GetService<IPreviewDialogService>();
                 var glyph = languageOpt == null
                     ? Glyph.Assembly
-                    : languageOpt == LanguageNames.CSharp
-                        ? Glyph.CSharpProject
+                    : languageOpt == LanguageNames.Stark
+                        ? Glyph.StarkProject
                         : Glyph.BasicProject;
 
                 var changedSolution = previewService.PreviewChanges(

@@ -4,13 +4,13 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.PatternMatching
+namespace StarkPlatform.CodeAnalysis.PatternMatching
 {
     /// <summary>
     /// The pattern matcher is thread-safe.  However, it maintains an internal cache of

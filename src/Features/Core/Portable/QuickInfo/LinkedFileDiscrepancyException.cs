@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.QuickInfo
+namespace StarkPlatform.CodeAnalysis.QuickInfo
 {
     // Used to aid the investigation of https://devdiv.visualstudio.com/DevDiv/_workitems?id=209299
     internal class LinkedFileDiscrepancyException : Exception

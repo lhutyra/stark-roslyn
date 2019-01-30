@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using Roslyn.Utilities;
 using SQLitePCL;
 
-namespace Microsoft.CodeAnalysis.SQLite.Interop
+namespace StarkPlatform.CodeAnalysis.SQLite.Interop
 {
     /// <summary>
     /// Represents a prepared sqlite statement.  <see cref="SqlStatement"/>s can be 

@@ -3,7 +3,7 @@
 using System;
 using Microsoft.VisualStudio.Debugger;
 
-namespace Microsoft.VisualStudio.LanguageServices.EditAndContinue
+namespace StarkPlatform.VisualStudio.LanguageServices.EditAndContinue
 {
     internal static class DebuggerComponent
     {

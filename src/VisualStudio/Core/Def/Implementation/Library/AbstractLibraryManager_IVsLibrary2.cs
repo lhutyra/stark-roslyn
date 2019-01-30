@@ -5,7 +5,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library
 {
     internal partial class AbstractLibraryManager : IVsLibrary2
     {

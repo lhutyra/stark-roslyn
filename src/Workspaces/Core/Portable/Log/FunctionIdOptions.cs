@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Concurrent;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     internal static class FunctionIdOptions
     {

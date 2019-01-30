@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Roslyn.Utilities;
 using System.Threading;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Venus
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Venus
 {
     internal static class VenusTaskExtensions
     {

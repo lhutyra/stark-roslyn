@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Debugging
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Debugging
 {
     internal interface IProximityExpressionsService : ILanguageService
     {

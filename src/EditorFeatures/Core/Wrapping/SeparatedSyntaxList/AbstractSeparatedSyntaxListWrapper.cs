@@ -3,7 +3,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping.SeparatedSyntaxList
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping.SeparatedSyntaxList
 {
     /// <summary>
     /// Base type for all wrappers that involve wrapping a comma-separated list of items.

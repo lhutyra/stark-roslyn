@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Text.Tagging;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Preview
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Preview
 {
     internal class HighlightTag : TextMarkerTag
     {

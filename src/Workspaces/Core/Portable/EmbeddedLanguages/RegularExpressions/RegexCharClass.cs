@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.EmbeddedLanguages.RegularExpressions
+namespace StarkPlatform.CodeAnalysis.EmbeddedLanguages.RegularExpressions
 {
     /// <summary>
     /// Minimal copy of https://github.com/dotnet/corefx/blob/master/src/System.Text.RegularExpressions/src/System/Text/RegularExpressions/RegexCharClass.cs

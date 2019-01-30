@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis.CodeActions
+﻿namespace StarkPlatform.CodeAnalysis.CodeActions
 {
     internal enum CodeActionPriority
     {

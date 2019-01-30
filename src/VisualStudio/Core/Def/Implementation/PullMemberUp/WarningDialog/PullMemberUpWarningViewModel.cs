@@ -2,11 +2,11 @@
 
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.PullMemberUp;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp.WarningDialog
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp.WarningDialog
 {
     internal class PullMemberUpWarningViewModel : AbstractNotifyPropertyChanged
     {

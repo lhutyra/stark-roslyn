@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// This is an abstraction over the file system which allows for us to do more thorough unit testing.

@@ -3,14 +3,14 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Projection;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.QuickInfo
+namespace StarkPlatform.CodeAnalysis.Editor.QuickInfo
 {
     /// <summary>
     /// Creates quick info content out of the span of an existing snapshot.  The span will be

@@ -3,10 +3,10 @@
 using System;
 using System.IO;
 using System.Threading;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements
 {
     public partial class CodeFunction
     {

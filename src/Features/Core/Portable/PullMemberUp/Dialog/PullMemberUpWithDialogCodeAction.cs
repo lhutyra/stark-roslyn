@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp.Dialog;
-using Microsoft.CodeAnalysis.PullMemberUp;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeRefactorings.PullMemberUp.Dialog;
+using StarkPlatform.CodeAnalysis.PullMemberUp;
 
-namespace Microsoft.CodeAnalysis.CodeRefactorings.PullMemberUp
+namespace StarkPlatform.CodeAnalysis.CodeRefactorings.PullMemberUp
 {
     internal abstract partial class AbstractPullMemberUpRefactoringProvider
     {

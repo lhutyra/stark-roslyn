@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.CodeActions
+namespace StarkPlatform.CodeAnalysis.CodeActions
 {
     /// <summary>
     /// A code action operation for requesting a document be opened in the host environment.

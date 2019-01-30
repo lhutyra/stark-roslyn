@@ -2,9 +2,9 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Completion;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class)]

@@ -4,28 +4,28 @@ using System;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
 using Microsoft.VisualStudio.Debugger.UI.Interfaces;
-using Microsoft.VisualStudio.LanguageServices.Utilities;
+using StarkPlatform.VisualStudio.LanguageServices.Utilities;
 using VsTextSpan = Microsoft.VisualStudio.TextManager.Interop.TextSpan;
 
-namespace Microsoft.VisualStudio.LanguageServices.EditAndContinue
+namespace StarkPlatform.VisualStudio.LanguageServices.EditAndContinue
 {
-    [Export(typeof(IManagedActiveStatementTracker)), Shared]
-    internal sealed class VisualStudioActiveStatementTracker : IManagedActiveStatementTracker
-    {
-        private readonly IEditAndContinueService _editAndContinueService;
+    //[Export(typeof(IManagedActiveStatementTracker)), Shared]
+    //internal sealed class VisualStudioActiveStatementTracker : IManagedActiveStatementTracker
+    //{
+    //    private readonly IEditAndContinueService _editAndContinueService;
 
-        [ImportingConstructor]
-        public VisualStudioActiveStatementTracker(IEditAndContinueService editAndContinueService)
-        {
-            _editAndContinueService = editAndContinueService;
-        }
+    //    [ImportingConstructor]
+    //    public VisualStudioActiveStatementTracker(IEditAndContinueService editAndContinueService)
+    //    {
+    //        _editAndContinueService = editAndContinueService;
+    //    }
 
-        public async Task<VsTextSpan?> GetCurrentActiveStatementPositionAsync(Guid moduleId, int methodToken, int methodVersion, int ilOffset, CancellationToken cancellationToken)
-            => (await _editAndContinueService.GetCurrentActiveStatementPositionAsync(new ActiveInstructionId(moduleId, methodToken, methodVersion, ilOffset), cancellationToken).ConfigureAwait(false))?.ToVsTextSpan();
+    //    public async Task<VsTextSpan?> GetCurrentActiveStatementPositionAsync(Guid moduleId, int methodToken, int methodVersion, int ilOffset, CancellationToken cancellationToken)
+    //        => (await _editAndContinueService.GetCurrentActiveStatementPositionAsync(new ActiveInstructionId(moduleId, methodToken, methodVersion, ilOffset), cancellationToken).ConfigureAwait(false))?.ToVsTextSpan();
 
-        public Task<bool?> IsActiveStatementInExceptionRegionAsync(Guid moduleId, int methodToken, int methodVersion, int ilOffset, CancellationToken cancellationToken)
-            => _editAndContinueService.IsActiveStatementInExceptionRegionAsync(new ActiveInstructionId(moduleId, methodToken, methodVersion, ilOffset), cancellationToken);
-    }
+    //    public Task<bool?> IsActiveStatementInExceptionRegionAsync(Guid moduleId, int methodToken, int methodVersion, int ilOffset, CancellationToken cancellationToken)
+    //        => _editAndContinueService.IsActiveStatementInExceptionRegionAsync(new ActiveInstructionId(moduleId, methodToken, methodVersion, ilOffset), cancellationToken);
+    //}
 }

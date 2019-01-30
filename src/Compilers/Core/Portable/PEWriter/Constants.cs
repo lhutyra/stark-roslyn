@@ -3,7 +3,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal static class Constants
     {

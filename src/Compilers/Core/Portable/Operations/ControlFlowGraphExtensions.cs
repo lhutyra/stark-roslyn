@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     public static partial class ControlFlowGraphExtensions
     {

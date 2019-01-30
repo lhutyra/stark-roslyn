@@ -4,11 +4,11 @@ using System;
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.SymbolMapping;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.SymbolMapping;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.MetadataAsSource
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.MetadataAsSource
 {
     [ExportWorkspaceServiceFactory(typeof(ISymbolMappingService), WorkspaceKind.MetadataAsSource)]
     [Shared]

@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.CodeGen;
-using Cci = Microsoft.Cci;
+using StarkPlatform.CodeAnalysis.CodeGen;
+using Cci = StarkPlatform.Cci;
 
-namespace Microsoft.CodeAnalysis.Emit.NoPia
+namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 {
     internal abstract partial class EmbeddedTypesManager<
         TPEModuleBuilder,

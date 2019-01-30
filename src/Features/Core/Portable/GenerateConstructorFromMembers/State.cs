@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.GenerateConstructorFromMembers
+namespace StarkPlatform.CodeAnalysis.GenerateConstructorFromMembers
 {
     internal partial class GenerateConstructorFromMembersCodeRefactoringProvider
     {

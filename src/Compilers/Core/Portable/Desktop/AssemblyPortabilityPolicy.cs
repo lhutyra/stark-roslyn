@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Policy to be used when matching assembly reference to an assembly definition across platforms.

@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Reflection.Metadata;
 
-namespace Microsoft.CodeAnalysis.RuntimeMembers
+namespace StarkPlatform.CodeAnalysis.RuntimeMembers
 {
     [Flags()]
     internal enum MemberFlags : byte

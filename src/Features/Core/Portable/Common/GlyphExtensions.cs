@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Tags;
+using StarkPlatform.CodeAnalysis.Tags;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class GlyphExtensions
     {
@@ -40,10 +40,10 @@ namespace Microsoft.CodeAnalysis
                     return Glyph.Assembly;
 
                 case WellKnownTags.File:
-                    return allTags.Contains(LanguageNames.VisualBasic) ? Glyph.BasicFile : Glyph.CSharpFile;
+                    return Glyph.StarkFile;
 
                 case WellKnownTags.Project:
-                    return allTags.Contains(LanguageNames.VisualBasic) ? Glyph.BasicProject : Glyph.CSharpProject;
+                    return Glyph.StarkProject;
 
                 case WellKnownTags.Class:
                     switch (GetAccessibility(allTags))

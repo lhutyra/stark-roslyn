@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Formatting.Rules
+namespace StarkPlatform.CodeAnalysis.Formatting.Rules
 {
     /// <summary>
     /// align first tokens on lines among the given tokens to the base token

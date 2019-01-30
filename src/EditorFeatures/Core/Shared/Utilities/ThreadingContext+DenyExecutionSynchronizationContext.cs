@@ -6,7 +6,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     internal sealed partial class ThreadingContext
     {

@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+﻿using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Classification.Classifiers
+namespace StarkPlatform.CodeAnalysis.Classification.Classifiers
 {
     internal abstract class AbstractNameSyntaxClassifier : AbstractSyntaxClassifier
     {

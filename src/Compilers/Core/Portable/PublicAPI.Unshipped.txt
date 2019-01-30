@@ -1,245 +1,245 @@
-*REMOVED*Microsoft.CodeAnalysis.Operations.IEventAssignmentOperation.EventReference.get -> Microsoft.CodeAnalysis.Operations.IEventReferenceOperation
-abstract Microsoft.CodeAnalysis.Compilation.ClassifyCommonConversion(Microsoft.CodeAnalysis.ITypeSymbol source, Microsoft.CodeAnalysis.ITypeSymbol destination) -> Microsoft.CodeAnalysis.Operations.CommonConversion
-abstract Microsoft.CodeAnalysis.Compilation.ContainsSymbolsWithName(string name, Microsoft.CodeAnalysis.SymbolFilter filter = Microsoft.CodeAnalysis.SymbolFilter.TypeAndMember, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> bool
-abstract Microsoft.CodeAnalysis.Compilation.GetSymbolsWithName(string name, Microsoft.CodeAnalysis.SymbolFilter filter = Microsoft.CodeAnalysis.SymbolFilter.TypeAndMember, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IEnumerable<Microsoft.CodeAnalysis.ISymbol>
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterCodeBlockAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.CodeBlockAnalysisContext> action) -> void
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterCodeBlockStartAction<TLanguageKindEnum>(System.Action<Microsoft.CodeAnalysis.Diagnostics.CodeBlockStartAnalysisContext<TLanguageKindEnum>> action) -> void
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.OperationAnalysisContext> action, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.OperationKind> operationKinds) -> void
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationBlockAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.OperationBlockAnalysisContext> action) -> void
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationBlockStartAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.OperationBlockStartAnalysisContext> action) -> void
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterSymbolEndAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.SymbolAnalysisContext> action) -> void
-abstract Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterSyntaxNodeAction<TLanguageKindEnum>(System.Action<Microsoft.CodeAnalysis.Diagnostics.SyntaxNodeAnalysisContext> action, System.Collections.Immutable.ImmutableArray<TLanguageKindEnum> syntaxKinds) -> void
-const Microsoft.CodeAnalysis.WellKnownMemberNames.DisposeAsyncMethodName = "DisposeAsync" -> string
-const Microsoft.CodeAnalysis.WellKnownMemberNames.DisposeMethodName = "Dispose" -> string
-const Microsoft.CodeAnalysis.WellKnownMemberNames.GetAsyncEnumeratorMethodName = "GetAsyncEnumerator" -> string
-const Microsoft.CodeAnalysis.WellKnownMemberNames.MoveNextAsyncMethodName = "MoveNextAsync" -> string
-Microsoft.CodeAnalysis.Compilation.HasImplicitConversion(Microsoft.CodeAnalysis.ITypeSymbol fromType, Microsoft.CodeAnalysis.ITypeSymbol toType) -> bool
-Microsoft.CodeAnalysis.Compilation.IsSymbolAccessibleWithin(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.ISymbol within, Microsoft.CodeAnalysis.ITypeSymbol throughType = null) -> bool
-Microsoft.CodeAnalysis.Diagnostics.OperationAnalysisContext.GetControlFlowGraph() -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.Diagnostics.OperationBlockAnalysisContext.GetControlFlowGraph(Microsoft.CodeAnalysis.IOperation operationBlock) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.Diagnostics.OperationBlockStartAnalysisContext.GetControlFlowGraph(Microsoft.CodeAnalysis.IOperation operationBlock) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.CancellationToken.get -> System.Threading.CancellationToken
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.Compilation.get -> Microsoft.CodeAnalysis.Compilation
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.Options.get -> Microsoft.CodeAnalysis.Diagnostics.AnalyzerOptions
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.OperationAnalysisContext> action, params Microsoft.CodeAnalysis.OperationKind[] operationKinds) -> void
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterSyntaxNodeAction<TLanguageKindEnum>(System.Action<Microsoft.CodeAnalysis.Diagnostics.SyntaxNodeAnalysisContext> action, params TLanguageKindEnum[] syntaxKinds) -> void
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.Symbol.get -> Microsoft.CodeAnalysis.ISymbol
-Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.SymbolStartAnalysisContext(Microsoft.CodeAnalysis.ISymbol symbol, Microsoft.CodeAnalysis.Compilation compilation, Microsoft.CodeAnalysis.Diagnostics.AnalyzerOptions options, System.Threading.CancellationToken cancellationToken) -> void
-Microsoft.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.Concurrent.get -> bool
-Microsoft.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.Concurrent.set -> void
-Microsoft.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolEndActionsCount.get -> int
-Microsoft.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolEndActionsCount.set -> void
-Microsoft.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolStartActionsCount.get -> int
-Microsoft.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolStartActionsCount.set -> void
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.BranchValue.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.ConditionalSuccessor.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.ConditionKind.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.EnclosingRegion.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.FallThroughSuccessor.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.IsReachable.get -> bool
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.Kind.get -> Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.Operations.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.IOperation>
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.Ordinal.get -> int
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock.Predecessors.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch>
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind.Block = 2 -> Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind.Entry = 0 -> Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind
-Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind.Exit = 1 -> Microsoft.CodeAnalysis.FlowAnalysis.BasicBlockKind
-Microsoft.CodeAnalysis.FlowAnalysis.CaptureId
-Microsoft.CodeAnalysis.FlowAnalysis.CaptureId.Equals(Microsoft.CodeAnalysis.FlowAnalysis.CaptureId other) -> bool
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.Destination.get -> Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.EnteringRegions.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.FinallyRegions.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.IsConditionalSuccessor.get -> bool
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.LeavingRegions.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.Semantics.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranch.Source.get -> Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Error = 7 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.None = 0 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.ProgramTermination = 4 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Regular = 1 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Rethrow = 6 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Return = 2 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.StructuredExceptionHandling = 3 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Throw = 5 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind.None = 0 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind.WhenFalse = 1 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind.WhenTrue = 2 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Blocks.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.BasicBlock>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.GetAnonymousFunctionControlFlowGraph(Microsoft.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation anonymousFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.GetLocalFunctionControlFlowGraph(Microsoft.CodeAnalysis.IMethodSymbol localFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.LocalFunctions.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.IMethodSymbol>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.OriginalOperation.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Parent.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Root.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraphExtensions
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.CaptureIds.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.CaptureId>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.EnclosingRegion.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.ExceptionType.get -> Microsoft.CodeAnalysis.ITypeSymbol
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.FirstBlockOrdinal.get -> int
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.Kind.get -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.LastBlockOrdinal.get -> int
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.LocalFunctions.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.IMethodSymbol>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.Locals.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion.NestedRegions.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Catch = 4 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.ErroneousBody = 10 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Filter = 3 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.FilterAndHandler = 5 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Finally = 7 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.LocalLifetime = 1 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Root = 0 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.StaticLocalInitializer = 9 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Try = 2 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.TryAndCatch = 6 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.TryAndFinally = 8 -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
-Microsoft.CodeAnalysis.FlowAnalysis.ICaughtExceptionOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation.Symbol.get -> Microsoft.CodeAnalysis.IMethodSymbol
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation.Id.get -> Microsoft.CodeAnalysis.FlowAnalysis.CaptureId
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation.Value.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation.Id.get -> Microsoft.CodeAnalysis.FlowAnalysis.CaptureId
-Microsoft.CodeAnalysis.FlowAnalysis.IIsNullOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IIsNullOperation.Operand.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation
-Microsoft.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation.Local.get -> Microsoft.CodeAnalysis.ILocalSymbol
-Microsoft.CodeAnalysis.IFieldSymbol.IsFixedSizeBuffer.get -> bool
-Microsoft.CodeAnalysis.ILocalSymbol.IsFixed.get -> bool
-Microsoft.CodeAnalysis.IOperation.SemanticModel.get -> Microsoft.CodeAnalysis.SemanticModel
-Microsoft.CodeAnalysis.ITypeSymbol.IsRefLikeType.get -> bool
-Microsoft.CodeAnalysis.ITypeSymbol.IsUnmanagedType.get -> bool
-Microsoft.CodeAnalysis.OperationKind.Binary = 32 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.CaughtException = 94 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.CoalesceAssignment = 97 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.ConstructorBody = 89 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.DiscardPattern = 104 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.FlowAnonymousFunction = 96 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.FlowCapture = 91 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.FlowCaptureReference = 92 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.FromEndIndex = 100 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.IsNull = 93 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.MethodBody = 88 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.Range = 99 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.RecursivePattern = 103 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.ReDim = 101 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.ReDimClause = 102 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.StaticLocalInitializationSemaphore = 95 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.SuppressNullableWarning = 98 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.SwitchExpression = 105 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.SwitchExpressionArm = 106 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.TupleBinary = 87 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.OperationKind.Unary = 31 -> Microsoft.CodeAnalysis.OperationKind
-Microsoft.CodeAnalysis.Operations.CommonConversion.IsImplicit.get -> bool
-Microsoft.CodeAnalysis.Operations.ICaseClauseOperation.Label.get -> Microsoft.CodeAnalysis.ILabelSymbol
-Microsoft.CodeAnalysis.Operations.ICoalesceAssignmentOperation
-Microsoft.CodeAnalysis.Operations.ICoalesceOperation.ValueConversion.get -> Microsoft.CodeAnalysis.Operations.CommonConversion
-Microsoft.CodeAnalysis.Operations.IDeclarationPatternOperation.MatchedType.get -> Microsoft.CodeAnalysis.ITypeSymbol
-Microsoft.CodeAnalysis.Operations.IDeclarationPatternOperation.MatchesNull.get -> bool
-Microsoft.CodeAnalysis.Operations.IDiscardPatternOperation
-Microsoft.CodeAnalysis.Operations.IEventAssignmentOperation.EventReference.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.IForLoopOperation.ConditionLocals.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-Microsoft.CodeAnalysis.Operations.IForToLoopOperation.IsChecked.get -> bool
-Microsoft.CodeAnalysis.Operations.IFromEndIndexOperation
-Microsoft.CodeAnalysis.Operations.IFromEndIndexOperation.IsLifted.get -> bool
-Microsoft.CodeAnalysis.Operations.IFromEndIndexOperation.Operand.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.IFromEndIndexOperation.Symbol.get -> Microsoft.CodeAnalysis.IMethodSymbol
-Microsoft.CodeAnalysis.Operations.IInstanceReferenceOperation.ReferenceKind.get -> Microsoft.CodeAnalysis.Operations.InstanceReferenceKind
-Microsoft.CodeAnalysis.Operations.ILoopOperation.ContinueLabel.get -> Microsoft.CodeAnalysis.ILabelSymbol
-Microsoft.CodeAnalysis.Operations.ILoopOperation.ExitLabel.get -> Microsoft.CodeAnalysis.ILabelSymbol
-Microsoft.CodeAnalysis.Operations.InstanceReferenceKind
-Microsoft.CodeAnalysis.Operations.InstanceReferenceKind.ContainingTypeInstance = 0 -> Microsoft.CodeAnalysis.Operations.InstanceReferenceKind
-Microsoft.CodeAnalysis.Operations.InstanceReferenceKind.ImplicitReceiver = 1 -> Microsoft.CodeAnalysis.Operations.InstanceReferenceKind
-Microsoft.CodeAnalysis.Operations.IPatternOperation.InputType.get -> Microsoft.CodeAnalysis.ITypeSymbol
-Microsoft.CodeAnalysis.Operations.IRangeOperation
-Microsoft.CodeAnalysis.Operations.IRangeOperation.IsLifted.get -> bool
-Microsoft.CodeAnalysis.Operations.IRangeOperation.LeftOperand.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.IRangeOperation.Method.get -> Microsoft.CodeAnalysis.IMethodSymbol
-Microsoft.CodeAnalysis.Operations.IRangeOperation.RightOperand.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation
-Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation.DeclaredSymbol.get -> Microsoft.CodeAnalysis.ISymbol
-Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation.DeconstructSymbol.get -> Microsoft.CodeAnalysis.ISymbol
-Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation.DeconstructionSubpatterns.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Operations.IPatternOperation>
-Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation.MatchedType.get -> Microsoft.CodeAnalysis.ITypeSymbol
-Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation.PropertySubpatterns.get -> System.Collections.Immutable.ImmutableArray<(Microsoft.CodeAnalysis.ISymbol, Microsoft.CodeAnalysis.Operations.IPatternOperation)>
-Microsoft.CodeAnalysis.Operations.IReDimClauseOperation
-Microsoft.CodeAnalysis.Operations.IReDimClauseOperation.DimensionSizes.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.IOperation>
-Microsoft.CodeAnalysis.Operations.IReDimClauseOperation.Operand.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.IReDimOperation
-Microsoft.CodeAnalysis.Operations.IReDimOperation.Clauses.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Operations.IReDimClauseOperation>
-Microsoft.CodeAnalysis.Operations.IReDimOperation.Preserve.get -> bool
-Microsoft.CodeAnalysis.Operations.ISuppressNullableWarningOperation
-Microsoft.CodeAnalysis.Operations.ISuppressNullableWarningOperation.Expression.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.ISwitchCaseOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Guard.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Pattern.get -> Microsoft.CodeAnalysis.Operations.IPatternOperation
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Value.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionOperation
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionOperation.Arms.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation>
-Microsoft.CodeAnalysis.Operations.ISwitchExpressionOperation.Value.get -> Microsoft.CodeAnalysis.IOperation
-Microsoft.CodeAnalysis.Operations.ISwitchOperation.ExitLabel.get -> Microsoft.CodeAnalysis.ILabelSymbol
-Microsoft.CodeAnalysis.Operations.ISwitchOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-Microsoft.CodeAnalysis.Operations.ITryOperation.ExitLabel.get -> Microsoft.CodeAnalysis.ILabelSymbol
-Microsoft.CodeAnalysis.Operations.IUsingOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ILocalSymbol>
-Microsoft.CodeAnalysis.SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier = 64 -> Microsoft.CodeAnalysis.SymbolDisplayMiscellaneousOptions
-Microsoft.CodeAnalysis.SymbolDisplayPartKind.ConstantName = 30 -> Microsoft.CodeAnalysis.SymbolDisplayPartKind
-Microsoft.CodeAnalysis.SymbolDisplayPartKind.EnumMemberName = 28 -> Microsoft.CodeAnalysis.SymbolDisplayPartKind
-Microsoft.CodeAnalysis.SymbolDisplayPartKind.ExtensionMethodName = 29 -> Microsoft.CodeAnalysis.SymbolDisplayPartKind
-override Microsoft.CodeAnalysis.FlowAnalysis.CaptureId.Equals(object obj) -> bool
-override Microsoft.CodeAnalysis.FlowAnalysis.CaptureId.GetHashCode() -> int
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.Operations.IBlockOperation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.Operations.IConstructorBodyOperation constructorBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.Operations.IFieldInitializerOperation initializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.Operations.IMethodBodyOperation methodBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.Operations.IParameterInitializerOperation initializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.Operations.IPropertyInitializerOperation initializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(Microsoft.CodeAnalysis.SyntaxNode node, Microsoft.CodeAnalysis.SemanticModel semanticModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraphExtensions.GetAnonymousFunctionControlFlowGraphInScope(this Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph controlFlowGraph, Microsoft.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation anonymousFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraphExtensions.GetLocalFunctionControlFlowGraphInScope(this Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph controlFlowGraph, Microsoft.CodeAnalysis.IMethodSymbol localFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> Microsoft.CodeAnalysis.FlowAnalysis.ControlFlowGraph
-static Microsoft.CodeAnalysis.Operations.OperationExtensions.GetCorrespondingOperation(this Microsoft.CodeAnalysis.Operations.IBranchOperation operation) -> Microsoft.CodeAnalysis.IOperation
-virtual Microsoft.CodeAnalysis.Diagnostics.AnalysisContext.RegisterSymbolStartAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext> action, Microsoft.CodeAnalysis.SymbolKind symbolKind) -> void
-virtual Microsoft.CodeAnalysis.Diagnostics.CompilationStartAnalysisContext.RegisterSymbolStartAction(System.Action<Microsoft.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext> action, Microsoft.CodeAnalysis.SymbolKind symbolKind) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitCaughtException(Microsoft.CodeAnalysis.FlowAnalysis.ICaughtExceptionOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitCoalesceAssignment(Microsoft.CodeAnalysis.Operations.ICoalesceAssignmentOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitDiscardPattern(Microsoft.CodeAnalysis.Operations.IDiscardPatternOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitFlowAnonymousFunction(Microsoft.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitFlowCapture(Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitFlowCaptureReference(Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitFromEndIndexOperation(Microsoft.CodeAnalysis.Operations.IFromEndIndexOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitIsNull(Microsoft.CodeAnalysis.FlowAnalysis.IIsNullOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitRangeOperation(Microsoft.CodeAnalysis.Operations.IRangeOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitReDim(Microsoft.CodeAnalysis.Operations.IReDimOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitReDimClause(Microsoft.CodeAnalysis.Operations.IReDimClauseOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitRecursivePattern(Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitStaticLocalInitializationSemaphore(Microsoft.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitSuppressNullableWarningExpression(Microsoft.CodeAnalysis.Operations.ISuppressNullableWarningOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitSuppressNullableWarningOperation(Microsoft.CodeAnalysis.Operations.ISuppressNullableWarningOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitSwitchExpression(Microsoft.CodeAnalysis.Operations.ISwitchExpressionOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor.VisitSwitchExpressionArm(Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation operation) -> void
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitCaughtException(Microsoft.CodeAnalysis.FlowAnalysis.ICaughtExceptionOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitCoalesceAssignment(Microsoft.CodeAnalysis.Operations.ICoalesceAssignmentOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitDiscardPattern(Microsoft.CodeAnalysis.Operations.IDiscardPatternOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFlowAnonymousFunction(Microsoft.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFlowCapture(Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFlowCaptureReference(Microsoft.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFromEndIndexOperation(Microsoft.CodeAnalysis.Operations.IFromEndIndexOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitIsNull(Microsoft.CodeAnalysis.FlowAnalysis.IIsNullOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitRangeOperation(Microsoft.CodeAnalysis.Operations.IRangeOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitReDim(Microsoft.CodeAnalysis.Operations.IReDimOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitReDimClause(Microsoft.CodeAnalysis.Operations.IReDimClauseOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitRecursivePattern(Microsoft.CodeAnalysis.Operations.IRecursivePatternOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitStaticLocalInitializationSemaphore(Microsoft.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitSuppressNullableWarningOperation(Microsoft.CodeAnalysis.Operations.ISuppressNullableWarningOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitSwitchExpression(Microsoft.CodeAnalysis.Operations.ISwitchExpressionOperation operation, TArgument argument) -> TResult
-virtual Microsoft.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitSwitchExpressionArm(Microsoft.CodeAnalysis.Operations.ISwitchExpressionArmOperation operation, TArgument argument) -> TResult
+*REMOVED*StarkPlatform.CodeAnalysis.Operations.IEventAssignmentOperation.EventReference.get -> StarkPlatform.CodeAnalysis.Operations.IEventReferenceOperation
+abstract StarkPlatform.CodeAnalysis.Compilation.ClassifyCommonConversion(StarkPlatform.CodeAnalysis.ITypeSymbol source, StarkPlatform.CodeAnalysis.ITypeSymbol destination) -> StarkPlatform.CodeAnalysis.Operations.CommonConversion
+abstract StarkPlatform.CodeAnalysis.Compilation.ContainsSymbolsWithName(string name, StarkPlatform.CodeAnalysis.SymbolFilter filter = StarkPlatform.CodeAnalysis.SymbolFilter.TypeAndMember, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> bool
+abstract StarkPlatform.CodeAnalysis.Compilation.GetSymbolsWithName(string name, StarkPlatform.CodeAnalysis.SymbolFilter filter = StarkPlatform.CodeAnalysis.SymbolFilter.TypeAndMember, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Generic.IEnumerable<StarkPlatform.CodeAnalysis.ISymbol>
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterCodeBlockAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.CodeBlockAnalysisContext> action) -> void
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterCodeBlockStartAction<TLanguageKindEnum>(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.CodeBlockStartAnalysisContext<TLanguageKindEnum>> action) -> void
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.OperationAnalysisContext> action, System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.OperationKind> operationKinds) -> void
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationBlockAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.OperationBlockAnalysisContext> action) -> void
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationBlockStartAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.OperationBlockStartAnalysisContext> action) -> void
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterSymbolEndAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.SymbolAnalysisContext> action) -> void
+abstract StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterSyntaxNodeAction<TLanguageKindEnum>(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.SyntaxNodeAnalysisContext> action, System.Collections.Immutable.ImmutableArray<TLanguageKindEnum> syntaxKinds) -> void
+const StarkPlatform.CodeAnalysis.WellKnownMemberNames.DisposeAsyncMethodName = "DisposeAsync" -> string
+const StarkPlatform.CodeAnalysis.WellKnownMemberNames.DisposeMethodName = "Dispose" -> string
+const StarkPlatform.CodeAnalysis.WellKnownMemberNames.GetAsyncEnumeratorMethodName = "GetAsyncEnumerator" -> string
+const StarkPlatform.CodeAnalysis.WellKnownMemberNames.MoveNextAsyncMethodName = "MoveNextAsync" -> string
+StarkPlatform.CodeAnalysis.Compilation.HasImplicitConversion(StarkPlatform.CodeAnalysis.ITypeSymbol fromType, StarkPlatform.CodeAnalysis.ITypeSymbol toType) -> bool
+StarkPlatform.CodeAnalysis.Compilation.IsSymbolAccessibleWithin(StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.ISymbol within, StarkPlatform.CodeAnalysis.ITypeSymbol throughType = null) -> bool
+StarkPlatform.CodeAnalysis.Diagnostics.OperationAnalysisContext.GetControlFlowGraph() -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.Diagnostics.OperationBlockAnalysisContext.GetControlFlowGraph(StarkPlatform.CodeAnalysis.IOperation operationBlock) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.Diagnostics.OperationBlockStartAnalysisContext.GetControlFlowGraph(StarkPlatform.CodeAnalysis.IOperation operationBlock) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.CancellationToken.get -> System.Threading.CancellationToken
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.Compilation.get -> StarkPlatform.CodeAnalysis.Compilation
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.Options.get -> StarkPlatform.CodeAnalysis.Diagnostics.AnalyzerOptions
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterOperationAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.OperationAnalysisContext> action, params StarkPlatform.CodeAnalysis.OperationKind[] operationKinds) -> void
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.RegisterSyntaxNodeAction<TLanguageKindEnum>(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.SyntaxNodeAnalysisContext> action, params TLanguageKindEnum[] syntaxKinds) -> void
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.Symbol.get -> StarkPlatform.CodeAnalysis.ISymbol
+StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext.SymbolStartAnalysisContext(StarkPlatform.CodeAnalysis.ISymbol symbol, StarkPlatform.CodeAnalysis.Compilation compilation, StarkPlatform.CodeAnalysis.Diagnostics.AnalyzerOptions options, System.Threading.CancellationToken cancellationToken) -> void
+StarkPlatform.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.Concurrent.get -> bool
+StarkPlatform.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.Concurrent.set -> void
+StarkPlatform.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolEndActionsCount.get -> int
+StarkPlatform.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolEndActionsCount.set -> void
+StarkPlatform.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolStartActionsCount.get -> int
+StarkPlatform.CodeAnalysis.Diagnostics.Telemetry.AnalyzerTelemetryInfo.SymbolStartActionsCount.set -> void
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.BranchValue.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.ConditionalSuccessor.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.ConditionKind.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.EnclosingRegion.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.FallThroughSuccessor.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.IsReachable.get -> bool
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.Kind.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.Operations.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.IOperation>
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.Ordinal.get -> int
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock.Predecessors.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch>
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind.Block = 2 -> StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind.Entry = 0 -> StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind.Exit = 1 -> StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlockKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId
+StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId.Equals(StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId other) -> bool
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.Destination.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.EnteringRegions.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.FinallyRegions.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.IsConditionalSuccessor.get -> bool
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.LeavingRegions.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.Semantics.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranch.Source.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Error = 7 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.None = 0 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.ProgramTermination = 4 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Regular = 1 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Rethrow = 6 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Return = 2 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.StructuredExceptionHandling = 3 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics.Throw = 5 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowBranchSemantics
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind.None = 0 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind.WhenFalse = 1 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind.WhenTrue = 2 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowConditionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Blocks.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.BasicBlock>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.GetAnonymousFunctionControlFlowGraph(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation anonymousFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.GetLocalFunctionControlFlowGraph(StarkPlatform.CodeAnalysis.IMethodSymbol localFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.LocalFunctions.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.IMethodSymbol>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.OriginalOperation.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Parent.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Root.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraphExtensions
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.CaptureIds.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.EnclosingRegion.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.ExceptionType.get -> StarkPlatform.CodeAnalysis.ITypeSymbol
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.FirstBlockOrdinal.get -> int
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.Kind.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.LastBlockOrdinal.get -> int
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.LocalFunctions.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.IMethodSymbol>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.Locals.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.ILocalSymbol>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion.NestedRegions.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegion>
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Catch = 4 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.ErroneousBody = 10 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Filter = 3 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.FilterAndHandler = 5 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Finally = 7 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.LocalLifetime = 1 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Root = 0 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.StaticLocalInitializer = 9 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.Try = 2 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.TryAndCatch = 6 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind.TryAndFinally = 8 -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowRegionKind
+StarkPlatform.CodeAnalysis.FlowAnalysis.ICaughtExceptionOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation.Symbol.get -> StarkPlatform.CodeAnalysis.IMethodSymbol
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation.Id.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation.Value.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation.Id.get -> StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId
+StarkPlatform.CodeAnalysis.FlowAnalysis.IIsNullOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IIsNullOperation.Operand.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation
+StarkPlatform.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation.Local.get -> StarkPlatform.CodeAnalysis.ILocalSymbol
+StarkPlatform.CodeAnalysis.IFieldSymbol.IsFixedSizeBuffer.get -> bool
+StarkPlatform.CodeAnalysis.ILocalSymbol.IsFixed.get -> bool
+StarkPlatform.CodeAnalysis.IOperation.SemanticModel.get -> StarkPlatform.CodeAnalysis.SemanticModel
+StarkPlatform.CodeAnalysis.ITypeSymbol.IsRefLikeType.get -> bool
+StarkPlatform.CodeAnalysis.ITypeSymbol.IsUnmanagedType.get -> bool
+StarkPlatform.CodeAnalysis.OperationKind.Binary = 32 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.CaughtException = 94 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.CoalesceAssignment = 97 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.ConstructorBody = 89 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.DiscardPattern = 104 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.FlowAnonymousFunction = 96 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.FlowCapture = 91 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.FlowCaptureReference = 92 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.FromEndIndex = 100 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.IsNull = 93 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.MethodBody = 88 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.Range = 99 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.RecursivePattern = 103 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.ReDim = 101 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.ReDimClause = 102 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.StaticLocalInitializationSemaphore = 95 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.SuppressNullableWarning = 98 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.SwitchExpression = 105 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.SwitchExpressionArm = 106 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.TupleBinary = 87 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.OperationKind.Unary = 31 -> StarkPlatform.CodeAnalysis.OperationKind
+StarkPlatform.CodeAnalysis.Operations.CommonConversion.IsImplicit.get -> bool
+StarkPlatform.CodeAnalysis.Operations.ICaseClauseOperation.Label.get -> StarkPlatform.CodeAnalysis.ILabelSymbol
+StarkPlatform.CodeAnalysis.Operations.ICoalesceAssignmentOperation
+StarkPlatform.CodeAnalysis.Operations.ICoalesceOperation.ValueConversion.get -> StarkPlatform.CodeAnalysis.Operations.CommonConversion
+StarkPlatform.CodeAnalysis.Operations.IDeclarationPatternOperation.MatchedType.get -> StarkPlatform.CodeAnalysis.ITypeSymbol
+StarkPlatform.CodeAnalysis.Operations.IDeclarationPatternOperation.MatchesNull.get -> bool
+StarkPlatform.CodeAnalysis.Operations.IDiscardPatternOperation
+StarkPlatform.CodeAnalysis.Operations.IEventAssignmentOperation.EventReference.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.IForLoopOperation.ConditionLocals.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.ILocalSymbol>
+StarkPlatform.CodeAnalysis.Operations.IForToLoopOperation.IsChecked.get -> bool
+StarkPlatform.CodeAnalysis.Operations.IFromEndIndexOperation
+StarkPlatform.CodeAnalysis.Operations.IFromEndIndexOperation.IsLifted.get -> bool
+StarkPlatform.CodeAnalysis.Operations.IFromEndIndexOperation.Operand.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.IFromEndIndexOperation.Symbol.get -> StarkPlatform.CodeAnalysis.IMethodSymbol
+StarkPlatform.CodeAnalysis.Operations.IInstanceReferenceOperation.ReferenceKind.get -> StarkPlatform.CodeAnalysis.Operations.InstanceReferenceKind
+StarkPlatform.CodeAnalysis.Operations.ILoopOperation.ContinueLabel.get -> StarkPlatform.CodeAnalysis.ILabelSymbol
+StarkPlatform.CodeAnalysis.Operations.ILoopOperation.ExitLabel.get -> StarkPlatform.CodeAnalysis.ILabelSymbol
+StarkPlatform.CodeAnalysis.Operations.InstanceReferenceKind
+StarkPlatform.CodeAnalysis.Operations.InstanceReferenceKind.ContainingTypeInstance = 0 -> StarkPlatform.CodeAnalysis.Operations.InstanceReferenceKind
+StarkPlatform.CodeAnalysis.Operations.InstanceReferenceKind.ImplicitReceiver = 1 -> StarkPlatform.CodeAnalysis.Operations.InstanceReferenceKind
+StarkPlatform.CodeAnalysis.Operations.IPatternOperation.InputType.get -> StarkPlatform.CodeAnalysis.ITypeSymbol
+StarkPlatform.CodeAnalysis.Operations.IRangeOperation
+StarkPlatform.CodeAnalysis.Operations.IRangeOperation.IsLifted.get -> bool
+StarkPlatform.CodeAnalysis.Operations.IRangeOperation.LeftOperand.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.IRangeOperation.Method.get -> StarkPlatform.CodeAnalysis.IMethodSymbol
+StarkPlatform.CodeAnalysis.Operations.IRangeOperation.RightOperand.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation
+StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation.DeclaredSymbol.get -> StarkPlatform.CodeAnalysis.ISymbol
+StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation.DeconstructSymbol.get -> StarkPlatform.CodeAnalysis.ISymbol
+StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation.DeconstructionSubpatterns.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.Operations.IPatternOperation>
+StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation.MatchedType.get -> StarkPlatform.CodeAnalysis.ITypeSymbol
+StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation.PropertySubpatterns.get -> System.Collections.Immutable.ImmutableArray<(StarkPlatform.CodeAnalysis.ISymbol, StarkPlatform.CodeAnalysis.Operations.IPatternOperation)>
+StarkPlatform.CodeAnalysis.Operations.IReDimClauseOperation
+StarkPlatform.CodeAnalysis.Operations.IReDimClauseOperation.DimensionSizes.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.IOperation>
+StarkPlatform.CodeAnalysis.Operations.IReDimClauseOperation.Operand.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.IReDimOperation
+StarkPlatform.CodeAnalysis.Operations.IReDimOperation.Clauses.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.Operations.IReDimClauseOperation>
+StarkPlatform.CodeAnalysis.Operations.IReDimOperation.Preserve.get -> bool
+StarkPlatform.CodeAnalysis.Operations.ISuppressNullableWarningOperation
+StarkPlatform.CodeAnalysis.Operations.ISuppressNullableWarningOperation.Expression.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchCaseOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.ILocalSymbol>
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Guard.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.ILocalSymbol>
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Pattern.get -> StarkPlatform.CodeAnalysis.Operations.IPatternOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation.Value.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionOperation.Arms.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation>
+StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionOperation.Value.get -> StarkPlatform.CodeAnalysis.IOperation
+StarkPlatform.CodeAnalysis.Operations.ISwitchOperation.ExitLabel.get -> StarkPlatform.CodeAnalysis.ILabelSymbol
+StarkPlatform.CodeAnalysis.Operations.ISwitchOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.ILocalSymbol>
+StarkPlatform.CodeAnalysis.Operations.ITryOperation.ExitLabel.get -> StarkPlatform.CodeAnalysis.ILabelSymbol
+StarkPlatform.CodeAnalysis.Operations.IUsingOperation.Locals.get -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.ILocalSymbol>
+StarkPlatform.CodeAnalysis.SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier = 64 -> StarkPlatform.CodeAnalysis.SymbolDisplayMiscellaneousOptions
+StarkPlatform.CodeAnalysis.SymbolDisplayPartKind.ConstantName = 30 -> StarkPlatform.CodeAnalysis.SymbolDisplayPartKind
+StarkPlatform.CodeAnalysis.SymbolDisplayPartKind.EnumMemberName = 28 -> StarkPlatform.CodeAnalysis.SymbolDisplayPartKind
+StarkPlatform.CodeAnalysis.SymbolDisplayPartKind.ExtensionMethodName = 29 -> StarkPlatform.CodeAnalysis.SymbolDisplayPartKind
+override StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId.Equals(object obj) -> bool
+override StarkPlatform.CodeAnalysis.FlowAnalysis.CaptureId.GetHashCode() -> int
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.Operations.IBlockOperation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.Operations.IConstructorBodyOperation constructorBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.Operations.IFieldInitializerOperation initializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.Operations.IMethodBodyOperation methodBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.Operations.IParameterInitializerOperation initializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.Operations.IPropertyInitializerOperation initializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph.Create(StarkPlatform.CodeAnalysis.SyntaxNode node, StarkPlatform.CodeAnalysis.SemanticModel semanticModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraphExtensions.GetAnonymousFunctionControlFlowGraphInScope(this StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph controlFlowGraph, StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation anonymousFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraphExtensions.GetLocalFunctionControlFlowGraphInScope(this StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph controlFlowGraph, StarkPlatform.CodeAnalysis.IMethodSymbol localFunction, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> StarkPlatform.CodeAnalysis.FlowAnalysis.ControlFlowGraph
+static StarkPlatform.CodeAnalysis.Operations.OperationExtensions.GetCorrespondingOperation(this StarkPlatform.CodeAnalysis.Operations.IBranchOperation operation) -> StarkPlatform.CodeAnalysis.IOperation
+virtual StarkPlatform.CodeAnalysis.Diagnostics.AnalysisContext.RegisterSymbolStartAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext> action, StarkPlatform.CodeAnalysis.SymbolKind symbolKind) -> void
+virtual StarkPlatform.CodeAnalysis.Diagnostics.CompilationStartAnalysisContext.RegisterSymbolStartAction(System.Action<StarkPlatform.CodeAnalysis.Diagnostics.SymbolStartAnalysisContext> action, StarkPlatform.CodeAnalysis.SymbolKind symbolKind) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitCaughtException(StarkPlatform.CodeAnalysis.FlowAnalysis.ICaughtExceptionOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitCoalesceAssignment(StarkPlatform.CodeAnalysis.Operations.ICoalesceAssignmentOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitDiscardPattern(StarkPlatform.CodeAnalysis.Operations.IDiscardPatternOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitFlowAnonymousFunction(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitFlowCapture(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitFlowCaptureReference(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitFromEndIndexOperation(StarkPlatform.CodeAnalysis.Operations.IFromEndIndexOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitIsNull(StarkPlatform.CodeAnalysis.FlowAnalysis.IIsNullOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitRangeOperation(StarkPlatform.CodeAnalysis.Operations.IRangeOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitReDim(StarkPlatform.CodeAnalysis.Operations.IReDimOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitReDimClause(StarkPlatform.CodeAnalysis.Operations.IReDimClauseOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitRecursivePattern(StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitStaticLocalInitializationSemaphore(StarkPlatform.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitSuppressNullableWarningExpression(StarkPlatform.CodeAnalysis.Operations.ISuppressNullableWarningOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitSuppressNullableWarningOperation(StarkPlatform.CodeAnalysis.Operations.ISuppressNullableWarningOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitSwitchExpression(StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor.VisitSwitchExpressionArm(StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation operation) -> void
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitCaughtException(StarkPlatform.CodeAnalysis.FlowAnalysis.ICaughtExceptionOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitCoalesceAssignment(StarkPlatform.CodeAnalysis.Operations.ICoalesceAssignmentOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitDiscardPattern(StarkPlatform.CodeAnalysis.Operations.IDiscardPatternOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFlowAnonymousFunction(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowAnonymousFunctionOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFlowCapture(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFlowCaptureReference(StarkPlatform.CodeAnalysis.FlowAnalysis.IFlowCaptureReferenceOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitFromEndIndexOperation(StarkPlatform.CodeAnalysis.Operations.IFromEndIndexOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitIsNull(StarkPlatform.CodeAnalysis.FlowAnalysis.IIsNullOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitRangeOperation(StarkPlatform.CodeAnalysis.Operations.IRangeOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitReDim(StarkPlatform.CodeAnalysis.Operations.IReDimOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitReDimClause(StarkPlatform.CodeAnalysis.Operations.IReDimClauseOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitRecursivePattern(StarkPlatform.CodeAnalysis.Operations.IRecursivePatternOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitStaticLocalInitializationSemaphore(StarkPlatform.CodeAnalysis.FlowAnalysis.IStaticLocalInitializationSemaphoreOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitSuppressNullableWarningOperation(StarkPlatform.CodeAnalysis.Operations.ISuppressNullableWarningOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitSwitchExpression(StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionOperation operation, TArgument argument) -> TResult
+virtual StarkPlatform.CodeAnalysis.Operations.OperationVisitor<TArgument, TResult>.VisitSwitchExpressionArm(StarkPlatform.CodeAnalysis.Operations.ISwitchExpressionArmOperation operation, TArgument argument) -> TResult

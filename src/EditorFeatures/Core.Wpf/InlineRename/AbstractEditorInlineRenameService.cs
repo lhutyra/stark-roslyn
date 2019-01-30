@@ -5,17 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.FindSymbols;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Navigation;
-using Microsoft.CodeAnalysis.Rename;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.Text.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.FindSymbols;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Navigation;
+using StarkPlatform.CodeAnalysis.Rename;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text.Shared.Extensions;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename
 {
     internal abstract partial class AbstractEditorInlineRenameService : IEditorInlineRenameService
     {
@@ -119,20 +119,6 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.InlineRename
 
             // Cannot rename constructors in VB.  TODO: this logic should be in the VB subclass of this type.
             var workspace = document.Project.Solution.Workspace;
-            if (symbol != null &&
-                symbol.Kind == SymbolKind.NamedType &&
-                symbol.Language == LanguageNames.VisualBasic &&
-                triggerToken.ToString().Equals("New", StringComparison.OrdinalIgnoreCase))
-            {
-                var originalSymbol = SymbolFinder.FindSymbolAtPositionAsync(semanticModel, triggerToken.SpanStart, workspace, cancellationToken: cancellationToken)
-                    .WaitAndGetResult(cancellationToken);
-
-                if (originalSymbol != null && originalSymbol.IsConstructor())
-                {
-                    return new FailureInlineRenameInfo(EditorFeaturesResources.You_cannot_rename_this_element);
-                }
-            }
-
             if (syntaxFactsService.IsTypeNamedDynamic(triggerToken, triggerToken.Parent))
             {
                 if (symbol.Kind == SymbolKind.DynamicType)

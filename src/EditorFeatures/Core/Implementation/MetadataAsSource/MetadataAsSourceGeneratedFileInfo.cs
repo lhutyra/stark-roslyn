@@ -4,10 +4,10 @@ using System;
 using System.Collections.Immutable;
 using System.IO;
 using System.Text;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.MetadataAsSource
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.MetadataAsSource
 {
     internal sealed class MetadataAsSourceGeneratedFileInfo
     {
@@ -26,7 +26,7 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.MetadataAsSource
         {
             this.SourceProjectId = sourceProject.Id;
             this.Workspace = sourceProject.Solution.Workspace;
-            this.LanguageName = allowDecompilation ? LanguageNames.CSharp : sourceProject.Language;
+            this.LanguageName = allowDecompilation ? LanguageNames.Stark : sourceProject.Language;
             if (sourceProject.Language == LanguageName)
             {
                 _parseOptions = sourceProject.ParseOptions;
@@ -39,7 +39,7 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.MetadataAsSource
             this.References = sourceProject.MetadataReferences.ToImmutableArray();
             this.AssemblyIdentity = topLevelNamedType.ContainingAssembly.Identity;
 
-            var extension = LanguageName == LanguageNames.CSharp ? ".cs" : ".vb";
+            var extension = LanguageName == LanguageNames.Stark ? ".cs" : ".vb";
 
             var directoryName = Guid.NewGuid().ToString("N");
             this.TemporaryFilePath = Path.Combine(rootPath, directoryName, topLevelNamedType.Name + extension);
@@ -61,12 +61,12 @@ namespace Microsoft.CodeAnalysis.Editor.Implementation.MetadataAsSource
             // Just say it's always a DLL since we probably won't have a Main method
             var compilationOptions = workspace.Services.GetLanguageServices(LanguageName).CompilationFactory.GetDefaultCompilationOptions().WithOutputKind(OutputKind.DynamicallyLinkedLibrary);
 
-            var extension = LanguageName == LanguageNames.CSharp ? ".cs" : ".vb";
+            var extension = LanguageName == LanguageNames.Stark ? ".cs" : ".vb";
 
             // We need to include the version information of the assembly so InternalsVisibleTo and stuff works
             var assemblyInfoDocumentId = DocumentId.CreateNewId(projectId);
             var assemblyInfoFileName = "AssemblyInfo" + extension;
-            var assemblyInfoString = LanguageName == LanguageNames.CSharp
+            var assemblyInfoString = LanguageName == LanguageNames.Stark
                 ? string.Format(@"[assembly: System.Reflection.AssemblyVersion(""{0}"")]", AssemblyIdentity.Version)
                 : string.Format(@"<Assembly: System.Reflection.AssemblyVersion(""{0}"")>", AssemblyIdentity.Version);
 

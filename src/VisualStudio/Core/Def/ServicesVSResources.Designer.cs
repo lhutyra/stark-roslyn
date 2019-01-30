@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.VisualStudio.LanguageServices {
+namespace StarkPlatform.VisualStudio.LanguageServices {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Microsoft.VisualStudio.LanguageServices {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.VisualStudio.LanguageServices.ServicesVSResources", typeof(ServicesVSResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StarkPlatform.VisualStudio.LanguageServices.ServicesVSResources", typeof(ServicesVSResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

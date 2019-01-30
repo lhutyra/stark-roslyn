@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="7b9f8160-9d62-48cd-9674-b487b1e17c1f" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft" />
-    <DisplayName>Roslyn Dependencies</DisplayName>
-    <Description>Roslyn dependencies for developer deployment.</Description>
-    <PackageId>Microsoft.CodeAnalysis.VisualStudio.Setup.Dependencies</PackageId>
+    <Identity Id="6E4D84BC-4923-4C50-AAB5-2CB31D7C8137" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Stackrift" />
+    <DisplayName>Stark Dependencies</DisplayName>
+    <Description>Stark dependencies for developer deployment.</Description>
+    <PackageId>StarkPlatform.CodeAnalysis.VisualStudio.Setup.Dependencies</PackageId>
   </Metadata>
-  <Installation Experimental="true">
+  <Installation InstalledByMsi="false">
     <InstallationTarget Version="[15.0,]" Id="Microsoft.VisualStudio.Pro" />
     <InstallationTarget Version="[15.0,]" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
     <InstallationTarget Version="[15.0,]" Id="Microsoft.VisualStudio.VWDExpress" />

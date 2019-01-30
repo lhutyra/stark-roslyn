@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Host;
 
-namespace Microsoft.CodeAnalysis.SplitOrMergeIfStatements
+namespace StarkPlatform.CodeAnalysis.SplitOrMergeIfStatements
 {
     /// <summary>
     /// When querying the syntax, C# else if chains are "flattened" and modeled to look like VB else-if clauses,

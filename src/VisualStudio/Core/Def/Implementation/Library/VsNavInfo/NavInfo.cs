@@ -2,9 +2,10 @@
 
 using System;
 using System.Collections.Immutable;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Library.VsNavInfo
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Library.VsNavInfo
 {
     internal class NavInfo : IVsNavInfo, IVsNavInfo2
     {

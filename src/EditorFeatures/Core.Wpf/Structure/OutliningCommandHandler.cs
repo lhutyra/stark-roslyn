@@ -7,10 +7,10 @@ using Microsoft.VisualStudio.Text.Outlining;
 using Microsoft.VisualStudio.Utilities;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Structure
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Structure
 {
     [Export(typeof(VSCommanding.ICommandHandler))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     [Name("Outlining Command Handler")]
     internal sealed class OutliningCommandHandler : VSCommanding.ICommandHandler<StartAutomaticOutliningCommandArgs>
     {

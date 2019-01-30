@@ -2,7 +2,7 @@
 
 using Microsoft.Internal.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
     internal interface IAnalyzersCommandHandler
     {

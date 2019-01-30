@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editor.Host
+namespace StarkPlatform.CodeAnalysis.Editor.Host
 {
     internal interface IWaitIndicator
     {

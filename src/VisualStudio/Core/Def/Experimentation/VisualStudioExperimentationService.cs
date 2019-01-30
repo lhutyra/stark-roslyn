@@ -3,13 +3,13 @@
 using System;
 using System.Composition;
 using System.Reflection;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Experiments;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Experiments;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.Internal.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Experimentation
+namespace StarkPlatform.VisualStudio.LanguageServices.Experimentation
 {
     [Export(typeof(VisualStudioExperimentationService))]
     [ExportWorkspaceService(typeof(IExperimentationService), ServiceLayer.Host), Shared]

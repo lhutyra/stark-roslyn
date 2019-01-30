@@ -2,7 +2,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal class CodeGenerationPropertyInfo
     {

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host;
 using System.Threading;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.FindUsages;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.FindUsages;
 
-namespace Microsoft.CodeAnalysis.Navigation
+namespace StarkPlatform.CodeAnalysis.Navigation
 {
     internal interface ISymbolNavigationService : IWorkspaceService
     {

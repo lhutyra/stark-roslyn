@@ -3,7 +3,7 @@
 using System.Diagnostics;
 using System.Reflection.Metadata;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// A region representing an exception handler clause. The region exposes the type (catch or

@@ -2,9 +2,9 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     /// <summary>
     /// Specifies the exact type of the service exported by the ILanguageService.

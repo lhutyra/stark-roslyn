@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Operations;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Root type for representing the abstract semantics of C# and VB statements and expressions.
@@ -98,7 +98,7 @@ namespace Microsoft.CodeAnalysis
         public ITypeSymbol Type { get; }
 
         /// <summary>
-        /// The source language of the IOperation. Possible values are <see cref="LanguageNames.CSharp"/> and <see cref="LanguageNames.VisualBasic"/>.
+        /// The source language of the IOperation. Possible values are <see cref="LanguageNames.Stark"/> and <see cref="LanguageNames.VisualBasic"/>.
         /// </summary>
 
         public string Language

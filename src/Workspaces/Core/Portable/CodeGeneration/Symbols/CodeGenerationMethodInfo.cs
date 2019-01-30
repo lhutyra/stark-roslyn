@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal class CodeGenerationMethodInfo
     {

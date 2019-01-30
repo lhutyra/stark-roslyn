@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.DebuggerIntelliSense
 {
-    internal class DebuggerIntelliSenseWorkspace : Microsoft.CodeAnalysis.Workspace
+    internal class DebuggerIntelliSenseWorkspace : StarkPlatform.CodeAnalysis.Workspace
     {
         public DebuggerIntelliSenseWorkspace(Solution solution)
             : base(solution.Workspace.Services.HostServices, "DebbugerIntellisense")

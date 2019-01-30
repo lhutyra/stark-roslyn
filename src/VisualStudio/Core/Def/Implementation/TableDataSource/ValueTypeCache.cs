@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Concurrent;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource
 {
     internal static class ValueTypeCache
     {

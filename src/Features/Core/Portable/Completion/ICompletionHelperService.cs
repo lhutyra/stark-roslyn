@@ -1,9 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.Globalization;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     internal interface ICompletionHelperService : IWorkspaceService
     {

@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.FindSymbols
+namespace StarkPlatform.CodeAnalysis.FindSymbols
 {
     // This file contains the legacy FindReferences APIs.  The APIs are legacy because they
     // do not contain enough information for us to effectively remote them over to the OOP

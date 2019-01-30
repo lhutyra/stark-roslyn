@@ -3,7 +3,7 @@
 using System.Globalization;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal class DeferredDocumentationProvider : DocumentationProvider
     {

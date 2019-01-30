@@ -5,15 +5,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Extensions;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Extensions;
+using StarkPlatform.CodeAnalysis.Remote;
 using Microsoft.ServiceHub.Client;
 using Roslyn.Utilities;
 using StreamJsonRpc;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     internal sealed partial class ServiceHubRemoteHostClient : RemoteHostClient
     {

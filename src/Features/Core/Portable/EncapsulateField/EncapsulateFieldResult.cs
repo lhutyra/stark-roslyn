@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.EncapsulateField
+namespace StarkPlatform.CodeAnalysis.EncapsulateField
 {
     internal class EncapsulateFieldResult
     {

@@ -2,9 +2,9 @@
 
 using System;
 using System.IO;
-using Microsoft.CodeAnalysis.CommandLine;
+using StarkPlatform.CodeAnalysis.CommandLine;
 
-namespace Microsoft.CodeAnalysis.CSharp.CommandLine
+namespace StarkPlatform.CodeAnalysis.Stark.CommandLine
 {
     public class Program
     {
@@ -30,7 +30,7 @@ namespace Microsoft.CodeAnalysis.CSharp.CommandLine
 #else
             var loader = new CoreClrAnalyzerAssemblyLoader();
 #endif
-            return DesktopBuildClient.Run(args, RequestLanguage.CSharpCompile, Skc.Run, loader);
+            return DesktopBuildClient.Run(args, RequestLanguage.StarkCompile, Skc.Run, loader);
         }
 
         public static int Run(string[] args, string clientDir, string workingDir, string sdkDir, string tempDir, TextWriter textWriter, IAnalyzerAssemblyLoader analyzerLoader)

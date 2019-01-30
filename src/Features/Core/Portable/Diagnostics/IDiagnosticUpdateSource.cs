@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Diagnostics
+namespace StarkPlatform.CodeAnalysis.Diagnostics
 {
     /// <summary>
     /// Implement this to participate in diagnostic service framework as one of diagnostic update source

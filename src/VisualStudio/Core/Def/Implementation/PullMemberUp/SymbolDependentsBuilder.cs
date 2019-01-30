@@ -5,10 +5,10 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Operations;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.PullMemberUp
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.PullMemberUp
 {
     internal static class SymbolDependentsBuilder
     {

@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis.Internal.Log;
-using static Microsoft.CodeAnalysis.LinkedFileDiffMergingSession;
+﻿using StarkPlatform.CodeAnalysis.Internal.Log;
+using static StarkPlatform.CodeAnalysis.LinkedFileDiffMergingSession;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal class LinkedFileDiffMergingLogger
     {

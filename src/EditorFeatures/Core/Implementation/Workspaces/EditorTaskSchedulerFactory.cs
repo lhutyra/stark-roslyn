@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.Workspaces
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.Workspaces
 {
     [ExportWorkspaceService(typeof(IWorkspaceTaskSchedulerFactory), ServiceLayer.Editor), Shared]
     internal class EditorTaskSchedulerFactory : WorkspaceTaskSchedulerFactory

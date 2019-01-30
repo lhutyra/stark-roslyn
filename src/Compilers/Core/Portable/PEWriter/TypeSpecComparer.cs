@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class TypeSpecComparer : IEqualityComparer<ITypeReference>
     {

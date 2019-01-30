@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.SymbolDisplay
+namespace StarkPlatform.CodeAnalysis.SymbolDisplay
 {
     internal abstract partial class AbstractSymbolDisplayVisitor : SymbolVisitor
     {

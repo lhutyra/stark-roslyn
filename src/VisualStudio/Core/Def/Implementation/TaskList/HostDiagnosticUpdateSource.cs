@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.TaskList
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.TaskList
 {
     // exporting both Abstract and HostDiagnosticUpdateSource is just to make testing easier.
     // use HostDiagnosticUpdateSource when abstract one is not needed for testing purpose
@@ -29,7 +29,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.TaskList
             registrationService.Register(this);
         }
 
-        public override Microsoft.CodeAnalysis.Workspace Workspace
+        public override StarkPlatform.CodeAnalysis.Workspace Workspace
         {
             get
             {

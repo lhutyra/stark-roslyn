@@ -2,7 +2,7 @@
 
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Suppression
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Suppression
 {
     /// <summary>
     /// Service to allow adding or removing bulk suppressions (in source or suppressions file).

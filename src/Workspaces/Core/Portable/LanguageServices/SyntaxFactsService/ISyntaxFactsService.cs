@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.LanguageServices
+namespace StarkPlatform.CodeAnalysis.LanguageServices
 {
     internal interface ISyntaxFactsService : ILanguageService
     {
@@ -281,7 +281,7 @@ namespace Microsoft.CodeAnalysis.LanguageServices
         bool IsLocalFunctionStatement(SyntaxNode node);
 
         bool IsDeclaratorOfLocalDeclarationStatement(SyntaxNode declarator, SyntaxNode localDeclarationStatement);
-        SeparatedSyntaxList<SyntaxNode> GetVariablesOfLocalDeclarationStatement(SyntaxNode node);
+        SyntaxNode GetVariablesOfLocalDeclarationStatement(SyntaxNode node);
         SyntaxNode GetInitializerOfVariableDeclaration(SyntaxNode node);
         SyntaxNode GetValueOfEqualsValueClause(SyntaxNode node);
 

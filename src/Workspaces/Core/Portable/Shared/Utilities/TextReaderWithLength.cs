@@ -2,7 +2,7 @@
 
 using System.IO;
 
-namespace Microsoft.CodeAnalysis.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 {
     internal abstract class TextReaderWithLength : TextReader
     {

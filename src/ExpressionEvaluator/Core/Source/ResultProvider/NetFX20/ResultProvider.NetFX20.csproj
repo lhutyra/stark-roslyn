@@ -3,8 +3,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.CodeAnalysis.ExpressionEvaluator</RootNamespace>
-    <AssemblyName>Microsoft.CodeAnalysis.ExpressionEvaluator.ResultProvider</AssemblyName>
+    <RootNamespace>StarkPlatform.CodeAnalysis.ExpressionEvaluator</RootNamespace>
+    <AssemblyName>StarkPlatform.CodeAnalysis.ExpressionEvaluator.ResultProvider</AssemblyName>
     <DefineConstants>$(DefineConstants);NETFX20</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFramework>net20</TargetFramework>
@@ -85,8 +85,8 @@
     <PackageReference Include="Microsoft.NetFX20" Version="$(MicrosoftNetFX20Version)" />
   </ItemGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.CSharp.ExpressionEvaluator.ResultProvider" />
-    <InternalsVisibleTo Include="Microsoft.CodeAnalysis.VisualBasic.ExpressionEvaluator.ResultProvider" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.CSharp.ExpressionEvaluator.ResultProvider" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.ResultProvider" />
   </ItemGroup>
   <Import Project="..\ResultProvider.projitems" Label="Shared" />
 </Project>

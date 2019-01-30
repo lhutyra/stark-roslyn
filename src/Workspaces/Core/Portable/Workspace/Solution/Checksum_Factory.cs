@@ -5,10 +5,10 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
-using Microsoft.CodeAnalysis.Serialization;
+using StarkPlatform.CodeAnalysis.Serialization;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     // various factory methods.
     // all these are just helper methods

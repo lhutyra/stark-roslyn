@@ -4,9 +4,9 @@ using System;
 using System.Diagnostics;
 
 #if COMPILERCORE
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 #else
-namespace Microsoft.CodeAnalysis.ErrorReporting
+namespace StarkPlatform.CodeAnalysis.ErrorReporting
 #endif
 {
     internal static class FatalError

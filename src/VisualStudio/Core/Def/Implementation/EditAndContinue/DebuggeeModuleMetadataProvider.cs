@@ -4,16 +4,16 @@ using System;
 using System.Composition;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Debugging;
-using Microsoft.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Debugging;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
 using Microsoft.DiaSymReader;
 using Microsoft.VisualStudio.Debugger;
 using Microsoft.VisualStudio.Debugger.Clr;
 using Microsoft.VisualStudio.Debugger.ComponentInterfaces;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.EditAndContinue
+namespace StarkPlatform.VisualStudio.LanguageServices.EditAndContinue
 {
     [Export(typeof(IDebuggeeModuleMetadataProvider)), Shared]
     internal sealed class DebuggeeModuleMetadataProvider : IDebuggeeModuleMetadataProvider

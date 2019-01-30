@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Completion
+namespace StarkPlatform.CodeAnalysis.Completion
 {
     /// <summary>
     /// The set of completions to present to the user.

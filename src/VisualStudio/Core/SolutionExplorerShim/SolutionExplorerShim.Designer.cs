@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.VisualStudio.LanguageServices.SolutionExplorer {
+namespace StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Microsoft.VisualStudio.LanguageServices.SolutionExplorer {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.VisualStudio.LanguageServices.SolutionExplorer.SolutionExplorerShim", typeof(SolutionExplorerShim).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer.SolutionExplorerShim", typeof(SolutionExplorerShim).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

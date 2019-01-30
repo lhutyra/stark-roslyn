@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     internal sealed partial class ControlFlowGraphBuilder : OperationVisitor<int?, IOperation>
     {
@@ -3048,7 +3048,7 @@ oneMoreTime:
 
                 // https://github.com/dotnet/roslyn/issues/27564: It looks like there is a bug in IOperation tree around XmlMemberAccessExpressionSyntax,
                 //                      a None operation is created and all children are dropped.
-                //                      See Microsoft.CodeAnalysis.VisualBasic.UnitTests.Semantics.ConditionalAccessTests.AnonymousTypeMemberName_01
+                //                      See StarkPlatform.CodeAnalysis.VisualBasic.UnitTests.Semantics.ConditionalAccessTests.AnonymousTypeMemberName_01
                 //                      The following assert is triggered because of that. Disabling it for now.
                 //Debug.Assert(_currentConditionalAccessInstance == null);
                 _currentConditionalAccessInstance = receiver;
@@ -3108,7 +3108,7 @@ oneMoreTime:
 
                 // https://github.com/dotnet/roslyn/issues/27564: It looks like there is a bug in IOperation tree around XmlMemberAccessExpressionSyntax,
                 //                      a None operation is created and all children are dropped.
-                //                      See Microsoft.CodeAnalysis.VisualBasic.ExpressionEvaluator.UnitTests.ExpressionCompilerTests.ConditionalAccessExpressionType
+                //                      See StarkPlatform.CodeAnalysis.VisualBasic.ExpressionEvaluator.UnitTests.ExpressionCompilerTests.ConditionalAccessExpressionType
                 //                      The following assert is triggered because of that. Disabling it for now.
                 //Debug.Assert(_currentConditionalAccessInstance == null);
                 _currentConditionalAccessInstance = null;

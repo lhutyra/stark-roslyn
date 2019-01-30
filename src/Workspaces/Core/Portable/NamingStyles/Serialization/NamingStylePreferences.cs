@@ -5,9 +5,9 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.NamingStyles;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     /// <summary>
     /// Contains all information related to Naming Style Preferences.

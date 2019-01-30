@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis.SymbolUsageAnalysis
 {
     internal static partial class SymbolUsageAnalysis
     {

@@ -6,7 +6,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Utilities
 {
     internal abstract class ProjectPropertyStorage
     {

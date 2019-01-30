@@ -3,9 +3,9 @@
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions;
 
-namespace Microsoft.CodeAnalysis.Editor.Wrapping
+namespace StarkPlatform.CodeAnalysis.Editor.Wrapping
 {
     internal interface ICodeActionComputer
     {

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Features.RQName;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Features.RQName;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices
+namespace StarkPlatform.VisualStudio.LanguageServices
 {
     /// <summary>
     /// Helpers related to <see cref="RQName"/>s. The resulting strings are suitable to pass as the pszRQName

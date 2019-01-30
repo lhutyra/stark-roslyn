@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.FlowAnalysis
+namespace StarkPlatform.CodeAnalysis.FlowAnalysis
 {
     /// <summary>
     /// Analyzer to execute custom dataflow analysis on a control flow graph.

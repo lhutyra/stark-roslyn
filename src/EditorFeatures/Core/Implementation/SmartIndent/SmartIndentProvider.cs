@@ -2,15 +2,15 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Options;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Options;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.SmartIndent
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.SmartIndent
 {
     [Export(typeof(ISmartIndentProvider))]
-    [ContentType(ContentTypeNames.RoslynContentType)]
+    [ContentType(ContentTypeNames.StarkRoslynContentType)]
     internal class SmartIndentProvider : ISmartIndentProvider
     {
         public ISmartIndent CreateSmartIndent(ITextView textView)

@@ -2,9 +2,9 @@
 
 using System;
 using System.Composition;
-using Microsoft.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
 
-namespace Microsoft.CodeAnalysis.Debugging
+namespace StarkPlatform.CodeAnalysis.Debugging
 {
     internal sealed class DebuggingWorkspaceService : IDebuggingWorkspaceService
     {

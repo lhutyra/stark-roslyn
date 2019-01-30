@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Utilities
 {
     /// <summary>
     /// Adds information to Help &gt; About screen showing the version of the Roslyn package.

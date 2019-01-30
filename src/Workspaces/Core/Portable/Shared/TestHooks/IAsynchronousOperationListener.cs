@@ -2,7 +2,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Microsoft.CodeAnalysis.Shared.TestHooks
+namespace StarkPlatform.CodeAnalysis.Shared.TestHooks
 {
     internal interface IAsynchronousOperationListener
     {

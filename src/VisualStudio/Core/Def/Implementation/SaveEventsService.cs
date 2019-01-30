@@ -4,17 +4,18 @@ using System;
 using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Commands;
-using Microsoft.CodeAnalysis.Internal.Log;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Commands;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     [Export(typeof(SaveEventsService))]
     internal sealed class SaveEventsService : IVsRunningDocTableEvents3
@@ -106,7 +107,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
                     var textBuffer = _editorAdaptersFactoryService.GetDocumentBuffer(textBufferAdapter);
 
                     // Do a quick check that this is a Roslyn file at all before we go do more expensive things
-                    if (textBuffer != null && textBuffer.ContentType.IsOfType(ContentTypeNames.RoslynContentType))
+                    if (textBuffer != null && textBuffer.ContentType.IsOfType(ContentTypeNames.StarkRoslynContentType))
                     {
                         if (textBufferAdapter != null)
                         {

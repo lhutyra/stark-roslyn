@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using System.Composition;
-using Microsoft.CodeAnalysis.Editor.Implementation.InlineRename;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.Editor.CSharp.InlineRename
+namespace StarkPlatform.CodeAnalysis.Editor.CSharp.InlineRename
 {
-    [ExportLanguageService(typeof(IEditorInlineRenameService), LanguageNames.CSharp), Shared]
+    [ExportLanguageService(typeof(IEditorInlineRenameService), LanguageNames.Stark), Shared]
     internal class CSharpEditorInlineRenameService : AbstractEditorInlineRenameService
     {
         [ImportingConstructor]

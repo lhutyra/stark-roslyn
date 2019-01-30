@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.TestHooks;
+using StarkPlatform.CodeAnalysis.Shared.TestHooks;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     /// <summary>
     /// provide a way to call APIs from UI thread

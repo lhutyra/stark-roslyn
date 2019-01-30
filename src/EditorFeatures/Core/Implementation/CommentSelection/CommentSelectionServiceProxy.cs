@@ -3,10 +3,10 @@
 using System.Collections.Immutable;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CommentSelection;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.CommentSelection;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.CommentSelection
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.CommentSelection
 {
     /// <summary>
     /// Bridge between the new <see cref="ICommentSelectionService"/> and an existing

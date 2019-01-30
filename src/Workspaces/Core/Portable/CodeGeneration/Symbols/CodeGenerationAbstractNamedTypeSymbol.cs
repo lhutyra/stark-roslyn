@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Editing;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal abstract class CodeGenerationAbstractNamedTypeSymbol : CodeGenerationTypeSymbol, INamedTypeSymbol
     {

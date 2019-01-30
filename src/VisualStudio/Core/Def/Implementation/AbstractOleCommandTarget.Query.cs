@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Commands;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.OrganizeImports;
-using Microsoft.CodeAnalysis.Text;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Commands;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.OrganizeImports;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     internal abstract partial class AbstractOleCommandTarget
     {
@@ -29,7 +30,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
             {
                 return QueryVisualStudio2000Status(ref pguidCmdGroup, commandCount, prgCmds, commandText);
             }
-            else if (pguidCmdGroup == Guids.CSharpGroupId)
+            else if (pguidCmdGroup == Guids.StarkGroupId)
             {
                 return QueryCSharpGroupStatus(ref pguidCmdGroup, commandCount, prgCmds, commandText);
             }

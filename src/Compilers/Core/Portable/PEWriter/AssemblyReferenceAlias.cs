@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     /// <summary>
     /// Represents an assembly reference with an alias (C# only, /r:Name=Reference on command line).

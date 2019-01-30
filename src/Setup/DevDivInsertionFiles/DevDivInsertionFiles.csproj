@@ -20,8 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\VisualStudio\CSharp\Impl\Microsoft.VisualStudio.LanguageServices.CSharp.csproj"/>
     <ProjectReference Include="..\..\VisualStudio\VisualBasic\Impl\Microsoft.VisualStudio.LanguageServices.VisualBasic.vbproj"/>
-    <ProjectReference Include="..\..\ExpressionEvaluator\CSharp\Source\ExpressionCompiler\Microsoft.CodeAnalysis.CSharp.ExpressionCompiler.csproj"/>
-    <ProjectReference Include="..\..\ExpressionEvaluator\VisualBasic\Source\ExpressionCompiler\Microsoft.CodeAnalysis.VisualBasic.ExpressionCompiler.vbproj"/>
+    <ProjectReference Include="..\..\ExpressionEvaluator\CSharp\Source\ExpressionCompiler\StarkPlatform.CodeAnalysis.CSharp.ExpressionCompiler.csproj"/>
+    <ProjectReference Include="..\..\ExpressionEvaluator\VisualBasic\Source\ExpressionCompiler\StarkPlatform.CodeAnalysis.VisualBasic.ExpressionCompiler.vbproj"/>
   </ItemGroup>
 
   <PropertyGroup>
@@ -41,7 +41,7 @@
     <ExpectedDependency Include="Humanizer.Core" DevEnvLib="lib/netstandard2.0/Humanizer.dll"/>
     <ExpectedDependency Include="ICSharpCode.Decompiler" DevEnvLib="lib/netstandard2.0/ICSharpCode.Decompiler.dll"/>
     <ExpectedDependency Include="Microsoft.DiaSymReader" DevEnvLib="lib/netstandard1.1/Microsoft.DiaSymReader.dll"/>
-    <ExpectedDependency Include="Microsoft.CodeAnalysis.Elfie" DevEnvLib="lib/net46/Microsoft.CodeAnalysis.Elfie.dll"/>
+    <ExpectedDependency Include="StarkPlatform.CodeAnalysis.Elfie" DevEnvLib="lib/net46/StarkPlatform.CodeAnalysis.Elfie.dll"/>
     <ExpectedDependency Include="System.Buffers" DevEnvLib="lib/netstandard2.0/System.Buffers.dll"/>
     <ExpectedDependency Include="System.Collections.Immutable" DevEnvLib="lib/netstandard2.0/System.Collections.Immutable.dll" OverwriteNgenOptimizationData="true"/>
     <ExpectedDependency Include="System.Reflection.Metadata" DevEnvLib="lib/netstandard2.0/System.Reflection.Metadata.dll" OverwriteNgenOptimizationData="true"/>

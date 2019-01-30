@@ -2,9 +2,9 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 
-namespace Microsoft.CodeAnalysis.NamingStyles
+namespace StarkPlatform.CodeAnalysis.NamingStyles
 {
     internal partial struct NamingStyle
     {

@@ -8,7 +8,7 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Host
+namespace StarkPlatform.CodeAnalysis.Host
 {
     internal partial class TemporaryStorageServiceFactory
     {

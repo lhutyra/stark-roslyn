@@ -2,21 +2,22 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Text;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Utilities
 {
     internal static class IVsEditorAdaptersFactoryServiceExtensions
     {
         public static IOleUndoManager TryGetUndoManager(
             this IVsEditorAdaptersFactoryService editorAdaptersFactoryService,
-            Microsoft.CodeAnalysis.Workspace workspace,
+            StarkPlatform.CodeAnalysis.Workspace workspace,
             DocumentId contextDocumentId,
             CancellationToken cancellationToken)
         {

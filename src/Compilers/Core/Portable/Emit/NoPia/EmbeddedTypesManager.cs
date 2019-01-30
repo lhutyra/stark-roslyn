@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Cci = Microsoft.Cci;
+using Cci = StarkPlatform.Cci;
 
-namespace Microsoft.CodeAnalysis.Emit.NoPia
+namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 {
     internal abstract class CommonEmbeddedTypesManager
     {

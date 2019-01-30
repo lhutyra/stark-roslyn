@@ -3,9 +3,9 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options;
 
-namespace Microsoft.CodeAnalysis.Internal.Log
+namespace StarkPlatform.CodeAnalysis.Internal.Log
 {
     /// <summary>
     /// Implementation of <see cref="ILogger"/> that produce timing debug output. 

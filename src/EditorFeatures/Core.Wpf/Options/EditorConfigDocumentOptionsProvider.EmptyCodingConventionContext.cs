@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.CodingConventions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Options
+namespace StarkPlatform.CodeAnalysis.Editor.Options
 {
     internal sealed partial class EditorConfigDocumentOptionsProvider
     {

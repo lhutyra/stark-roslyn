@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 
-namespace Microsoft.CodeAnalysis.Shared.Collections
+namespace StarkPlatform.CodeAnalysis.Shared.Collections
 {
     internal class SimpleIntervalTree<T> : IntervalTree<T>
     {

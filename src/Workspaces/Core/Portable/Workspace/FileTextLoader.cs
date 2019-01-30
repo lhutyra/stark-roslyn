@@ -8,14 +8,14 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Internal.Log;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Options.Providers;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Options.Providers;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class FileTextLoaderOptions
     {
@@ -241,7 +241,7 @@ namespace Microsoft.CodeAnalysis
             // InvalidDataException to caller of FileTextLoader.LoadText to deal with 
             // the situation.
             // 
-            // check this (http://source.roslyn.io/#Microsoft.CodeAnalysis.Workspaces/Workspace/Solution/TextDocumentState.cs,132)
+            // check this (http://source.roslyn.io/#StarkPlatform.CodeAnalysis.Workspaces/Workspace/Solution/TextDocumentState.cs,132)
             // to see how workspace deal with exception from FileTextLoader. other consumer can handle the exception differently
             var fileLength = FileUtilities.GetFileLength(path);
             var threshold = workspace.Options.GetOption(FileTextLoaderOptions.FileLengthThreshold);

@@ -2,7 +2,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     internal static class NativeMethods
     {

@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Shared.Extensions
+namespace StarkPlatform.CodeAnalysis.Shared.Extensions
 {
     internal partial class ITypeSymbolExtensions
     {

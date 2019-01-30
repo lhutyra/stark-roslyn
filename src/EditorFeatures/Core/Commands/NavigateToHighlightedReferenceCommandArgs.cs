@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.CodeAnalysis.Editor.Commands
+namespace StarkPlatform.CodeAnalysis.Editor.Commands
 {
     internal enum NavigateDirection
     {

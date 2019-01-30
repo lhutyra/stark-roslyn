@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using EnvDTE;
 using NuGet.VisualStudio;
 
-namespace Microsoft.VisualStudio.LanguageServices.Packaging
+namespace StarkPlatform.VisualStudio.LanguageServices.Packaging
 {
     /// <summary>Wrapper type to ensure we delay load the nuget libraries.</summary> 
     /// <remarks>All methods may throw exceptions due to <see cref="IVsPackageSourceProvider"/>

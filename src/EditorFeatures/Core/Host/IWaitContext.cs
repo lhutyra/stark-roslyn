@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Host
+namespace StarkPlatform.CodeAnalysis.Editor.Host
 {
     internal enum WaitIndicatorResult
     {

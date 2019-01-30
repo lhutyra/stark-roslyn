@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.Shared.TestHooks
+namespace StarkPlatform.CodeAnalysis.Shared.TestHooks
 {
     internal partial class AsynchronousOperationListener
     {

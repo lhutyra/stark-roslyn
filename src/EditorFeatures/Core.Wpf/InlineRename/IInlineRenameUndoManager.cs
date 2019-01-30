@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.Editor.Implementation.InlineRename;
-using Microsoft.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.InlineRename;
+using StarkPlatform.CodeAnalysis.Host;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     /// <summary>
     /// This interface contains the methods required to manipulate the undo stack

@@ -3,7 +3,7 @@
 using System;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     /// <summary>
     /// A <see cref="SourceText"/> that represents a subrange of another <see cref="SourceText"/>.

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Notification
+namespace StarkPlatform.CodeAnalysis.Notification
 {
     internal interface INotificationServiceCallback
     {

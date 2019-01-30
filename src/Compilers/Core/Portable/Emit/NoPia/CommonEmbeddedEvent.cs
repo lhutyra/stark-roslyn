@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Cci = Microsoft.Cci;
+using Cci = StarkPlatform.Cci;
 
-namespace Microsoft.CodeAnalysis.Emit.NoPia
+namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 {
     internal abstract partial class EmbeddedTypesManager<
         TPEModuleBuilder,

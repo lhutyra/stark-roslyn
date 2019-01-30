@@ -3,9 +3,9 @@
 using System.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 
-namespace Microsoft.CodeAnalysis.SymbolMapping
+namespace StarkPlatform.CodeAnalysis.SymbolMapping
 {
     [ExportWorkspaceService(typeof(ISymbolMappingService), ServiceLayer.Default), Shared]
     internal class DefaultSymbolMappingService : ISymbolMappingService

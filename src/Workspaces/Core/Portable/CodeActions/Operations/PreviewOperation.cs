@@ -3,7 +3,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.CodeActions
+namespace StarkPlatform.CodeAnalysis.CodeActions
 {
     /// <summary>
     /// Represents a preview operation for generating a custom user preview for the operation.

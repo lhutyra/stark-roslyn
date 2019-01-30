@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
 namespace Roslyn.Utilities
 {

@@ -6,34 +6,34 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Formatting.Rules;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Rename;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Simplification;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.Formatting;
+using StarkPlatform.CodeAnalysis.Formatting.Rules;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Rename;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.InternalElements;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Editor.OptionsExtensionMethods;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.GeneratedCodeRecognition;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
+using StarkPlatform.CodeAnalysis.GeneratedCodeRecognition;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     internal abstract partial class AbstractCodeModelService : ICodeModelService
     {
@@ -319,7 +319,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
         public abstract bool IsOptionNode(SyntaxNode node);
         public abstract bool IsImportNode(SyntaxNode node);
 
-        public ISymbol ResolveSymbol(Microsoft.CodeAnalysis.Workspace workspace, ProjectId projectId, SymbolKey symbolId)
+        public ISymbol ResolveSymbol(StarkPlatform.CodeAnalysis.Workspace workspace, ProjectId projectId, SymbolKey symbolId)
         {
             var project = workspace.CurrentSolution.GetProject(projectId);
 
@@ -797,15 +797,15 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefBool:
                     return SpecialType.System_Boolean;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefByte:
-                    return SpecialType.System_Byte;
+                    return SpecialType.System_UInt8;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefChar:
                     return SpecialType.System_Char;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefDecimal:
                     return SpecialType.System_Decimal;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefDouble:
-                    return SpecialType.System_Double;
+                    return SpecialType.System_Float64;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefFloat:
-                    return SpecialType.System_Single;
+                    return SpecialType.System_Float32;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefInt:
                     return SpecialType.System_Int32;
                 case EnvDTE.vsCMTypeRef.vsCMTypeRefLong:

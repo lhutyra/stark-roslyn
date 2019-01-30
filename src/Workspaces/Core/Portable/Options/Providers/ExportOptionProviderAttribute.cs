@@ -3,7 +3,7 @@
 using System;
 using System.Composition;
 
-namespace Microsoft.CodeAnalysis.Options.Providers
+namespace StarkPlatform.CodeAnalysis.Options.Providers
 {
     [AttributeUsage(AttributeTargets.Class)]
     internal sealed class ExportOptionProviderAttribute : ExportAttribute

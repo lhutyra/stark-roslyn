@@ -2,9 +2,9 @@
 
 using System;
 using System.Xml.Linq;
-using Microsoft.CodeAnalysis.NamingStyles;
+using StarkPlatform.CodeAnalysis.NamingStyles;
 
-namespace Microsoft.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
+namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 {
     internal class MutableNamingStyle
     {

@@ -4,7 +4,7 @@ using System;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Text;
 
-namespace Microsoft.VisualStudio.LanguageServices.Packaging
+namespace StarkPlatform.VisualStudio.LanguageServices.Packaging
 {
     internal partial class PackageInstallerService
     {

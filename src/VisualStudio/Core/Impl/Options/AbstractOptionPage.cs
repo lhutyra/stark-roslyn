@@ -3,7 +3,7 @@
 using System;
 using Microsoft.VisualStudio.Shell;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Options
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Options
 {
     [System.ComponentModel.DesignerCategory("code")] // this must be fully qualified
     internal abstract class AbstractOptionPage : UIElementDialogPage

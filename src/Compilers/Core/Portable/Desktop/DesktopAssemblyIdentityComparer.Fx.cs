@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     // TODO: Consider reducing the table memory footprint.
 

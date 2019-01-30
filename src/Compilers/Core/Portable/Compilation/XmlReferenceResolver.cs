@@ -3,7 +3,7 @@
 using System;
 using System.IO;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Resolves references to XML documents specified in source code.

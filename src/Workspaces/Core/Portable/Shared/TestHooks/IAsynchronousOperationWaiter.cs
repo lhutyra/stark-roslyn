@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 
-namespace Microsoft.CodeAnalysis.Shared.TestHooks
+namespace StarkPlatform.CodeAnalysis.Shared.TestHooks
 {
     internal interface IAsynchronousOperationWaiter
     {

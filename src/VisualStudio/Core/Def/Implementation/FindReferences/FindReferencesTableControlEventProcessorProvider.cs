@@ -5,7 +5,7 @@ using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Shell.TableControl;
 using Microsoft.VisualStudio.Text.Classification;
 
-namespace Microsoft.VisualStudio.LanguageServices.FindUsages
+namespace StarkPlatform.VisualStudio.LanguageServices.FindUsages
 {
     /// <summary>
     /// Event processor that we export so we can control how navigation works in the streaming

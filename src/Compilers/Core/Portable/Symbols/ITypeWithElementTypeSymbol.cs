@@ -1,4 +1,4 @@
-﻿namespace Microsoft.CodeAnalysis
+﻿namespace StarkPlatform.CodeAnalysis
 {
     public interface ITypeWithElementTypeSymbol : ITypeSymbol
     {

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-namespace Microsoft.CodeAnalysis.Extensions
+namespace StarkPlatform.CodeAnalysis.Extensions
 {
     internal static class CommonParenthesizedExpressionSyntaxExtensions
     {
@@ -89,6 +89,6 @@ namespace Microsoft.CodeAnalysis.Extensions
             => IsFloatingPoint(typeInfo.Type) || IsFloatingPoint(typeInfo.ConvertedType);
 
         private static bool IsFloatingPoint(ITypeSymbol type)
-            => type?.SpecialType == SpecialType.System_Single || type?.SpecialType == SpecialType.System_Double;
+            => type?.SpecialType == SpecialType.System_Float32 || type?.SpecialType == SpecialType.System_Float64;
     }
 }

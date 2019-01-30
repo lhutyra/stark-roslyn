@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Language.StandardClassification;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.BraceMatching
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.BraceMatching
 {
     internal sealed class ClassificationTypeDefinitions
     {

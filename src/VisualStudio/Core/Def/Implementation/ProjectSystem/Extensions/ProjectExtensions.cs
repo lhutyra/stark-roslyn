@@ -7,7 +7,7 @@ using System.Linq;
 using EnvDTE;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions
 {
     internal static class ProjectExtensions
     {

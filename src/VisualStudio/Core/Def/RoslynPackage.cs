@@ -6,27 +6,27 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Editor;
-using Microsoft.CodeAnalysis.Editor.Shared.Utilities;
-using Microsoft.CodeAnalysis.ErrorReporting;
-using Microsoft.CodeAnalysis.Experiments;
-using Microsoft.CodeAnalysis.Logging;
-using Microsoft.CodeAnalysis.Notification;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Versions;
+using Microsoft;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Editor;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.ErrorReporting;
+using StarkPlatform.CodeAnalysis.Experiments;
+using StarkPlatform.CodeAnalysis.Logging;
+using StarkPlatform.CodeAnalysis.Notification;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Versions;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Language.CodeCleanUp;
-using Microsoft.VisualStudio.LanguageServices.Experimentation;
-using Microsoft.VisualStudio.LanguageServices.Implementation;
-using Microsoft.VisualStudio.LanguageServices.Implementation.CodeCleanup;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interactive;
-using Microsoft.VisualStudio.LanguageServices.Implementation.LanguageService;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.RuleSets;
-using Microsoft.VisualStudio.LanguageServices.Implementation.TableDataSource;
-using Microsoft.VisualStudio.LanguageServices.Telemetry;
+using StarkPlatform.VisualStudio.LanguageServices.Experimentation;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeCleanup;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Diagnostics;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interactive;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.LanguageService;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.RuleSets;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.TableDataSource;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -35,7 +35,7 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Threading;
 using Task = System.Threading.Tasks.Task;
 
-namespace Microsoft.VisualStudio.LanguageServices.Setup
+namespace StarkPlatform.VisualStudio.LanguageServices.Setup
 {
     [Guid(Guids.RoslynPackageIdString)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
@@ -59,11 +59,10 @@ namespace Microsoft.VisualStudio.LanguageServices.Setup
             Assumes.Present(_componentModel);
 
             FatalError.Handler = FailFast.OnFatalException;
-            FatalError.NonFatalHandler = WatsonReporter.Report;
 
             // We also must set the FailFast handler for the compiler layer as well
             var compilerAssembly = typeof(Compilation).Assembly;
-            var compilerFatalError = compilerAssembly.GetType("Microsoft.CodeAnalysis.FatalError", throwOnError: true);
+            var compilerFatalError = compilerAssembly.GetType("StarkPlatform.CodeAnalysis.FatalError", throwOnError: true);
             var property = compilerFatalError.GetProperty(nameof(FatalError.Handler), BindingFlags.Static | BindingFlags.Public);
             var compilerFailFast = compilerAssembly.GetType(typeof(FailFast).FullName, throwOnError: true);
             var method = compilerFailFast.GetMethod(nameof(FailFast.OnFatalException), BindingFlags.Static | BindingFlags.NonPublic);
@@ -74,8 +73,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Setup
 
             // Ensure the options persisters are loaded since we have to fetch options from the shell
             _componentModel.GetExtensions<IOptionPersister>();
-
-            RoslynTelemetrySetup.Initialize(this);
 
             // set workspace output pane
             _outputPane = new WorkspaceFailureOutputPane(_componentModel.GetService<IThreadingContext>(), this, _workspace);
@@ -146,7 +143,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Setup
 
             // Perf: Initialize the command handlers.
             var commandHandlerServiceFactory = this.ComponentModel.GetService<ICommandHandlerServiceFactory>();
-            commandHandlerServiceFactory.Initialize(ContentTypeNames.RoslynContentType);
+            commandHandlerServiceFactory.Initialize(ContentTypeNames.StarkRoslynContentType);
             await LoadInteractiveMenusAsync(cancellationToken).ConfigureAwait(true);
 
             this.ComponentModel.GetService<MiscellaneousTodoListTable>();
@@ -171,11 +168,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Setup
             // Switch to the background object for constructing commands
             await TaskScheduler.Default;
 
-            await new CSharpResetInteractiveMenuCommand(menuCommandService, monitorSelectionService, ComponentModel)
-                .InitializeResetInteractiveFromProjectCommandAsync(cancellationToken)
-                .ConfigureAwait(true);
-
-            await new VisualBasicResetInteractiveMenuCommand(menuCommandService, monitorSelectionService, ComponentModel)
+            await new StarkResetInteractiveMenuCommand(menuCommandService, monitorSelectionService, ComponentModel)
                 .InitializeResetInteractiveFromProjectCommandAsync(cancellationToken)
                 .ConfigureAwait(true);
         }
@@ -279,7 +272,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Setup
                     // so guarding us from them
                     if (localRegistration != null)
                     {
-                        WatsonReporter.Report(new Exception("BulkFileOperation already exist"));
+                        //WatsonReporter.Report(new Exception("BulkFileOperation already exist"));
                         return;
                     }
 

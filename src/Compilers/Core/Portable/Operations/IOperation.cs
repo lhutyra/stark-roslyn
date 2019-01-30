@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Microsoft.CodeAnalysis.Operations;
+using StarkPlatform.CodeAnalysis.Operations;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// Root type for representing the abstract semantics of C# and VB statements and expressions.
@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis
         IEnumerable<IOperation> Children { get; }
 
         /// <summary>
-        /// The source language of the IOperation. Possible values are <see cref="LanguageNames.CSharp"/> and <see cref="LanguageNames.VisualBasic"/>.
+        /// The source language of the IOperation. Possible values are <see cref="LanguageNames.Stark"/> and <see cref="LanguageNames.VisualBasic"/>.
         /// </summary>
         string Language { get; }
 

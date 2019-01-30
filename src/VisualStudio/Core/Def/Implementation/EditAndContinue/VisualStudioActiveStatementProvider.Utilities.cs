@@ -3,17 +3,17 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.EditAndContinue;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.EditAndContinue;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Text;
 using Microsoft.VisualStudio.Debugger.Clr;
 using Microsoft.VisualStudio.Debugger.Symbols;
 using Roslyn.Utilities;
 
 #if TESTS
-namespace Microsoft.VisualStudio.LanguageServices.UnitTests.EditAndContinue
+namespace StarkPlatform.VisualStudio.LanguageServices.UnitTests.EditAndContinue
 #else
-namespace Microsoft.VisualStudio.LanguageServices.EditAndContinue
+namespace StarkPlatform.VisualStudio.LanguageServices.EditAndContinue
 #endif
 {
     // Utilities that are testable. Linked to test project to allow mocking.

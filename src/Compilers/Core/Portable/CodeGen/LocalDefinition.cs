@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Reflection.Metadata;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]
     internal sealed class LocalDefinition : Cci.ILocalDefinition

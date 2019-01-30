@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using Roslyn.Utilities;
 using System.Collections.Generic;
 
-namespace Microsoft.CodeAnalysis.Emit.NoPia
+namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 {
     internal sealed class VtblGap : Cci.IMethodDefinition
     {

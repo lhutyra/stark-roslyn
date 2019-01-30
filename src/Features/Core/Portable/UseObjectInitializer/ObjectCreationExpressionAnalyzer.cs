@@ -3,13 +3,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.PooledObjects;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.UseCollectionInitializer;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.UseCollectionInitializer;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.UseObjectInitializer
+namespace StarkPlatform.CodeAnalysis.UseObjectInitializer
 {
     internal class ObjectCreationExpressionAnalyzer<
         TExpressionSyntax,

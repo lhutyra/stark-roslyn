@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Roslyn.Utilities;
 using Word = System.UInt32;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     [DebuggerDisplay("{GetDebuggerDisplay(), nq}")]
     internal struct BitVector : IEquatable<BitVector>

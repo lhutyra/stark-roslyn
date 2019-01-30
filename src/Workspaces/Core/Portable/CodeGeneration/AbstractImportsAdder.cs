@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Simplification;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Simplification;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGeneration
+namespace StarkPlatform.CodeAnalysis.CodeGeneration
 {
     internal abstract partial class AbstractImportsAdder
     {
@@ -73,23 +73,23 @@ namespace Microsoft.CodeAnalysis.CodeGeneration
         {
             switch (type.OriginalDefinition.SpecialType)
             {
-                case Microsoft.CodeAnalysis.SpecialType.System_Object:
-                case Microsoft.CodeAnalysis.SpecialType.System_Void:
-                case Microsoft.CodeAnalysis.SpecialType.System_Boolean:
-                case Microsoft.CodeAnalysis.SpecialType.System_Char:
-                case Microsoft.CodeAnalysis.SpecialType.System_SByte:
-                case Microsoft.CodeAnalysis.SpecialType.System_Byte:
-                case Microsoft.CodeAnalysis.SpecialType.System_Int16:
-                case Microsoft.CodeAnalysis.SpecialType.System_UInt16:
-                case Microsoft.CodeAnalysis.SpecialType.System_Int32:
-                case Microsoft.CodeAnalysis.SpecialType.System_UInt32:
-                case Microsoft.CodeAnalysis.SpecialType.System_Int64:
-                case Microsoft.CodeAnalysis.SpecialType.System_UInt64:
-                case Microsoft.CodeAnalysis.SpecialType.System_Decimal:
-                case Microsoft.CodeAnalysis.SpecialType.System_Single:
-                case Microsoft.CodeAnalysis.SpecialType.System_Double:
-                case Microsoft.CodeAnalysis.SpecialType.System_String:
-                case Microsoft.CodeAnalysis.SpecialType.System_Nullable_T:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Object:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Void:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Boolean:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Char:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Int8:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_UInt8:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Int16:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_UInt16:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Int32:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_UInt32:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Int64:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_UInt64:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Decimal:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Float32:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Float64:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_String:
+                case StarkPlatform.CodeAnalysis.SpecialType.System_Nullable_T:
                     return true;
             }
 

@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.VisualStudio.PlatformUI;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.GenerateType
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.GenerateType
 {
     /// <summary>
     /// Interaction logic for GenerateTypeDialog.xaml

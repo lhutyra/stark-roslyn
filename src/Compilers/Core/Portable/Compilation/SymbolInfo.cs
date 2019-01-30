@@ -6,7 +6,7 @@ using System.Linq;
 using Roslyn.Utilities;
 using System.Diagnostics;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     public struct SymbolInfo : IEquatable<SymbolInfo>
     {

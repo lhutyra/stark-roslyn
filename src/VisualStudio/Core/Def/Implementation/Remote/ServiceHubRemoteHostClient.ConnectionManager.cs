@@ -4,11 +4,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.Remote;
 using Microsoft.ServiceHub.Client;
 using Roslyn.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Remote
+namespace StarkPlatform.VisualStudio.LanguageServices.Remote
 {
     internal sealed partial class ServiceHubRemoteHostClient : RemoteHostClient
     {

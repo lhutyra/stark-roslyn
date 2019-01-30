@@ -3,7 +3,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.Simplification
+namespace StarkPlatform.CodeAnalysis.Simplification
 {
     /// <summary>
     /// An annotation that holds onto information about a type or namespace symbol.

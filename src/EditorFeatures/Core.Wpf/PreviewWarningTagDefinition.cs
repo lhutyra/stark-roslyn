@@ -6,7 +6,7 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Tagging.Tags
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Tagging.Tags
 {
     [Export(typeof(EditorFormatDefinition))]
     [Name(PreviewWarningTag.TagId)]

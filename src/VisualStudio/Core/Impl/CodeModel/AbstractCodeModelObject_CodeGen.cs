@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeGeneration;
-using Microsoft.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeGeneration;
+using StarkPlatform.CodeAnalysis.Editing;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel
 {
     /// <summary>
     /// This is the root class for all code model objects. It contains methods that
@@ -65,53 +65,6 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel
 
             return CodeGenerationService.CreateNamedTypeDeclaration(
                 newTypeSymbol, destination,
-                options: GetCodeGenerationOptions(access, containerNode.SyntaxTree.Options));
-        }
-
-        protected SyntaxNode CreateEventDeclaration(SyntaxNode containerNode, string name, EnvDTE.vsCMAccess access, ITypeSymbol type, bool createPropertyStyleEvent)
-        {
-            var destination = CodeModelService.GetDestination(containerNode);
-
-            IMethodSymbol addMethod = null;
-            IMethodSymbol removeMethod = null;
-
-            if (createPropertyStyleEvent)
-            {
-                addMethod = CodeGenerationSymbolFactory.CreateMethodSymbol(
-                    attributes: default,
-                    accessibility: Accessibility.NotApplicable,
-                    modifiers: new DeclarationModifiers(),
-                    returnType: null,
-                    refKind: RefKind.None,
-                    explicitInterfaceImplementations: default,
-                    name: "add_" + name,
-                    typeParameters: default,
-                    parameters: default);
-
-                removeMethod = CodeGenerationSymbolFactory.CreateMethodSymbol(
-                    attributes: default,
-                    accessibility: Accessibility.NotApplicable,
-                    modifiers: new DeclarationModifiers(),
-                    returnType: null,
-                    refKind: RefKind.None,
-                    explicitInterfaceImplementations: default,
-                    name: "remove_" + name,
-                    typeParameters: default,
-                    parameters: default);
-            }
-
-            var newEventSymbol = CodeGenerationSymbolFactory.CreateEventSymbol(
-                attributes: default,
-                accessibility: CodeModelService.GetAccessibility(access, SymbolKind.Event, destination),
-                modifiers: new DeclarationModifiers(),
-                type: type,
-                explicitInterfaceImplementations: default,
-                name: name,
-                addMethod: addMethod,
-                removeMethod: removeMethod);
-
-            return CodeGenerationService.CreateEventDeclaration(
-                newEventSymbol, destination,
                 options: GetCodeGenerationOptions(access, containerNode.SyntaxTree.Options));
         }
 

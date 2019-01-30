@@ -2,7 +2,7 @@
 
 using System.IO;
 
-namespace Microsoft.CodeAnalysis.EditAndContinue
+namespace StarkPlatform.CodeAnalysis.EditAndContinue
 {
     internal struct PdbDelta
     {

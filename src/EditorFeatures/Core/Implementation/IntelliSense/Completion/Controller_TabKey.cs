@@ -2,18 +2,18 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Completion;
 using Microsoft.VisualStudio.Commanding;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
-using Microsoft.CodeAnalysis.Editor.Shared.Extensions;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 using VSCommanding = Microsoft.VisualStudio.Commanding;
-using Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.AsyncCompletion;
+using StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.AsyncCompletion;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.IntelliSense.Completion
 {
     internal partial class Controller
     {

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Linq;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Diagnostics
 {
     [Export(typeof(IVisualStudioDiagnosticAnalyzerService))]
     internal partial class VisualStudioDiagnosticAnalyzerService : IVisualStudioDiagnosticAnalyzerService
@@ -36,7 +36,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation.Diagnostics
 
             // Analyzers are only supported for C# and VB currently.
             var projectsWithHierarchy = _workspace.CurrentSolution.Projects
-                .Where(p => p.Language == LanguageNames.CSharp || p.Language == LanguageNames.VisualBasic)
+                .Where(p => p.Language == LanguageNames.Stark)
                 .Where(p => _workspace.GetHierarchy(p.Id) == hierarchyOpt);
 
             if (projectsWithHierarchy.Count() <= 1)

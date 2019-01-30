@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Classification
+namespace StarkPlatform.CodeAnalysis.Classification
 {
     internal static class ClassificationTags
     {

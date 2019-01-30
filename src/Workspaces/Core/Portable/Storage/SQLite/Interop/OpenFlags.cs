@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
-namespace Microsoft.CodeAnalysis.SQLite.Interop
+namespace StarkPlatform.CodeAnalysis.SQLite.Interop
 {
     // From: https://sqlite.org/c3ref/c_open_autoproxy.html
     // Uncomment what you need.  Leave the rest commented out to make it clear

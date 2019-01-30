@@ -8,9 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.CodeAnalysis {
+namespace StarkPlatform.CodeAnalysis {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace Microsoft.CodeAnalysis {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.CodeAnalysis.WorkspacesResources", typeof(WorkspacesResources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StarkPlatform.CodeAnalysis.WorkspacesResources", typeof(WorkspacesResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -572,15 +571,6 @@ namespace Microsoft.CodeAnalysis {
         internal static string Could_not_find_location_to_generation_symbol_into {
             get {
                 return ResourceManager.GetString("Could_not_find_location_to_generation_symbol_into", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C# files.
-        /// </summary>
-        internal static string CSharp_files {
-            get {
-                return ResourceManager.GetString("CSharp_files", resourceCulture);
             }
         }
         
@@ -1483,6 +1473,15 @@ namespace Microsoft.CodeAnalysis {
         internal static string Specified_path_must_be_absolute {
             get {
                 return ResourceManager.GetString("Specified_path_must_be_absolute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stark files.
+        /// </summary>
+        internal static string Stark_files {
+            get {
+                return ResourceManager.GetString("Stark_files", resourceCulture);
             }
         }
         

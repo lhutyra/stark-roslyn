@@ -3,10 +3,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Roslyn.Utilities;
-using Microsoft.CodeAnalysis.CodeGen;
-using Microsoft.CodeAnalysis.Debugging;
+using StarkPlatform.CodeAnalysis.CodeGen;
+using StarkPlatform.CodeAnalysis.Debugging;
 
-namespace Microsoft.CodeAnalysis.Emit.NoPia
+namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 {
     internal abstract partial class EmbeddedTypesManager<
         TPEModuleBuilder,

@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.CodeAnalysis.MSBuild.Logging
+namespace StarkPlatform.CodeAnalysis.MSBuild.Logging
 {
     internal class DiagnosticLog : IEnumerable<DiagnosticLogItem>
     {

@@ -2,9 +2,9 @@
 
 using System.Collections.Immutable;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.RuntimeMembers;
+using StarkPlatform.CodeAnalysis.RuntimeMembers;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     internal static class SpecialMembers
     {

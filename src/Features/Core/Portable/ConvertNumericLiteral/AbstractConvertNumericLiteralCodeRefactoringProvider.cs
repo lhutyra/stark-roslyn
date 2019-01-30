@@ -4,14 +4,14 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Shared.Utilities;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.Editing;
-using Microsoft.CodeAnalysis.CodeRefactorings;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.Editing;
+using StarkPlatform.CodeAnalysis.CodeRefactorings;
 
-namespace Microsoft.CodeAnalysis.ConvertNumericLiteral
+namespace StarkPlatform.CodeAnalysis.ConvertNumericLiteral
 {
     internal abstract class AbstractConvertNumericLiteralCodeRefactoringProvider : CodeRefactoringProvider
     {
@@ -143,8 +143,8 @@ namespace Microsoft.CodeAnalysis.ConvertNumericLiteral
         {
             switch (specialType)
             {
-                case SpecialType.System_Byte:
-                case SpecialType.System_SByte:
+                case SpecialType.System_UInt8:
+                case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_Int32:

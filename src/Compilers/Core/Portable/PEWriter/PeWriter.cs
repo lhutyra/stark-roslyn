@@ -13,13 +13,13 @@ using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Emit;
-using static Microsoft.CodeAnalysis.SigningUtilities;
-using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Emit;
+using static StarkPlatform.CodeAnalysis.SigningUtilities;
+using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 using Microsoft.DiaSymReader;
 
-namespace Microsoft.Cci
+namespace StarkPlatform.Cci
 {
     internal sealed class PeWritingException : Exception
     {

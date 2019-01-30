@@ -3,9 +3,9 @@
 using System;
 using System.Linq;
 using EnvDTE;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem.Extensions
 {
     internal static class ProjectItemsExtensions
     {

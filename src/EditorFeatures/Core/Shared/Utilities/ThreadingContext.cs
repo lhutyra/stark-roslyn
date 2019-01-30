@@ -3,11 +3,11 @@
 using System;
 using System.Composition;
 using System.Threading;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Utilities;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.Utilities;
 using Microsoft.VisualStudio.Threading;
 
-namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
+namespace StarkPlatform.CodeAnalysis.Editor.Shared.Utilities
 {
     /// <summary>
     /// Implements <see cref="IThreadingContext"/>, which provides an implementation of
@@ -44,7 +44,7 @@ namespace Microsoft.CodeAnalysis.Editor.Shared.Utilities
             switch (ForegroundThreadDataInfo.CreateDefault(ForegroundThreadDataKind.Unknown))
             {
                 case ForegroundThreadDataKind.JoinableTask:
-                    throw new NotSupportedException($"A {nameof(VisualStudio.Threading.JoinableTaskContext)} already exists, but we have no way to obtain it.");
+                    throw new NotSupportedException($"A {nameof(JoinableTaskContext)} already exists, but we have no way to obtain it.");
 
                 case ForegroundThreadDataKind.Wpf:
                 case ForegroundThreadDataKind.WinForms:

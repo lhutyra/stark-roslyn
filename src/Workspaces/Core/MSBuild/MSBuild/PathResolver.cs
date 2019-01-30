@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.MSBuild
+namespace StarkPlatform.CodeAnalysis.MSBuild
 {
     internal class PathResolver
     {

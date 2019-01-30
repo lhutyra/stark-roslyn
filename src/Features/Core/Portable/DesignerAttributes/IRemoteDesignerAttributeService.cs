@@ -2,9 +2,9 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Execution;
+using StarkPlatform.CodeAnalysis.Execution;
 
-namespace Microsoft.CodeAnalysis.DesignerAttributes
+namespace StarkPlatform.CodeAnalysis.DesignerAttributes
 {
     internal interface IRemoteDesignerAttributeService
     {

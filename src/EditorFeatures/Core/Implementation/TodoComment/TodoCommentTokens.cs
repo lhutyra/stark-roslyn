@@ -5,9 +5,9 @@ using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Threading;
-using Microsoft.CodeAnalysis.TodoComments;
+using StarkPlatform.CodeAnalysis.TodoComments;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.TodoComments
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.TodoComments
 {
     /// <summary>
     /// provide comment tokens to scan

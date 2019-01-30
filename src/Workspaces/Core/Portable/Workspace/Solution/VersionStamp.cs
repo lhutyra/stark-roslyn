@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// VersionStamp should be only used to compare versions returned by same API.

@@ -2,7 +2,7 @@
 
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.Diagnostics;
 using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -11,11 +11,12 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using System.Runtime.CompilerServices;
 using System.Collections.Immutable;
 using System.Linq;
-using Microsoft.CodeAnalysis;
+using Microsoft.VisualStudio;
+using StarkPlatform.CodeAnalysis;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.SolutionExplorer
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.SolutionExplorer
 {
-    using Workspace = Microsoft.CodeAnalysis.Workspace;
+    using Workspace = StarkPlatform.CodeAnalysis.Workspace;
 
     [Export(typeof(IAttachedCollectionSourceProvider))]
     [Name(nameof(CpsDiagnosticItemProvider))]

@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
-using Microsoft.CodeAnalysis.RemoveUnnecessaryParentheses;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.RemoveUnnecessaryParentheses;
 
-namespace Microsoft.CodeAnalysis.AddRequiredParentheses
+namespace StarkPlatform.CodeAnalysis.AddRequiredParentheses
 {
     internal abstract class AbstractAddRequiredParenthesesDiagnosticAnalyzer<
         TExpressionSyntax, TBinaryLikeExpressionSyntax, TLanguageKindEnum>

@@ -9,9 +9,9 @@ using System.Globalization;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Tasks.Hosting;
-using Microsoft.CodeAnalysis.CommandLine;
+using StarkPlatform.CodeAnalysis.CommandLine;
 
-namespace Microsoft.CodeAnalysis.BuildTasks
+namespace StarkPlatform.CodeAnalysis.BuildTasks
 {
     /// <summary>
     /// This class defines the "Vbc" XMake task, which enables building assemblies from VB

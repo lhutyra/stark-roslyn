@@ -6,18 +6,18 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Common;
-using Microsoft.CodeAnalysis.Editor.Shared.Options;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Remote;
-using Microsoft.CodeAnalysis.Shared.Extensions;
-using Microsoft.CodeAnalysis.SolutionCrawler;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.TodoComments;
-using Microsoft.CodeAnalysis.Versions;
+using StarkPlatform.CodeAnalysis.Common;
+using StarkPlatform.CodeAnalysis.Editor.Shared.Options;
+using StarkPlatform.CodeAnalysis.Options;
+using StarkPlatform.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.Shared.Extensions;
+using StarkPlatform.CodeAnalysis.SolutionCrawler;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.TodoComments;
+using StarkPlatform.CodeAnalysis.Versions;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Editor.Implementation.TodoComments
+namespace StarkPlatform.CodeAnalysis.Editor.Implementation.TodoComments
 {
     internal partial class TodoCommentIncrementalAnalyzer : IIncrementalAnalyzer
     {

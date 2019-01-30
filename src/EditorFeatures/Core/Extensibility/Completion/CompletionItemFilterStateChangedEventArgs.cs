@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Immutable;
-using Microsoft.CodeAnalysis.Completion;
+using StarkPlatform.CodeAnalysis.Completion;
 
-namespace Microsoft.CodeAnalysis.Editor
+namespace StarkPlatform.CodeAnalysis.Editor
 {
     internal class CompletionItemFilterStateChangedEventArgs : EventArgs
     {

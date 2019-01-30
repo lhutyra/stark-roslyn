@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Shared.Utilities;
+using StarkPlatform.CodeAnalysis.Shared.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeActions
+namespace StarkPlatform.CodeAnalysis.CodeActions
 {
     /// <summary>
     /// A <see cref="CodeActionOperation"/> for applying solution changes to a workspace.

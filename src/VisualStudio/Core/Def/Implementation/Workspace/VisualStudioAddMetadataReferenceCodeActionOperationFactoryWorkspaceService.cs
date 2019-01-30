@@ -3,16 +3,16 @@
 using System;
 using System.Composition;
 using System.Threading;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.CodeActions.WorkspaceServices;
-using Microsoft.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.CodeActions;
+using StarkPlatform.CodeAnalysis.CodeActions.WorkspaceServices;
+using StarkPlatform.CodeAnalysis.Host.Mef;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.LanguageServices.Implementation.ProjectSystem;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectSystem;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation
 {
     [ExportWorkspaceService(typeof(IAddMetadataReferenceCodeActionOperationFactoryWorkspaceService), ServiceLayer.Host), Shared]
     internal sealed class VisualStudioAddMetadataReferenceCodeActionOperationFactoryWorkspaceService : IAddMetadataReferenceCodeActionOperationFactoryWorkspaceService
@@ -32,7 +32,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
             return new AddMetadataReferenceOperation(projectId, assemblyIdentity);
         }
 
-        private class AddMetadataReferenceOperation : Microsoft.CodeAnalysis.CodeActions.CodeActionOperation
+        private class AddMetadataReferenceOperation : StarkPlatform.CodeAnalysis.CodeActions.CodeActionOperation
         {
             private readonly AssemblyIdentity _assemblyIdentity;
             private readonly ProjectId _projectId;
@@ -43,7 +43,7 @@ namespace Microsoft.VisualStudio.LanguageServices.Implementation
                 _assemblyIdentity = assemblyIdentity;
             }
 
-            public override void Apply(Microsoft.CodeAnalysis.Workspace workspace, CancellationToken cancellationToken = default)
+            public override void Apply(StarkPlatform.CodeAnalysis.Workspace workspace, CancellationToken cancellationToken = default)
             {
                 var visualStudioWorkspace = (VisualStudioWorkspaceImpl)workspace;
                 if (!visualStudioWorkspace.TryAddReferenceToProject(_projectId, "*" + _assemblyIdentity.GetDisplayName()))

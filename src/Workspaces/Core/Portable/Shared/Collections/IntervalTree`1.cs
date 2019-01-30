@@ -5,10 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using Microsoft.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.Shared.Collections
+namespace StarkPlatform.CodeAnalysis.Shared.Collections
 {
     /// <summary>
     /// An interval tree represents an ordered tree data structure to store intervals of the form 

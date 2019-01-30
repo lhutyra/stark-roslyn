@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.CodeAnalysis.Text
+namespace StarkPlatform.CodeAnalysis.Text
 {
     /// <summary>
     /// Holder for common Text Utility functions and values

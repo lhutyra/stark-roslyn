@@ -3,23 +3,23 @@
 using System;
 using System.Diagnostics;
 using System.Reflection.Metadata;
-using Microsoft.CodeAnalysis.Text;
+using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeGen
+namespace StarkPlatform.CodeAnalysis.CodeGen
 {
     internal partial class ILBuilder
     {
-        public void EmitNumericConversion(Microsoft.Cci.PrimitiveTypeCode fromPredefTypeKind, Microsoft.Cci.PrimitiveTypeCode toPredefTypeKind, bool @checked)
+        public void EmitNumericConversion(StarkPlatform.Cci.PrimitiveTypeCode fromPredefTypeKind, StarkPlatform.Cci.PrimitiveTypeCode toPredefTypeKind, bool @checked)
         {
             bool fromUnsigned = fromPredefTypeKind.IsUnsigned();
 
             switch (toPredefTypeKind)
             {
-                case Microsoft.Cci.PrimitiveTypeCode.Int8:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
                             break; // NOP
                         default:
                             if (@checked)
@@ -30,10 +30,10 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.UInt8:
+                case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
                             break; // NOP
                         default:
                             if (@checked)
@@ -44,12 +44,12 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Int16:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
                             break; // NOP
                         default:
                             if (@checked)
@@ -60,13 +60,13 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Char:
-                case Microsoft.Cci.PrimitiveTypeCode.UInt16:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Char:
+                case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             break; // NOP
                         default:
                             if (@checked)
@@ -77,17 +77,17 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Int32:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int32:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             break; // NOP
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_i4_un);
                             break; // NOP in unchecked
@@ -100,17 +100,17 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.UInt32:
+                case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             break; // NOP
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_u4);
                             break; // NOP in unchecked
@@ -123,24 +123,24 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.IntPtr:
+                case StarkPlatform.Cci.PrimitiveTypeCode.IntPtr:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.IntPtr:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.IntPtr:
                             break; // NOP
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
                             this.EmitOpCode(ILOpCode.Conv_i); // potentially widening, so not NOP
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             // Doesn't actually matter whether we sign extend, because
                             // bit 32 can't be set in any of these types.
                             this.EmitOpCode(ILOpCode.Conv_u); // potentially widening, so not NOP
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_i_un);
                             else
@@ -156,20 +156,20 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.UIntPtr:
+                case StarkPlatform.Cci.PrimitiveTypeCode.UIntPtr:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UIntPtr:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UIntPtr:
                             break; // NOP
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             this.EmitOpCode(ILOpCode.Conv_u); // potentially widening, so not NOP
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_u);
                             else
@@ -184,31 +184,31 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Int64:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Int64:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.Int64:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int64:
                             break; //NOP
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int32:
-                        case Microsoft.Cci.PrimitiveTypeCode.IntPtr:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.IntPtr:
                             this.EmitOpCode(ILOpCode.Conv_i8); // sign extend
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             this.EmitOpCode(ILOpCode.Conv_u8); // 0 extend
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.Pointer:
-                        case Microsoft.Cci.PrimitiveTypeCode.UIntPtr:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Pointer:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UIntPtr:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_i8_un);
                             else
                                 this.EmitOpCode(ILOpCode.Conv_u8); // 0 extend if unchecked
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt64:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_i8_un);
                             break; // NOP in unchecked
@@ -222,29 +222,29 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.UInt64:
+                case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt64:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
                             break; //NOP
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                        case Microsoft.Cci.PrimitiveTypeCode.Pointer:
-                        case Microsoft.Cci.PrimitiveTypeCode.UIntPtr:
-                        case Microsoft.Cci.PrimitiveTypeCode.Char:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Pointer:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UIntPtr:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Char:
                             this.EmitOpCode(ILOpCode.Conv_u8); // 0 extend
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                        case Microsoft.Cci.PrimitiveTypeCode.Int32:
-                        case Microsoft.Cci.PrimitiveTypeCode.IntPtr:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.IntPtr:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_u8);
                             else
                                 this.EmitOpCode(ILOpCode.Conv_i8); // sign extend if unchecked
                             break;
-                        case Microsoft.Cci.PrimitiveTypeCode.Int64:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.Int64:
                             if (@checked)
                                 this.EmitOpCode(ILOpCode.Conv_ovf_u8);
                             break; // NOP in unchecked
@@ -258,45 +258,45 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     }
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Float32:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Float32:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt64:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
                             this.EmitOpCode(ILOpCode.Conv_r_un);
                             break;
                     }
                     this.EmitOpCode(ILOpCode.Conv_r4);
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Float64:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Float64:
                     switch (fromPredefTypeKind)
                     {
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                        case Microsoft.Cci.PrimitiveTypeCode.UInt64:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                        case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
                             this.EmitOpCode(ILOpCode.Conv_r_un);
                             break;
                     }
                     this.EmitOpCode(ILOpCode.Conv_r8);
                     break;
 
-                case Microsoft.Cci.PrimitiveTypeCode.Pointer:
+                case StarkPlatform.Cci.PrimitiveTypeCode.Pointer:
                     if (@checked)
                     {
                         switch (fromPredefTypeKind)
                         {
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt32:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
                                 this.EmitOpCode(ILOpCode.Conv_u);
                                 break;
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt64:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
                                 this.EmitOpCode(ILOpCode.Conv_ovf_u_un);
                                 break;
-                            case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                            case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                            case Microsoft.Cci.PrimitiveTypeCode.Int32:
-                            case Microsoft.Cci.PrimitiveTypeCode.Int64:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int64:
                                 this.EmitOpCode(ILOpCode.Conv_ovf_u);
                                 break;
                             default:
@@ -307,16 +307,16 @@ namespace Microsoft.CodeAnalysis.CodeGen
                     {
                         switch (fromPredefTypeKind)
                         {
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt8:
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt16:
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt32:
-                            case Microsoft.Cci.PrimitiveTypeCode.UInt64:
-                            case Microsoft.Cci.PrimitiveTypeCode.Int64:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt8:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt16:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt32:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.UInt64:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int64:
                                 this.EmitOpCode(ILOpCode.Conv_u);
                                 break;
-                            case Microsoft.Cci.PrimitiveTypeCode.Int8:
-                            case Microsoft.Cci.PrimitiveTypeCode.Int16:
-                            case Microsoft.Cci.PrimitiveTypeCode.Int32:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int8:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int16:
+                            case StarkPlatform.Cci.PrimitiveTypeCode.Int32:
                                 // This matches dev10.  Presumably, we're using conv_i,
                                 // rather than conv_u, to sign-extend the value.
                                 this.EmitOpCode(ILOpCode.Conv_i);

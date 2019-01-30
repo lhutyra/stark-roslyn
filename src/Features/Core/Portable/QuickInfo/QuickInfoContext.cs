@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.CodeAnalysis.QuickInfo
+namespace StarkPlatform.CodeAnalysis.QuickInfo
 {
     /// <summary>
     /// The context presented to a <see cref="QuickInfoProvider"/> when providing quick info.

@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Microsoft.CodeAnalysis.Internal.Log;
+using StarkPlatform.CodeAnalysis.Internal.Log;
 
 namespace Roslyn.Utilities
 {

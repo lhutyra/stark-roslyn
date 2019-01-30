@@ -2,7 +2,7 @@
 
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.PatternMatching
+namespace StarkPlatform.CodeAnalysis.PatternMatching
 {
     /// <summary>
     /// Note(cyrusn): this enum is ordered from strongest match type to weakest match type.

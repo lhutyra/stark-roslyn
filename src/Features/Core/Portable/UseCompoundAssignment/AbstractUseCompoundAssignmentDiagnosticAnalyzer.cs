@@ -4,11 +4,11 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Microsoft.CodeAnalysis.CodeStyle;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.LanguageServices;
+using StarkPlatform.CodeAnalysis.CodeStyle;
+using StarkPlatform.CodeAnalysis.Diagnostics;
+using StarkPlatform.CodeAnalysis.LanguageServices;
 
-namespace Microsoft.CodeAnalysis.UseCompoundAssignment
+namespace StarkPlatform.CodeAnalysis.UseCompoundAssignment
 {
     internal abstract class AbstractUseCompoundAssignmentDiagnosticAnalyzer<
         TSyntaxKind,

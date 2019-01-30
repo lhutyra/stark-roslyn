@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Roslyn.Utilities;
 
-namespace Microsoft.CodeAnalysis.CodeLens
+namespace StarkPlatform.CodeAnalysis.CodeLens
 {
     internal sealed class LocationComparer : IEqualityComparer<Location>
     {

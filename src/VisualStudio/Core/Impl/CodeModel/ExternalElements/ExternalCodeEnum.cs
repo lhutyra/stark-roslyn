@@ -3,12 +3,12 @@
 using System;
 using System.Runtime.InteropServices;
 using EnvDTE;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Interop;
-using Microsoft.VisualStudio.LanguageServices.Implementation.Utilities;
+using StarkPlatform.CodeAnalysis;
+using StarkPlatform.CodeAnalysis.Text;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Interop;
+using StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.ExternalElements
 {
     [ComVisible(true)]
     [ComDefaultInterface(typeof(EnvDTE.CodeEnum))]

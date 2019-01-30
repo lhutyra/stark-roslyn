@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO.Pipes;
 
-namespace Microsoft.CodeAnalysis
+namespace StarkPlatform.CodeAnalysis
 {
     /// <summary>
     /// This type provides information about the runtime which is hosting application. It must be included in a concrete 

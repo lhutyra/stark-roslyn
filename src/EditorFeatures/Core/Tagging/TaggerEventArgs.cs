@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Microsoft.CodeAnalysis.Editor.Tagging
+namespace StarkPlatform.CodeAnalysis.Editor.Tagging
 {
     /// <summary>
     /// Information provided to the <see cref="AbstractAsynchronousTaggerProvider{TTag}"/> when 

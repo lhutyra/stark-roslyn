@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading;
-using Microsoft.CodeAnalysis.Navigation;
+using StarkPlatform.CodeAnalysis.Navigation;
 
-namespace Microsoft.CodeAnalysis.CodeActions
+namespace StarkPlatform.CodeAnalysis.CodeActions
 {
     /// <summary>
     /// A <see cref="CodeActionOperation"/> for navigating to a specific position in a document.

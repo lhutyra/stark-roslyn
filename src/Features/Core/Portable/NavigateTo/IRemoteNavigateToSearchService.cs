@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Remote;
+using StarkPlatform.CodeAnalysis.Remote;
 
-namespace Microsoft.CodeAnalysis.NavigateTo
+namespace StarkPlatform.CodeAnalysis.NavigateTo
 {
     internal interface IRemoteNavigateToSearchService
     {

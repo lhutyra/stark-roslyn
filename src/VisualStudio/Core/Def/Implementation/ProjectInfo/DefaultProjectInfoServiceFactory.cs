@@ -6,11 +6,11 @@ using System.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Host;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.LanguageServices.ProjectInfoService;
+using StarkPlatform.CodeAnalysis.Host;
+using StarkPlatform.CodeAnalysis.Host.Mef;
+using StarkPlatform.CodeAnalysis.LanguageServices.ProjectInfoService;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.ProjectInfoService
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.ProjectInfoService
 {
     [ExportWorkspaceServiceFactory(typeof(IProjectInfoService), ServiceLayer.Editor), Shared]
     internal sealed class DefaultProjectInfoServiceFactory : IWorkspaceServiceFactory

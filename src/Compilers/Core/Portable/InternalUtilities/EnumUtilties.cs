@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using Microsoft.CodeAnalysis;
+using StarkPlatform.CodeAnalysis;
 
 namespace Roslyn.Utilities
 {

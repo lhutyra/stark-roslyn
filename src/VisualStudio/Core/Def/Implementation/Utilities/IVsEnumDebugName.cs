@@ -3,7 +3,7 @@
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-namespace Microsoft.VisualStudio.LanguageServices.Implementation.Utilities
+namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.Utilities
 {
     [ComImport]
     [Guid("9AD7EC03-4157-45B4-A999-403D6DB94578")]
