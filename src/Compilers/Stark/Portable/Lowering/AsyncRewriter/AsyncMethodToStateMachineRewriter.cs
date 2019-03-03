@@ -129,7 +129,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             bodyBuilder.Add(F.Assignment(F.Local(cachedState), F.Field(F.This(), stateField)));
             bodyBuilder.Add(CacheThisIfNeeded());
 
-            var exceptionLocal = F.SynthesizedLocal(F.WellKnownType(WellKnownType.System_Exception));
+            var exceptionLocal = F.SynthesizedLocal(F.WellKnownType(WellKnownType.system_Exception));
             bodyBuilder.Add(
                 GenerateTopLevelTry(
                     F.Block(ImmutableArray<LocalSymbol>.Empty,
@@ -453,11 +453,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
             //  free $criticalNotifyCompletedTemp
 
             var criticalNotifyCompletedTemp = F.SynthesizedLocal(
-                F.WellKnownType(WellKnownType.System_Runtime_CompilerServices_ICriticalNotifyCompletion),
+                F.WellKnownType(WellKnownType.system_runtime_compiler_ICriticalNotifyCompletion),
                 null);
 
             var notifyCompletionTemp = F.SynthesizedLocal(
-                F.WellKnownType(WellKnownType.System_Runtime_CompilerServices_INotifyCompletion),
+                F.WellKnownType(WellKnownType.system_runtime_compiler_INotifyCompletion),
                 null);
 
             LocalSymbol thisTemp = (F.CurrentType.TypeKind == TypeKind.Class) ? F.SynthesizedLocal(F.CurrentType) : null;
@@ -526,7 +526,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             HashSet<DiagnosticInfo> useSiteDiagnostics = null;
             var useUnsafeOnCompleted = F.Compilation.Conversions.ClassifyImplicitConversionFromType(
                 loweredAwaiterType,
-                F.Compilation.GetWellKnownType(WellKnownType.System_Runtime_CompilerServices_ICriticalNotifyCompletion),
+                F.Compilation.GetWellKnownType(WellKnownType.system_runtime_compiler_ICriticalNotifyCompletion),
                 ref useSiteDiagnostics).IsImplicit;
 
             var onCompleted = (useUnsafeOnCompleted ?

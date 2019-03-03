@@ -192,10 +192,7 @@ namespace StarkPlatform.Cci
             get { throw ExceptionUtilities.Unreachable; }
         }
 
-        bool ITypeReference.IsValueType
-        {
-            get { throw ExceptionUtilities.Unreachable; }
-        }
+        bool ITypeReference.IsValueType => false;
 
         ITypeDefinition ITypeReference.GetResolvedType(EmitContext context)
         {

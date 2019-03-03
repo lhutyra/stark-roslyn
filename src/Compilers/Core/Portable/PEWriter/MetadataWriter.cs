@@ -456,7 +456,7 @@ namespace StarkPlatform.Cci
 
         // Well known dummy cor library types whose refs are used for attaching assembly attributes off within net modules
         // There is no guarantee the types actually exist in a cor library
-        internal const string dummyAssemblyAttributeParentNamespace = "System.Runtime.CompilerServices";
+        internal const string dummyAssemblyAttributeParentNamespace = "system.runtime.compiler";
         internal const string dummyAssemblyAttributeParentName = "AssemblyAttributesGoHere";
         internal static readonly string[,] dummyAssemblyAttributeParentQualifier = { { "", "M" }, { "S", "SM" } };
         private readonly TypeReferenceHandle[,] _dummyAssemblyAttributeParent = { { default(TypeReferenceHandle), default(TypeReferenceHandle) }, { default(TypeReferenceHandle), default(TypeReferenceHandle) } };
@@ -1487,6 +1487,11 @@ namespace StarkPlatform.Cci
             if (typeDef.IsInterface)
             {
                 result |= TypeAttributes.Interface;
+            }
+
+            if (typeDef.IsValueType)
+            {
+                result |= TypeAttributesExt.Struct;
             }
 
             if (typeDef.IsAbstract)

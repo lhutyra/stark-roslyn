@@ -383,7 +383,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
             if (next.IsKind(SyntaxKind.ColonToken))
             {
-                if (next.Parent.IsKind(SyntaxKind.BaseList) ||
+                if (next.Parent.IsKind(SyntaxKind.ImplementList) ||
                     next.Parent.IsKind(SyntaxKind.TypeParameterConstraintClause))
                 {
                     return true;

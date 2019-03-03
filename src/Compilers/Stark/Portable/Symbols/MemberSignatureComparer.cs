@@ -703,15 +703,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     continue;
                 }
 
-                // The struct constraint implies a System.ValueType constraint
-                // type which may be explicit in the other type parameter
-                // constraints (through type substitution in derived types).
-                if ((constraintType.SpecialType == SpecialType.System_ValueType) &&
-                    typeParameter2.HasValueTypeConstraint)
-                {
-                    continue;
-                }
-
                 return false;
             }
 

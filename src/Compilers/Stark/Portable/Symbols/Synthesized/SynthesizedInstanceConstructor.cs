@@ -273,7 +273,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             factory.CurrentFunction = this;
             if (ContainingType.BaseTypeNoUseSiteDiagnostics is MissingMetadataTypeSymbol)
             {
-                // System_Attribute was not found or was inaccessible
+                // system_Attribute was not found or was inaccessible
                 factory.CloseMethod(factory.Block());
                 return;
             }

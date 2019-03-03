@@ -981,6 +981,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.TransientKeyword;
                 case "constructor":
                     return SyntaxKind.ConstructorKeyword;
+                case "implements":
+                    return SyntaxKind.ImplementsKeyword;
+                case "extends":
+                    return SyntaxKind.ExtendsKeyword;
                 case "import":
                     return SyntaxKind.ImportKeyword;
                 default:
@@ -1659,6 +1663,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "constructor";
                 case SyntaxKind.ImportKeyword:
                     return "import";
+                case SyntaxKind.ImplementsKeyword:
+                    return "implements";
+                case SyntaxKind.ExtendsKeyword:
+                    return "extends";
                 default:
                     return string.Empty;
             }

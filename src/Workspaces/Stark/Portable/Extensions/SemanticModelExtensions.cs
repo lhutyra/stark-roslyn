@@ -391,14 +391,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             //    as the interface type itself.
             if (type != null)
             {
-                if (type.Parent is BaseTypeSyntax && type.Parent.IsParentKind(SyntaxKind.BaseList) && ((BaseTypeSyntax)type.Parent).Type == type)
+                if (type.Parent is BaseTypeSyntax && type.Parent.IsParentKind(SyntaxKind.ImplementList) && ((BaseTypeSyntax)type.Parent).Type == type)
                 {
                     var containingType = semanticModel.GetDeclaredSymbol(type.GetAncestor<BaseTypeDeclarationSyntax>(), cancellationToken) as INamedTypeSymbol;
                     if (containingType != null && containingType.TypeKind == TypeKind.Interface)
                     {
                         return containingType.DeclaredAccessibility;
                     }
-                    else if (((BaseListSyntax)type.Parent.Parent).Types[0] == type.Parent)
+                    else if (((ImplementListSyntax)type.Parent.Parent).Types[0] == type.Parent)
                     {
                         return containingType.DeclaredAccessibility;
                     }

@@ -425,7 +425,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 switch (constraint.SpecialType)
                 {
                     case SpecialType.System_Object:
-                    case SpecialType.System_ValueType:
                     case SpecialType.System_Enum:
                         return false; // can be satisfied by value types
                 }

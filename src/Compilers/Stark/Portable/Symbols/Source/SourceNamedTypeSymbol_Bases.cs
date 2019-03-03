@@ -174,14 +174,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             foreach (var decl in this.declaration.Declarations)
             {
-                BaseListSyntax bases = GetBaseListOpt(decl);
-                if (bases != null)
+                ImplementListSyntax implements = GetImplementListOpt(decl);
+                if (implements != null)
                 {
-                    var baseBinder = this.DeclaringCompilation.GetBinder(bases);
+                    var baseBinder = this.DeclaringCompilation.GetBinder(implements);
                     // Wrap base binder in a location-specific binder that will avoid generic constraint checks.
                     baseBinder = baseBinder.WithAdditionalFlagsAndContainingMemberOrLambda(BinderFlags.SuppressConstraintChecks, this);
 
-                    foreach (var baseTypeSyntax in bases.Types)
+                    foreach (var baseTypeSyntax in implements.Types)
                     {
                         var b = baseTypeSyntax.Type;
                         var tmpDiag = DiagnosticBag.GetInstance();
@@ -205,7 +205,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             foreach (var singleDeclaration in this.declaration.Declarations)
             {
-                var bases = GetBaseListOpt(singleDeclaration);
+                var bases = GetImplementListOpt(singleDeclaration);
                 if (bases != null)
                 {
                     return singleDeclaration;
@@ -336,12 +336,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return new Tuple<NamedTypeSymbol, ImmutableArray<NamedTypeSymbol>>(baseType, baseInterfacesRO);
         }
 
-        private static BaseListSyntax GetBaseListOpt(SingleTypeDeclaration decl)
+
+        private static ExtendListSyntax GetExtendListOpt(SingleTypeDeclaration decl)
         {
             if (decl.HasBaseDeclarations)
             {
                 var typeDeclaration = (BaseTypeDeclarationSyntax)decl.SyntaxReference.GetSyntax();
-                return typeDeclaration.BaseList;
+                return typeDeclaration.ExtendList;
+            }
+
+            return null;
+        }
+
+        private static ImplementListSyntax GetImplementListOpt(SingleTypeDeclaration decl)
+        {
+            if (decl.HasBaseDeclarations)
+            {
+                var typeDeclaration = (BaseTypeDeclarationSyntax)decl.SyntaxReference.GetSyntax();
+                return typeDeclaration.ImplementList;
             }
 
             return null;
@@ -350,23 +362,52 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         // process the base list for one part of a partial class, or for the only part of any other type declaration.
         private Tuple<NamedTypeSymbol, ImmutableArray<NamedTypeSymbol>> MakeOneDeclaredBases(ConsList<TypeSymbol> newBasesBeingResolved, SingleTypeDeclaration decl, DiagnosticBag diagnostics)
         {
-            BaseListSyntax bases = GetBaseListOpt(decl);
-            if (bases == null)
+            ExtendListSyntax extends = GetExtendListOpt(decl);
+            ImplementListSyntax implements = GetImplementListOpt(decl);
+            if (extends == null && implements == null)
             {
                 return null;
             }
 
             NamedTypeSymbol localBase = null;
             var localInterfaces = ArrayBuilder<NamedTypeSymbol>.GetInstance();
-            var baseBinder = this.DeclaringCompilation.GetBinder(bases);
+            var baseBinder = this.DeclaringCompilation.GetBinder((BaseListSyntax)extends ?? implements);
 
             // Wrap base binder in a location-specific binder that will avoid generic constraint checks
             // (to avoid cycles if the constraint types are not bound yet). Instead, constraint checks
             // are handled by the caller.
             baseBinder = baseBinder.WithAdditionalFlagsAndContainingMemberOrLambda(BinderFlags.SuppressConstraintChecks, this);
 
+            if (extends != null)
+            {
+                ResolveBases(extends, newBasesBeingResolved, diagnostics, baseBinder, ref localBase, localInterfaces);
+            }
+
+            if (implements != null)
+            {
+                ResolveBases(implements, newBasesBeingResolved, diagnostics, baseBinder, ref localBase, localInterfaces);
+            }
+
+            if (this.SpecialType == SpecialType.System_Object && ((object)localBase != null || localInterfaces.Count != 0))
+            {
+                var name = GetName(extends?.Parent ?? implements?.Parent);
+                diagnostics.Add(ErrorCode.ERR_ObjectCantHaveBases, new SourceLocation(name));
+            }
+
+            return new Tuple<NamedTypeSymbol, ImmutableArray<NamedTypeSymbol>>(localBase, localInterfaces.ToImmutableAndFree());
+        }
+
+        private void ResolveBases(BaseListSyntax baseList, ConsList<TypeSymbol> newBasesBeingResolved, DiagnosticBag diagnostics, Binder baseBinder, ref NamedTypeSymbol localBase, ArrayBuilder<NamedTypeSymbol> localInterfaces)
+        {
             int i = -1;
-            foreach (var baseTypeSyntax in bases.Types)
+
+            var isExtendList = baseList is ExtendListSyntax;
+            var isInterface = TypeKind == TypeKind.Interface;
+            var isClassOrStruct = TypeKind == TypeKind.Class || TypeKind == TypeKind.Struct;
+
+
+
+            foreach (var baseTypeSyntax in baseList.Types)
             {
                 i++;
                 var typeSyntax = baseTypeSyntax.Type;
@@ -379,7 +420,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                 TypeSymbol baseType;
 
-                if (i == 0 && TypeKind == TypeKind.Class) // allow class in the first position
+                if (i == 0 && isClassOrStruct && isExtendList) // allow class in the first position
                 {
                     baseType = baseBinder.BindType(typeSyntax, diagnostics, newBasesBeingResolved).TypeSymbol;
 
@@ -387,7 +428,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     if (IsRestrictedBaseType(baseSpecialType))
                     {
                         // check for one of the specific exceptions required for compiling mscorlib
-                        if (this.SpecialType == SpecialType.System_Enum && baseSpecialType == SpecialType.System_ValueType ||
+                        if (this.SpecialType == SpecialType.System_Enum ||
                             this.SpecialType == SpecialType.System_MulticastDelegate && baseSpecialType == SpecialType.System_Delegate)
                         {
                             // allowed
@@ -434,16 +475,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                          baseType.TypeKind == TypeKind.Delegate ||
                          baseType.TypeKind == TypeKind.Struct ||
                          baseTypeIsErrorWithoutInterfaceGuess) &&
-                        ((object)localBase == null))
+                        ((object) localBase == null))
                     {
-                        localBase = (NamedTypeSymbol)baseType;
-                        Debug.Assert((object)localBase != null);
+                        localBase = (NamedTypeSymbol) baseType;
+                        Debug.Assert((object) localBase != null);
                         if (this.IsStatic && localBase.SpecialType != SpecialType.System_Object)
                         {
                             // Static class '{0}' cannot derive from type '{1}'. Static classes must derive from object.
                             var info = diagnostics.Add(ErrorCode.ERR_StaticDerivedFromNonObject, location, this, localBase);
                             localBase = new ExtendedErrorTypeSymbol(localBase, LookupResultKind.NotReferencable, info);
                         }
+
                         continue;
                     }
                 }
@@ -452,15 +494,27 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     baseType = baseBinder.BindType(typeSyntax, diagnostics, newBasesBeingResolved).TypeSymbol;
                 }
 
+                // if we have an interface and we have an implements list, this is invalid
+                if (isInterface && !isExtendList)
+                {
+                    diagnostics.Add(ErrorCode.ERR_InvalidImplementsForInterface, location, this, baseType);
+                    continue;
+                }
+
                 switch (baseType.TypeKind)
                 {
                     case TypeKind.Interface:
+                        // If we have an interface in a extend list of a class, this is not supported
+                        if (isClassOrStruct && isExtendList)
+                        {
+                            diagnostics.Add(ErrorCode.ERR_InvalidInterfaceInExtendList, location, baseType);
+                        }
+                        
                         foreach (var t in localInterfaces)
                         {
                             if (TypeSymbol.Equals(t, baseType, TypeCompareKind.ConsiderEverything))
                             {
                                 diagnostics.Add(ErrorCode.ERR_DuplicateInterfaceInBaseList, location, baseType);
-                                continue;
                             }
                         }
 
@@ -481,55 +535,71 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                             diagnostics.Add(ErrorCode.ERR_DeriveFromConstructedDynamic, location, this, baseType);
                         }
 
-                        localInterfaces.Add((NamedTypeSymbol)baseType);
-                        continue;
+                        localInterfaces.Add((NamedTypeSymbol) baseType);
+                        break;
 
-                    case TypeKind.Class:
-                        if (TypeKind == TypeKind.Class)
+                    case TypeKind.Struct:
+                        // TODO: make error struct specific
+                        if (TypeKind == TypeKind.Struct && (object)localBase != null)
                         {
-                            if ((object)localBase == null)
+                            if (isExtendList)
                             {
-                                localBase = (NamedTypeSymbol)baseType;
-                                diagnostics.Add(ErrorCode.ERR_BaseClassMustBeFirst, location, baseType);
-                                continue;
+                                diagnostics.Add(ErrorCode.ERR_NoMultipleInheritance, location, this, localBase, baseType);
+                                break;
                             }
                             else
                             {
-                                diagnostics.Add(ErrorCode.ERR_NoMultipleInheritance, location, this, localBase, baseType);
-                                continue;
+                                // TODO: add localBase?
+                                diagnostics.Add(ErrorCode.ERR_InvalidClassInImplementList, location, this, baseType);
+                                break;
                             }
                         }
-                        goto default;
+
+                        // Else we are in an interface
+                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInInterfaceList, location, baseType);
+                        break;
+
+                    case TypeKind.Class:
+                        if (TypeKind == TypeKind.Class && (object)localBase != null)
+                        {
+                            if (isExtendList)
+                            {
+                                diagnostics.Add(ErrorCode.ERR_NoMultipleInheritance, location, this, localBase, baseType);
+                                break;
+                            }
+                            else
+                            {
+                                // TODO: add localBase?
+                                diagnostics.Add(ErrorCode.ERR_InvalidClassInImplementList, location, this, baseType);
+                                break;
+                            }
+                        }
+
+                        // Else we are in an interface
+                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInInterfaceList, location, baseType);
+                        break;
 
                     case TypeKind.TypeParameter:
                         diagnostics.Add(ErrorCode.ERR_DerivingFromATyVar, location, baseType);
-                        continue;
+                        break;
 
                     case TypeKind.Error:
                         // put the error type in the interface list so we don't lose track of it
-                        localInterfaces.Add((NamedTypeSymbol)baseType);
-                        continue;
+                        localInterfaces.Add((NamedTypeSymbol) baseType);
+                        break;
 
                     case TypeKind.Dynamic:
                         diagnostics.Add(ErrorCode.ERR_DeriveFromDynamic, location, this);
-                        continue;
+                        break;
 
                     case TypeKind.Submission:
                         throw ExceptionUtilities.UnexpectedValue(baseType.TypeKind);
 
                     default:
                         diagnostics.Add(ErrorCode.ERR_NonInterfaceInInterfaceList, location, baseType);
-                        continue;
+                        break;
                 }
             }
-
-            if (this.SpecialType == SpecialType.System_Object && ((object)localBase != null || localInterfaces.Count != 0))
-            {
-                var name = GetName(bases.Parent);
-                diagnostics.Add(ErrorCode.ERR_ObjectCantHaveBases, new SourceLocation(name));
-            }
-
-            return new Tuple<NamedTypeSymbol, ImmutableArray<NamedTypeSymbol>>(localBase, localInterfaces.ToImmutableAndFree());
         }
 
         /// <summary>
@@ -543,7 +613,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 case SpecialType.System_Enum:
                 case SpecialType.System_Delegate:
                 case SpecialType.System_MulticastDelegate:
-                case SpecialType.System_ValueType:
                     return true;
             }
 
@@ -634,9 +703,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         break;
 
                     case TypeKind.Struct:
-                        declaredBase = compilation.GetSpecialType(SpecialType.System_ValueType);
-                        break;
-
                     case TypeKind.Interface:
                         return null;
 

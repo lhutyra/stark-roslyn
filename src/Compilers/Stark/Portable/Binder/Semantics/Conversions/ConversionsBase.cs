@@ -3204,20 +3204,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return false;
             }
 
-            // SPEC: An unboxing conversion permits a reference type to be explicitly converted to a value-type. 
-            // SPEC: An unboxing conversion exists from the types object and System.ValueType to any non-nullable-value-type, 
-            var specialTypeSource = source.SpecialType;
-
-            if (specialTypeSource == SpecialType.System_Object || specialTypeSource == SpecialType.System_ValueType)
-            {
-                if (destination.IsValueType && !destination.IsNullableType())
-                {
-                    return true;
-                }
-            }
-
             // SPEC: and from any interface-type to any non-nullable-value-type that implements the interface-type. 
-
             if (source.IsInterfaceType() &&
                 destination.IsValueType &&
                 !destination.IsNullableType() &&

@@ -14,7 +14,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             ArrayBuilder<BoundExpression> expressions;
             MakeInterpolatedStringFormat((BoundInterpolatedString)conversion.Operand, out format, out expressions);
             expressions.Insert(0, format);
-            var stringFactory = _factory.WellKnownType(WellKnownType.System_Runtime_CompilerServices_FormattableStringFactory);
+            var stringFactory = _factory.WellKnownType(WellKnownType.system_runtime_compiler_FormattableStringFactory);
 
             // The normal pattern for lowering is to lower subtrees before the enclosing tree. However we cannot lower
             // the arguments first in this situation because we do not know what conversions will be

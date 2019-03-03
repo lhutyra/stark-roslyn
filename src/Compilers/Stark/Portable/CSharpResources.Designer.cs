@@ -6064,6 +6064,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is a class or a struct and cannot be used in an implements list.
+        /// </summary>
+        internal static string ERR_InvalidClassInImplementList {
+            get {
+                return ResourceManager.GetString("ERR_InvalidClassInImplementList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is of type &apos;{1}&apos;. The type specified in a constant declaration must be sbyte, byte, short, ushort, int, uint, long, ulong, char, float, double, decimal, bool, string, an enum-type, or a reference-type..
         /// </summary>
         internal static string ERR_InvalidConstantDeclarationType {
@@ -6172,6 +6181,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is an interface and cannot implement from another type &apos;{1}&apos;.
+        /// </summary>
+        internal static string ERR_InvalidImplementsForInterface {
+            get {
+                return ResourceManager.GetString("ERR_InvalidImplementsForInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid initializer member declarator.
         /// </summary>
         internal static string ERR_InvalidInitializerElementInitializer {
@@ -6186,6 +6204,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_InvalidInstrumentationKind {
             get {
                 return ResourceManager.GetString("ERR_InvalidInstrumentationKind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is an interface and cannot be used in an extends list for a class or struct.
+        /// </summary>
+        internal static string ERR_InvalidInterfaceInExtendList {
+            get {
+                return ResourceManager.GetString("ERR_InvalidInterfaceInExtendList", resourceCulture);
             }
         }
         

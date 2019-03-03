@@ -26,7 +26,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.ImplementInterface
             if (!cancellationToken.IsCancellationRequested)
             {
                 if (node is TypeSyntax interfaceNode && interfaceNode.Parent is BaseTypeSyntax &&
-                    interfaceNode.Parent.IsParentKind(SyntaxKind.BaseList) &&
+                    interfaceNode.Parent.IsParentKind(SyntaxKind.ImplementList) &&
                     ((BaseTypeSyntax)interfaceNode.Parent).Type == interfaceNode)
                 {
                     if (interfaceNode.Parent.Parent.IsParentKind(SyntaxKind.ClassDeclaration) ||

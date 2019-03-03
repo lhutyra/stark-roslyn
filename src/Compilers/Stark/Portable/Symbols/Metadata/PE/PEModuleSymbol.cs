@@ -494,7 +494,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
                 {
                     Interlocked.CompareExchange(ref _lazyEventRegistrationTokenSymbol,
                                                 GetTypeSymbolForWellKnownType(
-                                                    WellKnownType.System_Runtime_InteropServices_WindowsRuntime_EventRegistrationToken
+                                                    WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken
                                                     ),
                                                 null);
                     Debug.Assert((object)_lazyEventRegistrationTokenSymbol != null);
@@ -512,7 +512,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
                 {
                     Interlocked.CompareExchange(ref _lazyEventRegistrationTokenTableSymbol,
                                                 GetTypeSymbolForWellKnownType(
-                                                    WellKnownType.System_Runtime_InteropServices_WindowsRuntime_EventRegistrationTokenTable_T
+                                                    WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T
                                                     ),
                                                 null);
                     Debug.Assert((object)_lazyEventRegistrationTokenTableSymbol != null);
@@ -528,7 +528,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
                 if ((object)_lazySystemTypeSymbol == null)
                 {
                     Interlocked.CompareExchange(ref _lazySystemTypeSymbol,
-                                                GetTypeSymbolForWellKnownType(WellKnownType.System_Type),
+                                                GetTypeSymbolForWellKnownType(WellKnownType.system_Type),
                                                 null);
                     Debug.Assert((object)_lazySystemTypeSymbol != null);
                 }

@@ -30,7 +30,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.LanguageService
     // TODO(DustinCa): Put all of this in CSharpPackageRegistration.pkgdef rather than using attributes
     // (See vsproject\cool\coolpkg\pkg\VCSharp_Proj_System_Reg.pkgdef for an example).
     [Guid(Guids.StarkPackageIdString)]
-    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [PackageRegistration(UseManagedResourcesOnly = true)] // , AllowsBackgroundLoading = true
     [ProvideRoslynVersionRegistration(Guids.StarkPackageIdString, "Stark Language", productNameResourceID: 116, detailsResourceID: 117)]
     [ProvideLanguageExtension(typeof(StarkLanguageService), ".sk")]
     [ProvideLanguageService(Guids.StarkLanguageServiceIdString, "stark", languageResourceID: 101, RequestStockColors = true, ShowDropDownOptions = true)]
@@ -72,6 +72,10 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.LanguageService
     {
         private ObjectBrowserLibraryManager _libraryManager;
         private uint _libraryManagerCookie;
+
+        public StarkPackage()
+        {
+        }
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {

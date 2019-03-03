@@ -38,7 +38,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             base.AddSynthesizedAttributes(moduleBuilder, ref attributes);
 
             var compilation = this.DeclaringCompilation;
-            var systemType = compilation.GetWellKnownType(WellKnownType.System_Type);
+            var systemType = compilation.GetWellKnownType(WellKnownType.system_Type);
             var intType = compilation.GetSpecialType(SpecialType.System_Int32);
             var item1 = new TypedConstant(systemType, TypedConstantKind.Type, ((PointerTypeSymbol)this.Type.TypeSymbol).PointedAtType.TypeSymbol);
             var item2 = new TypedConstant(intType, TypedConstantKind.Primitive, this.FixedSize);
@@ -231,8 +231,5 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             get { return Accessibility.Public; }
         }
-
-        internal override NamedTypeSymbol BaseTypeNoUseSiteDiagnostics
-            => ContainingAssembly.GetSpecialType(SpecialType.System_ValueType);
     }
 }

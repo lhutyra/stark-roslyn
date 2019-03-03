@@ -1688,7 +1688,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
 
             if (node.Indices.Length == 1 &&
-                TypeSymbol.Equals(node.Indices[0].Type, compilation.GetWellKnownType(WellKnownType.System_Range), TypeCompareKind.ConsiderEverything2))
+                TypeSymbol.Equals(node.Indices[0].Type, compilation.GetWellKnownType(WellKnownType.system_Range), TypeCompareKind.ConsiderEverything2))
             {
                 _resultType = TypeSymbolWithAnnotations.Create(type);
             }
@@ -3939,7 +3939,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     }
                     Debug.Assert(operandType.IsNull ||
                         !operandType.IsReferenceType ||
-                        operandType.SpecialType == SpecialType.System_ValueType ||
                         operandType.TypeKind == TypeKind.Interface ||
                         operandType.TypeKind == TypeKind.Dynamic);
                     break;
@@ -4554,7 +4553,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             // https://github.com/dotnet/roslyn/issues/30620 remove before shipping dev16
             if (node.Arguments.Length == 1 &&
-                TypeSymbol.Equals(node.Arguments[0].Type, compilation.GetWellKnownType(WellKnownType.System_Range), TypeCompareKind.ConsiderEverything2))
+                TypeSymbol.Equals(node.Arguments[0].Type, compilation.GetWellKnownType(WellKnownType.system_Range), TypeCompareKind.ConsiderEverything2))
             {
                 _resultType = TypeSymbolWithAnnotations.Create(node.Type);
             }

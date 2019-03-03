@@ -79,16 +79,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 {
                     foreach (var syntaxRef in typeSymbol.DeclaringSyntaxReferences)
                     {
-                        if (syntaxRef.GetSyntax(cancellationToken) is TypeDeclarationSyntax typeDecl && typeDecl.BaseList != null)
+                        if (syntaxRef.GetSyntax(cancellationToken) is TypeDeclarationSyntax typeDecl && typeDecl.ImplementList != null)
                         {
-                            baseListTypes = baseListTypes.Concat(typeDecl.BaseList.Types);
+                            baseListTypes = baseListTypes.Concat(typeDecl.ImplementList.Types);
                         }
                     }
                 }
             }
-            else if (typeNode.BaseList != null)
+            else if (typeNode.ImplementList != null)
             {
-                return typeNode.BaseList.Types;
+                return typeNode.ImplementList.Types;
             }
 
             return baseListTypes;

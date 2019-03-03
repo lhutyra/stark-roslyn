@@ -103,7 +103,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
             }
 
             var startToken = attributesSyntaxList[0].AtToken;
-            var endToken = attributesSyntaxList[count - 1].ArgumentList.CloseParenToken;
+            var endToken = attributesSyntaxList[count - 1].GetLastToken();
             return IsBetweenTokens(position, startToken, endToken);
         }
 

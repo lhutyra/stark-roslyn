@@ -238,7 +238,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             CSharpCompilation compilation = containingType.DeclaringCompilation;
             var submissionReturnTypeOpt = compilation.ScriptCompilationInfo?.ReturnTypeOpt;
-            var taskT = compilation.GetWellKnownType(WellKnownType.System_Threading_Tasks_Task_T);
+            var taskT = compilation.GetWellKnownType(WellKnownType.system_Threading_Tasks_Task_T);
             var useSiteDiagnostic = taskT.GetUseSiteDiagnostic();
             if (useSiteDiagnostic != null)
             {

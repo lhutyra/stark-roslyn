@@ -78,12 +78,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
             }
 
             // class C<T> : IGoo |
-            var baseList = token.GetAncestor<BaseListSyntax>();
+            var baseList = token.GetAncestor<ImplementListSyntax>();
             if (baseList.GetParent() is TypeDeclarationSyntax)
             {
                 var typeDecl = baseList.GetParent() as TypeDeclarationSyntax;
                 if (typeDecl.TypeParameterList != null &&
-                    typeDecl.BaseList.Types.Any(t => token == t.GetLastToken(includeSkipped: true)))
+                    typeDecl.ImplementList.Types.Any(t => token == t.GetLastToken(includeSkipped: true)))
                 {
                     // token is IdentifierName "where"
                     // only suggest "where" if token's previous token is also "where"

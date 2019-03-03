@@ -169,7 +169,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         TransientKeyword = 8393,
         ImportKeyword = 8394,
         AsKeyword = 8395,
-        ConstructorKeyword = 8396, // Must be always last
+        ExtendsKeyword = 8396,
+        ImplementsKeyword = 8397,
+        ConstructorKeyword = 8398, // Must be always last
 #endif
 
         // contextual keywords
@@ -523,7 +525,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         EnumDeclaration = 8858,
         DelegateDeclaration = 8859,
 
-        BaseList = 8864,
+        ExtendList = 8863,
+        ImplementList = 8864,
         SimpleBaseType = 8865,
         TypeParameterConstraintClause = 8866,
         ConstructorConstraint = 8867,

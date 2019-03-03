@@ -322,7 +322,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 SingleTypeDeclaration.TypeDeclarationFlags.HasAnyAttributes :
                 SingleTypeDeclaration.TypeDeclarationFlags.None;
 
-            if (node.BaseList != null)
+            if (node.ExtendList != null || node.ImplementList != null)
             {
                 declFlags |= SingleTypeDeclaration.TypeDeclarationFlags.HasBaseDeclarations;
             }
@@ -408,7 +408,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 SingleTypeDeclaration.TypeDeclarationFlags.HasAnyAttributes :
                 SingleTypeDeclaration.TypeDeclarationFlags.None;
 
-            if (node.BaseList != null)
+            if (node.ImplementList != null)
             {
                 declFlags |= SingleTypeDeclaration.TypeDeclarationFlags.HasBaseDeclarations;
             }

@@ -9,7 +9,12 @@ namespace StarkPlatform.CodeAnalysis
     {
         public static bool IsInterface(this TypeAttributes flags)
         {
-            return (flags & TypeAttributes.Interface) != 0;
+            return (flags & TypeAttributes.Interface) == TypeAttributes.Interface;
+        }
+
+        public static bool IsValueType(this TypeAttributes flags)
+        {
+            return (flags & TypeAttributesExt.Struct) == TypeAttributesExt.Struct;
         }
 
         public static bool IsWindowsRuntime(this TypeAttributes flags)

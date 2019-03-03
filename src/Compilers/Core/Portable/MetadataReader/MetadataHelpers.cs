@@ -22,7 +22,7 @@ namespace StarkPlatform.CodeAnalysis
         private const string GenericTypeNameManglingString = "`";
         public const int MaxStringLengthForParamSize = 22;
         public const int MaxStringLengthForIntToStringConversion = 22;
-        public const string SystemString = "System";
+        public const string SystemString = "system";
 
         // These can appear in the interface name that precedes an explicit interface implementation member.
         public const char MangledNameRegionStartChar = '<';

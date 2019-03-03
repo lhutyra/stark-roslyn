@@ -110,8 +110,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.ObjectBrowser
                     if (baseType.SpecialType != SpecialType.System_Object &&
                         baseType.SpecialType != SpecialType.System_Delegate &&
                         baseType.SpecialType != SpecialType.System_MulticastDelegate &&
-                        baseType.SpecialType != SpecialType.System_Enum &&
-                        baseType.SpecialType != SpecialType.System_ValueType)
+                        baseType.SpecialType != SpecialType.System_Enum)
                     {
                         AddText(" : ");
                         AddTypeLink(baseType, LinkFlags.None);

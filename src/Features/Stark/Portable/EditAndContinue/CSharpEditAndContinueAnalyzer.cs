@@ -2304,7 +2304,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     return;
                 }
 
-                Debug.Assert(!SyntaxFactory.AreEquivalent(oldNode.BaseList, newNode.BaseList));
+                Debug.Assert(!SyntaxFactory.AreEquivalent(oldNode.ImplementList, newNode.ImplementList));
                 ReportError(RudeEditKind.BaseTypeOrInterfaceUpdate);
             }
 
@@ -2322,7 +2322,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     return;
                 }
 
-                if (!SyntaxFactory.AreEquivalent(oldNode.BaseList, newNode.BaseList))
+                if (!SyntaxFactory.AreEquivalent(oldNode.ImplementList, newNode.ImplementList))
                 {
                     ReportError(RudeEditKind.EnumUnderlyingTypeUpdate);
                     return;

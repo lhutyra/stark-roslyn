@@ -37,9 +37,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateMember.GenerateDefaultConstru
             var node = semanticDocument.Root.FindToken(textSpan.Start).GetAncestor<TypeSyntax>();
             if (node != null)
             {
-                if (node.Parent is BaseTypeSyntax && node.Parent.IsParentKind(SyntaxKind.BaseList))
+                if (node.Parent is BaseTypeSyntax && node.Parent.IsParentKind(SyntaxKind.ImplementList))
                 {
-                    var baseList = (BaseListSyntax)node.Parent.Parent;
+                    var baseList = (ImplementListSyntax)node.Parent.Parent;
                     if (baseList.Types.Count > 0 &&
                         baseList.Types[0].Type == node &&
                         baseList.IsParentKind(SyntaxKind.ClassDeclaration))

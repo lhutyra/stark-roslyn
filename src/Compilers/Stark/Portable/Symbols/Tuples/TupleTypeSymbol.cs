@@ -444,7 +444,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// <summary>
         /// Find the well-known ValueTuple type of a given arity.
         /// For example, for arity=2:
-        /// returns WellKnownType.System_ValueTuple_T2
+        /// returns WellKnownType.system_ValueTuple_T2
         /// </summary>
         private static WellKnownType GetTupleType(int arity)
         {
@@ -456,14 +456,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         }
 
         private static readonly WellKnownType[] tupleTypes = {
-                                                            WellKnownType.System_ValueTuple_T1,
-                                                            WellKnownType.System_ValueTuple_T2,
-                                                            WellKnownType.System_ValueTuple_T3,
-                                                            WellKnownType.System_ValueTuple_T4,
-                                                            WellKnownType.System_ValueTuple_T5,
-                                                            WellKnownType.System_ValueTuple_T6,
-                                                            WellKnownType.System_ValueTuple_T7,
-                                                            WellKnownType.System_ValueTuple_TRest };
+                                                            WellKnownType.system_ValueTuple_T1,
+                                                            WellKnownType.system_ValueTuple_T2,
+                                                            WellKnownType.system_ValueTuple_T3,
+                                                            WellKnownType.system_ValueTuple_T4,
+                                                            WellKnownType.system_ValueTuple_T5,
+                                                            WellKnownType.system_ValueTuple_T6,
+                                                            WellKnownType.system_ValueTuple_T7,
+                                                            WellKnownType.system_ValueTuple_TRest };
 
         /// <summary>
         /// Find the constructor for a well-known ValueTuple type of a given arity.

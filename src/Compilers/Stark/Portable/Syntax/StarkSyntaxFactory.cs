@@ -5,41 +5,43 @@ namespace StarkPlatform.CodeAnalysis.Stark
 {
     public partial class SyntaxFactory
     {
-
-        public static ClassDeclarationSyntax ClassDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList,
+        public static ClassDeclarationSyntax ClassDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members)
         {
             return SyntaxFactory.ClassDeclaration(attributeLists,
                 modifiers,
                 identifier,
                 typeParameterList,
-                baseList,
+                extendList,
+                implementList,
                 constraintClauses,
                 members,
                 SyntaxFactory.EndOfLineToken());
         }
 
-        public static StructDeclarationSyntax StructDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList,
+        public static StructDeclarationSyntax StructDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ImplementListSyntax implementList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members)
         {
             return SyntaxFactory.StructDeclaration(attributeLists,
                 modifiers,
-                identifier,
+                identifier,                
                 typeParameterList,
-                baseList,
+                null,
+                implementList,
                 constraintClauses,
                 members,
                 SyntaxFactory.EndOfLineToken());
         }
 
         public static InterfaceDeclarationSyntax InterfaceDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList,
-            BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members)
+            ExtendListSyntax extendList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members)
         {
             return SyntaxFactory.InterfaceDeclaration(attributeLists,
                 modifiers,
                 identifier,
                 typeParameterList,
-                baseList,
+                extendList,
+                null,
                 constraintClauses,
                 members,
                 SyntaxFactory.EndOfLineToken());
@@ -50,13 +52,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return SyntaxFactory.BreakStatement(SyntaxFactory.Token(SyntaxKind.BreakKeyword), SyntaxFactory.EndOfLineToken());
         }
 
-        public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, BaseListSyntax baseList,
+        public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, ExtendListSyntax extendList,
             SeparatedSyntaxList<EnumMemberDeclarationSyntax> members)
         {
             return SyntaxFactory.EnumDeclaration(attributeLists,
                 modifiers,
                 identifier,
-                baseList,
+                extendList,
+                null,
                 members,
                 SyntaxFactory.EndOfLineToken());
         }

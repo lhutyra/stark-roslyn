@@ -11,12 +11,11 @@
 
     <!-- VSIX -->
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
-    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
-    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <!--<IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
     <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
     <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
-    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>-->
     <!--<ExtensionInstallationRoot>CommonExtensions</ExtensionInstallationRoot>
     <ExtensionInstallationFolder>Microsoft\ManagedLanguages\VBStark\LanguageServices</ExtensionInstallationFolder>-->
     <!--<ExtensionInstallationFolder>Stackrift\Stark\LanguageServices</ExtensionInstallationFolder>-->

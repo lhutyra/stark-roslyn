@@ -251,6 +251,7 @@
     <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.VisualBasic.Workspaces" />
     <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.Desktop" />
     <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.MSBuild" />
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.Ergon" />
     <InternalsVisibleTo Include="StarkPlatform.VisualStudio.Stark.Repl" />
     <InternalsVisibleTo Include="StarkPlatform.VisualStudio.InteractiveServices" />
     <InternalsVisibleTo Include="StarkPlatform.VisualStudio.LanguageServices" />

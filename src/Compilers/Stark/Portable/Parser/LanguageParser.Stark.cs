@@ -1232,7 +1232,8 @@ tryAgain:
             var typeParameters = this.ParseTypeParameterList();
 
             _termState = saveTerm;
-            var baseList = this.ParseBaseList();
+            var extendList = this.ParseExtendList();
+            var implementList = this.ParseImplementList();
 
             // Parse class body
             bool parseMembers = true;
@@ -1317,7 +1318,8 @@ tryAgain:
                             classOrStructOrInterface,
                             name,
                             typeParameters,
-                            baseList,
+                            extendList,
+                            implementList,
                             constraints,
                             openBrace,
                             members,
@@ -1331,7 +1333,8 @@ tryAgain:
                             classOrStructOrInterface,
                             name,
                             typeParameters,
-                            baseList,
+                            extendList,
+                            implementList,
                             constraints,
                             openBrace,
                             members,
@@ -1345,7 +1348,8 @@ tryAgain:
                             classOrStructOrInterface,
                             name,
                             typeParameters,
-                            baseList,
+                            extendList,
+                            implementList,
                             constraints,
                             openBrace,
                             members,
@@ -1462,14 +1466,32 @@ tryAgain:
                 || this.IsCurrentTokenWhereOfConstraintClause();
         }
 
+        private ExtendListSyntax ParseExtendList()
+        {
+            if (this.CurrentToken.Kind != SyntaxKind.ExtendsKeyword)
+            {
+                return null;
+            }
+            return (ExtendListSyntax)ParseBaseList();
+        }
+
+        private ImplementListSyntax ParseImplementList()
+        {
+            if (this.CurrentToken.Kind != SyntaxKind.ImplementsKeyword)
+            {
+                return null;
+            }
+            return (ImplementListSyntax)ParseBaseList();
+        }
+
         private BaseListSyntax ParseBaseList()
         {
-            if (this.CurrentToken.Kind != SyntaxKind.ColonToken)
+            if (this.CurrentToken.Kind != SyntaxKind.ExtendsKeyword && this.CurrentToken.Kind != SyntaxKind.ImplementsKeyword)
             {
                 return null;
             }
 
-            var colon = this.EatToken();
+            var extendsOrImplements = this.EatToken();
             var list = _pool.AllocateSeparated<BaseTypeSyntax>();
             try
             {
@@ -1491,13 +1513,13 @@ tryAgain:
                         list.Add(_syntaxFactory.SimpleBaseType(this.ParseType()));
                         continue;
                     }
-                    else if (this.SkipBadBaseListTokens(ref colon, list, SyntaxKind.CommaToken) == PostSkipAction.Abort)
+                    else if (this.SkipBadBaseListTokens(ref extendsOrImplements, list, SyntaxKind.CommaToken) == PostSkipAction.Abort)
                     {
                         break;
                     }
                 }
 
-                return _syntaxFactory.BaseList(colon, list);
+                return extendsOrImplements.Kind == SyntaxKind.ExtendsKeyword ? (BaseListSyntax)_syntaxFactory.ExtendList(extendsOrImplements, list) : _syntaxFactory.ImplementList(extendsOrImplements, list);
             }
             finally
             {
@@ -3470,18 +3492,7 @@ tryAgain:
 
         private SyntaxToken ExpectColon()
         {
-            SyntaxToken colonToken;
-            if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
-            {
-                colonToken = this.EatToken(SyntaxKind.ColonToken);
-            }
-            else
-            {
-                colonToken = this.EatToken();
-                colonToken = this.AddError(colonToken, ErrorCode.ERR_ColonExpected);
-            }
-
-            return colonToken;
+            return this.EatToken(SyntaxKind.ColonToken);
         }
 
         private SyntaxToken ExpectMinusGreaterThanForReturnType()
@@ -3842,14 +3853,14 @@ tryAgain:
                 name = this.AddError(name, ErrorCode.ERR_UnexpectedGenericName);
             }
 
-            BaseListSyntax baseList = null;
-            if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
+            ExtendListSyntax extendList = null;
+            if (this.CurrentToken.Kind == SyntaxKind.ExtendsKeyword)
             {
-                var colon = this.EatToken(SyntaxKind.ColonToken);
+                var extendsKeyword = this.EatToken(SyntaxKind.ExtendsKeyword);
                 var type = this.ParseType();
                 var tmpList = _pool.AllocateSeparated<BaseTypeSyntax>();
                 tmpList.Add(_syntaxFactory.SimpleBaseType(type));
-                baseList = _syntaxFactory.BaseList(colon, tmpList);
+                extendList = _syntaxFactory.ExtendList(extendsKeyword, tmpList);
                 _pool.Free(tmpList);
             }
 
@@ -3883,7 +3894,8 @@ tryAgain:
                 modifiers.ToList(),
                 enumToken,
                 name,
-                baseList,
+                extendList,
+                null,
                 openBrace,
                 members,
                 closeBrace,

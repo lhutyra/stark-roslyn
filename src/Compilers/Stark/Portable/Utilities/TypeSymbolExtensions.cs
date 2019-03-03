@@ -255,7 +255,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 case TypeKind.Interface:
                     return compilation.Assembly.GetSpecialType(SpecialType.System_Object);
                 case TypeKind.Struct:
-                    return compilation.Assembly.GetSpecialType(SpecialType.System_ValueType);
+                    return null;
                 default:
                     throw ExceptionUtilities.UnexpectedValue(type.TypeKind);
             }

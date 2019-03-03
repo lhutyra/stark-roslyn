@@ -507,7 +507,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             for (; expression != null && expression.Parent != null; expression = expression.Parent as TypeSyntax)
             {
                 var parent = expression.Parent;
-                if (parent is BaseTypeSyntax && parent.Parent != null && parent.Parent.Kind() == SyntaxKind.BaseList && ((BaseTypeSyntax)parent).Type == expression)
+                if (parent is BaseTypeSyntax && parent.Parent != null && parent.Parent.Kind() == SyntaxKind.ImplementList && ((BaseTypeSyntax)parent).Type == expression)
                 {
                     // we have a winner
                     var decl = (BaseTypeDeclarationSyntax)parent.Parent.Parent;

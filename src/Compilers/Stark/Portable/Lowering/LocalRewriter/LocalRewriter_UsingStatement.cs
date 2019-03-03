@@ -153,7 +153,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 // IAsyncDisposable temp = (IAsyncDisposable) expr;
                 TypeSymbol iDisposableType = node.AwaitOpt is null ?
                     _compilation.GetSpecialType(SpecialType.System_IDisposable) :
-                    _compilation.GetWellKnownType(WellKnownType.System_IAsyncDisposable);
+                    _compilation.GetWellKnownType(WellKnownType.system_IAsyncDisposable);
 
                 BoundExpression tempInit = MakeConversionNode(
                     expressionSyntax,
@@ -219,7 +219,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 TypeSymbol iDisposableType = awaitOpt is null ?
                     _compilation.GetSpecialType(SpecialType.System_IDisposable) :
-                    _compilation.GetWellKnownType(WellKnownType.System_IAsyncDisposable);
+                    _compilation.GetWellKnownType(WellKnownType.system_IAsyncDisposable);
 
                 BoundExpression tempInit = MakeConversionNode(
                     declarationSyntax,

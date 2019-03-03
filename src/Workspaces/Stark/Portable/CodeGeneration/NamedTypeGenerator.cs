@@ -156,7 +156,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                     .WithAttributeLists(GenerateAttributeDeclarations(namedType, options))
                     .WithModifiers(GenerateModifiers(namedType, destination, options))
                     .WithTypeParameterList(GenerateTypeParameterList(namedType, options))
-                    .WithBaseList(GenerateBaseList(namedType))
+                    .WithImplementList(GenerateBaseList(namedType))
                     .WithConstraintClauses(GenerateConstraintClauses(namedType));
 
             return typeDeclaration;
@@ -185,14 +185,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             CodeGenerationOptions options)
         {
             var baseList = namedType.EnumUnderlyingType != null && namedType.EnumUnderlyingType.SpecialType != SpecialType.System_Int32
-                ? SyntaxFactory.BaseList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType(namedType.EnumUnderlyingType.GenerateTypeSyntax())))
+                ? SyntaxFactory.ExtendList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType(namedType.EnumUnderlyingType.GenerateTypeSyntax())))
                 : null;
 
             return SyntaxFactory.EnumDeclaration(
                 GenerateAttributeDeclarations(namedType, options),
                 GenerateModifiers(namedType, destination, options),
                 namedType.Name.ToIdentifierToken(),
-                baseList: baseList,
+                extendList: baseList,
                 members: default);
         }
 
@@ -244,7 +244,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             return TypeParameterGenerator.GenerateTypeParameterList(namedType.TypeParameters, options);
         }
 
-        private static BaseListSyntax GenerateBaseList(INamedTypeSymbol namedType)
+        private static ImplementListSyntax GenerateBaseList(INamedTypeSymbol namedType)
         {
             var types = new List<BaseTypeSyntax>();
             if (namedType.TypeKind == TypeKind.Class && namedType.BaseType != null && namedType.BaseType.SpecialType != StarkPlatform.CodeAnalysis.SpecialType.System_Object)
@@ -262,7 +262,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 return null;
             }
 
-            return SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(types));
+            return SyntaxFactory.ImplementList(SyntaxFactory.SeparatedList(types));
         }
 
         private static SyntaxList<TypeParameterConstraintClauseSyntax> GenerateConstraintClauses(INamedTypeSymbol namedType)

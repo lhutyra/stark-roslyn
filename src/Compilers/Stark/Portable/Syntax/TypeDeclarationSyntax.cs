@@ -64,7 +64,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 SyntaxFactory.Token(GetTypeDeclarationKeywordKind(kind)),
                 identifier,
                 default(TypeParameterListSyntax),
-                default(BaseListSyntax),
+                default(ExtendListSyntax),
+                default(ImplementListSyntax),
                 default(SyntaxList<TypeParameterConstraintClauseSyntax>),
                 SyntaxFactory.Token(SyntaxKind.OpenBraceToken),
                 default(SyntaxList<MemberDeclarationSyntax>),
@@ -77,16 +78,16 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return SyntaxFactory.TypeDeclaration(kind, SyntaxFactory.Identifier(identifier));
         }
 
-        public static TypeDeclarationSyntax TypeDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributes, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
+        public static TypeDeclarationSyntax TypeDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributes, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken semicolonToken)
         {
             switch (kind)
             {
                 case SyntaxKind.ClassDeclaration:
-                    return SyntaxFactory.ClassDeclaration(attributes, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+                    return SyntaxFactory.ClassDeclaration(attributes, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
                 case SyntaxKind.StructDeclaration:
-                    return SyntaxFactory.StructDeclaration(attributes, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+                    return SyntaxFactory.StructDeclaration(attributes, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
                 case SyntaxKind.InterfaceDeclaration:
-                    return SyntaxFactory.InterfaceDeclaration(attributes, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
+                    return SyntaxFactory.InterfaceDeclaration(attributes, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken);
                 default:
                     throw new ArgumentException("kind");
             }

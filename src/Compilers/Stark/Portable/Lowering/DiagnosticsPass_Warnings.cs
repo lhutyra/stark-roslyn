@@ -107,7 +107,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 // NOTE: We're only trying to produce a warning, so there's no point in producing an
                 // error if the well-known type we need for the check is missing.
-                NamedTypeSymbol marshalByRefType = compilation.GetWellKnownType(WellKnownType.System_MarshalByRefObject);
+                NamedTypeSymbol marshalByRefType = compilation.GetWellKnownType(WellKnownType.system_MarshalByRefObject);
 
                 TypeSymbol baseType = fieldAccess.FieldSymbol.ContainingType;
                 while ((object)baseType != null)
@@ -146,7 +146,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         private bool IsInterlockedAPI(Symbol method)
         {
-            var interlocked = _compilation.GetWellKnownType(WellKnownType.System_Threading_Interlocked);
+            var interlocked = _compilation.GetWellKnownType(WellKnownType.system_Threading_Interlocked);
             if ((object)interlocked != null && TypeSymbol.Equals(interlocked, method.ContainingType, TypeCompareKind.ConsiderEverything2))
                 return true;
 

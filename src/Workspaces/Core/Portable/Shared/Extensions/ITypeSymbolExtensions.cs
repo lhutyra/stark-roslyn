@@ -492,7 +492,6 @@ namespace StarkPlatform.CodeAnalysis.Shared.Extensions
                 case SpecialType.System_Delegate:
                 case SpecialType.System_MulticastDelegate:
                 case SpecialType.System_Enum:
-                case SpecialType.System_ValueType:
                     return true;
             }
 

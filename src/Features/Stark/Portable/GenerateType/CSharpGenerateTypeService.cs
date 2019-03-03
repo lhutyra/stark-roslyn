@@ -89,10 +89,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateType
         {
             if (expression is TypeSyntax &&
                 expression.Parent is BaseTypeSyntax &&
-                expression.Parent.IsParentKind(SyntaxKind.BaseList) &&
+                expression.Parent.IsParentKind(SyntaxKind.ImplementList) &&
                 ((BaseTypeSyntax)expression.Parent).Type == expression)
             {
-                var baseList = (BaseListSyntax)expression.Parent.Parent;
+                var baseList = (ImplementListSyntax)expression.Parent.Parent;
 
                 // If it's after the first item, then it's definitely an interface.
                 if (baseList.Types[0] != expression.Parent)
@@ -187,7 +187,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateType
 
             // BUG(5712): Don't offer generate type in an enum's base list.
             if (nameOrMemberAccessExpression.Parent is BaseTypeSyntax &&
-                nameOrMemberAccessExpression.Parent.IsParentKind(SyntaxKind.BaseList) &&
+                nameOrMemberAccessExpression.Parent.IsParentKind(SyntaxKind.ImplementList) &&
                 ((BaseTypeSyntax)nameOrMemberAccessExpression.Parent).Type == nameOrMemberAccessExpression &&
                 nameOrMemberAccessExpression.Parent.Parent.IsParentKind(SyntaxKind.EnumDeclaration))
             {
@@ -714,7 +714,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateType
 
             while (node != null)
             {
-                if (node is BaseListSyntax)
+                if (node is ImplementListSyntax)
                 {
                     if (node.Parent != null && (node.Parent is InterfaceDeclarationSyntax || node.Parent is StructDeclarationSyntax))
                     {
@@ -749,8 +749,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateType
 
             while (node != null)
             {
-                // Types in BaseList, Type Constraint or Member Types cannot be of more restricted accessibility than the declaring type
-                if ((node is BaseListSyntax || node is TypeParameterConstraintClauseSyntax) &&
+                // Types in ImplementList, Type Constraint or Member Types cannot be of more restricted accessibility than the declaring type
+                if ((node is ImplementListSyntax || node is TypeParameterConstraintClauseSyntax) &&
                     node.Parent != null &&
                     node.Parent is TypeDeclarationSyntax)
                 {
@@ -762,7 +762,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateType
                         }
                         else
                         {
-                            // The Type Decl which contains the BaseList does not contain Public
+                            // The Type Decl which contains the ImplementList does not contain Public
                             return false;
                         }
                     }

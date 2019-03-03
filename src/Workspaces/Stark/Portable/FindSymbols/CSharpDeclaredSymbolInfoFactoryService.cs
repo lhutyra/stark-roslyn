@@ -20,14 +20,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
     [ExportLanguageService(typeof(IDeclaredSymbolInfoFactoryService), LanguageNames.Stark), Shared]
     internal class CSharpDeclaredSymbolInfoFactoryService : AbstractDeclaredSymbolInfoFactoryService
     {
-        private ImmutableArray<string> GetInheritanceNames(StringTable stringTable, BaseListSyntax baseList)
+        private ImmutableArray<string> GetInheritanceNames(StringTable stringTable, ImplementListSyntax implementList)
         {
-            if (baseList == null)
+            if (implementList == null)
             {
                 return ImmutableArray<string>.Empty;
             }
 
-            var builder = ArrayBuilder<string>.GetInstance(baseList.Types.Count);
+            var builder = ArrayBuilder<string>.GetInstance(implementList.Types.Count);
 
             // It's not sufficient to just store the textual names we see in the inheritance list
             // of a type.  For example if we have:
@@ -50,9 +50,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
             var aliasMaps = AllocateAliasMapList();
             try
             {
-                AddAliasMaps(baseList, aliasMaps);
+                AddAliasMaps(implementList, aliasMaps);
 
-                foreach (var baseType in baseList.Types)
+                foreach (var baseType in implementList.Types)
                 {
                     AddInheritanceName(builder, baseType.Type, aliasMaps);
                 }
@@ -150,7 +150,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
                         DeclaredSymbolInfoKind.Class,
                         GetAccessibility(classDecl, classDecl.Modifiers),
                         classDecl.Identifier.Span,
-                        GetInheritanceNames(stringTable, classDecl.BaseList),
+                        GetInheritanceNames(stringTable, classDecl.ImplementList),
                         IsNestedType(classDecl));
                     return true;
                 case SyntaxKind.EnumDeclaration:
@@ -176,7 +176,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
                         DeclaredSymbolInfoKind.Interface,
                         GetAccessibility(interfaceDecl, interfaceDecl.Modifiers),
                         interfaceDecl.Identifier.Span,
-                        GetInheritanceNames(stringTable, interfaceDecl.BaseList),
+                        GetInheritanceNames(stringTable, interfaceDecl.ImplementList),
                         IsNestedType(interfaceDecl));
                     return true;
                 case SyntaxKind.StructDeclaration:
@@ -189,7 +189,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
                         DeclaredSymbolInfoKind.Struct,
                         GetAccessibility(structDecl, structDecl.Modifiers),
                         structDecl.Identifier.Span,
-                        GetInheritanceNames(stringTable, structDecl.BaseList),
+                        GetInheritanceNames(stringTable, structDecl.ImplementList),
                         IsNestedType(structDecl));
                     return true;
                 case SyntaxKind.DelegateDeclaration:

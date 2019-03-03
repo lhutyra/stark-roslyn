@@ -196,8 +196,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                 }
 
                                 // This should produce diagnostics if the types are missing
-                                GetWellKnownType(WellKnownType.System_Runtime_InteropServices_UnmanagedType, diagnostics, typeSyntax);
-                                GetSpecialType(SpecialType.System_ValueType, diagnostics, typeSyntax);
+                                GetWellKnownType(WellKnownType.system_runtime_interop_UnmanagedType, diagnostics, typeSyntax);
 
                                 constraints |= TypeParameterConstraintKind.Unmanaged;
                                 continue;
@@ -318,7 +317,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     CheckFeatureAvailability(syntax, MessageID.IDS_FeatureObjectGenericTypeConstraint, diagnostics);
                     break;
 
-                case SpecialType.System_ValueType:
                 case SpecialType.System_Array:
                     // "Constraint cannot be special class '{0}'"
                     Error(diagnostics, ErrorCode.ERR_SpecialTypeAsBound, syntax, type);

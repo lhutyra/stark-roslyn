@@ -697,7 +697,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             if (token.IsKind(SyntaxKind.ColonToken) ||
                 token.IsKind(SyntaxKind.CommaToken))
             {
-                if (token.Parent.IsKind(SyntaxKind.BaseList))
+                if (token.Parent.IsKind(SyntaxKind.ImplementList))
                 {
                     return true;
                 }
@@ -752,7 +752,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
                 token.HasMatchingText(SyntaxKind.WhereKeyword) &&
                 token.Parent.IsKind(SyntaxKind.IdentifierName) &&
                 token.Parent.IsParentKind(SyntaxKind.SimpleBaseType) &&
-                token.Parent.Parent.IsParentKind(SyntaxKind.BaseList))
+                token.Parent.Parent.IsParentKind(SyntaxKind.ImplementList))
             {
                 return true;
             }
@@ -2664,7 +2664,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
 
             return
                 token.IsKind(SyntaxKind.ColonToken) &&
-                token.Parent.IsKind(SyntaxKind.BaseList) &&
+                token.Parent.IsKind(SyntaxKind.ImplementList) &&
                 token.Parent.IsParentKind(SyntaxKind.EnumDeclaration);
         }
 

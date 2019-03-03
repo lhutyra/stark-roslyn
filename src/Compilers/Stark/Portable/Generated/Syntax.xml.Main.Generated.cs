@@ -892,8 +892,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a BaseListSyntax node.</summary>
-    public virtual TResult VisitBaseList(BaseListSyntax node)
+    /// <summary>Called when the visitor visits a ExtendListSyntax node.</summary>
+    public virtual TResult VisitExtendList(ExtendListSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
+    /// <summary>Called when the visitor visits a ImplementListSyntax node.</summary>
+    public virtual TResult VisitImplementList(ImplementListSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -2173,8 +2179,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a BaseListSyntax node.</summary>
-    public virtual void VisitBaseList(BaseListSyntax node)
+    /// <summary>Called when the visitor visits a ExtendListSyntax node.</summary>
+    public virtual void VisitExtendList(ExtendListSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    /// <summary>Called when the visitor visits a ImplementListSyntax node.</summary>
+    public virtual void VisitImplementList(ImplementListSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -3722,13 +3734,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       var keyword = this.VisitToken(node.Keyword);
       var identifier = this.VisitToken(node.Identifier);
       var typeParameterList = (TypeParameterListSyntax)this.Visit(node.TypeParameterList);
-      var baseList = (BaseListSyntax)this.Visit(node.BaseList);
+      var extendList = (ExtendListSyntax)this.Visit(node.ExtendList);
+      var implementList = (ImplementListSyntax)this.Visit(node.ImplementList);
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var openBraceToken = this.VisitToken(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = this.VisitToken(node.CloseBraceToken);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override SyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
@@ -3738,13 +3751,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       var keyword = this.VisitToken(node.Keyword);
       var identifier = this.VisitToken(node.Identifier);
       var typeParameterList = (TypeParameterListSyntax)this.Visit(node.TypeParameterList);
-      var baseList = (BaseListSyntax)this.Visit(node.BaseList);
+      var extendList = (ExtendListSyntax)this.Visit(node.ExtendList);
+      var implementList = (ImplementListSyntax)this.Visit(node.ImplementList);
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var openBraceToken = this.VisitToken(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = this.VisitToken(node.CloseBraceToken);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override SyntaxNode VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
@@ -3754,13 +3768,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       var keyword = this.VisitToken(node.Keyword);
       var identifier = this.VisitToken(node.Identifier);
       var typeParameterList = (TypeParameterListSyntax)this.Visit(node.TypeParameterList);
-      var baseList = (BaseListSyntax)this.Visit(node.BaseList);
+      var extendList = (ExtendListSyntax)this.Visit(node.ExtendList);
+      var implementList = (ImplementListSyntax)this.Visit(node.ImplementList);
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var openBraceToken = this.VisitToken(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = this.VisitToken(node.CloseBraceToken);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, baseList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override SyntaxNode VisitEnumDeclaration(EnumDeclarationSyntax node)
@@ -3769,12 +3784,13 @@ namespace StarkPlatform.CodeAnalysis.Stark
       var modifiers = this.VisitList(node.Modifiers);
       var enumKeyword = this.VisitToken(node.EnumKeyword);
       var identifier = this.VisitToken(node.Identifier);
-      var baseList = (BaseListSyntax)this.Visit(node.BaseList);
+      var extendList = (ExtendListSyntax)this.Visit(node.ExtendList);
+      var implementList = (ImplementListSyntax)this.Visit(node.ImplementList);
       var openBraceToken = this.VisitToken(node.OpenBraceToken);
       var members = this.VisitList(node.Members);
       var closeBraceToken = this.VisitToken(node.CloseBraceToken);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(attributeLists, modifiers, enumKeyword, identifier, baseList, openBraceToken, members, closeBraceToken, eosToken);
+      return node.Update(attributeLists, modifiers, enumKeyword, identifier, extendList, implementList, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override SyntaxNode VisitDelegateDeclaration(DelegateDeclarationSyntax node)
@@ -3799,11 +3815,18 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return node.Update(attributeLists, identifier, equalsValue);
     }
 
-    public override SyntaxNode VisitBaseList(BaseListSyntax node)
+    public override SyntaxNode VisitExtendList(ExtendListSyntax node)
     {
-      var colonToken = this.VisitToken(node.ColonToken);
+      var extendsKeyword = this.VisitToken(node.ExtendsKeyword);
       var types = this.VisitList(node.Types);
-      return node.Update(colonToken, types);
+      return node.Update(extendsKeyword, types);
+    }
+
+    public override SyntaxNode VisitImplementList(ImplementListSyntax node)
+    {
+      var implementsKeyword = this.VisitToken(node.ImplementsKeyword);
+      var types = this.VisitList(node.Types);
+      return node.Update(implementsKeyword, types);
     }
 
     public override SyntaxNode VisitSimpleBaseType(SimpleBaseTypeSyntax node)
@@ -8722,7 +8745,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ClassDeclarationSyntax instance.</summary>
-    public static ClassDeclarationSyntax ClassDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    public static ClassDeclarationSyntax ClassDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
       switch (keyword.Kind())
       {
@@ -8761,30 +8784,30 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (ClassDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ClassDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)keyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, typeParameterList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, baseList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseListSyntax)baseList.Green, constraintClauses.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterConstraintClauseSyntax>(), (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (ClassDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ClassDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)keyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, typeParameterList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, extendList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExtendListSyntax)extendList.Green, implementList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ImplementListSyntax)implementList.Green, constraintClauses.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterConstraintClauseSyntax>(), (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new ClassDeclarationSyntax instance.</summary>
-    public static ClassDeclarationSyntax ClassDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken eosToken)
+    public static ClassDeclarationSyntax ClassDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken eosToken)
     {
-      return SyntaxFactory.ClassDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.ClassKeyword), identifier, typeParameterList, baseList, constraintClauses, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
+      return SyntaxFactory.ClassDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.ClassKeyword), identifier, typeParameterList, extendList, implementList, constraintClauses, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
     }
 
     /// <summary>Creates a new ClassDeclarationSyntax instance.</summary>
     public static ClassDeclarationSyntax ClassDeclaration(SyntaxToken identifier)
     {
-      return SyntaxFactory.ClassDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.ClassKeyword), identifier, default(TypeParameterListSyntax), default(BaseListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.ClassDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.ClassKeyword), identifier, default(TypeParameterListSyntax), default(ExtendListSyntax), default(ImplementListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new ClassDeclarationSyntax instance.</summary>
     public static ClassDeclarationSyntax ClassDeclaration(string identifier)
     {
-      return SyntaxFactory.ClassDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.ClassKeyword), SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), default(BaseListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.ClassDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.ClassKeyword), SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), default(ExtendListSyntax), default(ImplementListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new StructDeclarationSyntax instance.</summary>
-    public static StructDeclarationSyntax StructDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    public static StructDeclarationSyntax StructDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
       switch (keyword.Kind())
       {
@@ -8823,30 +8846,30 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (StructDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.StructDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)keyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, typeParameterList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, baseList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseListSyntax)baseList.Green, constraintClauses.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterConstraintClauseSyntax>(), (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (StructDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.StructDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)keyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, typeParameterList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, extendList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExtendListSyntax)extendList.Green, implementList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ImplementListSyntax)implementList.Green, constraintClauses.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterConstraintClauseSyntax>(), (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new StructDeclarationSyntax instance.</summary>
-    public static StructDeclarationSyntax StructDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken eosToken)
+    public static StructDeclarationSyntax StructDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken eosToken)
     {
-      return SyntaxFactory.StructDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.StructKeyword), identifier, typeParameterList, baseList, constraintClauses, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
+      return SyntaxFactory.StructDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.StructKeyword), identifier, typeParameterList, extendList, implementList, constraintClauses, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
     }
 
     /// <summary>Creates a new StructDeclarationSyntax instance.</summary>
     public static StructDeclarationSyntax StructDeclaration(SyntaxToken identifier)
     {
-      return SyntaxFactory.StructDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.StructKeyword), identifier, default(TypeParameterListSyntax), default(BaseListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.StructDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.StructKeyword), identifier, default(TypeParameterListSyntax), default(ExtendListSyntax), default(ImplementListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new StructDeclarationSyntax instance.</summary>
     public static StructDeclarationSyntax StructDeclaration(string identifier)
     {
-      return SyntaxFactory.StructDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.StructKeyword), SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), default(BaseListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.StructDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.StructKeyword), SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), default(ExtendListSyntax), default(ImplementListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new InterfaceDeclarationSyntax instance.</summary>
-    public static InterfaceDeclarationSyntax InterfaceDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    public static InterfaceDeclarationSyntax InterfaceDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
       switch (keyword.Kind())
       {
@@ -8885,30 +8908,30 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (InterfaceDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.InterfaceDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)keyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, typeParameterList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, baseList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseListSyntax)baseList.Green, constraintClauses.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterConstraintClauseSyntax>(), (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (InterfaceDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.InterfaceDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)keyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, typeParameterList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterListSyntax)typeParameterList.Green, extendList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExtendListSyntax)extendList.Green, implementList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ImplementListSyntax)implementList.Green, constraintClauses.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeParameterConstraintClauseSyntax>(), (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.MemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new InterfaceDeclarationSyntax instance.</summary>
-    public static InterfaceDeclarationSyntax InterfaceDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, BaseListSyntax baseList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken eosToken)
+    public static InterfaceDeclarationSyntax InterfaceDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken eosToken)
     {
-      return SyntaxFactory.InterfaceDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.InterfaceKeyword), identifier, typeParameterList, baseList, constraintClauses, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
+      return SyntaxFactory.InterfaceDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.InterfaceKeyword), identifier, typeParameterList, extendList, implementList, constraintClauses, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
     }
 
     /// <summary>Creates a new InterfaceDeclarationSyntax instance.</summary>
     public static InterfaceDeclarationSyntax InterfaceDeclaration(SyntaxToken identifier)
     {
-      return SyntaxFactory.InterfaceDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.InterfaceKeyword), identifier, default(TypeParameterListSyntax), default(BaseListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.InterfaceDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.InterfaceKeyword), identifier, default(TypeParameterListSyntax), default(ExtendListSyntax), default(ImplementListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new InterfaceDeclarationSyntax instance.</summary>
     public static InterfaceDeclarationSyntax InterfaceDeclaration(string identifier)
     {
-      return SyntaxFactory.InterfaceDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.InterfaceKeyword), SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), default(BaseListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.InterfaceDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.InterfaceKeyword), SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), default(ExtendListSyntax), default(ImplementListSyntax), default(SyntaxList<TypeParameterConstraintClauseSyntax>), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SyntaxList<MemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new EnumDeclarationSyntax instance.</summary>
-    public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, BaseListSyntax baseList, SyntaxToken openBraceToken, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxToken openBraceToken, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
       switch (enumKeyword.Kind())
       {
@@ -8947,26 +8970,26 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (EnumDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.EnumDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)enumKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, baseList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseListSyntax)baseList.Green, (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EnumMemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (EnumDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.EnumDeclaration(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)enumKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, extendList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExtendListSyntax)extendList.Green, implementList == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ImplementListSyntax)implementList.Green, (Syntax.InternalSyntax.SyntaxToken)openBraceToken.Node, members.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EnumMemberDeclarationSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeBraceToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new EnumDeclarationSyntax instance.</summary>
-    public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, BaseListSyntax baseList, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken eosToken)
+    public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, ExtendListSyntax extendList, ImplementListSyntax implementList, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken eosToken)
     {
-      return SyntaxFactory.EnumDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.EnumKeyword), identifier, baseList, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
+      return SyntaxFactory.EnumDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.EnumKeyword), identifier, extendList, implementList, SyntaxFactory.Token(SyntaxKind.OpenBraceToken), members, SyntaxFactory.Token(SyntaxKind.CloseBraceToken), eosToken);
     }
 
     /// <summary>Creates a new EnumDeclarationSyntax instance.</summary>
     public static EnumDeclarationSyntax EnumDeclaration(SyntaxToken identifier)
     {
-      return SyntaxFactory.EnumDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EnumKeyword), identifier, default(BaseListSyntax), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.EnumDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EnumKeyword), identifier, default(ExtendListSyntax), default(ImplementListSyntax), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new EnumDeclarationSyntax instance.</summary>
     public static EnumDeclarationSyntax EnumDeclaration(string identifier)
     {
-      return SyntaxFactory.EnumDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EnumKeyword), SyntaxFactory.Identifier(identifier), default(BaseListSyntax), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
+      return SyntaxFactory.EnumDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EnumKeyword), SyntaxFactory.Identifier(identifier), default(ExtendListSyntax), default(ImplementListSyntax), SyntaxFactory.Token(SyntaxKind.OpenBraceToken), default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>), SyntaxFactory.Token(SyntaxKind.CloseBraceToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new DelegateDeclarationSyntax instance.</summary>
@@ -9046,24 +9069,44 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return SyntaxFactory.EnumMemberDeclaration(default(SyntaxList<AttributeSyntax>), SyntaxFactory.Identifier(identifier), default(EqualsValueClauseSyntax));
     }
 
-    /// <summary>Creates a new BaseListSyntax instance.</summary>
-    public static BaseListSyntax BaseList(SyntaxToken colonToken, SeparatedSyntaxList<BaseTypeSyntax> types)
+    /// <summary>Creates a new ExtendListSyntax instance.</summary>
+    public static ExtendListSyntax ExtendList(SyntaxToken extendsKeyword, SeparatedSyntaxList<BaseTypeSyntax> types)
     {
-      switch (colonToken.Kind())
+      switch (extendsKeyword.Kind())
       {
-        case SyntaxKind.ColonToken:
+        case SyntaxKind.ExtendsKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(colonToken));
+          throw new ArgumentException(nameof(extendsKeyword));
       }
-      return (BaseListSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.BaseList((Syntax.InternalSyntax.SyntaxToken)colonToken.Node, types.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseTypeSyntax>()).CreateRed();
+      return (ExtendListSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ExtendList((Syntax.InternalSyntax.SyntaxToken)extendsKeyword.Node, types.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseTypeSyntax>()).CreateRed();
     }
 
 
-    /// <summary>Creates a new BaseListSyntax instance.</summary>
-    public static BaseListSyntax BaseList(SeparatedSyntaxList<BaseTypeSyntax> types = default(SeparatedSyntaxList<BaseTypeSyntax>))
+    /// <summary>Creates a new ExtendListSyntax instance.</summary>
+    public static ExtendListSyntax ExtendList(SeparatedSyntaxList<BaseTypeSyntax> types = default(SeparatedSyntaxList<BaseTypeSyntax>))
     {
-      return SyntaxFactory.BaseList(SyntaxFactory.Token(SyntaxKind.ColonToken), types);
+      return SyntaxFactory.ExtendList(SyntaxFactory.Token(SyntaxKind.ExtendsKeyword), types);
+    }
+
+    /// <summary>Creates a new ImplementListSyntax instance.</summary>
+    public static ImplementListSyntax ImplementList(SyntaxToken implementsKeyword, SeparatedSyntaxList<BaseTypeSyntax> types)
+    {
+      switch (implementsKeyword.Kind())
+      {
+        case SyntaxKind.ImplementsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(implementsKeyword));
+      }
+      return (ImplementListSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ImplementList((Syntax.InternalSyntax.SyntaxToken)implementsKeyword.Node, types.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BaseTypeSyntax>()).CreateRed();
+    }
+
+
+    /// <summary>Creates a new ImplementListSyntax instance.</summary>
+    public static ImplementListSyntax ImplementList(SeparatedSyntaxList<BaseTypeSyntax> types = default(SeparatedSyntaxList<BaseTypeSyntax>))
+    {
+      return SyntaxFactory.ImplementList(SyntaxFactory.Token(SyntaxKind.ImplementsKeyword), types);
     }
 
     /// <summary>Creates a new SimpleBaseTypeSyntax instance.</summary>

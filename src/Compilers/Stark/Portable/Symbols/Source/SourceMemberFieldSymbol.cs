@@ -401,7 +401,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 EventSymbol @event = (EventSymbol)associatedPropertyOrEvent;
                 if (@event.IsWindowsRuntimeEvent)
                 {
-                    NamedTypeSymbol tokenTableType = this.DeclaringCompilation.GetWellKnownType(WellKnownType.System_Runtime_InteropServices_WindowsRuntime_EventRegistrationTokenTable_T);
+                    NamedTypeSymbol tokenTableType = this.DeclaringCompilation.GetWellKnownType(WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T);
                     Binder.ReportUseSiteDiagnostics(tokenTableType, diagnosticsForFirstDeclarator, this.ErrorLocation);
 
                     // CONSIDER: Do we want to guard against the possibility that someone has created their own EventRegistrationTokenTable<T>

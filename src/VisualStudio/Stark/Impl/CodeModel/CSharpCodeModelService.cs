@@ -3713,11 +3713,11 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
             }
 
             var typeName = SyntaxFactory.ParseTypeName(typeSymbol.ToMinimalDisplayString(semanticModel, position));
-            var baseList = typeDeclaration.BaseList != null
-                ? typeDeclaration.BaseList.WithTypes(typeDeclaration.BaseList.Types.Insert(insertionIndex, SyntaxFactory.SimpleBaseType(typeName)))
-                : SyntaxFactory.BaseList(SyntaxFactory.SingletonSeparatedList((BaseTypeSyntax)SyntaxFactory.SimpleBaseType(typeName)));
+            var baseList = typeDeclaration.ImplementList != null
+                ? typeDeclaration.ImplementList.WithTypes(typeDeclaration.ImplementList.Types.Insert(insertionIndex, SyntaxFactory.SimpleBaseType(typeName)))
+                : SyntaxFactory.ImplementList(SyntaxFactory.SingletonSeparatedList((BaseTypeSyntax)SyntaxFactory.SimpleBaseType(typeName)));
 
-            return typeDeclaration.WithBaseList(baseList);
+            return typeDeclaration.WithImplementList(baseList);
         }
 
         public override bool IsValidBaseType(SyntaxNode node, ITypeSymbol typeSymbol)
@@ -3742,8 +3742,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
             }
 
             var typeDeclaration = (TypeDeclarationSyntax)node;
-            var baseCount = typeDeclaration.BaseList != null
-                ? typeDeclaration.BaseList.Types.Count
+            var baseCount = typeDeclaration.ImplementList != null
+                ? typeDeclaration.ImplementList.Types.Count
                 : 0;
 
             int insertionIndex;
@@ -3775,8 +3775,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
             }
 
             var typeDeclaration = (TypeDeclarationSyntax)node;
-            if (typeDeclaration.BaseList == null ||
-                typeDeclaration.BaseList.Types.Count == 0)
+            if (typeDeclaration.ImplementList == null ||
+                typeDeclaration.ImplementList.Types.Count == 0)
             {
                 throw Exceptions.ThrowEInvalidArg();
             }
@@ -3784,7 +3784,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
             var isFirst = true;
             BaseTypeSyntax baseType = null;
 
-            foreach (var type in typeDeclaration.BaseList.Types)
+            foreach (var type in typeDeclaration.ImplementList.Types)
             {
                 if (!isFirst && node.IsKind(SyntaxKind.ClassDeclaration))
                 {
@@ -3807,14 +3807,14 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
                 throw Exceptions.ThrowEInvalidArg();
             }
 
-            var newTypes = typeDeclaration.BaseList.Types.Remove(baseType);
-            var newBaseList = typeDeclaration.BaseList.WithTypes(newTypes);
+            var newTypes = typeDeclaration.ImplementList.Types.Remove(baseType);
+            var newBaseList = typeDeclaration.ImplementList.WithTypes(newTypes);
             if (newBaseList.Types.Count == 0)
             {
                 newBaseList = null;
             }
 
-            return typeDeclaration.WithBaseList(newBaseList);
+            return typeDeclaration.WithImplementList(newBaseList);
         }
 
         public override bool IsValidInterfaceType(SyntaxNode node, ITypeSymbol typeSymbol)
@@ -3841,8 +3841,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
             }
 
             var typeDeclaration = (TypeDeclarationSyntax)node;
-            var baseCount = typeDeclaration.BaseList != null
-                ? typeDeclaration.BaseList.Types.Count
+            var baseCount = typeDeclaration.ImplementList != null
+                ? typeDeclaration.ImplementList.Types.Count
                 : 0;
 
             int insertionIndex;
@@ -3870,14 +3870,14 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
             }
 
             var typeDeclaration = (TypeDeclarationSyntax)node;
-            if (typeDeclaration.BaseList == null ||
-                typeDeclaration.BaseList.Types.Count == 0)
+            if (typeDeclaration.ImplementList == null ||
+                typeDeclaration.ImplementList.Types.Count == 0)
             {
                 throw Exceptions.ThrowEInvalidArg();
             }
 
             BaseTypeSyntax baseType = null;
-            foreach (var type in typeDeclaration.BaseList.Types)
+            foreach (var type in typeDeclaration.ImplementList.Types)
             {
                 var typeInfo = semanticModel.GetTypeInfo(type.Type, CancellationToken.None);
                 if (typeInfo.Type != null &&
@@ -3893,14 +3893,14 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
                 throw Exceptions.ThrowEInvalidArg();
             }
 
-            var newTypes = typeDeclaration.BaseList.Types.Remove(baseType);
-            var newBaseList = typeDeclaration.BaseList.WithTypes(newTypes);
+            var newTypes = typeDeclaration.ImplementList.Types.Remove(baseType);
+            var newBaseList = typeDeclaration.ImplementList.WithTypes(newTypes);
             if (newBaseList.Types.Count == 0)
             {
                 newBaseList = null;
             }
 
-            return typeDeclaration.WithBaseList(newBaseList);
+            return typeDeclaration.WithImplementList(newBaseList);
         }
     }
 }

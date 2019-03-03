@@ -47,7 +47,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:
-                case SpecialType.System_ValueType:
                 case SpecialType.System_Void:
                 case SpecialType.System_Int:
                 case SpecialType.System_UInt:

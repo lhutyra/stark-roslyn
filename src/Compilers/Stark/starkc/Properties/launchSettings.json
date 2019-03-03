@@ -2,7 +2,8 @@
   "profiles": {
     "csc": {
       "commandName": "Project",
-      "commandLineArgs": "Primitives.sk -target:library"
+      "commandLineArgs": "-parallel- -nostdlib -target:library -unsafe -langversion:8.0 *.sk -out:system.dll -runtimemetadataversion:v1.0.0",
+      "workingDirectory": "C:\\Code\\stark\\stark-runtime\\src\\system"
     }
   }
 }

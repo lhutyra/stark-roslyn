@@ -109,7 +109,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             if (method.IsIterator)
             {
-                var builderType = F.WellKnownType(WellKnownType.System_Runtime_CompilerServices_AsyncIteratorMethodBuilder);
+                var builderType = F.WellKnownType(WellKnownType.system_runtime_compiler_AsyncIteratorMethodBuilder);
                 Debug.Assert((object)builderType != null);
 
                 TryGetBuilderMember<MethodSymbol>(
@@ -143,7 +143,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             if (method.IsVoidReturningAsync())
             {
-                var builderType = F.WellKnownType(WellKnownType.System_Runtime_CompilerServices_AsyncVoidMethodBuilder);
+                var builderType = F.WellKnownType(WellKnownType.system_runtime_compiler_AsyncVoidMethodBuilder);
                 Debug.Assert((object)builderType != null);
                 MethodSymbol createBuilderMethod;
                 bool customBuilder = false;
@@ -194,7 +194,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 }
                 else
                 {
-                    builderType = F.WellKnownType(WellKnownType.System_Runtime_CompilerServices_AsyncTaskMethodBuilder);
+                    builderType = F.WellKnownType(WellKnownType.system_runtime_compiler_AsyncTaskMethodBuilder);
                     Debug.Assert((object)builderType != null);
                     TryGetBuilderMember<MethodSymbol>(
                         F,
@@ -263,7 +263,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 }
                 else
                 {
-                    builderType = F.WellKnownType(WellKnownType.System_Runtime_CompilerServices_AsyncTaskMethodBuilder_T);
+                    builderType = F.WellKnownType(WellKnownType.system_runtime_compiler_AsyncTaskMethodBuilder_T);
                     Debug.Assert((object)builderType != null);
                     builderType = builderType.Construct(resultType);
                     TryGetBuilderMember<MethodSymbol>(

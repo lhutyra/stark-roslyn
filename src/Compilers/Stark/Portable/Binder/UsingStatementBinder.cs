@@ -164,7 +164,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 {
                     if (hasAwait)
                     {
-                        awaitableTypeOpt = originalBinder.Compilation.GetWellKnownType(WellKnownType.System_Threading_Tasks_ValueTask);
+                        awaitableTypeOpt = originalBinder.Compilation.GetWellKnownType(WellKnownType.system_Threading_Tasks_ValueTask);
                     }
                     return true;
                 }
@@ -218,7 +218,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             TypeSymbol getDisposableInterface(bool isAsync)
             {
                 return isAsync
-                    ? originalBinder.Compilation.GetWellKnownType(WellKnownType.System_IAsyncDisposable)
+                    ? originalBinder.Compilation.GetWellKnownType(WellKnownType.system_IAsyncDisposable)
                     : originalBinder.Compilation.GetSpecialType(SpecialType.System_IDisposable);
             }
         }

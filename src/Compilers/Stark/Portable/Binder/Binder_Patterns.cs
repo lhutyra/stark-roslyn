@@ -742,7 +742,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return false;
             }
 
-            iTupleType = Compilation.GetWellKnownType(WellKnownType.System_Runtime_CompilerServices_ITuple);
+            iTupleType = Compilation.GetWellKnownType(WellKnownType.system_runtime_compiler_ITuple);
             if (iTupleType.TypeKind != TypeKind.Interface)
             {
                 // When compiling to a platform that lacks the interface ITuple (i.e. it is an error type), we simply do not match using it.

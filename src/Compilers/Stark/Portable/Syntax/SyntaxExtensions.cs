@@ -243,7 +243,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.DelegateDeclaration:
                 case SyntaxKind.EventDeclaration:
                 case SyntaxKind.EventFieldDeclaration:
-                case SyntaxKind.BaseList:
+                case SyntaxKind.ImplementList:
                 case SyntaxKind.SimpleBaseType:
                     return true;
 

@@ -46,7 +46,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             var compilation = this.DeclaringCompilation;
             var decl = this.declaration.Declarations[0];
-            var bases = GetBaseListOpt(decl);
+            var bases = GetImplementListOpt(decl);
             if (bases != null)
             {
                 var types = bases.Types;

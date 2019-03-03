@@ -643,24 +643,26 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             IEnumerable<SyntaxNode> interfaceTypes,
             IEnumerable<SyntaxNode> members)
         {
-            List<BaseTypeSyntax> baseTypes = null;
+            List<BaseTypeSyntax> extendTypes = null;
+            List<BaseTypeSyntax> implementTypes = null;
             if (baseType != null || interfaceTypes != null)
             {
-                baseTypes = new List<BaseTypeSyntax>();
+                implementTypes = new List<BaseTypeSyntax>();
 
                 if (baseType != null)
                 {
-                    baseTypes.Add(SyntaxFactory.SimpleBaseType((TypeSyntax)baseType));
+                    extendTypes = new List<BaseTypeSyntax>();
+                    extendTypes.Add(SyntaxFactory.SimpleBaseType((TypeSyntax)baseType));
                 }
 
                 if (interfaceTypes != null)
                 {
-                    baseTypes.AddRange(interfaceTypes.Select(i => SyntaxFactory.SimpleBaseType((TypeSyntax)i)));
+                    implementTypes.AddRange(interfaceTypes.Select(i => SyntaxFactory.SimpleBaseType((TypeSyntax)i)));
                 }
 
-                if (baseTypes.Count == 0)
+                if (implementTypes.Count == 0)
                 {
-                    baseTypes = null;
+                    implementTypes = null;
                 }
             }
 
@@ -669,7 +671,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 AsModifierList(accessibility, modifiers, SyntaxKind.ClassDeclaration),
                 name.ToIdentifierToken(),
                 AsTypeParameterList(typeParameters),
-                baseTypes != null ? SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(baseTypes)) : null,
+                extendTypes != null ? SyntaxFactory.ExtendList(SyntaxFactory.SeparatedList(extendTypes)) : null,
+                implementTypes != null ? SyntaxFactory.ImplementList(SyntaxFactory.SeparatedList(implementTypes)) : null,
                 default,
                 this.AsClassMembers(name, members));
         }
@@ -712,7 +715,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 AsModifierList(accessibility, modifiers, SyntaxKind.StructDeclaration),
                 name.ToIdentifierToken(),
                 AsTypeParameterList(typeParameters),
-                itypes != null ? SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(itypes)) : null,
+                itypes != null ? SyntaxFactory.ImplementList(SyntaxFactory.SeparatedList(itypes)) : null,
                 default,
                 this.AsClassMembers(name, members));
         }
@@ -724,10 +727,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             IEnumerable<SyntaxNode> interfaceTypes = null,
             IEnumerable<SyntaxNode> members = null)
         {
-            var itypes = interfaceTypes?.Select(i => (BaseTypeSyntax)SyntaxFactory.SimpleBaseType((TypeSyntax)i)).ToList();
-            if (itypes?.Count == 0)
+            var extendTypes = interfaceTypes?.Select(i => (BaseTypeSyntax)SyntaxFactory.SimpleBaseType((TypeSyntax)i)).ToList();
+            if (extendTypes?.Count == 0)
             {
-                itypes = null;
+                extendTypes = null;
             }
 
             return SyntaxFactory.InterfaceDeclaration(
@@ -735,7 +738,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 AsModifierList(accessibility, DeclarationModifiers.None),
                 name.ToIdentifierToken(),
                 AsTypeParameterList(typeParameters),
-                itypes != null ? SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(itypes)) : null,
+                extendTypes != null ? SyntaxFactory.ExtendList(SyntaxFactory.SeparatedList(extendTypes)) : null,
                 default,
                 this.AsInterfaceMembers(members));
         }
@@ -1198,8 +1201,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
         }
 
         internal override ImmutableArray<SyntaxNode> GetTypeInheritance(SyntaxNode declaration)
-            => declaration is BaseTypeDeclarationSyntax baseType && baseType.BaseList != null
-                ? ImmutableArray.Create<SyntaxNode>(baseType.BaseList)
+            => declaration is BaseTypeDeclarationSyntax baseType && baseType.ImplementList != null
+                ? ImmutableArray.Create<SyntaxNode>(baseType.ImplementList)
                 : ImmutableArray<SyntaxNode>.Empty;
 
         public override IReadOnlyList<SyntaxNode> GetNamespaceImports(SyntaxNode declaration)
@@ -2922,7 +2925,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
 
         public override IReadOnlyList<SyntaxNode> GetBaseAndInterfaceTypes(SyntaxNode declaration)
         {
-            var baseList = GetBaseList(declaration);
+            var baseList = GetImplementList(declaration);
             if (baseList != null)
             {
                 return baseList.Types.OfType<SimpleBaseTypeSyntax>().Select(bt => bt.Type).ToReadOnlyCollection();
@@ -2935,65 +2938,65 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
 
         public override SyntaxNode AddBaseType(SyntaxNode declaration, SyntaxNode baseType)
         {
-            var baseList = GetBaseList(declaration);
+            var baseList = GetImplementList(declaration);
 
             if (baseList != null)
             {
-                return WithBaseList(declaration, baseList.WithTypes(baseList.Types.Insert(0, SyntaxFactory.SimpleBaseType((TypeSyntax)baseType))));
+                return WithImplementList(declaration, baseList.WithTypes(baseList.Types.Insert(0, SyntaxFactory.SimpleBaseType((TypeSyntax)baseType))));
             }
             else
             {
-                return AddBaseList(declaration, SyntaxFactory.BaseList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType((TypeSyntax)baseType))));
+                return AddImplementList(declaration, SyntaxFactory.ImplementList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType((TypeSyntax)baseType))));
             }
         }
 
         public override SyntaxNode AddInterfaceType(SyntaxNode declaration, SyntaxNode interfaceType)
         {
-            var baseList = GetBaseList(declaration);
+            var baseList = GetImplementList(declaration);
 
             if (baseList != null)
             {
-                return WithBaseList(declaration, baseList.WithTypes(baseList.Types.Insert(baseList.Types.Count, SyntaxFactory.SimpleBaseType((TypeSyntax)interfaceType))));
+                return WithImplementList(declaration, baseList.WithTypes(baseList.Types.Insert(baseList.Types.Count, SyntaxFactory.SimpleBaseType((TypeSyntax)interfaceType))));
             }
             else
             {
-                return AddBaseList(declaration, SyntaxFactory.BaseList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType((TypeSyntax)interfaceType))));
+                return AddImplementList(declaration, SyntaxFactory.ImplementList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType((TypeSyntax)interfaceType))));
             }
         }
 
-        private static SyntaxNode AddBaseList(SyntaxNode declaration, BaseListSyntax baseList)
+        private static SyntaxNode AddImplementList(SyntaxNode declaration, ImplementListSyntax implementList)
         {
-            var newDecl = WithBaseList(declaration, baseList);
+            var newDecl = WithImplementList(declaration, implementList);
 
             // move trivia from type identifier to after base list
-            return ShiftTrivia(newDecl, GetBaseList(newDecl));
+            return ShiftTrivia(newDecl, GetImplementList(newDecl));
         }
 
-        private static BaseListSyntax GetBaseList(SyntaxNode declaration)
+        private static ImplementListSyntax GetImplementList(SyntaxNode declaration)
         {
             switch (declaration.Kind())
             {
                 case SyntaxKind.ClassDeclaration:
-                    return ((ClassDeclarationSyntax)declaration).BaseList;
+                    return ((ClassDeclarationSyntax)declaration).ImplementList;
                 case SyntaxKind.StructDeclaration:
-                    return ((StructDeclarationSyntax)declaration).BaseList;
+                    return ((StructDeclarationSyntax)declaration).ImplementList;
                 case SyntaxKind.InterfaceDeclaration:
-                    return ((InterfaceDeclarationSyntax)declaration).BaseList;
+                    return ((InterfaceDeclarationSyntax)declaration).ImplementList;
                 default:
                     return null;
             }
         }
 
-        private static SyntaxNode WithBaseList(SyntaxNode declaration, BaseListSyntax baseList)
+        private static SyntaxNode WithImplementList(SyntaxNode declaration, ImplementListSyntax implementList)
         {
             switch (declaration.Kind())
             {
                 case SyntaxKind.ClassDeclaration:
-                    return ((ClassDeclarationSyntax)declaration).WithBaseList(baseList);
+                    return ((ClassDeclarationSyntax)declaration).WithImplementList(implementList);
                 case SyntaxKind.StructDeclaration:
-                    return ((StructDeclarationSyntax)declaration).WithBaseList(baseList);
+                    return ((StructDeclarationSyntax)declaration).WithImplementList(implementList);
                 case SyntaxKind.InterfaceDeclaration:
-                    return ((InterfaceDeclarationSyntax)declaration).WithBaseList(baseList);
+                    return ((InterfaceDeclarationSyntax)declaration).WithImplementList(implementList);
                 default:
                     return declaration;
             }
@@ -3190,7 +3193,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                     break;
 
                 case SyntaxKind.SimpleBaseType:
-                    var baseList = declaration.Parent as BaseListSyntax;
+                    var baseList = declaration.Parent as ImplementListSyntax;
                     if (baseList != null && baseList.Types.Count == 1)
                     {
                         // remove entire base list if this is the only base type.

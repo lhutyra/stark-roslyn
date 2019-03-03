@@ -1692,6 +1692,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_CloseBraceExpected = 9003,
         ERR_AccessModifiersNotSupported = 9004,
         ERR_AssignReadOnlyLocal = 9005,
+        ERR_InvalidInterfaceInExtendList = 9006,
+        ERR_InvalidClassInImplementList = 9007,
+        ERR_InvalidImplementsForInterface = 9008,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

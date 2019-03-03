@@ -686,11 +686,6 @@ namespace StarkPlatform.CodeAnalysis.FindSymbols
                                 predicateOpt: n => n.BaseType?.SpecialType == SpecialType.System_Object,
                                 cancellationToken: cancellationToken).ConfigureAwait(false);
                             break;
-                        case SpecialType.System_ValueType:
-                            await AddMatchingTypesAsync(
-                                cachedModels, projectIndex.ValueTypes, localBuffer,
-                                predicateOpt: null, cancellationToken: cancellationToken).ConfigureAwait(false);
-                            break;
                         case SpecialType.System_Enum:
                             await AddMatchingTypesAsync(
                                 cachedModels, projectIndex.Enums, localBuffer,

@@ -106,7 +106,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             ImmutableArray<NamedTypeSymbol> interfaces;
 
-            NamedTypeSymbol effectiveBaseClass = corLibrary.GetSpecialType(typeParameter.HasValueTypeConstraint ? SpecialType.System_ValueType : SpecialType.System_Object);
+            NamedTypeSymbol effectiveBaseClass = corLibrary.GetSpecialType(typeParameter.HasValueTypeConstraint ? SpecialType.None : SpecialType.System_Object);
             TypeSymbol deducedBaseType = effectiveBaseClass;
             DynamicTypeEraser dynamicEraser = null;
 
@@ -187,6 +187,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                         case TypeKind.Interface:
                         case TypeKind.Class:
+                        case TypeKind.Struct:
                         case TypeKind.Delegate:
                             NamedTypeSymbol erasedConstraintType;
 
@@ -221,29 +222,29 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                                 break;
                             }
 
-                        case TypeKind.Struct:
-                            if (constraintType.IsNullableType())
-                            {
-                                var underlyingType = constraintType.GetNullableUnderlyingType();
-                                if (underlyingType.TypeKind == TypeKind.TypeParameter)
-                                {
-                                    var underlyingTypeParameter = (TypeParameterSymbol)underlyingType.TypeSymbol;
-                                    if (underlyingTypeParameter.ContainingSymbol == typeParameter.ContainingSymbol)
-                                    {
-                                        // The constraint type parameter is from the same containing type or method.
-                                        if (inProgress.ContainsReference(underlyingTypeParameter))
-                                        {
-                                            // "Circular constraint dependency involving '{0}' and '{1}'"
-                                            diagnosticsBuilder.Add(new TypeParameterDiagnosticInfo(underlyingTypeParameter, new CSDiagnosticInfo(ErrorCode.ERR_CircularConstraint, underlyingTypeParameter, typeParameter)));
-                                            continue;
-                                        }
-                                    }
-                                }
-                            }
-                            Debug.Assert(inherited || currentCompilation == null);
-                            constraintEffectiveBase = corLibrary.GetSpecialType(SpecialType.System_ValueType);
-                            constraintDeducedBase = constraintType.TypeSymbol;
-                            break;
+                        //case TypeKind.Struct:
+                        //    if (constraintType.IsNullableType())
+                        //    {
+                        //        var underlyingType = constraintType.GetNullableUnderlyingType();
+                        //        if (underlyingType.TypeKind == TypeKind.TypeParameter)
+                        //        {
+                        //            var underlyingTypeParameter = (TypeParameterSymbol)underlyingType.TypeSymbol;
+                        //            if (underlyingTypeParameter.ContainingSymbol == typeParameter.ContainingSymbol)
+                        //            {
+                        //                // The constraint type parameter is from the same containing type or method.
+                        //                if (inProgress.ContainsReference(underlyingTypeParameter))
+                        //                {
+                        //                    // "Circular constraint dependency involving '{0}' and '{1}'"
+                        //                    diagnosticsBuilder.Add(new TypeParameterDiagnosticInfo(underlyingTypeParameter, new CSDiagnosticInfo(ErrorCode.ERR_CircularConstraint, underlyingTypeParameter, typeParameter)));
+                        //                    continue;
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //    Debug.Assert(inherited || currentCompilation == null);
+                        //    constraintEffectiveBase = corLibrary.GetSpecialType(SpecialType.System_ValueType);
+                        //    constraintDeducedBase = constraintType.TypeSymbol;
+                        //    break;
 
                         case TypeKind.Enum:
                             Debug.Assert(inherited || currentCompilation == null);

@@ -2871,9 +2871,14 @@
       </PropertyComment>
       <Kind Name="IdentifierToken"/>
     </Field>
-    <Field Name="BaseList" Type="BaseListSyntax" Optional="true">
+    <Field Name="ExtendList" Type="ExtendListSyntax" Optional="true">
       <PropertyComment>
-        <summary>Gets the base type list.</summary>
+        <summary>Gets the extends type list.</summary>
+      </PropertyComment>
+    </Field>
+    <Field Name="ImplementList" Type="ImplementListSyntax" Optional="true">
+      <PropertyComment>
+        <summary>Gets the implements type list.</summary>
       </PropertyComment>
     </Field>
     <Field Name="OpenBraceToken" Type="SyntaxToken">
@@ -2934,7 +2939,8 @@
       <Kind Name="IdentifierToken"/>
     </Field>
     <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" Override="true"/>
-    <Field Name="BaseList" Type="BaseListSyntax" Optional="true" Override="true"/>
+    <Field Name="ExtendList" Type="ExtendListSyntax" Optional="true" Override="true"/>
+    <Field Name="ImplementList" Type="ImplementListSyntax" Optional="true" Override="true"/>
     <Field Name="ConstraintClauses" Type="SyntaxList&lt;TypeParameterConstraintClauseSyntax&gt;" Override="true"/>
     <Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
       <Kind Name="OpenBraceToken"/>
@@ -2965,7 +2971,8 @@
       <Kind Name="IdentifierToken"/>
     </Field>
     <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" Override="true"/>
-    <Field Name="BaseList" Type="BaseListSyntax" Optional="true" Override="true"/>
+    <Field Name="ExtendList" Type="ExtendListSyntax" Optional="true" Override="true"/>
+    <Field Name="ImplementList" Type="ImplementListSyntax" Optional="true" Override="true"/>
     <Field Name="ConstraintClauses" Type="SyntaxList&lt;TypeParameterConstraintClauseSyntax&gt;" Override="true"/>
     <Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
       <Kind Name="OpenBraceToken"/>
@@ -2996,7 +3003,8 @@
       <Kind Name="IdentifierToken"/>
     </Field>
     <Field Name="TypeParameterList" Type="TypeParameterListSyntax" Optional="true" Override="true"/>
-    <Field Name="BaseList" Type="BaseListSyntax" Optional="true" Override="true"/>
+    <Field Name="ExtendList" Type="ExtendListSyntax" Optional="true" Override="true"/>
+    <Field Name="ImplementList" Type="ImplementListSyntax" Optional="true" Override="true"/>
     <Field Name="ConstraintClauses" Type="SyntaxList&lt;TypeParameterConstraintClauseSyntax&gt;" Override="true"/>
     <Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
       <Kind Name="OpenBraceToken"/>
@@ -3026,7 +3034,8 @@
     <Field Name="Identifier" Type="SyntaxToken" Override="true">
       <Kind Name="IdentifierToken"/>
     </Field>
-    <Field Name="BaseList" Type="BaseListSyntax" Optional="true" Override="true">
+    <Field Name="ExtendList" Type="ExtendListSyntax" Optional="true" Override="true"/>
+    <Field Name="ImplementList" Type="ImplementListSyntax" Optional="true" Override="true">
     </Field>
     <Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
       <Kind Name="OpenBraceToken"/>
@@ -3113,24 +3122,50 @@
     </Field>
     <Field Name="EqualsValue" Type="EqualsValueClauseSyntax" Optional="true"/>
   </Node>
-  <Node Name="BaseListSyntax" Base="CSharpSyntaxNode">
-    <TypeComment>
-      <summary>Base list syntax.</summary>
-    </TypeComment>
-    <Kind Name="BaseList"/>
-    <Field Name="ColonToken" Type="SyntaxToken">
-      <PropertyComment>
-        <summary>Gets the colon token.</summary>
-      </PropertyComment>
-      <Kind Name="ColonToken"/>
-    </Field>
+  <AbstractNode Name="BaseListSyntax" Base="CSharpSyntaxNode">
     <Field Name="Types" Type="SeparatedSyntaxList&lt;BaseTypeSyntax&gt;">
       <PropertyComment>
-        <summary>Gets the base type references.</summary>
+        <summary>SeparatedSyntaxList of types.</summary>
+      </PropertyComment>
+    </Field>
+    <TypeComment>
+      <summary>Provides the base for an extends or implements list. This is an abstract class.</summary>
+    </TypeComment>
+  </AbstractNode>
+  <Node Name="ExtendListSyntax" Base="BaseListSyntax">
+      <TypeComment>
+          <summary>Extends list syntax.</summary>
+      </TypeComment>
+      <Kind Name="ExtendList"/>
+      <Field Name="ExtendsKeyword" Type="SyntaxToken">
+          <PropertyComment>
+              <summary>Gets the extends keyword.</summary>
+          </PropertyComment>
+          <Kind Name="ExtendsKeyword"/>
+      </Field>
+      <Field Name="Types" Type="SeparatedSyntaxList&lt;BaseTypeSyntax&gt;" Override="true">
+          <PropertyComment>
+              <summary>Gets the base type references.</summary>
+          </PropertyComment>
+      </Field>
+  </Node>
+  <Node Name="ImplementListSyntax" Base="BaseListSyntax">
+    <TypeComment>
+      <summary>Implements list syntax.</summary>
+    </TypeComment>
+    <Kind Name="ImplementList"/>
+    <Field Name="ImplementsKeyword" Type="SyntaxToken">
+      <PropertyComment>
+        <summary>Gets the implements keyword.</summary>
+      </PropertyComment>
+      <Kind Name="ImplementsKeyword"/>
+    </Field>
+    <Field Name="Types" Type="SeparatedSyntaxList&lt;BaseTypeSyntax&gt;" Override="true">
+      <PropertyComment>
+        <summary>Gets the implemented interfaces references.</summary>
       </PropertyComment>
     </Field>
   </Node>
-
   <AbstractNode Name="BaseTypeSyntax" Base="CSharpSyntaxNode">
     <TypeComment>
       <summary>Provides the base class from which the classes that represent base type syntax nodes are derived. This is an abstract class.</summary>

@@ -661,15 +661,15 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.CodeModel
 
             private bool CompareBaseLists(BaseTypeDeclarationSyntax oldType, BaseTypeDeclarationSyntax newType)
             {
-                if (oldType.BaseList == null && newType.BaseList == null)
+                if (oldType.ImplementList == null && newType.ImplementList == null)
                 {
                     return true;
                 }
 
-                if (oldType.BaseList != null && newType.BaseList != null)
+                if (oldType.ImplementList != null && newType.ImplementList != null)
                 {
-                    var oldTypes = oldType.BaseList.Types;
-                    var newTypes = newType.BaseList.Types;
+                    var oldTypes = oldType.ImplementList.Types;
+                    var newTypes = newType.ImplementList.Types;
 
                     if (oldTypes.Count != newTypes.Count)
                     {

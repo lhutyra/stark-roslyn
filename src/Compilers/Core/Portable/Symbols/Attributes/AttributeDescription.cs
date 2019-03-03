@@ -109,25 +109,25 @@ namespace StarkPlatform.CodeAnalysis
 
         static AttributeDescription()
         {
-            const string system = "System";
-            const string compilerServices = "System.Runtime.CompilerServices";
-            const string interopServices = "System.Runtime.InteropServices";
+            const string system = "system";
+            const string compiler = "system.runtime.compiler";
+            const string interop = "system.runtime.interop";
 
             TypeHandleTargets = (new[] {
                  new TypeHandleTargetInfo(system,"AttributeTargets", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo("System.Reflection","AssemblyNameFlags", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(compilerServices,"MethodImplOptions", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"CharSet", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"LayoutKind", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"UnmanagedType", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"TypeLibTypeFlags", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"ClassInterfaceType", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"ComInterfaceType", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(compilerServices,"CompilationRelaxations", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo("System.Diagnostics.DebuggableAttribute","DebuggingModes", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo("System.Security","SecurityCriticalScope", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(interopServices,"CallingConvention", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo("System.Configuration.Assemblies","AssemblyHashAlgorithm", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(compiler,"MethodImplOptions", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"CharSet", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"LayoutKind", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"UnmanagedType", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"TypeLibTypeFlags", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"ClassInterfaceType", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"ComInterfaceType", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(compiler,"CompilationRelaxations", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo("system.diagnostics.DebuggableAttribute","DebuggingModes", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo("system.security","SecurityCriticalScope", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(interop,"CallingConvention", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo("system.configuration.assemblies","AssemblyHashAlgorithm", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo("System.EnterpriseServices","TransactionOption", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo("System.Security.Permissions","SecurityAction", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo(system,"Type", SerializationTypeCode.Type)
@@ -413,20 +413,20 @@ namespace StarkPlatform.CodeAnalysis
         private static readonly byte[][] s_signaturesOfExcludeFromCodeCoverageAttribute = { s_signature_HasThis_Void };
 
         // early decoded attributes:
-        internal static readonly AttributeDescription OptionalAttribute = new AttributeDescription("System.Runtime.InteropServices", "OptionalAttribute", s_signaturesOfOptionalAttribute);
-        internal static readonly AttributeDescription ComImportAttribute = new AttributeDescription("System.Runtime.InteropServices", "ComImportAttribute", s_signaturesOfComImportAttribute);
+        internal static readonly AttributeDescription OptionalAttribute = new AttributeDescription("system.runtime.interop", "OptionalAttribute", s_signaturesOfOptionalAttribute);
+        internal static readonly AttributeDescription ComImportAttribute = new AttributeDescription("system.runtime.interop", "ComImportAttribute", s_signaturesOfComImportAttribute);
         internal static readonly AttributeDescription AttributeUsageAttribute = new AttributeDescription("System", "AttributeUsageAttribute", s_signaturesOfAttributeUsage);
         internal static readonly AttributeDescription ConditionalAttribute = new AttributeDescription("System.Diagnostics", "ConditionalAttribute", s_signaturesOfConditionalAttribute);
-        internal static readonly AttributeDescription CaseInsensitiveExtensionAttribute = new AttributeDescription("System.Runtime.CompilerServices", "ExtensionAttribute", s_signaturesOfExtensionAttribute, matchIgnoringCase: true);
-        internal static readonly AttributeDescription CaseSensitiveExtensionAttribute = new AttributeDescription("System.Runtime.CompilerServices", "ExtensionAttribute", s_signaturesOfExtensionAttribute, matchIgnoringCase: false);
+        internal static readonly AttributeDescription CaseInsensitiveExtensionAttribute = new AttributeDescription("system.runtime.compiler", "ExtensionAttribute", s_signaturesOfExtensionAttribute, matchIgnoringCase: true);
+        internal static readonly AttributeDescription CaseSensitiveExtensionAttribute = new AttributeDescription("system.runtime.compiler", "ExtensionAttribute", s_signaturesOfExtensionAttribute, matchIgnoringCase: false);
 
-        internal static readonly AttributeDescription InternalsVisibleToAttribute = new AttributeDescription("System.Runtime.CompilerServices", "InternalsVisibleToAttribute", s_signaturesOfInternalsVisibleToAttribute);
+        internal static readonly AttributeDescription InternalsVisibleToAttribute = new AttributeDescription("system.runtime.compiler", "InternalsVisibleToAttribute", s_signaturesOfInternalsVisibleToAttribute);
         internal static readonly AttributeDescription AssemblySignatureKeyAttribute = new AttributeDescription("System.Reflection", "AssemblySignatureKeyAttribute", s_signaturesOfAssemblySignatureKeyAttribute);
         internal static readonly AttributeDescription AssemblyKeyFileAttribute = new AttributeDescription("System.Reflection", "AssemblyKeyFileAttribute", s_signaturesOfAssemblyKeyFileAttribute);
         internal static readonly AttributeDescription AssemblyKeyNameAttribute = new AttributeDescription("System.Reflection", "AssemblyKeyNameAttribute", s_signaturesOfAssemblyKeyNameAttribute);
         internal static readonly AttributeDescription ParamArrayAttribute = new AttributeDescription("System", "ParamArrayAttribute", s_signaturesOfParamArrayAttribute);
         internal static readonly AttributeDescription DefaultMemberAttribute = new AttributeDescription("System.Reflection", "DefaultMemberAttribute", s_signaturesOfDefaultMemberAttribute);
-        internal static readonly AttributeDescription IndexerNameAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IndexerNameAttribute", s_signaturesOfIndexerNameAttribute);
+        internal static readonly AttributeDescription IndexerNameAttribute = new AttributeDescription("system.runtime.compiler", "IndexerNameAttribute", s_signaturesOfIndexerNameAttribute);
         internal static readonly AttributeDescription AssemblyDelaySignAttribute = new AttributeDescription("System.Reflection", "AssemblyDelaySignAttribute", s_signaturesOfAssemblyDelaySignAttribute);
         internal static readonly AttributeDescription AssemblyVersionAttribute = new AttributeDescription("System.Reflection", "AssemblyVersionAttribute", s_signaturesOfAssemblyVersionAttribute);
         internal static readonly AttributeDescription AssemblyFileVersionAttribute = new AttributeDescription("System.Reflection", "AssemblyFileVersionAttribute", s_signaturesOfAssemblyFileVersionAttribute);
@@ -440,76 +440,76 @@ namespace StarkPlatform.CodeAnalysis
         internal static readonly AttributeDescription SatelliteContractVersionAttribute = new AttributeDescription("System.Resources", "SatelliteContractVersionAttribute", s_signaturesOfSatelliteContractVersionAttribute);
         internal static readonly AttributeDescription AssemblyTrademarkAttribute = new AttributeDescription("System.Reflection", "AssemblyTrademarkAttribute", s_signaturesOfAssemblyTrademarkAttribute);
         internal static readonly AttributeDescription AssemblyFlagsAttribute = new AttributeDescription("System.Reflection", "AssemblyFlagsAttribute", s_signaturesOfAssemblyFlagsAttribute);
-        internal static readonly AttributeDescription DecimalConstantAttribute = new AttributeDescription("System.Runtime.CompilerServices", "DecimalConstantAttribute", s_signaturesOfDecimalConstantAttribute);
-        internal static readonly AttributeDescription IUnknownConstantAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IUnknownConstantAttribute", s_signaturesOfIUnknownConstantAttribute);
-        internal static readonly AttributeDescription CallerFilePathAttribute = new AttributeDescription("System.Runtime.CompilerServices", "CallerFilePathAttribute", s_signaturesOfCallerFilePathAttribute);
-        internal static readonly AttributeDescription CallerLineNumberAttribute = new AttributeDescription("System.Runtime.CompilerServices", "CallerLineNumberAttribute", s_signaturesOfCallerLineNumberAttribute);
-        internal static readonly AttributeDescription CallerMemberNameAttribute = new AttributeDescription("System.Runtime.CompilerServices", "CallerMemberNameAttribute", s_signaturesOfCallerMemberNameAttribute);
-        internal static readonly AttributeDescription IDispatchConstantAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IDispatchConstantAttribute", s_signaturesOfIDispatchConstantAttribute);
-        internal static readonly AttributeDescription DefaultParameterValueAttribute = new AttributeDescription("System.Runtime.InteropServices", "DefaultParameterValueAttribute", s_signaturesOfDefaultParameterValueAttribute);
-        internal static readonly AttributeDescription UnverifiableCodeAttribute = new AttributeDescription("System.Runtime.InteropServices", "UnverifiableCodeAttribute", s_signaturesOfUnverifiableCodeAttribute);
-        internal static readonly AttributeDescription SecurityPermissionAttribute = new AttributeDescription("System.Runtime.InteropServices", "SecurityPermissionAttribute", s_signaturesOfSecurityPermissionAttribute);
-        internal static readonly AttributeDescription DllImportAttribute = new AttributeDescription("System.Runtime.InteropServices", "DllImportAttribute", s_signaturesOfDllImportAttribute);
-        internal static readonly AttributeDescription MethodImplAttribute = new AttributeDescription("System.Runtime.CompilerServices", "MethodImplAttribute", s_signaturesOfMethodImplAttribute);
-        internal static readonly AttributeDescription PreserveSigAttribute = new AttributeDescription("System.Runtime.InteropServices", "PreserveSigAttribute", s_signaturesOfPreserveSigAttribute);
-        internal static readonly AttributeDescription DefaultCharSetAttribute = new AttributeDescription("System.Runtime.InteropServices", "DefaultCharSetAttribute", s_signaturesOfDefaultCharSetAttribute);
-        internal static readonly AttributeDescription SpecialNameAttribute = new AttributeDescription("System.Runtime.CompilerServices", "SpecialNameAttribute", s_signaturesOfSpecialNameAttribute);
+        internal static readonly AttributeDescription DecimalConstantAttribute = new AttributeDescription("system.runtime.compiler", "DecimalConstantAttribute", s_signaturesOfDecimalConstantAttribute);
+        internal static readonly AttributeDescription IUnknownConstantAttribute = new AttributeDescription("system.runtime.compiler", "IUnknownConstantAttribute", s_signaturesOfIUnknownConstantAttribute);
+        internal static readonly AttributeDescription CallerFilePathAttribute = new AttributeDescription("system.runtime.compiler", "CallerFilePathAttribute", s_signaturesOfCallerFilePathAttribute);
+        internal static readonly AttributeDescription CallerLineNumberAttribute = new AttributeDescription("system.runtime.compiler", "CallerLineNumberAttribute", s_signaturesOfCallerLineNumberAttribute);
+        internal static readonly AttributeDescription CallerMemberNameAttribute = new AttributeDescription("system.runtime.compiler", "CallerMemberNameAttribute", s_signaturesOfCallerMemberNameAttribute);
+        internal static readonly AttributeDescription IDispatchConstantAttribute = new AttributeDescription("system.runtime.compiler", "IDispatchConstantAttribute", s_signaturesOfIDispatchConstantAttribute);
+        internal static readonly AttributeDescription DefaultParameterValueAttribute = new AttributeDescription("system.runtime.interop", "DefaultParameterValueAttribute", s_signaturesOfDefaultParameterValueAttribute);
+        internal static readonly AttributeDescription UnverifiableCodeAttribute = new AttributeDescription("system.runtime.interop", "UnverifiableCodeAttribute", s_signaturesOfUnverifiableCodeAttribute);
+        internal static readonly AttributeDescription SecurityPermissionAttribute = new AttributeDescription("system.runtime.interop", "SecurityPermissionAttribute", s_signaturesOfSecurityPermissionAttribute);
+        internal static readonly AttributeDescription DllImportAttribute = new AttributeDescription("system.runtime.interop", "DllImportAttribute", s_signaturesOfDllImportAttribute);
+        internal static readonly AttributeDescription MethodImplAttribute = new AttributeDescription("system.runtime.compiler", "MethodImplAttribute", s_signaturesOfMethodImplAttribute);
+        internal static readonly AttributeDescription PreserveSigAttribute = new AttributeDescription("system.runtime.interop", "PreserveSigAttribute", s_signaturesOfPreserveSigAttribute);
+        internal static readonly AttributeDescription DefaultCharSetAttribute = new AttributeDescription("system.runtime.interop", "DefaultCharSetAttribute", s_signaturesOfDefaultCharSetAttribute);
+        internal static readonly AttributeDescription SpecialNameAttribute = new AttributeDescription("system.runtime.compiler", "SpecialNameAttribute", s_signaturesOfSpecialNameAttribute);
         internal static readonly AttributeDescription SerializableAttribute = new AttributeDescription("System", "SerializableAttribute", s_signaturesOfSerializableAttribute);
         internal static readonly AttributeDescription NonSerializedAttribute = new AttributeDescription("System", "NonSerializedAttribute", s_signaturesOfNonSerializedAttribute);
-        internal static readonly AttributeDescription StructLayoutAttribute = new AttributeDescription("System.Runtime.InteropServices", "StructLayoutAttribute", s_signaturesOfStructLayoutAttribute);
-        internal static readonly AttributeDescription FieldOffsetAttribute = new AttributeDescription("System.Runtime.InteropServices", "FieldOffsetAttribute", s_signaturesOfFieldOffsetAttribute);
-        internal static readonly AttributeDescription FixedBufferAttribute = new AttributeDescription("System.Runtime.CompilerServices", "FixedBufferAttribute", s_signaturesOfFixedBufferAttribute);
-        internal static readonly AttributeDescription NotNullWhenTrueAttribute = new AttributeDescription("System.Runtime.CompilerServices", "NotNullWhenTrueAttribute", s_signaturesOfNotNullWhenTrueAttribute);
-        internal static readonly AttributeDescription NotNullWhenFalseAttribute = new AttributeDescription("System.Runtime.CompilerServices", "NotNullWhenFalseAttribute", s_signaturesOfNotNullWhenFalseAttribute);
-        internal static readonly AttributeDescription EnsuresNotNullAttribute = new AttributeDescription("System.Runtime.CompilerServices", "EnsuresNotNullAttribute", s_signaturesOfEnsuresNotNullAttribute);
-        internal static readonly AttributeDescription AssertsTrueAttribute = new AttributeDescription("System.Runtime.CompilerServices", "AssertsTrueAttribute", s_signaturesOfAssertsTrueAttribute);
-        internal static readonly AttributeDescription AssertsFalseAttribute = new AttributeDescription("System.Runtime.CompilerServices", "AssertsFalseAttribute", s_signaturesOfAssertsFalseAttribute);
-        internal static readonly AttributeDescription MarshalAsAttribute = new AttributeDescription("System.Runtime.InteropServices", "MarshalAsAttribute", s_signaturesOfMarshalAsAttribute);
-        internal static readonly AttributeDescription InAttribute = new AttributeDescription("System.Runtime.InteropServices", "InAttribute", s_signaturesOfInAttribute);
-        internal static readonly AttributeDescription OutAttribute = new AttributeDescription("System.Runtime.InteropServices", "OutAttribute", s_signaturesOfOutAttribute);
-        internal static readonly AttributeDescription IsReadOnlyAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IsReadOnlyAttribute", s_signaturesOfIsReadOnlyAttribute);
-        internal static readonly AttributeDescription IsUnmanagedAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IsUnmanagedAttribute", s_signaturesOfIsUnmanagedAttribute);
-        internal static readonly AttributeDescription CoClassAttribute = new AttributeDescription("System.Runtime.InteropServices", "CoClassAttribute", s_signaturesOfCoClassAttribute);
-        internal static readonly AttributeDescription GuidAttribute = new AttributeDescription("System.Runtime.InteropServices", "GuidAttribute", s_signaturesOfGuidAttribute);
+        internal static readonly AttributeDescription StructLayoutAttribute = new AttributeDescription("system.runtime.interop", "StructLayoutAttribute", s_signaturesOfStructLayoutAttribute);
+        internal static readonly AttributeDescription FieldOffsetAttribute = new AttributeDescription("system.runtime.interop", "FieldOffsetAttribute", s_signaturesOfFieldOffsetAttribute);
+        internal static readonly AttributeDescription FixedBufferAttribute = new AttributeDescription("system.runtime.compiler", "FixedBufferAttribute", s_signaturesOfFixedBufferAttribute);
+        internal static readonly AttributeDescription NotNullWhenTrueAttribute = new AttributeDescription("system.runtime.compiler", "NotNullWhenTrueAttribute", s_signaturesOfNotNullWhenTrueAttribute);
+        internal static readonly AttributeDescription NotNullWhenFalseAttribute = new AttributeDescription("system.runtime.compiler", "NotNullWhenFalseAttribute", s_signaturesOfNotNullWhenFalseAttribute);
+        internal static readonly AttributeDescription EnsuresNotNullAttribute = new AttributeDescription("system.runtime.compiler", "EnsuresNotNullAttribute", s_signaturesOfEnsuresNotNullAttribute);
+        internal static readonly AttributeDescription AssertsTrueAttribute = new AttributeDescription("system.runtime.compiler", "AssertsTrueAttribute", s_signaturesOfAssertsTrueAttribute);
+        internal static readonly AttributeDescription AssertsFalseAttribute = new AttributeDescription("system.runtime.compiler", "AssertsFalseAttribute", s_signaturesOfAssertsFalseAttribute);
+        internal static readonly AttributeDescription MarshalAsAttribute = new AttributeDescription("system.runtime.interop", "MarshalAsAttribute", s_signaturesOfMarshalAsAttribute);
+        internal static readonly AttributeDescription InAttribute = new AttributeDescription("system.runtime.interop", "InAttribute", s_signaturesOfInAttribute);
+        internal static readonly AttributeDescription OutAttribute = new AttributeDescription("system.runtime.interop", "OutAttribute", s_signaturesOfOutAttribute);
+        internal static readonly AttributeDescription IsReadOnlyAttribute = new AttributeDescription("system.runtime.compiler", "IsReadOnlyAttribute", s_signaturesOfIsReadOnlyAttribute);
+        internal static readonly AttributeDescription IsUnmanagedAttribute = new AttributeDescription("system.runtime.compiler", "IsUnmanagedAttribute", s_signaturesOfIsUnmanagedAttribute);
+        internal static readonly AttributeDescription CoClassAttribute = new AttributeDescription("system.runtime.interop", "CoClassAttribute", s_signaturesOfCoClassAttribute);
+        internal static readonly AttributeDescription GuidAttribute = new AttributeDescription("system.runtime.interop", "GuidAttribute", s_signaturesOfGuidAttribute);
         internal static readonly AttributeDescription CLSCompliantAttribute = new AttributeDescription("System", "CLSCompliantAttribute", s_signaturesOfCLSCompliantAttribute);
         internal static readonly AttributeDescription HostProtectionAttribute = new AttributeDescription("System.Security.Permissions", "HostProtectionAttribute", s_signaturesOfHostProtectionAttribute);
         internal static readonly AttributeDescription SuppressUnmanagedCodeSecurityAttribute = new AttributeDescription("System.Security", "SuppressUnmanagedCodeSecurityAttribute", s_signaturesOfSuppressUnmanagedCodeSecurityAttribute);
         internal static readonly AttributeDescription PrincipalPermissionAttribute = new AttributeDescription("System.Security.Permissions", "PrincipalPermissionAttribute", s_signaturesOfPrincipalPermissionAttribute);
         internal static readonly AttributeDescription PermissionSetAttribute = new AttributeDescription("System.Security.Permissions", "PermissionSetAttribute", s_signaturesOfPermissionSetAttribute);
-        internal static readonly AttributeDescription TypeIdentifierAttribute = new AttributeDescription("System.Runtime.InteropServices", "TypeIdentifierAttribute", s_signaturesOfTypeIdentifierAttribute);
+        internal static readonly AttributeDescription TypeIdentifierAttribute = new AttributeDescription("system.runtime.interop", "TypeIdentifierAttribute", s_signaturesOfTypeIdentifierAttribute);
         internal static readonly AttributeDescription VisualBasicEmbeddedAttribute = new AttributeDescription("Microsoft.VisualBasic", "Embedded", s_signaturesOfVisualBasicEmbedded);
         internal static readonly AttributeDescription CodeAnalysisEmbeddedAttribute = new AttributeDescription("StarkPlatform.CodeAnalysis", "EmbeddedAttribute", s_signaturesOfCodeAnalysisEmbedded);
         internal static readonly AttributeDescription VisualBasicComClassAttribute = new AttributeDescription("Microsoft.VisualBasic", "ComClassAttribute", s_signaturesOfVisualBasicComClassAttribute);
         internal static readonly AttributeDescription StandardModuleAttribute = new AttributeDescription("Microsoft.VisualBasic.CompilerServices", "StandardModuleAttribute", s_signaturesOfStandardModuleAttribute);
         internal static readonly AttributeDescription OptionCompareAttribute = new AttributeDescription("Microsoft.VisualBasic.CompilerServices", "OptionCompareAttribute", s_signaturesOfOptionCompareAttribute);
-        internal static readonly AttributeDescription AccessedThroughPropertyAttribute = new AttributeDescription("System.Runtime.CompilerServices", "AccessedThroughPropertyAttribute", s_signaturesOfAccessedThroughPropertyAttribute);
+        internal static readonly AttributeDescription AccessedThroughPropertyAttribute = new AttributeDescription("system.runtime.compiler", "AccessedThroughPropertyAttribute", s_signaturesOfAccessedThroughPropertyAttribute);
         internal static readonly AttributeDescription WebMethodAttribute = new AttributeDescription("System.Web.Services", "WebMethodAttribute", s_signaturesOfWebMethodAttribute);
-        internal static readonly AttributeDescription DateTimeConstantAttribute = new AttributeDescription("System.Runtime.CompilerServices", "DateTimeConstantAttribute", s_signaturesOfDateTimeConstantAttribute);
-        internal static readonly AttributeDescription ClassInterfaceAttribute = new AttributeDescription("System.Runtime.InteropServices", "ClassInterfaceAttribute", s_signaturesOfClassInterfaceAttribute);
-        internal static readonly AttributeDescription ComSourceInterfacesAttribute = new AttributeDescription("System.Runtime.InteropServices", "ComSourceInterfacesAttribute", s_signaturesOfComSourceInterfacesAttribute);
-        internal static readonly AttributeDescription ComVisibleAttribute = new AttributeDescription("System.Runtime.InteropServices", "ComVisibleAttribute", s_signaturesOfComVisibleAttribute);
-        internal static readonly AttributeDescription DispIdAttribute = new AttributeDescription("System.Runtime.InteropServices", "DispIdAttribute", new byte[][] { s_signature_HasThis_Void_Int32 });
-        internal static readonly AttributeDescription TypeLibVersionAttribute = new AttributeDescription("System.Runtime.InteropServices", "TypeLibVersionAttribute", s_signaturesOfTypeLibVersionAttribute);
-        internal static readonly AttributeDescription ComCompatibleVersionAttribute = new AttributeDescription("System.Runtime.InteropServices", "ComCompatibleVersionAttribute", s_signaturesOfComCompatibleVersionAttribute);
-        internal static readonly AttributeDescription InterfaceTypeAttribute = new AttributeDescription("System.Runtime.InteropServices", "InterfaceTypeAttribute", s_signaturesOfInterfaceTypeAttribute);
-        internal static readonly AttributeDescription WindowsRuntimeImportAttribute = new AttributeDescription("System.Runtime.InteropServices.WindowsRuntime", "WindowsRuntimeImportAttribute", s_signaturesOfWindowsRuntimeImportAttribute);
+        internal static readonly AttributeDescription DateTimeConstantAttribute = new AttributeDescription("system.runtime.compiler", "DateTimeConstantAttribute", s_signaturesOfDateTimeConstantAttribute);
+        internal static readonly AttributeDescription ClassInterfaceAttribute = new AttributeDescription("system.runtime.interop", "ClassInterfaceAttribute", s_signaturesOfClassInterfaceAttribute);
+        internal static readonly AttributeDescription ComSourceInterfacesAttribute = new AttributeDescription("system.runtime.interop", "ComSourceInterfacesAttribute", s_signaturesOfComSourceInterfacesAttribute);
+        internal static readonly AttributeDescription ComVisibleAttribute = new AttributeDescription("system.runtime.interop", "ComVisibleAttribute", s_signaturesOfComVisibleAttribute);
+        internal static readonly AttributeDescription DispIdAttribute = new AttributeDescription("system.runtime.interop", "DispIdAttribute", new byte[][] { s_signature_HasThis_Void_Int32 });
+        internal static readonly AttributeDescription TypeLibVersionAttribute = new AttributeDescription("system.runtime.interop", "TypeLibVersionAttribute", s_signaturesOfTypeLibVersionAttribute);
+        internal static readonly AttributeDescription ComCompatibleVersionAttribute = new AttributeDescription("system.runtime.interop", "ComCompatibleVersionAttribute", s_signaturesOfComCompatibleVersionAttribute);
+        internal static readonly AttributeDescription InterfaceTypeAttribute = new AttributeDescription("system.runtime.interop", "InterfaceTypeAttribute", s_signaturesOfInterfaceTypeAttribute);
+        internal static readonly AttributeDescription WindowsRuntimeImportAttribute = new AttributeDescription("system.runtime.interop.WindowsRuntime", "WindowsRuntimeImportAttribute", s_signaturesOfWindowsRuntimeImportAttribute);
         internal static readonly AttributeDescription DynamicSecurityMethodAttribute = new AttributeDescription("System.Security", "DynamicSecurityMethodAttribute", s_signaturesOfDynamicSecurityMethodAttribute);
-        internal static readonly AttributeDescription RequiredAttributeAttribute = new AttributeDescription("System.Runtime.CompilerServices", "RequiredAttributeAttribute", s_signaturesOfRequiredAttributeAttribute);
-        internal static readonly AttributeDescription AsyncMethodBuilderAttribute = new AttributeDescription("System.Runtime.CompilerServices", "AsyncMethodBuilderAttribute", s_signaturesOfAsyncMethodBuilderAttribute);
-        internal static readonly AttributeDescription AsyncStateMachineAttribute = new AttributeDescription("System.Runtime.CompilerServices", "AsyncStateMachineAttribute", s_signaturesOfAsyncStateMachineAttribute);
-        internal static readonly AttributeDescription IteratorStateMachineAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IteratorStateMachineAttribute", s_signaturesOfIteratorStateMachineAttribute);
-        internal static readonly AttributeDescription CompilationRelaxationsAttribute = new AttributeDescription("System.Runtime.CompilerServices", "CompilationRelaxationsAttribute", s_signaturesOfCompilationRelaxationsAttribute);
-        internal static readonly AttributeDescription ReferenceAssemblyAttribute = new AttributeDescription("System.Runtime.CompilerServices", "ReferenceAssemblyAttribute", s_signaturesOfReferenceAssemblyAttribute);
-        internal static readonly AttributeDescription RuntimeCompatibilityAttribute = new AttributeDescription("System.Runtime.CompilerServices", "RuntimeCompatibilityAttribute", s_signaturesOfRuntimeCompatibilityAttribute);
+        internal static readonly AttributeDescription RequiredAttributeAttribute = new AttributeDescription("system.runtime.compiler", "RequiredAttributeAttribute", s_signaturesOfRequiredAttributeAttribute);
+        internal static readonly AttributeDescription AsyncMethodBuilderAttribute = new AttributeDescription("system.runtime.compiler", "AsyncMethodBuilderAttribute", s_signaturesOfAsyncMethodBuilderAttribute);
+        internal static readonly AttributeDescription AsyncStateMachineAttribute = new AttributeDescription("system.runtime.compiler", "AsyncStateMachineAttribute", s_signaturesOfAsyncStateMachineAttribute);
+        internal static readonly AttributeDescription IteratorStateMachineAttribute = new AttributeDescription("system.runtime.compiler", "IteratorStateMachineAttribute", s_signaturesOfIteratorStateMachineAttribute);
+        internal static readonly AttributeDescription CompilationRelaxationsAttribute = new AttributeDescription("system.runtime.compiler", "CompilationRelaxationsAttribute", s_signaturesOfCompilationRelaxationsAttribute);
+        internal static readonly AttributeDescription ReferenceAssemblyAttribute = new AttributeDescription("system.runtime.compiler", "ReferenceAssemblyAttribute", s_signaturesOfReferenceAssemblyAttribute);
+        internal static readonly AttributeDescription RuntimeCompatibilityAttribute = new AttributeDescription("system.runtime.compiler", "RuntimeCompatibilityAttribute", s_signaturesOfRuntimeCompatibilityAttribute);
         internal static readonly AttributeDescription DebuggableAttribute = new AttributeDescription("System.Diagnostics", "DebuggableAttribute", s_signaturesOfDebuggableAttribute);
-        internal static readonly AttributeDescription TypeForwardedToAttribute = new AttributeDescription("System.Runtime.CompilerServices", "TypeForwardedToAttribute", s_signaturesOfTypeForwardedToAttribute);
+        internal static readonly AttributeDescription TypeForwardedToAttribute = new AttributeDescription("system.runtime.compiler", "TypeForwardedToAttribute", s_signaturesOfTypeForwardedToAttribute);
         internal static readonly AttributeDescription STAThreadAttribute = new AttributeDescription("System", "STAThreadAttribute", s_signaturesOfSTAThreadAttribute);
         internal static readonly AttributeDescription MTAThreadAttribute = new AttributeDescription("System", "MTAThreadAttribute", s_signaturesOfMTAThreadAttribute);
         internal static readonly AttributeDescription ObsoleteAttribute = new AttributeDescription("System", "ObsoleteAttribute", s_signaturesOfObsoleteAttribute);
-        internal static readonly AttributeDescription TypeLibTypeAttribute = new AttributeDescription("System.Runtime.InteropServices", "TypeLibTypeAttribute", s_signaturesOfTypeLibTypeAttribute);
-        internal static readonly AttributeDescription DynamicAttribute = new AttributeDescription("System.Runtime.CompilerServices", "DynamicAttribute", s_signaturesOfDynamicAttribute);
-        internal static readonly AttributeDescription TupleElementNamesAttribute = new AttributeDescription("System.Runtime.CompilerServices", "TupleElementNamesAttribute", s_signaturesOfTupleElementNamesAttribute);
-        internal static readonly AttributeDescription IsByRefLikeAttribute = new AttributeDescription("System.Runtime.CompilerServices", "IsByRefLikeAttribute", s_signaturesOfIsByRefLikeAttribute);
+        internal static readonly AttributeDescription TypeLibTypeAttribute = new AttributeDescription("system.runtime.interop", "TypeLibTypeAttribute", s_signaturesOfTypeLibTypeAttribute);
+        internal static readonly AttributeDescription DynamicAttribute = new AttributeDescription("system.runtime.compiler", "DynamicAttribute", s_signaturesOfDynamicAttribute);
+        internal static readonly AttributeDescription TupleElementNamesAttribute = new AttributeDescription("system.runtime.compiler", "TupleElementNamesAttribute", s_signaturesOfTupleElementNamesAttribute);
+        internal static readonly AttributeDescription IsByRefLikeAttribute = new AttributeDescription("system.runtime.compiler", "IsByRefLikeAttribute", s_signaturesOfIsByRefLikeAttribute);
         internal static readonly AttributeDescription DebuggerHiddenAttribute = new AttributeDescription("System.Diagnostics", "DebuggerHiddenAttribute", s_signaturesOfDebuggerHiddenAttribute);
         internal static readonly AttributeDescription DebuggerNonUserCodeAttribute = new AttributeDescription("System.Diagnostics", "DebuggerNonUserCodeAttribute", s_signaturesOfDebuggerNonUserCodeAttribute);
         internal static readonly AttributeDescription DebuggerStepperBoundaryAttribute = new AttributeDescription("System.Diagnostics", "DebuggerStepperBoundaryAttribute", s_signaturesOfDebuggerStepperBoundaryAttribute);
@@ -518,18 +518,18 @@ namespace StarkPlatform.CodeAnalysis
         internal static readonly AttributeDescription SecuritySafeCriticalAttribute = new AttributeDescription("System.Security", "SecuritySafeCriticalAttribute", s_signaturesOfSecuritySafeCriticalAttribute);
         internal static readonly AttributeDescription DesignerGeneratedAttribute = new AttributeDescription("Microsoft.VisualBasic.CompilerServices", "DesignerGeneratedAttribute", s_signaturesOfDesignerGeneratedAttribute);
         internal static readonly AttributeDescription MyGroupCollectionAttribute = new AttributeDescription("Microsoft.VisualBasic", "MyGroupCollectionAttribute", s_signaturesOfMyGroupCollectionAttribute);
-        internal static readonly AttributeDescription ComEventInterfaceAttribute = new AttributeDescription("System.Runtime.InteropServices", "ComEventInterfaceAttribute", s_signaturesOfComEventInterfaceAttribute);
-        internal static readonly AttributeDescription BestFitMappingAttribute = new AttributeDescription("System.Runtime.InteropServices", "BestFitMappingAttribute", s_signaturesOfBestFitMappingAttribute);
+        internal static readonly AttributeDescription ComEventInterfaceAttribute = new AttributeDescription("system.runtime.interop", "ComEventInterfaceAttribute", s_signaturesOfComEventInterfaceAttribute);
+        internal static readonly AttributeDescription BestFitMappingAttribute = new AttributeDescription("system.runtime.interop", "BestFitMappingAttribute", s_signaturesOfBestFitMappingAttribute);
         internal static readonly AttributeDescription FlagsAttribute = new AttributeDescription("System", "FlagsAttribute", s_signaturesOfFlagsAttribute);
-        internal static readonly AttributeDescription LCIDConversionAttribute = new AttributeDescription("System.Runtime.InteropServices", "LCIDConversionAttribute", s_signaturesOfLCIDConversionAttribute);
-        internal static readonly AttributeDescription UnmanagedFunctionPointerAttribute = new AttributeDescription("System.Runtime.InteropServices", "UnmanagedFunctionPointerAttribute", s_signaturesOfUnmanagedFunctionPointerAttribute);
-        internal static readonly AttributeDescription PrimaryInteropAssemblyAttribute = new AttributeDescription("System.Runtime.InteropServices", "PrimaryInteropAssemblyAttribute", s_signaturesOfPrimaryInteropAssemblyAttribute);
-        internal static readonly AttributeDescription ImportedFromTypeLibAttribute = new AttributeDescription("System.Runtime.InteropServices", "ImportedFromTypeLibAttribute", s_signaturesOfImportedFromTypeLibAttribute);
+        internal static readonly AttributeDescription LCIDConversionAttribute = new AttributeDescription("system.runtime.interop", "LCIDConversionAttribute", s_signaturesOfLCIDConversionAttribute);
+        internal static readonly AttributeDescription UnmanagedFunctionPointerAttribute = new AttributeDescription("system.runtime.interop", "UnmanagedFunctionPointerAttribute", s_signaturesOfUnmanagedFunctionPointerAttribute);
+        internal static readonly AttributeDescription PrimaryInteropAssemblyAttribute = new AttributeDescription("system.runtime.interop", "PrimaryInteropAssemblyAttribute", s_signaturesOfPrimaryInteropAssemblyAttribute);
+        internal static readonly AttributeDescription ImportedFromTypeLibAttribute = new AttributeDescription("system.runtime.interop", "ImportedFromTypeLibAttribute", s_signaturesOfImportedFromTypeLibAttribute);
         internal static readonly AttributeDescription DefaultEventAttribute = new AttributeDescription("System.ComponentModel", "DefaultEventAttribute", s_signaturesOfDefaultEventAttribute);
         internal static readonly AttributeDescription AssemblyConfigurationAttribute = new AttributeDescription("System.Reflection", "AssemblyConfigurationAttribute", s_signaturesOfAssemblyConfigurationAttribute);
         internal static readonly AttributeDescription AssemblyAlgorithmIdAttribute = new AttributeDescription("System.Reflection", "AssemblyAlgorithmIdAttribute", s_signaturesOfAssemblyAlgorithmIdAttribute);
         internal static readonly AttributeDescription DeprecatedAttribute = new AttributeDescription("Windows.Foundation.Metadata", "DeprecatedAttribute", s_signaturesOfDeprecatedAttribute);
-        internal static readonly AttributeDescription NullableAttribute = new AttributeDescription("System.Runtime.CompilerServices", "NullableAttribute", s_signaturesOfNullableAttribute);
+        internal static readonly AttributeDescription NullableAttribute = new AttributeDescription("system.runtime.compiler", "NullableAttribute", s_signaturesOfNullableAttribute);
         internal static readonly AttributeDescription ExperimentalAttribute = new AttributeDescription("Windows.Foundation.Metadata", "ExperimentalAttribute", s_signaturesOfExperimentalAttribute);
         internal static readonly AttributeDescription ExcludeFromCodeCoverageAttribute = new AttributeDescription("System.Diagnostics.CodeAnalysis", "ExcludeFromCodeCoverageAttribute", s_signaturesOfExcludeFromCodeCoverageAttribute);
     }

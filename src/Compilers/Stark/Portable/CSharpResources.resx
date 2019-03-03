@@ -1523,6 +1523,15 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_DuplicateInterfaceInBaseList" xml:space="preserve">
     <value>'{0}' is already listed in interface list</value>
   </data>
+  <data name="ERR_InvalidInterfaceInExtendList" xml:space="preserve">
+    <value>'{0}' is an interface and cannot be used in an extends list for a class or struct</value>
+  </data>
+  <data name="ERR_InvalidClassInImplementList" xml:space="preserve">
+    <value>'{0}' is a class or a struct and cannot be used in an implements list</value>
+  </data>
+  <data name="ERR_InvalidImplementsForInterface" xml:space="preserve">
+    <value>'{0}' is an interface and cannot implement from another type '{1}'</value>
+  </data>
   <data name="ERR_DuplicateInterfaceWithTupleNamesInBaseList" xml:space="preserve">
     <value>'{0}' is already listed in the interface list on type '{2}' with different tuple element names, as '{1}'.</value>
   </data>

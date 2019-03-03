@@ -42,14 +42,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             foreach (SyntaxReference part in SyntaxReferences)
             {
                 TypeDeclarationSyntax typeBlock = (TypeDeclarationSyntax)part.GetSyntax();
-                BaseListSyntax bases = typeBlock.BaseList;
-                if (bases == null)
+                ImplementListSyntax implements = typeBlock.ImplementList;
+                if (implements == null)
                 {
                     continue;
                 }
-                SeparatedSyntaxList<BaseTypeSyntax> inheritedTypeDecls = bases.Types;
+                SeparatedSyntaxList<BaseTypeSyntax> inheritedTypeDecls = implements.Types;
 
-                var baseBinder = this.DeclaringCompilation.GetBinder(bases);
+                var baseBinder = this.DeclaringCompilation.GetBinder(implements);
                 baseBinder = baseBinder.WithAdditionalFlagsAndContainingMemberOrLambda(BinderFlags.SuppressConstraintChecks, this);
 
                 if ((object)backupLocation == null)

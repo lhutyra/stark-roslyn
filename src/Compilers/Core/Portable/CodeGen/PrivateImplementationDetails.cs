@@ -28,7 +28,6 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
 
         private readonly CommonPEModuleBuilder _moduleBuilder;       //the module builder
         private readonly Cci.ITypeReference _systemObject;           //base type
-        private readonly Cci.ITypeReference _systemValueType;        //base for nested structs
 
         private readonly Cci.ITypeReference _systemInt8Type;         //for metadata init of byte arrays
         private readonly Cci.ITypeReference _systemInt16Type;        //for metadata init of short arrays
@@ -65,7 +64,6 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
             string moduleName,
             int submissionSlotIndex,
             Cci.ITypeReference systemObject,
-            Cci.ITypeReference systemValueType,
             Cci.ITypeReference systemInt8Type,
             Cci.ITypeReference systemInt16Type,
             Cci.ITypeReference systemInt32Type,
@@ -73,11 +71,9 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
             Cci.ICustomAttribute compilerGeneratedAttribute)
         {
             Debug.Assert(systemObject != null);
-            Debug.Assert(systemValueType != null);
 
             _moduleBuilder = moduleBuilder;
             _systemObject = systemObject;
-            _systemValueType = systemValueType;
 
             _systemInt8Type = systemInt8Type;
             _systemInt16Type = systemInt16Type;
@@ -151,16 +147,16 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
             switch (size)
             {
                 case 1:
-                    return _systemInt8Type ?? new ExplicitSizeStruct(1, this, _systemValueType);
+                    return _systemInt8Type ?? new ExplicitSizeStruct(1, this);
                 case 2:
-                    return _systemInt16Type ?? new ExplicitSizeStruct(2, this, _systemValueType);
+                    return _systemInt16Type ?? new ExplicitSizeStruct(2, this);
                 case 4:
-                    return _systemInt32Type ?? new ExplicitSizeStruct(4, this, _systemValueType);
+                    return _systemInt32Type ?? new ExplicitSizeStruct(4, this);
                 case 8:
-                    return _systemInt64Type ?? new ExplicitSizeStruct(8, this, _systemValueType);
+                    return _systemInt64Type ?? new ExplicitSizeStruct(8, this);
             }
 
-            return new ExplicitSizeStruct(size, this, _systemValueType);
+            return new ExplicitSizeStruct(size, this);
         }
 
         internal Cci.IFieldReference GetModuleVersionId(Cci.ITypeReference mvidType)
@@ -305,13 +301,11 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
     {
         private readonly uint _size;
         private readonly Cci.INamedTypeDefinition _containingType;
-        private readonly Cci.ITypeReference _sysValueType;
 
-        internal ExplicitSizeStruct(uint size, PrivateImplementationDetails containingType, Cci.ITypeReference sysValueType)
+        internal ExplicitSizeStruct(uint size, PrivateImplementationDetails containingType)
         {
             _size = size;
             _containingType = containingType;
-            _sysValueType = sysValueType;
         }
 
         public override string ToString()
@@ -319,7 +313,7 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
 
         override public ushort Alignment => 1;
 
-        override public Cci.ITypeReference GetBaseClass(EmitContext context) => _sysValueType;
+        override public Cci.ITypeReference GetBaseClass(EmitContext context) => null;
 
         override public LayoutKind Layout => LayoutKind.Explicit;
 

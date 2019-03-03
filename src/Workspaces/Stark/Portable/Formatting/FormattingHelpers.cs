@@ -113,7 +113,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
 
         public static bool IsColonInTypeBaseList(this SyntaxToken token)
         {
-            return token.Kind() == SyntaxKind.ColonToken && token.Parent.Kind() == SyntaxKind.BaseList;
+            return token.Kind() == SyntaxKind.ColonToken && token.Parent.Kind() == SyntaxKind.ImplementList;
         }
 
         public static bool IsCommaInArgumentOrParameterList(this SyntaxToken token)
