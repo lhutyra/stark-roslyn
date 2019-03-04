@@ -1130,7 +1130,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
         protected SyntaxToken EatEos<T>(ref T node) where T : CSharpSyntaxNode
         {
-            var trivias = node.GetLastTerminal().GetTrailingTriviaCore();
+            var trivias = node is SyntaxToken ? node.GetTrailingTriviaCore() : node.GetLastTerminal()?.GetTrailingTriviaCore();
             if (trivias != null)
             {
                 GreenNode leftTrivia;
@@ -1138,7 +1138,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
                 var eolTrivia = FindEolAndSplit(trivias, out leftTrivia, out rightTrivia);
                 if (eolTrivia != null)
                 {
-                    var lastToken = node.GetLastToken();
+                    var lastToken = node is SyntaxToken token ? token : node.GetLastToken();
                     var newToken = (SyntaxToken)lastToken.WithTrailingTrivia(leftTrivia);
                     node = SyntaxLastTokenReplacer.Replace(node, newToken);
                     return SyntaxFactory.Token(null, SyntaxKind.EndOfLineTrivia, eolTrivia.Text, null, rightTrivia);
