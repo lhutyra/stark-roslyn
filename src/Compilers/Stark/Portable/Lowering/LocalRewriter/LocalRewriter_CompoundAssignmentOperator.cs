@@ -386,16 +386,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             Debug.Assert(receiver.Kind != BoundKind.TypeExpression);
             BoundExpression rewrittenReceiver = VisitExpression(receiver);
 
-            if (rewrittenReceiver.Type.IsTypeParameter())
-            {
-                var memberContainingType = fieldOrEvent.ContainingType;
-
-                // From the verifier perspective type parameters do not contain fields or methods.
-                // the instance must be "boxed" to access the field
-                // It makes sense to box receiver before storing into a temp - no need to box twice.
-                rewrittenReceiver = BoxReceiver(rewrittenReceiver, memberContainingType);
-            }
-
             BoundAssignmentOperator assignmentToTemp;
             var receiverTemp = _factory.StoreToTemp(rewrittenReceiver, out assignmentToTemp);
             stores.Add(assignmentToTemp);
@@ -638,17 +628,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         private static bool IsInvariantArray(TypeSymbol type)
         {
             return (type as ArrayTypeSymbol)?.ElementType.TypeSymbol.IsSealed == true;
-        }
-
-        private BoundExpression BoxReceiver(BoundExpression rewrittenReceiver, NamedTypeSymbol memberContainingType)
-        {
-            return MakeConversionNode(
-                rewrittenReceiver.Syntax,
-                rewrittenReceiver,
-                Conversion.Boxing,
-                memberContainingType,
-                @checked: false,
-                constantValueOpt: rewrittenReceiver.ConstantValue);
         }
 
         private BoundExpression SpillArrayElementAccess(

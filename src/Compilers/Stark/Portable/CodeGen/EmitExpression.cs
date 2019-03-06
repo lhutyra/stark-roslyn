@@ -1369,11 +1369,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
 
                     switch (conversion.ConversionKind)
                     {
-                        case ConversionKind.Boxing:
-                            // NOTE: boxing can produce null for Nullable, but any call through that
-                            // will result in null reference exceptions anyways.
-                            return true;
-
                         case ConversionKind.MethodGroup:
                         case ConversionKind.AnonymousFunction:
                             return true;
@@ -1516,7 +1511,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
                             //       otherwise we should not use direct 'call' and must use constrained call;
 
                             // calling a method defined in a value type
-                            Debug.Assert(TypeSymbol.Equals(receiverType, methodContainingType, TypeCompareKind.ConsiderEverything2));
                             tempOpt = EmitReceiverRef(receiver, receiverAddresskind);
                             callKind = CallKind.Call;
                         }

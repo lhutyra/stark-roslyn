@@ -1517,8 +1517,8 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_InterfacesCantContainConstructors" xml:space="preserve">
     <value>Interfaces cannot contain constructors</value>
   </data>
-  <data name="ERR_NonInterfaceInInterfaceList" xml:space="preserve">
-    <value>Type '{0}' in interface list is not an interface</value>
+  <data name="ERR_NonInterfaceInImplementsList" xml:space="preserve">
+    <value>Type '{0}' in implements list is not an interface</value>
   </data>
   <data name="ERR_DuplicateInterfaceInBaseList" xml:space="preserve">
     <value>'{0}' is already listed in interface list</value>
@@ -1526,8 +1526,11 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_InvalidInterfaceInExtendList" xml:space="preserve">
     <value>'{0}' is an interface and cannot be used in an extends list for a class or struct</value>
   </data>
-  <data name="ERR_InvalidClassInImplementList" xml:space="preserve">
-    <value>'{0}' is a class or a struct and cannot be used in an implements list</value>
+  <data name="ERR_NonStructBaseForStruct" xml:space="preserve">
+    <value>'{0}' is not a struct and cannot be used as the base of the struct `{1}`</value>
+  </data>
+  <data name="ERR_NonClassBaseForClass" xml:space="preserve">
+    <value>'{0}' is not a class and cannot be used as the base of the class `{1}`</value>
   </data>
   <data name="ERR_InvalidImplementsForInterface" xml:space="preserve">
     <value>'{0}' is an interface and cannot implement from another type '{1}'</value>

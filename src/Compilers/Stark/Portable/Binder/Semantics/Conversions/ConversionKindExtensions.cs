@@ -32,7 +32,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case ConversionKind.ImplicitNullable:
                 case ConversionKind.DefaultOrNullLiteral:
                 case ConversionKind.ImplicitReference:
-                case ConversionKind.Boxing:
                 case ConversionKind.ImplicitDynamic:
                 case ConversionKind.ImplicitConstant:
                 case ConversionKind.ImplicitUserDefined:

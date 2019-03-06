@@ -6064,15 +6064,6 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; is a class or a struct and cannot be used in an implements list.
-        /// </summary>
-        internal static string ERR_InvalidClassInImplementList {
-            get {
-                return ResourceManager.GetString("ERR_InvalidClassInImplementList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is of type &apos;{1}&apos;. The type specified in a constant declaration must be sbyte, byte, short, ushort, int, uint, long, ulong, char, float, double, decimal, bool, string, an enum-type, or a reference-type..
         /// </summary>
         internal static string ERR_InvalidConstantDeclarationType {
@@ -7540,6 +7531,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is not a class and cannot be used as the base of the class `{1}`.
+        /// </summary>
+        internal static string ERR_NonClassBaseForClass {
+            get {
+                return ResourceManager.GetString("ERR_NonClassBaseForClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot compile net modules when using /refout or /refonly..
         /// </summary>
         internal static string ERR_NoNetModuleOutputWhenRefOutOrRefOnly {
@@ -7567,11 +7567,11 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type &apos;{0}&apos; in interface list is not an interface.
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; in implements list is not an interface.
         /// </summary>
-        internal static string ERR_NonInterfaceInInterfaceList {
+        internal static string ERR_NonInterfaceInImplementsList {
             get {
-                return ResourceManager.GetString("ERR_NonInterfaceInInterfaceList", resourceCulture);
+                return ResourceManager.GetString("ERR_NonInterfaceInImplementsList", resourceCulture);
             }
         }
         
@@ -7581,6 +7581,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_NonInvocableMemberCalled {
             get {
                 return ResourceManager.GetString("ERR_NonInvocableMemberCalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is not a struct and cannot be used as the base of the struct `{1}`.
+        /// </summary>
+        internal static string ERR_NonStructBaseForStruct {
+            get {
+                return ResourceManager.GetString("ERR_NonStructBaseForStruct", resourceCulture);
             }
         }
         

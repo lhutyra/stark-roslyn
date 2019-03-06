@@ -3606,16 +3606,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                 type: constructorReturnType);
                         }
                     }
-                    else if (initializerArgumentListOpt != null && containingType.TypeKind == TypeKind.Struct)
-                    {
-                        diagnostics.Add(ErrorCode.ERR_StructWithBaseConstructorCall, constructor.Locations[0], containingType);
-                        return new BoundBadExpression(
-                            syntax: initializerArgumentListOpt.Parent,
-                            resultKind: LookupResultKind.Empty,
-                            symbols: ImmutableArray<Symbol>.Empty, //CONSIDER: we could look for a matching constructor on System.ValueType
-                            childBoundNodes: BuildArgumentsForErrorRecovery(analyzedArguments),
-                            type: constructorReturnType);
-                    }
                 }
                 else
                 {

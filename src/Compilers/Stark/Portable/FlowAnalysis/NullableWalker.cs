@@ -5018,33 +5018,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             }
                             break;
 
-                        case ConversionKind.Boxing:
-                            if (operandType.TypeSymbol?.IsValueType == true)
-                            {
-                                nullableAnnotation = (operandType.TypeSymbol.IsNullableType() && operandType.NullableAnnotation.IsAnyNullable()) ? NullableAnnotation.Nullable : NullableAnnotation.NotNullable;
-                            }
-                            else
-                            {
-                                Debug.Assert(operandType.TypeSymbol?.IsReferenceType != true);
-
-                                if (!operandType.IsNull)
-                                {
-                                    if (operandType.IsPossiblyNullableReferenceTypeTypeParameter() && type.IsPossiblyNullableReferenceTypeTypeParameter())
-                                    {
-                                        nullableAnnotation = NullableAnnotation.NotAnnotated;
-                                    }
-                                    else
-                                    {
-                                        nullableAnnotation = operandType.GetValueNullableAnnotation();
-                                    }
-                                }
-                                else
-                                {
-                                    nullableAnnotation = NullableAnnotation.Nullable;
-                                }
-                            }
-                            break;
-
                         case ConversionKind.ImplicitNullable:
                             nullableAnnotation = (operandType.IsNullableType() && operandType.NullableAnnotation.IsAnyNullable()) ? NullableAnnotation.Nullable : NullableAnnotation.NotNullable;
                             break;

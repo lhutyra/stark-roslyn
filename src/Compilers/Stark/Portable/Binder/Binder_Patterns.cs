@@ -226,7 +226,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         convertedExpression = CreateConversion(operand, inputType.GetNullableUnderlyingType(), discardedDiagnostics);
                         discardedDiagnostics.Free();
                     }
-                    else if ((conversion.ConversionKind == ConversionKind.Boxing || conversion.ConversionKind == ConversionKind.ImplicitReference)
+                    else if (conversion.ConversionKind == ConversionKind.ImplicitReference
                         && operand.ConstantValue != null && convertedExpression.ConstantValue == null)
                     {
                         // A boxed constant (or string converted to object) is a special case because we prefer

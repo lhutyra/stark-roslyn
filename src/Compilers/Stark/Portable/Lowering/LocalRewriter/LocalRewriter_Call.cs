@@ -318,7 +318,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                 case ConversionKind.DefaultOrNullLiteral:
                                     return true;
 
-                                case ConversionKind.Boxing:
                                 case ConversionKind.ImplicitDynamic:
                                 case ConversionKind.ExplicitDynamic:
                                 case ConversionKind.ExplicitEnumeration:
@@ -330,7 +329,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                 case ConversionKind.ImplicitNullable:
                                 case ConversionKind.ImplicitNumeric:
                                 case ConversionKind.ImplicitReference:
-                                case ConversionKind.Unboxing:
                                 case ConversionKind.PointerToInteger:
                                 case ConversionKind.PointerToPointer:
                                 case ConversionKind.PointerToVoid:

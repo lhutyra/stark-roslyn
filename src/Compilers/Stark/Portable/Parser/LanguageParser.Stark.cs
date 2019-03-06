@@ -1472,7 +1472,7 @@ tryAgain:
             {
                 return null;
             }
-            return (ExtendListSyntax)ParseBaseList();
+            return (ExtendListSyntax)ParseBaseList(SyntaxKind.ExtendsKeyword);
         }
 
         private ImplementListSyntax ParseImplementList()
@@ -1481,17 +1481,12 @@ tryAgain:
             {
                 return null;
             }
-            return (ImplementListSyntax)ParseBaseList();
+            return (ImplementListSyntax)ParseBaseList(SyntaxKind.ImplementsKeyword);
         }
 
-        private BaseListSyntax ParseBaseList()
+        private BaseListSyntax ParseBaseList(SyntaxKind expectedToken)
         {
-            if (this.CurrentToken.Kind != SyntaxKind.ExtendsKeyword && this.CurrentToken.Kind != SyntaxKind.ImplementsKeyword)
-            {
-                return null;
-            }
-
-            var extendsOrImplements = this.EatToken();
+            var extendsOrImplements = this.EatToken(expectedToken);
             var list = _pool.AllocateSeparated<BaseTypeSyntax>();
             try
             {
@@ -1503,6 +1498,7 @@ tryAgain:
                 while (true)
                 {
                     if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken ||
+                        (expectedToken == SyntaxKind.ExtendsKeyword && this.CurrentToken.Kind == SyntaxKind.ImplementsKeyword) ||
                         this.IsCurrentTokenWhereOfConstraintClause())
                     {
                         break;

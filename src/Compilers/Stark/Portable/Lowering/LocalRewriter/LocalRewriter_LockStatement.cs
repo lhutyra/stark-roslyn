@@ -34,21 +34,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     argumentType); //need to have a non-null type here for TempHelpers.StoreToTemp.
             }
 
-            if (argumentType.Kind == SymbolKind.TypeParameter)
-            {
-                // If the argument has a type parameter type, then we'll box it right away
-                // so that the same object is passed to both Monitor.Enter and Monitor.Exit.
-                argumentType = _compilation.GetSpecialType(SpecialType.System_Object);
-
-                rewrittenArgument = MakeConversionNode(
-                    rewrittenArgument.Syntax,
-                    rewrittenArgument,
-                    Conversion.Boxing,
-                    argumentType,
-                    @checked: false,
-                    constantValueOpt: rewrittenArgument.ConstantValue);
-            }
-
             BoundAssignmentOperator assignmentToLockTemp;
             BoundLocal boundLockTemp = _factory.StoreToTemp(rewrittenArgument, out assignmentToLockTemp, syntaxOpt: lockSyntax, kind: SynthesizedLocalKind.Lock);
 

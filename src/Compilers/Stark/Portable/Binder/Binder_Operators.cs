@@ -3090,23 +3090,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     // If it is of pointer type then we have already given an error.
                     return operandCouldBeNull ? null : ConstantValue.True;
 
-                case ConversionKind.Boxing:
-
-                    // A boxing conversion might be a conversion:
-                    //
-                    // * From a non-nullable value type to a reference type
-                    // * From a nullable value type to a reference type
-                    // * From a type parameter that *could* be a value type under construction
-                    //   to a reference type
-                    //
-                    // In the first case we know that the conversion will always succeed and that the
-                    // operand is never null, and therefore "is" will always result in true.
-                    //
-                    // In the second two cases we do not know; either the nullable value type could be
-                    // null, or the type parameter could be constructed with a reference type, and it
-                    // could be null.
-                    return operandCouldBeNull ? null : ConstantValue.True;
-
                 case ConversionKind.ImplicitNullable:
                     // We have "x is T" in one of the following situations:
                     // 1) x is of type X and T is X?.  The value is always true.
@@ -3306,12 +3289,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             switch (conversionKind)
             {
                 case ConversionKind.ImplicitReference:
-                case ConversionKind.Boxing:
                 case ConversionKind.ImplicitNullable:
                 case ConversionKind.Identity:
                 case ConversionKind.ExplicitNullable:
                 case ConversionKind.ExplicitReference:
-                case ConversionKind.Unboxing:
                     break;
 
                 default:

@@ -577,7 +577,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case ConversionKind.ExplicitEnumeration:
                 case ConversionKind.ExplicitNullable:
                 case ConversionKind.ExplicitReference:
-                case ConversionKind.Unboxing:
                 case ConversionKind.ExplicitDynamic:
                 case ConversionKind.PointerToPointer:
                 case ConversionKind.PointerToInteger:
@@ -597,7 +596,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case ConversionKind.ImplicitNumeric:
                 case ConversionKind.ImplicitNullable:
                 case ConversionKind.ImplicitReference:
-                case ConversionKind.Boxing:
                 case ConversionKind.ImplicitConstant:
                 case ConversionKind.PointerToVoid:
 

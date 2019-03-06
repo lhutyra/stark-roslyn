@@ -173,30 +173,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         explicitCastInCode: explicitCastInCode,
                         rewrittenType: rewrittenType);
 
-                case ConversionKind.Boxing:
-
-                    if (!_inExpressionLambda)
-                    {
-                        // We can perform some optimizations if we have a nullable value type
-                        // as the operand and we know its nullability:
-
-                        // * (object)new int?() is the same as (object)null
-                        // * (object)new int?(123) is the same as (object)123
-
-                        if (NullableNeverHasValue(rewrittenOperand))
-                        {
-                            return new BoundDefaultExpression(syntax, rewrittenType);
-                        }
-
-                        BoundExpression nullableValue = NullableAlwaysHasValue(rewrittenOperand);
-                        if (nullableValue != null)
-                        {
-                            // Recurse, eliminating the unnecessary ctor.
-                            return MakeConversionNode(oldNode, syntax, nullableValue, conversion, @checked, explicitCastInCode, constantValueOpt, rewrittenType);
-                        }
-                    }
-                    break;
-
                 case ConversionKind.DefaultOrNullLiteral:
                     if (!_inExpressionLambda || !explicitCastInCode)
                     {

@@ -444,7 +444,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case ConversionKind.ImplicitEnumeration:
                 // implicit ref cast does not throw ...
                 case ConversionKind.ImplicitReference:
-                case ConversionKind.Boxing:
                     return false;
 
                 // unchecked numeric conversion does not throw 

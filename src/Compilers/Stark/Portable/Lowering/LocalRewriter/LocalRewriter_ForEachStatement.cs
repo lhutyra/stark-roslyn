@@ -260,7 +260,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (isImplicit || !(enumeratorInfo.DisposeMethod is null))
             {
                 Conversion receiverConversion = enumeratorType.IsStructType() ?
-                    Conversion.Boxing :
+                    Conversion.NoConversion :
                     Conversion.ImplicitReference;
 
                 BoundExpression receiver = enumeratorInfo.DisposeMethod is null ?

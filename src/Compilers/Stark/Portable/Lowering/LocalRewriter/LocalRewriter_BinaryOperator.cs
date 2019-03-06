@@ -1940,12 +1940,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             if ((object)exprType != null)
             {
-                if (exprType.Kind == SymbolKind.TypeParameter)
-                {
-                    // Box type parameters.
-                    rewrittenExpr = MakeConversionNode(syntax, rewrittenExpr, Conversion.Boxing, objectType, @checked: false);
-                }
-                else if (exprType.IsNullableType())
+                if (exprType.IsNullableType())
                 {
                     operatorKind |= BinaryOperatorKind.NullableNull;
                 }

@@ -525,11 +525,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return Conversion.ImplicitReference;
             }
 
-            if (HasBoxingConversion(source, destination, ref useSiteDiagnostics))
-            {
-                return Conversion.Boxing;
-            }
-
             if (HasImplicitPointerConversion(source, destination))
             {
                 return Conversion.PointerToVoid;
@@ -551,7 +546,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         private bool HasExtendedTypeImplicitConversion(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
         {
-            return source.GetRequiredAccessModifiers(destination, out _) == 0;
+            // TODO: rework this part by taking into account inheritance
+            //return source.GetRequiredAccessModifiers(destination, out _) == 0;
+            return false;
         }
 
         private Conversion ClassifyImplicitBuiltInConversionSlow(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
@@ -619,11 +616,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return (source.Kind == SymbolKind.DynamicType) ? Conversion.ExplicitDynamic : Conversion.ExplicitReference;
             }
 
-            if (HasUnboxingConversion(source, destination, ref useSiteDiagnostics))
-            {
-                return Conversion.Unboxing;
-            }
-
             var tupleConversion = ClassifyExplicitTupleConversion(source, destination, ref useSiteDiagnostics, forCast);
             if (tupleConversion.Exists)
             {
@@ -674,9 +666,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     break;
                 case ConversionKind.ImplicitReference:
                     impliedExplicitConversion = Conversion.ExplicitReference;
-                    break;
-                case ConversionKind.Boxing:
-                    impliedExplicitConversion = Conversion.Unboxing;
                     break;
                 case ConversionKind.NoConversion:
                     impliedExplicitConversion = Conversion.NoConversion;
@@ -1484,11 +1473,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return Conversion.Identity;
                 }
 
-                if (HasBoxingConversion(sourceType, destination, ref useSiteDiagnostics))
-                {
-                    return Conversion.Boxing;
-                }
-
                 if (HasImplicitReferenceConversion(sourceType, destination, ref useSiteDiagnostics))
                 {
                     return Conversion.ImplicitReference;
@@ -1550,7 +1534,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             switch (conversion.Kind)
             {
                 case ConversionKind.Identity:
-                case ConversionKind.Boxing:
                 case ConversionKind.ImplicitReference:
                     return true;
 
@@ -2755,9 +2738,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return true;
             }
 
-            // The rest of the boxing conversions only operate when going from a value type to a
-            // reference type.
-            if (!source.IsValueType || !destination.IsReferenceType)
+            if (!destination.IsReferenceType)
             {
                 return false;
             }
@@ -2767,38 +2748,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (source.IsNullableType())
             {
                 return HasBoxingConversion(source.GetNullableUnderlyingType(), destination, ref useSiteDiagnostics);
-            }
-
-            // A boxing conversion exists from any non-nullable value type to object and dynamic, to
-            // System.ValueType, and to any interface type variance-compatible with one implemented
-            // by the non-nullable value type.  
-
-            // Furthermore, an enum type can be converted to the type System.Enum.
-
-            // We set the base class of the structs to System.ValueType, System.Enum, etc, so we can
-            // just check here.
-
-            // There are a couple of exceptions. The very special types ArgIterator, ArgumentHandle and 
-            // TypedReference are not boxable: 
-
-            if (source.IsRestrictedType())
-            {
-                return false;
-            }
-
-            if (destination.Kind == SymbolKind.DynamicType)
-            {
-                return !source.IsPointerType();
-            }
-
-            if (IsBaseClass(source, destination, ref useSiteDiagnostics))
-            {
-                return true;
-            }
-
-            if (HasAnyBaseInterfaceConversion(source, destination, ref useSiteDiagnostics))
-            {
-                return true;
             }
 
             return false;
@@ -3187,62 +3136,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             return false;
         }
-
-        private bool HasUnboxingConversion(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
-        {
-            Debug.Assert((object)source != null);
-            Debug.Assert((object)destination != null);
-
-            if (destination.IsPointerType())
-            {
-                return false;
-            }
-
-            // Ref-like types cannot be boxed or unboxed
-            if (destination.IsRestrictedType())
-            {
-                return false;
-            }
-
-            // SPEC: and from any interface-type to any non-nullable-value-type that implements the interface-type. 
-            if (source.IsInterfaceType() &&
-                destination.IsValueType &&
-                !destination.IsNullableType() &&
-                HasBoxingConversion(destination, source, ref useSiteDiagnostics))
-            {
-                return true;
-            }
-
-            // SPEC: Furthermore type System.Enum can be unboxed to any enum-type.
-            if (source.SpecialType == SpecialType.System_Enum && destination.IsEnumType())
-            {
-                return true;
-            }
-
-            // SPEC: An unboxing conversion exists from a reference type to a nullable-type if an unboxing 
-            // SPEC: conversion exists from the reference type to the underlying non-nullable-value-type 
-            // SPEC: of the nullable-type.
-            if (source.IsReferenceType &&
-                destination.IsNullableType() &&
-                HasUnboxingConversion(source, destination.GetNullableUnderlyingType(), ref useSiteDiagnostics))
-            {
-                return true;
-            }
-
-            // SPEC: UNDONE A value type S has an unboxing conversion from an interface type I if it has an unboxing 
-            // SPEC: UNDONE conversion from an interface type I0 and I0 has an identity conversion to I.
-
-            // SPEC: UNDONE A value type S has an unboxing conversion from an interface type I if it has an unboxing conversion 
-            // SPEC: UNDONE from an interface or delegate type I0 and either I0 is variance-convertible to I or I is variance-convertible to I0.
-
-            if (HasUnboxingTypeParameterConversion(source, destination, ref useSiteDiagnostics))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
+       
         private static bool HasPointerToPointerConversion(TypeSymbol source, TypeSymbol destination)
         {
             Debug.Assert((object)source != null);

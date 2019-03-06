@@ -348,7 +348,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_InterfacesCannotContainTypes = 524,
         ERR_InterfacesCantContainFields = 525,
         ERR_InterfacesCantContainConstructors = 526,
-        ERR_NonInterfaceInInterfaceList = 527,
+        ERR_NonInterfaceInImplementsList = 527,
         ERR_DuplicateInterfaceInBaseList = 528,
         ERR_CycleInInterfaceInheritance = 529,
         ERR_InterfaceMemberHasBody = 531,
@@ -1693,8 +1693,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_AccessModifiersNotSupported = 9004,
         ERR_AssignReadOnlyLocal = 9005,
         ERR_InvalidInterfaceInExtendList = 9006,
-        ERR_InvalidClassInImplementList = 9007,
-        ERR_InvalidImplementsForInterface = 9008,
+        ERR_NonStructBaseForStruct = 9007,
+        ERR_NonClassBaseForClass = 9008,
+        ERR_InvalidImplementsForInterface = 9009,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

@@ -180,14 +180,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case ConversionKind.ImplicitEnumeration:
                 case ConversionKind.ImplicitThrow:
                 case ConversionKind.AnonymousFunction:
-                case ConversionKind.Boxing:
                 case ConversionKind.DefaultOrNullLiteral:
                 case ConversionKind.NullToPointer:
                 case ConversionKind.PointerToVoid:
                 case ConversionKind.PointerToPointer:
                 case ConversionKind.PointerToInteger:
                 case ConversionKind.IntegerToPointer:
-                case ConversionKind.Unboxing:
                 case ConversionKind.ExplicitReference:
                 case ConversionKind.IntPtr:
                 case ConversionKind.ExplicitEnumeration:
@@ -220,14 +218,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
         internal static Conversion ImplicitEnumeration => new Conversion(ConversionKind.ImplicitEnumeration);
         internal static Conversion ImplicitThrow => new Conversion(ConversionKind.ImplicitThrow);
         internal static Conversion AnonymousFunction => new Conversion(ConversionKind.AnonymousFunction);
-        internal static Conversion Boxing => new Conversion(ConversionKind.Boxing);
         internal static Conversion DefaultOrNullLiteral => new Conversion(ConversionKind.DefaultOrNullLiteral);
         internal static Conversion NullToPointer => new Conversion(ConversionKind.NullToPointer);
         internal static Conversion PointerToVoid => new Conversion(ConversionKind.PointerToVoid);
         internal static Conversion PointerToPointer => new Conversion(ConversionKind.PointerToPointer);
         internal static Conversion PointerToInteger => new Conversion(ConversionKind.PointerToInteger);
         internal static Conversion IntegerToPointer => new Conversion(ConversionKind.IntegerToPointer);
-        internal static Conversion Unboxing => new Conversion(ConversionKind.Unboxing);
         internal static Conversion ExplicitReference => new Conversion(ConversionKind.ExplicitReference);
         internal static Conversion IntPtr => new Conversion(ConversionKind.IntPtr);
         internal static Conversion ExplicitEnumeration => new Conversion(ConversionKind.ExplicitEnumeration);

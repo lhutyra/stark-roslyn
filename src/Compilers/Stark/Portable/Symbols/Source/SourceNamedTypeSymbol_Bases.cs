@@ -405,8 +405,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             var isInterface = TypeKind == TypeKind.Interface;
             var isClassOrStruct = TypeKind == TypeKind.Class || TypeKind == TypeKind.Struct;
 
-
-
             foreach (var baseTypeSyntax in baseList.Types)
             {
                 i++;
@@ -424,6 +422,21 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 {
                     baseType = baseBinder.BindType(typeSyntax, diagnostics, newBasesBeingResolved).TypeSymbol;
 
+
+                    if (baseType.TypeKind != TypeKind)
+                    {
+                        if (TypeKind == TypeKind.Struct)
+                        {
+                            diagnostics.Add(ErrorCode.ERR_NonStructBaseForStruct, location, baseType, this);
+                            continue;
+                        }
+                        else
+                        {
+                            diagnostics.Add(ErrorCode.ERR_NonClassBaseForClass, location, baseType, this);
+                            continue;
+                        }
+                    }
+                    
                     SpecialType baseSpecialType = baseType.SpecialType;
                     if (IsRestrictedBaseType(baseSpecialType))
                     {
@@ -441,16 +454,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         else
                         {
                             // '{0}' cannot derive from special class '{1}'
-                            diagnostics.Add(ErrorCode.ERR_DeriveFromEnumOrValueType, Locations[0], this, baseType);
+                            diagnostics.Add(ErrorCode.ERR_DeriveFromEnumOrValueType, Locations[0], baseType, this);
                             continue;
                         }
                     }
 
                     if (baseType.IsSealed && !this.IsStatic) // Give precedence to ERR_StaticDerivedFromNonObject
                     {
-                        diagnostics.Add(ErrorCode.ERR_CantDeriveFromSealedType, Locations[0], this, baseType);
+                        diagnostics.Add(ErrorCode.ERR_CantDeriveFromSealedType, Locations[0], baseType, this);
                         continue;
                     }
+
+                    // TODO: log error if base class is not struct/class
 
                     bool baseTypeIsErrorWithoutInterfaceGuess = false;
 
@@ -539,44 +554,27 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         break;
 
                     case TypeKind.Struct:
-                        // TODO: make error struct specific
-                        if (TypeKind == TypeKind.Struct && (object)localBase != null)
+                        if ((object)localBase != null)
                         {
                             if (isExtendList)
                             {
                                 diagnostics.Add(ErrorCode.ERR_NoMultipleInheritance, location, this, localBase, baseType);
                                 break;
                             }
-                            else
-                            {
-                                // TODO: add localBase?
-                                diagnostics.Add(ErrorCode.ERR_InvalidClassInImplementList, location, this, baseType);
-                                break;
-                            }
                         }
-
-                        // Else we are in an interface
-                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInInterfaceList, location, baseType);
+                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInImplementsList, location, baseType);
                         break;
 
                     case TypeKind.Class:
-                        if (TypeKind == TypeKind.Class && (object)localBase != null)
+                        if ((object)localBase != null)
                         {
                             if (isExtendList)
                             {
                                 diagnostics.Add(ErrorCode.ERR_NoMultipleInheritance, location, this, localBase, baseType);
                                 break;
                             }
-                            else
-                            {
-                                // TODO: add localBase?
-                                diagnostics.Add(ErrorCode.ERR_InvalidClassInImplementList, location, this, baseType);
-                                break;
-                            }
                         }
-
-                        // Else we are in an interface
-                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInInterfaceList, location, baseType);
+                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInImplementsList, location, baseType);
                         break;
 
                     case TypeKind.TypeParameter:
@@ -596,7 +594,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         throw ExceptionUtilities.UnexpectedValue(baseType.TypeKind);
 
                     default:
-                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInInterfaceList, location, baseType);
+                        diagnostics.Add(ErrorCode.ERR_NonInterfaceInImplementsList, location, baseType);
                         break;
                 }
             }
