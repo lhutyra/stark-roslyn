@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>StarkPlatform.CodeAnalysis</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFrameworks>$(RoslynPortableTargetFrameworks)</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);WORKSPACE_ERGON</DefineConstants>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageDescription>
+      .NET Compiler Platform ("Roslyn") support for analyzing Ergon projects and solutions. This should be used with at least one
+      of the following packages to add the appropriate language support:
+      - StarkPlatform.CodeAnalysis.Shark.Workspaces
+    </PackageDescription>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\Compilers\Shared\CoreClrAnalyzerAssemblyLoader.cs">
+      <Link>InternalUtilities\CoreClrAnalyzerAssemblyLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Compilers\Shared\GlobalAssemblyCacheHelpers\GlobalAssemblyCacheLocation.cs">
+      <Link>InternalUtilities\GlobalAssemblyCache.cs</Link>
+    </Compile>
+    <Compile Update="WorkspaceErgonResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WorkspaceErgonResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\src\Ergon.Core\Ergon.Core.csproj" />
+    <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="WorkspaceErgonResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WorkspaceErgonResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="StarkPlatform.CodeAnalysis.Workspaces.Ergon.UnitTests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" Key="$(MoqPublicKey)" />
+  </ItemGroup>
+</Project>
