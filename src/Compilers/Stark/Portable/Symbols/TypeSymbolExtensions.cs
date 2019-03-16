@@ -669,6 +669,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     case TypeKind.TypeParameter:
                     case TypeKind.Submission:
                     case TypeKind.Enum:
+                    case TypeKind.ConstLiteral:
                         return null;
 
                     case TypeKind.Class:

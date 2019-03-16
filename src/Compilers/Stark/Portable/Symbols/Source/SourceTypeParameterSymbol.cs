@@ -460,6 +460,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public override bool HasConstTypeConstraint
+        {
+            get
+            {
+                var constraints = this.GetDeclaredConstraints();
+                return (constraints & (TypeParameterConstraintKind.Const)) != 0;
+            }
+        }
+
         public override bool HasReferenceTypeConstraint
         {
             get
@@ -559,6 +568,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 var constraints = this.GetDeclaredConstraints();
                 return (constraints & (TypeParameterConstraintKind.ValueType | TypeParameterConstraintKind.Unmanaged)) != 0;
+            }
+        }
+
+        public override bool HasConstTypeConstraint
+        {
+            get
+            {
+                var constraints = this.GetDeclaredConstraints();
+                return (constraints & (TypeParameterConstraintKind.Const)) != 0;
             }
         }
 
@@ -780,6 +798,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 var typeParameter = this.OverriddenTypeParameter;
                 return ((object)typeParameter != null) && typeParameter.HasValueTypeConstraint;
+            }
+        }
+
+        public override bool HasConstTypeConstraint
+        {
+            get
+            {
+                var typeParameter = this.OverriddenTypeParameter;
+                return ((object)typeParameter != null) && typeParameter.HasConstTypeConstraint;
             }
         }
 

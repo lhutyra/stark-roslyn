@@ -460,6 +460,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         return BindNamespaceOrTypeOrAliasSymbol(refTypeSyntax.Type, diagnostics, basesBeingResolved, suppressUseSiteDiagnostics);
                     }
 
+                case SyntaxKind.ConstLiteralType:
+                    var constListeralTypeSyntax = (ConstLiteralTypeSyntax)syntax;
+                    var literal = BindLiteralConstant(constListeralTypeSyntax.Value, diagnostics);
+                    var constType = literal.Type;
+                    return TypeSymbolWithAnnotations.Create(new ConstLiteralTypeSymbol(TypeSymbolWithAnnotations.Create(constType), literal.ConstantValue.Value));
+
                 case SyntaxKind.ExtendedType:
                 {
                     // extended type syntax

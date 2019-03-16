@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using StarkPlatform.CodeAnalysis.SymbolDisplay;
@@ -277,6 +278,19 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 // ???
                 AddPunctuation(SyntaxKind.EqualsToken);
                 symbol.Target.Accept(this);
+            }
+        }
+
+        public override void VisitConstLiteralType(IConstLiteralTypeSymbol constLiteralTypeSymbol)
+        {
+            // TODO: Improve symbol display for const literal
+            if (constLiteralTypeSymbol.Value is string)
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.StringLiteral, constLiteralTypeSymbol, (string)constLiteralTypeSymbol.Value));
+            }
+            else
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.NumericLiteral, constLiteralTypeSymbol, constLiteralTypeSymbol.Value.ToString()));
             }
         }
 

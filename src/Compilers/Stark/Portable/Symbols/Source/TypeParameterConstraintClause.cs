@@ -18,6 +18,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         ValueType = 0x02,
         Constructor = 0x04,
         Unmanaged = 0x08,
+        Const = 0x10,
         NullableReferenceType = ReferenceType | 0x10,
         NotNullableReferenceType = ReferenceType | 0x20,
     }
@@ -58,6 +59,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             switch (constraints & (TypeParameterConstraintKind.NullableReferenceType | TypeParameterConstraintKind.NotNullableReferenceType))
             {
                 case TypeParameterConstraintKind.None:
+                case TypeParameterConstraintKind.Const:
                 case TypeParameterConstraintKind.ReferenceType:
                 case TypeParameterConstraintKind.NullableReferenceType:
                 case TypeParameterConstraintKind.NotNullableReferenceType:
@@ -80,6 +82,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// Syntax for the constraint types. Populated from early constraint checking step only.
         /// </summary>
         internal readonly ImmutableArray<TypeConstraintSyntax> TypeConstraintsSyntax;
+
+        public bool IsConst => (Constraints & TypeParameterConstraintKind.Const) != 0;
 
         /// <summary>
         /// Collection of constraint clauses for other partial declarations of the same container.

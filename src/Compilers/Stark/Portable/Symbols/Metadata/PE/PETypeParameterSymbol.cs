@@ -309,6 +309,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
             }
         }
 
+        public override bool HasConstTypeConstraint
+        {
+            get
+            {
+                return (_flags & GenericParameterAttributesExt.ConstConstraint) != 0;
+            }
+        }
+
         public override bool HasUnmanagedTypeConstraint
         {
             get

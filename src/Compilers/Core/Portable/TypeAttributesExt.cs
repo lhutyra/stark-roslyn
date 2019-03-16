@@ -7,4 +7,10 @@ namespace StarkPlatform.CodeAnalysis
         public const TypeAttributes ClassSemanticsMask = (TypeAttributes)0x00000060;
         public const TypeAttributes Struct = (TypeAttributes)0x00000040;
     }
+
+
+    public static class GenericParameterAttributesExt
+    {
+        public const GenericParameterAttributes ConstConstraint = (GenericParameterAttributes)0x20;
+    }
 }

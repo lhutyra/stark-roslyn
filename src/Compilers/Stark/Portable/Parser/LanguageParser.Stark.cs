@@ -1562,7 +1562,9 @@ tryAgain:
                 // first bound
                 if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken || this.IsCurrentTokenWhereOfConstraintClause())
                 {
-                    bounds.Add(_syntaxFactory.TypeConstraint(this.AddError(this.CreateMissingIdentifierName(), ErrorCode.ERR_TypeExpected)));
+                    // TODO
+                    //bounds.Add(_syntaxFactory.TypeConstraint(this.AddError(this.CreateMissingIdentifierName(), ErrorCode.ERR_TypeExpected)));
+                    this.AddError(CurrentToken, ErrorCode.ERR_TypeExpected);
                 }
                 else
                 {
@@ -1582,7 +1584,9 @@ tryAgain:
                             bounds.AddSeparator(this.EatToken(SyntaxKind.CommaToken));
                             if (this.IsCurrentTokenWhereOfConstraintClause())
                             {
-                                bounds.Add(_syntaxFactory.TypeConstraint(this.AddError(this.CreateMissingIdentifierName(), ErrorCode.ERR_TypeExpected)));
+                                // TODO: error
+                                this.AddError(CurrentToken, ErrorCode.ERR_TypeExpected);
+                                //bounds.Add(_syntaxFactory.TypeConstraint(this.AddError(this.CreateMissingIdentifierName(), ErrorCode.ERR_TypeExpected)));
                                 break;
                             }
                             else
@@ -1632,28 +1636,52 @@ tryAgain:
                     var open = this.EatToken(SyntaxKind.OpenParenToken);
                     var close = this.EatToken(SyntaxKind.CloseParenToken);
                     return _syntaxFactory.ConstructorConstraint(newToken, open, close);
-                case SyntaxKind.StructKeyword:
-                    var structToken = this.EatToken();
 
-                    if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+
+                case SyntaxKind.ConstKeyword:
+                    var constKeyword = EatToken();
+                    var constType = ParseUnderlyingType(false);
+                    return _syntaxFactory.ConstConstraint(constKeyword, constType);
+
+                case SyntaxKind.IsKeyword:
+                    var isKeyword = EatToken();
+                    switch (this.CurrentToken.Kind)
                     {
-                        questionToken = this.EatToken();
-                        questionToken = this.AddError(questionToken, ErrorCode.ERR_UnexpectedToken, questionToken.Text);
+                        case SyntaxKind.StructKeyword:
+                            var structToken = this.EatToken();
+
+                            if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+                            {
+                                questionToken = this.EatToken();
+                                questionToken = this.AddError(questionToken, ErrorCode.ERR_UnexpectedToken, questionToken.Text);
+                            }
+
+                            return _syntaxFactory.ClassOrStructConstraint(SyntaxKind.StructConstraint, isKeyword, structToken, questionToken);
+                        case SyntaxKind.ClassKeyword:
+                            var classToken = this.EatToken();
+
+                            if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
+                            {
+                                questionToken = this.EatToken();
+                            }
+                            return _syntaxFactory.ClassOrStructConstraint(SyntaxKind.ClassConstraint, isKeyword, classToken, questionToken);
+                        default:
+                            // parse const int
+                            // or error
+                            return null;
                     }
 
-                    return _syntaxFactory.ClassOrStructConstraint(SyntaxKind.StructConstraint, structToken, questionToken);
-                case SyntaxKind.ClassKeyword:
-                    var classToken = this.EatToken();
+                case SyntaxKind.ExtendsKeyword:
+                case SyntaxKind.ImplementsKeyword:
+                    var kind = CurrentToken.Kind;
+                    var extendsOrImplements = EatToken();
 
-                    if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
-                    {
-                        questionToken = this.EatToken();
-                    }
-
-                    return _syntaxFactory.ClassOrStructConstraint(SyntaxKind.ClassConstraint, classToken, questionToken);
-                default:
                     var type = this.ParseType();
-                    return _syntaxFactory.TypeConstraint(type);
+                    return _syntaxFactory.ExtendsOrImplementsTypeConstraint(kind == SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsTypeConstraint : SyntaxKind.ImplementsTypeConstraint, extendsOrImplements, type);
+
+                default:
+                    // error
+                    return null;
             }
         }
 
@@ -5678,6 +5706,15 @@ tryAgain:
             else if (this.CurrentToken.Kind == SyntaxKind.OpenParenToken)
             {
                 return this.ParseTupleType();
+            }
+            else if (CurrentToken.Kind == SyntaxKind.TrueKeyword ||
+                     CurrentToken.Kind == SyntaxKind.NullKeyword ||
+                     CurrentToken.Kind == SyntaxKind.NumericLiteralToken ||
+                     CurrentToken.Kind == SyntaxKind.StringLiteralToken ||
+                     CurrentToken.Kind == SyntaxKind.CharacterLiteralToken)
+            {
+                var expression = _syntaxFactory.LiteralExpression(SyntaxFacts.GetLiteralExpression(CurrentToken.Kind), this.EatToken());
+                return _syntaxFactory.ConstLiteralType(expression);
             }
             else
             {

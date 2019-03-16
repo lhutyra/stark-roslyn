@@ -113,6 +113,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _hasValueTypeConstraint; }
         }
 
+        public override bool HasConstTypeConstraint
+        {
+            get { return false; }
+        }
+
         public override bool HasReferenceTypeConstraint
         {
             get { throw ExceptionUtilities.Unreachable; }

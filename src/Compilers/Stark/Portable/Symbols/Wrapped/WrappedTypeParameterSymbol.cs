@@ -97,6 +97,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public override bool HasConstTypeConstraint
+        {
+            get
+            {
+                return _underlyingTypeParameter.HasConstTypeConstraint;
+            }
+        }
+
         public override VarianceKind Variance
         {
             get

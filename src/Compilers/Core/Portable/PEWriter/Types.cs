@@ -383,6 +383,16 @@ namespace StarkPlatform.Cci
         TypeAccessModifiers AccessModifiers { get; }
     }
 
+    internal interface IConstLiteralTypeReference : ITypeReference
+    {
+        /// <summary>
+        /// The type of value stored at the target memory location.
+        /// </summary>
+        ITypeReference GetElementType(EmitContext context);
+
+        object Value { get; }
+    }
+
 
     /// <summary>
     /// This interface models the metadata representation of a pointer to a location in unmanaged memory.

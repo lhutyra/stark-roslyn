@@ -272,5 +272,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return DefaultVisit(symbol, argument);
         }
+
+        public virtual TResult VisitConstLiteralType(ConstLiteralTypeSymbol symbol, TArgument argument)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

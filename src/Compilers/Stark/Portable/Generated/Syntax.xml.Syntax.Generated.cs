@@ -471,6 +471,71 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     }
   }
 
+  public sealed partial class ConstLiteralTypeSyntax : TypeSyntax
+  {
+    private LiteralExpressionSyntax value;
+
+    internal ConstLiteralTypeSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+        : base(green, parent, position)
+    {
+    }
+
+    /// <summary>The value of this type syntax.</summary>
+    public LiteralExpressionSyntax Value 
+    {
+        get
+        {
+            return this.GetRedAtZero(ref this.value);
+        }
+    }
+
+    internal override SyntaxNode GetNodeSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.GetRedAtZero(ref this.value);
+            default: return null;
+        }
+    }
+    internal override SyntaxNode GetCachedSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.value;
+            default: return null;
+        }
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitConstLiteralType(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitConstLiteralType(this);
+    }
+
+    public ConstLiteralTypeSyntax Update(LiteralExpressionSyntax value)
+    {
+        if (value != this.Value)
+        {
+            var newNode = SyntaxFactory.ConstLiteralType(value);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               return newNode.WithAnnotations(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    public ConstLiteralTypeSyntax WithValue(LiteralExpressionSyntax value)
+    {
+        return this.Update(value);
+    }
+  }
+
   /// <summary>Class which represents the syntax node for predefined types.</summary>
   public sealed partial class PredefinedTypeSyntax : TypeSyntax
   {
@@ -15401,10 +15466,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
     }
 
+    /// <summary>Gets the is keyword .</summary>
+    public SyntaxToken IsKeyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ClassOrStructConstraintSyntax)this.Green).isKeyword, this.Position, 0); }
+    }
+
     /// <summary>Gets the constraint keyword ("class" or "struct").</summary>
     public SyntaxToken ClassOrStructKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ClassOrStructConstraintSyntax)this.Green).classOrStructKeyword, this.Position, 0); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ClassOrStructConstraintSyntax)this.Green).classOrStructKeyword, this.GetChildPosition(1), this.GetChildIndex(1)); }
     }
 
     /// <summary>SyntaxToken representing the question mark.</summary>
@@ -15414,7 +15485,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         {
             var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ClassOrStructConstraintSyntax)this.Green).questionToken;
             if (slot != null)
-                return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+                return new SyntaxToken(this, slot, this.GetChildPosition(2), this.GetChildIndex(2));
 
             return default(SyntaxToken);
         }
@@ -15445,11 +15516,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitClassOrStructConstraint(this);
     }
 
-    public ClassOrStructConstraintSyntax Update(SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
+    public ClassOrStructConstraintSyntax Update(SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
     {
-        if (classOrStructKeyword != this.ClassOrStructKeyword || questionToken != this.QuestionToken)
+        if (isKeyword != this.IsKeyword || classOrStructKeyword != this.ClassOrStructKeyword || questionToken != this.QuestionToken)
         {
-            var newNode = SyntaxFactory.ClassOrStructConstraint(this.Kind(), classOrStructKeyword, questionToken);
+            var newNode = SyntaxFactory.ClassOrStructConstraint(this.Kind(), isKeyword, classOrStructKeyword, questionToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -15459,33 +15530,44 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
+    public ClassOrStructConstraintSyntax WithIsKeyword(SyntaxToken isKeyword)
+    {
+        return this.Update(isKeyword, this.ClassOrStructKeyword, this.QuestionToken);
+    }
+
     public ClassOrStructConstraintSyntax WithClassOrStructKeyword(SyntaxToken classOrStructKeyword)
     {
-        return this.Update(classOrStructKeyword, this.QuestionToken);
+        return this.Update(this.IsKeyword, classOrStructKeyword, this.QuestionToken);
     }
 
     public ClassOrStructConstraintSyntax WithQuestionToken(SyntaxToken questionToken)
     {
-        return this.Update(this.ClassOrStructKeyword, questionToken);
+        return this.Update(this.IsKeyword, this.ClassOrStructKeyword, questionToken);
     }
   }
 
-  /// <summary>Type constraint syntax.</summary>
-  public sealed partial class TypeConstraintSyntax : TypeParameterConstraintSyntax
+  /// <summary>Const constraint syntax.</summary>
+  public sealed partial class ConstConstraintSyntax : TypeConstraintSyntax
   {
     private TypeSyntax type;
 
-    internal TypeConstraintSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+    internal ConstConstraintSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
 
-    /// <summary>Gets the type syntax.</summary>
-    public TypeSyntax Type 
+    /// <summary>Gets the "const" keyword .</summary>
+    public SyntaxToken ConstKeyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ConstConstraintSyntax)this.Green).constKeyword, this.Position, 0); }
+    }
+
+    /// <summary>Get the type of the const constraint.</summary>
+    public override TypeSyntax Type 
     {
         get
         {
-            return this.GetRedAtZero(ref this.type);
+            return this.GetRed(ref this.type, 1);
         }
     }
 
@@ -15493,7 +15575,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 0: return this.GetRedAtZero(ref this.type);
+            case 1: return this.GetRed(ref this.type, 1);
             default: return null;
         }
     }
@@ -15501,26 +15583,26 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 0: return this.type;
+            case 1: return this.type;
             default: return null;
         }
     }
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitTypeConstraint(this);
+        return visitor.VisitConstConstraint(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitTypeConstraint(this);
+        visitor.VisitConstConstraint(this);
     }
 
-    public TypeConstraintSyntax Update(TypeSyntax type)
+    public ConstConstraintSyntax Update(SyntaxToken constKeyword, TypeSyntax type)
     {
-        if (type != this.Type)
+        if (constKeyword != this.ConstKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.TypeConstraint(type);
+            var newNode = SyntaxFactory.ConstConstraint(constKeyword, type);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -15530,9 +15612,107 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
-    public TypeConstraintSyntax WithType(TypeSyntax type)
+    public ConstConstraintSyntax WithConstKeyword(SyntaxToken constKeyword)
     {
-        return this.Update(type);
+        return this.Update(constKeyword, this.Type);
+    }
+
+    internal override TypeConstraintSyntax WithTypeCore(TypeSyntax type) => WithType(type);
+    public new ConstConstraintSyntax WithType(TypeSyntax type)
+    {
+        return this.Update(this.ConstKeyword, type);
+    }
+  }
+
+  /// <summary>Type constraint syntax.</summary>
+  public abstract partial class TypeConstraintSyntax : TypeParameterConstraintSyntax
+  {
+    internal TypeConstraintSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+      : base(green, parent, position)
+    {
+    }
+
+    /// <summary>Gets the type syntax.</summary>
+    public abstract TypeSyntax Type { get; }
+    public TypeConstraintSyntax WithType(TypeSyntax type) => WithTypeCore(type);
+    internal abstract TypeConstraintSyntax WithTypeCore(TypeSyntax type);
+  }
+
+  /// <summary>Type constraint syntax.</summary>
+  public sealed partial class ExtendsOrImplementsTypeConstraintSyntax : TypeConstraintSyntax
+  {
+    private TypeSyntax type;
+
+    internal ExtendsOrImplementsTypeConstraintSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+        : base(green, parent, position)
+    {
+    }
+
+    /// <summary>Gets the extends or implements keyword ("extends" or "implements").</summary>
+    public SyntaxToken ExtendsOrImplementsKeyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExtendsOrImplementsTypeConstraintSyntax)this.Green).extendsOrImplementsKeyword, this.Position, 0); }
+    }
+
+    /// <summary>Gets the type syntax.</summary>
+    public override TypeSyntax Type 
+    {
+        get
+        {
+            return this.GetRed(ref this.type, 1);
+        }
+    }
+
+    internal override SyntaxNode GetNodeSlot(int index)
+    {
+        switch (index)
+        {
+            case 1: return this.GetRed(ref this.type, 1);
+            default: return null;
+        }
+    }
+    internal override SyntaxNode GetCachedSlot(int index)
+    {
+        switch (index)
+        {
+            case 1: return this.type;
+            default: return null;
+        }
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitExtendsOrImplementsTypeConstraint(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitExtendsOrImplementsTypeConstraint(this);
+    }
+
+    public ExtendsOrImplementsTypeConstraintSyntax Update(SyntaxToken extendsOrImplementsKeyword, TypeSyntax type)
+    {
+        if (extendsOrImplementsKeyword != this.ExtendsOrImplementsKeyword || type != this.Type)
+        {
+            var newNode = SyntaxFactory.ExtendsOrImplementsTypeConstraint(this.Kind(), extendsOrImplementsKeyword, type);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               return newNode.WithAnnotations(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    public ExtendsOrImplementsTypeConstraintSyntax WithExtendsOrImplementsKeyword(SyntaxToken extendsOrImplementsKeyword)
+    {
+        return this.Update(extendsOrImplementsKeyword, this.Type);
+    }
+
+    internal override TypeConstraintSyntax WithTypeCore(TypeSyntax type) => WithType(type);
+    public new ExtendsOrImplementsTypeConstraintSyntax WithType(TypeSyntax type)
+    {
+        return this.Update(this.ExtendsOrImplementsKeyword, type);
     }
   }
 

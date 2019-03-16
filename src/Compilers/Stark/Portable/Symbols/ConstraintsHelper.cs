@@ -106,7 +106,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             ImmutableArray<NamedTypeSymbol> interfaces;
 
-            NamedTypeSymbol effectiveBaseClass = corLibrary.GetSpecialType(typeParameter.HasValueTypeConstraint ? SpecialType.None : SpecialType.System_Object);
+            NamedTypeSymbol effectiveBaseClass = typeParameter.HasValueTypeConstraint || typeParameter.HasConstTypeConstraint ? null : corLibrary.GetSpecialType(SpecialType.System_Object);
             TypeSymbol deducedBaseType = effectiveBaseClass;
             DynamicTypeEraser dynamicEraser = null;
 
@@ -240,9 +240,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                                     }
                                 }
                             }
-                            Debug.Assert(inherited || currentCompilation == null);
+                            Debug.Assert(inherited || currentCompilation == null || constraintType.IsIntrinsicType);
                             constraintEffectiveBase = (NamedTypeSymbol)constraintType.TypeSymbol;
                             constraintDeducedBase = constraintType.TypeSymbol;
+                            if (constraintType.IsIntrinsicType)
+                            {
+                                deducedBaseType = constraintDeducedBase;
+                                effectiveBaseClass = constraintEffectiveBase;
+                            }
                             break;
 
                         case TypeKind.Enum:
@@ -1065,6 +1070,12 @@ hasRelatedInterfaces:
                                                 constraintType.TypeSymbol, ref useSiteDiagnostics))
             {
                 return true;
+            }
+
+            if (typeArgument.TypeKind == TypeKind.ConstLiteral)
+            {
+                var constType = (ConstLiteralTypeSymbol)typeArgument.TypeSymbol;
+                return constType.UnderlyingType.TypeSymbol.Equals(constraintType.TypeSymbol, TypeCompareKind.AllIgnoreOptions);
             }
 
             if (typeArgument.TypeKind == TypeKind.TypeParameter)

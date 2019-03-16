@@ -626,6 +626,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         public abstract bool HasValueTypeConstraint { get; }
 
+        public abstract bool HasConstTypeConstraint { get; }
+
         public abstract bool HasUnmanagedTypeConstraint { get; }
 
         public abstract VarianceKind Variance { get; }

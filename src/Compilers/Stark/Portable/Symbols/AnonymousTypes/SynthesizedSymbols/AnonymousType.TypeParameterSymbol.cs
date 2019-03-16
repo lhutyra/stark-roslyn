@@ -78,6 +78,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 get { return false; }
             }
 
+            public override bool HasConstTypeConstraint
+            {
+                get { return false; }
+            }
+
             public override bool HasUnmanagedTypeConstraint
             {
                 get { return false; }

@@ -330,6 +330,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         NullableType = 8625,
         ExtendedType = 8626,
         OmittedTypeArgument = 8627,
+        ConstLiteralType = 8628,
 
         // expressions
         ParenthesizedExpression = 8632,
@@ -532,7 +533,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ConstructorConstraint = 8867,
         ClassConstraint = 8868,
         StructConstraint = 8869,
-        TypeConstraint = 8870,
+        //TypeConstraint = 8870,
         ExplicitInterfaceSpecifier = 8871,
         EnumMemberDeclaration = 8872,
         FieldDeclaration = 8873,
@@ -541,6 +542,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         OperatorDeclaration = 8876,
         ConversionOperatorDeclaration = 8877,
         ConstructorDeclaration = 8878,
+        ExtendsTypeConstraint = 8879,
+        ImplementsTypeConstraint = 8880,
+        ConstConstraint = 8881,
 
         BaseConstructorInitializer = 8889,
         ThisConstructorInitializer = 8890,

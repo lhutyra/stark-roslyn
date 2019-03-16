@@ -590,6 +590,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public ImmutableArray<CustomModifier> CustomModifiers => _extensions.CustomModifiers;
 
         public bool IsReferenceType => TypeSymbol.IsReferenceType;
+        public bool IsIntrinsicType => TypeSymbol.IsIntrinsicType();
         public bool IsValueType => TypeSymbol.IsValueType;
         public TypeKind TypeKind => TypeSymbol.TypeKind;
         public SpecialType SpecialType => _extensions.GetSpecialType(_defaultType);

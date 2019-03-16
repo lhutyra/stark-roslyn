@@ -3738,6 +3738,56 @@ namespace StarkPlatform.Cci
                     continue;
                 }
 
+
+                var constTypeReference = typeReference as IConstLiteralTypeReference;
+                if (constTypeReference != null)
+                {
+                    // ELEMENT_CONST_LITERAL_TYPE: 0x61
+                    encoder.Builder.WriteByte(0x61);
+                    var underlyingTypeReference = constTypeReference.GetElementType(Context);
+                    SerializeTypeReference(encoder, underlyingTypeReference);
+                    var constValue = constTypeReference.Value;
+                    switch (Type.GetTypeCode(constValue.GetType()))
+                    {
+                        case TypeCode.Boolean:
+                            encoder.Builder.WriteBoolean((bool)constValue);
+                            break;
+                        case TypeCode.Byte:
+                            encoder.Builder.WriteByte((byte)constValue);
+                            break;
+                        case TypeCode.Double:
+                            encoder.Builder.WriteDouble((double)constValue);
+                            break;
+                        case TypeCode.Int16:
+                            encoder.Builder.WriteInt16((short)constValue);
+                            break;
+                        case TypeCode.Int32:
+                            encoder.Builder.WriteInt32((int)constValue);
+                            break;
+                        case TypeCode.Int64:
+                            encoder.Builder.WriteInt64((long)constValue);
+                            break;
+                        case TypeCode.SByte:
+                            encoder.Builder.WriteSByte((sbyte)constValue);
+                            break;
+                        case TypeCode.Single:
+                            encoder.Builder.WriteSingle((float)constValue);
+                            break;
+                        case TypeCode.UInt16:
+                            encoder.Builder.WriteUInt16((ushort)constValue);
+                            break;
+                        case TypeCode.UInt32:
+                            encoder.Builder.WriteUInt32((uint)constValue);
+                            break;
+                        case TypeCode.UInt64:
+                            encoder.Builder.WriteUInt64((ulong)constValue);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException("Type not supported for literals");
+                    }
+                    return;
+                }
+                
                 var extendedTypeReference = typeReference as IExtendedTypeReference;
                 if (extendedTypeReference != null)
                 {

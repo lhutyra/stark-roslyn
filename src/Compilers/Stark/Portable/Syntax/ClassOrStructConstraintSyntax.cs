@@ -6,7 +6,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         public ClassOrStructConstraintSyntax Update(SyntaxToken classOrStructKeyword)
         {
-            return Update(classOrStructKeyword, QuestionToken);
+            return Update(IsKeyword, classOrStructKeyword, QuestionToken);
         }
     }
 }

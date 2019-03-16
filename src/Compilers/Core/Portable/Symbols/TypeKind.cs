@@ -90,5 +90,9 @@ namespace StarkPlatform.CodeAnalysis
         /// </summary>
         Transient = 14,
 
+        /// <summary>
+        /// Type is a const literal.
+        /// </summary>
+        ConstLiteral = 15,
     }
 }

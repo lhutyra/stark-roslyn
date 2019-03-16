@@ -140,6 +140,14 @@
       <summary>Provides the base class from which the classes that represent type syntax nodes are derived. This is an abstract class.</summary>
     </TypeComment>
   </AbstractNode>
+  <Node Name="ConstLiteralTypeSyntax" Base="TypeSyntax">
+      <Kind Name="ConstLiteralType"/>
+      <Field Name="Value" Type="LiteralExpressionSyntax">
+          <PropertyComment>
+              <summary>The value of this type syntax.</summary>
+          </PropertyComment>
+      </Field>
+  </Node>
   <Node Name="PredefinedTypeSyntax" Base="TypeSyntax">
     <Kind Name="PredefinedType"/>
     <Field Name="Keyword" Type="SyntaxToken">
@@ -3241,6 +3249,12 @@
     </TypeComment>
     <Kind Name="ClassConstraint"/>
     <Kind Name="StructConstraint"/>
+    <Field Name="IsKeyword" Type="SyntaxToken">
+        <PropertyComment>
+            <summary>Gets the is keyword .</summary>
+        </PropertyComment>
+        <Kind Name="IsKeyword"/>
+    </Field>
     <Field Name="ClassOrStructKeyword" Type="SyntaxToken">
       <PropertyComment>
         <summary>Gets the constraint keyword ("class" or "struct").</summary>
@@ -3255,16 +3269,51 @@
       </PropertyComment>
     </Field>
   </Node>
-  <Node Name="TypeConstraintSyntax" Base="TypeParameterConstraintSyntax">
+  <Node Name="ConstConstraintSyntax" Base="TypeConstraintSyntax">
+      <TypeComment>
+          <summary>Const constraint syntax.</summary>
+      </TypeComment>
+      <Kind Name="ConstConstraint"/>
+      <Field Name="ConstKeyword" Type="SyntaxToken">
+          <PropertyComment>
+              <summary>Gets the "const" keyword .</summary>
+          </PropertyComment>
+          <Kind Name="ConstKeyword"/>
+      </Field>
+      <Field Name="Type" Type="TypeSyntax" Override="true">
+          <PropertyComment>
+              <summary>Get the type of the const constraint.</summary>
+          </PropertyComment>
+      </Field>
+  </Node>
+  <AbstractNode Name="TypeConstraintSyntax" Base="TypeParameterConstraintSyntax">
     <TypeComment>
       <summary>Type constraint syntax.</summary>
     </TypeComment>
-    <Kind Name="TypeConstraint"/>
     <Field Name="Type" Type="TypeSyntax">
       <PropertyComment>
         <summary>Gets the type syntax.</summary>
       </PropertyComment>
     </Field>
+  </AbstractNode>
+  <Node Name="ExtendsOrImplementsTypeConstraintSyntax" Base="TypeConstraintSyntax">
+      <TypeComment>
+          <summary>Type constraint syntax.</summary>
+      </TypeComment>
+      <Kind Name="ExtendsTypeConstraint"/>
+      <Kind Name="ImplementsTypeConstraint"/>
+      <Field Name="ExtendsOrImplementsKeyword" Type="SyntaxToken">
+          <PropertyComment>
+              <summary>Gets the extends or implements keyword ("extends" or "implements").</summary>
+          </PropertyComment>
+          <Kind Name="ExtendsKeyword"/>
+          <Kind Name="ImplementsKeyword"/>
+      </Field>
+      <Field Name="Type" Type="TypeSyntax" Override="true">
+          <PropertyComment>
+              <summary>Gets the type syntax.</summary>
+          </PropertyComment>
+      </Field>
   </Node>
   <AbstractNode Name="BaseFieldDeclarationSyntax" Base="MemberDeclarationSyntax">
     <Field Name="AttributeLists" Type="SyntaxList&lt;AttributeSyntax&gt;">

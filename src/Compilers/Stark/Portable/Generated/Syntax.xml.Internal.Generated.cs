@@ -745,6 +745,115 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
+  internal sealed partial class ConstLiteralTypeSyntax : TypeSyntax
+  {
+    internal readonly LiteralExpressionSyntax value;
+
+    internal ConstLiteralTypeSyntax(SyntaxKind kind, LiteralExpressionSyntax value, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 1;
+        this.AdjustFlagsAndWidth(value);
+        this.value = value;
+    }
+
+
+    internal ConstLiteralTypeSyntax(SyntaxKind kind, LiteralExpressionSyntax value, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 1;
+        this.AdjustFlagsAndWidth(value);
+        this.value = value;
+    }
+
+
+    internal ConstLiteralTypeSyntax(SyntaxKind kind, LiteralExpressionSyntax value)
+        : base(kind)
+    {
+        this.SlotCount = 1;
+        this.AdjustFlagsAndWidth(value);
+        this.value = value;
+    }
+
+    /// <summary>The value of this type syntax.</summary>
+    public LiteralExpressionSyntax Value { get { return this.value; } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.value;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.ConstLiteralTypeSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitConstLiteralType(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitConstLiteralType(this);
+    }
+
+    public ConstLiteralTypeSyntax Update(LiteralExpressionSyntax value)
+    {
+        if (value != this.Value)
+        {
+            var newNode = SyntaxFactory.ConstLiteralType(value);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new ConstLiteralTypeSyntax(this.Kind, this.value, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new ConstLiteralTypeSyntax(this.Kind, this.value, GetDiagnostics(), annotations);
+    }
+
+    internal ConstLiteralTypeSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 1;
+      var value = (LiteralExpressionSyntax)reader.ReadValue();
+      if (value != null)
+      {
+         AdjustFlagsAndWidth(value);
+         this.value = value;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.value);
+    }
+
+    static ConstLiteralTypeSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(ConstLiteralTypeSyntax), r => new ConstLiteralTypeSyntax(r));
+    }
+  }
+
   /// <summary>Class which represents the syntax node for predefined types.</summary>
   internal sealed partial class PredefinedTypeSyntax : TypeSyntax
   {
@@ -24104,13 +24213,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   /// <summary>Base type for class or struct constraint syntax.</summary>
   internal sealed partial class ClassOrStructConstraintSyntax : TypeParameterConstraintSyntax
   {
+    internal readonly SyntaxToken isKeyword;
     internal readonly SyntaxToken classOrStructKeyword;
     internal readonly SyntaxToken questionToken;
 
-    internal ClassOrStructConstraintSyntax(SyntaxKind kind, SyntaxToken classOrStructKeyword, SyntaxToken questionToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ClassOrStructConstraintSyntax(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 2;
+        this.SlotCount = 3;
+        this.AdjustFlagsAndWidth(isKeyword);
+        this.isKeyword = isKeyword;
         this.AdjustFlagsAndWidth(classOrStructKeyword);
         this.classOrStructKeyword = classOrStructKeyword;
         if (questionToken != null)
@@ -24121,11 +24233,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal ClassOrStructConstraintSyntax(SyntaxKind kind, SyntaxToken classOrStructKeyword, SyntaxToken questionToken, SyntaxFactoryContext context)
+    internal ClassOrStructConstraintSyntax(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 2;
+        this.SlotCount = 3;
+        this.AdjustFlagsAndWidth(isKeyword);
+        this.isKeyword = isKeyword;
         this.AdjustFlagsAndWidth(classOrStructKeyword);
         this.classOrStructKeyword = classOrStructKeyword;
         if (questionToken != null)
@@ -24136,10 +24250,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal ClassOrStructConstraintSyntax(SyntaxKind kind, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
+    internal ClassOrStructConstraintSyntax(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
         : base(kind)
     {
-        this.SlotCount = 2;
+        this.SlotCount = 3;
+        this.AdjustFlagsAndWidth(isKeyword);
+        this.isKeyword = isKeyword;
         this.AdjustFlagsAndWidth(classOrStructKeyword);
         this.classOrStructKeyword = classOrStructKeyword;
         if (questionToken != null)
@@ -24149,6 +24265,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
     }
 
+    /// <summary>Gets the is keyword .</summary>
+    public SyntaxToken IsKeyword { get { return this.isKeyword; } }
     /// <summary>Gets the constraint keyword ("class" or "struct").</summary>
     public SyntaxToken ClassOrStructKeyword { get { return this.classOrStructKeyword; } }
     /// <summary>SyntaxToken representing the question mark.</summary>
@@ -24158,8 +24276,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
         switch (index)
         {
-            case 0: return this.classOrStructKeyword;
-            case 1: return this.questionToken;
+            case 0: return this.isKeyword;
+            case 1: return this.classOrStructKeyword;
+            case 2: return this.questionToken;
             default: return null;
         }
     }
@@ -24179,11 +24298,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitClassOrStructConstraint(this);
     }
 
-    public ClassOrStructConstraintSyntax Update(SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
+    public ClassOrStructConstraintSyntax Update(SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
     {
-        if (classOrStructKeyword != this.ClassOrStructKeyword || questionToken != this.QuestionToken)
+        if (isKeyword != this.IsKeyword || classOrStructKeyword != this.ClassOrStructKeyword || questionToken != this.QuestionToken)
         {
-            var newNode = SyntaxFactory.ClassOrStructConstraint(this.Kind, classOrStructKeyword, questionToken);
+            var newNode = SyntaxFactory.ClassOrStructConstraint(this.Kind, isKeyword, classOrStructKeyword, questionToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -24198,18 +24317,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ClassOrStructConstraintSyntax(this.Kind, this.classOrStructKeyword, this.questionToken, diagnostics, GetAnnotations());
+         return new ClassOrStructConstraintSyntax(this.Kind, this.isKeyword, this.classOrStructKeyword, this.questionToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ClassOrStructConstraintSyntax(this.Kind, this.classOrStructKeyword, this.questionToken, GetDiagnostics(), annotations);
+         return new ClassOrStructConstraintSyntax(this.Kind, this.isKeyword, this.classOrStructKeyword, this.questionToken, GetDiagnostics(), annotations);
     }
 
     internal ClassOrStructConstraintSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 2;
+      this.SlotCount = 3;
+      var isKeyword = (SyntaxToken)reader.ReadValue();
+      if (isKeyword != null)
+      {
+         AdjustFlagsAndWidth(isKeyword);
+         this.isKeyword = isKeyword;
+      }
       var classOrStructKeyword = (SyntaxToken)reader.ReadValue();
       if (classOrStructKeyword != null)
       {
@@ -24227,6 +24352,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
+      writer.WriteValue(this.isKeyword);
       writer.WriteValue(this.classOrStructKeyword);
       writer.WriteValue(this.questionToken);
     }
@@ -24237,70 +24363,80 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
-  /// <summary>Type constraint syntax.</summary>
-  internal sealed partial class TypeConstraintSyntax : TypeParameterConstraintSyntax
+  /// <summary>Const constraint syntax.</summary>
+  internal sealed partial class ConstConstraintSyntax : TypeConstraintSyntax
   {
+    internal readonly SyntaxToken constKeyword;
     internal readonly TypeSyntax type;
 
-    internal TypeConstraintSyntax(SyntaxKind kind, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken constKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 1;
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(constKeyword);
+        this.constKeyword = constKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
 
-    internal TypeConstraintSyntax(SyntaxKind kind, TypeSyntax type, SyntaxFactoryContext context)
+    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken constKeyword, TypeSyntax type, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 1;
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(constKeyword);
+        this.constKeyword = constKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
 
-    internal TypeConstraintSyntax(SyntaxKind kind, TypeSyntax type)
+    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken constKeyword, TypeSyntax type)
         : base(kind)
     {
-        this.SlotCount = 1;
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(constKeyword);
+        this.constKeyword = constKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
-    /// <summary>Gets the type syntax.</summary>
-    public TypeSyntax Type { get { return this.type; } }
+    /// <summary>Gets the "const" keyword .</summary>
+    public SyntaxToken ConstKeyword { get { return this.constKeyword; } }
+    /// <summary>Get the type of the const constraint.</summary>
+    public override TypeSyntax Type { get { return this.type; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.type;
+            case 0: return this.constKeyword;
+            case 1: return this.type;
             default: return null;
         }
     }
 
     internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
     {
-      return new Stark.Syntax.TypeConstraintSyntax(this, parent, position);
+      return new Stark.Syntax.ConstConstraintSyntax(this, parent, position);
     }
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitTypeConstraint(this);
+        return visitor.VisitConstConstraint(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitTypeConstraint(this);
+        visitor.VisitConstConstraint(this);
     }
 
-    public TypeConstraintSyntax Update(TypeSyntax type)
+    public ConstConstraintSyntax Update(SyntaxToken constKeyword, TypeSyntax type)
     {
-        if (type != this.Type)
+        if (constKeyword != this.ConstKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.TypeConstraint(type);
+            var newNode = SyntaxFactory.ConstConstraint(constKeyword, type);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -24315,18 +24451,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new TypeConstraintSyntax(this.Kind, this.type, diagnostics, GetAnnotations());
+         return new ConstConstraintSyntax(this.Kind, this.constKeyword, this.type, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new TypeConstraintSyntax(this.Kind, this.type, GetDiagnostics(), annotations);
+         return new ConstConstraintSyntax(this.Kind, this.constKeyword, this.type, GetDiagnostics(), annotations);
     }
 
-    internal TypeConstraintSyntax(ObjectReader reader)
+    internal ConstConstraintSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 1;
+      this.SlotCount = 2;
+      var constKeyword = (SyntaxToken)reader.ReadValue();
+      if (constKeyword != null)
+      {
+         AdjustFlagsAndWidth(constKeyword);
+         this.constKeyword = constKeyword;
+      }
       var type = (TypeSyntax)reader.ReadValue();
       if (type != null)
       {
@@ -24338,12 +24480,161 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
+      writer.WriteValue(this.constKeyword);
       writer.WriteValue(this.type);
     }
 
-    static TypeConstraintSyntax()
+    static ConstConstraintSyntax()
     {
-       ObjectBinder.RegisterTypeReader(typeof(TypeConstraintSyntax), r => new TypeConstraintSyntax(r));
+       ObjectBinder.RegisterTypeReader(typeof(ConstConstraintSyntax), r => new ConstConstraintSyntax(r));
+    }
+  }
+
+  /// <summary>Type constraint syntax.</summary>
+  internal abstract partial class TypeConstraintSyntax : TypeParameterConstraintSyntax
+  {
+    internal TypeConstraintSyntax(SyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+      : base(kind, diagnostics, annotations)
+    {
+    }
+    internal TypeConstraintSyntax(SyntaxKind kind)
+      : base(kind)
+    {
+    }
+
+    protected TypeConstraintSyntax(ObjectReader reader)
+       : base(reader)
+    {
+    }
+
+    /// <summary>Gets the type syntax.</summary>
+    public abstract TypeSyntax Type { get; }
+  }
+
+  /// <summary>Type constraint syntax.</summary>
+  internal sealed partial class ExtendsOrImplementsTypeConstraintSyntax : TypeConstraintSyntax
+  {
+    internal readonly SyntaxToken extendsOrImplementsKeyword;
+    internal readonly TypeSyntax type;
+
+    internal ExtendsOrImplementsTypeConstraintSyntax(SyntaxKind kind, SyntaxToken extendsOrImplementsKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(extendsOrImplementsKeyword);
+        this.extendsOrImplementsKeyword = extendsOrImplementsKeyword;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
+    }
+
+
+    internal ExtendsOrImplementsTypeConstraintSyntax(SyntaxKind kind, SyntaxToken extendsOrImplementsKeyword, TypeSyntax type, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(extendsOrImplementsKeyword);
+        this.extendsOrImplementsKeyword = extendsOrImplementsKeyword;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
+    }
+
+
+    internal ExtendsOrImplementsTypeConstraintSyntax(SyntaxKind kind, SyntaxToken extendsOrImplementsKeyword, TypeSyntax type)
+        : base(kind)
+    {
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(extendsOrImplementsKeyword);
+        this.extendsOrImplementsKeyword = extendsOrImplementsKeyword;
+        this.AdjustFlagsAndWidth(type);
+        this.type = type;
+    }
+
+    /// <summary>Gets the extends or implements keyword ("extends" or "implements").</summary>
+    public SyntaxToken ExtendsOrImplementsKeyword { get { return this.extendsOrImplementsKeyword; } }
+    /// <summary>Gets the type syntax.</summary>
+    public override TypeSyntax Type { get { return this.type; } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.extendsOrImplementsKeyword;
+            case 1: return this.type;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.ExtendsOrImplementsTypeConstraintSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitExtendsOrImplementsTypeConstraint(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitExtendsOrImplementsTypeConstraint(this);
+    }
+
+    public ExtendsOrImplementsTypeConstraintSyntax Update(SyntaxToken extendsOrImplementsKeyword, TypeSyntax type)
+    {
+        if (extendsOrImplementsKeyword != this.ExtendsOrImplementsKeyword || type != this.Type)
+        {
+            var newNode = SyntaxFactory.ExtendsOrImplementsTypeConstraint(this.Kind, extendsOrImplementsKeyword, type);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new ExtendsOrImplementsTypeConstraintSyntax(this.Kind, this.extendsOrImplementsKeyword, this.type, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new ExtendsOrImplementsTypeConstraintSyntax(this.Kind, this.extendsOrImplementsKeyword, this.type, GetDiagnostics(), annotations);
+    }
+
+    internal ExtendsOrImplementsTypeConstraintSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 2;
+      var extendsOrImplementsKeyword = (SyntaxToken)reader.ReadValue();
+      if (extendsOrImplementsKeyword != null)
+      {
+         AdjustFlagsAndWidth(extendsOrImplementsKeyword);
+         this.extendsOrImplementsKeyword = extendsOrImplementsKeyword;
+      }
+      var type = (TypeSyntax)reader.ReadValue();
+      if (type != null)
+      {
+         AdjustFlagsAndWidth(type);
+         this.type = type;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.extendsOrImplementsKeyword);
+      writer.WriteValue(this.type);
+    }
+
+    static ExtendsOrImplementsTypeConstraintSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(ExtendsOrImplementsTypeConstraintSyntax), r => new ExtendsOrImplementsTypeConstraintSyntax(r));
     }
   }
 
@@ -35458,6 +35749,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
+    public virtual TResult VisitConstLiteralType(ConstLiteralTypeSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     public virtual TResult VisitPredefinedType(PredefinedTypeSyntax node)
     {
       return this.DefaultVisit(node);
@@ -36193,7 +36489,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
-    public virtual TResult VisitTypeConstraint(TypeConstraintSyntax node)
+    public virtual TResult VisitConstConstraint(ConstConstraintSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
+    public virtual TResult VisitExtendsOrImplementsTypeConstraint(ExtendsOrImplementsTypeConstraintSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -36528,6 +36829,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
     public virtual void VisitAliasQualifiedName(AliasQualifiedNameSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    public virtual void VisitConstLiteralType(ConstLiteralTypeSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -37267,7 +37573,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       this.DefaultVisit(node);
     }
 
-    public virtual void VisitTypeConstraint(TypeConstraintSyntax node)
+    public virtual void VisitConstConstraint(ConstConstraintSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    public virtual void VisitExtendsOrImplementsTypeConstraint(ExtendsOrImplementsTypeConstraintSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -37615,6 +37926,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       var colonColonToken = (SyntaxToken)this.Visit(node.ColonColonToken);
       var name = (SimpleNameSyntax)this.Visit(node.Name);
       return node.Update(alias, colonColonToken, name);
+    }
+
+    public override CSharpSyntaxNode VisitConstLiteralType(ConstLiteralTypeSyntax node)
+    {
+      var value = (LiteralExpressionSyntax)this.Visit(node.Value);
+      return node.Update(value);
     }
 
     public override CSharpSyntaxNode VisitPredefinedType(PredefinedTypeSyntax node)
@@ -38844,15 +39161,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     public override CSharpSyntaxNode VisitClassOrStructConstraint(ClassOrStructConstraintSyntax node)
     {
+      var isKeyword = (SyntaxToken)this.Visit(node.IsKeyword);
       var classOrStructKeyword = (SyntaxToken)this.Visit(node.ClassOrStructKeyword);
       var questionToken = (SyntaxToken)this.Visit(node.QuestionToken);
-      return node.Update(classOrStructKeyword, questionToken);
+      return node.Update(isKeyword, classOrStructKeyword, questionToken);
     }
 
-    public override CSharpSyntaxNode VisitTypeConstraint(TypeConstraintSyntax node)
+    public override CSharpSyntaxNode VisitConstConstraint(ConstConstraintSyntax node)
     {
+      var constKeyword = (SyntaxToken)this.Visit(node.ConstKeyword);
       var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(type);
+      return node.Update(constKeyword, type);
+    }
+
+    public override CSharpSyntaxNode VisitExtendsOrImplementsTypeConstraint(ExtendsOrImplementsTypeConstraintSyntax node)
+    {
+      var extendsOrImplementsKeyword = (SyntaxToken)this.Visit(node.ExtendsOrImplementsKeyword);
+      var type = (TypeSyntax)this.Visit(node.Type);
+      return node.Update(extendsOrImplementsKeyword, type);
     }
 
     public override CSharpSyntaxNode VisitFieldDeclaration(FieldDeclarationSyntax node)
@@ -39574,6 +39900,26 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       if (cached != null) return (AliasQualifiedNameSyntax)cached;
 
       var result = new AliasQualifiedNameSyntax(SyntaxKind.AliasQualifiedName, alias, colonColonToken, name, this.context);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
+    public ConstLiteralTypeSyntax ConstLiteralType(LiteralExpressionSyntax value)
+    {
+#if DEBUG
+      if (value == null)
+        throw new ArgumentNullException(nameof(value));
+#endif
+
+      int hash;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstLiteralType, value, this.context, out hash);
+      if (cached != null) return (ConstLiteralTypeSyntax)cached;
+
+      var result = new ConstLiteralTypeSyntax(SyntaxKind.ConstLiteralType, value, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -44459,7 +44805,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public ClassOrStructConstraintSyntax ClassOrStructConstraint(SyntaxKind kind, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
+    public ClassOrStructConstraintSyntax ClassOrStructConstraint(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
     {
       switch (kind)
       {
@@ -44470,6 +44816,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           throw new ArgumentException(nameof(kind));
       }
 #if DEBUG
+      if (isKeyword == null)
+        throw new ArgumentNullException(nameof(isKeyword));
+      switch (isKeyword.Kind)
+      {
+        case SyntaxKind.IsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(isKeyword));
+      }
       if (classOrStructKeyword == null)
         throw new ArgumentNullException(nameof(classOrStructKeyword));
       switch (classOrStructKeyword.Kind)
@@ -44494,10 +44849,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)kind, classOrStructKeyword, questionToken, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)kind, isKeyword, classOrStructKeyword, questionToken, this.context, out hash);
       if (cached != null) return (ClassOrStructConstraintSyntax)cached;
 
-      var result = new ClassOrStructConstraintSyntax(kind, classOrStructKeyword, questionToken, this.context);
+      var result = new ClassOrStructConstraintSyntax(kind, isKeyword, classOrStructKeyword, questionToken, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -44506,18 +44861,65 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public TypeConstraintSyntax TypeConstraint(TypeSyntax type)
+    public ConstConstraintSyntax ConstConstraint(SyntaxToken constKeyword, TypeSyntax type)
     {
 #if DEBUG
+      if (constKeyword == null)
+        throw new ArgumentNullException(nameof(constKeyword));
+      switch (constKeyword.Kind)
+      {
+        case SyntaxKind.ConstKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(constKeyword));
+      }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.TypeConstraint, type, this.context, out hash);
-      if (cached != null) return (TypeConstraintSyntax)cached;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstConstraint, constKeyword, type, this.context, out hash);
+      if (cached != null) return (ConstConstraintSyntax)cached;
 
-      var result = new TypeConstraintSyntax(SyntaxKind.TypeConstraint, type, this.context);
+      var result = new ConstConstraintSyntax(SyntaxKind.ConstConstraint, constKeyword, type, this.context);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
+    public ExtendsOrImplementsTypeConstraintSyntax ExtendsOrImplementsTypeConstraint(SyntaxKind kind, SyntaxToken extendsOrImplementsKeyword, TypeSyntax type)
+    {
+      switch (kind)
+      {
+        case SyntaxKind.ExtendsTypeConstraint:
+        case SyntaxKind.ImplementsTypeConstraint:
+          break;
+        default:
+          throw new ArgumentException(nameof(kind));
+      }
+#if DEBUG
+      if (extendsOrImplementsKeyword == null)
+        throw new ArgumentNullException(nameof(extendsOrImplementsKeyword));
+      switch (extendsOrImplementsKeyword.Kind)
+      {
+        case SyntaxKind.ExtendsKeyword:
+        case SyntaxKind.ImplementsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(extendsOrImplementsKeyword));
+      }
+      if (type == null)
+        throw new ArgumentNullException(nameof(type));
+#endif
+
+      int hash;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)kind, extendsOrImplementsKeyword, type, this.context, out hash);
+      if (cached != null) return (ExtendsOrImplementsTypeConstraintSyntax)cached;
+
+      var result = new ExtendsOrImplementsTypeConstraintSyntax(kind, extendsOrImplementsKeyword, type, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -46885,6 +47287,26 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       if (cached != null) return (AliasQualifiedNameSyntax)cached;
 
       var result = new AliasQualifiedNameSyntax(SyntaxKind.AliasQualifiedName, alias, colonColonToken, name);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
+    public static ConstLiteralTypeSyntax ConstLiteralType(LiteralExpressionSyntax value)
+    {
+#if DEBUG
+      if (value == null)
+        throw new ArgumentNullException(nameof(value));
+#endif
+
+      int hash;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstLiteralType, value, out hash);
+      if (cached != null) return (ConstLiteralTypeSyntax)cached;
+
+      var result = new ConstLiteralTypeSyntax(SyntaxKind.ConstLiteralType, value);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -51770,7 +52192,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static ClassOrStructConstraintSyntax ClassOrStructConstraint(SyntaxKind kind, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
+    public static ClassOrStructConstraintSyntax ClassOrStructConstraint(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken classOrStructKeyword, SyntaxToken questionToken)
     {
       switch (kind)
       {
@@ -51781,6 +52203,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           throw new ArgumentException(nameof(kind));
       }
 #if DEBUG
+      if (isKeyword == null)
+        throw new ArgumentNullException(nameof(isKeyword));
+      switch (isKeyword.Kind)
+      {
+        case SyntaxKind.IsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(isKeyword));
+      }
       if (classOrStructKeyword == null)
         throw new ArgumentNullException(nameof(classOrStructKeyword));
       switch (classOrStructKeyword.Kind)
@@ -51805,10 +52236,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)kind, classOrStructKeyword, questionToken, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)kind, isKeyword, classOrStructKeyword, questionToken, out hash);
       if (cached != null) return (ClassOrStructConstraintSyntax)cached;
 
-      var result = new ClassOrStructConstraintSyntax(kind, classOrStructKeyword, questionToken);
+      var result = new ClassOrStructConstraintSyntax(kind, isKeyword, classOrStructKeyword, questionToken);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -51817,18 +52248,65 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static TypeConstraintSyntax TypeConstraint(TypeSyntax type)
+    public static ConstConstraintSyntax ConstConstraint(SyntaxToken constKeyword, TypeSyntax type)
     {
 #if DEBUG
+      if (constKeyword == null)
+        throw new ArgumentNullException(nameof(constKeyword));
+      switch (constKeyword.Kind)
+      {
+        case SyntaxKind.ConstKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(constKeyword));
+      }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.TypeConstraint, type, out hash);
-      if (cached != null) return (TypeConstraintSyntax)cached;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstConstraint, constKeyword, type, out hash);
+      if (cached != null) return (ConstConstraintSyntax)cached;
 
-      var result = new TypeConstraintSyntax(SyntaxKind.TypeConstraint, type);
+      var result = new ConstConstraintSyntax(SyntaxKind.ConstConstraint, constKeyword, type);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
+    public static ExtendsOrImplementsTypeConstraintSyntax ExtendsOrImplementsTypeConstraint(SyntaxKind kind, SyntaxToken extendsOrImplementsKeyword, TypeSyntax type)
+    {
+      switch (kind)
+      {
+        case SyntaxKind.ExtendsTypeConstraint:
+        case SyntaxKind.ImplementsTypeConstraint:
+          break;
+        default:
+          throw new ArgumentException(nameof(kind));
+      }
+#if DEBUG
+      if (extendsOrImplementsKeyword == null)
+        throw new ArgumentNullException(nameof(extendsOrImplementsKeyword));
+      switch (extendsOrImplementsKeyword.Kind)
+      {
+        case SyntaxKind.ExtendsKeyword:
+        case SyntaxKind.ImplementsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(extendsOrImplementsKeyword));
+      }
+      if (type == null)
+        throw new ArgumentNullException(nameof(type));
+#endif
+
+      int hash;
+      var cached = SyntaxNodeCache.TryGetNode((int)kind, extendsOrImplementsKeyword, type, out hash);
+      if (cached != null) return (ExtendsOrImplementsTypeConstraintSyntax)cached;
+
+      var result = new ExtendsOrImplementsTypeConstraintSyntax(kind, extendsOrImplementsKeyword, type);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -54054,6 +54532,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(GenericNameSyntax),
            typeof(TypeArgumentListSyntax),
            typeof(AliasQualifiedNameSyntax),
+           typeof(ConstLiteralTypeSyntax),
            typeof(PredefinedTypeSyntax),
            typeof(ArrayTypeSyntax),
            typeof(ArrayRankSpecifierSyntax),
@@ -54201,7 +54680,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(TypeParameterConstraintClauseSyntax),
            typeof(ConstructorConstraintSyntax),
            typeof(ClassOrStructConstraintSyntax),
-           typeof(TypeConstraintSyntax),
+           typeof(ConstConstraintSyntax),
+           typeof(ExtendsOrImplementsTypeConstraintSyntax),
            typeof(FieldDeclarationSyntax),
            typeof(EventFieldDeclarationSyntax),
            typeof(ExplicitInterfaceSpecifierSyntax),

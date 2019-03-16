@@ -1035,6 +1035,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Emit
 
                 case SymbolKind.TypeParameter:
                     return Translate((TypeParameterSymbol)typeSymbol);
+
+                case SymbolKind.ConstLiteralType:
+                    return Translate((ConstLiteralTypeSymbol)typeSymbol);
             }
 
             throw ExceptionUtilities.UnexpectedValue(typeSymbol.Kind);
@@ -1395,6 +1398,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Emit
         }
 
         internal static Cci.IArrayTypeReference Translate(ArrayTypeSymbol symbol)
+        {
+            return symbol;
+        }
+
+        internal static Cci.IConstLiteralTypeReference Translate(ConstLiteralTypeSymbol symbol)
         {
             return symbol;
         }

@@ -139,6 +139,33 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         }
 
                         continue;
+
+                    case SyntaxKind.ConstConstraint:
+                        if (i != 0)
+                        {
+                            // TODO: add a specific error message for constraint
+                            diagnostics.Add(ErrorCode.ERR_RefValBoundMustBeFirst, syntax.GetFirstToken().GetLocation());
+                        }
+
+                        var constConstraintSyntax = (ConstConstraintSyntax)syntax;
+
+                        // For pointer types, don't report this error. It is already reported during binding typeSyntax below.
+                        switch (constConstraintSyntax.Type.Kind())
+                        {
+                            case SyntaxKind.PredefinedType:
+                                constraints |= TypeParameterConstraintKind.Const;
+                                var type = BindTypeOrUnmanagedKeyword(constConstraintSyntax.Type, diagnostics, out var isUnmanaged);
+                                constraintTypes.Add(type);
+                                syntaxBuilder.Add(constConstraintSyntax);
+                                break;
+                            default:
+                                // TODO: Add error message that only predefined type are supported for now
+                                diagnostics.Add(ErrorCode.ERR_BadConstraintType, constConstraintSyntax.Type.GetLocation());
+                                break;
+                        }
+
+                        break;
+
                     case SyntaxKind.StructConstraint:
                         if (i != 0)
                         {
@@ -164,7 +191,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                         constraints |= TypeParameterConstraintKind.Constructor;
                         continue;
-                    case SyntaxKind.TypeConstraint:
+                    case SyntaxKind.ExtendsTypeConstraint:
+                    case SyntaxKind.ImplementsTypeConstraint:
                         {
                             var typeConstraintSyntax = (TypeConstraintSyntax)syntax;
                             var typeSyntax = typeConstraintSyntax.Type;
@@ -201,6 +229,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                 constraints |= TypeParameterConstraintKind.Unmanaged;
                                 continue;
                             }
+
+                            // TODO: add error if extends is not class or implements is not an interface
 
                             constraintTypes.Add(type);
                             syntaxBuilder.Add(typeConstraintSyntax);
@@ -353,10 +383,13 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case TypeKind.Delegate:
                 case TypeKind.Enum:
                 case TypeKind.Struct:
-                    // "'{0}' is not a valid constraint. A type used as a constraint must be an interface, a non-sealed class or a type parameter."
-                    Error(diagnostics, ErrorCode.ERR_BadBoundType, syntax, type);
-                    return false;
-
+                    if (!(syntax is ConstConstraintSyntax))
+                    {
+                        // "'{0}' is not a valid constraint. A type used as a constraint must be an interface, a non-sealed class or a type parameter."
+                        Error(diagnostics, ErrorCode.ERR_BadBoundType, syntax, type);
+                        return false;
+                    }
+                    break;
                 case TypeKind.Array:
                 case TypeKind.Pointer:
                     // CS0706 already reported by parser.

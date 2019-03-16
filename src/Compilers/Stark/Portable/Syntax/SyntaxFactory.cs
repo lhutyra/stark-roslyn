@@ -2501,7 +2501,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// <summary>Creates a new ClassOrStructConstraintSyntax instance.</summary>
         public static ClassOrStructConstraintSyntax ClassOrStructConstraint(SyntaxKind kind, SyntaxToken classOrStructKeyword)
         {
-            return ClassOrStructConstraint(kind, classOrStructKeyword, questionToken: default(SyntaxToken));
+            return ClassOrStructConstraint(kind, Token(SyntaxKind.IsKeyword), classOrStructKeyword, questionToken: default(SyntaxToken));
         }
 
         // backwards compatibility for extended API

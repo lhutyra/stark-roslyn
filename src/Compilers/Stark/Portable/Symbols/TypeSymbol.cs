@@ -476,6 +476,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// </summary>
         public abstract bool IsValueType { get; }
 
+        /// <summary>
+        /// Returns true if the type is a const literal
+        /// </summary>
+        public virtual bool IsConstLiteral => false;
+
         // Only the compiler can create TypeSymbols.
         internal TypeSymbol()
         {

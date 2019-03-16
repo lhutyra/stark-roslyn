@@ -142,7 +142,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case Parameter:
                         return ((ParameterSyntax)parent).Type == node;
 
-                    case TypeConstraint:
+                    case ExtendsTypeConstraint:
+                    case ImplementsTypeConstraint:
                         return ((TypeConstraintSyntax)parent).Type == node;
 
                     case MethodDeclaration:

@@ -116,5 +116,11 @@ namespace StarkPlatform.CodeAnalysis
         /// Symbol is a transient type.
         /// </summary>
         TransientType = 21,
+
+
+        /// <summary>
+        /// Symbol is a const literal type.
+        /// </summary>
+        ConstLiteralType = 22
     }
 }

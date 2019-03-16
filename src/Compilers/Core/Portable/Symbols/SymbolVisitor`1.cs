@@ -105,5 +105,10 @@ namespace StarkPlatform.CodeAnalysis
         {
             return DefaultVisit(symbol);
         }
+
+        public virtual TResult VisitConstLiteralType(IConstLiteralTypeSymbol symbol)
+        {
+            return DefaultVisit(symbol);
+        }
     }
 }

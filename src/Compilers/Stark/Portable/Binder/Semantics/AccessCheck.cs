@@ -100,6 +100,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SymbolKind.PointerType:
                     return IsSymbolAccessibleCore(((PointerTypeSymbol)symbol).PointedAtType.TypeSymbol, within, null, out failedThroughTypeCheck, compilation, ref useSiteDiagnostics, basesBeingResolved);
 
+                case SymbolKind.ConstLiteralType:
+                    return IsSymbolAccessibleCore(((ConstLiteralTypeSymbol)symbol).UnderlyingType.TypeSymbol, within, null, out failedThroughTypeCheck, compilation, ref useSiteDiagnostics, basesBeingResolved);
+
                 case SymbolKind.NamedType:
                     return IsNamedTypeAccessible((NamedTypeSymbol)symbol, within, ref useSiteDiagnostics, basesBeingResolved);
 
