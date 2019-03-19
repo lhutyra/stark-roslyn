@@ -10,6 +10,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     internal enum DeclarationKind : byte
     {
         Namespace,
+        Module,
         Class,
         Interface,
         Struct,
@@ -27,6 +28,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             switch (kind)
             {
                 case SyntaxKind.ClassDeclaration: return DeclarationKind.Class;
+                case SyntaxKind.ModuleDeclaration: return DeclarationKind.Module;
                 case SyntaxKind.InterfaceDeclaration: return DeclarationKind.Interface;
                 case SyntaxKind.StructDeclaration: return DeclarationKind.Struct;
                 case SyntaxKind.NamespaceDeclaration: return DeclarationKind.Namespace;

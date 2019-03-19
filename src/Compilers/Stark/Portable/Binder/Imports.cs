@@ -210,24 +210,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         }
                         else if (imported.Kind == SymbolKind.NamedType)
                         {
-                            if (usingDirective.StaticKeyword == default(SyntaxToken))
+                            var importedType = (NamedTypeSymbol)imported;
+                            if (uniqueUsings.Contains(importedType))
                             {
-                                diagnostics.Add(ErrorCode.ERR_BadUsingNamespace, usingDirective.Name.Location, imported);
+                                diagnostics.Add(ErrorCode.WRN_DuplicateUsing, usingDirective.Name.Location, importedType);
                             }
                             else
                             {
-                                var importedType = (NamedTypeSymbol)imported;
-                                if (uniqueUsings.Contains(importedType))
-                                {
-                                    diagnostics.Add(ErrorCode.WRN_DuplicateUsing, usingDirective.Name.Location, importedType);
-                                }
-                                else
-                                {
-                                    declarationBinder.ReportDiagnosticsIfObsolete(diagnostics, importedType, usingDirective.Name, hasBaseReceiver: false);
+                                declarationBinder.ReportDiagnosticsIfObsolete(diagnostics, importedType, usingDirective.Name, hasBaseReceiver: false);
 
-                                    uniqueUsings.Add(importedType);
-                                    usings.Add(new NamespaceOrTypeAndImportDirective(importedType, usingDirective));
-                                }
+                                uniqueUsings.Add(importedType);
+                                usings.Add(new NamespaceOrTypeAndImportDirective(importedType, usingDirective));
                             }
                         }
                         else if (imported.Kind != SymbolKind.ErrorType)

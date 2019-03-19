@@ -171,7 +171,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         AsKeyword = 8395,
         ExtendsKeyword = 8396,
         ImplementsKeyword = 8397,
-        ConstructorKeyword = 8398, // Must be always last
+        ModuleKeyword = 8398,
+        ConstructorKeyword = 8399, // Must be always last
 #endif
 
         // contextual keywords
@@ -180,7 +181,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         AliasKeyword = 8407,
         GlobalKeyword = 8408,
         AssemblyKeyword = 8409,
-        ModuleKeyword = 8410,
+        //ModuleKeyword = 8410,
         TypeKeyword = 8411,
         FieldKeyword = 8412,
         MethodKeyword = 8413,
@@ -525,6 +526,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         InterfaceDeclaration = 8857,
         EnumDeclaration = 8858,
         DelegateDeclaration = 8859,
+        ModuleDeclaration = 8860,
 
         ExtendList = 8863,
         ImplementList = 8864,

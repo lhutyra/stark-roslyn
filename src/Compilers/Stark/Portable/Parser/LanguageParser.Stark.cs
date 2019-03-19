@@ -429,6 +429,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
                 case SyntaxKind.EnumKeyword:
                 case SyntaxKind.DelegateKeyword:
                 case SyntaxKind.ClassKeyword:
+                case SyntaxKind.ModuleKeyword:
                 case SyntaxKind.InterfaceKeyword:
                 case SyntaxKind.StructKeyword:
                 case SyntaxKind.AbstractKeyword:
@@ -1111,6 +1112,7 @@ tryAgain:
             {
                 case SyntaxKind.StructKeyword:
                 case SyntaxKind.ClassKeyword:
+                case SyntaxKind.ModuleKeyword:
                 case SyntaxKind.InterfaceKeyword:
                     return true;
             }
@@ -1183,6 +1185,9 @@ tryAgain:
                     CheckForVersionSpecificModifiers(modifiers, SyntaxKind.StaticKeyword, MessageID.IDS_FeatureStaticClasses);
                     return this.ParseClassOrStructOrInterfaceDeclaration(attributes, modifiers);
 
+                case SyntaxKind.ModuleKeyword:
+                    return this.ParseClassOrStructOrInterfaceDeclaration(attributes, modifiers);
+
                 case SyntaxKind.StructKeyword:
                     // report use of "readonly struct" if feature is unsupported
                     CheckForVersionSpecificModifiers(modifiers, SyntaxKind.ReadOnlyKeyword, MessageID.IDS_FeatureReadOnlyStructs);
@@ -1220,20 +1225,23 @@ tryAgain:
         {
             Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ClassKeyword ||
                 this.CurrentToken.Kind == SyntaxKind.StructKeyword ||
+                this.CurrentToken.Kind == SyntaxKind.ModuleKeyword ||
                 this.CurrentToken.Kind == SyntaxKind.InterfaceKeyword);
 
             // "top-level" expressions and statements should never occur inside an asynchronous context
             Debug.Assert(!IsInAsync);
 
+            bool isModule = this.CurrentToken.Kind == SyntaxKind.ModuleKeyword;
+
             var classOrStructOrInterface = this.EatToken();
             var saveTerm = _termState;
             _termState |= TerminatorState.IsPossibleAggregateClauseStartOrStop;
             var name = this.ParseIdentifierToken();
-            var typeParameters = this.ParseTypeParameterList();
+            var typeParameters = isModule ? null : this.ParseTypeParameterList();
 
             _termState = saveTerm;
-            var extendList = this.ParseExtendList();
-            var implementList = this.ParseImplementList();
+            var extendList = isModule ? null : this.ParseExtendList();
+            var implementList = isModule ? null : this.ParseImplementList();
 
             // Parse class body
             bool parseMembers = true;
@@ -1241,7 +1249,7 @@ tryAgain:
             var constraints = default(SyntaxListBuilder<TypeParameterConstraintClauseSyntax>);
             try
             {
-                if (this.CurrentToken.ContextualKind == SyntaxKind.WhereKeyword)
+                if (!isModule &&  this.CurrentToken.ContextualKind == SyntaxKind.WhereKeyword)
                 {
                     constraints = _pool.Allocate<TypeParameterConstraintClauseSyntax>();
                     this.ParseTypeParameterConstraintClauses(constraints);
@@ -1311,6 +1319,21 @@ tryAgain:
 
                 switch (classOrStructOrInterface.Kind)
                 {
+                    case SyntaxKind.ModuleKeyword:
+                        return _syntaxFactory.ModuleDeclaration(
+                            attributes,
+                            modifiers.ToList(),
+                            classOrStructOrInterface,
+                            name,
+                            typeParameters,
+                            extendList,
+                            implementList,
+                            constraints,
+                            openBrace,
+                            members,
+                            closeBrace,
+                            null);
+
                     case SyntaxKind.ClassKeyword:
                         return _syntaxFactory.ClassDeclaration(
                             attributes,
@@ -1707,6 +1730,7 @@ tryAgain:
                 case SyntaxKind.AtToken:
                 case SyntaxKind.AbstractKeyword:
                 case SyntaxKind.ClassKeyword:
+                case SyntaxKind.ModuleKeyword:
                 case SyntaxKind.ConstKeyword:
                 case SyntaxKind.DelegateKeyword:
                 case SyntaxKind.EnumKeyword:
@@ -1741,6 +1765,7 @@ tryAgain:
             switch (this.CurrentToken.Kind)
             {
                 case SyntaxKind.ClassKeyword:
+                case SyntaxKind.ModuleKeyword:
                 case SyntaxKind.DelegateKeyword:
                 case SyntaxKind.EnumKeyword:
                 case SyntaxKind.InterfaceKeyword:
@@ -1757,6 +1782,7 @@ tryAgain:
             switch (member?.Kind())
             {
                 case SyntaxKind.ClassDeclaration:
+                case SyntaxKind.ModuleDeclaration:
                 case SyntaxKind.StructDeclaration:
                 case SyntaxKind.InterfaceDeclaration:
                 case SyntaxKind.EnumDeclaration:
@@ -1927,6 +1953,7 @@ tryAgain:
                     case SyntaxKind.EnumKeyword:
                     case SyntaxKind.InterfaceKeyword:
                     case SyntaxKind.StructKeyword:
+                    case SyntaxKind.ModuleKeyword:
                         return this.ParseTypeDeclaration(attributes, modifiers);
 
                     case SyntaxKind.NamespaceKeyword:
@@ -3737,6 +3764,7 @@ tryAgain:
                     case SyntaxKind.GetAccessorDeclaration:
                     case SyntaxKind.SetAccessorDeclaration:
                         return ((Stark.Syntax.AccessorDeclarationSyntax)decl).Modifiers;
+                    case SyntaxKind.ModuleDeclaration:
                     case SyntaxKind.ClassDeclaration:
                     case SyntaxKind.StructDeclaration:
                     case SyntaxKind.InterfaceDeclaration:

@@ -193,6 +193,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             CSharpSyntaxNode syntax)
         {
             Debug.Assert(
+                kind == SyntaxKind.ModuleDeclaration ||
                 kind == SyntaxKind.ClassDeclaration ||
                 kind == SyntaxKind.StructDeclaration ||
                 kind == SyntaxKind.InterfaceDeclaration ||

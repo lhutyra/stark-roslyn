@@ -80,6 +80,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                          declaration.Kind == DeclarationKind.Interface ||
                          declaration.Kind == DeclarationKind.Enum ||
                          declaration.Kind == DeclarationKind.Delegate ||
+                         declaration.Kind == DeclarationKind.Module ||
                          declaration.Kind == DeclarationKind.Class);
 
             if (containingSymbol.Kind == SymbolKind.NamedType)
@@ -100,6 +101,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 case SyntaxKind.DelegateDeclaration:
                     return ((DelegateDeclarationSyntax)node).Identifier;
                 case SyntaxKind.ClassDeclaration:
+                case SyntaxKind.ModuleDeclaration:
                 case SyntaxKind.InterfaceDeclaration:
                 case SyntaxKind.StructDeclaration:
                     return ((BaseTypeDeclarationSyntax)node).Identifier;

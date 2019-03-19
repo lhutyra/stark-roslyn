@@ -284,8 +284,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                     if (previousToken.Parent is AttributeSyntax parent)
                     {
                         if (parent.Target != null &&
-                            (parent.Target.Identifier.IsKindOrHasMatchingText(SyntaxKind.AssemblyKeyword) ||
-                             parent.Target.Identifier.IsKindOrHasMatchingText(SyntaxKind.ModuleKeyword)))
+                            (parent.Target.Identifier.IsKindOrHasMatchingText(SyntaxKind.AssemblyKeyword)))
                         {
                             if (!(currentToken.Parent is AttributeSyntax))
                             {
@@ -346,8 +345,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                     {
                         if (parent.Target != null)
                         {
-                            if (parent.Target.Identifier == SyntaxFactory.Token(SyntaxKind.AssemblyKeyword) ||
-                                parent.Target.Identifier == SyntaxFactory.Token(SyntaxKind.ModuleKeyword))
+                            if (parent.Target.Identifier == SyntaxFactory.Token(SyntaxKind.AssemblyKeyword))
                             {
                                 if (!(previousToken.Parent is AttributeSyntax))
                                 {

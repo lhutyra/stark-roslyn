@@ -301,6 +301,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return false;
         }
 
+        public override SingleNamespaceOrTypeDeclaration VisitModuleDeclaration(ModuleDeclarationSyntax node)
+        {
+            return VisitTypeDeclaration(node, DeclarationKind.Module);
+        }
+
         public override SingleNamespaceOrTypeDeclaration VisitClassDeclaration(ClassDeclarationSyntax node)
         {
             return VisitTypeDeclaration(node, DeclarationKind.Class);

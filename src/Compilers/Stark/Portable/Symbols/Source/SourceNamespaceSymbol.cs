@@ -386,6 +386,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 case DeclarationKind.Namespace:
                     return new SourceNamespaceSymbol(_module, this, (MergedNamespaceDeclaration)declaration, diagnostics);
 
+                case DeclarationKind.Module:
                 case DeclarationKind.Struct:
                 case DeclarationKind.Interface:
                 case DeclarationKind.Enum:

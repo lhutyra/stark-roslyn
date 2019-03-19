@@ -191,7 +191,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             this.declaration = declaration;
 
             TypeKind typeKind = declaration.Kind.ToTypeKind();
-            var modifiers = MakeModifiers(typeKind, diagnostics);
+            bool isModule = declaration.Kind == DeclarationKind.Module;
+            var modifiers = MakeModifiers(typeKind, diagnostics, isModule);
 
             foreach (var singleDeclaration in declaration.Declarations)
             {
@@ -241,7 +242,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        private DeclarationModifiers MakeModifiers(TypeKind typeKind, DiagnosticBag diagnostics)
+        private DeclarationModifiers MakeModifiers(TypeKind typeKind, DiagnosticBag diagnostics, bool isModule)
         {
             var defaultAccess = this.ContainingSymbol is NamespaceSymbol
                 ? DeclarationModifiers.Internal
@@ -265,7 +266,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 case TypeKind.Class:
                 case TypeKind.Submission:
-                    allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Static | DeclarationModifiers.Sealed | DeclarationModifiers.Abstract | DeclarationModifiers.Unsafe;
+                    allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Unsafe;
+                    if (!isModule)
+                    {
+                        allowedModifiers |= DeclarationModifiers.Sealed | DeclarationModifiers.Abstract;
+                    }
                     break;
                 case TypeKind.Struct:
                     allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Ref | DeclarationModifiers.Abstract | DeclarationModifiers.ReadOnly | DeclarationModifiers.Unsafe;
@@ -305,6 +310,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 case TypeKind.Interface:
                     mods |= DeclarationModifiers.Abstract;
+                    break;
+                case TypeKind.Class:
+                    if (isModule)
+                    {
+                        mods |= DeclarationModifiers.Static;
+                    }
                     break;
                 case TypeKind.Struct:
                     // A struct without abstract is sealed by default
@@ -2417,6 +2428,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     case SyntaxKind.ClassDeclaration:
                         var classDecl = (ClassDeclarationSyntax)syntax;
                         AddNonTypeMembers(builder, classDecl.Members, diagnostics);
+                        break;
+
+                    case SyntaxKind.ModuleDeclaration:
+                        var moduleDecl = (ModuleDeclarationSyntax)syntax;
+                        AddNonTypeMembers(builder, moduleDecl.Members, diagnostics);
                         break;
 
                     case SyntaxKind.InterfaceDeclaration:

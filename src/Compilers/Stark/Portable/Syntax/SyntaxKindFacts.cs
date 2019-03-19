@@ -42,7 +42,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             switch (kind)
             {
                 case SyntaxKind.AssemblyKeyword:
-                case SyntaxKind.ModuleKeyword:
+                //case SyntaxKind.ModuleKeyword: // no longer possible with stark
                     return true;
                 default:
                     return false;
@@ -800,6 +800,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.ClassDeclaration;
                 case SyntaxKind.StructKeyword:
                     return SyntaxKind.StructDeclaration;
+                case SyntaxKind.ModuleKeyword:
+                    return SyntaxKind.ModuleDeclaration;
                 case SyntaxKind.InterfaceKeyword:
                     return SyntaxKind.InterfaceDeclaration;
                 default:
@@ -981,6 +983,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.TransientKeyword;
                 case "constructor":
                     return SyntaxKind.ConstructorKeyword;
+                case "module":
+                    return SyntaxKind.ModuleKeyword;
                 case "implements":
                     return SyntaxKind.ImplementsKeyword;
                 case "extends":
@@ -1120,7 +1124,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.AscendingKeyword:
                 case SyntaxKind.DescendingKeyword:
                 case SyntaxKind.AssemblyKeyword:
-                case SyntaxKind.ModuleKeyword:
                 case SyntaxKind.TypeKeyword:
                 case SyntaxKind.GlobalKeyword:
                 case SyntaxKind.FieldKeyword:
@@ -1208,8 +1211,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.DescendingKeyword;
                 case "assembly":
                     return SyntaxKind.AssemblyKeyword;
-                case "module":
-                    return SyntaxKind.ModuleKeyword;
                 case "type":
                     return SyntaxKind.TypeKeyword;
                 case "field":

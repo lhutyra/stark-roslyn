@@ -13613,6 +13613,283 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     public new BaseTypeDeclarationSyntax AddImplementListTypes(params BaseTypeSyntax[] items) => AddImplementListTypesCore(items);
   }
 
+  /// <summary>Module declaration syntax.</summary>
+  public sealed partial class ModuleDeclarationSyntax : TypeDeclarationSyntax
+  {
+    private SyntaxNode attributeLists;
+    private TypeParameterListSyntax typeParameterList;
+    private ExtendListSyntax extendList;
+    private ImplementListSyntax implementList;
+    private SyntaxNode constraintClauses;
+    private SyntaxNode members;
+
+    internal ModuleDeclarationSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+        : base(green, parent, position)
+    {
+    }
+
+    public override SyntaxList<AttributeSyntax> AttributeLists 
+    {
+        get
+        {
+            return new SyntaxList<AttributeSyntax>(this.GetRed(ref this.attributeLists, 0));
+        }
+    }
+
+    public override SyntaxTokenList Modifiers 
+    {
+        get
+        {
+            var slot = this.Green.GetSlot(1);
+            if (slot != null)
+                return new SyntaxTokenList(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxTokenList);
+        }
+    }
+
+    /// <summary>Gets the class keyword token.</summary>
+    public override SyntaxToken Keyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ModuleDeclarationSyntax)this.Green).keyword, this.GetChildPosition(2), this.GetChildIndex(2)); }
+    }
+
+    public override SyntaxToken Identifier 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ModuleDeclarationSyntax)this.Green).identifier, this.GetChildPosition(3), this.GetChildIndex(3)); }
+    }
+
+    public override TypeParameterListSyntax TypeParameterList 
+    {
+        get
+        {
+            return this.GetRed(ref this.typeParameterList, 4);
+        }
+    }
+
+    public override ExtendListSyntax ExtendList 
+    {
+        get
+        {
+            return this.GetRed(ref this.extendList, 5);
+        }
+    }
+
+    public override ImplementListSyntax ImplementList 
+    {
+        get
+        {
+            return this.GetRed(ref this.implementList, 6);
+        }
+    }
+
+    public override SyntaxList<TypeParameterConstraintClauseSyntax> ConstraintClauses 
+    {
+        get
+        {
+            return new SyntaxList<TypeParameterConstraintClauseSyntax>(this.GetRed(ref this.constraintClauses, 7));
+        }
+    }
+
+    public override SyntaxToken OpenBraceToken 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ModuleDeclarationSyntax)this.Green).openBraceToken, this.GetChildPosition(8), this.GetChildIndex(8)); }
+    }
+
+    public override SyntaxList<MemberDeclarationSyntax> Members 
+    {
+        get
+        {
+            return new SyntaxList<MemberDeclarationSyntax>(this.GetRed(ref this.members, 9));
+        }
+    }
+
+    public override SyntaxToken CloseBraceToken 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ModuleDeclarationSyntax)this.Green).closeBraceToken, this.GetChildPosition(10), this.GetChildIndex(10)); }
+    }
+
+    public override SyntaxToken EosToken 
+    {
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ModuleDeclarationSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(11), this.GetChildIndex(11));
+
+            return default(SyntaxToken);
+        }
+    }
+
+    internal override SyntaxNode GetNodeSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.GetRedAtZero(ref this.attributeLists);
+            case 4: return this.GetRed(ref this.typeParameterList, 4);
+            case 5: return this.GetRed(ref this.extendList, 5);
+            case 6: return this.GetRed(ref this.implementList, 6);
+            case 7: return this.GetRed(ref this.constraintClauses, 7);
+            case 9: return this.GetRed(ref this.members, 9);
+            default: return null;
+        }
+    }
+    internal override SyntaxNode GetCachedSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.attributeLists;
+            case 4: return this.typeParameterList;
+            case 5: return this.extendList;
+            case 6: return this.implementList;
+            case 7: return this.constraintClauses;
+            case 9: return this.members;
+            default: return null;
+        }
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitModuleDeclaration(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitModuleDeclaration(this);
+    }
+
+    public ModuleDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    {
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || extendList != this.ExtendList || implementList != this.ImplementList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
+        {
+            var newNode = SyntaxFactory.ModuleDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               return newNode.WithAnnotations(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override BaseTypeDeclarationSyntax WithAttributeListsCore(SyntaxList<AttributeSyntax> attributeLists) => WithAttributeLists(attributeLists);
+    public new ModuleDeclarationSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
+    {
+        return this.Update(attributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithModifiersCore(SyntaxTokenList modifiers) => WithModifiers(modifiers);
+    public new ModuleDeclarationSyntax WithModifiers(SyntaxTokenList modifiers)
+    {
+        return this.Update(this.AttributeLists, modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override TypeDeclarationSyntax WithKeywordCore(SyntaxToken keyword) => WithKeyword(keyword);
+    public new ModuleDeclarationSyntax WithKeyword(SyntaxToken keyword)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithIdentifierCore(SyntaxToken identifier) => WithIdentifier(identifier);
+    public new ModuleDeclarationSyntax WithIdentifier(SyntaxToken identifier)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override TypeDeclarationSyntax WithTypeParameterListCore(TypeParameterListSyntax typeParameterList) => WithTypeParameterList(typeParameterList);
+    public new ModuleDeclarationSyntax WithTypeParameterList(TypeParameterListSyntax typeParameterList)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, typeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithExtendListCore(ExtendListSyntax extendList) => WithExtendList(extendList);
+    public new ModuleDeclarationSyntax WithExtendList(ExtendListSyntax extendList)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, extendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithImplementListCore(ImplementListSyntax implementList) => WithImplementList(implementList);
+    public new ModuleDeclarationSyntax WithImplementList(ImplementListSyntax implementList)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, implementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override TypeDeclarationSyntax WithConstraintClausesCore(SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses) => WithConstraintClauses(constraintClauses);
+    public new ModuleDeclarationSyntax WithConstraintClauses(SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, constraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithOpenBraceTokenCore(SyntaxToken openBraceToken) => WithOpenBraceToken(openBraceToken);
+    public new ModuleDeclarationSyntax WithOpenBraceToken(SyntaxToken openBraceToken)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, openBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override TypeDeclarationSyntax WithMembersCore(SyntaxList<MemberDeclarationSyntax> members) => WithMembers(members);
+    public new ModuleDeclarationSyntax WithMembers(SyntaxList<MemberDeclarationSyntax> members)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, members, this.CloseBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithCloseBraceTokenCore(SyntaxToken closeBraceToken) => WithCloseBraceToken(closeBraceToken);
+    public new ModuleDeclarationSyntax WithCloseBraceToken(SyntaxToken closeBraceToken)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, closeBraceToken, this.EosToken);
+    }
+
+    internal override BaseTypeDeclarationSyntax WithEosTokenCore(SyntaxToken eosToken) => WithEosToken(eosToken);
+    public new ModuleDeclarationSyntax WithEosToken(SyntaxToken eosToken)
+    {
+        return this.Update(this.AttributeLists, this.Modifiers, this.Keyword, this.Identifier, this.TypeParameterList, this.ExtendList, this.ImplementList, this.ConstraintClauses, this.OpenBraceToken, this.Members, this.CloseBraceToken, eosToken);
+    }
+    internal override BaseTypeDeclarationSyntax AddAttributeListsCore(params AttributeSyntax[] items) => AddAttributeLists(items);
+
+    public new ModuleDeclarationSyntax AddAttributeLists(params AttributeSyntax[] items)
+    {
+        return this.WithAttributeLists(this.AttributeLists.AddRange(items));
+    }
+    internal override BaseTypeDeclarationSyntax AddModifiersCore(params SyntaxToken[] items) => AddModifiers(items);
+
+    public new ModuleDeclarationSyntax AddModifiers(params SyntaxToken[] items)
+    {
+        return this.WithModifiers(this.Modifiers.AddRange(items));
+    }
+    internal override TypeDeclarationSyntax AddTypeParameterListParametersCore(params TypeParameterSyntax[] items) => AddTypeParameterListParameters(items);
+
+    public new ModuleDeclarationSyntax AddTypeParameterListParameters(params TypeParameterSyntax[] items)
+    {
+        var typeParameterList = this.TypeParameterList ?? SyntaxFactory.TypeParameterList();
+        return this.WithTypeParameterList(typeParameterList.WithParameters(typeParameterList.Parameters.AddRange(items)));
+    }
+    internal override BaseTypeDeclarationSyntax AddExtendListTypesCore(params BaseTypeSyntax[] items) => AddExtendListTypes(items);
+
+    public new ModuleDeclarationSyntax AddExtendListTypes(params BaseTypeSyntax[] items)
+    {
+        var extendList = this.ExtendList ?? SyntaxFactory.ExtendList();
+        return this.WithExtendList(extendList.WithTypes(extendList.Types.AddRange(items)));
+    }
+    internal override BaseTypeDeclarationSyntax AddImplementListTypesCore(params BaseTypeSyntax[] items) => AddImplementListTypes(items);
+
+    public new ModuleDeclarationSyntax AddImplementListTypes(params BaseTypeSyntax[] items)
+    {
+        var implementList = this.ImplementList ?? SyntaxFactory.ImplementList();
+        return this.WithImplementList(implementList.WithTypes(implementList.Types.AddRange(items)));
+    }
+    internal override TypeDeclarationSyntax AddConstraintClausesCore(params TypeParameterConstraintClauseSyntax[] items) => AddConstraintClauses(items);
+
+    public new ModuleDeclarationSyntax AddConstraintClauses(params TypeParameterConstraintClauseSyntax[] items)
+    {
+        return this.WithConstraintClauses(this.ConstraintClauses.AddRange(items));
+    }
+    internal override TypeDeclarationSyntax AddMembersCore(params MemberDeclarationSyntax[] items) => AddMembers(items);
+
+    public new ModuleDeclarationSyntax AddMembers(params MemberDeclarationSyntax[] items)
+    {
+        return this.WithMembers(this.Members.AddRange(items));
+    }
+  }
+
   /// <summary>Class type declaration syntax.</summary>
   public sealed partial class ClassDeclarationSyntax : TypeDeclarationSyntax
   {

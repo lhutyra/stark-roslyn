@@ -21633,6 +21633,364 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public abstract StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> Members { get; }
   }
 
+  /// <summary>Module declaration syntax.</summary>
+  internal sealed partial class ModuleDeclarationSyntax : TypeDeclarationSyntax
+  {
+    internal readonly GreenNode attributeLists;
+    internal readonly GreenNode modifiers;
+    internal readonly SyntaxToken keyword;
+    internal readonly SyntaxToken identifier;
+    internal readonly TypeParameterListSyntax typeParameterList;
+    internal readonly ExtendListSyntax extendList;
+    internal readonly ImplementListSyntax implementList;
+    internal readonly GreenNode constraintClauses;
+    internal readonly SyntaxToken openBraceToken;
+    internal readonly GreenNode members;
+    internal readonly SyntaxToken closeBraceToken;
+    internal readonly SyntaxToken eosToken;
+
+    internal ModuleDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 12;
+        if (attributeLists != null)
+        {
+            this.AdjustFlagsAndWidth(attributeLists);
+            this.attributeLists = attributeLists;
+        }
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(keyword);
+        this.keyword = keyword;
+        this.AdjustFlagsAndWidth(identifier);
+        this.identifier = identifier;
+        if (typeParameterList != null)
+        {
+            this.AdjustFlagsAndWidth(typeParameterList);
+            this.typeParameterList = typeParameterList;
+        }
+        if (extendList != null)
+        {
+            this.AdjustFlagsAndWidth(extendList);
+            this.extendList = extendList;
+        }
+        if (implementList != null)
+        {
+            this.AdjustFlagsAndWidth(implementList);
+            this.implementList = implementList;
+        }
+        if (constraintClauses != null)
+        {
+            this.AdjustFlagsAndWidth(constraintClauses);
+            this.constraintClauses = constraintClauses;
+        }
+        this.AdjustFlagsAndWidth(openBraceToken);
+        this.openBraceToken = openBraceToken;
+        if (members != null)
+        {
+            this.AdjustFlagsAndWidth(members);
+            this.members = members;
+        }
+        this.AdjustFlagsAndWidth(closeBraceToken);
+        this.closeBraceToken = closeBraceToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
+    }
+
+
+    internal ModuleDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 12;
+        if (attributeLists != null)
+        {
+            this.AdjustFlagsAndWidth(attributeLists);
+            this.attributeLists = attributeLists;
+        }
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(keyword);
+        this.keyword = keyword;
+        this.AdjustFlagsAndWidth(identifier);
+        this.identifier = identifier;
+        if (typeParameterList != null)
+        {
+            this.AdjustFlagsAndWidth(typeParameterList);
+            this.typeParameterList = typeParameterList;
+        }
+        if (extendList != null)
+        {
+            this.AdjustFlagsAndWidth(extendList);
+            this.extendList = extendList;
+        }
+        if (implementList != null)
+        {
+            this.AdjustFlagsAndWidth(implementList);
+            this.implementList = implementList;
+        }
+        if (constraintClauses != null)
+        {
+            this.AdjustFlagsAndWidth(constraintClauses);
+            this.constraintClauses = constraintClauses;
+        }
+        this.AdjustFlagsAndWidth(openBraceToken);
+        this.openBraceToken = openBraceToken;
+        if (members != null)
+        {
+            this.AdjustFlagsAndWidth(members);
+            this.members = members;
+        }
+        this.AdjustFlagsAndWidth(closeBraceToken);
+        this.closeBraceToken = closeBraceToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
+    }
+
+
+    internal ModuleDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, GreenNode constraintClauses, SyntaxToken openBraceToken, GreenNode members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+        : base(kind)
+    {
+        this.SlotCount = 12;
+        if (attributeLists != null)
+        {
+            this.AdjustFlagsAndWidth(attributeLists);
+            this.attributeLists = attributeLists;
+        }
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(keyword);
+        this.keyword = keyword;
+        this.AdjustFlagsAndWidth(identifier);
+        this.identifier = identifier;
+        if (typeParameterList != null)
+        {
+            this.AdjustFlagsAndWidth(typeParameterList);
+            this.typeParameterList = typeParameterList;
+        }
+        if (extendList != null)
+        {
+            this.AdjustFlagsAndWidth(extendList);
+            this.extendList = extendList;
+        }
+        if (implementList != null)
+        {
+            this.AdjustFlagsAndWidth(implementList);
+            this.implementList = implementList;
+        }
+        if (constraintClauses != null)
+        {
+            this.AdjustFlagsAndWidth(constraintClauses);
+            this.constraintClauses = constraintClauses;
+        }
+        this.AdjustFlagsAndWidth(openBraceToken);
+        this.openBraceToken = openBraceToken;
+        if (members != null)
+        {
+            this.AdjustFlagsAndWidth(members);
+            this.members = members;
+        }
+        this.AdjustFlagsAndWidth(closeBraceToken);
+        this.closeBraceToken = closeBraceToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
+    }
+
+    public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> AttributeLists { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax>(this.attributeLists); } }
+    public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
+    /// <summary>Gets the class keyword token.</summary>
+    public override SyntaxToken Keyword { get { return this.keyword; } }
+    public override SyntaxToken Identifier { get { return this.identifier; } }
+    public override TypeParameterListSyntax TypeParameterList { get { return this.typeParameterList; } }
+    public override ExtendListSyntax ExtendList { get { return this.extendList; } }
+    public override ImplementListSyntax ImplementList { get { return this.implementList; } }
+    public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> ConstraintClauses { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax>(this.constraintClauses); } }
+    public override SyntaxToken OpenBraceToken { get { return this.openBraceToken; } }
+    public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> Members { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax>(this.members); } }
+    public override SyntaxToken CloseBraceToken { get { return this.closeBraceToken; } }
+    public override SyntaxToken EosToken { get { return this.eosToken; } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.attributeLists;
+            case 1: return this.modifiers;
+            case 2: return this.keyword;
+            case 3: return this.identifier;
+            case 4: return this.typeParameterList;
+            case 5: return this.extendList;
+            case 6: return this.implementList;
+            case 7: return this.constraintClauses;
+            case 8: return this.openBraceToken;
+            case 9: return this.members;
+            case 10: return this.closeBraceToken;
+            case 11: return this.eosToken;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.ModuleDeclarationSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitModuleDeclaration(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitModuleDeclaration(this);
+    }
+
+    public ModuleDeclarationSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    {
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || keyword != this.Keyword || identifier != this.Identifier || typeParameterList != this.TypeParameterList || extendList != this.ExtendList || implementList != this.ImplementList || constraintClauses != this.ConstraintClauses || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
+        {
+            var newNode = SyntaxFactory.ModuleDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new ModuleDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.extendList, this.implementList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new ModuleDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.keyword, this.identifier, this.typeParameterList, this.extendList, this.implementList, this.constraintClauses, this.openBraceToken, this.members, this.closeBraceToken, this.eosToken, GetDiagnostics(), annotations);
+    }
+
+    internal ModuleDeclarationSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 12;
+      var attributeLists = (GreenNode)reader.ReadValue();
+      if (attributeLists != null)
+      {
+         AdjustFlagsAndWidth(attributeLists);
+         this.attributeLists = attributeLists;
+      }
+      var modifiers = (GreenNode)reader.ReadValue();
+      if (modifiers != null)
+      {
+         AdjustFlagsAndWidth(modifiers);
+         this.modifiers = modifiers;
+      }
+      var keyword = (SyntaxToken)reader.ReadValue();
+      if (keyword != null)
+      {
+         AdjustFlagsAndWidth(keyword);
+         this.keyword = keyword;
+      }
+      var identifier = (SyntaxToken)reader.ReadValue();
+      if (identifier != null)
+      {
+         AdjustFlagsAndWidth(identifier);
+         this.identifier = identifier;
+      }
+      var typeParameterList = (TypeParameterListSyntax)reader.ReadValue();
+      if (typeParameterList != null)
+      {
+         AdjustFlagsAndWidth(typeParameterList);
+         this.typeParameterList = typeParameterList;
+      }
+      var extendList = (ExtendListSyntax)reader.ReadValue();
+      if (extendList != null)
+      {
+         AdjustFlagsAndWidth(extendList);
+         this.extendList = extendList;
+      }
+      var implementList = (ImplementListSyntax)reader.ReadValue();
+      if (implementList != null)
+      {
+         AdjustFlagsAndWidth(implementList);
+         this.implementList = implementList;
+      }
+      var constraintClauses = (GreenNode)reader.ReadValue();
+      if (constraintClauses != null)
+      {
+         AdjustFlagsAndWidth(constraintClauses);
+         this.constraintClauses = constraintClauses;
+      }
+      var openBraceToken = (SyntaxToken)reader.ReadValue();
+      if (openBraceToken != null)
+      {
+         AdjustFlagsAndWidth(openBraceToken);
+         this.openBraceToken = openBraceToken;
+      }
+      var members = (GreenNode)reader.ReadValue();
+      if (members != null)
+      {
+         AdjustFlagsAndWidth(members);
+         this.members = members;
+      }
+      var closeBraceToken = (SyntaxToken)reader.ReadValue();
+      if (closeBraceToken != null)
+      {
+         AdjustFlagsAndWidth(closeBraceToken);
+         this.closeBraceToken = closeBraceToken;
+      }
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
+      {
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.attributeLists);
+      writer.WriteValue(this.modifiers);
+      writer.WriteValue(this.keyword);
+      writer.WriteValue(this.identifier);
+      writer.WriteValue(this.typeParameterList);
+      writer.WriteValue(this.extendList);
+      writer.WriteValue(this.implementList);
+      writer.WriteValue(this.constraintClauses);
+      writer.WriteValue(this.openBraceToken);
+      writer.WriteValue(this.members);
+      writer.WriteValue(this.closeBraceToken);
+      writer.WriteValue(this.eosToken);
+    }
+
+    static ModuleDeclarationSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(ModuleDeclarationSyntax), r => new ModuleDeclarationSyntax(r));
+    }
+  }
+
   /// <summary>Class type declaration syntax.</summary>
   internal sealed partial class ClassDeclarationSyntax : TypeDeclarationSyntax
   {
@@ -36429,6 +36787,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
+    public virtual TResult VisitModuleDeclaration(ModuleDeclarationSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     public virtual TResult VisitClassDeclaration(ClassDeclarationSyntax node)
     {
       return this.DefaultVisit(node);
@@ -37509,6 +37872,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
     public virtual void VisitTypeParameter(TypeParameterSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    public virtual void VisitModuleDeclaration(ModuleDeclarationSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -39032,6 +39400,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       var varianceKeyword = (SyntaxToken)this.Visit(node.VarianceKeyword);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
       return node.Update(attributeLists, varianceKeyword, identifier);
+    }
+
+    public override CSharpSyntaxNode VisitModuleDeclaration(ModuleDeclarationSyntax node)
+    {
+      var attributeLists = this.VisitList(node.AttributeLists);
+      var modifiers = this.VisitList(node.Modifiers);
+      var keyword = (SyntaxToken)this.Visit(node.Keyword);
+      var identifier = (SyntaxToken)this.Visit(node.Identifier);
+      var typeParameterList = (TypeParameterListSyntax)this.Visit(node.TypeParameterList);
+      var extendList = (ExtendListSyntax)this.Visit(node.ExtendList);
+      var implementList = (ImplementListSyntax)this.Visit(node.ImplementList);
+      var constraintClauses = this.VisitList(node.ConstraintClauses);
+      var openBraceToken = (SyntaxToken)this.Visit(node.OpenBraceToken);
+      var members = this.VisitList(node.Members);
+      var closeBraceToken = (SyntaxToken)this.Visit(node.CloseBraceToken);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(attributeLists, modifiers, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses, openBraceToken, members, closeBraceToken, eosToken);
     }
 
     public override CSharpSyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
@@ -44365,6 +44750,62 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 
       return result;
+    }
+
+    public ModuleDeclarationSyntax ModuleDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    {
+#if DEBUG
+      if (keyword == null)
+        throw new ArgumentNullException(nameof(keyword));
+      switch (keyword.Kind)
+      {
+        case SyntaxKind.ModuleKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(keyword));
+      }
+      if (identifier == null)
+        throw new ArgumentNullException(nameof(identifier));
+      switch (identifier.Kind)
+      {
+        case SyntaxKind.IdentifierToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(identifier));
+      }
+      if (openBraceToken == null)
+        throw new ArgumentNullException(nameof(openBraceToken));
+      switch (openBraceToken.Kind)
+      {
+        case SyntaxKind.OpenBraceToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(openBraceToken));
+      }
+      if (closeBraceToken == null)
+        throw new ArgumentNullException(nameof(closeBraceToken));
+      switch (closeBraceToken.Kind)
+      {
+        case SyntaxKind.CloseBraceToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(closeBraceToken));
+      }
+      if (eosToken != null)
+      {
+      switch (eosToken.Kind)
+      {
+        case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(eosToken));
+      }
+      }
+#endif
+
+      return new ModuleDeclarationSyntax(SyntaxKind.ModuleDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken, this.context);
     }
 
     public ClassDeclarationSyntax ClassDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
@@ -51754,6 +52195,62 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
+    public static ModuleDeclarationSyntax ModuleDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    {
+#if DEBUG
+      if (keyword == null)
+        throw new ArgumentNullException(nameof(keyword));
+      switch (keyword.Kind)
+      {
+        case SyntaxKind.ModuleKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(keyword));
+      }
+      if (identifier == null)
+        throw new ArgumentNullException(nameof(identifier));
+      switch (identifier.Kind)
+      {
+        case SyntaxKind.IdentifierToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(identifier));
+      }
+      if (openBraceToken == null)
+        throw new ArgumentNullException(nameof(openBraceToken));
+      switch (openBraceToken.Kind)
+      {
+        case SyntaxKind.OpenBraceToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(openBraceToken));
+      }
+      if (closeBraceToken == null)
+        throw new ArgumentNullException(nameof(closeBraceToken));
+      switch (closeBraceToken.Kind)
+      {
+        case SyntaxKind.CloseBraceToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(closeBraceToken));
+      }
+      if (eosToken != null)
+      {
+      switch (eosToken.Kind)
+      {
+        case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(eosToken));
+      }
+      }
+#endif
+
+      return new ModuleDeclarationSyntax(SyntaxKind.ModuleDeclaration, attributeLists.Node, modifiers.Node, keyword, identifier, typeParameterList, extendList, implementList, constraintClauses.Node, openBraceToken, members.Node, closeBraceToken, eosToken);
+    }
+
     public static ClassDeclarationSyntax ClassDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken keyword, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ExtendListSyntax extendList, ImplementListSyntax implementList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, SyntaxToken openBraceToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<MemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
 #if DEBUG
@@ -54668,6 +55165,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(NameEqualsSyntax),
            typeof(TypeParameterListSyntax),
            typeof(TypeParameterSyntax),
+           typeof(ModuleDeclarationSyntax),
            typeof(ClassDeclarationSyntax),
            typeof(StructDeclarationSyntax),
            typeof(InterfaceDeclarationSyntax),

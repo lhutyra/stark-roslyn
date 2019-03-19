@@ -246,7 +246,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             switch (token.Kind())
             {
                 case SyntaxKind.AssemblyKeyword:
-                case SyntaxKind.ModuleKeyword:
                 case SyntaxKind.FieldKeyword:
                 case SyntaxKind.EventKeyword:
                 case SyntaxKind.MethodKeyword:

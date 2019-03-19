@@ -12,6 +12,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 case DeclarationKind.Class:
                 case DeclarationKind.Script:
+                case DeclarationKind.Module:
                 case DeclarationKind.ImplicitClass:
                     return TypeKind.Class;
 
