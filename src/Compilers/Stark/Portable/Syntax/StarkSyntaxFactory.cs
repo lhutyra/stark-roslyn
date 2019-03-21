@@ -53,7 +53,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         }
 
         public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, ExtendListSyntax extendList,
-            SeparatedSyntaxList<EnumMemberDeclarationSyntax> members)
+            SyntaxList<EnumMemberDeclarationSyntax> members)
         {
             return SyntaxFactory.EnumDeclaration(attributeLists,
                 modifiers,

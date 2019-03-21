@@ -3080,7 +3080,7 @@
     <Field Name="OpenBraceToken" Type="SyntaxToken" Override="true">
       <Kind Name="OpenBraceToken"/>
     </Field>
-    <Field Name="Members" Type="SeparatedSyntaxList&lt;EnumMemberDeclarationSyntax&gt;">
+    <Field Name="Members" Type="SyntaxList&lt;EnumMemberDeclarationSyntax&gt;">
       <PropertyComment>
         <summary>Gets the members declaration list.</summary>
       </PropertyComment>

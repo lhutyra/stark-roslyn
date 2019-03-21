@@ -447,7 +447,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return result;
         }
 
-        private static ImmutableHashSet<string> GetEnumMemberNames(SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, ref SingleTypeDeclaration.TypeDeclarationFlags declFlags)
+        private static ImmutableHashSet<string> GetEnumMemberNames(SyntaxList<EnumMemberDeclarationSyntax> members, ref SingleTypeDeclaration.TypeDeclarationFlags declFlags)
         {
             var cnt = members.Count;
 

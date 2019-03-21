@@ -14787,15 +14787,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     }
 
     /// <summary>Gets the members declaration list.</summary>
-    public SeparatedSyntaxList<EnumMemberDeclarationSyntax> Members 
+    public SyntaxList<EnumMemberDeclarationSyntax> Members 
     {
         get
         {
-            var red = this.GetRed(ref this.members, 7);
-            if (red != null)
-                return new SeparatedSyntaxList<EnumMemberDeclarationSyntax>(red, this.GetChildIndex(7));
-
-            return default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>);
+            return new SyntaxList<EnumMemberDeclarationSyntax>(this.GetRed(ref this.members, 7));
         }
     }
 
@@ -14850,7 +14846,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitEnumDeclaration(this);
     }
 
-    public EnumDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxToken openBraceToken, SeparatedSyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
+    public EnumDeclarationSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken enumKeyword, SyntaxToken identifier, ExtendListSyntax extendList, ImplementListSyntax implementList, SyntaxToken openBraceToken, SyntaxList<EnumMemberDeclarationSyntax> members, SyntaxToken closeBraceToken, SyntaxToken eosToken)
     {
         if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || enumKeyword != this.EnumKeyword || identifier != this.Identifier || extendList != this.ExtendList || implementList != this.ImplementList || openBraceToken != this.OpenBraceToken || members != this.Members || closeBraceToken != this.CloseBraceToken || eosToken != this.EosToken)
         {
@@ -14905,7 +14901,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this.Update(this.AttributeLists, this.Modifiers, this.EnumKeyword, this.Identifier, this.ExtendList, this.ImplementList, openBraceToken, this.Members, this.CloseBraceToken, this.EosToken);
     }
 
-    public EnumDeclarationSyntax WithMembers(SeparatedSyntaxList<EnumMemberDeclarationSyntax> members)
+    public EnumDeclarationSyntax WithMembers(SyntaxList<EnumMemberDeclarationSyntax> members)
     {
         return this.Update(this.AttributeLists, this.Modifiers, this.EnumKeyword, this.Identifier, this.ExtendList, this.ImplementList, this.OpenBraceToken, members, this.CloseBraceToken, this.EosToken);
     }

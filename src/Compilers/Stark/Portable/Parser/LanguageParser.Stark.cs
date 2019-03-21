@@ -2992,6 +2992,24 @@ tryAgain:
             return action;
         }
 
+        private PostSkipAction SkipBadListTokensWithExpectedKind<T, TNode>(
+            ref T startToken,
+            SyntaxListBuilder<TNode> list,
+            Func<LanguageParser, bool> isNotExpectedFunction,
+            Func<LanguageParser, bool> abortFunction,
+            SyntaxKind expected)
+            where T : CSharpSyntaxNode
+            where TNode : CSharpSyntaxNode
+        {
+            GreenNode trailingTrivia;
+            var action = this.SkipBadListTokensWithExpectedKindHelper(list, isNotExpectedFunction, abortFunction, expected, out trailingTrivia);
+            if (trailingTrivia != null)
+            {
+                startToken = AddTrailingSkippedSyntax(startToken, trailingTrivia);
+            }
+            return action;
+        }
+
         private PostSkipAction SkipBadListTokensWithErrorCode<T, TNode>(
             ref T startToken,
             SyntaxListBuilder<TNode> list,
@@ -3916,12 +3934,12 @@ tryAgain:
                 _pool.Free(tmpList);
             }
 
-            var members = default(SeparatedSyntaxList<EnumMemberDeclarationSyntax>);
+            var members = default(SyntaxList<EnumMemberDeclarationSyntax>);
             var openBrace = this.EatToken(SyntaxKind.OpenBraceToken);
 
             if (!openBrace.IsMissing)
             {
-                var builder = _pool.AllocateSeparated<EnumMemberDeclarationSyntax>();
+                var builder = _pool.Allocate<EnumMemberDeclarationSyntax>();
                 try
                 {
                     this.ParseEnumMemberDeclarations(ref openBrace, builder);
@@ -3956,13 +3974,12 @@ tryAgain:
 
         private void ParseEnumMemberDeclarations(
             ref SyntaxToken openBrace,
-            SeparatedSyntaxListBuilder<EnumMemberDeclarationSyntax> members)
+            SyntaxListBuilder<EnumMemberDeclarationSyntax> members)
         {
             if (this.CurrentToken.Kind != SyntaxKind.CloseBraceToken)
             {
 tryAgain:
-
-                if (this.IsPossibleEnumMemberDeclaration() || this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
+                if (this.IsPossibleEnumMemberDeclaration())
                 {
                     // first member
                     members.Add(this.ParseEnumMemberDeclaration());
@@ -3974,32 +3991,12 @@ tryAgain:
                         {
                             break;
                         }
-                        else if (this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.SemicolonToken || this.IsPossibleEnumMemberDeclaration())
+                        else if (this.IsPossibleEnumMemberDeclaration())
                         {
-                            if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-                            {
-                                // semicolon instead of comma.. consume it with error and act as if it were a comma.
-                                members.AddSeparator(this.EatTokenWithPrejudice(SyntaxKind.CommaToken));
-                            }
-                            else
-                            {
-                                members.AddSeparator(this.EatToken(SyntaxKind.CommaToken));
-                            }
-
-                            // check for exit case after legal trailing comma
-                            if (this.CurrentToken.Kind == SyntaxKind.CloseBraceToken)
-                            {
-                                break;
-                            }
-                            else if (!this.IsPossibleEnumMemberDeclaration())
-                            {
-                                goto tryAgain;
-                            }
-
                             members.Add(this.ParseEnumMemberDeclaration());
                             continue;
                         }
-                        else if (this.SkipBadEnumMemberListTokens(ref openBrace, members, SyntaxKind.CommaToken) == PostSkipAction.Abort)
+                        else if (this.SkipBadEnumMemberListTokens(ref openBrace, members, SyntaxKind.IdentifierToken) == PostSkipAction.Abort)
                         {
                             break;
                         }
@@ -4012,10 +4009,10 @@ tryAgain:
             }
         }
 
-        private PostSkipAction SkipBadEnumMemberListTokens(ref SyntaxToken openBrace, SeparatedSyntaxListBuilder<EnumMemberDeclarationSyntax> list, SyntaxKind expected)
+        private PostSkipAction SkipBadEnumMemberListTokens(ref SyntaxToken openBrace, SyntaxListBuilder<EnumMemberDeclarationSyntax> list, SyntaxKind expected)
         {
-            return this.SkipBadSeparatedListTokensWithExpectedKind(ref openBrace, list,
-                p => p.CurrentToken.Kind != SyntaxKind.CommaToken && p.CurrentToken.Kind != SyntaxKind.SemicolonToken && !p.IsPossibleEnumMemberDeclaration(),
+            return this.SkipBadListTokensWithExpectedKind(ref openBrace, list,
+                p => !p.IsPossibleEnumMemberDeclaration(),
                 p => p.CurrentToken.Kind == SyntaxKind.CloseBraceToken || p.IsTerminator(),
                 expected);
         }
