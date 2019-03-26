@@ -172,7 +172,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ExtendsKeyword = 8396,
         ImplementsKeyword = 8397,
         ModuleKeyword = 8398,
-        ConstructorKeyword = 8399, // Must be always last
+        HasKeyword = 8399,
+        ConstructorKeyword = 8400, // Must be always last
 #endif
 
         // contextual keywords

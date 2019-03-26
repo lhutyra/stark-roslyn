@@ -983,6 +983,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.TransientKeyword;
                 case "constructor":
                     return SyntaxKind.ConstructorKeyword;
+                case "has":
+                    return SyntaxKind.HasKeyword;
                 case "module":
                     return SyntaxKind.ModuleKeyword;
                 case "implements":
@@ -1662,6 +1664,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "transient";
                 case SyntaxKind.ConstructorKeyword:
                     return "constructor";
+                case SyntaxKind.HasKeyword:
+                    return "has";
                 case SyntaxKind.ImportKeyword:
                     return "import";
                 case SyntaxKind.ImplementsKeyword:
