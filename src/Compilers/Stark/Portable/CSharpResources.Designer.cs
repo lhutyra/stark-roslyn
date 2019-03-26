@@ -6352,6 +6352,24 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid type constraint. Expecting `is`, `has`, `extends` or `implements` constraints.
+        /// </summary>
+        internal static string ERR_InvalidTypeConstraint {
+            get {
+                return ResourceManager.GetString("ERR_InvalidTypeConstraint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid type constraint after is. Expecting `is struct` or `is class` or `is const &lt;primitive type&gt;`.
+        /// </summary>
+        internal static string ERR_InvalidTypeConstraintAfterIs {
+            get {
+                return ResourceManager.GetString("ERR_InvalidTypeConstraintAfterIs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified version string does not conform to the required format - major[.minor[.build[.revision]]].
         /// </summary>
         internal static string ERR_InvalidVersionFormat {

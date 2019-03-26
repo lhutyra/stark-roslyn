@@ -4495,11 +4495,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         return this.WithParameter(this.Parameter.WithAttributeLists(this.Parameter.AttributeLists.AddRange(items)));
     }
-
-    public SimpleLambdaExpressionSyntax AddParameterModifiers(params SyntaxToken[] items)
-    {
-        return this.WithParameter(this.Parameter.WithModifiers(this.Parameter.Modifiers.AddRange(items)));
-    }
   }
 
   public sealed partial class RefExpressionSyntax : ExpressionSyntax
@@ -15829,10 +15824,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
     }
 
+    /// <summary>Gets the is keyword .</summary>
+    public SyntaxToken IsKeyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ConstConstraintSyntax)this.Green).isKeyword, this.Position, 0); }
+    }
+
     /// <summary>Gets the "const" keyword .</summary>
     public SyntaxToken ConstKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ConstConstraintSyntax)this.Green).constKeyword, this.Position, 0); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ConstConstraintSyntax)this.Green).constKeyword, this.GetChildPosition(1), this.GetChildIndex(1)); }
     }
 
     /// <summary>Get the type of the const constraint.</summary>
@@ -15840,7 +15841,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.type, 1);
+            return this.GetRed(ref this.type, 2);
         }
     }
 
@@ -15848,7 +15849,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 1: return this.GetRed(ref this.type, 1);
+            case 2: return this.GetRed(ref this.type, 2);
             default: return null;
         }
     }
@@ -15856,7 +15857,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 1: return this.type;
+            case 2: return this.type;
             default: return null;
         }
     }
@@ -15871,11 +15872,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitConstConstraint(this);
     }
 
-    public ConstConstraintSyntax Update(SyntaxToken constKeyword, TypeSyntax type)
+    public ConstConstraintSyntax Update(SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type)
     {
-        if (constKeyword != this.ConstKeyword || type != this.Type)
+        if (isKeyword != this.IsKeyword || constKeyword != this.ConstKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.ConstConstraint(constKeyword, type);
+            var newNode = SyntaxFactory.ConstConstraint(isKeyword, constKeyword, type);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -15885,15 +15886,20 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
+    public ConstConstraintSyntax WithIsKeyword(SyntaxToken isKeyword)
+    {
+        return this.Update(isKeyword, this.ConstKeyword, this.Type);
+    }
+
     public ConstConstraintSyntax WithConstKeyword(SyntaxToken constKeyword)
     {
-        return this.Update(constKeyword, this.Type);
+        return this.Update(this.IsKeyword, constKeyword, this.Type);
     }
 
     internal override TypeConstraintSyntax WithTypeCore(TypeSyntax type) => WithType(type);
     public new ConstConstraintSyntax WithType(TypeSyntax type)
     {
-        return this.Update(this.ConstKeyword, type);
+        return this.Update(this.IsKeyword, this.ConstKeyword, type);
     }
   }
 

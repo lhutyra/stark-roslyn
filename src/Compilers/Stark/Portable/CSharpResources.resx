@@ -1535,6 +1535,12 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_InvalidImplementsForInterface" xml:space="preserve">
     <value>'{0}' is an interface and cannot implement from another type '{1}'</value>
   </data>
+  <data name="ERR_InvalidTypeConstraint" xml:space="preserve">
+    <value>Invalid type constraint. Expecting `is`, `has`, `extends` or `implements` constraints</value>
+  </data>
+  <data name="ERR_InvalidTypeConstraintAfterIs" xml:space="preserve">
+    <value>Invalid type constraint after is. Expecting `is struct` or `is class` or `is const &lt;primitive type&gt;`</value>
+  </data>
   <data name="ERR_DuplicateInterfaceWithTupleNamesInBaseList" xml:space="preserve">
     <value>'{0}' is already listed in the interface list on type '{2}' with different tuple element names, as '{1}'.</value>
   </data>

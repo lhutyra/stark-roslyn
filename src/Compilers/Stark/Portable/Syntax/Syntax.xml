@@ -3306,6 +3306,12 @@
           <summary>Const constraint syntax.</summary>
       </TypeComment>
       <Kind Name="ConstConstraint"/>
+      <Field Name="IsKeyword" Type="SyntaxToken">
+          <PropertyComment>
+              <summary>Gets the is keyword .</summary>
+          </PropertyComment>
+          <Kind Name="IsKeyword"/>
+      </Field>
       <Field Name="ConstKeyword" Type="SyntaxToken">
           <PropertyComment>
               <summary>Gets the "const" keyword .</summary>

@@ -24724,13 +24724,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   /// <summary>Const constraint syntax.</summary>
   internal sealed partial class ConstConstraintSyntax : TypeConstraintSyntax
   {
+    internal readonly SyntaxToken isKeyword;
     internal readonly SyntaxToken constKeyword;
     internal readonly TypeSyntax type;
 
-    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken constKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 2;
+        this.SlotCount = 3;
+        this.AdjustFlagsAndWidth(isKeyword);
+        this.isKeyword = isKeyword;
         this.AdjustFlagsAndWidth(constKeyword);
         this.constKeyword = constKeyword;
         this.AdjustFlagsAndWidth(type);
@@ -24738,11 +24741,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken constKeyword, TypeSyntax type, SyntaxFactoryContext context)
+    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 2;
+        this.SlotCount = 3;
+        this.AdjustFlagsAndWidth(isKeyword);
+        this.isKeyword = isKeyword;
         this.AdjustFlagsAndWidth(constKeyword);
         this.constKeyword = constKeyword;
         this.AdjustFlagsAndWidth(type);
@@ -24750,16 +24755,20 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken constKeyword, TypeSyntax type)
+    internal ConstConstraintSyntax(SyntaxKind kind, SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type)
         : base(kind)
     {
-        this.SlotCount = 2;
+        this.SlotCount = 3;
+        this.AdjustFlagsAndWidth(isKeyword);
+        this.isKeyword = isKeyword;
         this.AdjustFlagsAndWidth(constKeyword);
         this.constKeyword = constKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
+    /// <summary>Gets the is keyword .</summary>
+    public SyntaxToken IsKeyword { get { return this.isKeyword; } }
     /// <summary>Gets the "const" keyword .</summary>
     public SyntaxToken ConstKeyword { get { return this.constKeyword; } }
     /// <summary>Get the type of the const constraint.</summary>
@@ -24769,8 +24778,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
         switch (index)
         {
-            case 0: return this.constKeyword;
-            case 1: return this.type;
+            case 0: return this.isKeyword;
+            case 1: return this.constKeyword;
+            case 2: return this.type;
             default: return null;
         }
     }
@@ -24790,11 +24800,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitConstConstraint(this);
     }
 
-    public ConstConstraintSyntax Update(SyntaxToken constKeyword, TypeSyntax type)
+    public ConstConstraintSyntax Update(SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type)
     {
-        if (constKeyword != this.ConstKeyword || type != this.Type)
+        if (isKeyword != this.IsKeyword || constKeyword != this.ConstKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.ConstConstraint(constKeyword, type);
+            var newNode = SyntaxFactory.ConstConstraint(isKeyword, constKeyword, type);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -24809,18 +24819,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ConstConstraintSyntax(this.Kind, this.constKeyword, this.type, diagnostics, GetAnnotations());
+         return new ConstConstraintSyntax(this.Kind, this.isKeyword, this.constKeyword, this.type, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ConstConstraintSyntax(this.Kind, this.constKeyword, this.type, GetDiagnostics(), annotations);
+         return new ConstConstraintSyntax(this.Kind, this.isKeyword, this.constKeyword, this.type, GetDiagnostics(), annotations);
     }
 
     internal ConstConstraintSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 2;
+      this.SlotCount = 3;
+      var isKeyword = (SyntaxToken)reader.ReadValue();
+      if (isKeyword != null)
+      {
+         AdjustFlagsAndWidth(isKeyword);
+         this.isKeyword = isKeyword;
+      }
       var constKeyword = (SyntaxToken)reader.ReadValue();
       if (constKeyword != null)
       {
@@ -24838,6 +24854,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
+      writer.WriteValue(this.isKeyword);
       writer.WriteValue(this.constKeyword);
       writer.WriteValue(this.type);
     }
@@ -45276,9 +45293,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public ConstConstraintSyntax ConstConstraint(SyntaxToken constKeyword, TypeSyntax type)
+    public ConstConstraintSyntax ConstConstraint(SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type)
     {
 #if DEBUG
+      if (isKeyword == null)
+        throw new ArgumentNullException(nameof(isKeyword));
+      switch (isKeyword.Kind)
+      {
+        case SyntaxKind.IsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(isKeyword));
+      }
       if (constKeyword == null)
         throw new ArgumentNullException(nameof(constKeyword));
       switch (constKeyword.Kind)
@@ -45293,10 +45319,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstConstraint, constKeyword, type, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstConstraint, isKeyword, constKeyword, type, this.context, out hash);
       if (cached != null) return (ConstConstraintSyntax)cached;
 
-      var result = new ConstConstraintSyntax(SyntaxKind.ConstConstraint, constKeyword, type, this.context);
+      var result = new ConstConstraintSyntax(SyntaxKind.ConstConstraint, isKeyword, constKeyword, type, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -46010,7 +46036,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public ParameterSyntax Parameter(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public ParameterSyntax Parameter(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
 #if DEBUG
       if (identifier == null)
@@ -46036,7 +46062,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, modifiers.Node, identifier, colonToken, type, @default, this.context);
+      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, identifier, colonToken, type, @default, this.context);
     }
 
     public IncompleteMemberSyntax IncompleteMember(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type)
@@ -52719,9 +52745,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static ConstConstraintSyntax ConstConstraint(SyntaxToken constKeyword, TypeSyntax type)
+    public static ConstConstraintSyntax ConstConstraint(SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type)
     {
 #if DEBUG
+      if (isKeyword == null)
+        throw new ArgumentNullException(nameof(isKeyword));
+      switch (isKeyword.Kind)
+      {
+        case SyntaxKind.IsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(isKeyword));
+      }
       if (constKeyword == null)
         throw new ArgumentNullException(nameof(constKeyword));
       switch (constKeyword.Kind)
@@ -52736,10 +52771,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstConstraint, constKeyword, type, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ConstConstraint, isKeyword, constKeyword, type, out hash);
       if (cached != null) return (ConstConstraintSyntax)cached;
 
-      var result = new ConstConstraintSyntax(SyntaxKind.ConstConstraint, constKeyword, type);
+      var result = new ConstConstraintSyntax(SyntaxKind.ConstConstraint, isKeyword, constKeyword, type);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);

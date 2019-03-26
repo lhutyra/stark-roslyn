@@ -1634,14 +1634,11 @@ tryAgain:
         {
             switch (this.CurrentToken.Kind)
             {
-                case SyntaxKind.NewKeyword:
-                case SyntaxKind.ClassKeyword:
-                case SyntaxKind.StructKeyword:
+                case SyntaxKind.IsKeyword:
+                case SyntaxKind.HasKeyword:
                     return true;
-                case SyntaxKind.IdentifierToken:
-                    return this.IsTrueIdentifier();
                 default:
-                    return IsPredefinedType(this.CurrentToken.Kind);
+                    return false;
             }
         }
 
@@ -1658,14 +1655,18 @@ tryAgain:
                     var close = this.EatToken(SyntaxKind.CloseParenToken);
                     return _syntaxFactory.ConstructorConstraint(newToken, open, close);
 
+                case SyntaxKind.ExtendsKeyword:
+                case SyntaxKind.ImplementsKeyword:
+                    var kind = CurrentToken.Kind;
+                    var extendsOrImplements = EatToken();
 
-                case SyntaxKind.ConstKeyword:
-                    var constKeyword = EatToken();
-                    var constType = ParseUnderlyingType(false);
-                    return _syntaxFactory.ConstConstraint(constKeyword, constType);
+                    var type = this.ParseType();
+                    return _syntaxFactory.ExtendsOrImplementsTypeConstraint(kind == SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsTypeConstraint : SyntaxKind.ImplementsTypeConstraint, extendsOrImplements, type);
 
-                case SyntaxKind.IsKeyword:
-                    var isKeyword = EatToken();
+                default:
+                    // TODO: we should handle the error differently?
+                    bool hasIsKeyword = CurrentToken.Kind == SyntaxKind.IsKeyword;
+                    var isKeyword = EatToken(SyntaxKind.IsKeyword, ErrorCode.ERR_InvalidTypeConstraint);
                     switch (this.CurrentToken.Kind)
                     {
                         case SyntaxKind.StructKeyword:
@@ -1678,31 +1679,21 @@ tryAgain:
                             }
 
                             return _syntaxFactory.ClassOrStructConstraint(SyntaxKind.StructConstraint, isKeyword, structToken, questionToken);
-                        case SyntaxKind.ClassKeyword:
-                            var classToken = this.EatToken();
+
+                        case SyntaxKind.ConstKeyword:
+                            var constKeyword = EatToken();
+                            var constType = ParseUnderlyingType(false);
+                            return _syntaxFactory.ConstConstraint(isKeyword, constKeyword, constType);
+
+                        default:
+                            var classToken = this.EatToken(SyntaxKind.ClassKeyword, ErrorCode.ERR_InvalidTypeConstraintAfterIs, hasIsKeyword);
 
                             if (this.CurrentToken.Kind == SyntaxKind.QuestionToken)
                             {
                                 questionToken = this.EatToken();
                             }
                             return _syntaxFactory.ClassOrStructConstraint(SyntaxKind.ClassConstraint, isKeyword, classToken, questionToken);
-                        default:
-                            // parse const int
-                            // or error
-                            return null;
                     }
-
-                case SyntaxKind.ExtendsKeyword:
-                case SyntaxKind.ImplementsKeyword:
-                    var kind = CurrentToken.Kind;
-                    var extendsOrImplements = EatToken();
-
-                    var type = this.ParseType();
-                    return _syntaxFactory.ExtendsOrImplementsTypeConstraint(kind == SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsTypeConstraint : SyntaxKind.ImplementsTypeConstraint, extendsOrImplements, type);
-
-                default:
-                    // error
-                    return null;
             }
         }
 

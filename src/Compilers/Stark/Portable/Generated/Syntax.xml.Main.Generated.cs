@@ -3921,9 +3921,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
     public override SyntaxNode VisitConstConstraint(ConstConstraintSyntax node)
     {
+      var isKeyword = this.VisitToken(node.IsKeyword);
       var constKeyword = this.VisitToken(node.ConstKeyword);
       var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(constKeyword, type);
+      return node.Update(isKeyword, constKeyword, type);
     }
 
     public override SyntaxNode VisitExtendsOrImplementsTypeConstraint(ExtendsOrImplementsTypeConstraintSyntax node)
@@ -4128,12 +4129,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public override SyntaxNode VisitParameter(ParameterSyntax node)
     {
       var attributeLists = this.VisitList(node.AttributeLists);
-      var modifiers = this.VisitList(node.Modifiers);
       var identifier = this.VisitToken(node.Identifier);
       var colonToken = this.VisitToken(node.ColonToken);
       var type = (TypeSyntax)this.Visit(node.Type);
       var @default = (EqualsValueClauseSyntax)this.Visit(node.Default);
-      return node.Update(attributeLists, modifiers, identifier, colonToken, type, @default);
+      return node.Update(attributeLists, identifier, colonToken, type, @default);
     }
 
     public override SyntaxNode VisitIncompleteMember(IncompleteMemberSyntax node)
@@ -9390,8 +9390,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ConstConstraintSyntax instance.</summary>
-    public static ConstConstraintSyntax ConstConstraint(SyntaxToken constKeyword, TypeSyntax type)
+    public static ConstConstraintSyntax ConstConstraint(SyntaxToken isKeyword, SyntaxToken constKeyword, TypeSyntax type)
     {
+      switch (isKeyword.Kind())
+      {
+        case SyntaxKind.IsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(isKeyword));
+      }
       switch (constKeyword.Kind())
       {
         case SyntaxKind.ConstKeyword:
@@ -9401,14 +9408,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      return (ConstConstraintSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ConstConstraint((Syntax.InternalSyntax.SyntaxToken)constKeyword.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
+      return (ConstConstraintSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ConstConstraint((Syntax.InternalSyntax.SyntaxToken)isKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)constKeyword.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new ConstConstraintSyntax instance.</summary>
     public static ConstConstraintSyntax ConstConstraint(TypeSyntax type)
     {
-      return SyntaxFactory.ConstConstraint(SyntaxFactory.Token(SyntaxKind.ConstKeyword), type);
+      return SyntaxFactory.ConstConstraint(SyntaxFactory.Token(SyntaxKind.IsKeyword), SyntaxFactory.Token(SyntaxKind.ConstKeyword), type);
     }
 
     /// <summary>Creates a new ExtendsOrImplementsTypeConstraintSyntax instance.</summary>
