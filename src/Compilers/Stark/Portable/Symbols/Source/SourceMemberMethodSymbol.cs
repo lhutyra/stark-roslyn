@@ -1141,7 +1141,7 @@ done:
             {
                 arguments.GetOrCreateData<CommonMethodWellKnownAttributeData>().SetPreserveSignature(arguments.Index);
             }
-            else if (attribute.IsTargetAttribute(this, AttributeDescription.MethodImplAttribute))
+            else if (attribute.IsTargetAttribute(this, AttributeDescription.FuncImplAttribute))
             {
                 AttributeData.DecodeMethodImplAttribute<CommonMethodWellKnownAttributeData, AttributeSyntax, CSharpAttributeData, AttributeLocation>(ref arguments, MessageProvider.Instance);
             }

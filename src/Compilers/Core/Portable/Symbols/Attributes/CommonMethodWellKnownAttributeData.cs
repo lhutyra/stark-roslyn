@@ -24,7 +24,7 @@ namespace StarkPlatform.CodeAnalysis
         {
         }
 
-        #region DllImportAttribute, MethodImplAttribute, PreserveSigAttribute
+        #region DllImportAttribute, FuncImplAttribute, PreserveSigAttribute
 
         // PreserveSig flag can be set by multiple attributes (DllImport, MethodImpl and PreserveSig).
         // True if the value of PreserveSig flag is determined by the first attribute that sets it (VB). 
@@ -36,7 +36,7 @@ namespace StarkPlatform.CodeAnalysis
         private bool _dllImportPreserveSig;
         private int _dllImportIndex;               // -1 .. not specified
 
-        // data from MethodImplAttribute
+        // data from FuncImplAttribute
         private int _methodImplIndex;              // -1 .. not specified
         private MethodImplAttributes _attributes;  // includes preserveSig
 
@@ -52,7 +52,7 @@ namespace StarkPlatform.CodeAnalysis
             SetDataStored();
         }
 
-        // used by MethodImplAttribute
+        // used by FuncImplAttribute
         public void SetMethodImplementation(int attributeIndex, MethodImplAttributes attributes)
         {
             VerifySealed(expected: false);

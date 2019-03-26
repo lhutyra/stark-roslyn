@@ -116,7 +116,7 @@ namespace StarkPlatform.CodeAnalysis
             TypeHandleTargets = (new[] {
                  new TypeHandleTargetInfo(system,"AttributeTargets", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo("System.Reflection","AssemblyNameFlags", SerializationTypeCode.Int32)
-                ,new TypeHandleTargetInfo(compiler,"MethodImplOptions", SerializationTypeCode.Int32)
+                ,new TypeHandleTargetInfo(compiler,"FuncImplOptions", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo(interop,"CharSet", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo(interop,"LayoutKind", SerializationTypeCode.Int32)
                 ,new TypeHandleTargetInfo(interop,"UnmanagedType", SerializationTypeCode.Int32)
@@ -450,7 +450,7 @@ namespace StarkPlatform.CodeAnalysis
         internal static readonly AttributeDescription UnverifiableCodeAttribute = new AttributeDescription("system.runtime.interop", "UnverifiableCodeAttribute", s_signaturesOfUnverifiableCodeAttribute);
         internal static readonly AttributeDescription SecurityPermissionAttribute = new AttributeDescription("system.runtime.interop", "SecurityPermissionAttribute", s_signaturesOfSecurityPermissionAttribute);
         internal static readonly AttributeDescription DllImportAttribute = new AttributeDescription("system.runtime.interop", "DllImportAttribute", s_signaturesOfDllImportAttribute);
-        internal static readonly AttributeDescription MethodImplAttribute = new AttributeDescription("system.runtime.compiler", "MethodImplAttribute", s_signaturesOfMethodImplAttribute);
+        internal static readonly AttributeDescription FuncImplAttribute = new AttributeDescription("system.runtime.compiler", "FuncImplAttribute", s_signaturesOfMethodImplAttribute);
         internal static readonly AttributeDescription PreserveSigAttribute = new AttributeDescription("system.runtime.interop", "PreserveSigAttribute", s_signaturesOfPreserveSigAttribute);
         internal static readonly AttributeDescription DefaultCharSetAttribute = new AttributeDescription("system.runtime.interop", "DefaultCharSetAttribute", s_signaturesOfDefaultCharSetAttribute);
         internal static readonly AttributeDescription SpecialNameAttribute = new AttributeDescription("system.runtime.compiler", "SpecialNameAttribute", s_signaturesOfSpecialNameAttribute);
