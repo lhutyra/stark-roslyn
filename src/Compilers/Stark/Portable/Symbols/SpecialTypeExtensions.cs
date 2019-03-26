@@ -11,6 +11,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             switch (specialType)
             {
+                case SpecialType.System_UInt:
+                case SpecialType.System_Int:
                 case SpecialType.System_UInt8:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
@@ -29,6 +31,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             switch (specialType)
             {
+                case SpecialType.System_Int:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:
@@ -45,10 +48,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
+                case SpecialType.System_Int:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_Int64:
+                case SpecialType.System_UInt:
                 case SpecialType.System_UInt8:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
@@ -72,19 +77,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 case SpecialType.System_Boolean:
                 case SpecialType.System_Char:
+                case SpecialType.System_Int:
                 case SpecialType.System_Int8:
                 case SpecialType.System_Int16:
                 case SpecialType.System_Int32:
                 case SpecialType.System_Int64:
+                case SpecialType.System_UInt:
                 case SpecialType.System_UInt8:
                 case SpecialType.System_UInt16:
                 case SpecialType.System_UInt32:
                 case SpecialType.System_UInt64:
                 case SpecialType.System_Float32:
                 case SpecialType.System_Float64:
-                // NOTE: VB treats System.DateTime as an intrinsic, while C# does not, see "predeftype.h"
-                //case SpecialType.System_DateTime:
-                case SpecialType.System_Decimal:
                     return true;
                 default:
                     return false;
