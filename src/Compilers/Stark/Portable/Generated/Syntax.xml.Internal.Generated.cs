@@ -28981,25 +28981,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   internal sealed partial class ParameterSyntax : CSharpSyntaxNode
   {
     internal readonly GreenNode attributeLists;
-    internal readonly GreenNode modifiers;
     internal readonly SyntaxToken identifier;
     internal readonly SyntaxToken colonToken;
     internal readonly TypeSyntax type;
     internal readonly EqualsValueClauseSyntax @default;
 
-    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 6;
+        this.SlotCount = 5;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
             this.attributeLists = attributeLists;
-        }
-        if (modifiers != null)
-        {
-            this.AdjustFlagsAndWidth(modifiers);
-            this.modifiers = modifiers;
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
@@ -29021,20 +29015,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default, SyntaxFactoryContext context)
+    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 6;
+        this.SlotCount = 5;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
             this.attributeLists = attributeLists;
-        }
-        if (modifiers != null)
-        {
-            this.AdjustFlagsAndWidth(modifiers);
-            this.modifiers = modifiers;
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
@@ -29056,19 +29045,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    internal ParameterSyntax(SyntaxKind kind, GreenNode attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
         : base(kind)
     {
-        this.SlotCount = 6;
+        this.SlotCount = 5;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
             this.attributeLists = attributeLists;
-        }
-        if (modifiers != null)
-        {
-            this.AdjustFlagsAndWidth(modifiers);
-            this.modifiers = modifiers;
         }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
@@ -29091,8 +29075,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     /// <summary>Gets the attribute declaration list.</summary>
     public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> AttributeLists { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax>(this.attributeLists); } }
-    /// <summary>Gets the modifier list.</summary>
-    public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
     /// <summary>Gets the colon token.</summary>
@@ -29105,11 +29087,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         switch (index)
         {
             case 0: return this.attributeLists;
-            case 1: return this.modifiers;
-            case 2: return this.identifier;
-            case 3: return this.colonToken;
-            case 4: return this.type;
-            case 5: return this.@default;
+            case 1: return this.identifier;
+            case 2: return this.colonToken;
+            case 3: return this.type;
+            case 4: return this.@default;
             default: return null;
         }
     }
@@ -29129,11 +29110,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitParameter(this);
     }
 
-    public ParameterSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public ParameterSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || @default != this.Default)
+        if (attributeLists != this.AttributeLists || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || @default != this.Default)
         {
-            var newNode = SyntaxFactory.Parameter(attributeLists, modifiers, identifier, colonToken, type, @default);
+            var newNode = SyntaxFactory.Parameter(attributeLists, identifier, colonToken, type, @default);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -29148,29 +29129,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ParameterSyntax(this.Kind, this.attributeLists, this.modifiers, this.identifier, this.colonToken, this.type, this.@default, diagnostics, GetAnnotations());
+         return new ParameterSyntax(this.Kind, this.attributeLists, this.identifier, this.colonToken, this.type, this.@default, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ParameterSyntax(this.Kind, this.attributeLists, this.modifiers, this.identifier, this.colonToken, this.type, this.@default, GetDiagnostics(), annotations);
+         return new ParameterSyntax(this.Kind, this.attributeLists, this.identifier, this.colonToken, this.type, this.@default, GetDiagnostics(), annotations);
     }
 
     internal ParameterSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 6;
+      this.SlotCount = 5;
       var attributeLists = (GreenNode)reader.ReadValue();
       if (attributeLists != null)
       {
          AdjustFlagsAndWidth(attributeLists);
          this.attributeLists = attributeLists;
-      }
-      var modifiers = (GreenNode)reader.ReadValue();
-      if (modifiers != null)
-      {
-         AdjustFlagsAndWidth(modifiers);
-         this.modifiers = modifiers;
       }
       var identifier = (SyntaxToken)reader.ReadValue();
       if (identifier != null)
@@ -29202,7 +29177,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.attributeLists);
-      writer.WriteValue(this.modifiers);
       writer.WriteValue(this.identifier);
       writer.WriteValue(this.colonToken);
       writer.WriteValue(this.type);
@@ -39554,9 +39528,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     public override CSharpSyntaxNode VisitConstConstraint(ConstConstraintSyntax node)
     {
+      var isKeyword = (SyntaxToken)this.Visit(node.IsKeyword);
       var constKeyword = (SyntaxToken)this.Visit(node.ConstKeyword);
       var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(constKeyword, type);
+      return node.Update(isKeyword, constKeyword, type);
     }
 
     public override CSharpSyntaxNode VisitExtendsOrImplementsTypeConstraint(ExtendsOrImplementsTypeConstraintSyntax node)
@@ -39761,12 +39736,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public override CSharpSyntaxNode VisitParameter(ParameterSyntax node)
     {
       var attributeLists = this.VisitList(node.AttributeLists);
-      var modifiers = this.VisitList(node.Modifiers);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
       var colonToken = (SyntaxToken)this.Visit(node.ColonToken);
       var type = (TypeSyntax)this.Visit(node.Type);
       var @default = (EqualsValueClauseSyntax)this.Visit(node.Default);
-      return node.Update(attributeLists, modifiers, identifier, colonToken, type, @default);
+      return node.Update(attributeLists, identifier, colonToken, type, @default);
     }
 
     public override CSharpSyntaxNode VisitIncompleteMember(IncompleteMemberSyntax node)
@@ -53479,7 +53453,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static ParameterSyntax Parameter(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public static ParameterSyntax Parameter(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
 #if DEBUG
       if (identifier == null)
@@ -53505,7 +53479,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, modifiers.Node, identifier, colonToken, type, @default);
+      return new ParameterSyntax(SyntaxKind.Parameter, attributeLists.Node, identifier, colonToken, type, @default);
     }
 
     public static IncompleteMemberSyntax IncompleteMember(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax type)

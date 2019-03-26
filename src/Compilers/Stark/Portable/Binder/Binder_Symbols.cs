@@ -481,6 +481,13 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             case SyntaxKind.TransientKeyword:
                                 accessModifiers |= TypeAccessModifiers.Transient;
                                 break;
+                            case SyntaxKind.InKeyword:
+                            case SyntaxKind.RefKeyword:
+                            case SyntaxKind.OutKeyword:
+                            case SyntaxKind.ThisKeyword:
+                            case SyntaxKind.ParamsKeyword:
+                                // these modifiers are handled at parameter level and not at the type level
+                                break;
                             default:
                                 throw new InvalidOperationException($"The type modifiers `{token}` is not supported");
 

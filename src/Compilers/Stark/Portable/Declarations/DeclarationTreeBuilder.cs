@@ -533,12 +533,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                     if (parameters.Count != 0)
                     {
-                        var firstParameter = parameters[0];
-                        foreach (var modifier in firstParameter.Modifiers)
+                        var firstParameterType = parameters[0].Type as Syntax.InternalSyntax.ExtendedTypeSyntax;
+                        if (firstParameterType != null)
                         {
-                            if (modifier.Kind == SyntaxKind.ThisKeyword)
+                            foreach (var modifier in firstParameterType.Modifiers)
                             {
-                                return true;
+                                if (modifier.Kind == SyntaxKind.ThisKeyword)
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }

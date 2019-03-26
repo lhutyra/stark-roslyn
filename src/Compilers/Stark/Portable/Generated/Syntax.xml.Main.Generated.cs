@@ -10174,7 +10174,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ParameterSyntax instance.</summary>
-    public static ParameterSyntax Parameter(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public static ParameterSyntax Parameter(SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
       switch (identifier.Kind())
       {
@@ -10192,20 +10192,20 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(colonToken));
       }
-      return (ParameterSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.Parameter(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green, @default == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EqualsValueClauseSyntax)@default.Green).CreateRed();
+      return (ParameterSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.Parameter(attributeLists.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.AttributeSyntax>(), (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green, @default == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EqualsValueClauseSyntax)@default.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new ParameterSyntax instance.</summary>
-    public static ParameterSyntax Parameter(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public static ParameterSyntax Parameter(SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
-      return SyntaxFactory.Parameter(attributeLists, modifiers, identifier, default(SyntaxToken), type, @default);
+      return SyntaxFactory.Parameter(attributeLists, identifier, default(SyntaxToken), type, @default);
     }
 
     /// <summary>Creates a new ParameterSyntax instance.</summary>
     public static ParameterSyntax Parameter(SyntaxToken identifier)
     {
-      return SyntaxFactory.Parameter(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.Parameter(default(SyntaxList<AttributeSyntax>), identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
     }
 
     /// <summary>Creates a new IncompleteMemberSyntax instance.</summary>

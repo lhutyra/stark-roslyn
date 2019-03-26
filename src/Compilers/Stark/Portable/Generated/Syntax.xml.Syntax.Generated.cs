@@ -18892,23 +18892,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         }
     }
 
-    /// <summary>Gets the modifier list.</summary>
-    public SyntaxTokenList Modifiers 
-    {
-        get
-        {
-            var slot = this.Green.GetSlot(1);
-            if (slot != null)
-                return new SyntaxTokenList(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
-
-            return default(SyntaxTokenList);
-        }
-    }
-
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ParameterSyntax)this.Green).identifier, this.GetChildPosition(2), this.GetChildIndex(2)); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ParameterSyntax)this.Green).identifier, this.GetChildPosition(1), this.GetChildIndex(1)); }
     }
 
     /// <summary>Gets the colon token.</summary>
@@ -18918,7 +18905,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         {
             var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ParameterSyntax)this.Green).colonToken;
             if (slot != null)
-                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+                return new SyntaxToken(this, slot, this.GetChildPosition(2), this.GetChildIndex(2));
 
             return default(SyntaxToken);
         }
@@ -18928,7 +18915,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.type, 4);
+            return this.GetRed(ref this.type, 3);
         }
     }
 
@@ -18936,7 +18923,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.@default, 5);
+            return this.GetRed(ref this.@default, 4);
         }
     }
 
@@ -18945,8 +18932,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         switch (index)
         {
             case 0: return this.GetRedAtZero(ref this.attributeLists);
-            case 4: return this.GetRed(ref this.type, 4);
-            case 5: return this.GetRed(ref this.@default, 5);
+            case 3: return this.GetRed(ref this.type, 3);
+            case 4: return this.GetRed(ref this.@default, 4);
             default: return null;
         }
     }
@@ -18955,8 +18942,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         switch (index)
         {
             case 0: return this.attributeLists;
-            case 4: return this.type;
-            case 5: return this.@default;
+            case 3: return this.type;
+            case 4: return this.@default;
             default: return null;
         }
     }
@@ -18971,11 +18958,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitParameter(this);
     }
 
-    public ParameterSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
+    public ParameterSyntax Update(SyntaxList<AttributeSyntax> attributeLists, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax @default)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || @default != this.Default)
+        if (attributeLists != this.AttributeLists || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || @default != this.Default)
         {
-            var newNode = SyntaxFactory.Parameter(attributeLists, modifiers, identifier, colonToken, type, @default);
+            var newNode = SyntaxFactory.Parameter(attributeLists, identifier, colonToken, type, @default);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -18987,42 +18974,32 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public ParameterSyntax WithAttributeLists(SyntaxList<AttributeSyntax> attributeLists)
     {
-        return this.Update(attributeLists, this.Modifiers, this.Identifier, this.ColonToken, this.Type, this.Default);
-    }
-
-    public ParameterSyntax WithModifiers(SyntaxTokenList modifiers)
-    {
-        return this.Update(this.AttributeLists, modifiers, this.Identifier, this.ColonToken, this.Type, this.Default);
+        return this.Update(attributeLists, this.Identifier, this.ColonToken, this.Type, this.Default);
     }
 
     public ParameterSyntax WithIdentifier(SyntaxToken identifier)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, identifier, this.ColonToken, this.Type, this.Default);
+        return this.Update(this.AttributeLists, identifier, this.ColonToken, this.Type, this.Default);
     }
 
     public ParameterSyntax WithColonToken(SyntaxToken colonToken)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, colonToken, this.Type, this.Default);
+        return this.Update(this.AttributeLists, this.Identifier, colonToken, this.Type, this.Default);
     }
 
     public ParameterSyntax WithType(TypeSyntax type)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ColonToken, type, this.Default);
+        return this.Update(this.AttributeLists, this.Identifier, this.ColonToken, type, this.Default);
     }
 
     public ParameterSyntax WithDefault(EqualsValueClauseSyntax @default)
     {
-        return this.Update(this.AttributeLists, this.Modifiers, this.Identifier, this.ColonToken, this.Type, @default);
+        return this.Update(this.AttributeLists, this.Identifier, this.ColonToken, this.Type, @default);
     }
 
     public ParameterSyntax AddAttributeLists(params AttributeSyntax[] items)
     {
         return this.WithAttributeLists(this.AttributeLists.AddRange(items));
-    }
-
-    public ParameterSyntax AddModifiers(params SyntaxToken[] items)
-    {
-        return this.WithModifiers(this.Modifiers.AddRange(items));
     }
   }
 

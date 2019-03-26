@@ -3888,11 +3888,6 @@
         <summary>Gets the attribute declaration list.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;">
-      <PropertyComment>
-        <summary>Gets the modifier list.</summary>
-      </PropertyComment>
-    </Field>
     <Field Name="Identifier" Type="SyntaxToken">
         <PropertyComment>
             <summary>Gets the identifier.</summary>

@@ -1069,8 +1069,6 @@ tryAgain:
                     return DeclarationModifiers.Partial;
                 case SyntaxKind.AsyncKeyword:
                     return DeclarationModifiers.Async;
-                case SyntaxKind.RefKeyword:
-                    return DeclarationModifiers.Ref;
                 case SyntaxKind.IdentifierToken:
                     switch (contextualKind)
                     {
@@ -3389,7 +3387,6 @@ tryAgain:
             _termState |= TerminatorState.IsEndOfParameterList;
 
             var attributes = _pool.Allocate<AttributeSyntax>();
-            var modifiers = _pool.Allocate();
             try
             {
                 if (this.CurrentToken.Kind != closeKind)
@@ -3399,8 +3396,7 @@ tryAgain:
                     {
                         // first parameter
                         attributes.Clear();
-                        modifiers.Clear();
-                        var parameter = this.ParseParameter(attributes, modifiers);
+                        var parameter = this.ParseParameter(attributes);
                         nodes.Add(parameter);
 
                         // additional parameters
@@ -3414,8 +3410,7 @@ tryAgain:
                             {
                                 nodes.AddSeparator(this.EatToken(SyntaxKind.CommaToken));
                                 attributes.Clear();
-                                modifiers.Clear();
-                                parameter = this.ParseParameter(attributes, modifiers);
+                                parameter = this.ParseParameter(attributes);
                                 if (parameter.IsMissing && this.IsPossibleParameter())
                                 {
                                     // ensure we always consume tokens
@@ -3442,7 +3437,6 @@ tryAgain:
             }
             finally
             {
-                _pool.Free(modifiers);
                 _pool.Free(attributes);
             }
         }
@@ -3479,7 +3473,7 @@ tryAgain:
             }
         }
 
-        private static bool CanReuseParameter(Stark.Syntax.ParameterSyntax parameter, SyntaxListBuilder<AttributeSyntax> attributes, SyntaxListBuilder modifiers)
+        private static bool CanReuseParameter(Stark.Syntax.ParameterSyntax parameter, SyntaxListBuilder<AttributeSyntax> attributes)
         {
             if (parameter == null)
             {
@@ -3490,12 +3484,6 @@ tryAgain:
             //
             // TODO(cyrusn): Why?  We can reuse other constructs if they have attributes.
             if (attributes.Count != 0 || parameter.AttributeLists.Count != 0)
-            {
-                return false;
-            }
-
-            // cannot reuse parameter if it had modifiers.
-            if ((modifiers != null && modifiers.Count != 0) || parameter.Modifiers.Count != 0)
             {
                 return false;
             }
@@ -3532,15 +3520,14 @@ tryAgain:
             return true;
         }
 
-        private ParameterSyntax ParseParameter(SyntaxListBuilder<AttributeSyntax> attributes, SyntaxListBuilder modifiers)
+        private ParameterSyntax ParseParameter(SyntaxListBuilder<AttributeSyntax> attributes)
         {
-            if (this.IsIncrementalAndFactoryContextMatches && CanReuseParameter(this.CurrentNode as Stark.Syntax.ParameterSyntax, attributes, modifiers))
+            if (this.IsIncrementalAndFactoryContextMatches && CanReuseParameter(this.CurrentNode as Stark.Syntax.ParameterSyntax, attributes))
             {
                 return (ParameterSyntax)this.EatNode();
             }
 
             this.ParseAttributeSyntaxList(attributes);
-            this.ParseParameterModifiers(modifiers);
 
             TypeSyntax type;
             SyntaxToken name;
@@ -3556,7 +3543,7 @@ tryAgain:
                 def = _syntaxFactory.EqualsValueClause(equals, value: value);
                 def = CheckFeatureAvailability(def, MessageID.IDS_FeatureOptionalParameter);
             }
-            return _syntaxFactory.Parameter(attributes, modifiers.ToList(), name, colon, type, def);
+            return _syntaxFactory.Parameter(attributes, name, colon, type, def);
         }
 
         private SyntaxToken ExpectColon()
@@ -5394,7 +5381,7 @@ tryAgain:
 
             void ParseReadonlyAndTransient(SyntaxListBuilder<SyntaxToken> modifiers)
             {
-                while (IsExtendedTypeModifier(CurrentToken))
+                while (IsExtendedTypeModifier(CurrentToken) || IsParameterModifier(CurrentToken.Kind))
                 {
                     modifiers.Add(EatToken());
                 }
@@ -5982,288 +5969,6 @@ tryAgain:
         private bool IsPossibleYieldStatement()
         {
             return this.CurrentToken.ContextualKind == SyntaxKind.YieldKeyword && (this.PeekToken(1).Kind == SyntaxKind.ReturnKeyword || this.PeekToken(1).Kind == SyntaxKind.BreakKeyword);
-        }
-
-        private bool IsPossibleLocalDeclarationStatement(bool allowAnyExpression)
-        {
-            // This method decides whether to parse a statement as a
-            // declaration or as an expression statement. In the old
-            // compiler it would simply call IsLocalDeclaration.
-
-            var tk = this.CurrentToken.Kind;
-            if (tk == SyntaxKind.RefKeyword ||
-                IsDeclarationModifier(tk) || // treat `static int x = 2;` as a local variable declaration
-                (SyntaxFacts.IsPredefinedType(tk) &&
-                        this.PeekToken(1).Kind != SyntaxKind.DotToken && // e.g. `int.Parse()` is an expression
-                        this.PeekToken(1).Kind != SyntaxKind.OpenParenToken)) // e.g. `int (x, y)` is an error decl expression
-            {
-                return true;
-            }
-
-            tk = this.CurrentToken.ContextualKind;
-            if (IsAdditionalLocalFunctionModifier(tk) &&
-                (tk != SyntaxKind.AsyncKeyword))
-            {
-                return true;
-            }
-
-            bool? typedIdentifier = IsPossibleTypedIdentifierStart(this.CurrentToken, this.PeekToken(1), allowThisKeyword: false);
-            if (typedIdentifier != null)
-            {
-                return typedIdentifier.Value;
-            }
-
-            // It's common to have code like the following:
-            // 
-            //      Task.
-            //      await Task.Delay()
-            //
-            // In this case we don't want to parse this as as a local declaration like:
-            //
-            //      Task.await Task
-            //
-            // This does not represent user intent, and it causes all sorts of problems to higher 
-            // layers.  This is because both the parse tree is strange, and the symbol tables have
-            // entries that throw things off (like a bogus 'Task' local).
-            //
-            // Note that we explicitly do this check when we see that the code spreads over multiple 
-            // lines.  We don't want this if the user has actually written "X.Y z"
-            if (tk == SyntaxKind.IdentifierToken)
-            {
-                var token1 = PeekToken(1);
-                if (token1.Kind == SyntaxKind.DotToken &&
-                    token1.TrailingTrivia.Any((int)SyntaxKind.EndOfLineTrivia))
-                {
-                    if (PeekToken(2).Kind == SyntaxKind.IdentifierToken &&
-                        PeekToken(3).Kind == SyntaxKind.IdentifierToken)
-                    {
-                        // We have something like:
-                        //
-                        //      X.
-                        //      Y z
-                        //
-                        // This is only a local declaration if we have:
-                        //
-                        //      X.Y z;
-                        //      X.Y z = ...
-                        //      X.Y z, ...  
-                        //      X.Y z( ...      (local function) 
-                        //      X.Y z<W...      (local function)
-                        //
-                        var token4Kind = PeekToken(4).Kind;
-                        if (token4Kind != SyntaxKind.SemicolonToken &&
-                            token4Kind != SyntaxKind.EqualsToken &&
-                            token4Kind != SyntaxKind.CommaToken &&
-                            token4Kind != SyntaxKind.OpenParenToken &&
-                            token4Kind != SyntaxKind.LessThanToken)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            var resetPoint = this.GetResetPoint();
-            try
-            {
-                ScanTypeFlags st = this.ScanType();
-
-                // We could always return true for st == AliasQualName in addition to MustBeType on the first line, however, we want it to return false in the case where
-                // CurrentToken.Kind != SyntaxKind.Identifier so that error cases, like: A::N(), are not parsed as variable declarations and instead are parsed as A.N() where we can give
-                // a better error message saying "did you meant to use a '.'?"
-                if (st == ScanTypeFlags.MustBeType && this.CurrentToken.Kind != SyntaxKind.DotToken && this.CurrentToken.Kind != SyntaxKind.OpenParenToken)
-                {
-                    return true;
-                }
-
-                if (st == ScanTypeFlags.NotType || this.CurrentToken.Kind != SyntaxKind.IdentifierToken)
-                {
-                    return false;
-                }
-
-                // T? and T* might start an expression, we need to parse further to disambiguate:
-                if (allowAnyExpression)
-                {
-                    if (st == ScanTypeFlags.PointerOrMultiplication)
-                    {
-                        return false;
-                    }
-                    else if (st == ScanTypeFlags.NullableType)
-                    {
-                        return IsPossibleDeclarationStatementFollowingNullableType();
-                    }
-                }
-
-                return true;
-            }
-            finally
-            {
-                this.Reset(ref resetPoint);
-                this.Release(ref resetPoint);
-            }
-        }
-
-        // Looks ahead for a declaration of a field, property or method declaration following a nullable type T?.
-        private bool IsPossibleDeclarationStatementFollowingNullableType()
-        {
-            if (IsFieldDeclaration(isEvent: false))
-            {
-                return IsPossibleFieldDeclarationFollowingNullableType();
-            }
-
-            ExplicitInterfaceSpecifierSyntax explicitInterfaceOpt;
-            SyntaxToken identifierOrThisOpt;
-            TypeParameterListSyntax typeParameterListOpt;
-            this.ParseMemberName(out explicitInterfaceOpt, out identifierOrThisOpt, out typeParameterListOpt, isEvent: false);
-
-            if (explicitInterfaceOpt == null && identifierOrThisOpt == null && typeParameterListOpt == null)
-            {
-                return false;
-            }
-
-            // looks like a property:
-            if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
-            {
-                return true;
-            }
-
-            // don't accept indexers:
-            if (identifierOrThisOpt.Kind == SyntaxKind.ThisKeyword)
-            {
-                return false;
-            }
-
-            return IsPossibleMethodDeclarationFollowingNullableType();
-        }
-
-        // At least one variable declaration terminated by a semicolon or a comma.
-        //   idf;
-        //   idf,
-        //   idf = <expr>;
-        //   idf = <expr>, 
-        private bool IsPossibleFieldDeclarationFollowingNullableType()
-        {
-            if (this.CurrentToken.Kind != SyntaxKind.IdentifierToken)
-            {
-                return false;
-            }
-
-            this.EatToken();
-
-            if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
-            {
-                var saveTerm = _termState;
-                _termState |= TerminatorState.IsEndOfFieldDeclaration;
-                this.EatToken();
-                this.ParseVariableInitializer();
-                _termState = saveTerm;
-            }
-
-            return this.CurrentToken.Kind == SyntaxKind.CommaToken || this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
-        }
-
-        private bool IsPossibleMethodDeclarationFollowingNullableType()
-        {
-            var saveTerm = _termState;
-            _termState |= TerminatorState.IsEndOfMethodSignature;
-
-            var paramList = this.ParseParenthesizedParameterList();
-
-            _termState = saveTerm;
-            var separatedParameters = paramList.Parameters.GetWithSeparators();
-
-            // parsed full signature:
-            if (!paramList.CloseParenToken.IsMissing)
-            {
-                // (...) {
-                // (...) where
-                if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken || this.CurrentToken.ContextualKind == SyntaxKind.WhereKeyword)
-                {
-                    return true;
-                }
-
-                // disambiguates conditional expressions
-                // (...) :
-                if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
-                {
-                    return false;
-                }
-            }
-
-            // no parameters, just an open paren followed by a token that doesn't belong to a parameter definition:
-            if (separatedParameters.Count == 0)
-            {
-                return false;
-            }
-
-            var parameter = (ParameterSyntax)separatedParameters[0];
-
-            // has an attribute:
-            //   ([Attr]
-            if (parameter.AttributeLists.Count > 0)
-            {
-                return true;
-            }
-
-            // has params modifier:
-            //   (params
-            for (int i = 0; i < parameter.Modifiers.Count; i++)
-            {
-                if (parameter.Modifiers[i].Kind == SyntaxKind.ParamsKeyword)
-                {
-                    return true;
-                }
-            }
-
-            if (parameter.Type == null)
-            {
-                // has arglist:
-                //   (__arglist
-                if (parameter.Identifier.Kind == SyntaxKind.ArgListKeyword)
-                {
-                    return true;
-                }
-            }
-            else if (parameter.Type.Kind == SyntaxKind.NullableType)
-            {
-                // nullable type with modifiers
-                //   (ref T?
-                //   (out T?
-                if (parameter.Modifiers.Count > 0)
-                {
-                    return true;
-                }
-
-                // nullable type, identifier, and separator or closing parent
-                //   (T ? idf,
-                //   (T ? idf)
-                if (!parameter.Identifier.IsMissing &&
-                    (separatedParameters.Count >= 2 && !separatedParameters[1].IsMissing ||
-                     separatedParameters.Count == 1 && !paramList.CloseParenToken.IsMissing))
-                {
-                    return true;
-                }
-            }
-            else if (parameter.Type.Kind == SyntaxKind.IdentifierName &&
-                    ((IdentifierNameSyntax)parameter.Type).Identifier.ContextualKind == SyntaxKind.FromKeyword)
-            {
-                // assume that "from" is meant to be a query start ("from" bound to a type is rare):
-                // (from
-                return false;
-            }
-            else
-            {
-                // has a name and a non-nullable type:
-                //   (T idf
-                //   (ref T idf
-                //   (out T idf
-                if (!parameter.Identifier.IsMissing)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private bool IsPossibleNewExpression()
@@ -9923,7 +9628,7 @@ tryAgain:
                 arrow = CheckFeatureAvailability(arrow, MessageID.IDS_FeatureLambda);
 
                 var parameter = _syntaxFactory.Parameter(
-                    default(SyntaxList<AttributeSyntax>), default(SyntaxList<SyntaxToken>),
+                    default(SyntaxList<AttributeSyntax>), 
                     name, null, null, null);
                 var body = ParseLambdaBody();
 
@@ -10039,19 +9744,12 @@ tryAgain:
             var colonToken = this.ExpectColon();
 
             TypeSyntax paramType = null;
-            SyntaxListBuilder modifiers = _pool.Allocate();
 
             if (ShouldParseLambdaParameterType(hasModifier))
             {
-                if (hasModifier)
-                {
-                    ParseParameterModifiers(modifiers);
-                }
-
                 paramType = ParseType(ParseTypeMode.Parameter);
             }
-            var parameter = _syntaxFactory.Parameter(default(SyntaxList<AttributeSyntax>), modifiers.ToList(), paramName, colonToken, paramType, null);
-            _pool.Free(modifiers);
+            var parameter = _syntaxFactory.Parameter(default(SyntaxList<AttributeSyntax>), paramName, colonToken, paramType, null);
             return parameter;
         }
 

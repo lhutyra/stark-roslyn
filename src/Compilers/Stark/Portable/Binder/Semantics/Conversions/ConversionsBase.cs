@@ -536,19 +536,34 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return tupleConversion;
             }
 
-            if (HasExtendedTypeImplicitConversion(source, destination, ref useSiteDiagnostics))
+            if (HasExtendedTypeConversion(source, destination, ref useSiteDiagnostics))
             {
-                return Conversion.Identity;
+                return ClassifyExtendedTypeConversion(source, destination, ref useSiteDiagnostics);
             }
 
             return Conversion.NoConversion;
         }
 
-        private bool HasExtendedTypeImplicitConversion(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
+        private Conversion ClassifyExtendedTypeConversion(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
         {
-            // TODO: rework this part by taking into account inheritance
-            //return source.GetRequiredAccessModifiers(destination, out _) == 0;
-            return false;
+            var sourceSymbol = source is IExtendedTypeSymbol sourceExtended ? (TypeSymbol)sourceExtended.ElementType : source;
+            var destSymbol = destination is IExtendedTypeSymbol destExtended ? (TypeSymbol)destExtended.ElementType : destination;
+
+            if (source is IExtendedTypeSymbol sourceExtended2)
+            {
+                Debug.Assert(sourceExtended2.AccessModifiers == 0, "TODO access modifiers for extended types are not implemented");
+            }
+            if (destination is IExtendedTypeSymbol destExtended2)
+            {
+                Debug.Assert(destExtended2.AccessModifiers == 0, "TODO access modifiers for extended types are not implemented");
+            }
+            
+            return ClassifyStandardImplicitConversion(sourceSymbol, destSymbol, ref useSiteDiagnostics);
+        }
+
+        private bool HasExtendedTypeConversion(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)
+        {
+            return source is IExtendedTypeSymbol || destination is IExtendedTypeSymbol;
         }
 
         private Conversion ClassifyImplicitBuiltInConversionSlow(TypeSymbol source, TypeSymbol destination, ref HashSet<DiagnosticInfo> useSiteDiagnostics)

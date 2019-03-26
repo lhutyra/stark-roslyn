@@ -282,7 +282,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 var firstParam = _syntax.ParameterList.Parameters.FirstOrDefault();
                 return firstParam != null &&
                     !firstParam.IsArgList &&
-                    firstParam.Modifiers.Any(SyntaxKind.ThisKeyword);
+                    firstParam.Type is ExtendedTypeSyntax extended && 
+                    extended.Modifiers.Any(SyntaxKind.ThisKeyword);
             }
         }
 

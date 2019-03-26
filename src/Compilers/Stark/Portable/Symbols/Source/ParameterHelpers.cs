@@ -31,9 +31,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             foreach (var parameterSyntax in syntax.Parameters)
             {
+                var extendedParameterType = parameterSyntax.Type as ExtendedTypeSyntax;
+
                 if (mustBeLastParameter == null)
                 {
-                    if (parameterSyntax.Modifiers.Any(SyntaxKind.ParamsKeyword) ||
+                    if (extendedParameterType != null && extendedParameterType.Modifiers.Any(SyntaxKind.ParamsKeyword) ||
                         parameterSyntax.Identifier.Kind() == SyntaxKind.ArgListKeyword)
                     {
                         mustBeLastParameter = parameterSyntax;
@@ -42,7 +44,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                 CheckParameterModifiers(parameterSyntax, diagnostics);
 
-                var refKind = GetModifiers(parameterSyntax.Modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
+                var refKind = GetModifiers(extendedParameterType?.Modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
                 if (thisKeyword.Kind() != SyntaxKind.None && !allowThis)
                 {
                     diagnostics.Add(ErrorCode.ERR_ThisInBadContext, thisKeyword.GetLocation());
@@ -157,7 +159,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             var seenParams = false;
             var seenIn = false;
 
-            foreach (var modifier in parameter.Modifiers)
+            // If we don't have an extended type syntax, we don't have modifiers
+            var extendedSypeSyntax = parameter.Type as ExtendedTypeSyntax;
+            if (extendedSypeSyntax == null) return;
+
+            foreach (var modifier in extendedSypeSyntax.Modifiers)
             {
                 switch (modifier.Kind())
                 {
@@ -280,6 +286,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         }
                         break;
 
+                    case SyntaxKind.TransientKeyword:
+                    case SyntaxKind.ReadOnlyKeyword:
+                        break;
+
                     default:
                         throw ExceptionUtilities.UnexpectedValue(modifier.Kind());
                 }
@@ -367,7 +377,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             Conversion conversion = binder.Conversions.ClassifyImplicitConversionFromExpression(defaultExpression, parameterType, ref useSiteDiagnostics);
             diagnostics.Add(defaultExpression.Syntax, useSiteDiagnostics);
 
-            var refKind = GetModifiers(parameterSyntax.Modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
+            var extendedTypeSyntax = parameterSyntax.Type as ExtendedTypeSyntax;
+
+            var refKind = GetModifiers(extendedTypeSyntax?.Modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
 
             // CONSIDER: We are inconsistent here regarding where the error is reported; is it
             // CONSIDER: reported on the parameter name, or on the value of the initializer?
@@ -535,7 +547,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return null;
         }
 
-        private static RefKind GetModifiers(SyntaxTokenList modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword)
+        private static RefKind GetModifiers(SyntaxTokenList? modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword)
         {
             var refKind = RefKind.None;
 
@@ -543,7 +555,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             paramsKeyword = default(SyntaxToken);
             thisKeyword = default(SyntaxToken);
 
-            foreach (var modifier in modifiers)
+            if (!modifiers.HasValue) return refKind;
+
+            var list = modifiers.Value;
+            foreach (var modifier in list)
             {
                 switch (modifier.Kind())
                 {

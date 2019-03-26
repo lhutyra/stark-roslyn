@@ -97,7 +97,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             var firstParam = syntax.ParameterList.Parameters.FirstOrDefault();
             bool isExtensionMethod = firstParam != null &&
                 !firstParam.IsArgList &&
-                firstParam.Modifiers.Any(SyntaxKind.ThisKeyword);
+                firstParam.Type is ExtendedTypeSyntax extended &&
+                extended.Modifiers.Any(SyntaxKind.ThisKeyword);
 
             bool modifierErrors;
             var declarationModifiers = this.MakeModifiers(modifiers, methodKind, location, diagnostics, out modifierErrors);
@@ -267,7 +268,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         // do not use Binder.ReportUseSiteErrorForAttributeCtor in this case, because we'll need to report a special error id, not a generic use site error.
                         diagnostics.Add(
                             ErrorCode.ERR_ExtensionAttrNotFound,
-                            syntax.ParameterList.Parameters[0].Modifiers.FirstOrDefault(SyntaxKind.ThisKeyword).GetLocation(),
+                            ((ExtendedTypeSyntax)syntax.ParameterList.Parameters[0].Type).Modifiers.FirstOrDefault(SyntaxKind.ThisKeyword).GetLocation(),
                             memberDescriptor.DeclaringTypeMetadataName);
                     }
                 }

@@ -122,36 +122,40 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     }
                     else
                     {
+                        var extendedSyntax = typeSyntax as ExtendedTypeSyntax;
                         type = BindType(typeSyntax, diagnostics);
-                        foreach (var modifier in p.Modifiers)
+                        if (extendedSyntax != null)
                         {
-                            switch (modifier.Kind())
+                            foreach (var modifier in extendedSyntax.Modifiers)
                             {
-                                case SyntaxKind.RefKeyword:
-                                    refKind = RefKind.Ref;
-                                    allValue = false;
-                                    break;
+                                switch (modifier.Kind())
+                                {
+                                    case SyntaxKind.RefKeyword:
+                                        refKind = RefKind.Ref;
+                                        allValue = false;
+                                        break;
 
-                                case SyntaxKind.OutKeyword:
-                                    refKind = RefKind.Out;
-                                    allValue = false;
-                                    break;
+                                    case SyntaxKind.OutKeyword:
+                                        refKind = RefKind.Out;
+                                        allValue = false;
+                                        break;
 
-                                case SyntaxKind.InKeyword:
-                                    refKind = RefKind.In;
-                                    allValue = false;
-                                    break;
+                                    case SyntaxKind.InKeyword:
+                                        refKind = RefKind.In;
+                                        allValue = false;
+                                        break;
 
-                                case SyntaxKind.ParamsKeyword:
-                                    // This was a parse error in the native compiler; 
-                                    // it is a semantic analysis error in Roslyn. See comments to
-                                    // changeset 1674 for details.
-                                    Error(diagnostics, ErrorCode.ERR_IllegalParams, p);
-                                    break;
+                                    case SyntaxKind.ParamsKeyword:
+                                        // This was a parse error in the native compiler; 
+                                        // it is a semantic analysis error in Roslyn. See comments to
+                                        // changeset 1674 for details.
+                                        Error(diagnostics, ErrorCode.ERR_IllegalParams, p);
+                                        break;
 
-                                case SyntaxKind.ThisKeyword:
-                                    Error(diagnostics, ErrorCode.ERR_ThisInBadContext, modifier);
-                                    break;
+                                    case SyntaxKind.ThisKeyword:
+                                        Error(diagnostics, ErrorCode.ERR_ThisInBadContext, modifier);
+                                        break;
+                                }
                             }
                         }
                     }
