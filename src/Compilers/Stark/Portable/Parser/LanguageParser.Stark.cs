@@ -1978,22 +1978,27 @@ tryAgain:
                         break;
                 }
 
-                if (acceptStatement &&
-                    this.CurrentToken.Kind != SyntaxKind.CloseBraceToken &&
-                    this.CurrentToken.Kind != SyntaxKind.EndOfFileToken &&
-                    this.IsPossibleStatement(acceptAccessibilityMods: true))
+
+                // Otherwise we generate an error
+                var incompleteMember = _syntaxFactory.IncompleteMember(attributes, modifiers.ToList(), null);
+                if (incompleteMember.ContainsDiagnostics)
                 {
-                    var saveTerm = _termState;
-                    _termState |= TerminatorState.IsPossibleStatementStartOrStop; // partial statements can abort if a new statement starts
-
-                    // Any expression is allowed, not just expression statements:
-                    var statement = this.ParseStatementNoDeclaration(allowAnyExpression: true);
-
-                    _termState = saveTerm;
-                    if (statement != null)
-                    {
-                        return _syntaxFactory.GlobalStatement(statement);
-                    }
+                    return incompleteMember;
+                }
+                else if (parentKind == SyntaxKind.NamespaceDeclaration ||
+                         parentKind == SyntaxKind.CompilationUnit && !IsScript)
+                {
+                    return this.AddErrorToLastToken(incompleteMember, ErrorCode.ERR_NamespaceUnexpected);
+                }
+                else
+                {
+                    //the error position should indicate CurrentToken
+                    return this.AddError(
+                        incompleteMember,
+                        incompleteMember.FullWidth + this.CurrentToken.GetLeadingTriviaWidth(),
+                        this.CurrentToken.Width,
+                        ErrorCode.ERR_InvalidMemberDecl,
+                        this.CurrentToken.Text);
                 }
             }
             finally
