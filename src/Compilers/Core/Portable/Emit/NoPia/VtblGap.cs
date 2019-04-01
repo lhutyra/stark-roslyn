@@ -32,16 +32,16 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
             get { return true; }
         }
 
-        bool Cci.IMethodDefinition.HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
         bool Cci.IMethodDefinition.IsAbstract
         {
             get { return false; }
         }
 
+        bool Cci.IMethodDefinition.IsReadOnly
+        {
+            get { return false; }
+        }
+        
         bool Cci.IMethodDefinition.IsAccessCheckedOnOverride
         {
             get { return false; }
@@ -135,11 +135,6 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
         ImmutableArray<byte> Cci.IMethodDefinition.ReturnValueMarshallingDescriptor
         {
             get { return default(ImmutableArray<byte>); }
-        }
-
-        IEnumerable<Cci.SecurityAttribute> Cci.IMethodDefinition.SecurityAttributes
-        {
-            get { return SpecializedCollections.EmptyEnumerable<Cci.SecurityAttribute>(); }
         }
 
         Cci.ITypeDefinition Cci.ITypeDefinitionMember.ContainingTypeDefinition

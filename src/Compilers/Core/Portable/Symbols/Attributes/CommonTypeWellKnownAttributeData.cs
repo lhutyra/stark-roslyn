@@ -101,15 +101,6 @@ namespace StarkPlatform.CodeAnalysis
             return _lazySecurityAttributeData;
         }
 
-        internal bool HasDeclarativeSecurity
-        {
-            get
-            {
-                VerifySealed(expected: true);
-                return _lazySecurityAttributeData != null || this.HasSuppressUnmanagedCodeSecurityAttribute;
-            }
-        }
-
         /// <summary>
         /// Returns data decoded from security attributes or null if there are no security attributes.
         /// </summary>

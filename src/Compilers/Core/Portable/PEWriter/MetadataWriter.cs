@@ -1013,6 +1013,11 @@ namespace StarkPlatform.Cci
                 result |= MethodAttributes.Static;
             }
 
+            if (methodDef.IsReadOnly)
+            {
+                result |= MethodAttributesExt.ReadOnly;
+            }
+            
             if (methodDef.IsSealed)
             {
                 result |= MethodAttributes.Final;
@@ -1056,11 +1061,6 @@ namespace StarkPlatform.Cci
             if (methodDef.IsPlatformInvoke)
             {
                 result |= MethodAttributes.PinvokeImpl;
-            }
-
-            if (methodDef.HasDeclarativeSecurity)
-            {
-                result |= MethodAttributes.HasSecurity;
             }
 
             if (methodDef.RequiresSecurityObject)
@@ -1540,11 +1540,6 @@ namespace StarkPlatform.Cci
                     break;
             }
 
-            if (typeDef.HasDeclarativeSecurity)
-            {
-                result |= TypeAttributes.HasSecurity;
-            }
-
             if (typeDef.IsBeforeFieldInit)
             {
                 result |= TypeAttributes.BeforeFieldInit;
@@ -1914,7 +1909,6 @@ namespace StarkPlatform.Cci
             this.PopulateAssemblyTableRows();
             this.PopulateClassLayoutTableRows();
             this.PopulateConstantTableRows();
-            this.PopulateDeclSecurityTableRows();
             this.PopulateEventMapTableRows();
             this.PopulateEventTableRows();
             this.PopulateExportedTypeTableRows();
@@ -2156,60 +2150,6 @@ namespace StarkPlatform.Cci
                     constructor: GetCustomAttributeTypeCodedIndex(constructor),
                     value: GetCustomAttributeSignatureIndex(customAttribute));
             }
-        }
-
-        private void PopulateDeclSecurityTableRows()
-        {
-            if (module.OutputKind != OutputKind.NetModule)
-            {
-                this.PopulateDeclSecurityTableRowsFor(EntityHandle.AssemblyDefinition, module.GetSourceAssemblySecurityAttributes());
-            }
-
-            foreach (ITypeDefinition typeDef in this.GetTypeDefs())
-            {
-                if (!typeDef.HasDeclarativeSecurity)
-                {
-                    continue;
-                }
-
-                this.PopulateDeclSecurityTableRowsFor(GetTypeDefinitionHandle(typeDef), typeDef.SecurityAttributes);
-            }
-
-            foreach (IMethodDefinition methodDef in this.GetMethodDefs())
-            {
-                if (!methodDef.HasDeclarativeSecurity)
-                {
-                    continue;
-                }
-
-                this.PopulateDeclSecurityTableRowsFor(GetMethodDefinitionHandle(methodDef), methodDef.SecurityAttributes);
-            }
-        }
-
-        private void PopulateDeclSecurityTableRowsFor(EntityHandle parentHandle, IEnumerable<SecurityAttribute> attributes)
-        {
-            OrderPreservingMultiDictionary<DeclarativeSecurityAction, ICustomAttribute> groupedSecurityAttributes = null;
-
-            foreach (SecurityAttribute securityAttribute in attributes)
-            {
-                groupedSecurityAttributes = groupedSecurityAttributes ?? OrderPreservingMultiDictionary<DeclarativeSecurityAction, ICustomAttribute>.GetInstance();
-                groupedSecurityAttributes.Add(securityAttribute.Action, securityAttribute.Attribute);
-            }
-
-            if (groupedSecurityAttributes == null)
-            {
-                return;
-            }
-
-            foreach (DeclarativeSecurityAction securityAction in groupedSecurityAttributes.Keys)
-            {
-                metadata.AddDeclarativeSecurityAttribute(
-                    parent: parentHandle,
-                    action: securityAction,
-                    permissionSet: GetPermissionSetBlobHandle(groupedSecurityAttributes[securityAction]));
-            }
-
-            groupedSecurityAttributes.Free();
         }
 
         private void PopulateEventTableRows()

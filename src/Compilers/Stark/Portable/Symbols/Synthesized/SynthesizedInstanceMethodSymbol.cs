@@ -30,6 +30,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public override bool IsReadOnly => false;
+
         internal override bool TryGetThisParameter(out ParameterSymbol thisParameter)
         {
             Debug.Assert(!IsStatic);

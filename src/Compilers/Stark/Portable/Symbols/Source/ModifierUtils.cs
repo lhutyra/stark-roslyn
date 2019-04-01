@@ -7,8 +7,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 {
     internal static class ModifierUtils
     {
-        internal static DeclarationModifiers MakeAndCheckNontypeMemberModifiers(
-            SyntaxTokenList modifiers,
+        internal static DeclarationModifiers MakeAndCheckNontypeMemberModifiers(bool isFunc, SyntaxTokenList modifiers,
             DeclarationModifiers defaultAccess,
             DeclarationModifiers allowedModifiers,
             Location errorLocation,
@@ -16,7 +15,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             out bool modifierErrors)
         {
             var result = modifiers.ToDeclarationModifiers(diagnostics);
-            result = CheckModifiers(result, allowedModifiers, errorLocation, diagnostics, modifiers, out modifierErrors);
+            result = CheckModifiers(isFunc, result, allowedModifiers, errorLocation, diagnostics, modifiers, out modifierErrors);
 
             if ((result & DeclarationModifiers.AccessibilityMask) == 0)
             {
@@ -26,8 +25,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return result;
         }
 
-        internal static DeclarationModifiers CheckModifiers(
-            DeclarationModifiers modifiers,
+        internal static DeclarationModifiers CheckModifiers(bool isFunc, DeclarationModifiers modifiers,
             DeclarationModifiers allowedModifiers,
             Location errorLocation,
             DiagnosticBag diagnostics,
@@ -59,11 +57,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 modifierErrors = true;
             }
 
-            bool isMethod = (allowedModifiers & (DeclarationModifiers.Partial | DeclarationModifiers.Virtual)) == (DeclarationModifiers.Partial | DeclarationModifiers.Virtual);
-            if (isMethod && ((result & (DeclarationModifiers.Partial | DeclarationModifiers.Private)) == (DeclarationModifiers.Partial | DeclarationModifiers.Private)))
+            if (isFunc)
             {
-                diagnostics.Add(ErrorCode.ERR_PartialMethodInvalidModifier, errorLocation);
-                modifierErrors = true;
+                if ((result & (DeclarationModifiers.Partial | DeclarationModifiers.Private)) == (DeclarationModifiers.Partial | DeclarationModifiers.Private))
+                {
+                    diagnostics.Add(ErrorCode.ERR_PartialMethodInvalidModifier, errorLocation);
+                    modifierErrors = true;
+                }
+
+                if ((result & DeclarationModifiers.Static) != 0 && (result & (DeclarationModifiers.ReadOnly | DeclarationModifiers.Transient)) != 0)
+                {
+                    diagnostics.Add(ErrorCode.ERR_InvalidThisModifierForStatic, errorLocation);
+                    modifierErrors = true;
+                }
             }
 
             if ((result & DeclarationModifiers.PrivateProtected) != 0)

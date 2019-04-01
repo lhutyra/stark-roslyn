@@ -479,8 +479,6 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
 
         public ushort GenericParameterCount => 0;
 
-        public bool HasDeclarativeSecurity => false;
-
         public IEnumerable<Cci.TypeReferenceWithAttributes> Interfaces(EmitContext context)
             => SpecializedCollections.EmptyEnumerable<Cci.TypeReferenceWithAttributes>();
 

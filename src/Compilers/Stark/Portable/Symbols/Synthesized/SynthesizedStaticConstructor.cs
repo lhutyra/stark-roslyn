@@ -232,6 +232,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public override bool IsReadOnly => false;
+
         public override bool IsAsync
         {
             get
@@ -329,16 +331,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation
         {
             get { return null; }
-        }
-
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal sealed override ObsoleteAttributeData ObsoleteAttributeData

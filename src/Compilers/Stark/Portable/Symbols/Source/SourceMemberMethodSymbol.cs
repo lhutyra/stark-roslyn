@@ -498,6 +498,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public sealed override bool IsReadOnly
+        {
+            get
+            {
+                return (this.DeclarationModifiers & DeclarationModifiers.ReadOnly) != 0;
+            }
+        }
+
         internal bool IsUnsafe
         {
             get
@@ -1550,31 +1558,6 @@ done:
                 var data = GetDecodedWellKnownAttributeData();
                 return data != null && data.HasDynamicSecurityMethodAttribute;
             }
-        }
-
-        internal sealed override bool HasDeclarativeSecurity
-        {
-            get
-            {
-                var data = this.GetDecodedWellKnownAttributeData();
-                return data != null && data.HasDeclarativeSecurity;
-            }
-        }
-
-        internal sealed override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            var attributesBag = this.GetAttributesBag();
-            var wellKnownData = (CommonMethodWellKnownAttributeData)attributesBag.DecodedWellKnownAttributeData;
-            if (wellKnownData != null)
-            {
-                SecurityWellKnownAttributeData securityData = wellKnownData.SecurityInformation;
-                if (securityData != null)
-                {
-                    return securityData.GetSecurityAttributes(attributesBag.Attributes);
-                }
-            }
-
-            return SpecializedCollections.EmptyEnumerable<Cci.SecurityAttribute>();
         }
 
         public sealed override DllImportData GetDllImportData()

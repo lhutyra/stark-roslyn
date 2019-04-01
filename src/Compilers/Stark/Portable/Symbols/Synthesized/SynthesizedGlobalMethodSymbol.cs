@@ -121,16 +121,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return null; }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
-        internal override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
         internal sealed override ObsoleteAttributeData ObsoleteAttributeData
         {
             get { return null; }
@@ -252,6 +242,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return true; }
         }
 
+        public override bool IsReadOnly
+        {
+            get { return false; }
+        }
+        
         public override bool IsAsync
         {
             get { return false; }

@@ -446,11 +446,6 @@ namespace StarkPlatform.Cci
         bool IsImplicitlyDeclared { get; }
 
         /// <summary>
-        /// True if this method has a non empty collection of SecurityAttributes or the System.Security.SuppressUnmanagedCodeSecurityAttribute.
-        /// </summary>
-        bool HasDeclarativeSecurity { get; }
-
-        /// <summary>
         /// True if the method does not provide an implementation.
         /// </summary>
         bool IsAbstract { get; }
@@ -509,6 +504,11 @@ namespace StarkPlatform.Cci
         /// True if the method does not require an instance of its declaring type as its first argument.
         /// </summary>
         bool IsStatic { get; }
+
+        /// <summary>
+        /// True if the method is readonly
+        /// </summary>
+        bool IsReadOnly { get; }
 
         /// <summary>
         /// True if the method may be overridden (or if it is an override).
@@ -571,11 +571,6 @@ namespace StarkPlatform.Cci
             get;
             // ^ requires this.ReturnValueIsMarshalledExplicitly;
         }
-
-        /// <summary>
-        /// Declarative security actions for this method.
-        /// </summary>
-        IEnumerable<SecurityAttribute> SecurityAttributes { get; }
 
         /// <summary>
         /// Namespace containing this method.

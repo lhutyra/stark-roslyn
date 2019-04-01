@@ -490,11 +490,6 @@ namespace StarkPlatform.Cci
         }
 
         /// <summary>
-        /// True if this type has a non empty collection of SecurityAttributes or the System.Security.SuppressUnmanagedCodeSecurityAttribute.
-        /// </summary>
-        bool HasDeclarativeSecurity { get; }
-
-        /// <summary>
         /// Zero or more interfaces implemented by this type.
         /// </summary>
         IEnumerable<TypeReferenceWithAttributes> Interfaces(EmitContext context);
@@ -574,11 +569,6 @@ namespace StarkPlatform.Cci
         /// Zero or more properties defined by this type.
         /// </summary>
         IEnumerable<IPropertyDefinition> GetProperties(EmitContext context);
-
-        /// <summary>
-        /// Declarative security actions for this type. Will be empty if this.HasSecurity is false.
-        /// </summary>
-        IEnumerable<SecurityAttribute> SecurityAttributes { get; }
 
         /// <summary>
         /// Size of an object of this type. In bytes. If zero, the size is unspecified and will be determined at runtime.

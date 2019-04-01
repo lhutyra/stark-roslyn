@@ -147,22 +147,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         public override DllImportData GetDllImportData()
         {
             return null;
-        }
-
-        internal override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            return SpecializedCollections.EmptyEnumerable<Cci.SecurityAttribute>();
         }
 
         internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation
@@ -345,6 +332,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 return true;
             }
         }
+
+        public override bool IsReadOnly => false;
 
         public override bool IsVirtual
         {

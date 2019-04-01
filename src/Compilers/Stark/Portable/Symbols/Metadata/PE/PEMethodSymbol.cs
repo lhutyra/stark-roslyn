@@ -332,13 +332,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
 
         internal override bool IsAccessCheckedOnOverride => HasFlag(MethodAttributes.CheckAccessOnOverride);
 
-        internal override bool HasDeclarativeSecurity => HasFlag(MethodAttributes.HasSecurity);
-
-        internal override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
         public override Accessibility DeclaredAccessibility
         {
             get
@@ -408,6 +401,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
         // Has to have the abstract flag.
         // NOTE: dev10 treats the method as abstract (i.e. requiring an impl in subtypes) event if it is not metadata virtual.
         public override bool IsAbstract => HasFlag(MethodAttributes.Abstract);
+
+        // Has to have the abstract flag.
+        // NOTE: dev10 treats the method as abstract (i.e. requiring an impl in subtypes) event if it is not metadata virtual.
+        public override bool IsReadOnly => HasFlag(MethodAttributesExt.ReadOnly);
 
         // NOTE: abstract final methods are a bit strange.  First, they don't
         // PEVerify - there's a specific error message for that combination of modifiers.

@@ -10084,7 +10084,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       }
       switch (eosToken.Kind())
       {
-        case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
@@ -10096,9 +10095,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
 
     /// <summary>Creates a new AccessorDeclarationSyntax instance.</summary>
-    public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public static AccessorDeclarationSyntax AccessorDeclaration(SyntaxKind kind, SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody)
     {
-      return SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, SyntaxFactory.Token(GetAccessorDeclarationKeywordKind(kind)), body, expressionBody, eosToken);
+      return SyntaxFactory.AccessorDeclaration(kind, attributeLists, modifiers, SyntaxFactory.Token(GetAccessorDeclarationKeywordKind(kind)), body, expressionBody, default(SyntaxToken));
     }
 
     /// <summary>Creates a new AccessorDeclarationSyntax instance.</summary>

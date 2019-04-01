@@ -1698,6 +1698,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_InvalidImplementsForInterface = 9009,
         ERR_InvalidTypeConstraint = 9010,
         ERR_InvalidTypeConstraintAfterIs = 9011,
+        ERR_InvalidThisModifierForStatic = 9012,
+
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

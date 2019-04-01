@@ -1609,7 +1609,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extension method must be defined in a non-generic static class.
+        ///   Looks up a localized string similar to Extension method must be defined in a non-generic module.
         /// </summary>
         internal static string ERR_BadExtensionAgg {
             get {
@@ -3238,7 +3238,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: static classes cannot be used as constraints.
+        ///   Looks up a localized string similar to &apos;{0}&apos;: modules cannot be used as constraints.
         /// </summary>
         internal static string ERR_ConstraintIsStaticClass {
             get {
@@ -3265,7 +3265,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Static classes cannot have instance constructors.
+        ///   Looks up a localized string similar to Modules cannot have instance constructors.
         /// </summary>
         internal static string ERR_ConstructorInStaticClass {
             get {
@@ -3652,7 +3652,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Static classes cannot contain destructors.
+        ///   Looks up a localized string similar to Modules cannot contain destructors.
         /// </summary>
         internal static string ERR_DestructorInStaticClass {
             get {
@@ -4750,7 +4750,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extension methods must be defined in a top level static class; {0} is a nested class.
+        ///   Looks up a localized string similar to Extension methods must be defined in a top level module; {0} is a nested class.
         /// </summary>
         internal static string ERR_ExtensionMethodsDecl {
             get {
@@ -5713,7 +5713,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: cannot declare indexers in a static class.
+        ///   Looks up a localized string similar to &apos;{0}&apos;: cannot declare indexers in a module.
         /// </summary>
         internal static string ERR_IndexerInStaticClass {
             get {
@@ -5821,7 +5821,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: cannot declare instance members in a static class.
+        ///   Looks up a localized string similar to &apos;{0}&apos;: cannot declare instance members in a module.
         /// </summary>
         internal static string ERR_InstanceMemberInStaticClass {
             get {
@@ -5830,7 +5830,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot create an instance of the static class &apos;{0}&apos;.
+        ///   Looks up a localized string similar to Cannot create an instance of the module &apos;{0}&apos;.
         /// </summary>
         internal static string ERR_InstantiatingStaticClass {
             get {
@@ -6348,6 +6348,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_InvalidSubsystemVersion {
             get {
                 return ResourceManager.GetString("ERR_InvalidSubsystemVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A readonly or transient method cannot have a static access modifier.
+        /// </summary>
+        internal static string ERR_InvalidThisModifierForStatic {
+            get {
+                return ResourceManager.GetString("ERR_InvalidThisModifierForStatic", resourceCulture);
             }
         }
         
@@ -7927,7 +7936,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: static classes cannot contain user-defined operators.
+        ///   Looks up a localized string similar to &apos;{0}&apos;: Modules cannot contain user-defined operators.
         /// </summary>
         internal static string ERR_OperatorInStaticClass {
             get {
@@ -8611,7 +8620,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: static classes cannot contain protected members.
+        ///   Looks up a localized string similar to &apos;{0}&apos;: modules cannot contain protected members.
         /// </summary>
         internal static string ERR_ProtectedInStatic {
             get {
@@ -9637,7 +9646,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{1}&apos;: cannot derive from static class &apos;{0}&apos;.
+        ///   Looks up a localized string similar to &apos;{1}&apos;: cannot derive from module &apos;{0}&apos;.
         /// </summary>
         internal static string ERR_StaticBaseClass {
             get {
@@ -9646,7 +9655,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos;: static classes cannot implement interfaces.
+        ///   Looks up a localized string similar to &apos;{0}&apos;: Modules cannot implement interfaces.
         /// </summary>
         internal static string ERR_StaticClassInterfaceImpl {
             get {
@@ -9691,7 +9700,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Static class &apos;{0}&apos; cannot derive from type &apos;{1}&apos;. Static classes must derive from object..
+        ///   Looks up a localized string similar to Module &apos;{0}&apos; cannot derive from type &apos;{1}&apos;.
         /// </summary>
         internal static string ERR_StaticDerivedFromNonObject {
             get {

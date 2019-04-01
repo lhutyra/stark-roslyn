@@ -2091,16 +2091,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
             }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return (_flags & TypeAttributes.HasSecurity) != 0; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
         internal override NamedTypeSymbol ComImportCoClass
         {
             get

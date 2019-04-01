@@ -38,8 +38,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 DeclarationModifiers.Unsafe;
 
             bool modifierErrors;
-            var declarationModifiers = ModifierUtils.MakeAndCheckNontypeMemberModifiers(
-                syntax.Modifiers, defaultAccess, allowedModifiers, location, diagnostics, out modifierErrors);
+            var declarationModifiers = ModifierUtils.MakeAndCheckNontypeMemberModifiers(true, syntax.Modifiers, defaultAccess, allowedModifiers, location, diagnostics, out modifierErrors);
 
             this.CheckUnsafeModifier(declarationModifiers, diagnostics);
 

@@ -64,11 +64,6 @@ namespace StarkPlatform.Cci
             return SpecializedCollections.EmptyEnumerable<IFieldDefinition>();
         }
 
-        public bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
         public IEnumerable<Cci.TypeReferenceWithAttributes> Interfaces(EmitContext context)
         {
             return SpecializedCollections.EmptyEnumerable<Cci.TypeReferenceWithAttributes>();
@@ -175,11 +170,6 @@ namespace StarkPlatform.Cci
             {
                 return 0;
             }
-        }
-
-        IEnumerable<SecurityAttribute> ITypeDefinition.SecurityAttributes
-        {
-            get { throw ExceptionUtilities.Unreachable; }
         }
 
         void IReference.Dispatch(MetadataVisitor visitor)

@@ -1021,15 +1021,6 @@ next:;
             }
         }
 
-        internal sealed override bool HasDeclarativeSecurity
-        {
-            get
-            {
-                var data = this.GetDecodedWellKnownAttributeData();
-                return data != null && data.HasDeclarativeSecurity;
-            }
-        }
-
         internal bool HasSecurityCriticalAttributes
         {
             get
@@ -1037,22 +1028,6 @@ next:;
                 var data = this.GetDecodedWellKnownAttributeData();
                 return data != null && data.HasSecurityCriticalAttributes;
             }
-        }
-
-        internal sealed override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            var attributesBag = this.GetAttributesBag();
-            var wellKnownData = (TypeWellKnownAttributeData)attributesBag.DecodedWellKnownAttributeData;
-            if (wellKnownData != null)
-            {
-                SecurityWellKnownAttributeData securityData = wellKnownData.SecurityInformation;
-                if (securityData != null)
-                {
-                    return securityData.GetSecurityAttributes(attributesBag.Attributes);
-                }
-            }
-
-            return null;
         }
 
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()
@@ -1185,16 +1160,6 @@ next:;
             if (this.IsReadOnly)
             {
                 AddSynthesizedAttribute(ref attributes, moduleBuilder.SynthesizeIsReadOnlyAttribute(this));
-            }
-
-            if (this.Indexers.Any())
-            {
-                string defaultMemberName = this.Indexers.First().MetadataName; // UNDONE: IndexerNameAttribute
-                var defaultMemberNameConstant = new TypedConstant(compilation.GetSpecialType(SpecialType.System_String), TypedConstantKind.Primitive, defaultMemberName);
-
-                AddSynthesizedAttribute(ref attributes, compilation.TrySynthesizeAttribute(
-                    WellKnownMember.System_Reflection_DefaultMemberAttribute__ctor,
-                    ImmutableArray.Create(defaultMemberNameConstant)));
             }
 
             NamedTypeSymbol baseType = this.BaseTypeNoUseSiteDiagnostics;

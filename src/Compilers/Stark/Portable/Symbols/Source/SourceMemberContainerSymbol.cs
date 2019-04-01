@@ -360,8 +360,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                 if (!modifierErrors)
                 {
-                    mods = ModifierUtils.CheckModifiers(
-                        mods, allowedModifiers, declaration.Declarations[i].NameLocation, diagnostics,
+                    mods = ModifierUtils.CheckModifiers(false, mods, allowedModifiers, declaration.Declarations[i].NameLocation, diagnostics,
                         modifierTokens: null, modifierErrors: out modifierErrors);
 
                     // It is an error for the same modifier to appear multiple times.

@@ -48,6 +48,7 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
             protected abstract ImmutableArray<TEmbeddedTypeParameter> GetTypeParameters();
             protected abstract ImmutableArray<TEmbeddedParameter> GetParameters();
             protected abstract bool IsAbstract { get; }
+            protected abstract bool IsReadOnly { get; }
             protected abstract bool IsAccessCheckedOnOverride { get; }
             protected abstract bool IsConstructor { get; }
             protected abstract bool IsExternal { get; }
@@ -161,8 +162,6 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 
             bool Cci.IMethodDefinition.IsImplicitlyDeclared => true;
 
-            bool Cci.IMethodDefinition.HasDeclarativeSecurity => false;
-
             bool Cci.IMethodDefinition.IsAbstract => IsAbstract;
 
             bool Cci.IMethodDefinition.IsAccessCheckedOnOverride => IsAccessCheckedOnOverride;
@@ -186,6 +185,8 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
             bool Cci.IMethodDefinition.IsSealed => IsSealed;
 
             bool Cci.IMethodDefinition.IsStatic => IsStatic;
+
+            bool Cci.IMethodDefinition.IsReadOnly => IsReadOnly;
 
             bool Cci.IMethodDefinition.IsVirtual => IsVirtual;
 
@@ -215,9 +216,6 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
             Cci.IMarshallingInformation Cci.IMethodDefinition.ReturnValueMarshallingInformation => ReturnValueMarshallingInformation;
 
             ImmutableArray<byte> Cci.IMethodDefinition.ReturnValueMarshallingDescriptor => ReturnValueMarshallingDescriptor;
-
-            IEnumerable<Cci.SecurityAttribute> Cci.IMethodDefinition.SecurityAttributes =>
-                SpecializedCollections.EmptyEnumerable<Cci.SecurityAttribute>();
 
             Cci.ITypeDefinition Cci.ITypeDefinitionMember.ContainingTypeDefinition => ContainingType;
 

@@ -33,7 +33,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return _underlyingType.InterfacesNoUseSiteDiagnostics(basesBeingResolved);
         }
 
-        public override NamedTypeSymbol OriginalDefinition => _underlyingType;
+        public override NamedTypeSymbol OriginalDefinition => this;
 
         internal override bool IsComImport => _underlyingType.IsComImport;
 

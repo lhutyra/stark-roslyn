@@ -1406,16 +1406,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal abstract CharSet MarshallingCharSet { get; }
 
         /// <summary>
-        /// True if the type has declarative security information (HasSecurity flags).
-        /// </summary>
-        internal abstract bool HasDeclarativeSecurity { get; }
-
-        /// <summary>
-        /// Declaration security information associated with this type, or null if there is none.
-        /// </summary>
-        internal abstract IEnumerable<Cci.SecurityAttribute> GetSecurityInformation();
-
-        /// <summary>
         /// Returns a sequence of preprocessor symbols specified in <see cref="ConditionalAttribute"/> applied on this symbol, or null if there are none.
         /// </summary>
         internal abstract ImmutableArray<string> GetAppliedConditionalSymbols();

@@ -146,8 +146,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         internal override CharSet MarshallingCharSet => DefaultMarshallingCharSet;
 
-        internal override bool HasDeclarativeSecurity => false;
-
         internal override bool IsInterface => false;
 
         internal override NamedTypeSymbol BaseTypeNoUseSiteDiagnostics => _baseType;
@@ -179,8 +177,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override IEnumerable<FieldSymbol> GetFieldsToEmit() => SpecializedCollections.EmptyEnumerable<FieldSymbol>();
 
         internal override ImmutableArray<NamedTypeSymbol> GetInterfacesToEmit() => ImmutableArray<NamedTypeSymbol>.Empty;
-
-        internal override IEnumerable<SecurityAttribute> GetSecurityInformation() => null;
 
         internal override ImmutableArray<NamedTypeSymbol> InterfacesNoUseSiteDiagnostics(ConsList<TypeSymbol> basesBeingResolved = null) => ImmutableArray<NamedTypeSymbol>.Empty;
 

@@ -87,19 +87,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
             get { return default(System.Reflection.MethodImplAttributes); }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
         public override DllImportData GetDllImportData()
         {
             return null;
-        }
-
-        internal override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation

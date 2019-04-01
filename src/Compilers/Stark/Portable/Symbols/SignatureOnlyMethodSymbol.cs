@@ -91,10 +91,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation { get { throw ExceptionUtilities.Unreachable; } }
 
-        internal override bool HasDeclarativeSecurity { get { throw ExceptionUtilities.Unreachable; } }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation() { throw ExceptionUtilities.Unreachable; }
-
         internal override ObsoleteAttributeData ObsoleteAttributeData { get { throw ExceptionUtilities.Unreachable; } }
 
         internal override ImmutableArray<string> GetAppliedConditionalSymbols() { throw ExceptionUtilities.Unreachable; }
@@ -114,6 +110,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public override Accessibility DeclaredAccessibility { get { throw ExceptionUtilities.Unreachable; } }
 
         public override bool IsStatic { get { throw ExceptionUtilities.Unreachable; } }
+
+        public override bool IsReadOnly { get { throw ExceptionUtilities.Unreachable; } }
 
         public override bool IsAsync { get { throw ExceptionUtilities.Unreachable; } }
 

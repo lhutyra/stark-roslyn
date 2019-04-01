@@ -302,15 +302,6 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
                 }
             }
 
-            bool Cci.ITypeDefinition.HasDeclarativeSecurity
-            {
-                get
-                {
-                    // None of the transferrable attributes are security attributes.
-                    return false;
-                }
-            }
-
             IEnumerable<Cci.TypeReferenceWithAttributes> Cci.ITypeDefinition.Interfaces(EmitContext context)
             {
                 return GetInterfaces(context);
@@ -495,15 +486,6 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
                 }
 
                 return _lazyProperties;
-            }
-
-            IEnumerable<Cci.SecurityAttribute> Cci.ITypeDefinition.SecurityAttributes
-            {
-                get
-                {
-                    // None of the transferrable attributes are security attributes.
-                    return SpecializedCollections.EmptyEnumerable<Cci.SecurityAttribute>();
-                }
             }
 
             System.Runtime.InteropServices.CharSet Cci.ITypeDefinition.StringFormat

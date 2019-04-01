@@ -189,7 +189,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 DeclarationModifiers.Extern |
                 DeclarationModifiers.Unsafe;
 
-            var mods = ModifierUtils.MakeAndCheckNontypeMemberModifiers(modifiers, defaultAccess, allowedModifiers, location, diagnostics, out modifierErrors);
+            var mods = ModifierUtils.MakeAndCheckNontypeMemberModifiers(true, modifiers, defaultAccess, allowedModifiers, location, diagnostics, out modifierErrors);
 
             this.CheckUnsafeModifier(mods, diagnostics);
 

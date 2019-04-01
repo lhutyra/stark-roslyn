@@ -76,6 +76,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return false; }
         }
 
+        public override bool IsReadOnly => false;
+
         public override bool IsVirtual
         {
             get { return false; }
@@ -147,16 +149,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation
         {
             get { return null; }
-        }
-
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()

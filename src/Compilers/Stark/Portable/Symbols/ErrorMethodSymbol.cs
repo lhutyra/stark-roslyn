@@ -56,6 +56,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return false; }
         }
 
+        public override bool IsReadOnly => false;
+
         public override bool IsVirtual
         {
             get { return false; }
@@ -230,16 +232,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal sealed override ImmutableArray<string> GetAppliedConditionalSymbols()
         {
             return ImmutableArray<string>.Empty;
-        }
-
-        internal sealed override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
-        internal sealed override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal override int CalculateLocalSyntaxOffset(int localPosition, SyntaxTree localTree)

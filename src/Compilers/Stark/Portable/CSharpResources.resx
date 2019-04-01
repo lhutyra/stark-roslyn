@@ -2013,37 +2013,37 @@ If such a class is used as a base class and if the deriving class defines a dest
     <value>Invalid constraint type. A type used as a constraint must be an interface, a non-sealed class or a type parameter.</value>
   </data>
   <data name="ERR_InstanceMemberInStaticClass" xml:space="preserve">
-    <value>'{0}': cannot declare instance members in a static class</value>
+    <value>'{0}': cannot declare instance members in a module</value>
   </data>
   <data name="ERR_StaticBaseClass" xml:space="preserve">
-    <value>'{1}': cannot derive from static class '{0}'</value>
+    <value>'{1}': cannot derive from module '{0}'</value>
   </data>
   <data name="ERR_ConstructorInStaticClass" xml:space="preserve">
-    <value>Static classes cannot have instance constructors</value>
+    <value>Modules cannot have instance constructors</value>
   </data>
   <data name="ERR_DestructorInStaticClass" xml:space="preserve">
-    <value>Static classes cannot contain destructors</value>
+    <value>Modules cannot contain destructors</value>
   </data>
   <data name="ERR_InstantiatingStaticClass" xml:space="preserve">
-    <value>Cannot create an instance of the static class '{0}'</value>
+    <value>Cannot create an instance of the module '{0}'</value>
   </data>
   <data name="ERR_StaticDerivedFromNonObject" xml:space="preserve">
-    <value>Static class '{0}' cannot derive from type '{1}'. Static classes must derive from object.</value>
+    <value>Module '{0}' cannot derive from type '{1}'</value>
   </data>
   <data name="ERR_StaticClassInterfaceImpl" xml:space="preserve">
-    <value>'{0}': static classes cannot implement interfaces</value>
+    <value>'{0}': Modules cannot implement interfaces</value>
   </data>
   <data name="ERR_RefStructInterfaceImpl" xml:space="preserve">
     <value>'{0}': ref structs cannot implement interfaces</value>
   </data>
   <data name="ERR_OperatorInStaticClass" xml:space="preserve">
-    <value>'{0}': static classes cannot contain user-defined operators</value>
+    <value>'{0}': Modules cannot contain user-defined operators</value>
   </data>
   <data name="ERR_ConvertToStaticClass" xml:space="preserve">
     <value>Cannot convert to static type '{0}'</value>
   </data>
   <data name="ERR_ConstraintIsStaticClass" xml:space="preserve">
-    <value>'{0}': static classes cannot be used as constraints</value>
+    <value>'{0}': modules cannot be used as constraints</value>
   </data>
   <data name="ERR_GenericArgIsStaticClass" xml:space="preserve">
     <value>'{0}': static types cannot be used as type arguments</value>
@@ -2052,7 +2052,7 @@ If such a class is used as a base class and if the deriving class defines a dest
     <value>'{0}': array elements cannot be of static type</value>
   </data>
   <data name="ERR_IndexerInStaticClass" xml:space="preserve">
-    <value>'{0}': cannot declare indexers in a static class</value>
+    <value>'{0}': cannot declare indexers in a module</value>
   </data>
   <data name="ERR_ParameterIsStaticClass" xml:space="preserve">
     <value>'{0}': static types cannot be used as parameters</value>
@@ -2128,6 +2128,9 @@ If such a class is used as a base class and if the deriving class defines a dest
   </data>
   <data name="ERR_PartialMethodInvalidModifier" xml:space="preserve">
     <value>A partial method cannot have access modifiers or the virtual, abstract, override, new, sealed, or extern modifiers</value>
+  </data>
+  <data name="ERR_InvalidThisModifierForStatic" xml:space="preserve">
+    <value>A readonly or transient method cannot have a static access modifier</value>
   </data>
   <data name="ERR_PartialMethodOnlyInPartialClass" xml:space="preserve">
     <value>A partial method must be declared within a partial class or partial struct</value>
@@ -2418,7 +2421,7 @@ If such a class is used as a base class and if the deriving class defines a dest
     <value>Unexpected token '{0}'</value>
   </data>
   <data name="ERR_ProtectedInStatic" xml:space="preserve">
-    <value>'{0}': static classes cannot contain protected members</value>
+    <value>'{0}': modules cannot contain protected members</value>
   </data>
   <data name="WRN_UnreachableGeneralCatch" xml:space="preserve">
     <value>A previous catch clause already catches all exceptions. All non-exceptions thrown will be wrapped in a System.Runtime.CompilerServices.RuntimeWrappedException.</value>
@@ -2456,13 +2459,13 @@ A catch() block after a catch (System.Exception e) block can catch non-CLS excep
     <value>Extension method must be static</value>
   </data>
   <data name="ERR_BadExtensionAgg" xml:space="preserve">
-    <value>Extension method must be defined in a non-generic static class</value>
+    <value>Extension method must be defined in a non-generic module</value>
   </data>
   <data name="ERR_DupParamMod" xml:space="preserve">
     <value>A parameter can only have one '{0}' modifier</value>
   </data>
   <data name="ERR_ExtensionMethodsDecl" xml:space="preserve">
-    <value>Extension methods must be defined in a top level static class; {0} is a nested class</value>
+    <value>Extension methods must be defined in a top level module; {0} is a nested class</value>
   </data>
   <data name="ERR_ExtensionAttrNotFound" xml:space="preserve">
     <value>Cannot define a new extension method because the compiler required type '{0}' cannot be found. Are you missing a reference to System.Core.dll?</value>

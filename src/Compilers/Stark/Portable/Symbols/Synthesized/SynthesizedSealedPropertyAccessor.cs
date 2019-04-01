@@ -333,16 +333,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return null; }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()
         {
             return ImmutableArray<string>.Empty;

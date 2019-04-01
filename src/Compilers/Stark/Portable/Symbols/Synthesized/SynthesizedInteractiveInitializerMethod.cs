@@ -170,11 +170,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return true; }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
         internal override bool HasSpecialName
         {
             get { return true; }
@@ -203,11 +198,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()
         {
             return ImmutableArray<string>.Empty;
-        }
-
-        internal override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal override bool IsMetadataNewSlot(bool ignoreInterfaceImplementationChanges = false)

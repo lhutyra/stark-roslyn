@@ -172,19 +172,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 get { return System.Reflection.MethodImplAttributes.Runtime; }
             }
 
-            internal override bool HasDeclarativeSecurity
-            {
-                get { return false; }
-            }
-
             public override DllImportData GetDllImportData()
             {
                 return null;
-            }
-
-            internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-            {
-                throw ExceptionUtilities.Unreachable;
             }
 
             internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation

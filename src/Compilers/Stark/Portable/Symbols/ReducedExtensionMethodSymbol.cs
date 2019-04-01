@@ -158,6 +158,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _reducedFrom.Arity; }
         }
 
+        public override bool IsReadOnly => _reducedFrom.IsReadOnly;
+
         public override string Name
         {
             get { return _reducedFrom.Name; }
@@ -186,16 +188,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override MarshalPseudoCustomAttributeData ReturnValueMarshallingInformation
         {
             get { return _reducedFrom.ReturnValueMarshallingInformation; }
-        }
-
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return _reducedFrom.HasDeclarativeSecurity; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            return _reducedFrom.GetSecurityInformation();
         }
 
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()

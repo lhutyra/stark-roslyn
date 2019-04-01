@@ -3832,7 +3832,6 @@
       <PropertyComment>
         <summary>Gets the optional semicolon token.</summary>
       </PropertyComment>
-      <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
   </Node>

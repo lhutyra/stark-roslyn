@@ -217,16 +217,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _underlyingType.IsReadOnly; }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return _underlyingType.HasDeclarativeSecurity; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            return _underlyingType.GetSecurityInformation();
-        }
-
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()
         {
             return _underlyingType.GetAppliedConditionalSymbols();

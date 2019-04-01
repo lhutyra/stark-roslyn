@@ -47,6 +47,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Emit.NoPia
             }
         }
 
+        protected override bool IsReadOnly
+        {
+            get
+            {
+                return UnderlyingMethod.IsReadOnly;
+            }
+        }
+
         protected override bool IsAccessCheckedOnOverride
         {
             get

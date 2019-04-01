@@ -194,16 +194,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         internal sealed override ImmutableArray<string> GetAppliedConditionalSymbols() => ImmutableArray<string>.Empty;
 
-        internal override bool HasDeclarativeSecurity => false;
-
         internal override CharSet MarshallingCharSet => DefaultMarshallingCharSet;
 
         public override bool IsSerializable => false;
-
-        internal override IEnumerable<Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
 
         internal override AttributeUsageInfo GetAttributeUsageInfo() => default(AttributeUsageInfo);
 

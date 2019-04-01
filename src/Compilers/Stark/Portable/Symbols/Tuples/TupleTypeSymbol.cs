@@ -1408,14 +1408,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        internal override bool HasDeclarativeSecurity
-        {
-            get
-            {
-                return _underlyingType.HasDeclarativeSecurity;
-            }
-        }
-
         internal override bool IsInterface
         {
             get
@@ -1590,11 +1582,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override ImmutableArray<NamedTypeSymbol> GetDeclaredInterfaces(ConsList<TypeSymbol> basesBeingResolved)
         {
             return _underlyingType.GetDeclaredInterfaces(basesBeingResolved);
-        }
-
-        internal override IEnumerable<SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()

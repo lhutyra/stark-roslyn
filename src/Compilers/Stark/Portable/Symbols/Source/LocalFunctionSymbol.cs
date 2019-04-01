@@ -335,8 +335,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         internal override CallingConvention CallingConvention => CallingConvention.Default;
 
-        internal override bool HasDeclarativeSecurity => false;
-
         internal override bool RequiresSecurityObject => false;
 
         public override Symbol AssociatedSymbol => null;
@@ -346,6 +344,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public override bool IsAsync => (_declarationModifiers & DeclarationModifiers.Async) != 0;
 
         public override bool IsStatic => (_declarationModifiers & DeclarationModifiers.Static) != 0;
+
+        public override bool IsReadOnly => (_declarationModifiers & DeclarationModifiers.ReadOnly) != 0;
 
         public override bool IsVirtual => (_declarationModifiers & DeclarationModifiers.Virtual) != 0;
 
@@ -368,11 +368,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override bool IsMetadataNewSlot(bool ignoreInterfaceImplementationChanges = false) => false;
 
         internal override bool IsMetadataVirtual(bool ignoreInterfaceImplementationChanges = false) => false;
-
-        internal override IEnumerable<SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
 
         internal override int CalculateLocalSyntaxOffset(int localPosition, SyntaxTree localTree)
         {

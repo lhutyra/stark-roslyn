@@ -66,11 +66,6 @@ namespace StarkPlatform.Cci
             get { return 0; }
         }
 
-        public bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
         public bool IsEnum
         {
             get { return false; }

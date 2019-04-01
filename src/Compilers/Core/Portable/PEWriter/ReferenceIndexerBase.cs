@@ -264,10 +264,6 @@ namespace StarkPlatform.Cci
             }
 
             this.Visit(typeDefinition.GetExplicitImplementationOverrides(Context));
-            if (typeDefinition.HasDeclarativeSecurity)
-            {
-                this.Visit(typeDefinition.SecurityAttributes);
-            }
 
             this.VisitTypeReferencesThatNeedTokens(typeDefinition.Interfaces(Context));
 

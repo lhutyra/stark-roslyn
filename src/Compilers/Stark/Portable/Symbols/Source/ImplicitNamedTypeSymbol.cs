@@ -141,16 +141,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return DefaultMarshallingCharSet; }
         }
 
-        internal sealed override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
-        internal sealed override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
-        }
-
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()
         {
             return ImmutableArray<string>.Empty;

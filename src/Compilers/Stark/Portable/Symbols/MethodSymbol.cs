@@ -63,6 +63,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get;
         }
 
+        public abstract bool IsReadOnly { get; }
+
         /// <summary>
         /// Returns the arity of this method, or the number of type parameters it takes.
         /// A non-generic method has zero arity.
@@ -102,19 +104,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal abstract System.Reflection.MethodImplAttributes ImplementationAttributes { get; }
 
         /// <summary>
-        /// True if the type has declarative security information (HasSecurity flags).
-        /// </summary>
-        internal abstract bool HasDeclarativeSecurity { get; }
-
-        /// <summary>
         /// Platform invoke information, or null if the method isn't a P/Invoke.
         /// </summary>
         public abstract DllImportData GetDllImportData();
-
-        /// <summary>
-        /// Declaration security information associated with this type, or null if there is none.
-        /// </summary>
-        internal abstract IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation();
 
         /// <summary>
         /// Marshalling information for return value (FieldMarshal in metadata).

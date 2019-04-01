@@ -410,8 +410,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             const DeclarationModifiers defaultAccess = DeclarationModifiers.None;
 
             // Check that the set of modifiers is allowed
-            const DeclarationModifiers allowedModifiers = DeclarationModifiers.AccessibilityMask;
-            var mods = ModifierUtils.MakeAndCheckNontypeMemberModifiers(syntax.Modifiers, defaultAccess, allowedModifiers, location, diagnostics, out modifierErrors);
+            const DeclarationModifiers allowedModifiers = DeclarationModifiers.AccessibilityMask | DeclarationModifiers.ReadOnly;
+            var mods = ModifierUtils.MakeAndCheckNontypeMemberModifiers(true, syntax.Modifiers, defaultAccess, allowedModifiers, location, diagnostics, out modifierErrors);
 
             // For interface, check there are no accessibility modifiers.
             // (This check is handled outside of MakeAndCheckModifiers

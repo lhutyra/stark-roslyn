@@ -281,11 +281,6 @@ namespace StarkPlatform.Cci
             this.Visit(method.RefCustomModifiers);
             this.Visit(method.ReturnValueCustomModifiers);
 
-            if (method.HasDeclarativeSecurity)
-            {
-                this.Visit(method.SecurityAttributes);
-            }
-
             if (method.IsGeneric)
             {
                 this.Visit(method.GenericParameters);

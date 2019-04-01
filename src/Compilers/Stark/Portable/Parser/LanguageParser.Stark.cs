@@ -2907,7 +2907,6 @@ tryAgain:
                 || IsPossibleAttributeDeclaration()
                 || SyntaxFacts.GetAccessorDeclarationKind(this.CurrentToken.ContextualKind) != SyntaxKind.None
                 || this.CurrentToken.Kind == SyntaxKind.OpenBraceToken  // for accessor blocks w/ missing keyword
-                || this.CurrentToken.Kind == SyntaxKind.SemicolonToken // for empty body accessors w/ missing keyword
                 || IsPossibleAccessorModifier();
         }
 
@@ -3195,7 +3194,6 @@ tryAgain:
                 ArrowExpressionClauseSyntax expressionBody = null;
                 SyntaxToken eosToken = null;
 
-                bool currentTokenIsSemicolon = this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
                 bool currentTokenIsArrow = this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken;
                 bool currentTokenIsOpenBraceToken = this.CurrentToken.Kind == SyntaxKind.OpenBraceToken;
 
@@ -3203,8 +3201,6 @@ tryAgain:
                 {
                     this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody, requestedExpressionBodyFeature: MessageID.IDS_FeatureExpressionBodiedAccessor);
                 }
-
-
 
                 // If we don't have a block body, we need to recover a Eos
                 if (blockBody == null)
@@ -3215,12 +3211,10 @@ tryAgain:
                     }
                     else
                     {
-                        Debug.Assert(accessorName != null);
-                        eosToken = EatEos(ref accessorName);
-
                         if (accessorKind == SyntaxKind.AddAccessorDeclaration ||
                             accessorKind == SyntaxKind.RemoveAccessorDeclaration)
                         {
+                            eosToken = EatEos(ref accessorName);
                             eosToken = this.AddError(eosToken, ErrorCode.ERR_AddRemoveMustHaveBody);
                         }
                     }
@@ -3937,10 +3931,6 @@ tryAgain:
             var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
 
             SyntaxToken semicolon = null;
-            if (this.CurrentToken.Kind == SyntaxKind.SemicolonToken)
-            {
-                semicolon = this.EatToken();
-            }
 
             return _syntaxFactory.EnumDeclaration(
                 attributes,
@@ -5893,8 +5883,6 @@ tryAgain:
                     return this.ParseWhileStatement();
                 case SyntaxKind.OpenBraceToken:
                     return this.ParseBlock();
-                case SyntaxKind.SemicolonToken:
-                    return _syntaxFactory.EmptyStatement(this.EatToken());
                 case SyntaxKind.IdentifierToken:
                     if (isPossibleAwaitForEach())
                     {
@@ -6221,8 +6209,7 @@ tryAgain:
 
         private bool IsPossibleStatementStartOrStop()
         {
-            return this.CurrentToken.Kind == SyntaxKind.SemicolonToken
-                || this.IsPossibleStatement(acceptAccessibilityMods: true);
+            return this.IsPossibleStatement(acceptAccessibilityMods: true);
         }
 
         private PostSkipAction SkipBadStatementListTokens(SyntaxListBuilder<StatementSyntax> statements, SyntaxKind expected, out GreenNode trailingTrivia)
@@ -6264,7 +6251,6 @@ tryAgain:
                 case SyntaxKind.UsingKeyword:
                 case SyntaxKind.WhileKeyword:
                 case SyntaxKind.OpenBraceToken:
-                case SyntaxKind.SemicolonToken:
                 case SyntaxKind.StaticKeyword:
                 case SyntaxKind.VolatileKeyword: // TODO: remove
                 case SyntaxKind.ConstKeyword:
@@ -6312,8 +6298,7 @@ tryAgain:
         private bool IsEndOfFixedStatement()
         {
             return this.CurrentToken.Kind == SyntaxKind.CloseParenToken
-                || this.CurrentToken.Kind == SyntaxKind.OpenBraceToken
-                || this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
+                   || this.CurrentToken.Kind == SyntaxKind.OpenBraceToken;
         }
 
         private StatementSyntax ParseEmbeddedStatement()

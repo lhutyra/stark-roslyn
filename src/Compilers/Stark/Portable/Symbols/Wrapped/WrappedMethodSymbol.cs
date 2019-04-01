@@ -49,6 +49,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public override bool IsReadOnly => UnderlyingMethod.IsReadOnly;
+
         public override RefKind RefKind
         {
             get
@@ -203,16 +205,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 return UnderlyingMethod.ReturnValueMarshallingInformation;
             }
-        }
-
-        internal override bool HasDeclarativeSecurity
-        {
-            get { return UnderlyingMethod.HasDeclarativeSecurity; }
-        }
-
-        internal override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            return UnderlyingMethod.GetSecurityInformation();
         }
 
         internal override ImmutableArray<string> GetAppliedConditionalSymbols()

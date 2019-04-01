@@ -761,25 +761,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 }
             }
         }
-
-        bool Cci.ITypeDefinition.HasDeclarativeSecurity
-        {
-            get
-            {
-                CheckDefinitionInvariant();
-                return this.HasDeclarativeSecurity;
-            }
-        }
-
-        IEnumerable<Cci.SecurityAttribute> Cci.ITypeDefinition.SecurityAttributes
-        {
-            get
-            {
-                CheckDefinitionInvariant();
-                return this.GetSecurityInformation() ?? SpecializedCollections.EmptyEnumerable<Cci.SecurityAttribute>();
-            }
-        }
-
         ushort Cci.ITypeDefinition.Alignment
         {
             get

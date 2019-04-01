@@ -45951,7 +45951,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       {
       switch (eosToken.Kind)
       {
-        case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;
@@ -53403,7 +53402,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       {
       switch (eosToken.Kind)
       {
-        case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
         case SyntaxKind.None:
           break;

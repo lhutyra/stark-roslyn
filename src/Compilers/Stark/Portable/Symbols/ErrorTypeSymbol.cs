@@ -480,11 +480,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return false; }
         }
 
-        internal sealed override bool HasDeclarativeSecurity
-        {
-            get { return false; }
-        }
-
         internal sealed override bool IsComImport
         {
             get { return false; }
@@ -493,11 +488,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal sealed override ObsoleteAttributeData ObsoleteAttributeData
         {
             get { return null; }
-        }
-
-        internal sealed override IEnumerable<StarkPlatform.Cci.SecurityAttribute> GetSecurityInformation()
-        {
-            throw ExceptionUtilities.Unreachable;
         }
 
         internal sealed override ImmutableArray<string> GetAppliedConditionalSymbols()
