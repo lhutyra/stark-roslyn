@@ -269,7 +269,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Unsafe;
                     if (!isModule)
                     {
-                        allowedModifiers |= DeclarationModifiers.Sealed | DeclarationModifiers.Abstract;
+                        allowedModifiers |= DeclarationModifiers.Virtual | DeclarationModifiers.Abstract;
                     }
                     break;
                 case TypeKind.Struct:
@@ -315,6 +315,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     if (isModule)
                     {
                         mods |= DeclarationModifiers.Static;
+                    }
+                    else if ((mods & (DeclarationModifiers.Virtual | DeclarationModifiers.Abstract)) == 0)
+                    {
+                        mods |= DeclarationModifiers.Sealed;
                     }
                     break;
                 case TypeKind.Struct:
