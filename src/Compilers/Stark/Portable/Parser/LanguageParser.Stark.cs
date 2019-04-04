@@ -1978,28 +1978,29 @@ tryAgain:
                         break;
                 }
 
+                // Workaround in case of a parsing error right after attributes/modifiers
+                // we will emit an invalid member declaration
+                // but we will eat the offending token to avoid an infinite loop
+                //=======================================================================
 
-                // Otherwise we generate an error
+                var skippedToken = EatToken();
+
                 var incompleteMember = _syntaxFactory.IncompleteMember(attributes, modifiers.ToList(), null);
-                if (incompleteMember.ContainsDiagnostics)
-                {
-                    return incompleteMember;
-                }
-                else if (parentKind == SyntaxKind.NamespaceDeclaration ||
-                         parentKind == SyntaxKind.CompilationUnit && !IsScript)
-                {
-                    return this.AddErrorToLastToken(incompleteMember, ErrorCode.ERR_NamespaceUnexpected);
-                }
-                else
-                {
-                    //the error position should indicate CurrentToken
-                    return this.AddError(
-                        incompleteMember,
-                        incompleteMember.FullWidth + this.CurrentToken.GetLeadingTriviaWidth(),
-                        this.CurrentToken.Width,
-                        ErrorCode.ERR_InvalidMemberDecl,
-                        this.CurrentToken.Text);
-                }
+
+                var builder = new SyntaxListBuilder(1);
+                builder.Add(skippedToken);
+                var fileAsTrivia = _syntaxFactory.SkippedTokensTrivia(builder.ToList<SyntaxToken>());
+                incompleteMember = AddTrailingSkippedSyntax(incompleteMember, fileAsTrivia);
+
+                //the error position should indicate skippedToken
+                var error = this.AddError(
+                    incompleteMember,
+                    incompleteMember.FullWidth - skippedToken.FullWidth,
+                    skippedToken.Width,
+                    ErrorCode.ERR_InvalidMemberDecl,
+                    skippedToken.Text);
+
+                return error;
             }
             finally
             {
