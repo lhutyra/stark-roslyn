@@ -138,12 +138,13 @@ namespace StarkPlatform.CodeAnalysis.Stark
             AnalyzedArguments arguments,
             OverloadResolutionResult<PropertySymbol> result,
             bool allowRefOmittedArguments,
-            ref HashSet<DiagnosticInfo> useSiteDiagnostics)
+            ref HashSet<DiagnosticInfo> useSiteDiagnostics,
+            RefKind returnRefKind = default)
         {
             ArrayBuilder<TypeSymbolWithAnnotations> typeArguments = ArrayBuilder<TypeSymbolWithAnnotations>.GetInstance();
             MethodOrPropertyOverloadResolution(
                 indexers, typeArguments, receiverOpt, arguments, result, isMethodGroupConversion: false,
-                allowRefOmittedArguments: allowRefOmittedArguments, useSiteDiagnostics: ref useSiteDiagnostics);
+                allowRefOmittedArguments: allowRefOmittedArguments, useSiteDiagnostics: ref useSiteDiagnostics, returnRefKind: returnRefKind);
             typeArguments.Free();
         }
 
@@ -278,12 +279,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 RemoveStaticInstanceMismatches(results, arguments, receiver);
 
                 RemoveConstraintViolations(results);
-
-                if (isMethodGroupConversion)
-                {
-                    RemoveDelegateConversionsWithWrongReturnType(results, ref useSiteDiagnostics, returnRefKind, returnType);
-                }
             }
+
+            // Bind on ref kind return
+            RemoveConversionsWithWrongReturnTypeOrRefKind(results, ref useSiteDiagnostics, returnRefKind, returnType);
 
             // NB: As in dev12, we do this AFTER removing less derived members.
             // Also note that less derived members are not actually removed - they are simply flagged.
@@ -414,7 +413,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// error scenarios, such as a delegate type that has no invoke method.</param>
         /// <param name="returnType">The return type of the delegate, if known. It isn't
         /// known when we're attempting to infer the return type of a method group for type inference.</param>
-        private void RemoveDelegateConversionsWithWrongReturnType<TMember>(
+        private void RemoveConversionsWithWrongReturnTypeOrRefKind<TMember>(
             ArrayBuilder<MemberResolutionResult<TMember>> results,
             ref HashSet<DiagnosticInfo> useSiteDiagnostics,
             RefKind? returnRefKind,
@@ -424,7 +423,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             // rejects candidates that have the wrong return ref kind or return type.
 
             // Delegate conversions apply to method in a method group, not to properties in a "property group".
-            Debug.Assert(typeof(TMember) == typeof(MethodSymbol));
 
             for (int f = 0; f < results.Count; ++f)
             {
@@ -434,17 +432,40 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     continue;
                 }
 
-                var method = (MethodSymbol)(Symbol)result.Member;
+                TypeSymbolWithAnnotations methodReturnType;
+                RefKind methodReturnRefKind;
+                {
+                    var method = result.Member as MethodSymbol;
+                    if (method == null)
+                    {
+                        var property = result.Member as PropertySymbol;
+                        if (property != null)
+                        {
+                            methodReturnType = property.Type;
+                            methodReturnRefKind = property.RefKind;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        methodReturnType = method.ReturnType;
+                        methodReturnRefKind = method.RefKind;
+                    }
+                }
+
                 bool returnsMatch =
                     (object)returnType == null ||
-                    method.ReturnType.TypeSymbol.Equals(returnType, TypeCompareKind.AllIgnoreOptions) ||
-                    returnRefKind == RefKind.None && Conversions.HasIdentityOrImplicitReferenceConversion(method.ReturnType.TypeSymbol, returnType, ref useSiteDiagnostics);
+                    methodReturnType.TypeSymbol.Equals(returnType, TypeCompareKind.AllIgnoreOptions) ||
+                    returnRefKind == RefKind.None && Conversions.HasIdentityOrImplicitReferenceConversion(methodReturnType.TypeSymbol, returnType, ref useSiteDiagnostics);
                 if (!returnsMatch)
                 {
                     results[f] = new MemberResolutionResult<TMember>(
                         result.Member, result.LeastOverriddenMember, MemberAnalysisResult.WrongReturnType());
                 }
-                else if (method.RefKind != returnRefKind)
+                else if (methodReturnRefKind != returnRefKind && !(methodReturnRefKind == RefKind.In && returnRefKind == RefKind.None))
                 {
                     results[f] = new MemberResolutionResult<TMember>(
                         result.Member, result.LeastOverriddenMember, MemberAnalysisResult.WrongRefKind());

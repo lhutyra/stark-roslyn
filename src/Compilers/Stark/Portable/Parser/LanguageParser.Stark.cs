@@ -2878,7 +2878,7 @@ tryAgain:
         private ExpressionSyntax ParsePossibleRefExpression()
         {
             var refKeyword = default(SyntaxToken);
-            if (this.CurrentToken.Kind == SyntaxKind.RefKeyword)
+            if (this.CurrentToken.Kind == SyntaxKind.RefKeyword || this.CurrentToken.Kind == SyntaxKind.InKeyword)
             {
                 refKeyword = this.EatToken();
                 refKeyword = CheckFeatureAvailability(refKeyword, MessageID.IDS_FeatureRefLocalsReturns);
@@ -5316,13 +5316,11 @@ tryAgain:
             ParseTypeMode mode = ParseTypeMode.Normal,
             bool expectSizes = false)
         {
-            if (mode == ParseTypeMode.Normal && !expectSizes && this.CurrentToken.Kind == SyntaxKind.RefKeyword)
+            if (mode == ParseTypeMode.Normal && !expectSizes && (this.CurrentToken.Kind == SyntaxKind.RefKeyword || this.CurrentToken.Kind == SyntaxKind.InKeyword))
             {
-                var refKeyword = this.EatToken();
-                refKeyword = this.CheckFeatureAvailability(refKeyword, MessageID.IDS_FeatureRefLocalsReturns);
-
+                var refOrInKeyword = this.EatToken();
                 var type = ParseTypeCore(mode, expectSizes);
-                return _syntaxFactory.RefType(refKeyword, type);
+                return _syntaxFactory.RefKindType(refOrInKeyword, type);
             }
 
             return ParseTypeCore(mode, expectSizes);
@@ -6573,7 +6571,7 @@ tryAgain:
                 if (this.CurrentToken.Kind == SyntaxKind.RefKeyword || CurrentToken.Kind == SyntaxKind.VarKeyword || CurrentToken.Kind == SyntaxKind.LetKeyword)
                 {
                     decl = ParseVariableDeclaration();
-                    if (decl.Type != null && decl.Type.Kind == SyntaxKind.RefType)
+                    if (decl.Type != null && decl.Type.Kind == SyntaxKind.RefKindType)
                     {
                         decl = decl.Update(decl.VariableKeyword, decl.Identifier, decl.ColonToken, CheckFeatureAvailability(decl.Type, MessageID.IDS_FeatureRefFor), decl.Initializer);
                     }

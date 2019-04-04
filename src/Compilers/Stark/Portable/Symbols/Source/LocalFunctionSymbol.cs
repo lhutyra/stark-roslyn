@@ -75,9 +75,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 ReportAttributesDisallowed(param.AttributeLists, _declarationDiagnostics);
             }
 
-            if (syntax.ReturnType.Kind() == SyntaxKind.RefType)
+            if (syntax.ReturnType.Kind() == SyntaxKind.RefKindType)
             {
-                var returnType = (RefTypeSyntax)syntax.ReturnType;
+                var returnType = (RefKindTypeSyntax)syntax.ReturnType;
                 if (returnType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)returnType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword))
                 {
                     _refKind = RefKind.RefReadOnly;

@@ -2038,52 +2038,52 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   }
 
   /// <summary>The ref modifier of a method's return value or a local.</summary>
-  internal sealed partial class RefTypeSyntax : TypeSyntax
+  internal sealed partial class RefKindTypeSyntax : TypeSyntax
   {
-    internal readonly SyntaxToken refKeyword;
+    internal readonly SyntaxToken refKindKeyword;
     internal readonly TypeSyntax type;
 
-    internal RefTypeSyntax(SyntaxKind kind, SyntaxToken refKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal RefKindTypeSyntax(SyntaxKind kind, SyntaxToken refKindKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(refKeyword);
-        this.refKeyword = refKeyword;
+        this.AdjustFlagsAndWidth(refKindKeyword);
+        this.refKindKeyword = refKindKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
 
-    internal RefTypeSyntax(SyntaxKind kind, SyntaxToken refKeyword, TypeSyntax type, SyntaxFactoryContext context)
+    internal RefKindTypeSyntax(SyntaxKind kind, SyntaxToken refKindKeyword, TypeSyntax type, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(refKeyword);
-        this.refKeyword = refKeyword;
+        this.AdjustFlagsAndWidth(refKindKeyword);
+        this.refKindKeyword = refKindKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
 
-    internal RefTypeSyntax(SyntaxKind kind, SyntaxToken refKeyword, TypeSyntax type)
+    internal RefKindTypeSyntax(SyntaxKind kind, SyntaxToken refKindKeyword, TypeSyntax type)
         : base(kind)
     {
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(refKeyword);
-        this.refKeyword = refKeyword;
+        this.AdjustFlagsAndWidth(refKindKeyword);
+        this.refKindKeyword = refKindKeyword;
         this.AdjustFlagsAndWidth(type);
         this.type = type;
     }
 
-    public SyntaxToken RefKeyword { get { return this.refKeyword; } }
+    public SyntaxToken RefKindKeyword { get { return this.refKindKeyword; } }
     public TypeSyntax Type { get { return this.type; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.refKeyword;
+            case 0: return this.refKindKeyword;
             case 1: return this.type;
             default: return null;
         }
@@ -2091,24 +2091,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
     {
-      return new Stark.Syntax.RefTypeSyntax(this, parent, position);
+      return new Stark.Syntax.RefKindTypeSyntax(this, parent, position);
     }
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitRefType(this);
+        return visitor.VisitRefKindType(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitRefType(this);
+        visitor.VisitRefKindType(this);
     }
 
-    public RefTypeSyntax Update(SyntaxToken refKeyword, TypeSyntax type)
+    public RefKindTypeSyntax Update(SyntaxToken refKindKeyword, TypeSyntax type)
     {
-        if (refKeyword != this.RefKeyword || type != this.Type)
+        if (refKindKeyword != this.RefKindKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.RefType(refKeyword, type);
+            var newNode = SyntaxFactory.RefKindType(refKindKeyword, type);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -2123,23 +2123,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new RefTypeSyntax(this.Kind, this.refKeyword, this.type, diagnostics, GetAnnotations());
+         return new RefKindTypeSyntax(this.Kind, this.refKindKeyword, this.type, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new RefTypeSyntax(this.Kind, this.refKeyword, this.type, GetDiagnostics(), annotations);
+         return new RefKindTypeSyntax(this.Kind, this.refKindKeyword, this.type, GetDiagnostics(), annotations);
     }
 
-    internal RefTypeSyntax(ObjectReader reader)
+    internal RefKindTypeSyntax(ObjectReader reader)
         : base(reader)
     {
       this.SlotCount = 2;
-      var refKeyword = (SyntaxToken)reader.ReadValue();
-      if (refKeyword != null)
+      var refKindKeyword = (SyntaxToken)reader.ReadValue();
+      if (refKindKeyword != null)
       {
-         AdjustFlagsAndWidth(refKeyword);
-         this.refKeyword = refKeyword;
+         AdjustFlagsAndWidth(refKindKeyword);
+         this.refKindKeyword = refKindKeyword;
       }
       var type = (TypeSyntax)reader.ReadValue();
       if (type != null)
@@ -2152,13 +2152,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
-      writer.WriteValue(this.refKeyword);
+      writer.WriteValue(this.refKindKeyword);
       writer.WriteValue(this.type);
     }
 
-    static RefTypeSyntax()
+    static RefKindTypeSyntax()
     {
-       ObjectBinder.RegisterTypeReader(typeof(RefTypeSyntax), r => new RefTypeSyntax(r));
+       ObjectBinder.RegisterTypeReader(typeof(RefKindTypeSyntax), r => new RefKindTypeSyntax(r));
     }
   }
 
@@ -36148,7 +36148,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
-    public virtual TResult VisitRefType(RefTypeSyntax node)
+    public virtual TResult VisitRefKindType(RefKindTypeSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -37237,7 +37237,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       this.DefaultVisit(node);
     }
 
-    public virtual void VisitRefType(RefTypeSyntax node)
+    public virtual void VisitRefKindType(RefKindTypeSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -38356,11 +38356,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return node.Update(omittedTypeArgumentToken);
     }
 
-    public override CSharpSyntaxNode VisitRefType(RefTypeSyntax node)
+    public override CSharpSyntaxNode VisitRefKindType(RefKindTypeSyntax node)
     {
-      var refKeyword = (SyntaxToken)this.Visit(node.RefKeyword);
+      var refKindKeyword = (SyntaxToken)this.Visit(node.RefKindKeyword);
       var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(refKeyword, type);
+      return node.Update(refKindKeyword, type);
     }
 
     public override CSharpSyntaxNode VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
@@ -40575,27 +40575,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public RefTypeSyntax RefType(SyntaxToken refKeyword, TypeSyntax type)
+    public RefKindTypeSyntax RefKindType(SyntaxToken refKindKeyword, TypeSyntax type)
     {
 #if DEBUG
-      if (refKeyword == null)
-        throw new ArgumentNullException(nameof(refKeyword));
-      switch (refKeyword.Kind)
+      if (refKindKeyword == null)
+        throw new ArgumentNullException(nameof(refKindKeyword));
+      switch (refKindKeyword.Kind)
       {
         case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(refKeyword));
+          throw new ArgumentException(nameof(refKindKeyword));
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.RefType, refKeyword, type, this.context, out hash);
-      if (cached != null) return (RefTypeSyntax)cached;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.RefKindType, refKindKeyword, type, this.context, out hash);
+      if (cached != null) return (RefKindTypeSyntax)cached;
 
-      var result = new RefTypeSyntax(SyntaxKind.RefType, refKeyword, type, this.context);
+      var result = new RefKindTypeSyntax(SyntaxKind.RefKindType, refKindKeyword, type, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -41818,6 +41819,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       switch (refKeyword.Kind)
       {
         case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
           break;
         default:
           throw new ArgumentException(nameof(refKeyword));
@@ -48026,27 +48028,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static RefTypeSyntax RefType(SyntaxToken refKeyword, TypeSyntax type)
+    public static RefKindTypeSyntax RefKindType(SyntaxToken refKindKeyword, TypeSyntax type)
     {
 #if DEBUG
-      if (refKeyword == null)
-        throw new ArgumentNullException(nameof(refKeyword));
-      switch (refKeyword.Kind)
+      if (refKindKeyword == null)
+        throw new ArgumentNullException(nameof(refKindKeyword));
+      switch (refKindKeyword.Kind)
       {
         case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(refKeyword));
+          throw new ArgumentException(nameof(refKindKeyword));
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.RefType, refKeyword, type, out hash);
-      if (cached != null) return (RefTypeSyntax)cached;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.RefKindType, refKindKeyword, type, out hash);
+      if (cached != null) return (RefKindTypeSyntax)cached;
 
-      var result = new RefTypeSyntax(SyntaxKind.RefType, refKeyword, type);
+      var result = new RefKindTypeSyntax(SyntaxKind.RefKindType, refKindKeyword, type);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -49269,6 +49272,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       switch (refKeyword.Kind)
       {
         case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
           break;
         default:
           throw new ArgumentException(nameof(refKeyword));
@@ -55046,7 +55050,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(TupleTypeSyntax),
            typeof(TupleElementSyntax),
            typeof(OmittedTypeArgumentSyntax),
-           typeof(RefTypeSyntax),
+           typeof(RefKindTypeSyntax),
            typeof(ParenthesizedExpressionSyntax),
            typeof(TupleExpressionSyntax),
            typeof(PrefixUnaryExpressionSyntax),

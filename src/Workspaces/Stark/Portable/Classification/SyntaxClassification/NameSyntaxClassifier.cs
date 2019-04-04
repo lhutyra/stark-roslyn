@@ -268,7 +268,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification.Classifiers
         private bool IsInVarContext(NameSyntax name)
         {
             return
-                name.CheckParent<RefTypeSyntax>(v => v.Type == name) ||
+                name.CheckParent<RefKindTypeSyntax>(v => v.Type == name) ||
                 name.CheckParent<ForEachVariableStatementSyntax>(f => true) ||
                 name.CheckParent<DeclarationPatternSyntax>(v => v.Type == name) ||
                 name.CheckParent<VariableDeclarationSyntax>(v => v.Type == name) ||

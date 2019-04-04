@@ -30,7 +30,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.ParenthesizedExpression:
                     return BindMethodGroup(((ParenthesizedExpressionSyntax)node).Expression, invoked: false, indexed: false, diagnostics: diagnostics);
                 default:
-                    return BindExpression(node, diagnostics, invoked, indexed);
+                    return BindExpression(node, diagnostics, invoked, indexed, RefKind.None);
             }
         }
 

@@ -1998,7 +1998,7 @@ done:
                 {
                     case SyntaxKind.ParenthesizedExpression:
                     case SyntaxKind.RefExpression:
-                    case SyntaxKind.RefType:
+                    case SyntaxKind.RefKindType:
                         var pp = parent.Parent;
                         if (pp == null) break;
                         parent = pp;

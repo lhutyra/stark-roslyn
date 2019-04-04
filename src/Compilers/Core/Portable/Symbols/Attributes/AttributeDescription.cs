@@ -465,10 +465,10 @@ namespace StarkPlatform.CodeAnalysis
         internal static readonly AttributeDescription AssertsTrueAttribute = new AttributeDescription("system.runtime.compiler", "AssertsTrueAttribute", s_signaturesOfAssertsTrueAttribute);
         internal static readonly AttributeDescription AssertsFalseAttribute = new AttributeDescription("system.runtime.compiler", "AssertsFalseAttribute", s_signaturesOfAssertsFalseAttribute);
         internal static readonly AttributeDescription MarshalAsAttribute = new AttributeDescription("system.runtime.interop", "MarshalAsAttribute", s_signaturesOfMarshalAsAttribute);
-        internal static readonly AttributeDescription InAttribute = new AttributeDescription("system.runtime.interop", "InAttribute", s_signaturesOfInAttribute);
-        internal static readonly AttributeDescription OutAttribute = new AttributeDescription("system.runtime.interop", "OutAttribute", s_signaturesOfOutAttribute);
-        internal static readonly AttributeDescription IsReadOnlyAttribute = new AttributeDescription("system.runtime.compiler", "IsReadOnlyAttribute", s_signaturesOfIsReadOnlyAttribute);
-        internal static readonly AttributeDescription IsUnmanagedAttribute = new AttributeDescription("system.runtime.compiler", "IsUnmanagedAttribute", s_signaturesOfIsUnmanagedAttribute);
+        internal static readonly AttributeDescription InAttribute = new AttributeDescription("system.runtime.annotations", "InAttribute", s_signaturesOfInAttribute);
+        internal static readonly AttributeDescription OutAttribute = new AttributeDescription("system.runtime.annotations", "OutAttribute", s_signaturesOfOutAttribute);
+        internal static readonly AttributeDescription IsReadOnlyAttribute = new AttributeDescription("system.runtime.annotations", "IsReadOnlyAttribute", s_signaturesOfIsReadOnlyAttribute);
+        internal static readonly AttributeDescription IsUnmanagedAttribute = new AttributeDescription("system.runtime.annotations", "IsUnmanagedAttribute", s_signaturesOfIsUnmanagedAttribute);
         internal static readonly AttributeDescription CoClassAttribute = new AttributeDescription("system.runtime.interop", "CoClassAttribute", s_signaturesOfCoClassAttribute);
         internal static readonly AttributeDescription GuidAttribute = new AttributeDescription("system.runtime.interop", "GuidAttribute", s_signaturesOfGuidAttribute);
         internal static readonly AttributeDescription CLSCompliantAttribute = new AttributeDescription("System", "CLSCompliantAttribute", s_signaturesOfCLSCompliantAttribute);

@@ -225,7 +225,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </summary>
         internal BoundExpression BindValue(ExpressionSyntax node, DiagnosticBag diagnostics, BindValueKind valueKind)
         {
-            var result = this.BindExpression(node, diagnostics: diagnostics, invoked: false, indexed: false);
+            var refkind = valueKind == BindValueKind.RefReturn ? RefKind.Ref : valueKind == BindValueKind.ReadonlyRef ? RefKind.In : RefKind.None;
+            var result = this.BindExpression(node, diagnostics: diagnostics, invoked: false, indexed: false, refkind);
             return CheckValue(result, valueKind, diagnostics);
         }
 
@@ -321,19 +322,42 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         public BoundExpression BindExpression(ExpressionSyntax node, DiagnosticBag diagnostics)
         {
-            return BindExpression(node, diagnostics: diagnostics, invoked: false, indexed: false);
+            return BindExpression(node, diagnostics: diagnostics, invoked: false, indexed: false, RefKind.None);
         }
 
-        protected BoundExpression BindExpression(ExpressionSyntax node, DiagnosticBag diagnostics, bool invoked, bool indexed)
-        {
-            BoundExpression expr = BindExpressionInternal(node, diagnostics, invoked, indexed);
-            VerifyUnchecked(node, diagnostics, expr);
+        [ThreadStatic]
+        private static Stack<RefKind> _stackRefKindContext;
 
-            if (expr.Kind == BoundKind.ArgListOperator)
+        protected static RefKind GetCurrentRefKindContext()
+        {
+            var local = _stackRefKindContext;
+            return local == null || local.Count == 0 ? RefKind.None : local.Peek();
+        }
+
+        protected BoundExpression BindExpression(ExpressionSyntax node, DiagnosticBag diagnostics, bool invoked, bool indexed, RefKind bindRefKind)
+        {
+            if (_stackRefKindContext == null)
             {
-                // CS0226: An __arglist expression may only appear inside of a call or new expression
-                Error(diagnostics, ErrorCode.ERR_IllegalArglist, node);
-                expr = ToBadExpression(expr);
+                _stackRefKindContext = new Stack<RefKind>();
+            }
+
+            BoundExpression expr = null;
+            try
+            {
+                _stackRefKindContext.Push(bindRefKind);
+                expr = BindExpressionInternal(node, diagnostics, invoked, indexed);
+                VerifyUnchecked(node, diagnostics, expr);
+
+                if (expr.Kind == BoundKind.ArgListOperator)
+                {
+                    // CS0226: An __arglist expression may only appear inside of a call or new expression
+                    Error(diagnostics, ErrorCode.ERR_IllegalArglist, node);
+                    expr = ToBadExpression(expr);
+                }
+            }
+            finally
+            {
+                _stackRefKindContext.Pop();
             }
 
             return expr;
@@ -578,7 +602,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.ThrowExpression:
                     return BindThrowExpression((ThrowExpressionSyntax)node, diagnostics);
 
-                case SyntaxKind.RefType:
+                case SyntaxKind.RefKindType:
                     return BindRefType(node, diagnostics);
 
                 case SyntaxKind.RefExpression:
@@ -1769,7 +1793,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return this.BindNamespaceOrType(node, diagnostics);
             }
 
-            return this.BindExpression(node, diagnostics, SyntaxFacts.IsInvoked(node), SyntaxFacts.IsIndexed(node));
+            return this.BindExpression(node, diagnostics, SyntaxFacts.IsInvoked(node), SyntaxFacts.IsIndexed(node), RefKind.None);
         }
 
         public BoundExpression BindLabel(ExpressionSyntax node, DiagnosticBag diagnostics)
@@ -6712,7 +6736,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         private BoundExpression BindElementAccess(ElementAccessExpressionSyntax node, DiagnosticBag diagnostics)
         {
-            BoundExpression receiver = BindExpression(node.Expression, diagnostics: diagnostics, invoked: false, indexed: true);
+            BoundExpression receiver = BindExpression(node.Expression, diagnostics: diagnostics, invoked: false, indexed: true, RefKind.None);
             return BindElementAccess(node, receiver, node.ArgumentList, diagnostics);
         }
 
@@ -7192,7 +7216,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
             OverloadResolutionResult<PropertySymbol> overloadResolutionResult = OverloadResolutionResult<PropertySymbol>.GetInstance();
             bool allowRefOmittedArguments = receiverOpt.IsExpressionOfComImportType();
             HashSet<DiagnosticInfo> useSiteDiagnostics = null;
-            this.OverloadResolution.PropertyOverloadResolution(propertyGroup, receiverOpt, analyzedArguments, overloadResolutionResult, allowRefOmittedArguments, ref useSiteDiagnostics);
+
+            var refKindContext = GetCurrentRefKindContext();
+            this.OverloadResolution.PropertyOverloadResolution(propertyGroup, receiverOpt, analyzedArguments, overloadResolutionResult, allowRefOmittedArguments, ref useSiteDiagnostics, refKindContext);
             diagnostics.Add(syntax, useSiteDiagnostics);
             BoundExpression propertyAccess;
 

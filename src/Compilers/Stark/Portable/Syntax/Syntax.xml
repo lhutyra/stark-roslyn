@@ -321,13 +321,14 @@
       <summary>Creates an OmittedTypeArgumentSyntax node.</summary>
     </FactoryComment>
   </Node>
-  <Node Name="RefTypeSyntax" Base="TypeSyntax">
+  <Node Name="RefKindTypeSyntax" Base="TypeSyntax">
     <TypeComment>
       <summary>The ref modifier of a method's return value or a local.</summary>
     </TypeComment>
-    <Kind Name="RefType"/>
-    <Field Name="RefKeyword" Type="SyntaxToken">
+    <Kind Name="RefKindType"/>
+    <Field Name="RefKindKeyword" Type="SyntaxToken">
       <Kind Name="RefKeyword"/>
+      <Kind Name="InKeyword"/>
     </Field>
     <Field Name="Type" Type="TypeSyntax"/>
   </Node>
@@ -1328,6 +1329,7 @@
     <Kind Name="RefExpression"/>
     <Field Name="RefKeyword" Type="SyntaxToken">
       <Kind Name="RefKeyword"/>
+      <Kind Name="InKeyword"/>
     </Field>
     <Field Name="Expression" Type="ExpressionSyntax"/>
   </Node>

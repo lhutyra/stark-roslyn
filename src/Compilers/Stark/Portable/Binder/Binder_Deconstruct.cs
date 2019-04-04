@@ -752,7 +752,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         return new DeconstructionVariable(builder, node);
                     }
                 default:
-                    var boundVariable = BindExpression(node, diagnostics, invoked: false, indexed: false);
+                    var boundVariable = BindExpression(node, diagnostics, invoked: false, indexed: false, RefKind.None);
                     var checkedVariable = CheckValue(boundVariable, BindValueKind.Assignable, diagnostics);
                     if (expression == null && checkedVariable.Kind != BoundKind.DiscardExpression)
                     {

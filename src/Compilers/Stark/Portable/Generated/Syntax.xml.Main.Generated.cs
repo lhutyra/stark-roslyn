@@ -106,8 +106,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a RefTypeSyntax node.</summary>
-    public virtual TResult VisitRefType(RefTypeSyntax node)
+    /// <summary>Called when the visitor visits a RefKindTypeSyntax node.</summary>
+    public virtual TResult VisitRefKindType(RefKindTypeSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -1411,8 +1411,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
       this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a RefTypeSyntax node.</summary>
-    public virtual void VisitRefType(RefTypeSyntax node)
+    /// <summary>Called when the visitor visits a RefKindTypeSyntax node.</summary>
+    public virtual void VisitRefKindType(RefKindTypeSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -2732,11 +2732,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return node.Update(omittedTypeArgumentToken);
     }
 
-    public override SyntaxNode VisitRefType(RefTypeSyntax node)
+    public override SyntaxNode VisitRefKindType(RefKindTypeSyntax node)
     {
-      var refKeyword = this.VisitToken(node.RefKeyword);
+      var refKindKeyword = this.VisitToken(node.RefKindKeyword);
       var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(refKeyword, type);
+      return node.Update(refKindKeyword, type);
     }
 
     public override SyntaxNode VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
@@ -4832,27 +4832,22 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return SyntaxFactory.OmittedTypeArgument(SyntaxFactory.Token(SyntaxKind.OmittedTypeArgumentToken));
     }
 
-    /// <summary>Creates a new RefTypeSyntax instance.</summary>
-    public static RefTypeSyntax RefType(SyntaxToken refKeyword, TypeSyntax type)
+    /// <summary>Creates a new RefKindTypeSyntax instance.</summary>
+    public static RefKindTypeSyntax RefKindType(SyntaxToken refKindKeyword, TypeSyntax type)
     {
-      switch (refKeyword.Kind())
+      switch (refKindKeyword.Kind())
       {
         case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(refKeyword));
+          throw new ArgumentException(nameof(refKindKeyword));
       }
       if (type == null)
         throw new ArgumentNullException(nameof(type));
-      return (RefTypeSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.RefType((Syntax.InternalSyntax.SyntaxToken)refKeyword.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
+      return (RefKindTypeSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.RefKindType((Syntax.InternalSyntax.SyntaxToken)refKindKeyword.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
     }
 
-
-    /// <summary>Creates a new RefTypeSyntax instance.</summary>
-    public static RefTypeSyntax RefType(TypeSyntax type)
-    {
-      return SyntaxFactory.RefType(SyntaxFactory.Token(SyntaxKind.RefKeyword), type);
-    }
 
     /// <summary>Creates a new ParenthesizedExpressionSyntax instance.</summary>
     public static ParenthesizedExpressionSyntax ParenthesizedExpression(SyntaxToken openParenToken, ExpressionSyntax expression, SyntaxToken closeParenToken)
@@ -6080,6 +6075,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       switch (refKeyword.Kind())
       {
         case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
           break;
         default:
           throw new ArgumentException(nameof(refKeyword));
@@ -6089,12 +6085,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return (RefExpressionSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.RefExpression((Syntax.InternalSyntax.SyntaxToken)refKeyword.Node, expression == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)expression.Green).CreateRed();
     }
 
-
-    /// <summary>Creates a new RefExpressionSyntax instance.</summary>
-    public static RefExpressionSyntax RefExpression(ExpressionSyntax expression)
-    {
-      return SyntaxFactory.RefExpression(SyntaxFactory.Token(SyntaxKind.RefKeyword), expression);
-    }
 
     /// <summary>Creates a new ParenthesizedLambdaExpressionSyntax instance.</summary>
     public static ParenthesizedLambdaExpressionSyntax ParenthesizedLambdaExpression(SyntaxToken asyncKeyword, ParameterListSyntax parameterList, SyntaxToken arrowToken, CSharpSyntaxNode body)

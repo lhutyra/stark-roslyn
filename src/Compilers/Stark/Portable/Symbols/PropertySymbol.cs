@@ -512,7 +512,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             // This checks if the property have the same definition and the type parameters on the containing types have been
             // substituted in the same way.
-            return TypeSymbol.Equals(this.ContainingType, other.ContainingType, TypeCompareKind.ConsiderEverything2) && ReferenceEquals(this.OriginalDefinition, other.OriginalDefinition);
+            return RefKind == other.RefKind && TypeSymbol.Equals(this.ContainingType, other.ContainingType, TypeCompareKind.ConsiderEverything2) && ReferenceEquals(this.OriginalDefinition, other.OriginalDefinition);
         }
 
         public override int GetHashCode()
@@ -521,6 +521,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             hash = Hash.Combine(this.ContainingType, hash);
             hash = Hash.Combine(this.Name, hash);
             hash = Hash.Combine(hash, this.ParameterCount);
+            hash = Hash.Combine(hash, (int)RefKind);
             return hash;
         }
 

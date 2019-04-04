@@ -1986,7 +1986,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
             private void ClassifyPossibleReadOnlyRefAttributesForType(SyntaxNode owner, TypeSyntax type)
             {
-                if (type is RefTypeSyntax refType && refType.RefKeyword != default && refType.Type is ExtendedTypeSyntax extendedType && extendedType.Modifiers.Contains(token => token.Kind() == SyntaxKind.ReadOnlyKeyword))
+                if (type is RefKindTypeSyntax refType && refType.RefKindKeyword != default && refType.Type is ExtendedTypeSyntax extendedType && extendedType.Modifiers.Contains(token => token.Kind() == SyntaxKind.ReadOnlyKeyword))
                 {
                     ReportError(RudeEditKind.ReadOnlyReferences, owner, owner);
                 }

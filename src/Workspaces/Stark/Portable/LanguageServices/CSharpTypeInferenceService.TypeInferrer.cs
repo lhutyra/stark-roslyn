@@ -86,7 +86,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             private IEnumerable<TypeInferenceInfo> GetTypesSimple(SyntaxNode node)
             {
-                if (node is RefTypeSyntax refType)
+                if (node is RefKindTypeSyntax refType)
                 {
                     return GetTypes(refType.Type);
                 }

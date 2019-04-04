@@ -447,11 +447,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         return TypeSymbolWithAnnotations.Create(IsNullableEnabled(tupleTypeSyntax.CloseParenToken), BindTupleType(tupleTypeSyntax, diagnostics));
                     }
 
-                case SyntaxKind.RefType:
+                case SyntaxKind.RefKindType:
                     {
                         // ref needs to be handled by the caller
-                        var refTypeSyntax = (RefTypeSyntax)syntax;
-                        var refToken = refTypeSyntax.RefKeyword;
+                        var refTypeSyntax = (RefKindTypeSyntax)syntax;
+                        var refToken = refTypeSyntax.RefKindKeyword;
                         if (!syntax.HasErrors)
                         {
                             diagnostics.Add(ErrorCode.ERR_UnexpectedToken, refToken.GetLocation(), refToken.ToString());

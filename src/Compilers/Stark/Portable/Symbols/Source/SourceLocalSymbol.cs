@@ -144,7 +144,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             Debug.Assert(closestTypeSyntax != null);
             Debug.Assert(nodeBinder != null);
 
-            Debug.Assert(closestTypeSyntax.Kind() != SyntaxKind.RefType);
+            Debug.Assert(closestTypeSyntax.Kind() != SyntaxKind.RefKindType);
             return closestTypeSyntax.IsNullWithNoType()
                 ? new DeconstructionLocalSymbol(containingSymbol, scopeBinder, nodeBinder, closestTypeSyntax, identifierToken, kind, deconstruction)
                 : new SourceLocalSymbol(containingSymbol, scopeBinder, false, closestTypeSyntax, identifierToken, kind);

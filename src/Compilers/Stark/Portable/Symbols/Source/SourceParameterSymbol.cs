@@ -49,7 +49,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             if (addRefReadOnlyModifier && refKind == RefKind.In)
             {
-                var modifierType = context.GetWellKnownType(WellKnownType.system_runtime_interop_InAttribute, declarationDiagnostics, syntax);
+                var modifierType = context.GetWellKnownType(WellKnownType.system_runtime_annotations_InAttribute, declarationDiagnostics, syntax);
 
                 return new SourceComplexParameterSymbolWithCustomModifiersPrecedingByRef(
                     owner,

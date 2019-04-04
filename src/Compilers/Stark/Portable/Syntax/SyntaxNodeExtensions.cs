@@ -232,9 +232,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         internal static TypeSyntax SkipRef(this TypeSyntax syntax)
         {
-            if (syntax != null && syntax.Kind() == SyntaxKind.RefType)
+            if (syntax != null && syntax.Kind() == SyntaxKind.RefKindType)
             {
-                syntax = ((RefTypeSyntax)syntax).Type;
+                syntax = ((RefKindTypeSyntax)syntax).Type;
             }
 
             return syntax;
@@ -243,13 +243,18 @@ namespace StarkPlatform.CodeAnalysis.Stark
         internal static TypeSyntax SkipRef(this TypeSyntax syntax, out RefKind refKind)
         {
             refKind = RefKind.None;
-            if (syntax != null && syntax.Kind() == SyntaxKind.RefType)
+            if (syntax != null && syntax.Kind() == SyntaxKind.RefKindType)
             {
-                var refType = (RefTypeSyntax)syntax;
-                refKind = refType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)refType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword) ?
-                    RefKind.RefReadOnly :
-                    RefKind.Ref;
+                var refType = (RefKindTypeSyntax)syntax;
 
+                if (refType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)refType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword))
+                {
+                    refKind = RefKind.RefReadOnly;
+                }
+                else
+                {
+                    refKind = refType.RefKindKeyword.Kind() == SyntaxKind.RefKeyword ? RefKind.Ref : RefKind.In;
+                }
                 syntax = refType.Type;
             }
 
@@ -264,7 +269,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             refKind = RefKind.None;
             if (syntax?.Kind() == SyntaxKind.RefExpression)
             {
-                refKind = RefKind.Ref;
+                refKind = ((RefExpressionSyntax)syntax).RefKeyword.Kind() == SyntaxKind.RefKeyword ? RefKind.Ref : RefKind.In;
                 syntax = ((RefExpressionSyntax)syntax).Expression;
 
                 syntax.CheckDeconstructionCompatibleArgument(diagnostics);

@@ -136,8 +136,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case RefValueExpression:
                         return ((RefValueExpressionSyntax)parent).Type == node;
 
-                    case RefType:
-                        return ((RefTypeSyntax)parent).Type == node;
+                    case RefKindType:
+                        return ((RefKindTypeSyntax)parent).Type == node;
 
                     case Parameter:
                         return ((ParameterSyntax)parent).Type == node;

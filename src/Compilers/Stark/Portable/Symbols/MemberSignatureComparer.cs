@@ -98,7 +98,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// <summary>
         /// This instance is used to determine if two C# member declarations in source conflict with each other.
         /// Names, arities, and parameter types are considered.
-        /// Return types, type parameter constraints, custom modifiers, and parameter ref kinds, etc are ignored.
+        /// Return types and Return RefKind, type parameter constraints, custom modifiers, and parameter ref kinds, etc are ignored.
         /// </summary>
         /// <remarks>
         /// This does the same comparison that MethodSignature used to do.
@@ -110,6 +110,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             considerTypeConstraints: false,
             considerCallingConvention: false,
             considerRefKindDifferences: false,
+            considerReturnRefKindDifferences: true,
             typeComparison: TypeCompareKind.IgnoreCustomModifiersAndArraySizesAndLowerBounds | TypeCompareKind.IgnoreNullableModifiersForReferenceTypes | TypeCompareKind.IgnoreDynamicAndTupleNames); //shouldn't actually matter for source members
 
         /// <summary>
@@ -329,6 +330,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         // True to consider RefKind differences, false to consider them the same.
         private readonly bool _considerRefKindDifferences;
 
+        private readonly bool _considerReturnRefKindDifferences;
+
         // Equality options for parameter types and return types (if return is considered).
         private readonly TypeCompareKind _typeComparison;
 
@@ -342,7 +345,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             bool considerCallingConvention,
             bool considerRefKindDifferences,
             TypeCompareKind typeComparison = TypeCompareKind.IgnoreDynamic,
-            bool useSpecialHandlingForNullableTypes = false)
+            bool useSpecialHandlingForNullableTypes = false,
+            bool considerReturnRefKindDifferences = false)
         {
             Debug.Assert(!considerExplicitlyImplementedInterfaces || considerName, "Doesn't make sense to consider interfaces separately from name.");
 
@@ -352,6 +356,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             _considerTypeConstraints = considerTypeConstraints;
             _considerCallingConvention = considerCallingConvention;
             _considerRefKindDifferences = considerRefKindDifferences;
+            _considerReturnRefKindDifferences = considerReturnRefKindDifferences;
             _typeComparison = typeComparison;
             _useSpecialHandlingForNullableTypes = useSpecialHandlingForNullableTypes;
         }
@@ -429,7 +434,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 typeMap2 = GetTypeMap(member2);
             }
 
-            if (_considerReturnType && !HaveSameReturnTypes(member1, typeMap1, member2, typeMap2, _typeComparison))
+            if ((_considerReturnRefKindDifferences || _considerReturnType) && !HaveSameReturnTypes(member1, typeMap1, member2, typeMap2, _typeComparison))
             {
                 return false;
             }

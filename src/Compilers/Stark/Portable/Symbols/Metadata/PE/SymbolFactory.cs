@@ -59,7 +59,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
 
         internal override bool IsAcceptedInAttributeModifierType(TypeSymbol type)
         {
-            return type.IsWellKnownTypeInAttribute();
+            return true;
         }
 
         internal override bool IsAcceptedUnmanagedTypeModifierType(TypeSymbol type)

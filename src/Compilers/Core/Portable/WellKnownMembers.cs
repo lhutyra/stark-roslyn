@@ -2936,14 +2936,14 @@ namespace StarkPlatform.CodeAnalysis
 
                  // System_Runtime_CompilerServices_IsReadOnlyAttribute__ctor
                  (byte)(MemberFlags.Constructor),                                                                                                               // Flags
-                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_compiler_IsReadOnlyAttribute - WellKnownType.ExtSentinel),        // DeclaringTypeId
+                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_annotations_IsReadOnlyAttribute - WellKnownType.ExtSentinel),        // DeclaringTypeId
                  0,                                                                                                                                             // Arity
                      0,                                                                                                                                         // Method Signature
                      (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
 
                  // System_Runtime_CompilerServices_IsByRefLikeAttribute__ctor
                  (byte)(MemberFlags.Constructor),                                                                                                               // Flags
-                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_compiler_IsByRefLikeAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
+                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_annotations_IsByRefLikeAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
                  0,                                                                                                                                             // Arity
                      0,                                                                                                                                         // Method Signature
                      (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -3007,7 +3007,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_CompilerServices_IsUnmanagedAttribute__ctor
                  (byte)(MemberFlags.Constructor),                                                                                                               // Flags
-                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_compiler_IsUnmanagedAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
+                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_annotations_IsUnmanagedAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
                  0,                                                                                                                                             // Arity
                      0,                                                                                                                                         // Method Signature
                      (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type

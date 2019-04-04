@@ -1259,18 +1259,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
   }
 
   /// <summary>The ref modifier of a method's return value or a local.</summary>
-  public sealed partial class RefTypeSyntax : TypeSyntax
+  public sealed partial class RefKindTypeSyntax : TypeSyntax
   {
     private TypeSyntax type;
 
-    internal RefTypeSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+    internal RefKindTypeSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
 
-    public SyntaxToken RefKeyword 
+    public SyntaxToken RefKindKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.RefTypeSyntax)this.Green).refKeyword, this.Position, 0); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.RefKindTypeSyntax)this.Green).refKindKeyword, this.Position, 0); }
     }
 
     public TypeSyntax Type 
@@ -1300,19 +1300,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitRefType(this);
+        return visitor.VisitRefKindType(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitRefType(this);
+        visitor.VisitRefKindType(this);
     }
 
-    public RefTypeSyntax Update(SyntaxToken refKeyword, TypeSyntax type)
+    public RefKindTypeSyntax Update(SyntaxToken refKindKeyword, TypeSyntax type)
     {
-        if (refKeyword != this.RefKeyword || type != this.Type)
+        if (refKindKeyword != this.RefKindKeyword || type != this.Type)
         {
-            var newNode = SyntaxFactory.RefType(refKeyword, type);
+            var newNode = SyntaxFactory.RefKindType(refKindKeyword, type);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -1322,14 +1322,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
-    public RefTypeSyntax WithRefKeyword(SyntaxToken refKeyword)
+    public RefKindTypeSyntax WithRefKindKeyword(SyntaxToken refKindKeyword)
     {
-        return this.Update(refKeyword, this.Type);
+        return this.Update(refKindKeyword, this.Type);
     }
 
-    public RefTypeSyntax WithType(TypeSyntax type)
+    public RefKindTypeSyntax WithType(TypeSyntax type)
     {
-        return this.Update(this.RefKeyword, type);
+        return this.Update(this.RefKindKeyword, type);
     }
   }
 
