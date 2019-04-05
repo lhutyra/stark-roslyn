@@ -44,7 +44,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                 CheckParameterModifiers(parameterSyntax, diagnostics);
 
-                var refKind = GetModifiers(extendedParameterType?.Modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
+                RefKind refKind = RefKind.None;
+                SyntaxToken refnessKeyword = default;
+                if (parameterSyntax.Type is RefKindTypeSyntax refKindTypeSyntax)
+                {
+                    refnessKeyword = refKindTypeSyntax.RefKindKeyword;
+                    switch (refKindTypeSyntax.RefKindKeyword.Kind())
+                    {
+                        case SyntaxKind.RefKeyword:
+                            refKind = RefKind.Ref;
+                            break;
+                        case SyntaxKind.InKeyword:
+                            refKind = RefKind.In;
+                            break;
+                        case SyntaxKind.OutKeyword:
+                            refKind = RefKind.In;
+                            break;
+                        default:
+                            throw ExceptionUtilities.UnexpectedValue(refKindTypeSyntax.RefKindKeyword.Kind());
+                    }
+                }
+
+                GetModifiers(extendedParameterType?.Modifiers, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
                 if (thisKeyword.Kind() != SyntaxKind.None && !allowThis)
                 {
                     diagnostics.Add(ErrorCode.ERR_ThisInBadContext, thisKeyword.GetLocation());
@@ -379,7 +400,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             var extendedTypeSyntax = parameterSyntax.Type as ExtendedTypeSyntax;
 
-            var refKind = GetModifiers(extendedTypeSyntax?.Modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
+            RefKind refKind = RefKind.None;
+            SyntaxToken refnessKeyword = default;
+            if (parameterSyntax.Type is RefKindTypeSyntax refKindTypeSyntax)
+            {
+                refnessKeyword = refKindTypeSyntax.RefKindKeyword;
+                switch (refKindTypeSyntax.RefKindKeyword.Kind())
+                {
+                    case SyntaxKind.RefKeyword:
+                        refKind = RefKind.Ref;
+                        break;
+                    case SyntaxKind.InKeyword:
+                        refKind = RefKind.In;
+                        break;
+                    case SyntaxKind.OutKeyword:
+                        refKind = RefKind.In;
+                        break;
+                    default:
+                        throw ExceptionUtilities.UnexpectedValue(refKindTypeSyntax.RefKindKeyword.Kind());
+                }
+            }
+
+            GetModifiers(extendedTypeSyntax?.Modifiers, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
 
             // CONSIDER: We are inconsistent here regarding where the error is reported; is it
             // CONSIDER: reported on the parameter name, or on the value of the initializer?
@@ -547,42 +589,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return null;
         }
 
-        private static RefKind GetModifiers(SyntaxTokenList? modifiers, out SyntaxToken refnessKeyword, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword)
+        private static void GetModifiers(SyntaxTokenList? modifiers, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword)
         {
-            var refKind = RefKind.None;
-
-            refnessKeyword = default(SyntaxToken);
             paramsKeyword = default(SyntaxToken);
             thisKeyword = default(SyntaxToken);
 
-            if (!modifiers.HasValue) return refKind;
+            if (!modifiers.HasValue) return;
 
             var list = modifiers.Value;
             foreach (var modifier in list)
             {
                 switch (modifier.Kind())
                 {
-                    case SyntaxKind.OutKeyword:
-                        if (refKind == RefKind.None)
-                        {
-                            refnessKeyword = modifier;
-                            refKind = RefKind.Out;
-                        }
-                        break;
-                    case SyntaxKind.RefKeyword:
-                        if (refKind == RefKind.None)
-                        {
-                            refnessKeyword = modifier;
-                            refKind = RefKind.Ref;
-                        }
-                        break;
-                    case SyntaxKind.InKeyword:
-                        if (refKind == RefKind.None)
-                        {
-                            refnessKeyword = modifier;
-                            refKind = RefKind.In;
-                        }
-                        break;
                     case SyntaxKind.ParamsKeyword:
                         paramsKeyword = modifier;
                         break;
@@ -591,8 +609,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         break;
                 }
             }
-
-            return refKind;
         }
     }
 }
