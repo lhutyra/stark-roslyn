@@ -2132,6 +2132,18 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_InvalidThisModifierForStatic" xml:space="preserve">
     <value>A readonly or transient method cannot have a static access modifier</value>
   </data>
+  <data name="ERR_InvalidInlineILOpcode" xml:space="preserve">
+    <value>The IL opcode `{0}` is not recognized. Check the documentation for the list of opcodes.</value>
+  </data>
+  <data name="ERR_InlineILArgumentExpected" xml:space="preserve">
+    <value>The IL opcode `{0}` is expecting an argument of type `{1}`</value>
+  </data>
+  <data name="ERR_InlineILNoArgumentExpected" xml:space="preserve">
+    <value>The IL opcode `{0}` is not expecting an argument</value>
+  </data>
+  <data name="ERR_InvalidInlineILArgument" xml:space="preserve">
+    <value>The argument is invalid for the IL opcode `{0}`</value>
+  </data>
   <data name="ERR_PartialMethodOnlyInPartialClass" xml:space="preserve">
     <value>A partial method must be declared within a partial class or partial struct</value>
   </data>

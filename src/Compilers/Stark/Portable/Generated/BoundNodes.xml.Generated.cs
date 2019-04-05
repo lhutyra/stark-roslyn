@@ -200,6 +200,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         NonConstructorMethodBody,
         ConstructorMethodBody,
         ExpressionWithNullability,
+        InlineILStatement,
     }
 
 
@@ -8205,6 +8206,40 @@ namespace StarkPlatform.CodeAnalysis.Stark
         }
     }
 
+    internal sealed partial class BoundInlineILStatement : BoundStatement
+    {
+        public BoundInlineILStatement(SyntaxNode syntax, ILInstruction instruction, BoundExpression argument, bool hasErrors = false)
+            : base(BoundKind.InlineILStatement, syntax, hasErrors || argument.HasErrors())
+        {
+
+            Debug.Assert((object)instruction != null, "Field 'instruction' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+
+            this.Instruction = instruction;
+            this.Argument = argument;
+        }
+
+
+        public ILInstruction Instruction { get; }
+
+        public BoundExpression Argument { get; }
+
+        public override BoundNode Accept(BoundTreeVisitor visitor)
+        {
+            return visitor.VisitInlineILStatement(this);
+        }
+
+        public BoundInlineILStatement Update(ILInstruction instruction, BoundExpression argument)
+        {
+            if (instruction != this.Instruction || argument != this.Argument)
+            {
+                var result = new BoundInlineILStatement(this.Syntax, instruction, argument, this.HasErrors);
+                result.CopyAttributes(this);
+                return result;
+            }
+            return this;
+        }
+    }
+
     internal abstract partial class BoundTreeVisitor<A,R>
     {
 
@@ -8573,6 +8608,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return VisitConstructorMethodBody(node as BoundConstructorMethodBody, arg);
                 case BoundKind.ExpressionWithNullability: 
                     return VisitExpressionWithNullability(node as BoundExpressionWithNullability, arg);
+                case BoundKind.InlineILStatement: 
+                    return VisitInlineILStatement(node as BoundInlineILStatement, arg);
             }
 
             return default(R);
@@ -9301,6 +9338,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             return this.DefaultVisit(node, arg);
         }
+        public virtual R VisitInlineILStatement(BoundInlineILStatement node, A arg)
+        {
+            return this.DefaultVisit(node, arg);
+        }
     }
 
     internal abstract partial class BoundTreeVisitor
@@ -10022,6 +10063,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node);
         }
         public virtual BoundNode VisitExpressionWithNullability(BoundExpressionWithNullability node)
+        {
+            return this.DefaultVisit(node);
+        }
+        public virtual BoundNode VisitInlineILStatement(BoundInlineILStatement node)
         {
             return this.DefaultVisit(node);
         }
@@ -10965,6 +11010,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public override BoundNode VisitExpressionWithNullability(BoundExpressionWithNullability node)
         {
             this.Visit(node.Expression);
+            return null;
+        }
+        public override BoundNode VisitInlineILStatement(BoundInlineILStatement node)
+        {
+            this.Visit(node.Argument);
             return null;
         }
     }
@@ -12042,6 +12092,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundExpression expression = (BoundExpression)this.Visit(node.Expression);
             TypeSymbol type = this.VisitType(node.Type);
             return node.Update(expression, node.NullableAnnotation, type);
+        }
+        public override BoundNode VisitInlineILStatement(BoundInlineILStatement node)
+        {
+            BoundExpression argument = (BoundExpression)this.Visit(node.Argument);
+            return node.Update(node.Instruction, argument);
         }
     }
 
@@ -14035,6 +14090,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 new TreeDumperNode("nullableAnnotation", node.NullableAnnotation, null),
                 new TreeDumperNode("type", node.Type, null),
                 new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
+            }
+            );
+        }
+        public override TreeDumperNode VisitInlineILStatement(BoundInlineILStatement node, object arg)
+        {
+            return new TreeDumperNode("inlineILStatement", null, new TreeDumperNode[]
+            {
+                new TreeDumperNode("instruction", node.Instruction, null),
+                new TreeDumperNode("argument", null, new TreeDumperNode[] { Visit(node.Argument, null) })
             }
             );
         }

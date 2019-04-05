@@ -81,6 +81,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.FixedStatement:
                     result = BindFixedStatement((FixedStatementSyntax)node, diagnostics);
                     break;
+                case SyntaxKind.InlineILStatement:
+                    result = BindInlineILStatement((InlineILStatementSyntax)node, diagnostics);
+                    break;
                 case SyntaxKind.LabeledStatement:
                     result = BindLabeled((LabeledStatementSyntax)node, diagnostics);
                     break;

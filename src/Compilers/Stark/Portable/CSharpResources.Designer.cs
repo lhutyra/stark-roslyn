@@ -5821,6 +5821,24 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The IL opcode `{0}` is expecting an argument of type `{1}`.
+        /// </summary>
+        internal static string ERR_InlineILArgumentExpected {
+            get {
+                return ResourceManager.GetString("ERR_InlineILArgumentExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IL opcode `{0}` is not expecting an argument.
+        /// </summary>
+        internal static string ERR_InlineILNoArgumentExpected {
+            get {
+                return ResourceManager.GetString("ERR_InlineILNoArgumentExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos;: cannot declare instance members in a module.
         /// </summary>
         internal static string ERR_InstanceMemberInStaticClass {
@@ -6186,6 +6204,24 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_InvalidInitializerElementInitializer {
             get {
                 return ResourceManager.GetString("ERR_InvalidInitializerElementInitializer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument is invalid for the IL opcode `{0}`.
+        /// </summary>
+        internal static string ERR_InvalidInlineILArgument {
+            get {
+                return ResourceManager.GetString("ERR_InvalidInlineILArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IL opcode `{0}` is not recognized. Check the documentation for the list of opcodes..
+        /// </summary>
+        internal static string ERR_InvalidInlineILOpcode {
+            get {
+                return ResourceManager.GetString("ERR_InvalidInlineILOpcode", resourceCulture);
             }
         }
         

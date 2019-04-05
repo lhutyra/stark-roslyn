@@ -10452,6 +10452,121 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     }
   }
 
+  public sealed partial class InlineILStatementSyntax : StatementSyntax
+  {
+    private ExpressionSyntax argument;
+
+    internal InlineILStatementSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+        : base(green, parent, position)
+    {
+    }
+
+    public SyntaxToken HashILToken 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.InlineILStatementSyntax)this.Green).hashILToken, this.Position, 0); }
+    }
+
+    /// <summary>Gets the tokens identifying an IL instruction.</summary>
+    public SyntaxTokenList Instruction 
+    {
+        get
+        {
+            var slot = this.Green.GetSlot(1);
+            if (slot != null)
+                return new SyntaxTokenList(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxTokenList);
+        }
+    }
+
+    public ExpressionSyntax Argument 
+    {
+        get
+        {
+            return this.GetRed(ref this.argument, 2);
+        }
+    }
+
+    /// <summary>Gets the optional semicolon token.</summary>
+    public SyntaxToken EosToken 
+    {
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.InlineILStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+
+            return default(SyntaxToken);
+        }
+    }
+
+    internal override SyntaxNode GetNodeSlot(int index)
+    {
+        switch (index)
+        {
+            case 2: return this.GetRed(ref this.argument, 2);
+            default: return null;
+        }
+    }
+    internal override SyntaxNode GetCachedSlot(int index)
+    {
+        switch (index)
+        {
+            case 2: return this.argument;
+            default: return null;
+        }
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitInlineILStatement(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitInlineILStatement(this);
+    }
+
+    public InlineILStatementSyntax Update(SyntaxToken hashILToken, SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    {
+        if (hashILToken != this.HashILToken || instruction != this.Instruction || argument != this.Argument || eosToken != this.EosToken)
+        {
+            var newNode = SyntaxFactory.InlineILStatement(hashILToken, instruction, argument, eosToken);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               return newNode.WithAnnotations(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    public InlineILStatementSyntax WithHashILToken(SyntaxToken hashILToken)
+    {
+        return this.Update(hashILToken, this.Instruction, this.Argument, this.EosToken);
+    }
+
+    public InlineILStatementSyntax WithInstruction(SyntaxTokenList instruction)
+    {
+        return this.Update(this.HashILToken, instruction, this.Argument, this.EosToken);
+    }
+
+    public InlineILStatementSyntax WithArgument(ExpressionSyntax argument)
+    {
+        return this.Update(this.HashILToken, this.Instruction, argument, this.EosToken);
+    }
+
+    public InlineILStatementSyntax WithEosToken(SyntaxToken eosToken)
+    {
+        return this.Update(this.HashILToken, this.Instruction, this.Argument, eosToken);
+    }
+
+    public InlineILStatementSyntax AddInstruction(params SyntaxToken[] items)
+    {
+        return this.WithInstruction(this.Instruction.AddRange(items));
+    }
+  }
+
   public sealed partial class FixedStatementSyntax : StatementSyntax
   {
     private VariableDeclarationSyntax declaration;

@@ -1286,7 +1286,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
         }
 
-        private void SetSlotAssigned(int slot)
+        protected void SetSlotAssigned(int slot)
         {
             SetSlotAssigned(slot, ref this.State);
         }

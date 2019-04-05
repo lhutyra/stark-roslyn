@@ -1918,4 +1918,9 @@
     <Field Name="Type" Type="TypeSymbol" Override="true" Null="allow"/> <!-- We use null Type for placeholders representing out vars -->
     <Field Name="NullableAnnotation" Type="NullableAnnotation"/>
   </Node>
+
+  <Node Name="BoundInlineILStatement" Base="BoundStatement">
+      <Field Name="Instruction" Type="ILInstruction"/>
+      <Field Name="Argument" Type="BoundExpression" Null="allow"/>
+  </Node>
 </Tree>

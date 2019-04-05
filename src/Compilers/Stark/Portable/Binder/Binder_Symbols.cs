@@ -452,11 +452,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         // ref needs to be handled by the caller
                         var refTypeSyntax = (RefKindTypeSyntax)syntax;
                         var refToken = refTypeSyntax.RefKindKeyword;
-                        if (!syntax.HasErrors)
-                        {
-                            diagnostics.Add(ErrorCode.ERR_UnexpectedToken, refToken.GetLocation(), refToken.ToString());
-                        }
-
                         return BindNamespaceOrTypeOrAliasSymbol(refTypeSyntax.Type, diagnostics, basesBeingResolved, suppressUseSiteDiagnostics);
                     }
 

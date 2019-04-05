@@ -2292,6 +2292,26 @@
     <Field Name="Statement" Type="StatementSyntax"/>
   </Node>
 
+  <Node Name="InlineILStatementSyntax" Base="StatementSyntax">
+      <Kind Name="InlineILStatement"/>
+      <Field Name="HashILToken" Type="SyntaxToken">
+          <Kind Name="HashILToken"/>
+      </Field>
+      <Field Name="Instruction" Type="SyntaxList&lt;SyntaxToken&gt;">
+          <PropertyComment>
+              <summary>Gets the tokens identifying an IL instruction.</summary>
+          </PropertyComment>
+      </Field>
+      <Field Name="Argument" Type="ExpressionSyntax" Optional="true"/>
+      <Field Name="EosToken" Type="SyntaxToken" Optional="true">
+          <PropertyComment>
+              <summary>Gets the optional semicolon token.</summary>
+          </PropertyComment>
+          <Kind Name="SemicolonToken"/>
+          <Kind Name="EndOfLineTrivia"/>
+      </Field>
+  </Node>
+
   <Node Name="FixedStatementSyntax" Base="StatementSyntax">
     <Kind Name="FixedStatement"/>
     <Field Name="FixedKeyword" Type="SyntaxToken">

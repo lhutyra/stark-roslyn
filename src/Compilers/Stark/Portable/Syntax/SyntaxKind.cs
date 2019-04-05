@@ -40,6 +40,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         SlashToken = 8221,
         DotDotToken = 8222,
         AtToken = 8223,
+        HashILToken = 8224,
 
         // additional xml tokens
         SlashGreaterThanToken = 8232, // xml empty element end
@@ -506,6 +507,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         // statements that didn't fit above
         LocalFunctionStatement = 8830,
+        InlineILStatement = 8831,
 
         // declarations
         CompilationUnit = 8840,

@@ -1306,6 +1306,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "?";
                 case SyntaxKind.HashToken:
                     return "#";
+                case SyntaxKind.HashILToken:
+                    return "#il";
                 case SyntaxKind.SlashToken:
                     return "/";
                 case SyntaxKind.SlashGreaterThanToken:

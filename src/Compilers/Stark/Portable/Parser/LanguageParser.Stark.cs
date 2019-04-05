@@ -5317,7 +5317,7 @@ tryAgain:
             ParseTypeMode mode = ParseTypeMode.Normal,
             bool expectSizes = false)
         {
-            if (mode == ParseTypeMode.Normal && !expectSizes && (this.CurrentToken.Kind == SyntaxKind.RefKeyword || this.CurrentToken.Kind == SyntaxKind.InKeyword))
+            if (this.CurrentToken.Kind == SyntaxKind.RefKeyword || this.CurrentToken.Kind == SyntaxKind.InKeyword)
             {
                 var refOrInKeyword = this.EatToken();
                 var type = ParseTypeCore(mode, expectSizes);
@@ -5834,6 +5834,8 @@ tryAgain:
         {
             switch (this.CurrentToken.Kind)
             {
+                case SyntaxKind.HashILToken:
+                    return this.ParseInlineILStatement();
                 case SyntaxKind.FixedKeyword:
                     return this.ParseFixedStatement();
                 case SyntaxKind.BreakKeyword:
@@ -6255,6 +6257,7 @@ tryAgain:
                 case SyntaxKind.ConstKeyword:
                 case SyntaxKind.VarKeyword:
                 case SyntaxKind.LetKeyword:
+                case SyntaxKind.HashILToken:
                     return true;
 
                 case SyntaxKind.IdentifierToken:
@@ -6277,6 +6280,76 @@ tryAgain:
                     return IsPredefinedType(tk)
                         || IsPossibleExpression();
             }
+        }
+
+        private InlineILStatementSyntax ParseInlineILStatement()
+        {
+            var ilDirective = this.EatToken(SyntaxKind.HashILToken);
+
+            SyntaxListBuilder<SyntaxToken> list = default(SyntaxListBuilder<SyntaxToken>);
+            try
+            {
+                list = _pool.Allocate<SyntaxToken>();
+
+                // at least we expect an identifier
+
+                if (CurrentToken.Kind == SyntaxKind.SizeOfKeyword)
+                {
+                    list.Add(EatToken(SyntaxKind.SizeOfKeyword));
+                }
+                else
+                {
+                    list.Add(EatToken(SyntaxKind.IdentifierToken));
+                }
+
+                if (IsDotLikeToken(CurrentToken))
+                {
+                    list.Add(EatToken());
+                    while (CurrentToken.Kind == SyntaxKind.IdentifierToken
+                           || SyntaxFacts.IsPredefinedType(CurrentToken.Kind)
+                           || CurrentToken.Kind == SyntaxKind.NumericLiteralToken)
+                    {
+                        list.Add(EatToken());
+                        if (IsDotLikeToken(CurrentToken))
+                        {
+                            list.Add(EatToken());
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                var trailingToken = list[list.Count - 1];
+                ExpressionSyntax argument = null;
+                if ((!trailingToken.HasTrailingTrivia || !HasEolInTrivias(trailingToken.GetTrailingTriviaCore())) && CurrentToken.Kind != SyntaxKind.EndOfFileToken)
+                {
+                    argument = ParseSubExpression(Precedence.Expression);
+                }
+
+                SyntaxToken eosToken;
+                if (argument == null)
+                {
+                    eosToken = this.EatEos(ref trailingToken);
+                    list[list.Count - 1] = trailingToken;
+                }
+                else
+                {
+                    eosToken = this.EatEos(ref argument);
+                }
+
+                return _syntaxFactory.InlineILStatement(ilDirective, list.ToList(), argument, eosToken);
+            }
+            finally
+            {
+                _pool.Free(list);
+            }
+        }
+
+        private static bool IsDotLikeToken(SyntaxToken token)
+        {
+            // .1 is parsed as a float so we need to process it on the next loop
+            return token.Kind == SyntaxKind.DotToken || token.Kind == SyntaxKind.NumericLiteralToken && token.Text != null && token.Text.StartsWith(".");
         }
 
         private FixedStatementSyntax ParseFixedStatement()
@@ -8098,7 +8171,8 @@ tryAgain:
                     }
                     else
                     {
-                        expr = this.CreateMissingIdentifierName();
+                        // Eat the token if it is invalid
+                        expr = CreateMissingIdentifierName();
 
                         if (tk == SyntaxKind.EndOfFileToken)
                         {
@@ -8106,6 +8180,13 @@ tryAgain:
                         }
                         else
                         {
+                            // We skip the invalid token
+                            var skippedToken = EatToken();
+                            var builder = new SyntaxListBuilder(1);
+                            builder.Add(skippedToken);
+                            var fileAsTrivia = _syntaxFactory.SkippedTokensTrivia(builder.ToList<SyntaxToken>());
+                            expr = AddLeadingSkippedSyntax(expr, fileAsTrivia);
+
                             expr = this.AddError(expr, ErrorCode.ERR_InvalidExprTerm, SyntaxFacts.GetText(tk));
                         }
                     }

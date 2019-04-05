@@ -1148,6 +1148,24 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             return EatToken(SyntaxKind.SemicolonToken);
         }
 
+        protected static bool HasEolInTrivias(GreenNode trivias)
+        {
+            if (trivias is SyntaxTrivia oneTrivia && oneTrivia.Kind == SyntaxKind.EndOfLineTrivia)
+            {
+                return true;
+            }
+            for (int i = 0; i < trivias.SlotCount; i++)
+            {
+                var slot = trivias.GetSlot(i);
+                if (slot is SyntaxTrivia trivia && trivia.Kind == SyntaxKind.EndOfLineTrivia)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static SyntaxTrivia FindEolAndSplit(GreenNode trivias, out GreenNode leftTrivia, out GreenNode rightTrivia)
         {
             leftTrivia = null;

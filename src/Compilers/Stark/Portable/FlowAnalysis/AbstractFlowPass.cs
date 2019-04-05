@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Text;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using StarkPlatform.CodeAnalysis.Stark.Syntax;
@@ -2858,6 +2860,30 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
 
             Join(ref this.State, ref savedState);
+            return null;
+        }
+
+        public override BoundNode VisitInlineILStatement(BoundInlineILStatement node)
+        {
+            if (node.Instruction.OpCode == ILOpCode.Ret)
+            {
+                SetUnreachable();               
+            }
+            else if (node.Instruction.OpCode.IsBranch())
+            {
+                var label = node.Argument as BoundLabel;
+                if (label != null)
+                {
+                    PendingBranches.Add(new PendingBranch(node, this.State, label.Label));
+                    SetUnreachable();
+                }
+                else
+                {
+                    // TODO: handle other cases
+                    throw new NotImplementedException($"The flow pass analysis for BoundInlineILStatement is not fully implemented for opcode {node.Instruction.OpCode}");
+                }
+            }
+            
             return null;
         }
 

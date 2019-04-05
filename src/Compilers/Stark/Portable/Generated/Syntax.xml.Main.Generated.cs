@@ -688,6 +688,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
+    /// <summary>Called when the visitor visits a InlineILStatementSyntax node.</summary>
+    public virtual TResult VisitInlineILStatement(InlineILStatementSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     /// <summary>Called when the visitor visits a FixedStatementSyntax node.</summary>
     public virtual TResult VisitFixedStatement(FixedStatementSyntax node)
     {
@@ -1989,6 +1995,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
     /// <summary>Called when the visitor visits a UsingStatementSyntax node.</summary>
     public virtual void VisitUsingStatement(UsingStatementSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    /// <summary>Called when the visitor visits a InlineILStatementSyntax node.</summary>
+    public virtual void VisitInlineILStatement(InlineILStatementSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -3516,6 +3528,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
       var closeParenToken = this.VisitToken(node.CloseParenToken);
       var statement = (StatementSyntax)this.Visit(node.Statement);
       return node.Update(awaitKeyword, usingKeyword, openParenToken, declaration, expression, closeParenToken, statement);
+    }
+
+    public override SyntaxNode VisitInlineILStatement(InlineILStatementSyntax node)
+    {
+      var hashILToken = this.VisitToken(node.HashILToken);
+      var instruction = this.VisitList(node.Instruction);
+      var argument = (ExpressionSyntax)this.Visit(node.Argument);
+      var eosToken = this.VisitToken(node.EosToken);
+      return node.Update(hashILToken, instruction, argument, eosToken);
     }
 
     public override SyntaxNode VisitFixedStatement(FixedStatementSyntax node)
@@ -7913,6 +7934,41 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public static UsingStatementSyntax UsingStatement(StatementSyntax statement)
     {
       return SyntaxFactory.UsingStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.UsingKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), default(VariableDeclarationSyntax), default(ExpressionSyntax), SyntaxFactory.Token(SyntaxKind.CloseParenToken), statement);
+    }
+
+    /// <summary>Creates a new InlineILStatementSyntax instance.</summary>
+    public static InlineILStatementSyntax InlineILStatement(SyntaxToken hashILToken, SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    {
+      switch (hashILToken.Kind())
+      {
+        case SyntaxKind.HashILToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(hashILToken));
+      }
+      switch (eosToken.Kind())
+      {
+        case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(eosToken));
+      }
+      return (InlineILStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.InlineILStatement((Syntax.InternalSyntax.SyntaxToken)hashILToken.Node, instruction.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), argument == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)argument.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+    }
+
+
+    /// <summary>Creates a new InlineILStatementSyntax instance.</summary>
+    public static InlineILStatementSyntax InlineILStatement(SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    {
+      return SyntaxFactory.InlineILStatement(SyntaxFactory.Token(SyntaxKind.HashILToken), instruction, argument, eosToken);
+    }
+
+    /// <summary>Creates a new InlineILStatementSyntax instance.</summary>
+    public static InlineILStatementSyntax InlineILStatement(SyntaxTokenList instruction = default(SyntaxTokenList))
+    {
+      return SyntaxFactory.InlineILStatement(SyntaxFactory.Token(SyntaxKind.HashILToken), instruction, default(ExpressionSyntax), default(SyntaxToken));
     }
 
     /// <summary>Creates a new FixedStatementSyntax instance.</summary>

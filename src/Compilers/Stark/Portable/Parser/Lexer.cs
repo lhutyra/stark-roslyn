@@ -434,6 +434,20 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             character = TextWindow.PeekChar();
             switch (character)
             {
+                case '#':
+                    if (ScanForHashIl())
+                    {
+                        TextWindow.AdvanceChar(); // #
+                        TextWindow.AdvanceChar(); // i
+                        TextWindow.AdvanceChar(); // l
+                        info.Kind = SyntaxKind.HashILToken;
+                    }
+                    else
+                    {
+                        goto default;
+                    }
+                    break;
+
                 case '\"':
                 case '\'':
                     this.ScanStringLiteral(ref info);
@@ -2375,6 +2389,13 @@ LoopExit:
                     case '#':
                         if (_allowPreprocessorDirectives)
                         {
+                            // If we have the directive #il 
+                            // We will parse it as a syntax token instead and not as a trivia
+                            if (ScanForHashIl())
+                            {
+                                return;
+                            }
+
                             this.LexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, ref triviaList);
                             break;
                         }
@@ -2406,6 +2427,11 @@ LoopExit:
                         return;
                 }
             }
+        }
+
+        private bool ScanForHashIl()
+        {
+            return TextWindow.PeekChar(1) == 'i' && TextWindow.PeekChar(2) == 'l' && SyntaxFacts.IsWhitespace(TextWindow.PeekChar(3));
         }
 
         // All conflict markers consist of the same character repeated seven times.  If it is

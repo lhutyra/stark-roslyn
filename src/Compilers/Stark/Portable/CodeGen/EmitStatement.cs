@@ -82,6 +82,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
                     EmitNoOpStatement((BoundNoOpStatement)statement);
                     break;
 
+                case BoundKind.InlineILStatement:
+                    EmitInlineILStatement((BoundInlineILStatement)statement);
+                    break;
+
                 default:
                     // Code gen should not be invoked if there are errors.
                     throw ExceptionUtilities.UnexpectedValue(statement.Kind);
@@ -90,7 +94,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
 #if DEBUG
             if (_stackLocals == null || _stackLocals.Count == 0)
             {
-                _builder.AssertStackEmpty();
+                if (statement.Kind != BoundKind.InlineILStatement)
+                {
+                    _builder.AssertStackEmpty();
+                }
             }
 #endif
 

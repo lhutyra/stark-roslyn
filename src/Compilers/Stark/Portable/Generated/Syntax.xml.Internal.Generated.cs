@@ -16783,6 +16783,191 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
+  internal sealed partial class InlineILStatementSyntax : StatementSyntax
+  {
+    internal readonly SyntaxToken hashILToken;
+    internal readonly GreenNode instruction;
+    internal readonly ExpressionSyntax argument;
+    internal readonly SyntaxToken eosToken;
+
+    internal InlineILStatementSyntax(SyntaxKind kind, SyntaxToken hashILToken, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 4;
+        this.AdjustFlagsAndWidth(hashILToken);
+        this.hashILToken = hashILToken;
+        if (instruction != null)
+        {
+            this.AdjustFlagsAndWidth(instruction);
+            this.instruction = instruction;
+        }
+        if (argument != null)
+        {
+            this.AdjustFlagsAndWidth(argument);
+            this.argument = argument;
+        }
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
+    }
+
+
+    internal InlineILStatementSyntax(SyntaxKind kind, SyntaxToken hashILToken, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 4;
+        this.AdjustFlagsAndWidth(hashILToken);
+        this.hashILToken = hashILToken;
+        if (instruction != null)
+        {
+            this.AdjustFlagsAndWidth(instruction);
+            this.instruction = instruction;
+        }
+        if (argument != null)
+        {
+            this.AdjustFlagsAndWidth(argument);
+            this.argument = argument;
+        }
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
+    }
+
+
+    internal InlineILStatementSyntax(SyntaxKind kind, SyntaxToken hashILToken, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+        : base(kind)
+    {
+        this.SlotCount = 4;
+        this.AdjustFlagsAndWidth(hashILToken);
+        this.hashILToken = hashILToken;
+        if (instruction != null)
+        {
+            this.AdjustFlagsAndWidth(instruction);
+            this.instruction = instruction;
+        }
+        if (argument != null)
+        {
+            this.AdjustFlagsAndWidth(argument);
+            this.argument = argument;
+        }
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
+    }
+
+    public SyntaxToken HashILToken { get { return this.hashILToken; } }
+    /// <summary>Gets the tokens identifying an IL instruction.</summary>
+    public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Instruction { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.instruction); } }
+    public ExpressionSyntax Argument { get { return this.argument; } }
+    /// <summary>Gets the optional semicolon token.</summary>
+    public SyntaxToken EosToken { get { return this.eosToken; } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.hashILToken;
+            case 1: return this.instruction;
+            case 2: return this.argument;
+            case 3: return this.eosToken;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.InlineILStatementSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitInlineILStatement(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitInlineILStatement(this);
+    }
+
+    public InlineILStatementSyntax Update(SyntaxToken hashILToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    {
+        if (hashILToken != this.HashILToken || instruction != this.Instruction || argument != this.Argument || eosToken != this.EosToken)
+        {
+            var newNode = SyntaxFactory.InlineILStatement(hashILToken, instruction, argument, eosToken);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new InlineILStatementSyntax(this.Kind, this.hashILToken, this.instruction, this.argument, this.eosToken, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new InlineILStatementSyntax(this.Kind, this.hashILToken, this.instruction, this.argument, this.eosToken, GetDiagnostics(), annotations);
+    }
+
+    internal InlineILStatementSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 4;
+      var hashILToken = (SyntaxToken)reader.ReadValue();
+      if (hashILToken != null)
+      {
+         AdjustFlagsAndWidth(hashILToken);
+         this.hashILToken = hashILToken;
+      }
+      var instruction = (GreenNode)reader.ReadValue();
+      if (instruction != null)
+      {
+         AdjustFlagsAndWidth(instruction);
+         this.instruction = instruction;
+      }
+      var argument = (ExpressionSyntax)reader.ReadValue();
+      if (argument != null)
+      {
+         AdjustFlagsAndWidth(argument);
+         this.argument = argument;
+      }
+      var eosToken = (SyntaxToken)reader.ReadValue();
+      if (eosToken != null)
+      {
+         AdjustFlagsAndWidth(eosToken);
+         this.eosToken = eosToken;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.hashILToken);
+      writer.WriteValue(this.instruction);
+      writer.WriteValue(this.argument);
+      writer.WriteValue(this.eosToken);
+    }
+
+    static InlineILStatementSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(InlineILStatementSyntax), r => new InlineILStatementSyntax(r));
+    }
+  }
+
   internal sealed partial class FixedStatementSyntax : StatementSyntax
   {
     internal readonly SyntaxToken fixedKeyword;
@@ -36633,6 +36818,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
+    public virtual TResult VisitInlineILStatement(InlineILStatementSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     public virtual TResult VisitFixedStatement(FixedStatementSyntax node)
     {
       return this.DefaultVisit(node);
@@ -37718,6 +37908,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
     public virtual void VisitUsingStatement(UsingStatementSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    public virtual void VisitInlineILStatement(InlineILStatementSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -39140,6 +39335,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       var closeParenToken = (SyntaxToken)this.Visit(node.CloseParenToken);
       var statement = (StatementSyntax)this.Visit(node.Statement);
       return node.Update(awaitKeyword, usingKeyword, openParenToken, declaration, expression, closeParenToken, statement);
+    }
+
+    public override CSharpSyntaxNode VisitInlineILStatement(InlineILStatementSyntax node)
+    {
+      var hashILToken = (SyntaxToken)this.Visit(node.HashILToken);
+      var instruction = this.VisitList(node.Instruction);
+      var argument = (ExpressionSyntax)this.Visit(node.Argument);
+      var eosToken = (SyntaxToken)this.Visit(node.EosToken);
+      return node.Update(hashILToken, instruction, argument, eosToken);
     }
 
     public override CSharpSyntaxNode VisitFixedStatement(FixedStatementSyntax node)
@@ -43853,6 +44057,35 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #endif
 
       return new UsingStatementSyntax(SyntaxKind.UsingStatement, awaitKeyword, usingKeyword, openParenToken, declaration, expression, closeParenToken, statement, this.context);
+    }
+
+    public InlineILStatementSyntax InlineILStatement(SyntaxToken hashILToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    {
+#if DEBUG
+      if (hashILToken == null)
+        throw new ArgumentNullException(nameof(hashILToken));
+      switch (hashILToken.Kind)
+      {
+        case SyntaxKind.HashILToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(hashILToken));
+      }
+      if (eosToken != null)
+      {
+      switch (eosToken.Kind)
+      {
+        case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(eosToken));
+      }
+      }
+#endif
+
+      return new InlineILStatementSyntax(SyntaxKind.InlineILStatement, hashILToken, instruction.Node, argument, eosToken, this.context);
     }
 
     public FixedStatementSyntax FixedStatement(SyntaxToken fixedKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -51308,6 +51541,35 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new UsingStatementSyntax(SyntaxKind.UsingStatement, awaitKeyword, usingKeyword, openParenToken, declaration, expression, closeParenToken, statement);
     }
 
+    public static InlineILStatementSyntax InlineILStatement(SyntaxToken hashILToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    {
+#if DEBUG
+      if (hashILToken == null)
+        throw new ArgumentNullException(nameof(hashILToken));
+      switch (hashILToken.Kind)
+      {
+        case SyntaxKind.HashILToken:
+          break;
+        default:
+          throw new ArgumentException(nameof(hashILToken));
+      }
+      if (eosToken != null)
+      {
+      switch (eosToken.Kind)
+      {
+        case SyntaxKind.SemicolonToken:
+        case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(eosToken));
+      }
+      }
+#endif
+
+      return new InlineILStatementSyntax(SyntaxKind.InlineILStatement, hashILToken, instruction.Node, argument, eosToken);
+    }
+
     public static FixedStatementSyntax FixedStatement(SyntaxToken fixedKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, SyntaxToken closeParenToken, StatementSyntax statement)
     {
 #if DEBUG
@@ -55147,6 +55409,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(ForStatementSyntax),
            typeof(ForEachVariableStatementSyntax),
            typeof(UsingStatementSyntax),
+           typeof(InlineILStatementSyntax),
            typeof(FixedStatementSyntax),
            typeof(CheckedStatementSyntax),
            typeof(UnsafeStatementSyntax),
