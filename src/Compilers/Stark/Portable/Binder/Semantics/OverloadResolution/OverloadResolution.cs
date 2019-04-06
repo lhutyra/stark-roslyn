@@ -406,6 +406,36 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return false;
         }
 
+
+        private static readonly ObjectPool<List<int>> _poolListInt = new ObjectPool<List<int>>(() => new List<int>());
+
+        private static bool TryGetReturnKindAndType<TMember>(TMember member, out TypeSymbolWithAnnotations returnType, out RefKind returnRefKind) where TMember : Symbol
+        {
+            returnType = default;
+            returnRefKind = RefKind.None;
+
+            var method = member as MethodSymbol;
+            if (method == null)
+            {
+                var property = member as PropertySymbol;
+                if (property != null)
+                {
+                    returnType = property.Type;
+                    returnRefKind = property.RefKind;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                returnType = method.ReturnType;
+                returnRefKind = method.RefKind;
+            }
+            return true;
+        }
+
         /// <summary>
         /// Remove candidates to a delegate conversion where the method's return ref kind or return type is wrong.
         /// </summary>
@@ -416,60 +446,83 @@ namespace StarkPlatform.CodeAnalysis.Stark
         private void RemoveConversionsWithWrongReturnTypeOrRefKind<TMember>(
             ArrayBuilder<MemberResolutionResult<TMember>> results,
             ref HashSet<DiagnosticInfo> useSiteDiagnostics,
-            RefKind? returnRefKind,
+            RefKind returnRefKind,
             TypeSymbol returnType) where TMember : Symbol
         {
-            // When the feature 'ImprovedOverloadCandidates' is enabled, then a delegate conversion overload resolution
-            // rejects candidates that have the wrong return ref kind or return type.
+            // Don't try to match more if there is already a single match (or none)
+            if (results.Count <= 1) return;
 
-            // Delegate conversions apply to method in a method group, not to properties in a "property group".
-
-            for (int f = 0; f < results.Count; ++f)
+            var matchesForRefKindNone = _poolListInt.Allocate();
+            try
             {
-                var result = results[f];
-                if (!result.Result.IsValid)
+                for (int f = 0; f < results.Count; ++f)
                 {
-                    continue;
-                }
+                    var result = results[f];
 
-                TypeSymbolWithAnnotations methodReturnType;
-                RefKind methodReturnRefKind;
-                {
-                    var method = result.Member as MethodSymbol;
-                    if (method == null)
+                    TypeSymbolWithAnnotations methodReturnType;
+                    RefKind methodReturnRefKind;
+                    if (!TryGetReturnKindAndType(result.Member, out methodReturnType, out methodReturnRefKind))
                     {
-                        var property = result.Member as PropertySymbol;
-                        if (property != null)
-                        {
-                            methodReturnType = property.Type;
-                            methodReturnRefKind = property.RefKind;
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                        continue;
+                    }
+
+                    bool returnsMatch =
+                        (object)returnType == null ||
+                        methodReturnType.TypeSymbol.Equals(returnType, TypeCompareKind.AllIgnoreOptions) ||
+                        returnRefKind == RefKind.None && Conversions.HasIdentityOrImplicitReferenceConversion(methodReturnType.TypeSymbol, returnType, ref useSiteDiagnostics);
+                    if (!returnsMatch)
+                    {
+                        results[f] = new MemberResolutionResult<TMember>(result.Member, result.LeastOverriddenMember, MemberAnalysisResult.WrongReturnType());
                     }
                     else
                     {
-                        methodReturnType = method.ReturnType;
-                        methodReturnRefKind = method.RefKind;
+                        bool isRefKindValid = false;
+                        switch (returnRefKind)
+                        {
+                            // RefKind.None: no ref, ref return
+                            case RefKind.None:
+                                isRefKindValid = methodReturnRefKind == RefKind.None || methodReturnRefKind == RefKind.Ref;
+                                if (isRefKindValid)
+                                {
+                                    matchesForRefKindNone.Add(f);
+                                }
+                                break;
+                            // RefKind.Ref: ref only
+                            case RefKind.Ref:
+                            case RefKind.In:
+                                isRefKindValid = methodReturnRefKind == returnRefKind;
+                                break;
+                            default:
+                                throw ExceptionUtilities.UnexpectedValue(returnRefKind);
+                        }
+
+                        if (!isRefKindValid)
+                        {
+                            results[f] = new MemberResolutionResult<TMember>(result.Member, result.LeastOverriddenMember, MemberAnalysisResult.WrongRefKind());
+                        }
                     }
                 }
 
-                bool returnsMatch =
-                    (object)returnType == null ||
-                    methodReturnType.TypeSymbol.Equals(returnType, TypeCompareKind.AllIgnoreOptions) ||
-                    returnRefKind == RefKind.None && Conversions.HasIdentityOrImplicitReferenceConversion(methodReturnType.TypeSymbol, returnType, ref useSiteDiagnostics);
-                if (!returnsMatch)
+                // If we match none to ref or none, prefer none
+                if (matchesForRefKindNone.Count > 1)
                 {
-                    results[f] = new MemberResolutionResult<TMember>(
-                        result.Member, result.LeastOverriddenMember, MemberAnalysisResult.WrongReturnType());
+                    // TODO: It might be a bit overkill to use a list if we are supposed to have only ref+none in the list...
+                    foreach (var resultIndex in matchesForRefKindNone)
+                    {
+                        var result = results[resultIndex];
+                        var check = TryGetReturnKindAndType(result.Member, out _, out RefKind methodReturnRefKind);
+                        Debug.Assert(check);
+                        if (methodReturnRefKind == RefKind.Ref)
+                        {
+                            results[resultIndex] = new MemberResolutionResult<TMember>(result.Member, result.LeastOverriddenMember, MemberAnalysisResult.Worse());
+                        }
+                    }
                 }
-                else if (methodReturnRefKind != returnRefKind && !(methodReturnRefKind == RefKind.In && returnRefKind == RefKind.None))
-                {
-                    results[f] = new MemberResolutionResult<TMember>(
-                        result.Member, result.LeastOverriddenMember, MemberAnalysisResult.WrongRefKind());
-                }
+            }
+            finally
+            {
+                matchesForRefKindNone.Clear();
+                _poolListInt.Free(matchesForRefKindNone);
             }
         }
 
