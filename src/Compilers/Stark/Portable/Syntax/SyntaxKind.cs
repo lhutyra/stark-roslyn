@@ -40,7 +40,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         SlashToken = 8221,
         DotDotToken = 8222,
         AtToken = 8223,
-        HashILToken = 8224,
 
         // additional xml tokens
         SlashGreaterThanToken = 8232, // xml empty element end
@@ -209,7 +208,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         NameOfKeyword = 8434,
         AsyncKeyword = 8435,
         AwaitKeyword = 8436,
-        WhenKeyword = 8437,
+        IlKeyword = 8437,
+        WhenKeyword = 8438,   // Must be last of contextual keyword
+
         /// when adding a contextual keyword following functions must be adapted:
         /// <see cref="SyntaxFacts.GetContextualKeywordKinds"/>
         /// <see cref="SyntaxFacts.IsContextualKeyword(SyntaxKind)"/>

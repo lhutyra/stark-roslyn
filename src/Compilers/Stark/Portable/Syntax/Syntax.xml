@@ -1959,7 +1959,7 @@
         <Kind Name="UsingKeyword"/>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2025,7 +2025,7 @@
   <Node Name="ExpressionStatementSyntax" Base="StatementSyntax">
     <Kind Name="ExpressionStatement"/>
     <Field Name="Expression" Type="ExpressionSyntax"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2033,7 +2033,7 @@
 
   <Node Name="EmptyStatementSyntax" Base="StatementSyntax">
     <Kind Name="EmptyStatement"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2088,7 +2088,7 @@
         </summary>
       </PropertyComment>
     </Field>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
       <PropertyComment>
@@ -2113,7 +2113,7 @@
     <Field Name="BreakKeyword" Type="SyntaxToken">
       <Kind Name="BreakKeyword"/>
     </Field>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2123,7 +2123,7 @@
     <Field Name="ContinueKeyword" Type="SyntaxToken">
       <Kind Name="ContinueKeyword"/>
     </Field>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2134,7 +2134,7 @@
       <Kind Name="ReturnKeyword"/>
     </Field>
     <Field Name="Expression" Type="ExpressionSyntax" Optional="true"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2145,7 +2145,7 @@
       <Kind Name="ThrowKeyword"/>
     </Field>
     <Field Name="Expression" Type="ExpressionSyntax" Optional="true"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2161,7 +2161,7 @@
       <Kind Name="BreakKeyword"/>
     </Field>
     <Field Name="Expression" Type="ExpressionSyntax" Optional="true"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2196,7 +2196,7 @@
     <Field Name="CloseParenToken" Type="SyntaxToken">
       <Kind Name="CloseParenToken"/>
     </Field>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -2294,9 +2294,6 @@
 
   <Node Name="InlineILStatementSyntax" Base="StatementSyntax">
       <Kind Name="InlineILStatement"/>
-      <Field Name="HashILToken" Type="SyntaxToken">
-          <Kind Name="HashILToken"/>
-      </Field>
       <Field Name="Instruction" Type="SyntaxList&lt;SyntaxToken&gt;">
           <PropertyComment>
               <summary>Gets the tokens identifying an IL instruction.</summary>
@@ -2339,6 +2336,9 @@
     <Kind Name="UnsafeStatement"/>
     <Field Name="UnsafeKeyword" Type="SyntaxToken">
       <Kind Name="UnsafeKeyword"/>
+    </Field>
+    <Field Name="IlKeyword" Type="SyntaxToken" Optional="true">
+        <Kind Name="IlKeyword"/>
     </Field>
     <Field Name="Block" Type="BlockSyntax"/>
   </Node>
@@ -2696,7 +2696,7 @@
       </PropertyComment>
       <Kind Name="IdentifierToken"/>
     </Field>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
       <PropertyComment>
@@ -2720,7 +2720,7 @@
     <Field Name="StaticKeyword" Type="SyntaxToken" Optional="true"/>
     <Field Name="Alias" Type="NameEqualsSyntax" Optional="true"/>
     <Field Name="Name" Type="NameSyntax"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -3161,7 +3161,7 @@
         <summary>Gets the constraint clause list.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <PropertyComment>
         <summary>Gets the semicolon token.</summary>
       </PropertyComment>
@@ -3387,7 +3387,7 @@
       </PropertyComment>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax"/>
-    <Field Name="EosToken" Type="SyntaxToken">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -3405,7 +3405,7 @@
       </PropertyComment>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax" Override="true"/>
-    <Field Name="EosToken" Type="SyntaxToken" Override="true">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>
@@ -3426,7 +3426,7 @@
       <Kind Name="EventKeyword"/>
     </Field>
     <Field Name="Declaration" Type="VariableDeclarationSyntax" Override="true"/>
-    <Field Name="EosToken" Type="SyntaxToken" Override="true">
+    <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
       <Kind Name="SemicolonToken"/>
       <Kind Name="EndOfLineTrivia"/>
     </Field>

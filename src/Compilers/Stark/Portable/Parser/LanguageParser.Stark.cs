@@ -1875,7 +1875,7 @@ tryAgain:
                     switch (this.CurrentToken.Kind)
                     {
                         case SyntaxKind.UnsafeKeyword:
-                            if (this.PeekToken(1).Kind == SyntaxKind.OpenBraceToken)
+                            if (IsPossibleUnsafeStatement())
                             {
                                 return _syntaxFactory.GlobalStatement(ParseUnsafeStatement());
                             }
@@ -5834,8 +5834,6 @@ tryAgain:
         {
             switch (this.CurrentToken.Kind)
             {
-                case SyntaxKind.HashILToken:
-                    return this.ParseInlineILStatement();
                 case SyntaxKind.FixedKeyword:
                     return this.ParseFixedStatement();
                 case SyntaxKind.BreakKeyword:
@@ -5948,7 +5946,13 @@ tryAgain:
 
         private bool IsPossibleUnsafeStatement()
         {
-            return this.PeekToken(1).Kind == SyntaxKind.OpenBraceToken;
+            // unsafe {
+            // unsafe il {
+            var nextToken = this.PeekToken(1);
+            var nextTokenKind = nextToken.Kind;
+            return nextTokenKind == SyntaxKind.OpenBraceToken ||
+                   (nextToken.ContextualKind == SyntaxKind.IlKeyword &&
+                    this.PeekToken(2).Kind == SyntaxKind.OpenBraceToken);
         }
 
         private bool IsPossibleYieldStatement()
@@ -6257,7 +6261,6 @@ tryAgain:
                 case SyntaxKind.ConstKeyword:
                 case SyntaxKind.VarKeyword:
                 case SyntaxKind.LetKeyword:
-                case SyntaxKind.HashILToken:
                     return true;
 
                 case SyntaxKind.IdentifierToken:
@@ -6282,17 +6285,25 @@ tryAgain:
             }
         }
 
+        private bool HasEolInTrailingTrivias(SyntaxListBuilder<SyntaxToken> tokens)
+        {
+            if (tokens.Count > 0)
+            {
+                return HasEolInTrailingTrivias(tokens[tokens.Count - 1]);
+            }
+
+            return false;
+        }
+
         private InlineILStatementSyntax ParseInlineILStatement()
         {
-            var ilDirective = this.EatToken(SyntaxKind.HashILToken);
-
-            SyntaxListBuilder<SyntaxToken> list = default(SyntaxListBuilder<SyntaxToken>);
+            var list = default(SyntaxListBuilder<SyntaxToken>);
             try
             {
                 list = _pool.Allocate<SyntaxToken>();
 
-                // at least we expect an identifier
-
+                // As we are going to eat any kind of identifiers dot...etc.
+                // We are making sure that we break between EOL or semicolon
                 if (CurrentToken.Kind == SyntaxKind.SizeOfKeyword)
                 {
                     list.Add(EatToken(SyntaxKind.SizeOfKeyword));
@@ -6302,17 +6313,23 @@ tryAgain:
                     list.Add(EatToken(SyntaxKind.IdentifierToken));
                 }
 
-                if (IsDotLikeToken(CurrentToken))
+                bool hasEol = HasEolInTrailingTrivias(list);
+
+                if (!hasEol && IsDotLikeToken(CurrentToken))
                 {
                     list.Add(EatToken());
-                    while (CurrentToken.Kind == SyntaxKind.IdentifierToken
+                    hasEol = HasEolInTrailingTrivias(list);
+
+                    while (!hasEol && (CurrentToken.Kind == SyntaxKind.IdentifierToken
                            || SyntaxFacts.IsPredefinedType(CurrentToken.Kind)
-                           || CurrentToken.Kind == SyntaxKind.NumericLiteralToken)
+                           || CurrentToken.Kind == SyntaxKind.NumericLiteralToken))
                     {
                         list.Add(EatToken());
-                        if (IsDotLikeToken(CurrentToken))
+                        hasEol = HasEolInTrailingTrivias(list);
+                        if (!hasEol && IsDotLikeToken(CurrentToken))
                         {
                             list.Add(EatToken());
+                            hasEol = HasEolInTrailingTrivias(list);
                         }
                         else
                         {
@@ -6322,7 +6339,7 @@ tryAgain:
                 }
                 var trailingToken = list[list.Count - 1];
                 ExpressionSyntax argument = null;
-                if ((!trailingToken.HasTrailingTrivia || !HasEolInTrivias(trailingToken.GetTrailingTriviaCore())) && CurrentToken.Kind != SyntaxKind.EndOfFileToken)
+                if (!hasEol && CurrentToken.Kind != SyntaxKind.CloseBraceToken)
                 {
                     argument = ParseSubExpression(Precedence.Expression);
                 }
@@ -6338,7 +6355,7 @@ tryAgain:
                     eosToken = this.EatEos(ref argument);
                 }
 
-                return _syntaxFactory.InlineILStatement(ilDirective, list.ToList(), argument, eosToken);
+                return _syntaxFactory.InlineILStatement(list.ToList(), argument, eosToken);
             }
             finally
             {
@@ -7099,8 +7116,51 @@ tryAgain:
         {
             Debug.Assert(this.CurrentToken.Kind == SyntaxKind.UnsafeKeyword);
             var @unsafe = this.EatToken(SyntaxKind.UnsafeKeyword);
-            var block = this.ParseBlock();
-            return _syntaxFactory.UnsafeStatement(@unsafe, block);
+
+            SyntaxToken il = null;
+            if (CurrentToken.ContextualKind == SyntaxKind.IlKeyword)
+            {
+                il = ConvertToKeyword(EatToken());
+            }
+
+            var block = il != null ? ParseILBlock() : this.ParseBlock();
+            return _syntaxFactory.UnsafeStatement(@unsafe, il, block);
+        }
+
+        private BlockSyntax ParseILBlock()
+        {
+            // There's a special error code for a missing token after an accessor keyword
+            var openBrace = this.EatToken(SyntaxKind.OpenBraceToken);
+
+            var statements = _pool.Allocate<StatementSyntax>();
+            try
+            {
+                while (this.CurrentToken.Kind != SyntaxKind.CloseBraceToken && this.CurrentToken.Kind != SyntaxKind.EndOfFileToken)
+                {
+                    var inlineILStatementSyntax = this.ParseInlineILStatement();
+                    statements.Add(inlineILStatementSyntax);
+                }
+
+                //GreenNode trailingTrivia;
+                //var action = this.SkipBadStatementListTokens(statements, SyntaxKind.CloseBraceToken, out trailingTrivia);
+                //if (trailingTrivia != null)
+                //{
+                //    previousNode = AddTrailingSkippedSyntax(previousNode, trailingTrivia);
+                //}
+
+                //if (action == PostSkipAction.Abort)
+                //{
+                //    break;
+                //}
+
+                var closeBrace = this.EatToken(SyntaxKind.CloseBraceToken);
+
+                return _syntaxFactory.Block(openBrace, statements.ToList(), closeBrace);
+            }
+            finally
+            {
+                _pool.Free(statements);
+            }
         }
 
         private UsingStatementSyntax ParseUsingStatement(SyntaxToken awaitTokenOpt = default)

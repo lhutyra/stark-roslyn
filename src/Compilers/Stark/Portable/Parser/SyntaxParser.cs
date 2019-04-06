@@ -1128,8 +1128,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
         private int CurrentTokenPosition => _firstToken + _tokenOffset;
 
-        protected SyntaxToken EatEos<T>(ref T node) where T : CSharpSyntaxNode
+        protected SyntaxToken EatEos<T>(ref T node, bool nullEosBeforeClosingBrace = true) where T : CSharpSyntaxNode
         {
+            if (nullEosBeforeClosingBrace && CurrentToken.Kind == SyntaxKind.CloseBraceToken)
+            {
+                return null;
+            }
+
             var trivias = node is SyntaxToken ? node.GetTrailingTriviaCore() : node.GetLastTerminal()?.GetTrailingTriviaCore();
             if (trivias != null)
             {
@@ -1146,6 +1151,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             }
 
             return EatToken(SyntaxKind.SemicolonToken);
+        }
+
+        protected static bool HasEolInTrailingTrivias(CSharpSyntaxNode token)
+        {
+            return token.HasTrailingTrivia && HasEolInTrivias(token.GetTrailingTriviaCore());
         }
 
         protected static bool HasEolInTrivias(GreenNode trivias)

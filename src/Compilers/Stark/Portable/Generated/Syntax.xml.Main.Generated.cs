@@ -3532,11 +3532,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
     public override SyntaxNode VisitInlineILStatement(InlineILStatementSyntax node)
     {
-      var hashILToken = this.VisitToken(node.HashILToken);
       var instruction = this.VisitList(node.Instruction);
       var argument = (ExpressionSyntax)this.Visit(node.Argument);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(hashILToken, instruction, argument, eosToken);
+      return node.Update(instruction, argument, eosToken);
     }
 
     public override SyntaxNode VisitFixedStatement(FixedStatementSyntax node)
@@ -3559,8 +3558,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public override SyntaxNode VisitUnsafeStatement(UnsafeStatementSyntax node)
     {
       var unsafeKeyword = this.VisitToken(node.UnsafeKeyword);
+      var ilKeyword = this.VisitToken(node.IlKeyword);
       var block = (BlockSyntax)this.Visit(node.Block);
-      return node.Update(unsafeKeyword, block);
+      return node.Update(unsafeKeyword, ilKeyword, block);
     }
 
     public override SyntaxNode VisitLockStatement(LockStatementSyntax node)
@@ -7233,6 +7233,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7245,6 +7246,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public static LocalDeclarationStatementSyntax LocalDeclarationStatement(VariableDeclarationSyntax declaration, SyntaxToken eosToken)
     {
       return SyntaxFactory.LocalDeclarationStatement(default(SyntaxToken), default(SyntaxToken), declaration, eosToken);
+    }
+
+    /// <summary>Creates a new LocalDeclarationStatementSyntax instance.</summary>
+    public static LocalDeclarationStatementSyntax LocalDeclarationStatement(VariableDeclarationSyntax declaration)
+    {
+      return SyntaxFactory.LocalDeclarationStatement(default(SyntaxToken), default(SyntaxToken), declaration, default(SyntaxToken));
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
@@ -7388,6 +7395,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7396,6 +7404,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
 
+    /// <summary>Creates a new ExpressionStatementSyntax instance.</summary>
+    public static ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression)
+    {
+      return SyntaxFactory.ExpressionStatement(expression, default(SyntaxToken));
+    }
+
     /// <summary>Creates a new EmptyStatementSyntax instance.</summary>
     public static EmptyStatementSyntax EmptyStatement(SyntaxToken eosToken)
     {
@@ -7403,6 +7417,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7410,6 +7425,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return (EmptyStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.EmptyStatement((Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
+
+    /// <summary>Creates a new EmptyStatementSyntax instance.</summary>
+    public static EmptyStatementSyntax EmptyStatement()
+    {
+      return SyntaxFactory.EmptyStatement(default(SyntaxToken));
+    }
 
     /// <summary>Creates a new LabeledStatementSyntax instance.</summary>
     public static LabeledStatementSyntax LabeledStatement(SyntaxToken identifier, SyntaxToken colonToken, StatementSyntax statement)
@@ -7478,6 +7499,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7493,9 +7515,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new GotoStatementSyntax instance.</summary>
-    public static GotoStatementSyntax GotoStatement(SyntaxKind kind, SyntaxToken eosToken)
+    public static GotoStatementSyntax GotoStatement(SyntaxKind kind, ExpressionSyntax expression = default(ExpressionSyntax))
     {
-      return SyntaxFactory.GotoStatement(kind, SyntaxFactory.Token(SyntaxKind.GotoKeyword), default(SyntaxToken), default(ExpressionSyntax), eosToken);
+      return SyntaxFactory.GotoStatement(kind, SyntaxFactory.Token(SyntaxKind.GotoKeyword), default(SyntaxToken), expression, default(SyntaxToken));
     }
 
     /// <summary>Creates a new BreakStatementSyntax instance.</summary>
@@ -7512,6 +7534,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7524,6 +7547,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public static BreakStatementSyntax BreakStatement(SyntaxToken eosToken)
     {
       return SyntaxFactory.BreakStatement(SyntaxFactory.Token(SyntaxKind.BreakKeyword), eosToken);
+    }
+
+    /// <summary>Creates a new BreakStatementSyntax instance.</summary>
+    public static BreakStatementSyntax BreakStatement()
+    {
+      return SyntaxFactory.BreakStatement(SyntaxFactory.Token(SyntaxKind.BreakKeyword), default(SyntaxToken));
     }
 
     /// <summary>Creates a new ContinueStatementSyntax instance.</summary>
@@ -7540,6 +7569,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7552,6 +7582,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public static ContinueStatementSyntax ContinueStatement(SyntaxToken eosToken)
     {
       return SyntaxFactory.ContinueStatement(SyntaxFactory.Token(SyntaxKind.ContinueKeyword), eosToken);
+    }
+
+    /// <summary>Creates a new ContinueStatementSyntax instance.</summary>
+    public static ContinueStatementSyntax ContinueStatement()
+    {
+      return SyntaxFactory.ContinueStatement(SyntaxFactory.Token(SyntaxKind.ContinueKeyword), default(SyntaxToken));
     }
 
     /// <summary>Creates a new ReturnStatementSyntax instance.</summary>
@@ -7568,6 +7604,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7583,9 +7620,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ReturnStatementSyntax instance.</summary>
-    public static ReturnStatementSyntax ReturnStatement(SyntaxToken eosToken)
+    public static ReturnStatementSyntax ReturnStatement(ExpressionSyntax expression = default(ExpressionSyntax))
     {
-      return SyntaxFactory.ReturnStatement(SyntaxFactory.Token(SyntaxKind.ReturnKeyword), default(ExpressionSyntax), eosToken);
+      return SyntaxFactory.ReturnStatement(SyntaxFactory.Token(SyntaxKind.ReturnKeyword), expression, default(SyntaxToken));
     }
 
     /// <summary>Creates a new ThrowStatementSyntax instance.</summary>
@@ -7602,6 +7639,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7617,9 +7655,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ThrowStatementSyntax instance.</summary>
-    public static ThrowStatementSyntax ThrowStatement(SyntaxToken eosToken)
+    public static ThrowStatementSyntax ThrowStatement(ExpressionSyntax expression = default(ExpressionSyntax))
     {
-      return SyntaxFactory.ThrowStatement(SyntaxFactory.Token(SyntaxKind.ThrowKeyword), default(ExpressionSyntax), eosToken);
+      return SyntaxFactory.ThrowStatement(SyntaxFactory.Token(SyntaxKind.ThrowKeyword), expression, default(SyntaxToken));
     }
 
     /// <summary>Creates a new YieldStatementSyntax instance.</summary>
@@ -7652,6 +7690,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7663,7 +7702,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     /// <summary>Creates a new YieldStatementSyntax instance.</summary>
     public static YieldStatementSyntax YieldStatement(SyntaxKind kind, ExpressionSyntax expression = default(ExpressionSyntax))
     {
-      return SyntaxFactory.YieldStatement(kind, SyntaxFactory.Token(SyntaxKind.YieldKeyword), SyntaxFactory.Token(GetYieldStatementReturnOrBreakKeywordKind(kind)), expression, SyntaxFactory.Token(GetYieldStatementEosTokenKind(kind)));
+      return SyntaxFactory.YieldStatement(kind, SyntaxFactory.Token(SyntaxKind.YieldKeyword), SyntaxFactory.Token(GetYieldStatementReturnOrBreakKeywordKind(kind)), expression, default(SyntaxToken));
     }
 
     private static SyntaxKind GetYieldStatementReturnOrBreakKeywordKind(SyntaxKind kind)
@@ -7769,6 +7808,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -7781,6 +7821,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public static DoStatementSyntax DoStatement(StatementSyntax statement, ExpressionSyntax condition, SyntaxToken eosToken)
     {
       return SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), statement, SyntaxFactory.Token(SyntaxKind.WhileKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), eosToken);
+    }
+
+    /// <summary>Creates a new DoStatementSyntax instance.</summary>
+    public static DoStatementSyntax DoStatement(StatementSyntax statement, ExpressionSyntax condition)
+    {
+      return SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), statement, SyntaxFactory.Token(SyntaxKind.WhileKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), default(SyntaxToken));
     }
 
     /// <summary>Creates a new ForStatementSyntax instance.</summary>
@@ -7937,15 +7983,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new InlineILStatementSyntax instance.</summary>
-    public static InlineILStatementSyntax InlineILStatement(SyntaxToken hashILToken, SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    public static InlineILStatementSyntax InlineILStatement(SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
     {
-      switch (hashILToken.Kind())
-      {
-        case SyntaxKind.HashILToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(hashILToken));
-      }
       switch (eosToken.Kind())
       {
         case SyntaxKind.SemicolonToken:
@@ -7955,20 +7994,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (InlineILStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.InlineILStatement((Syntax.InternalSyntax.SyntaxToken)hashILToken.Node, instruction.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), argument == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)argument.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (InlineILStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.InlineILStatement(instruction.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), argument == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)argument.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
-
-    /// <summary>Creates a new InlineILStatementSyntax instance.</summary>
-    public static InlineILStatementSyntax InlineILStatement(SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
-    {
-      return SyntaxFactory.InlineILStatement(SyntaxFactory.Token(SyntaxKind.HashILToken), instruction, argument, eosToken);
-    }
 
     /// <summary>Creates a new InlineILStatementSyntax instance.</summary>
     public static InlineILStatementSyntax InlineILStatement(SyntaxTokenList instruction = default(SyntaxTokenList))
     {
-      return SyntaxFactory.InlineILStatement(SyntaxFactory.Token(SyntaxKind.HashILToken), instruction, default(ExpressionSyntax), default(SyntaxToken));
+      return SyntaxFactory.InlineILStatement(instruction, default(ExpressionSyntax), default(SyntaxToken));
     }
 
     /// <summary>Creates a new FixedStatementSyntax instance.</summary>
@@ -8054,7 +8087,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new UnsafeStatementSyntax instance.</summary>
-    public static UnsafeStatementSyntax UnsafeStatement(SyntaxToken unsafeKeyword, BlockSyntax block)
+    public static UnsafeStatementSyntax UnsafeStatement(SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block)
     {
       switch (unsafeKeyword.Kind())
       {
@@ -8063,16 +8096,24 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(unsafeKeyword));
       }
+      switch (ilKeyword.Kind())
+      {
+        case SyntaxKind.IlKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(ilKeyword));
+      }
       if (block == null)
         throw new ArgumentNullException(nameof(block));
-      return (UnsafeStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.UnsafeStatement((Syntax.InternalSyntax.SyntaxToken)unsafeKeyword.Node, block == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)block.Green).CreateRed();
+      return (UnsafeStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.UnsafeStatement((Syntax.InternalSyntax.SyntaxToken)unsafeKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)ilKeyword.Node, block == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)block.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new UnsafeStatementSyntax instance.</summary>
     public static UnsafeStatementSyntax UnsafeStatement(BlockSyntax block = default(BlockSyntax))
     {
-      return SyntaxFactory.UnsafeStatement(SyntaxFactory.Token(SyntaxKind.UnsafeKeyword), block ?? SyntaxFactory.Block());
+      return SyntaxFactory.UnsafeStatement(SyntaxFactory.Token(SyntaxKind.UnsafeKeyword), default(SyntaxToken), block ?? SyntaxFactory.Block());
     }
 
     /// <summary>Creates a new LockStatementSyntax instance.</summary>
@@ -8589,6 +8630,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -8604,9 +8646,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ExternAliasDirectiveSyntax instance.</summary>
-    public static ExternAliasDirectiveSyntax ExternAliasDirective(string identifier, SyntaxToken eosToken)
+    public static ExternAliasDirectiveSyntax ExternAliasDirective(SyntaxToken identifier)
     {
-      return SyntaxFactory.ExternAliasDirective(SyntaxFactory.Token(SyntaxKind.ExternKeyword), SyntaxFactory.Token(SyntaxKind.AliasKeyword), SyntaxFactory.Identifier(identifier), eosToken);
+      return SyntaxFactory.ExternAliasDirective(SyntaxFactory.Token(SyntaxKind.ExternKeyword), SyntaxFactory.Token(SyntaxKind.AliasKeyword), identifier, default(SyntaxToken));
+    }
+
+    /// <summary>Creates a new ExternAliasDirectiveSyntax instance.</summary>
+    public static ExternAliasDirectiveSyntax ExternAliasDirective(string identifier)
+    {
+      return SyntaxFactory.ExternAliasDirective(SyntaxFactory.Token(SyntaxKind.ExternKeyword), SyntaxFactory.Token(SyntaxKind.AliasKeyword), SyntaxFactory.Identifier(identifier), default(SyntaxToken));
     }
 
     /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
@@ -8625,6 +8673,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -8640,9 +8689,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
-    public static ImportDirectiveSyntax ImportDirective(NameSyntax name, SyntaxToken eosToken)
+    public static ImportDirectiveSyntax ImportDirective(NameSyntax name)
     {
-      return SyntaxFactory.ImportDirective(SyntaxFactory.Token(SyntaxKind.ImportKeyword), default(SyntaxToken), default(NameEqualsSyntax), name, eosToken);
+      return SyntaxFactory.ImportDirective(SyntaxFactory.Token(SyntaxKind.ImportKeyword), default(SyntaxToken), default(NameEqualsSyntax), name, default(SyntaxToken));
     }
 
     /// <summary>Creates a new NamespaceDeclarationSyntax instance.</summary>
@@ -9202,6 +9251,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -9217,15 +9267,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new DelegateDeclarationSyntax instance.</summary>
-    public static DelegateDeclarationSyntax DelegateDeclaration(TypeSyntax returnType, SyntaxToken identifier, SyntaxToken eosToken)
+    public static DelegateDeclarationSyntax DelegateDeclaration(TypeSyntax returnType, SyntaxToken identifier)
     {
-      return SyntaxFactory.DelegateDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.DelegateKeyword), returnType, identifier, default(TypeParameterListSyntax), SyntaxFactory.ParameterList(), default(SyntaxList<TypeParameterConstraintClauseSyntax>), eosToken);
+      return SyntaxFactory.DelegateDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.DelegateKeyword), returnType, identifier, default(TypeParameterListSyntax), SyntaxFactory.ParameterList(), default(SyntaxList<TypeParameterConstraintClauseSyntax>), default(SyntaxToken));
     }
 
     /// <summary>Creates a new DelegateDeclarationSyntax instance.</summary>
-    public static DelegateDeclarationSyntax DelegateDeclaration(TypeSyntax returnType, string identifier, SyntaxToken eosToken)
+    public static DelegateDeclarationSyntax DelegateDeclaration(TypeSyntax returnType, string identifier)
     {
-      return SyntaxFactory.DelegateDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.DelegateKeyword), returnType, SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), SyntaxFactory.ParameterList(), default(SyntaxList<TypeParameterConstraintClauseSyntax>), eosToken);
+      return SyntaxFactory.DelegateDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.DelegateKeyword), returnType, SyntaxFactory.Identifier(identifier), default(TypeParameterListSyntax), SyntaxFactory.ParameterList(), default(SyntaxList<TypeParameterConstraintClauseSyntax>), default(SyntaxToken));
     }
 
     /// <summary>Creates a new EnumMemberDeclarationSyntax instance.</summary>
@@ -9517,6 +9567,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -9526,9 +9577,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
 
     /// <summary>Creates a new FieldDeclarationSyntax instance.</summary>
-    public static FieldDeclarationSyntax FieldDeclaration(VariableDeclarationSyntax declaration, SyntaxToken eosToken)
+    public static FieldDeclarationSyntax FieldDeclaration(VariableDeclarationSyntax declaration)
     {
-      return SyntaxFactory.FieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), declaration, eosToken);
+      return SyntaxFactory.FieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), declaration, default(SyntaxToken));
     }
 
     /// <summary>Creates a new EventFieldDeclarationSyntax instance.</summary>
@@ -9547,6 +9598,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
@@ -9562,9 +9614,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new EventFieldDeclarationSyntax instance.</summary>
-    public static EventFieldDeclarationSyntax EventFieldDeclaration(VariableDeclarationSyntax declaration, SyntaxToken eosToken)
+    public static EventFieldDeclarationSyntax EventFieldDeclaration(VariableDeclarationSyntax declaration)
     {
-      return SyntaxFactory.EventFieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EventKeyword), declaration, eosToken);
+      return SyntaxFactory.EventFieldDeclaration(default(SyntaxList<AttributeSyntax>), default(SyntaxTokenList), SyntaxFactory.Token(SyntaxKind.EventKeyword), declaration, default(SyntaxToken));
     }
 
     /// <summary>Creates a new ExplicitInterfaceSpecifierSyntax instance.</summary>

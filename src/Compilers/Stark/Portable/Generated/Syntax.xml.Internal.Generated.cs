@@ -13524,8 +13524,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -13546,8 +13549,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -13567,8 +13573,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken AwaitKeyword { get { return this.awaitKeyword; } }
@@ -14394,8 +14403,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14406,8 +14418,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14417,8 +14432,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(expression);
         this.expression = expression;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public ExpressionSyntax Expression { get { return this.expression; } }
@@ -14515,8 +14533,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 1;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14525,8 +14546,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
         this.SetFactoryContext(context);
         this.SlotCount = 1;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14534,8 +14558,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         : base(kind)
     {
         this.SlotCount = 1;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken EosToken { get { return this.eosToken; } }
@@ -14784,8 +14811,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14806,8 +14836,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14827,8 +14860,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     /// <summary>
@@ -14958,8 +14994,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(breakKeyword);
         this.breakKeyword = breakKeyword;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14970,8 +15009,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(breakKeyword);
         this.breakKeyword = breakKeyword;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -14981,8 +15023,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(breakKeyword);
         this.breakKeyword = breakKeyword;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken BreakKeyword { get { return this.breakKeyword; } }
@@ -15082,8 +15127,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(continueKeyword);
         this.continueKeyword = continueKeyword;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15094,8 +15142,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(continueKeyword);
         this.continueKeyword = continueKeyword;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15105,8 +15156,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.SlotCount = 2;
         this.AdjustFlagsAndWidth(continueKeyword);
         this.continueKeyword = continueKeyword;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken ContinueKeyword { get { return this.continueKeyword; } }
@@ -15212,8 +15266,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15229,8 +15286,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15245,8 +15305,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken ReturnKeyword { get { return this.returnKeyword; } }
@@ -15361,8 +15424,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15378,8 +15444,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15394,8 +15463,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken ThrowKeyword { get { return this.throwKeyword; } }
@@ -15513,8 +15585,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15532,8 +15607,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15550,8 +15628,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(expression);
             this.expression = expression;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken YieldKeyword { get { return this.yieldKeyword; } }
@@ -15856,8 +15937,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.condition = condition;
         this.AdjustFlagsAndWidth(closeParenToken);
         this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15878,8 +15962,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.condition = condition;
         this.AdjustFlagsAndWidth(closeParenToken);
         this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -15899,8 +15986,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.condition = condition;
         this.AdjustFlagsAndWidth(closeParenToken);
         this.closeParenToken = closeParenToken;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken DoKeyword { get { return this.doKeyword; } }
@@ -16785,17 +16875,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
   internal sealed partial class InlineILStatementSyntax : StatementSyntax
   {
-    internal readonly SyntaxToken hashILToken;
     internal readonly GreenNode instruction;
     internal readonly ExpressionSyntax argument;
     internal readonly SyntaxToken eosToken;
 
-    internal InlineILStatementSyntax(SyntaxKind kind, SyntaxToken hashILToken, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal InlineILStatementSyntax(SyntaxKind kind, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 4;
-        this.AdjustFlagsAndWidth(hashILToken);
-        this.hashILToken = hashILToken;
+        this.SlotCount = 3;
         if (instruction != null)
         {
             this.AdjustFlagsAndWidth(instruction);
@@ -16814,13 +16901,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal InlineILStatementSyntax(SyntaxKind kind, SyntaxToken hashILToken, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken, SyntaxFactoryContext context)
+    internal InlineILStatementSyntax(SyntaxKind kind, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 4;
-        this.AdjustFlagsAndWidth(hashILToken);
-        this.hashILToken = hashILToken;
+        this.SlotCount = 3;
         if (instruction != null)
         {
             this.AdjustFlagsAndWidth(instruction);
@@ -16839,12 +16924,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal InlineILStatementSyntax(SyntaxKind kind, SyntaxToken hashILToken, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    internal InlineILStatementSyntax(SyntaxKind kind, GreenNode instruction, ExpressionSyntax argument, SyntaxToken eosToken)
         : base(kind)
     {
-        this.SlotCount = 4;
-        this.AdjustFlagsAndWidth(hashILToken);
-        this.hashILToken = hashILToken;
+        this.SlotCount = 3;
         if (instruction != null)
         {
             this.AdjustFlagsAndWidth(instruction);
@@ -16862,7 +16945,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
     }
 
-    public SyntaxToken HashILToken { get { return this.hashILToken; } }
     /// <summary>Gets the tokens identifying an IL instruction.</summary>
     public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Instruction { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.instruction); } }
     public ExpressionSyntax Argument { get { return this.argument; } }
@@ -16873,10 +16955,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
         switch (index)
         {
-            case 0: return this.hashILToken;
-            case 1: return this.instruction;
-            case 2: return this.argument;
-            case 3: return this.eosToken;
+            case 0: return this.instruction;
+            case 1: return this.argument;
+            case 2: return this.eosToken;
             default: return null;
         }
     }
@@ -16896,11 +16977,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitInlineILStatement(this);
     }
 
-    public InlineILStatementSyntax Update(SyntaxToken hashILToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    public InlineILStatementSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
     {
-        if (hashILToken != this.HashILToken || instruction != this.Instruction || argument != this.Argument || eosToken != this.EosToken)
+        if (instruction != this.Instruction || argument != this.Argument || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.InlineILStatement(hashILToken, instruction, argument, eosToken);
+            var newNode = SyntaxFactory.InlineILStatement(instruction, argument, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -16915,24 +16996,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new InlineILStatementSyntax(this.Kind, this.hashILToken, this.instruction, this.argument, this.eosToken, diagnostics, GetAnnotations());
+         return new InlineILStatementSyntax(this.Kind, this.instruction, this.argument, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new InlineILStatementSyntax(this.Kind, this.hashILToken, this.instruction, this.argument, this.eosToken, GetDiagnostics(), annotations);
+         return new InlineILStatementSyntax(this.Kind, this.instruction, this.argument, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal InlineILStatementSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 4;
-      var hashILToken = (SyntaxToken)reader.ReadValue();
-      if (hashILToken != null)
-      {
-         AdjustFlagsAndWidth(hashILToken);
-         this.hashILToken = hashILToken;
-      }
+      this.SlotCount = 3;
       var instruction = (GreenNode)reader.ReadValue();
       if (instruction != null)
       {
@@ -16956,7 +17031,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
-      writer.WriteValue(this.hashILToken);
       writer.WriteValue(this.instruction);
       writer.WriteValue(this.argument);
       writer.WriteValue(this.eosToken);
@@ -17267,42 +17341,59 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   internal sealed partial class UnsafeStatementSyntax : StatementSyntax
   {
     internal readonly SyntaxToken unsafeKeyword;
+    internal readonly SyntaxToken ilKeyword;
     internal readonly BlockSyntax block;
 
-    internal UnsafeStatementSyntax(SyntaxKind kind, SyntaxToken unsafeKeyword, BlockSyntax block, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal UnsafeStatementSyntax(SyntaxKind kind, SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 2;
+        this.SlotCount = 3;
         this.AdjustFlagsAndWidth(unsafeKeyword);
         this.unsafeKeyword = unsafeKeyword;
+        if (ilKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(ilKeyword);
+            this.ilKeyword = ilKeyword;
+        }
         this.AdjustFlagsAndWidth(block);
         this.block = block;
     }
 
 
-    internal UnsafeStatementSyntax(SyntaxKind kind, SyntaxToken unsafeKeyword, BlockSyntax block, SyntaxFactoryContext context)
+    internal UnsafeStatementSyntax(SyntaxKind kind, SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 2;
+        this.SlotCount = 3;
         this.AdjustFlagsAndWidth(unsafeKeyword);
         this.unsafeKeyword = unsafeKeyword;
+        if (ilKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(ilKeyword);
+            this.ilKeyword = ilKeyword;
+        }
         this.AdjustFlagsAndWidth(block);
         this.block = block;
     }
 
 
-    internal UnsafeStatementSyntax(SyntaxKind kind, SyntaxToken unsafeKeyword, BlockSyntax block)
+    internal UnsafeStatementSyntax(SyntaxKind kind, SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block)
         : base(kind)
     {
-        this.SlotCount = 2;
+        this.SlotCount = 3;
         this.AdjustFlagsAndWidth(unsafeKeyword);
         this.unsafeKeyword = unsafeKeyword;
+        if (ilKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(ilKeyword);
+            this.ilKeyword = ilKeyword;
+        }
         this.AdjustFlagsAndWidth(block);
         this.block = block;
     }
 
     public SyntaxToken UnsafeKeyword { get { return this.unsafeKeyword; } }
+    public SyntaxToken IlKeyword { get { return this.ilKeyword; } }
     public BlockSyntax Block { get { return this.block; } }
 
     internal override GreenNode GetSlot(int index)
@@ -17310,7 +17401,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         switch (index)
         {
             case 0: return this.unsafeKeyword;
-            case 1: return this.block;
+            case 1: return this.ilKeyword;
+            case 2: return this.block;
             default: return null;
         }
     }
@@ -17330,11 +17422,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitUnsafeStatement(this);
     }
 
-    public UnsafeStatementSyntax Update(SyntaxToken unsafeKeyword, BlockSyntax block)
+    public UnsafeStatementSyntax Update(SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block)
     {
-        if (unsafeKeyword != this.UnsafeKeyword || block != this.Block)
+        if (unsafeKeyword != this.UnsafeKeyword || ilKeyword != this.IlKeyword || block != this.Block)
         {
-            var newNode = SyntaxFactory.UnsafeStatement(unsafeKeyword, block);
+            var newNode = SyntaxFactory.UnsafeStatement(unsafeKeyword, ilKeyword, block);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -17349,23 +17441,29 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new UnsafeStatementSyntax(this.Kind, this.unsafeKeyword, this.block, diagnostics, GetAnnotations());
+         return new UnsafeStatementSyntax(this.Kind, this.unsafeKeyword, this.ilKeyword, this.block, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new UnsafeStatementSyntax(this.Kind, this.unsafeKeyword, this.block, GetDiagnostics(), annotations);
+         return new UnsafeStatementSyntax(this.Kind, this.unsafeKeyword, this.ilKeyword, this.block, GetDiagnostics(), annotations);
     }
 
     internal UnsafeStatementSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 2;
+      this.SlotCount = 3;
       var unsafeKeyword = (SyntaxToken)reader.ReadValue();
       if (unsafeKeyword != null)
       {
          AdjustFlagsAndWidth(unsafeKeyword);
          this.unsafeKeyword = unsafeKeyword;
+      }
+      var ilKeyword = (SyntaxToken)reader.ReadValue();
+      if (ilKeyword != null)
+      {
+         AdjustFlagsAndWidth(ilKeyword);
+         this.ilKeyword = ilKeyword;
       }
       var block = (BlockSyntax)reader.ReadValue();
       if (block != null)
@@ -17379,6 +17477,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.unsafeKeyword);
+      writer.WriteValue(this.ilKeyword);
       writer.WriteValue(this.block);
     }
 
@@ -20107,8 +20206,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.aliasKeyword = aliasKeyword;
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -20123,8 +20225,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.aliasKeyword = aliasKeyword;
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -20138,8 +20243,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.aliasKeyword = aliasKeyword;
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     /// <summary>SyntaxToken representing the extern keyword.</summary>
@@ -20276,8 +20384,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(name);
         this.name = name;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -20300,8 +20411,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(name);
         this.name = name;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -20323,8 +20437,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(name);
         this.name = name;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     public SyntaxToken ImportKeyword { get { return this.importKeyword; } }
@@ -23605,8 +23722,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(constraintClauses);
             this.constraintClauses = constraintClauses;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -23643,8 +23763,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(constraintClauses);
             this.constraintClauses = constraintClauses;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -23680,8 +23803,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(constraintClauses);
             this.constraintClauses = constraintClauses;
         }
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
@@ -25248,8 +25374,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -25270,8 +25399,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -25291,8 +25423,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         }
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
@@ -25427,8 +25562,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.eventKeyword = eventKeyword;
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -25451,8 +25589,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.eventKeyword = eventKeyword;
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
 
@@ -25474,8 +25615,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         this.eventKeyword = eventKeyword;
         this.AdjustFlagsAndWidth(declaration);
         this.declaration = declaration;
-        this.AdjustFlagsAndWidth(eosToken);
-        this.eosToken = eosToken;
+        if (eosToken != null)
+        {
+            this.AdjustFlagsAndWidth(eosToken);
+            this.eosToken = eosToken;
+        }
     }
 
     /// <summary>Gets the attribute declaration list.</summary>
@@ -39339,11 +39483,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     public override CSharpSyntaxNode VisitInlineILStatement(InlineILStatementSyntax node)
     {
-      var hashILToken = (SyntaxToken)this.Visit(node.HashILToken);
       var instruction = this.VisitList(node.Instruction);
       var argument = (ExpressionSyntax)this.Visit(node.Argument);
       var eosToken = (SyntaxToken)this.Visit(node.EosToken);
-      return node.Update(hashILToken, instruction, argument, eosToken);
+      return node.Update(instruction, argument, eosToken);
     }
 
     public override CSharpSyntaxNode VisitFixedStatement(FixedStatementSyntax node)
@@ -39366,8 +39509,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public override CSharpSyntaxNode VisitUnsafeStatement(UnsafeStatementSyntax node)
     {
       var unsafeKeyword = (SyntaxToken)this.Visit(node.UnsafeKeyword);
+      var ilKeyword = (SyntaxToken)this.Visit(node.IlKeyword);
       var block = (BlockSyntax)this.Visit(node.Block);
-      return node.Update(unsafeKeyword, block);
+      return node.Update(unsafeKeyword, ilKeyword, block);
     }
 
     public override CSharpSyntaxNode VisitLockStatement(LockStatementSyntax node)
@@ -43306,15 +43450,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43484,15 +43630,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #if DEBUG
       if (expression == null)
         throw new ArgumentNullException(nameof(expression));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43512,15 +43660,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public EmptyStatementSyntax EmptyStatement(SyntaxToken eosToken)
     {
 #if DEBUG
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43608,15 +43758,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           throw new ArgumentException(nameof(caseOrDefaultKeyword));
       }
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43635,15 +43787,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(breakKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43672,15 +43826,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(continueKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43709,15 +43865,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43746,15 +43904,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(throwKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43801,15 +43961,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnOrBreakKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -43898,15 +44060,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeParenToken));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -44059,18 +44223,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new UsingStatementSyntax(SyntaxKind.UsingStatement, awaitKeyword, usingKeyword, openParenToken, declaration, expression, closeParenToken, statement, this.context);
     }
 
-    public InlineILStatementSyntax InlineILStatement(SyntaxToken hashILToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    public InlineILStatementSyntax InlineILStatement(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
     {
 #if DEBUG
-      if (hashILToken == null)
-        throw new ArgumentNullException(nameof(hashILToken));
-      switch (hashILToken.Kind)
-      {
-        case SyntaxKind.HashILToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(hashILToken));
-      }
       if (eosToken != null)
       {
       switch (eosToken.Kind)
@@ -44085,7 +44240,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new InlineILStatementSyntax(SyntaxKind.InlineILStatement, hashILToken, instruction.Node, argument, eosToken, this.context);
+      int hash;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.InlineILStatement, instruction.Node, argument, eosToken, this.context, out hash);
+      if (cached != null) return (InlineILStatementSyntax)cached;
+
+      var result = new InlineILStatementSyntax(SyntaxKind.InlineILStatement, instruction.Node, argument, eosToken, this.context);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
     }
 
     public FixedStatementSyntax FixedStatement(SyntaxToken fixedKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -44165,7 +44330,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public UnsafeStatementSyntax UnsafeStatement(SyntaxToken unsafeKeyword, BlockSyntax block)
+    public UnsafeStatementSyntax UnsafeStatement(SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block)
     {
 #if DEBUG
       if (unsafeKeyword == null)
@@ -44177,15 +44342,26 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(unsafeKeyword));
       }
+      if (ilKeyword != null)
+      {
+      switch (ilKeyword.Kind)
+      {
+        case SyntaxKind.IlKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(ilKeyword));
+      }
+      }
       if (block == null)
         throw new ArgumentNullException(nameof(block));
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.UnsafeStatement, unsafeKeyword, block, this.context, out hash);
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.UnsafeStatement, unsafeKeyword, ilKeyword, block, this.context, out hash);
       if (cached != null) return (UnsafeStatementSyntax)cached;
 
-      var result = new UnsafeStatementSyntax(SyntaxKind.UnsafeStatement, unsafeKeyword, block, this.context);
+      var result = new UnsafeStatementSyntax(SyntaxKind.UnsafeStatement, unsafeKeyword, ilKeyword, block, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -44689,15 +44865,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -44718,15 +44896,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (name == null)
         throw new ArgumentNullException(nameof(name));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -45283,15 +45463,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -45609,15 +45791,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #if DEBUG
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -45638,15 +45822,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -50788,15 +50974,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -50966,15 +51154,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #if DEBUG
       if (expression == null)
         throw new ArgumentNullException(nameof(expression));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -50994,15 +51184,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public static EmptyStatementSyntax EmptyStatement(SyntaxToken eosToken)
     {
 #if DEBUG
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51090,15 +51282,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           throw new ArgumentException(nameof(caseOrDefaultKeyword));
       }
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51117,15 +51311,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(breakKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51154,15 +51350,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(continueKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51191,15 +51389,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51228,15 +51428,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(throwKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51283,15 +51485,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(returnOrBreakKeyword));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51380,15 +51584,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(closeParenToken));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -51541,18 +51747,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new UsingStatementSyntax(SyntaxKind.UsingStatement, awaitKeyword, usingKeyword, openParenToken, declaration, expression, closeParenToken, statement);
     }
 
-    public static InlineILStatementSyntax InlineILStatement(SyntaxToken hashILToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    public static InlineILStatementSyntax InlineILStatement(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> instruction, ExpressionSyntax argument, SyntaxToken eosToken)
     {
 #if DEBUG
-      if (hashILToken == null)
-        throw new ArgumentNullException(nameof(hashILToken));
-      switch (hashILToken.Kind)
-      {
-        case SyntaxKind.HashILToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(hashILToken));
-      }
       if (eosToken != null)
       {
       switch (eosToken.Kind)
@@ -51567,7 +51764,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new InlineILStatementSyntax(SyntaxKind.InlineILStatement, hashILToken, instruction.Node, argument, eosToken);
+      int hash;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.InlineILStatement, instruction.Node, argument, eosToken, out hash);
+      if (cached != null) return (InlineILStatementSyntax)cached;
+
+      var result = new InlineILStatementSyntax(SyntaxKind.InlineILStatement, instruction.Node, argument, eosToken);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
     }
 
     public static FixedStatementSyntax FixedStatement(SyntaxToken fixedKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -51647,7 +51854,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static UnsafeStatementSyntax UnsafeStatement(SyntaxToken unsafeKeyword, BlockSyntax block)
+    public static UnsafeStatementSyntax UnsafeStatement(SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block)
     {
 #if DEBUG
       if (unsafeKeyword == null)
@@ -51659,15 +51866,26 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(unsafeKeyword));
       }
+      if (ilKeyword != null)
+      {
+      switch (ilKeyword.Kind)
+      {
+        case SyntaxKind.IlKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(ilKeyword));
+      }
+      }
       if (block == null)
         throw new ArgumentNullException(nameof(block));
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.UnsafeStatement, unsafeKeyword, block, out hash);
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.UnsafeStatement, unsafeKeyword, ilKeyword, block, out hash);
       if (cached != null) return (UnsafeStatementSyntax)cached;
 
-      var result = new UnsafeStatementSyntax(SyntaxKind.UnsafeStatement, unsafeKeyword, block);
+      var result = new UnsafeStatementSyntax(SyntaxKind.UnsafeStatement, unsafeKeyword, ilKeyword, block);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -52171,15 +52389,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         default:
           throw new ArgumentException(nameof(identifier));
       }
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -52200,15 +52420,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (name == null)
         throw new ArgumentNullException(nameof(name));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -52765,15 +52987,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (parameterList == null)
         throw new ArgumentNullException(nameof(parameterList));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -53091,15 +53315,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 #if DEBUG
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 
@@ -53120,15 +53346,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
       if (declaration == null)
         throw new ArgumentNullException(nameof(declaration));
-      if (eosToken == null)
-        throw new ArgumentNullException(nameof(eosToken));
+      if (eosToken != null)
+      {
       switch (eosToken.Kind)
       {
         case SyntaxKind.SemicolonToken:
         case SyntaxKind.EndOfLineTrivia:
+        case SyntaxKind.None:
           break;
         default:
           throw new ArgumentException(nameof(eosToken));
+      }
       }
 #endif
 

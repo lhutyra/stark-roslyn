@@ -8488,7 +8488,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.LocalDeclarationStatementSyntax)this.Green).eosToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.LocalDeclarationStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -8981,7 +8988,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionStatementSyntax)this.Green).eosToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9045,7 +9059,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EmptyStatementSyntax)this.Green).eosToken, this.Position, 0); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EmptyStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.Position, 0);
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9231,7 +9252,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     /// </summary>
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.GotoStatementSyntax)this.Green).eosToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.GotoStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9310,7 +9338,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BreakStatementSyntax)this.Green).eosToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BreakStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9377,7 +9412,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ContinueStatementSyntax)this.Green).eosToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ContinueStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9454,7 +9496,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ReturnStatementSyntax)this.Green).eosToken, this.GetChildPosition(2), this.GetChildIndex(2)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ReturnStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(2), this.GetChildIndex(2));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9538,7 +9587,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ThrowStatementSyntax)this.Green).eosToken, this.GetChildPosition(2), this.GetChildIndex(2)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ThrowStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(2), this.GetChildIndex(2));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9627,7 +9683,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.YieldStatementSyntax)this.Green).eosToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.YieldStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -9850,7 +9913,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).eosToken, this.GetChildPosition(6), this.GetChildIndex(6)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(6), this.GetChildIndex(6));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -10461,19 +10531,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
     }
 
-    public SyntaxToken HashILToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.InlineILStatementSyntax)this.Green).hashILToken, this.Position, 0); }
-    }
-
     /// <summary>Gets the tokens identifying an IL instruction.</summary>
     public SyntaxTokenList Instruction 
     {
         get
         {
-            var slot = this.Green.GetSlot(1);
+            var slot = this.Green.GetSlot(0);
             if (slot != null)
-                return new SyntaxTokenList(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+                return new SyntaxTokenList(this, slot, this.Position, 0);
 
             return default(SyntaxTokenList);
         }
@@ -10483,7 +10548,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.argument, 2);
+            return this.GetRed(ref this.argument, 1);
         }
     }
 
@@ -10494,7 +10559,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         {
             var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.InlineILStatementSyntax)this.Green).eosToken;
             if (slot != null)
-                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+                return new SyntaxToken(this, slot, this.GetChildPosition(2), this.GetChildIndex(2));
 
             return default(SyntaxToken);
         }
@@ -10504,7 +10569,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 2: return this.GetRed(ref this.argument, 2);
+            case 1: return this.GetRed(ref this.argument, 1);
             default: return null;
         }
     }
@@ -10512,7 +10577,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 2: return this.argument;
+            case 1: return this.argument;
             default: return null;
         }
     }
@@ -10527,11 +10592,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitInlineILStatement(this);
     }
 
-    public InlineILStatementSyntax Update(SyntaxToken hashILToken, SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
+    public InlineILStatementSyntax Update(SyntaxTokenList instruction, ExpressionSyntax argument, SyntaxToken eosToken)
     {
-        if (hashILToken != this.HashILToken || instruction != this.Instruction || argument != this.Argument || eosToken != this.EosToken)
+        if (instruction != this.Instruction || argument != this.Argument || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.InlineILStatement(hashILToken, instruction, argument, eosToken);
+            var newNode = SyntaxFactory.InlineILStatement(instruction, argument, eosToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -10541,24 +10606,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
-    public InlineILStatementSyntax WithHashILToken(SyntaxToken hashILToken)
-    {
-        return this.Update(hashILToken, this.Instruction, this.Argument, this.EosToken);
-    }
-
     public InlineILStatementSyntax WithInstruction(SyntaxTokenList instruction)
     {
-        return this.Update(this.HashILToken, instruction, this.Argument, this.EosToken);
+        return this.Update(instruction, this.Argument, this.EosToken);
     }
 
     public InlineILStatementSyntax WithArgument(ExpressionSyntax argument)
     {
-        return this.Update(this.HashILToken, this.Instruction, argument, this.EosToken);
+        return this.Update(this.Instruction, argument, this.EosToken);
     }
 
     public InlineILStatementSyntax WithEosToken(SyntaxToken eosToken)
     {
-        return this.Update(this.HashILToken, this.Instruction, this.Argument, eosToken);
+        return this.Update(this.Instruction, this.Argument, eosToken);
     }
 
     public InlineILStatementSyntax AddInstruction(params SyntaxToken[] items)
@@ -10770,11 +10830,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
       get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.UnsafeStatementSyntax)this.Green).unsafeKeyword, this.Position, 0); }
     }
 
+    public SyntaxToken IlKeyword 
+    {
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.UnsafeStatementSyntax)this.Green).ilKeyword;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxToken);
+        }
+    }
+
     public BlockSyntax Block 
     {
         get
         {
-            return this.GetRed(ref this.block, 1);
+            return this.GetRed(ref this.block, 2);
         }
     }
 
@@ -10782,7 +10854,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 1: return this.GetRed(ref this.block, 1);
+            case 2: return this.GetRed(ref this.block, 2);
             default: return null;
         }
     }
@@ -10790,7 +10862,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 1: return this.block;
+            case 2: return this.block;
             default: return null;
         }
     }
@@ -10805,11 +10877,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitUnsafeStatement(this);
     }
 
-    public UnsafeStatementSyntax Update(SyntaxToken unsafeKeyword, BlockSyntax block)
+    public UnsafeStatementSyntax Update(SyntaxToken unsafeKeyword, SyntaxToken ilKeyword, BlockSyntax block)
     {
-        if (unsafeKeyword != this.UnsafeKeyword || block != this.Block)
+        if (unsafeKeyword != this.UnsafeKeyword || ilKeyword != this.IlKeyword || block != this.Block)
         {
-            var newNode = SyntaxFactory.UnsafeStatement(unsafeKeyword, block);
+            var newNode = SyntaxFactory.UnsafeStatement(unsafeKeyword, ilKeyword, block);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -10821,12 +10893,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public UnsafeStatementSyntax WithUnsafeKeyword(SyntaxToken unsafeKeyword)
     {
-        return this.Update(unsafeKeyword, this.Block);
+        return this.Update(unsafeKeyword, this.IlKeyword, this.Block);
+    }
+
+    public UnsafeStatementSyntax WithIlKeyword(SyntaxToken ilKeyword)
+    {
+        return this.Update(this.UnsafeKeyword, ilKeyword, this.Block);
     }
 
     public UnsafeStatementSyntax WithBlock(BlockSyntax block)
     {
-        return this.Update(this.UnsafeKeyword, block);
+        return this.Update(this.UnsafeKeyword, this.IlKeyword, block);
     }
 
     public UnsafeStatementSyntax AddBlockStatements(params StatementSyntax[] items)
@@ -12609,7 +12686,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     /// <summary>SyntaxToken representing the semicolon token.</summary>
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExternAliasDirectiveSyntax)this.Green).eosToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExternAliasDirectiveSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -12717,7 +12801,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ImportDirectiveSyntax)this.Green).eosToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ImportDirectiveSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(4), this.GetChildIndex(4));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -15146,7 +15237,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     /// <summary>Gets the semicolon token.</summary>
     public SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DelegateDeclarationSyntax)this.Green).eosToken, this.GetChildPosition(8), this.GetChildIndex(8)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DelegateDeclarationSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(8), this.GetChildIndex(8));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -16184,7 +16282,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public override SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.FieldDeclarationSyntax)this.Green).eosToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.FieldDeclarationSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)
@@ -16314,7 +16419,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public override SyntaxToken EosToken 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EventFieldDeclarationSyntax)this.Green).eosToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EventFieldDeclarationSyntax)this.Green).eosToken;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(4), this.GetChildIndex(4));
+
+            return default(SyntaxToken);
+        }
     }
 
     internal override SyntaxNode GetNodeSlot(int index)

@@ -1138,6 +1138,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.AwaitKeyword:
                 case SyntaxKind.WhenKeyword:
                 case SyntaxKind.UnderscoreToken:
+                case SyntaxKind.IlKeyword:
                     return true;
                 default:
                     return false;
@@ -1233,6 +1234,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.AwaitKeyword;
                 case "when":
                     return SyntaxKind.WhenKeyword;
+                case "il":
+                    return SyntaxKind.IlKeyword;
                 case "nameof":
                     return SyntaxKind.NameOfKeyword;
                 case "_":
@@ -1306,8 +1309,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "?";
                 case SyntaxKind.HashToken:
                     return "#";
-                case SyntaxKind.HashILToken:
-                    return "#il";
                 case SyntaxKind.SlashToken:
                     return "/";
                 case SyntaxKind.SlashGreaterThanToken:
@@ -1652,6 +1653,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "await";
                 case SyntaxKind.WhenKeyword:
                     return "when";
+                case SyntaxKind.IlKeyword:
+                    return "il";
                 case SyntaxKind.InterpolatedStringStartToken:
                     return "$\"";
                 case SyntaxKind.InterpolatedStringEndToken:

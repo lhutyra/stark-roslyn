@@ -47,11 +47,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 SyntaxFactory.EndOfLineToken());
         }
 
-        public static BreakStatementSyntax BreakStatement()
-        {
-            return SyntaxFactory.BreakStatement(SyntaxFactory.Token(SyntaxKind.BreakKeyword), SyntaxFactory.EndOfLineToken());
-        }
-
         public static EnumDeclarationSyntax EnumDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, SyntaxToken identifier, ExtendListSyntax extendList,
             SyntaxList<EnumMemberDeclarationSyntax> members)
         {
@@ -83,42 +78,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return SyntaxFactory.Attribute(default, name, argumentList);
         }
 
-
-        public static ReturnStatementSyntax ReturnStatement(ExpressionSyntax expression)
-        {
-            return SyntaxFactory.ReturnStatement(expression, SyntaxFactory.EndOfLineToken());
-        }
-
-        public static ThrowStatementSyntax ThrowStatement(ExpressionSyntax expression)
-        {
-            return SyntaxFactory.ThrowStatement(expression, SyntaxFactory.EndOfLineToken());
-        }
-
-
         public static IfStatementSyntax IfStatement(ExpressionSyntax condition, BlockSyntax statement)
         {
             return SyntaxFactory.IfStatement(condition, statement, null);
         }
 
-
-        public static ExpressionStatementSyntax ExpressionStatement(ExpressionSyntax expression)
-        {
-            return SyntaxFactory.ExpressionStatement(expression, SyntaxFactory.EndOfLineToken());
-        }
-
-        public static LocalDeclarationStatementSyntax LocalDeclarationStatement(VariableDeclarationSyntax declaration)
-        {
-            return SyntaxFactory.LocalDeclarationStatement(declaration, SyntaxFactory.EndOfLineToken());
-        }
-
         public static FieldDeclarationSyntax FieldDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, VariableDeclarationSyntax declaration)
         {
             return SyntaxFactory.FieldDeclaration(attributeLists, modifiers, declaration, EndOfLineToken());
-        }
-
-        public static ImportDirectiveSyntax ImportDirective(NameSyntax name)
-        {
-            return SyntaxFactory.ImportDirective(name, SyntaxFactory.EndOfLineToken());
         }
 
 
@@ -153,26 +120,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 expressionBody != null || initializer != null ? SyntaxFactory.EndOfLineToken() : default);
         }
 
-        public static ExternAliasDirectiveSyntax ExternAliasDirective(string identifier)
-        {
-            return SyntaxFactory.ExternAliasDirective(identifier, SyntaxFactory.EndOfLineToken());
-        }
-
-        public static ExternAliasDirectiveSyntax ExternAliasDirective(SyntaxToken identifier)
-        {
-            return SyntaxFactory.ExternAliasDirective(SyntaxFactory.Token(SyntaxKind.ExternKeyword), SyntaxFactory.Token(SyntaxKind.AliasKeyword), identifier, EndOfLineToken());
-        }
-
         /// <summary>Creates a new ReturnStatementSyntax instance.</summary>
         public static ReturnStatementSyntax ReturnStatement()
         {
-            return SyntaxFactory.ReturnStatement(EndOfLineToken());
+            return SyntaxFactory.ReturnStatement(null, EndOfLineToken());
         }
-
-        public static ContinueStatementSyntax ContinueStatement()
-        {
-            return SyntaxFactory.ContinueStatement(EndOfLineToken());
-        }
-
     }
 }
