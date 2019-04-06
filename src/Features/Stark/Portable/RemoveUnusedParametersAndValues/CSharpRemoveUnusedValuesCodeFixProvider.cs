@@ -15,12 +15,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.RemoveUnusedParametersAndValues
     internal class CSharpRemoveUnusedValuesCodeFixProvider :
         AbstractRemoveUnusedValuesCodeFixProvider<ExpressionSyntax, StatementSyntax, BlockSyntax,
             ExpressionStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclarationSyntax,
-            ForEachVariableStatementSyntax, SwitchSectionSyntax, SwitchLabelSyntax, CatchClauseSyntax, CatchClauseSyntax>
+            ForStatementSyntax, SwitchSectionSyntax, SwitchLabelSyntax, CatchClauseSyntax, CatchClauseSyntax>
     {
         protected override BlockSyntax WrapWithBlockIfNecessary(IEnumerable<StatementSyntax> statements)
             => SyntaxFactory.Block(statements);
 
-        protected override SyntaxToken GetForEachStatementIdentifier(ForEachVariableStatementSyntax node)
+        protected override SyntaxToken GetForEachStatementIdentifier(ForStatementSyntax node)
             => node.Variable.GetFirstToken();
 
         protected override SyntaxNode TryUpdateNameForFlaggedNode(SyntaxNode node, SyntaxToken newName)

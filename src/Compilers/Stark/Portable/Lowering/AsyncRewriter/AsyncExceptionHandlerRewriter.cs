@@ -137,7 +137,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             Debug.Assert(
                 tryStatementSyntax.IsKind(SyntaxKind.TryStatement) ||
                 tryStatementSyntax.IsKind(SyntaxKind.UsingStatement) ||
-                tryStatementSyntax.IsKind(SyntaxKind.ForEachVariableStatement) ||
+                tryStatementSyntax.IsKind(SyntaxKind.ForStatement) ||
                 tryStatementSyntax.IsKind(SyntaxKind.LocalDeclarationStatement));
 
             BoundStatement finalizedRegion;
@@ -902,7 +902,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                 Debug.Assert(statementSyntax.Kind() == SyntaxKind.TryStatement ||
                     (statementSyntax.Kind() == SyntaxKind.UsingStatement && ((UsingStatementSyntax)statementSyntax).AwaitKeyword != default) ||
-                    (statementSyntax.Kind() == SyntaxKind.ForEachVariableStatement && ((CommonForEachStatementSyntax)statementSyntax).AwaitKeyword != default) ||
+                    (statementSyntax.Kind() == SyntaxKind.ForStatement && ((ForStatementSyntax)statementSyntax).AwaitKeyword != default) ||
                     (statementSyntax.Kind() == SyntaxKind.LocalDeclarationStatement && ((LocalDeclarationStatementSyntax)statementSyntax).AwaitKeyword != default));
 
                 this.ParentOpt = parent;

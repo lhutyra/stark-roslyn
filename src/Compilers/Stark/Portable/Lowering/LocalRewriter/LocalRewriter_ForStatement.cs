@@ -11,30 +11,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
 {
     internal sealed partial class LocalRewriter
     {
-        public override BoundNode VisitForStatement(BoundForStatement node)
-        {
-            Debug.Assert(node != null);
-
-            var rewrittenInitializer = (BoundStatement)Visit(node.Initializer);
-            var rewrittenCondition = (BoundExpression)Visit(node.Condition);
-            var rewrittenIncrement = (BoundStatement)Visit(node.Increment);
-            var rewrittenBody = (BoundStatement)Visit(node.Body);
-
-            // EnC: We need to insert a hidden sequence point to handle function remapping in case 
-            // the containing method is edited while methods invoked in the condition are being executed.
-            if (rewrittenCondition != null && this.Instrument)
-            {
-                rewrittenCondition = _instrumenter.InstrumentForStatementCondition(node, rewrittenCondition, _factory);
-            }
-
-            return RewriteForStatement(
-                node,
-                rewrittenInitializer,
-                rewrittenCondition,
-                rewrittenIncrement,
-                rewrittenBody);
-        }
-
         private BoundStatement RewriteForStatementWithoutInnerLocals(
             BoundLoopStatement original,
             ImmutableArray<LocalSymbol> outerLocals,
@@ -146,9 +122,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case BoundKind.ForEachStatement:
                         branchBack = _instrumenter.InstrumentForEachStatementConditionalGotoStart((BoundForEachStatement)original, branchBack);
                         break;
-                    case BoundKind.ForStatement:
-                        branchBack = _instrumenter.InstrumentForStatementConditionalGotoStartOrBreak((BoundForStatement)original, branchBack);
-                        break;
                     default:
                         throw ExceptionUtilities.UnexpectedValue(original.Kind);
                 }
@@ -233,12 +206,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (rewrittenCondition != null)
             {
                 BoundStatement ifNotConditionGotoBreak = new BoundConditionalGoto(rewrittenCondition.Syntax, rewrittenCondition, false, node.BreakLabel);
-
-                if (this.Instrument)
-                {
-                    ifNotConditionGotoBreak = _instrumenter.InstrumentForStatementConditionalGotoStartOrBreak(node, ifNotConditionGotoBreak);
-                }
-
                 blockBuilder.Add(ifNotConditionGotoBreak);
             }
 

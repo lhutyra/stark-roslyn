@@ -1739,6 +1739,7 @@ tryAgain:
                 case SyntaxKind.ImplicitKeyword:
                 case SyntaxKind.ExplicitKeyword:
                 case SyntaxKind.VarKeyword:
+                case SyntaxKind.InKeyword:
                 case SyntaxKind.LetKeyword:
                 case SyntaxKind.FuncKeyword:
                 case SyntaxKind.ConstructorKeyword:
@@ -3673,10 +3674,28 @@ tryAgain:
 
         private VariableDeclarationSyntax ParseVariableDeclaration(bool isLocal = true)
         {
-            var variableKeywordToken = EatToken();
-            Debug.Assert(variableKeywordToken.Kind == SyntaxKind.VarKeyword ||
-                         variableKeywordToken.Kind == SyntaxKind.LetKeyword ||
-                         variableKeywordToken.Kind == SyntaxKind.ConstKeyword);
+            SyntaxToken variableKeywordToken;
+            if (!(CurrentToken.Kind == SyntaxKind.VarKeyword ||
+                  CurrentToken.Kind == SyntaxKind.LetKeyword ||
+                  CurrentToken.Kind == SyntaxKind.ConstKeyword))
+            {
+                variableKeywordToken = EatToken(SyntaxKind.VarKeyword);
+            }
+            else
+            {
+                variableKeywordToken = EatToken();
+            }
+
+            SyntaxToken @ref = null;
+            if (isLocal && CurrentToken.Kind == SyntaxKind.RefKeyword)
+            {
+                @ref = EatToken();
+                // TODO: add an error if ref is not compatible with const for example
+                //if (@ref != null)
+                //{
+                //    variableKeywordToken = AddError(variableKeywordToken, ErrorCode.ERR_InvalidVarDeclarationAfterRef);
+                //}
+            }
 
             var name = this.ParseIdentifierToken();
 
@@ -3721,7 +3740,7 @@ tryAgain:
                 initializer = _syntaxFactory.EqualsValueClause(equals, init);
             }
 
-            return _syntaxFactory.VariableDeclaration(variableKeywordToken, name, colonToken, typeSyntax, initializer);
+            return _syntaxFactory.VariableDeclaration(variableKeywordToken, @ref, name, colonToken, typeSyntax, initializer);
         }
 
         private bool IsEndOfFieldDeclaration()
@@ -5743,17 +5762,7 @@ tryAgain:
                 // expression then we only allow legal expression statements. (That is, "new C();",
                 // "C();", "x = y;" and so on.)
 
-                StatementSyntax result = ParseStatementNoDeclaration(allowAnyExpression: false);
-                if (result != null)
-                {
-                    return result;
-                }
-
-                // We could not successfully parse the statement as a non-declaration. Try to parse
-                // it as either a declaration or as an "await X();" statement that is in a non-async
-                // method. 
-
-                return ParsePossibleDeclarationOrBadAwaitStatement();
+                return ParseStatementNoDeclaration(allowAnyExpression: false);
             }
             finally
             {
@@ -5854,8 +5863,6 @@ tryAgain:
                 case SyntaxKind.DoKeyword:
                     return this.ParseDoStatement();
                 case SyntaxKind.ForKeyword:
-                    return this.ParseForStatement();
-                case SyntaxKind.ForEachKeyword:
                     return this.ParseForEachStatement(awaitTokenOpt: default);
                 case SyntaxKind.GotoKeyword:
                     return this.ParseGotoStatement();
@@ -5922,7 +5929,7 @@ tryAgain:
             bool isPossibleAwaitForEach()
             {
                 return this.CurrentToken.ContextualKind == SyntaxKind.AwaitKeyword &&
-                    this.PeekToken(1).Kind == SyntaxKind.ForEachKeyword;
+                    this.PeekToken(1).Kind == SyntaxKind.ForKeyword;
             }
 
             bool isPossibleAwaitUsing()
@@ -6186,14 +6193,11 @@ tryAgain:
                 && this.CurrentToken.Kind != SyntaxKind.EndOfFileToken
                 && !(stopOnSwitchSections && this.IsPossibleSwitchSection()))
             {
-                if (this.IsPossibleStatement(acceptAccessibilityMods: true))
+                var statement = this.ParseStatementCore();
+                if (statement != null)
                 {
-                    var statement = this.ParseStatementCore();
-                    if (statement != null)
-                    {
-                        statements.Add(statement);
-                        continue;
-                    }
+                    statements.Add(statement);
+                    continue;
                 }
 
                 GreenNode trailingTrivia;
@@ -6244,7 +6248,6 @@ tryAgain:
                 case SyntaxKind.UncheckedKeyword:
                 case SyntaxKind.DoKeyword:
                 case SyntaxKind.ForKeyword:
-                case SyntaxKind.ForEachKeyword:
                 case SyntaxKind.GotoKeyword:
                 case SyntaxKind.IfKeyword:
                 //case SyntaxKind.ElseKeyword:
@@ -6260,6 +6263,7 @@ tryAgain:
                 case SyntaxKind.VolatileKeyword: // TODO: remove
                 case SyntaxKind.ConstKeyword:
                 case SyntaxKind.VarKeyword:
+                case SyntaxKind.RefKeyword:
                 case SyntaxKind.LetKeyword:
                     return true;
 
@@ -6641,64 +6645,6 @@ tryAgain:
                 || this.CurrentToken.Kind == SyntaxKind.SemicolonToken;
         }
 
-        private ForStatementSyntax ParseForStatement()
-        {
-            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ForKeyword);
-
-            var forToken = this.EatToken(SyntaxKind.ForKeyword);
-            var openParen = this.EatToken(SyntaxKind.OpenParenToken);
-
-            var saveTerm = _termState;
-            _termState |= TerminatorState.IsEndOfForStatementArgument;
-
-            var resetPoint = this.GetResetPoint();
-            var initializers = _pool.AllocateSeparated<ExpressionSyntax>();
-            var incrementors = _pool.AllocateSeparated<ExpressionSyntax>();
-            try
-            {
-                // Here can be either a declaration or an expression statement list.  Scan
-                // for a declaration first.
-                VariableDeclarationSyntax decl = null;
-                if (this.CurrentToken.Kind == SyntaxKind.RefKeyword || CurrentToken.Kind == SyntaxKind.VarKeyword || CurrentToken.Kind == SyntaxKind.LetKeyword)
-                {
-                    decl = ParseVariableDeclaration();
-                    if (decl.Type != null && decl.Type.Kind == SyntaxKind.RefKindType)
-                    {
-                        decl = decl.Update(decl.VariableKeyword, decl.Identifier, decl.ColonToken, CheckFeatureAvailability(decl.Type, MessageID.IDS_FeatureRefFor), decl.Initializer);
-                    }
-                }
-                else if (this.CurrentToken.Kind != SyntaxKind.SemicolonToken)
-                {
-                    // Not a type followed by an identifier, so it must be an expression list.
-                    this.ParseForStatementExpressionList(ref openParen, initializers);
-                }
-
-                var semi = this.EatToken(SyntaxKind.SemicolonToken);
-                ExpressionSyntax condition = null;
-                if (this.CurrentToken.Kind != SyntaxKind.SemicolonToken)
-                {
-                    condition = this.ParseExpressionCore();
-                }
-
-                var semi2 = this.EatToken(SyntaxKind.SemicolonToken);
-                if (this.CurrentToken.Kind != SyntaxKind.CloseParenToken)
-                {
-                    this.ParseForStatementExpressionList(ref semi2, incrementors);
-                }
-
-                var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-                var statement = ParseEmbeddedStatement();
-                return _syntaxFactory.ForStatement(forToken, openParen, decl, initializers, semi, condition, semi2, incrementors, closeParen, statement);
-            }
-            finally
-            {
-                _termState = saveTerm;
-                this.Release(ref resetPoint);
-                _pool.Free(incrementors);
-                _pool.Free(initializers);
-            }
-        }
-
         private bool IsEndOfForStatementArgument()
         {
             return this.CurrentToken.Kind == SyntaxKind.SemicolonToken
@@ -6750,32 +6696,20 @@ tryAgain:
                 expected);
         }
 
-        private CommonForEachStatementSyntax ParseForEachStatement(SyntaxToken awaitTokenOpt)
+        private ForStatementSyntax ParseForEachStatement(SyntaxToken awaitTokenOpt)
         {
             // Can be a 'for' keyword if the user typed: 'for (SomeType t in'
-            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ForEachKeyword || this.CurrentToken.Kind == SyntaxKind.ForKeyword);
+            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.ForKeyword);
 
             // Syntax for foreach is either:
             //  foreach [await] ( <type> <identifier> in <expr> ) <embedded-statement>
             // or
             //  foreach [await] ( <deconstruction-declaration> in <expr> ) <embedded-statement>
 
-            SyntaxToken @foreach;
-
-            // If we're at a 'for', then consume it and attach
-            // it as skipped text to the missing 'foreach' token.
-            if (this.CurrentToken.Kind == SyntaxKind.ForKeyword)
-            {
-                var skippedForToken = this.EatToken();
-                skippedForToken = this.AddError(skippedForToken, ErrorCode.ERR_SyntaxError, SyntaxFacts.GetText(SyntaxKind.ForEachKeyword), SyntaxFacts.GetText(SyntaxKind.ForKeyword));
-                @foreach = ConvertToMissingWithTrailingTrivia(skippedForToken, SyntaxKind.ForEachKeyword);
-            }
-            else
-            {
-                @foreach = this.EatToken(SyntaxKind.ForEachKeyword);
-            }
+            var @for = this.EatToken(SyntaxKind.ForKeyword);
 
             var variable = ParseExpressionOrDeclaration(ParseTypeMode.Normal, feature: MessageID.IDS_FeatureTuples, permitTupleDesignation: true);
+
             var @in = this.EatToken(SyntaxKind.InKeyword, ErrorCode.ERR_InExpected);
             if (!IsValidForeachVariable(variable))
             {
@@ -6819,7 +6753,7 @@ tryAgain:
             //    }
             //}
 
-            return _syntaxFactory.ForEachVariableStatement(awaitTokenOpt, @foreach, variable, @in, expression, statement);
+            return _syntaxFactory.ForStatement(awaitTokenOpt, @for, variable, @in, expression, statement);
         }
 
         private static bool IsValidForeachVariable(ExpressionSyntax variable)
@@ -7596,7 +7530,6 @@ tryAgain:
                 case SyntaxKind.DoKeyword:
                 case SyntaxKind.FinallyKeyword:
                 case SyntaxKind.ForKeyword:
-                case SyntaxKind.ForEachKeyword:
                 case SyntaxKind.GotoKeyword:
                 case SyntaxKind.IfKeyword:
                 case SyntaxKind.ElseKeyword:

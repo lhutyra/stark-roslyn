@@ -63,7 +63,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
 
             if (token.Kind() == SyntaxKind.IdentifierToken)
             {
-                if (token.Parent is ForEachVariableStatementSyntax statement)
+                if (token.Parent is ForStatementSyntax statement)
                 {
                     if (statement.Variable is IdentifierNameSyntax nameSyntax && nameSyntax.Identifier == token)
                     {
@@ -73,7 +73,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
             }
             else if (token.Kind() == SyntaxKind.CloseParenToken)
             {
-                var statement = token.GetAncestor<ForEachVariableStatementSyntax>();
+                var statement = token.GetAncestor<ForStatementSyntax>();
                 if (statement != null && token.Span.End == statement.Variable.Span.End)
                 {
                     return true;

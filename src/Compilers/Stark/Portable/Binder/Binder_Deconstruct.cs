@@ -46,19 +46,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             Error(diagnostics, ErrorCode.ERR_MixedDeconstructionUnsupported, left);
                         }
                         break;
-                    case SyntaxKind.ForStatement:
-                        if (((ForStatementSyntax)node.Parent).Initializers.Contains(node))
-                        {
-                            if (expression != null)
-                            {
-                                Error(diagnostics, ErrorCode.ERR_MixedDeconstructionUnsupported, left);
-                            }
-                        }
-                        else
-                        {
-                            Error(diagnostics, ErrorCode.ERR_DeclarationExpressionNotPermitted, declaration);
-                        }
-                        break;
                     default:
                         Error(diagnostics, ErrorCode.ERR_DeclarationExpressionNotPermitted, declaration);
                         break;
@@ -168,7 +155,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         private static bool IsDeconstructionResultUsed(ExpressionSyntax left)
         {
             var parent = left.Parent;
-            if (parent is null || parent.Kind() == SyntaxKind.ForEachVariableStatement)
+            if (parent is null || parent.Kind() == SyntaxKind.ForStatement)
             {
                 return false;
             }
@@ -185,12 +172,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 case SyntaxKind.ExpressionStatement:
                     return ((ExpressionStatementSyntax)grandParent).Expression != parent;
-
-                case SyntaxKind.ForStatement:
-                    // Incrementors and Initializers don't have to produce a value
-                    var loop = (ForStatementSyntax)grandParent;
-                    return !loop.Incrementors.Contains(parent) && !loop.Initializers.Contains(parent);
-
                 default:
                     return true;
             }

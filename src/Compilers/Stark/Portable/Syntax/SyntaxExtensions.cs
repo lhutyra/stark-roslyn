@@ -373,8 +373,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             return parent;
                         }
                         return null;
-                    case SyntaxKind.ForEachVariableStatement:
-                        if ((object)((ForEachVariableStatementSyntax)parent).Variable == expr)
+                    case SyntaxKind.ForStatement:
+                        if ((object)((ForStatementSyntax)parent).Variable == expr)
                         {
                             return parent;
                         }

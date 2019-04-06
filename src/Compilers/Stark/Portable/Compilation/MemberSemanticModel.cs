@@ -328,23 +328,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     break;
 
                 case SyntaxKind.ForStatement:
-                    var forStmt = (ForStatementSyntax)stmt;
-                    if (LookupPosition.IsBetweenTokens(position, forStmt.SecondSemicolonToken, forStmt.CloseParenToken) &&
-                        forStmt.Incrementors.Count > 0)
-                    {
-                        binder = binder.GetBinder(forStmt.Incrementors.First());
-                        Debug.Assert(binder != null);
-                    }
-                    else if (LookupPosition.IsBetweenTokens(position, forStmt.FirstSemicolonToken, LookupPosition.GetFirstExcludedToken(forStmt)) &&
-                        forStmt.Condition != null)
-                    {
-                        binder = binder.GetBinder(forStmt.Condition);
-                        Debug.Assert(binder != null);
-                    }
-                    break;
-
-                case SyntaxKind.ForEachVariableStatement:
-                    var foreachStmt = (CommonForEachStatementSyntax)stmt;
+                    var foreachStmt = (ForStatementSyntax)stmt;
                     var start = foreachStmt.InKeyword;
                     if (LookupPosition.IsBetweenTokens(position, start, foreachStmt.Statement.GetFirstToken()))
                     {
@@ -825,7 +809,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new AwaitExpressionInfo(boundAwait.AwaitableInfo);
         }
 
-        public override ForEachStatementInfo GetForEachStatementInfo(CommonForEachStatementSyntax node)
+        public override ForEachStatementInfo GetForEachStatementInfo(ForStatementSyntax node)
         {
             BoundForEachStatement boundForEach = (BoundForEachStatement)GetUpperBoundNode(node);
 
@@ -899,7 +883,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new DeconstructionInfo(boundConversion.Conversion);
         }
 
-        public override DeconstructionInfo GetDeconstructionInfo(ForEachVariableStatementSyntax node)
+        public override DeconstructionInfo GetDeconstructionInfo(ForStatementSyntax node)
         {
             var boundForEach = (BoundForEachStatement)GetUpperBoundNode(node);
             if (boundForEach is null)

@@ -11456,14 +11456,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundStatement body = (BoundStatement)this.Visit(node.Body);
             return node.Update(node.Locals, condition, body, node.BreakLabel, node.ContinueLabel);
         }
-        public override BoundNode VisitForStatement(BoundForStatement node)
-        {
-            BoundStatement initializer = (BoundStatement)this.Visit(node.Initializer);
-            BoundExpression condition = (BoundExpression)this.Visit(node.Condition);
-            BoundStatement increment = (BoundStatement)this.Visit(node.Increment);
-            BoundStatement body = (BoundStatement)this.Visit(node.Body);
-            return node.Update(node.OuterLocals, initializer, node.InnerLocals, condition, increment, body, node.BreakLabel, node.ContinueLabel);
-        }
         public override BoundNode VisitForEachStatement(BoundForEachStatement node)
         {
             BoundTypeExpression iterationVariableType = (BoundTypeExpression)this.Visit(node.IterationVariableType);

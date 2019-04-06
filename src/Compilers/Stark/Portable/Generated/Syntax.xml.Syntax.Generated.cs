@@ -8576,10 +8576,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
       get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.VariableDeclarationSyntax)this.Green).variableKeyword, this.Position, 0); }
     }
 
+    /// <summary>Gets the ref keyword.</summary>
+    public SyntaxToken RefKeyword 
+    {
+        get
+        {
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.VariableDeclarationSyntax)this.Green).refKeyword;
+            if (slot != null)
+                return new SyntaxToken(this, slot, this.GetChildPosition(1), this.GetChildIndex(1));
+
+            return default(SyntaxToken);
+        }
+    }
+
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.VariableDeclarationSyntax)this.Green).identifier, this.GetChildPosition(1), this.GetChildIndex(1)); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.VariableDeclarationSyntax)this.Green).identifier, this.GetChildPosition(2), this.GetChildIndex(2)); }
     }
 
     /// <summary>Gets the colon token.</summary>
@@ -8589,7 +8602,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         {
             var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.VariableDeclarationSyntax)this.Green).colonToken;
             if (slot != null)
-                return new SyntaxToken(this, slot, this.GetChildPosition(2), this.GetChildIndex(2));
+                return new SyntaxToken(this, slot, this.GetChildPosition(3), this.GetChildIndex(3));
 
             return default(SyntaxToken);
         }
@@ -8599,7 +8612,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.type, 3);
+            return this.GetRed(ref this.type, 4);
         }
     }
 
@@ -8607,7 +8620,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.initializer, 4);
+            return this.GetRed(ref this.initializer, 5);
         }
     }
 
@@ -8615,8 +8628,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 3: return this.GetRed(ref this.type, 3);
-            case 4: return this.GetRed(ref this.initializer, 4);
+            case 4: return this.GetRed(ref this.type, 4);
+            case 5: return this.GetRed(ref this.initializer, 5);
             default: return null;
         }
     }
@@ -8624,8 +8637,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 3: return this.type;
-            case 4: return this.initializer;
+            case 4: return this.type;
+            case 5: return this.initializer;
             default: return null;
         }
     }
@@ -8640,11 +8653,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitVariableDeclaration(this);
     }
 
-    public VariableDeclarationSyntax Update(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public VariableDeclarationSyntax Update(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-        if (variableKeyword != this.VariableKeyword || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || initializer != this.Initializer)
+        if (variableKeyword != this.VariableKeyword || refKeyword != this.RefKeyword || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || initializer != this.Initializer)
         {
-            var newNode = SyntaxFactory.VariableDeclaration(variableKeyword, identifier, colonToken, type, initializer);
+            var newNode = SyntaxFactory.VariableDeclaration(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -8656,27 +8669,32 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public VariableDeclarationSyntax WithVariableKeyword(SyntaxToken variableKeyword)
     {
-        return this.Update(variableKeyword, this.Identifier, this.ColonToken, this.Type, this.Initializer);
+        return this.Update(variableKeyword, this.RefKeyword, this.Identifier, this.ColonToken, this.Type, this.Initializer);
+    }
+
+    public VariableDeclarationSyntax WithRefKeyword(SyntaxToken refKeyword)
+    {
+        return this.Update(this.VariableKeyword, refKeyword, this.Identifier, this.ColonToken, this.Type, this.Initializer);
     }
 
     public VariableDeclarationSyntax WithIdentifier(SyntaxToken identifier)
     {
-        return this.Update(this.VariableKeyword, identifier, this.ColonToken, this.Type, this.Initializer);
+        return this.Update(this.VariableKeyword, this.RefKeyword, identifier, this.ColonToken, this.Type, this.Initializer);
     }
 
     public VariableDeclarationSyntax WithColonToken(SyntaxToken colonToken)
     {
-        return this.Update(this.VariableKeyword, this.Identifier, colonToken, this.Type, this.Initializer);
+        return this.Update(this.VariableKeyword, this.RefKeyword, this.Identifier, colonToken, this.Type, this.Initializer);
     }
 
     public VariableDeclarationSyntax WithType(TypeSyntax type)
     {
-        return this.Update(this.VariableKeyword, this.Identifier, this.ColonToken, type, this.Initializer);
+        return this.Update(this.VariableKeyword, this.RefKeyword, this.Identifier, this.ColonToken, type, this.Initializer);
     }
 
     public VariableDeclarationSyntax WithInitializer(EqualsValueClauseSyntax initializer)
     {
-        return this.Update(this.VariableKeyword, this.Identifier, this.ColonToken, this.Type, initializer);
+        return this.Update(this.VariableKeyword, this.RefKeyword, this.Identifier, this.ColonToken, this.Type, initializer);
     }
   }
 
@@ -10004,247 +10022,20 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
   public sealed partial class ForStatementSyntax : StatementSyntax
   {
-    private VariableDeclarationSyntax declaration;
-    private SyntaxNode initializers;
-    private ExpressionSyntax condition;
-    private SyntaxNode incrementors;
-    private StatementSyntax statement;
+    private ExpressionSyntax variable;
+    private ExpressionSyntax expression;
+    private BlockSyntax statement;
 
     internal ForStatementSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
     }
 
-    public SyntaxToken ForKeyword 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).forKeyword, this.Position, 0); }
-    }
-
-    public SyntaxToken OpenParenToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).openParenToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
-    }
-
-    public VariableDeclarationSyntax Declaration 
+    public SyntaxToken AwaitKeyword 
     {
         get
         {
-            return this.GetRed(ref this.declaration, 2);
-        }
-    }
-
-    public SeparatedSyntaxList<ExpressionSyntax> Initializers 
-    {
-        get
-        {
-            var red = this.GetRed(ref this.initializers, 3);
-            if (red != null)
-                return new SeparatedSyntaxList<ExpressionSyntax>(red, this.GetChildIndex(3));
-
-            return default(SeparatedSyntaxList<ExpressionSyntax>);
-        }
-    }
-
-    public SyntaxToken FirstSemicolonToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).firstSemicolonToken, this.GetChildPosition(4), this.GetChildIndex(4)); }
-    }
-
-    public ExpressionSyntax Condition 
-    {
-        get
-        {
-            return this.GetRed(ref this.condition, 5);
-        }
-    }
-
-    public SyntaxToken SecondSemicolonToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).secondSemicolonToken, this.GetChildPosition(6), this.GetChildIndex(6)); }
-    }
-
-    public SeparatedSyntaxList<ExpressionSyntax> Incrementors 
-    {
-        get
-        {
-            var red = this.GetRed(ref this.incrementors, 7);
-            if (red != null)
-                return new SeparatedSyntaxList<ExpressionSyntax>(red, this.GetChildIndex(7));
-
-            return default(SeparatedSyntaxList<ExpressionSyntax>);
-        }
-    }
-
-    public SyntaxToken CloseParenToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).closeParenToken, this.GetChildPosition(8), this.GetChildIndex(8)); }
-    }
-
-    public StatementSyntax Statement 
-    {
-        get
-        {
-            return this.GetRed(ref this.statement, 9);
-        }
-    }
-
-    internal override SyntaxNode GetNodeSlot(int index)
-    {
-        switch (index)
-        {
-            case 2: return this.GetRed(ref this.declaration, 2);
-            case 3: return this.GetRed(ref this.initializers, 3);
-            case 5: return this.GetRed(ref this.condition, 5);
-            case 7: return this.GetRed(ref this.incrementors, 7);
-            case 9: return this.GetRed(ref this.statement, 9);
-            default: return null;
-        }
-    }
-    internal override SyntaxNode GetCachedSlot(int index)
-    {
-        switch (index)
-        {
-            case 2: return this.declaration;
-            case 3: return this.initializers;
-            case 5: return this.condition;
-            case 7: return this.incrementors;
-            case 9: return this.statement;
-            default: return null;
-        }
-    }
-
-    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
-    {
-        return visitor.VisitForStatement(this);
-    }
-
-    public override void Accept(CSharpSyntaxVisitor visitor)
-    {
-        visitor.VisitForStatement(this);
-    }
-
-    public ForStatementSyntax Update(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-        if (forKeyword != this.ForKeyword || openParenToken != this.OpenParenToken || declaration != this.Declaration || initializers != this.Initializers || firstSemicolonToken != this.FirstSemicolonToken || condition != this.Condition || secondSemicolonToken != this.SecondSemicolonToken || incrementors != this.Incrementors || closeParenToken != this.CloseParenToken || statement != this.Statement)
-        {
-            var newNode = SyntaxFactory.ForStatement(forKeyword, openParenToken, declaration, initializers, firstSemicolonToken, condition, secondSemicolonToken, incrementors, closeParenToken, statement);
-            var annotations = this.GetAnnotations();
-            if (annotations != null && annotations.Length > 0)
-               return newNode.WithAnnotations(annotations);
-            return newNode;
-        }
-
-        return this;
-    }
-
-    public ForStatementSyntax WithForKeyword(SyntaxToken forKeyword)
-    {
-        return this.Update(forKeyword, this.OpenParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithOpenParenToken(SyntaxToken openParenToken)
-    {
-        return this.Update(this.ForKeyword, openParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithDeclaration(VariableDeclarationSyntax declaration)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithInitializers(SeparatedSyntaxList<ExpressionSyntax> initializers)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithFirstSemicolonToken(SyntaxToken firstSemicolonToken)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, this.Initializers, firstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithCondition(ExpressionSyntax condition)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithSecondSemicolonToken(SyntaxToken secondSemicolonToken)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, secondSemicolonToken, this.Incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithIncrementors(SeparatedSyntaxList<ExpressionSyntax> incrementors)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, incrementors, this.CloseParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithCloseParenToken(SyntaxToken closeParenToken)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, closeParenToken, this.Statement);
-    }
-
-    public ForStatementSyntax WithStatement(StatementSyntax statement)
-    {
-        return this.Update(this.ForKeyword, this.OpenParenToken, this.Declaration, this.Initializers, this.FirstSemicolonToken, this.Condition, this.SecondSemicolonToken, this.Incrementors, this.CloseParenToken, statement);
-    }
-
-    public ForStatementSyntax AddInitializers(params ExpressionSyntax[] items)
-    {
-        return this.WithInitializers(this.Initializers.AddRange(items));
-    }
-
-    public ForStatementSyntax AddIncrementors(params ExpressionSyntax[] items)
-    {
-        return this.WithIncrementors(this.Incrementors.AddRange(items));
-    }
-  }
-
-  public abstract partial class CommonForEachStatementSyntax : StatementSyntax
-  {
-    internal CommonForEachStatementSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
-      : base(green, parent, position)
-    {
-    }
-
-    public abstract SyntaxToken AwaitKeyword { get; }
-    public CommonForEachStatementSyntax WithAwaitKeyword(SyntaxToken awaitKeyword) => WithAwaitKeywordCore(awaitKeyword);
-    internal abstract CommonForEachStatementSyntax WithAwaitKeywordCore(SyntaxToken awaitKeyword);
-
-    public abstract SyntaxToken ForEachKeyword { get; }
-    public CommonForEachStatementSyntax WithForEachKeyword(SyntaxToken forEachKeyword) => WithForEachKeywordCore(forEachKeyword);
-    internal abstract CommonForEachStatementSyntax WithForEachKeywordCore(SyntaxToken forEachKeyword);
-
-    public abstract SyntaxToken InKeyword { get; }
-    public CommonForEachStatementSyntax WithInKeyword(SyntaxToken inKeyword) => WithInKeywordCore(inKeyword);
-    internal abstract CommonForEachStatementSyntax WithInKeywordCore(SyntaxToken inKeyword);
-
-    public abstract ExpressionSyntax Expression { get; }
-    public CommonForEachStatementSyntax WithExpression(ExpressionSyntax expression) => WithExpressionCore(expression);
-    internal abstract CommonForEachStatementSyntax WithExpressionCore(ExpressionSyntax expression);
-
-    public abstract BlockSyntax Statement { get; }
-    public CommonForEachStatementSyntax WithStatement(BlockSyntax statement) => WithStatementCore(statement);
-    internal abstract CommonForEachStatementSyntax WithStatementCore(BlockSyntax statement);
-
-    public CommonForEachStatementSyntax AddStatementStatements(params StatementSyntax[] items) => AddStatementStatementsCore(items);
-    internal abstract CommonForEachStatementSyntax AddStatementStatementsCore(params StatementSyntax[] items);
-  }
-
-  public sealed partial class ForEachVariableStatementSyntax : CommonForEachStatementSyntax
-  {
-    private ExpressionSyntax variable;
-    private ExpressionSyntax expression;
-    private BlockSyntax statement;
-
-    internal ForEachVariableStatementSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
-        : base(green, parent, position)
-    {
-    }
-
-    public override SyntaxToken AwaitKeyword 
-    {
-        get
-        {
-            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForEachVariableStatementSyntax)this.Green).awaitKeyword;
+            var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).awaitKeyword;
             if (slot != null)
                 return new SyntaxToken(this, slot, this.Position, 0);
 
@@ -10252,9 +10043,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         }
     }
 
-    public override SyntaxToken ForEachKeyword 
+    public SyntaxToken ForEachKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForEachVariableStatementSyntax)this.Green).forEachKeyword, this.GetChildPosition(1), this.GetChildIndex(1)); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).forEachKeyword, this.GetChildPosition(1), this.GetChildIndex(1)); }
     }
 
     /// <summary>
@@ -10271,12 +10062,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         }
     }
 
-    public override SyntaxToken InKeyword 
+    public SyntaxToken InKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForEachVariableStatementSyntax)this.Green).inKeyword, this.GetChildPosition(3), this.GetChildIndex(3)); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ForStatementSyntax)this.Green).inKeyword, this.GetChildPosition(3), this.GetChildIndex(3)); }
     }
 
-    public override ExpressionSyntax Expression 
+    public ExpressionSyntax Expression 
     {
         get
         {
@@ -10284,7 +10075,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         }
     }
 
-    public override BlockSyntax Statement 
+    public BlockSyntax Statement 
     {
         get
         {
@@ -10315,19 +10106,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitForEachVariableStatement(this);
+        return visitor.VisitForStatement(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitForEachVariableStatement(this);
+        visitor.VisitForStatement(this);
     }
 
-    public ForEachVariableStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
+    public ForStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
         if (awaitKeyword != this.AwaitKeyword || forEachKeyword != this.ForEachKeyword || variable != this.Variable || inKeyword != this.InKeyword || expression != this.Expression || statement != this.Statement)
         {
-            var newNode = SyntaxFactory.ForEachVariableStatement(awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
+            var newNode = SyntaxFactory.ForStatement(awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -10337,43 +10128,37 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
-    internal override CommonForEachStatementSyntax WithAwaitKeywordCore(SyntaxToken awaitKeyword) => WithAwaitKeyword(awaitKeyword);
-    public new ForEachVariableStatementSyntax WithAwaitKeyword(SyntaxToken awaitKeyword)
+    public ForStatementSyntax WithAwaitKeyword(SyntaxToken awaitKeyword)
     {
         return this.Update(awaitKeyword, this.ForEachKeyword, this.Variable, this.InKeyword, this.Expression, this.Statement);
     }
 
-    internal override CommonForEachStatementSyntax WithForEachKeywordCore(SyntaxToken forEachKeyword) => WithForEachKeyword(forEachKeyword);
-    public new ForEachVariableStatementSyntax WithForEachKeyword(SyntaxToken forEachKeyword)
+    public ForStatementSyntax WithForEachKeyword(SyntaxToken forEachKeyword)
     {
         return this.Update(this.AwaitKeyword, forEachKeyword, this.Variable, this.InKeyword, this.Expression, this.Statement);
     }
 
-    public ForEachVariableStatementSyntax WithVariable(ExpressionSyntax variable)
+    public ForStatementSyntax WithVariable(ExpressionSyntax variable)
     {
         return this.Update(this.AwaitKeyword, this.ForEachKeyword, variable, this.InKeyword, this.Expression, this.Statement);
     }
 
-    internal override CommonForEachStatementSyntax WithInKeywordCore(SyntaxToken inKeyword) => WithInKeyword(inKeyword);
-    public new ForEachVariableStatementSyntax WithInKeyword(SyntaxToken inKeyword)
+    public ForStatementSyntax WithInKeyword(SyntaxToken inKeyword)
     {
         return this.Update(this.AwaitKeyword, this.ForEachKeyword, this.Variable, inKeyword, this.Expression, this.Statement);
     }
 
-    internal override CommonForEachStatementSyntax WithExpressionCore(ExpressionSyntax expression) => WithExpression(expression);
-    public new ForEachVariableStatementSyntax WithExpression(ExpressionSyntax expression)
+    public ForStatementSyntax WithExpression(ExpressionSyntax expression)
     {
         return this.Update(this.AwaitKeyword, this.ForEachKeyword, this.Variable, this.InKeyword, expression, this.Statement);
     }
 
-    internal override CommonForEachStatementSyntax WithStatementCore(BlockSyntax statement) => WithStatement(statement);
-    public new ForEachVariableStatementSyntax WithStatement(BlockSyntax statement)
+    public ForStatementSyntax WithStatement(BlockSyntax statement)
     {
         return this.Update(this.AwaitKeyword, this.ForEachKeyword, this.Variable, this.InKeyword, this.Expression, statement);
     }
-    internal override CommonForEachStatementSyntax AddStatementStatementsCore(params StatementSyntax[] items) => AddStatementStatements(items);
 
-    public new ForEachVariableStatementSyntax AddStatementStatements(params StatementSyntax[] items)
+    public ForStatementSyntax AddStatementStatements(params StatementSyntax[] items)
     {
         return this.WithStatement(this.Statement.WithStatements(this.Statement.Statements.AddRange(items)));
     }

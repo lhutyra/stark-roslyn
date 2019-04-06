@@ -863,8 +863,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.WhileKeyword;
                 case "for":
                     return SyntaxKind.ForKeyword;
-                case "foreach":
-                    return SyntaxKind.ForEachKeyword;
                 case "do":
                     return SyntaxKind.DoKeyword;
                 case "switch":
@@ -1433,8 +1431,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "while";
                 case SyntaxKind.ForKeyword:
                     return "for";
-                case SyntaxKind.ForEachKeyword:
-                    return "foreach";
                 case SyntaxKind.DoKeyword:
                     return "do";
                 case SyntaxKind.SwitchKeyword:

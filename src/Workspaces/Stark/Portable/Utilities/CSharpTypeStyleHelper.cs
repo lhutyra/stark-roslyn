@@ -81,7 +81,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
 
         internal TypeSyntax FindAnalyzableType(SyntaxNode node, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
-            Debug.Assert(node.IsKind(SyntaxKind.VariableDeclaration, SyntaxKind.ForEachVariableStatement, SyntaxKind.DeclarationExpression));
+            Debug.Assert(node.IsKind(SyntaxKind.VariableDeclaration, SyntaxKind.ForStatement, SyntaxKind.DeclarationExpression));
 
             switch (node)
             {
@@ -105,13 +105,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             // must have an initializer.
             var isSupportedParentKind = variableDeclaration.IsParentKind(
                 SyntaxKind.LocalDeclarationStatement,
-                SyntaxKind.ForStatement,
+                SyntaxKind.ForStatementOld,
                 SyntaxKind.UsingStatement);
 
             return isSupportedParentKind && variableDeclaration.Initializer != null && variableDeclaration.Initializer.IsKind(SyntaxKind.EqualsValueClause);
         }
 
-        protected virtual bool ShouldAnalyzeForEachStatement(ForEachVariableStatementSyntax forEachStatement, SemanticModel semanticModel, CancellationToken cancellationToken)
+        protected virtual bool ShouldAnalyzeForEachStatement(ForStatementSyntax forEachStatement, SemanticModel semanticModel, CancellationToken cancellationToken)
             => true;
 
         protected virtual bool ShouldAnalyzeDeclarationExpression(DeclarationExpressionSyntax declaration, SemanticModel semanticModel, CancellationToken cancellationToken)
@@ -128,7 +128,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
 
                     break;
 
-                case ForEachVariableStatementSyntax forEachVariableStatement:
+                case ForStatementSyntax forEachVariableStatement:
                     deconstructionInfoOpt = semanticModel.GetDeconstructionInfo(forEachVariableStatement);
                     break;
             }

@@ -195,8 +195,8 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.Debugging
                             AddExpressionTerms((previousStatement as DoStatementSyntax).Condition, _expressions);
                             AddLastStatementOfConstruct(previousStatement);
                             break;
+                        case SyntaxKind.ForStatementOld:
                         case SyntaxKind.ForStatement:
-                        case SyntaxKind.ForEachVariableStatement:
                         case SyntaxKind.IfStatement:
                         case SyntaxKind.CheckedStatement:
                         case SyntaxKind.UncheckedStatement:
@@ -246,11 +246,11 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.Debugging
                     case SyntaxKind.DoStatement:
                         AddLastStatementOfConstruct((statement as DoStatementSyntax).Statement);
                         break;
+                    case SyntaxKind.ForStatementOld:
+                        AddLastStatementOfConstruct((statement as ForStatementSyntax2).Statement);
+                        break;
                     case SyntaxKind.ForStatement:
                         AddLastStatementOfConstruct((statement as ForStatementSyntax).Statement);
-                        break;
-                    case SyntaxKind.ForEachVariableStatement:
-                        AddLastStatementOfConstruct((statement as CommonForEachStatementSyntax).Statement);
                         break;
                     case SyntaxKind.IfStatement:
                         var ifStatement = statement as IfStatementSyntax;

@@ -348,8 +348,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
                 node.Kind() == SyntaxKind.IfStatement ||
                 node.Kind() == SyntaxKind.ElseClause ||
                 node.Kind() == SyntaxKind.WhileStatement ||
+                node.Kind() == SyntaxKind.ForStatementOld ||
                 node.Kind() == SyntaxKind.ForStatement ||
-                node.Kind() == SyntaxKind.ForEachVariableStatement ||
                 node.Kind() == SyntaxKind.UsingStatement ||
                 node.Kind() == SyntaxKind.DoStatement ||
                 node.Kind() == SyntaxKind.TryStatement ||

@@ -2174,7 +2174,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return memberModel == null ? default(AwaitExpressionInfo) : memberModel.GetAwaitExpressionInfo(node);
         }
 
-        public override ForEachStatementInfo GetForEachStatementInfo(CommonForEachStatementSyntax node)
+        public override ForEachStatementInfo GetForEachStatementInfo(ForStatementSyntax node)
         {
             MemberSemanticModel memberModel = GetMemberModel(node);
             return memberModel == null ? default(ForEachStatementInfo) : memberModel.GetForEachStatementInfo(node);
@@ -2186,7 +2186,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return memberModel?.GetDeconstructionInfo(node) ?? default;
         }
 
-        public override DeconstructionInfo GetDeconstructionInfo(ForEachVariableStatementSyntax node)
+        public override DeconstructionInfo GetDeconstructionInfo(ForStatementSyntax node)
         {
             MemberSemanticModel memberModel = GetMemberModel(node);
             return memberModel?.GetDeconstructionInfo(node) ?? default;

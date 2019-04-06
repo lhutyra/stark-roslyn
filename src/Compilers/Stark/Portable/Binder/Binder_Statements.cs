@@ -64,10 +64,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     result = BindWhile((WhileStatementSyntax)node, diagnostics);
                     break;
                 case SyntaxKind.ForStatement:
-                    result = BindFor((ForStatementSyntax)node, diagnostics);
-                    break;
-                case SyntaxKind.ForEachVariableStatement:
-                    result = BindForEach((CommonForEachStatementSyntax)node, diagnostics);
+                    result = BindForEach((ForStatementSyntax)node, diagnostics);
                     break;
                 case SyntaxKind.BreakStatement:
                     result = BindBreak((BreakStatementSyntax)node, diagnostics);
@@ -324,7 +321,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         switch (node.Parent.Kind())
                         {
                             case SyntaxKind.ForStatement:
-                            case SyntaxKind.ForEachVariableStatement:
                             case SyntaxKind.WhileStatement:
                                 // For loop constructs, only warn if we see a block following the statement.
                                 // That indicates code like:  "while (x) ; { }"
@@ -1049,12 +1045,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         private SourceLocalSymbol LocateDeclaredVariableSymbol(VariableDeclarationSyntax declarator, TypeSyntax typeSyntax, LocalDeclarationKind outerKind)
         {
             LocalDeclarationKind kind = outerKind == LocalDeclarationKind.UsingVariable ? LocalDeclarationKind.UsingVariable : LocalDeclarationKind.RegularVariable;
-            return LocateDeclaredVariableSymbol(declarator.Identifier, typeSyntax, declarator.Initializer, kind);
-        }
-
-        private SourceLocalSymbol LocateDeclaredVariableSymbol(SyntaxToken identifier, TypeSyntax typeSyntax, EqualsValueClauseSyntax equalsValue, LocalDeclarationKind kind)
-        {
-            SourceLocalSymbol localSymbol = this.LookupLocal(identifier);
+            SourceLocalSymbol localSymbol = this.LookupLocal(declarator.Identifier);
 
             // In error scenarios with misplaced code, it is possible we can't bind the local declaration.
             // This occurs through the semantic model.  In that case concoct a plausible result.
@@ -1063,11 +1054,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 localSymbol = SourceLocalSymbol.MakeLocal(
                     ContainingMemberOrLambda,
                     this,
-                    false, // do not allow ref
+                    RefKind.None,
                     typeSyntax,
-                    identifier,
+                    declarator.Identifier,
                     kind,
-                    equalsValue);
+                    declarator.Initializer);
             }
 
             return localSymbol;
@@ -2265,13 +2256,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.Next.BindDoParts(diagnostics, originalBinder);
         }
 
-        internal BoundForStatement BindFor(ForStatementSyntax node, DiagnosticBag diagnostics)
-        {
-            var loopBinder = this.GetBinder(node);
-            Debug.Assert(loopBinder != null);
-            return loopBinder.BindForParts(diagnostics, loopBinder);
-        }
-
         internal virtual BoundForStatement BindForParts(DiagnosticBag diagnostics, Binder originalBinder)
         {
             return this.Next.BindForParts(diagnostics, originalBinder);
@@ -2325,7 +2309,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
         }
 
-        private BoundStatement BindForEach(CommonForEachStatementSyntax node, DiagnosticBag diagnostics)
+        private BoundStatement BindForEach(ForStatementSyntax node, DiagnosticBag diagnostics)
         {
             Binder loopBinder = this.GetBinder(node);
             return this.GetBinder(node.Expression).WrapWithVariablesIfAny(node.Expression, loopBinder.BindForEachParts(diagnostics, loopBinder));

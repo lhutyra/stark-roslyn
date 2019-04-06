@@ -232,13 +232,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                 return;
             }
 
-            if (node is ForStatementSyntax forStatement && forStatement.Statement != null && !(forStatement.Statement is BlockSyntax))
+            if (node is ForStatementSyntax2 forStatement && forStatement.Statement != null && !(forStatement.Statement is BlockSyntax))
             {
                 AddEmbeddedStatementsIndentationOperation(list, forStatement.Statement);
                 return;
             }
 
-            if (node is CommonForEachStatementSyntax foreachStatement && foreachStatement.Statement != null && !(foreachStatement.Statement is BlockSyntax))
+            if (node is ForStatementSyntax foreachStatement && foreachStatement.Statement != null && !(foreachStatement.Statement is BlockSyntax))
             {
                 AddEmbeddedStatementsIndentationOperation(list, foreachStatement.Statement);
                 return;

@@ -141,8 +141,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.UsePatternMatching
 
                             return CheckExpression(conditionalExpression);
 
-                        case SyntaxKind.ForStatement:
-                            var forStatement = (ForStatementSyntax)current;
+                        case SyntaxKind.ForStatementOld:
+                            var forStatement = (ForStatementSyntax2)current;
                             if (!forStatement.Condition.Span.Contains(_comparison.Span))
                             {
                                 // In a for-statement, only the condition expression

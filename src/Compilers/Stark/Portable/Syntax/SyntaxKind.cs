@@ -106,7 +106,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ElseKeyword = 8326,
         WhileKeyword = 8327,
         ForKeyword = 8328,
-        ForEachKeyword = 8329,
+        //ForEachKeyword = 8329,
         DoKeyword = 8330,
         SwitchKeyword = 8331,
         CaseKeyword = 8332,
@@ -484,7 +484,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         WhileStatement = 8809,
         DoStatement = 8810,
-        ForStatement = 8811,
         UsingStatement = 8813,
         FixedStatement = 8814,
 
@@ -586,7 +585,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         TupleExpression = 8926,
         SingleVariableDesignation = 8927,
         ParenthesizedVariableDesignation = 8928,
-        ForEachVariableStatement = 8929,
+        ForStatement = 8929,
 
         // patterns (for pattern-matching)
         DeclarationPattern = 9000,

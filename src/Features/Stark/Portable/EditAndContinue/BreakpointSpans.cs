@@ -411,13 +411,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                             LastNotMissing(doStatement.CloseParenToken, doStatement.EosToken));
                     }
 
-                case SyntaxKind.ForStatement:
+                case SyntaxKind.ForStatementOld:
                     // Note: if the user was in the body of the for, then we would have hit its nested
                     // statement on the way up.  If they were in the condition or the incrementors, then
                     // we would have those on the way up as well (in TryCreateBreakpointSpanForExpression or
                     // CreateBreakpointSpanForVariableDeclaration). So the user must be on the 'for'
                     // itself. in that case, set the bp on the variable declaration or initializers
-                    var forStatement = (ForStatementSyntax)statement;
+                    var forStatement = (ForStatementSyntax2)statement;
                     if (forStatement.Declaration != null)
                     {
                         // for (int i = 0; ...
@@ -447,19 +447,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                         return TryCreateSpanForStatement(forStatement.Statement, position);
                     }
 
-                case SyntaxKind.ForEachVariableStatement:
+                case SyntaxKind.ForStatement:
                     // Note: if the user was in the body of the foreach, then we would have hit its
                     // nested statement on the way up.  If they were in the expression then we would
                     // have hit that on the way up as well. In "foreach(var f in expr)" we allow a
                     // bp on "foreach", "var f" and "in".
-                    var forEachStatement = (CommonForEachStatementSyntax)statement;
+                    var forEachStatement = (ForStatementSyntax)statement;
                     if (position < forEachStatement.ForEachKeyword.Span.End || position > forEachStatement.Expression.Span.End)
                     {
                         return CreateSpan(forEachStatement.ForEachKeyword);
                     }
                     else if (position < forEachStatement.InKeyword.FullSpan.Start)
                     {
-                        return ((ForEachVariableStatementSyntax)statement).Variable.Span;
+                        return ((ForStatementSyntax)statement).Variable.Span;
                     }
                     else if (position < forEachStatement.Expression.FullSpan.Start)
                     {
@@ -675,15 +675,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     Debug.Assert(((ArrowExpressionClauseSyntax)parent).Expression == expression);
                     return true;
 
-                case SyntaxKind.ForStatement:
-                    var forStatement = (ForStatementSyntax)parent;
+                case SyntaxKind.ForStatementOld:
+                    var forStatement = (ForStatementSyntax2)parent;
                     return
                         forStatement.Initializers.Contains(expression) ||
                         forStatement.Condition == expression ||
                         forStatement.Incrementors.Contains(expression);
 
-                case SyntaxKind.ForEachVariableStatement:
-                    var forEachStatement = (CommonForEachStatementSyntax)parent;
+                case SyntaxKind.ForStatement:
+                    var forEachStatement = (ForStatementSyntax)parent;
                     return forEachStatement.Expression == expression;
 
                 default:

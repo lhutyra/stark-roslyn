@@ -1638,7 +1638,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 switch (curSyntax.Kind())
                 {
                     case SyntaxKind.ForStatement:
-                    case SyntaxKind.ForEachVariableStatement:
                     case SyntaxKind.WhileStatement:
                     case SyntaxKind.DoStatement:
                     case SyntaxKind.SimpleLambdaExpression:

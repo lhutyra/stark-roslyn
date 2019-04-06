@@ -123,8 +123,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.WhileStatement:
                 case SyntaxKind.SwitchStatement:
+                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachVariableStatement:
                     return true;
             }
 
@@ -137,8 +137,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             {
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.WhileStatement:
+                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachVariableStatement:
                     return true;
             }
 
@@ -550,7 +550,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case ArgumentListSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case WhileStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case DoStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
-                case ForStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
+                case ForStatementSyntax2 n: return (n.OpenParenToken, n.CloseParenToken);
                 case UsingStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case FixedStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case LockStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
@@ -826,7 +826,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             for (var current = node; current != null; current = current.GetParent())
             {
                 if ((current is AssignmentExpressionSyntax assignment && previous == assignment.Left && assignment.IsDeconstruction()) ||
-                    (current is ForEachVariableStatementSyntax @foreach && previous == @foreach.Variable))
+                    (current is ForStatementSyntax @foreach && previous == @foreach.Variable))
                 {
                     deconstructionLeft = previous;
                     return true;

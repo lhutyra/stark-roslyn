@@ -209,7 +209,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         public ForEachSymbols GetForEachSymbols(SemanticModel semanticModel, SyntaxNode forEachStatement)
         {
-            if (forEachStatement is CommonForEachStatementSyntax csforEachStatement)
+            if (forEachStatement is ForStatementSyntax csforEachStatement)
             {
                 var info = semanticModel.GetForEachStatementInfo(csforEachStatement);
                 return new ForEachSymbols(
@@ -250,7 +250,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         public ImmutableArray<IMethodSymbol> GetDeconstructionForEachMethods(SemanticModel semanticModel, SyntaxNode node)
         {
-            if (node is ForEachVariableStatementSyntax @foreach)
+            if (node is ForStatementSyntax @foreach)
             {
                 var builder = ArrayBuilder<IMethodSymbol>.GetInstance();
                 FlattenDeconstructionMethods(semanticModel.GetDeconstructionInfo(@foreach), builder);
@@ -302,7 +302,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case AssignmentExpressionSyntax assignment when token.Kind() == SyntaxKind.EqualsToken:
                     return GetDeconstructionAssignmentMethods(semanticModel, node).As<ISymbol>();
 
-                case ForEachVariableStatementSyntax deconstructionForeach when token.Kind() == SyntaxKind.InKeyword:
+                case ForStatementSyntax deconstructionForeach when token.Kind() == SyntaxKind.InKeyword:
                     return GetDeconstructionForEachMethods(semanticModel, node).As<ISymbol>();
             }
 

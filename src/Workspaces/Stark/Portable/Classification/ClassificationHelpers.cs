@@ -112,8 +112,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification
                 case SyntaxKind.ThrowStatement:
                 case SyntaxKind.WhileStatement:
                 case SyntaxKind.DoStatement:
+                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachVariableStatement:
                 // Checked Statements
                 case SyntaxKind.IfStatement:
                 case SyntaxKind.ElseClause:
@@ -259,7 +259,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification
             {
                 return ClassificationTypeNames.ParameterName;
             }
-            else if (token.Parent is ForEachVariableStatementSyntax forEachStatementSyntax && ((IdentifierNameSyntax)forEachStatementSyntax.Variable).Identifier == token)
+            else if (token.Parent is ForStatementSyntax forEachStatementSyntax && ((IdentifierNameSyntax)forEachStatementSyntax.Variable).Identifier == token)
             {
                 return ClassificationTypeNames.LocalName;
             }

@@ -26,10 +26,10 @@ namespace StarkPlatform.CodeAnalysis.Editor.CSharp.KeywordHighlighting.KeywordHi
                 case DoStatementSyntax doStatement:
                     HighlightDoStatement(doStatement, spans);
                     break;
-                case ForStatementSyntax forStatement:
+                case ForStatementSyntax2 forStatement:
                     HighlightForStatement(forStatement, spans);
                     break;
-                case CommonForEachStatementSyntax forEachStatement:
+                case ForStatementSyntax forEachStatement:
                     HighlightForEachStatement(forEachStatement, spans);
                     break;
                 case WhileStatementSyntax whileStatement:
@@ -49,12 +49,12 @@ namespace StarkPlatform.CodeAnalysis.Editor.CSharp.KeywordHighlighting.KeywordHi
             spans.Add(EmptySpan(statement.EosToken.Span.End));
         }
 
-        private void HighlightForStatement(ForStatementSyntax statement, List<TextSpan> spans)
+        private void HighlightForStatement(ForStatementSyntax2 statement, List<TextSpan> spans)
         {
             spans.Add(statement.ForKeyword.Span);
         }
 
-        private void HighlightForEachStatement(CommonForEachStatementSyntax statement, List<TextSpan> spans)
+        private void HighlightForEachStatement(ForStatementSyntax statement, List<TextSpan> spans)
         {
             spans.Add(statement.ForEachKeyword.Span);
         }

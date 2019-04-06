@@ -2208,7 +2208,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             LoopTail(node);
             ResolveBreaks(breakState, node.BreakLabel);
 
-            if (AwaitUsingAndForeachAddsPendingBranch && ((CommonForEachStatementSyntax)node.Syntax).AwaitKeyword != default)
+            if (AwaitUsingAndForeachAddsPendingBranch && ((ForStatementSyntax)node.Syntax).AwaitKeyword != default)
             {
                 PendingBranches.Add(new PendingBranch(node, this.State, null));
             }

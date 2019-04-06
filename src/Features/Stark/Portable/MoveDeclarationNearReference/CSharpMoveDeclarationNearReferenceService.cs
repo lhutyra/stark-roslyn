@@ -22,8 +22,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.MoveDeclarationNearReference
         {
             return node is AnonymousFunctionExpressionSyntax ||
                    node is LocalFunctionStatementSyntax ||
-                   node is CommonForEachStatementSyntax ||
                    node is ForStatementSyntax ||
+                   node is ForStatementSyntax2 ||
                    node is WhileStatementSyntax ||
                    node is DoStatementSyntax ||
                    node is CheckedStatementSyntax;

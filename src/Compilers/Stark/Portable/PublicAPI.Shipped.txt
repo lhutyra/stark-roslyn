@@ -32,12 +32,12 @@ abstract StarkPlatform.CodeAnalysis.Stark.Syntax.BaseTypeDeclarationSyntax.OpenB
 abstract StarkPlatform.CodeAnalysis.Stark.Syntax.BaseTypeDeclarationSyntax.SemicolonToken.get -> StarkPlatform.CodeAnalysis.SyntaxToken
 abstract StarkPlatform.CodeAnalysis.Stark.Syntax.BaseTypeSyntax.Type.get -> StarkPlatform.CodeAnalysis.Stark.Syntax.TypeSyntax
 abstract StarkPlatform.CodeAnalysis.Stark.Syntax.BranchingDirectiveTriviaSyntax.BranchTaken.get -> bool
-abstract StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax.CloseParenToken.get -> StarkPlatform.CodeAnalysis.SyntaxToken
-abstract StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax.Expression.get -> StarkPlatform.CodeAnalysis.Stark.Syntax.ExpressionSyntax
-abstract StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax.ForEachKeyword.get -> StarkPlatform.CodeAnalysis.SyntaxToken
-abstract StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax.InKeyword.get -> StarkPlatform.CodeAnalysis.SyntaxToken
-abstract StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax.OpenParenToken.get -> StarkPlatform.CodeAnalysis.SyntaxToken
-abstract StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax.Statement.get -> StarkPlatform.CodeAnalysis.Stark.Syntax.StatementSyntax
+abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax.CloseParenToken.get -> StarkPlatform.CodeAnalysis.SyntaxToken
+abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax.Expression.get -> StarkPlatform.CodeAnalysis.Stark.Syntax.ExpressionSyntax
+abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax.ForEachKeyword.get -> StarkPlatform.CodeAnalysis.SyntaxToken
+abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax.InKeyword.get -> StarkPlatform.CodeAnalysis.SyntaxToken
+abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax.OpenParenToken.get -> StarkPlatform.CodeAnalysis.SyntaxToken
+abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax.Statement.get -> StarkPlatform.CodeAnalysis.Stark.Syntax.StatementSyntax
 abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ConditionalDirectiveTriviaSyntax.Condition.get -> StarkPlatform.CodeAnalysis.Stark.Syntax.ExpressionSyntax
 abstract StarkPlatform.CodeAnalysis.Stark.Syntax.ConditionalDirectiveTriviaSyntax.ConditionValue.get -> bool
 abstract StarkPlatform.CodeAnalysis.Stark.Syntax.DirectiveTriviaSyntax.EndOfDirectiveToken.get -> StarkPlatform.CodeAnalysis.SyntaxToken
@@ -565,7 +565,7 @@ StarkPlatform.CodeAnalysis.Stark.Syntax.ClassOrStructConstraintSyntax
 StarkPlatform.CodeAnalysis.Stark.Syntax.ClassOrStructConstraintSyntax.ClassOrStructKeyword.get -> StarkPlatform.CodeAnalysis.SyntaxToken
 StarkPlatform.CodeAnalysis.Stark.Syntax.ClassOrStructConstraintSyntax.Update(StarkPlatform.CodeAnalysis.SyntaxToken classOrStructKeyword) -> StarkPlatform.CodeAnalysis.Stark.Syntax.ClassOrStructConstraintSyntax
 StarkPlatform.CodeAnalysis.Stark.Syntax.ClassOrStructConstraintSyntax.WithClassOrStructKeyword(StarkPlatform.CodeAnalysis.SyntaxToken classOrStructKeyword) -> StarkPlatform.CodeAnalysis.Stark.Syntax.ClassOrStructConstraintSyntax
-StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax
+StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax
 StarkPlatform.CodeAnalysis.Stark.Syntax.CompilationUnitSyntax
 StarkPlatform.CodeAnalysis.Stark.Syntax.CompilationUnitSyntax.AddAttributeLists(params StarkPlatform.CodeAnalysis.Stark.Syntax.AttributeSyntax[] items) -> StarkPlatform.CodeAnalysis.Stark.Syntax.CompilationUnitSyntax
 StarkPlatform.CodeAnalysis.Stark.Syntax.CompilationUnitSyntax.AddExterns(params StarkPlatform.CodeAnalysis.Stark.Syntax.ExternAliasDirectiveSyntax[] items) -> StarkPlatform.CodeAnalysis.Stark.Syntax.CompilationUnitSyntax
@@ -3602,7 +3602,7 @@ static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetDeclaredSymbol(this 
 static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetDeconstructionInfo(this StarkPlatform.CodeAnalysis.SemanticModel semanticModel, StarkPlatform.CodeAnalysis.Stark.Syntax.AssignmentExpressionSyntax assignment) -> StarkPlatform.CodeAnalysis.Stark.DeconstructionInfo
 static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetDeconstructionInfo(this StarkPlatform.CodeAnalysis.SemanticModel semanticModel, StarkPlatform.CodeAnalysis.Stark.Syntax.ForEachVariableStatementSyntax foreach) -> StarkPlatform.CodeAnalysis.Stark.DeconstructionInfo
 static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetFirstDirective(this StarkPlatform.CodeAnalysis.SyntaxNode node, System.Func<StarkPlatform.CodeAnalysis.Stark.Syntax.DirectiveTriviaSyntax, bool> predicate = null) -> StarkPlatform.CodeAnalysis.Stark.Syntax.DirectiveTriviaSyntax
-static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetForEachStatementInfo(this StarkPlatform.CodeAnalysis.SemanticModel semanticModel, StarkPlatform.CodeAnalysis.Stark.Syntax.CommonForEachStatementSyntax forEachStatement) -> StarkPlatform.CodeAnalysis.Stark.ForEachStatementInfo
+static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetForEachStatementInfo(this StarkPlatform.CodeAnalysis.SemanticModel semanticModel, StarkPlatform.CodeAnalysis.Stark.Syntax.ForStatementSyntax forEachStatement) -> StarkPlatform.CodeAnalysis.Stark.ForEachStatementInfo
 static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetForEachStatementInfo(this StarkPlatform.CodeAnalysis.SemanticModel semanticModel, StarkPlatform.CodeAnalysis.Stark.Syntax.ForEachVariableStatementSyntax forEachStatement) -> StarkPlatform.CodeAnalysis.Stark.ForEachStatementInfo
 static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetInConversion(this StarkPlatform.CodeAnalysis.Operations.ICompoundAssignmentOperation compoundAssignment) -> StarkPlatform.CodeAnalysis.Stark.Conversion
 static StarkPlatform.CodeAnalysis.Stark.CSharpExtensions.GetIndexerGroup(this StarkPlatform.CodeAnalysis.SemanticModel semanticModel, StarkPlatform.CodeAnalysis.Stark.Syntax.ExpressionSyntax expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Collections.Immutable.ImmutableArray<StarkPlatform.CodeAnalysis.IPropertySymbol>

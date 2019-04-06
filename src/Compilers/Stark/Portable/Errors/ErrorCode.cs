@@ -1703,7 +1703,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_InlineILArgumentExpected = 9014,
         ERR_InlineILNoArgumentExpected = 9015,
         ERR_InvalidInlineILArgument = 9016,
-
+        ERR_InvalidVarDeclarationAfterRef = 9017,
+        ERR_InvalidVarDeclaration = 9018,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

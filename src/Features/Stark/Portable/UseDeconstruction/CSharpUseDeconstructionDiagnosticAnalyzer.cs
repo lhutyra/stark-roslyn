@@ -57,7 +57,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseDeconstruction
                 case VariableDeclarationSyntax variableDeclaration:
                     AnalyzeVariableDeclaration(context, variableDeclaration, option.Notification.Severity);
                     return;
-                case ForEachVariableStatementSyntax forEachStatement:
+                case ForStatementSyntax forEachStatement:
                     AnalyzeForEachStatement(context, forEachStatement, option.Notification.Severity);
                     return;
             }
@@ -82,7 +82,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseDeconstruction
         }
 
         private void AnalyzeForEachStatement(
-            SyntaxNodeAnalysisContext context, ForEachVariableStatementSyntax forEachStatement, ReportDiagnostic severity)
+            SyntaxNodeAnalysisContext context, ForStatementSyntax forEachStatement, ReportDiagnostic severity)
         {
             if (!TryAnalyzeForEachStatement(
                     context.SemanticModel, forEachStatement, out _,
@@ -134,7 +134,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseDeconstruction
 
         public static bool TryAnalyzeForEachStatement(
             SemanticModel semanticModel,
-            ForEachVariableStatementSyntax forEachStatement,
+            ForStatementSyntax forEachStatement,
             out INamedTypeSymbol tupleType,
             out ImmutableArray<MemberAccessExpressionSyntax> memberAccessExpressions,
             CancellationToken cancellationToken)

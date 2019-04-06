@@ -143,7 +143,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
 
         public static bool IsSemicolonInForStatement(this SyntaxToken token)
         {
-            var forStatement = token.Parent as ForStatementSyntax;
+            var forStatement = token.Parent as ForStatementSyntax2;
             return
                 token.Kind() == SyntaxKind.SemicolonToken &&
                 forStatement != null &&
@@ -299,7 +299,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                     return whileStatement.CloseParenToken.Equals(token);
                 case DoStatementSyntax doStatement:
                     return doStatement.CloseParenToken.Equals(token);
-                case ForStatementSyntax forStatement:
+                case ForStatementSyntax2 forStatement:
                     return forStatement.CloseParenToken.Equals(token);
                 case LockStatementSyntax lockStatement:
                     return lockStatement.CloseParenToken.Equals(token);
@@ -383,8 +383,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
         {
             return node is IfStatementSyntax ||
                    node is WhileStatementSyntax ||
+                   node is ForStatementSyntax2 ||
                    node is ForStatementSyntax ||
-                   node is CommonForEachStatementSyntax ||
                    node is UsingStatementSyntax ||
                    node is FixedStatementSyntax ||
                    node is LockStatementSyntax;

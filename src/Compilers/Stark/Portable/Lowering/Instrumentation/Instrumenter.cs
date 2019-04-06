@@ -131,43 +131,28 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public virtual BoundStatement InstrumentForEachStatementCollectionVarDeclaration(BoundForEachStatement original, BoundStatement collectionVarDecl)
         {
             Debug.Assert(!original.WasCompilerGenerated);
-            Debug.Assert(original.Syntax is CommonForEachStatementSyntax);
+            Debug.Assert(original.Syntax is ForStatementSyntax);
             return collectionVarDecl;
         }
 
         public virtual BoundStatement InstrumentForEachStatement(BoundForEachStatement original, BoundStatement rewritten)
         {
-            Debug.Assert(original.Syntax is CommonForEachStatementSyntax);
+            Debug.Assert(original.Syntax is ForStatementSyntax);
             return InstrumentStatement(original, rewritten);
         }
 
         public virtual BoundStatement InstrumentForEachStatementDeconstructionVariablesDeclaration(BoundForEachStatement original, BoundStatement iterationVarDecl)
         {
             Debug.Assert(!original.WasCompilerGenerated);
-            Debug.Assert(original.Syntax.Kind() == SyntaxKind.ForEachVariableStatement);
+            Debug.Assert(original.Syntax.Kind() == SyntaxKind.ForStatement);
             return iterationVarDecl;
         }
 
         public virtual BoundStatement InstrumentForEachStatementConditionalGotoStart(BoundForEachStatement original, BoundStatement branchBack)
         {
             Debug.Assert(!original.WasCompilerGenerated);
-            Debug.Assert(original.Syntax is CommonForEachStatementSyntax);
+            Debug.Assert(original.Syntax is ForStatementSyntax);
             return branchBack;
-        }
-
-        public virtual BoundStatement InstrumentForStatementConditionalGotoStartOrBreak(BoundForStatement original, BoundStatement branchBack)
-        {
-            Debug.Assert(!original.WasCompilerGenerated);
-            Debug.Assert(original.Syntax.Kind() == SyntaxKind.ForStatement);
-            return branchBack;
-        }
-
-        public virtual BoundExpression InstrumentForStatementCondition(BoundForStatement original, BoundExpression rewrittenCondition, SyntheticBoundNodeFactory factory)
-        {
-            Debug.Assert(!original.WasCompilerGenerated);
-            Debug.Assert(original.Syntax.Kind() == SyntaxKind.ForStatement);
-            Debug.Assert(factory != null);
-            return rewrittenCondition;
         }
 
         public virtual BoundStatement InstrumentIfStatement(BoundIfStatement original, BoundStatement rewritten)

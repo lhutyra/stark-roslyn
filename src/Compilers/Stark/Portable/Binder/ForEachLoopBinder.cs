@@ -27,12 +27,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
         private const string GetAsyncEnumeratorMethodName = WellKnownMemberNames.GetAsyncEnumeratorMethodName;
         private const string MoveNextAsyncMethodName = WellKnownMemberNames.MoveNextAsyncMethodName;
 
-        private readonly CommonForEachStatementSyntax _syntax;
+        private readonly ForStatementSyntax _syntax;
 
         private bool IsAsync
             => _syntax.AwaitKeyword != default;
 
-        public ForEachLoopBinder(Binder enclosing, CommonForEachStatementSyntax syntax)
+        public ForEachLoopBinder(Binder enclosing, ForStatementSyntax syntax)
             : base(enclosing)
         {
             Debug.Assert(syntax != null);
@@ -43,9 +43,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             switch (_syntax.Kind())
             {
-                case SyntaxKind.ForEachVariableStatement:
+                case SyntaxKind.ForStatement:
                     {
-                        var syntax = (ForEachVariableStatementSyntax)_syntax;
+                        var syntax = (ForStatementSyntax)_syntax;
                         var locals = ArrayBuilder<LocalSymbol>.GetInstance();
                         CollectLocalsFromDeconstruction(
                             syntax.Variable,
@@ -88,7 +88,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     }
                 case SyntaxKind.IdentifierName:
                     var syntax = (IdentifierNameSyntax)declaration;
-                    var collection = ((ForEachVariableStatementSyntax)deconstructionStatement).Expression;
+                    var collection = ((ForStatementSyntax)deconstructionStatement).Expression;
                     var symbol = SourceLocalSymbol.MakeForeachLocal(
                         (MethodSymbol)this.ContainingMemberOrLambda,
                         this,
@@ -165,7 +165,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             TypeSymbolWithAnnotations inferredType;
             bool hasErrors = !GetEnumeratorInfoAndInferCollectionElementType(ref builder, ref collectionExpr, diagnostics, out inferredType);
 
-            ExpressionSyntax variables = ((ForEachVariableStatementSyntax)_syntax).Variable;
+            ExpressionSyntax variables = ((ForStatementSyntax)_syntax).Variable;
 
             // Tracking narrowest safe-to-escape scope by default, the proper val escape will be set when doing full binding of the foreach statement
             var valuePlaceholder = new BoundDeconstructValuePlaceholder(_syntax.Expression, this.LocalScopeDepth, inferredType.TypeSymbol ?? CreateErrorType("var"));
@@ -218,9 +218,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
             uint collectionEscape = GetValEscape(collectionExpr, this.LocalScopeDepth);
             switch (_syntax.Kind())
             {
-                case SyntaxKind.ForEachVariableStatement:
+                case SyntaxKind.ForStatement:
                     {
-                        var node = (ForEachVariableStatementSyntax)_syntax;
+                        var node = (ForStatementSyntax)_syntax;
                         iterationVariableType = inferredType.TypeSymbol ?? CreateErrorType("var");
 
                         var variables = node.Variable;

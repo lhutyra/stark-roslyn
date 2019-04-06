@@ -26,9 +26,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                 case SyntaxKind.ElseClause:
                 case SyntaxKind.WhileStatement:
                 case SyntaxKind.DoStatement:
-                case SyntaxKind.ForEachVariableStatement:
-                case SyntaxKind.UsingStatement:
                 case SyntaxKind.ForStatement:
+                case SyntaxKind.UsingStatement:
+                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.TryStatement:
                 case SyntaxKind.CatchClause:
                 case SyntaxKind.FinallyClause:
@@ -380,7 +380,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             // Insert a newline between the previous statement and this one.
             // ; *
             if (previousToken.Kind() == SyntaxKind.SemicolonToken
-                && (previousToken.Parent is StatementSyntax && !previousToken.Parent.IsKind(SyntaxKind.ForStatement))
+                && (previousToken.Parent is StatementSyntax && !previousToken.Parent.IsKind(SyntaxKind.ForStatementOld))
                 && !optionSet.GetOption(CSharpFormattingOptions.WrappingKeepStatementsOnSingleLine))
             {
                 return CreateAdjustNewLinesOperation(1, AdjustNewLinesOption.PreserveLines);

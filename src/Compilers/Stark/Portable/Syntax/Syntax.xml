@@ -1975,6 +1975,12 @@
         <Kind Name="LetKeyword"/>
         <Kind Name="ConstKeyword"/>
     </Field>
+    <Field Name="RefKeyword" Type="SyntaxToken" Optional="true">
+        <PropertyComment>
+            <summary>Gets the ref keyword.</summary>
+        </PropertyComment>
+        <Kind Name="RefKeyword"/>
+    </Field>
     <Field Name="Identifier" Type="SyntaxToken">
         <PropertyComment>
             <summary>Gets the identifier.</summary>
@@ -2201,56 +2207,14 @@
       <Kind Name="EndOfLineTrivia"/>
     </Field>
   </Node>
+
   <Node Name="ForStatementSyntax" Base="StatementSyntax">
     <Kind Name="ForStatement"/>
-    <Field Name="ForKeyword" Type="SyntaxToken">
-      <Kind Name="ForKeyword"/>
-    </Field>
-    <Field Name="OpenParenToken" Type="SyntaxToken">
-      <Kind Name="OpenParenToken"/>
-    </Field>
-    <!-- Declaration and Initializers are mutually exclusive. -->
-    <Field Name="Declaration" Type="VariableDeclarationSyntax" Optional="true"/>
-    <Field Name="Initializers" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;"/>
-    <Field Name="FirstSemicolonToken" Type="SyntaxToken">
-      <Kind Name="SemicolonToken"/>
-    </Field>
-    <Field Name="Condition" Type="ExpressionSyntax" Optional="true"/>
-    <Field Name="SecondSemicolonToken" Type="SyntaxToken">
-      <Kind Name="SemicolonToken"/>
-    </Field>
-    <Field Name="Incrementors" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;"/>
-    <Field Name="CloseParenToken" Type="SyntaxToken">
-      <Kind Name="CloseParenToken"/>
-    </Field>
-    <Field Name="Statement" Type="StatementSyntax"/>
-  </Node>
-
-  <!-- Because there are two forms of the foreach loop, we make an abstract base. -->
-  <AbstractNode Name="CommonForEachStatementSyntax" Base="StatementSyntax">
     <Field Name="AwaitKeyword" Type="SyntaxToken" Optional="true">
       <Kind Name="AwaitKeyword"/>
     </Field>
     <Field Name="ForEachKeyword" Type="SyntaxToken">
-      <Kind Name="ForEachKeyword"/>
-    </Field>
-    <!-- At this point one of two declaration forms appears -->
-    <Field Name="InKeyword" Type="SyntaxToken">
-      <Kind Name="InKeyword"/>
-    </Field>
-    <Field Name="Expression" Type="ExpressionSyntax"/>
-    <Field Name="Statement" Type="BlockSyntax"/>
-  </AbstractNode>
-  <!-- We name this "DeclarationForEachStatementSyntax" because it can express existing foreach
-       loops. We may elect to represent all foreach loops using this node and deprecate (stop parsing
-       into) the old one. -->
-  <Node Name="ForEachVariableStatementSyntax" Base="CommonForEachStatementSyntax">
-    <Kind Name="ForEachVariableStatement"/>
-    <Field Name="AwaitKeyword" Type="SyntaxToken" Optional="true" Override="true">
-      <Kind Name="AwaitKeyword"/>
-    </Field>
-    <Field Name="ForEachKeyword" Type="SyntaxToken" Override="true">
-      <Kind Name="ForEachKeyword"/>
+      <Kind Name="ForKeyword"/>
     </Field>
     <Field Name="Variable" Type="ExpressionSyntax">
       <PropertyComment>
@@ -2262,11 +2226,11 @@
         </summary>
       </PropertyComment>
     </Field>
-    <Field Name="InKeyword" Type="SyntaxToken" Override="true">
+    <Field Name="InKeyword" Type="SyntaxToken">
       <Kind Name="InKeyword"/>
     </Field>
-    <Field Name="Expression" Type="ExpressionSyntax" Override="true"/>
-    <Field Name="Statement" Type="BlockSyntax" Override="true"/>
+    <Field Name="Expression" Type="ExpressionSyntax" />
+    <Field Name="Statement" Type="BlockSyntax" />
   </Node>
 
   <!--

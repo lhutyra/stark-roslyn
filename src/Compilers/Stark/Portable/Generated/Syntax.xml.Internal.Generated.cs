@@ -13687,17 +13687,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   internal sealed partial class VariableDeclarationSyntax : CSharpSyntaxNode
   {
     internal readonly SyntaxToken variableKeyword;
+    internal readonly SyntaxToken refKeyword;
     internal readonly SyntaxToken identifier;
     internal readonly SyntaxToken colonToken;
     internal readonly TypeSyntax type;
     internal readonly EqualsValueClauseSyntax initializer;
 
-    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 5;
+        this.SlotCount = 6;
         this.AdjustFlagsAndWidth(variableKeyword);
         this.variableKeyword = variableKeyword;
+        if (refKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(refKeyword);
+            this.refKeyword = refKeyword;
+        }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
         if (colonToken != null)
@@ -13718,13 +13724,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, SyntaxFactoryContext context)
+    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 5;
+        this.SlotCount = 6;
         this.AdjustFlagsAndWidth(variableKeyword);
         this.variableKeyword = variableKeyword;
+        if (refKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(refKeyword);
+            this.refKeyword = refKeyword;
+        }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
         if (colonToken != null)
@@ -13745,12 +13756,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
         : base(kind)
     {
-        this.SlotCount = 5;
+        this.SlotCount = 6;
         this.AdjustFlagsAndWidth(variableKeyword);
         this.variableKeyword = variableKeyword;
+        if (refKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(refKeyword);
+            this.refKeyword = refKeyword;
+        }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
         if (colonToken != null)
@@ -13772,6 +13788,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     /// <summary>Gets the variable keyword.</summary>
     public SyntaxToken VariableKeyword { get { return this.variableKeyword; } }
+    /// <summary>Gets the ref keyword.</summary>
+    public SyntaxToken RefKeyword { get { return this.refKeyword; } }
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
     /// <summary>Gets the colon token.</summary>
@@ -13784,10 +13802,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         switch (index)
         {
             case 0: return this.variableKeyword;
-            case 1: return this.identifier;
-            case 2: return this.colonToken;
-            case 3: return this.type;
-            case 4: return this.initializer;
+            case 1: return this.refKeyword;
+            case 2: return this.identifier;
+            case 3: return this.colonToken;
+            case 4: return this.type;
+            case 5: return this.initializer;
             default: return null;
         }
     }
@@ -13807,11 +13826,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitVariableDeclaration(this);
     }
 
-    public VariableDeclarationSyntax Update(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public VariableDeclarationSyntax Update(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-        if (variableKeyword != this.VariableKeyword || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || initializer != this.Initializer)
+        if (variableKeyword != this.VariableKeyword || refKeyword != this.RefKeyword || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || initializer != this.Initializer)
         {
-            var newNode = SyntaxFactory.VariableDeclaration(variableKeyword, identifier, colonToken, type, initializer);
+            var newNode = SyntaxFactory.VariableDeclaration(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -13826,23 +13845,29 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.identifier, this.colonToken, this.type, this.initializer, diagnostics, GetAnnotations());
+         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.refKeyword, this.identifier, this.colonToken, this.type, this.initializer, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.identifier, this.colonToken, this.type, this.initializer, GetDiagnostics(), annotations);
+         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.refKeyword, this.identifier, this.colonToken, this.type, this.initializer, GetDiagnostics(), annotations);
     }
 
     internal VariableDeclarationSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 5;
+      this.SlotCount = 6;
       var variableKeyword = (SyntaxToken)reader.ReadValue();
       if (variableKeyword != null)
       {
          AdjustFlagsAndWidth(variableKeyword);
          this.variableKeyword = variableKeyword;
+      }
+      var refKeyword = (SyntaxToken)reader.ReadValue();
+      if (refKeyword != null)
+      {
+         AdjustFlagsAndWidth(refKeyword);
+         this.refKeyword = refKeyword;
       }
       var identifier = (SyntaxToken)reader.ReadValue();
       if (identifier != null)
@@ -13874,6 +13899,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.variableKeyword);
+      writer.WriteValue(this.refKeyword);
       writer.WriteValue(this.identifier);
       writer.WriteValue(this.colonToken);
       writer.WriteValue(this.type);
@@ -16126,159 +16152,102 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
   internal sealed partial class ForStatementSyntax : StatementSyntax
   {
-    internal readonly SyntaxToken forKeyword;
-    internal readonly SyntaxToken openParenToken;
-    internal readonly VariableDeclarationSyntax declaration;
-    internal readonly GreenNode initializers;
-    internal readonly SyntaxToken firstSemicolonToken;
-    internal readonly ExpressionSyntax condition;
-    internal readonly SyntaxToken secondSemicolonToken;
-    internal readonly GreenNode incrementors;
-    internal readonly SyntaxToken closeParenToken;
-    internal readonly StatementSyntax statement;
+    internal readonly SyntaxToken awaitKeyword;
+    internal readonly SyntaxToken forEachKeyword;
+    internal readonly ExpressionSyntax variable;
+    internal readonly SyntaxToken inKeyword;
+    internal readonly ExpressionSyntax expression;
+    internal readonly BlockSyntax statement;
 
-    internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, GreenNode initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, GreenNode incrementors, SyntaxToken closeParenToken, StatementSyntax statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal ForStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 10;
-        this.AdjustFlagsAndWidth(forKeyword);
-        this.forKeyword = forKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        if (declaration != null)
+        this.SlotCount = 6;
+        if (awaitKeyword != null)
         {
-            this.AdjustFlagsAndWidth(declaration);
-            this.declaration = declaration;
+            this.AdjustFlagsAndWidth(awaitKeyword);
+            this.awaitKeyword = awaitKeyword;
         }
-        if (initializers != null)
-        {
-            this.AdjustFlagsAndWidth(initializers);
-            this.initializers = initializers;
-        }
-        this.AdjustFlagsAndWidth(firstSemicolonToken);
-        this.firstSemicolonToken = firstSemicolonToken;
-        if (condition != null)
-        {
-            this.AdjustFlagsAndWidth(condition);
-            this.condition = condition;
-        }
-        this.AdjustFlagsAndWidth(secondSemicolonToken);
-        this.secondSemicolonToken = secondSemicolonToken;
-        if (incrementors != null)
-        {
-            this.AdjustFlagsAndWidth(incrementors);
-            this.incrementors = incrementors;
-        }
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
+        this.AdjustFlagsAndWidth(forEachKeyword);
+        this.forEachKeyword = forEachKeyword;
+        this.AdjustFlagsAndWidth(variable);
+        this.variable = variable;
+        this.AdjustFlagsAndWidth(inKeyword);
+        this.inKeyword = inKeyword;
+        this.AdjustFlagsAndWidth(expression);
+        this.expression = expression;
         this.AdjustFlagsAndWidth(statement);
         this.statement = statement;
     }
 
 
-    internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, GreenNode initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, GreenNode incrementors, SyntaxToken closeParenToken, StatementSyntax statement, SyntaxFactoryContext context)
+    internal ForStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 10;
-        this.AdjustFlagsAndWidth(forKeyword);
-        this.forKeyword = forKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        if (declaration != null)
+        this.SlotCount = 6;
+        if (awaitKeyword != null)
         {
-            this.AdjustFlagsAndWidth(declaration);
-            this.declaration = declaration;
+            this.AdjustFlagsAndWidth(awaitKeyword);
+            this.awaitKeyword = awaitKeyword;
         }
-        if (initializers != null)
-        {
-            this.AdjustFlagsAndWidth(initializers);
-            this.initializers = initializers;
-        }
-        this.AdjustFlagsAndWidth(firstSemicolonToken);
-        this.firstSemicolonToken = firstSemicolonToken;
-        if (condition != null)
-        {
-            this.AdjustFlagsAndWidth(condition);
-            this.condition = condition;
-        }
-        this.AdjustFlagsAndWidth(secondSemicolonToken);
-        this.secondSemicolonToken = secondSemicolonToken;
-        if (incrementors != null)
-        {
-            this.AdjustFlagsAndWidth(incrementors);
-            this.incrementors = incrementors;
-        }
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
+        this.AdjustFlagsAndWidth(forEachKeyword);
+        this.forEachKeyword = forEachKeyword;
+        this.AdjustFlagsAndWidth(variable);
+        this.variable = variable;
+        this.AdjustFlagsAndWidth(inKeyword);
+        this.inKeyword = inKeyword;
+        this.AdjustFlagsAndWidth(expression);
+        this.expression = expression;
         this.AdjustFlagsAndWidth(statement);
         this.statement = statement;
     }
 
 
-    internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, GreenNode initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, GreenNode incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
+    internal ForStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
         : base(kind)
     {
-        this.SlotCount = 10;
-        this.AdjustFlagsAndWidth(forKeyword);
-        this.forKeyword = forKeyword;
-        this.AdjustFlagsAndWidth(openParenToken);
-        this.openParenToken = openParenToken;
-        if (declaration != null)
+        this.SlotCount = 6;
+        if (awaitKeyword != null)
         {
-            this.AdjustFlagsAndWidth(declaration);
-            this.declaration = declaration;
+            this.AdjustFlagsAndWidth(awaitKeyword);
+            this.awaitKeyword = awaitKeyword;
         }
-        if (initializers != null)
-        {
-            this.AdjustFlagsAndWidth(initializers);
-            this.initializers = initializers;
-        }
-        this.AdjustFlagsAndWidth(firstSemicolonToken);
-        this.firstSemicolonToken = firstSemicolonToken;
-        if (condition != null)
-        {
-            this.AdjustFlagsAndWidth(condition);
-            this.condition = condition;
-        }
-        this.AdjustFlagsAndWidth(secondSemicolonToken);
-        this.secondSemicolonToken = secondSemicolonToken;
-        if (incrementors != null)
-        {
-            this.AdjustFlagsAndWidth(incrementors);
-            this.incrementors = incrementors;
-        }
-        this.AdjustFlagsAndWidth(closeParenToken);
-        this.closeParenToken = closeParenToken;
+        this.AdjustFlagsAndWidth(forEachKeyword);
+        this.forEachKeyword = forEachKeyword;
+        this.AdjustFlagsAndWidth(variable);
+        this.variable = variable;
+        this.AdjustFlagsAndWidth(inKeyword);
+        this.inKeyword = inKeyword;
+        this.AdjustFlagsAndWidth(expression);
+        this.expression = expression;
         this.AdjustFlagsAndWidth(statement);
         this.statement = statement;
     }
 
-    public SyntaxToken ForKeyword { get { return this.forKeyword; } }
-    public SyntaxToken OpenParenToken { get { return this.openParenToken; } }
-    public VariableDeclarationSyntax Declaration { get { return this.declaration; } }
-    public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> Initializers { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax>(new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.initializers)); } }
-    public SyntaxToken FirstSemicolonToken { get { return this.firstSemicolonToken; } }
-    public ExpressionSyntax Condition { get { return this.condition; } }
-    public SyntaxToken SecondSemicolonToken { get { return this.secondSemicolonToken; } }
-    public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> Incrementors { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax>(new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.incrementors)); } }
-    public SyntaxToken CloseParenToken { get { return this.closeParenToken; } }
-    public StatementSyntax Statement { get { return this.statement; } }
+    public SyntaxToken AwaitKeyword { get { return this.awaitKeyword; } }
+    public SyntaxToken ForEachKeyword { get { return this.forEachKeyword; } }
+    /// <summary>
+    /// The variable(s) of the loop. In correct code this is a tuple
+    /// literal, declaration expression with a tuple designator, or
+    /// a discard syntax in the form of a simple identifier. In broken
+    /// code it could be something else.
+    /// </summary>
+    public ExpressionSyntax Variable { get { return this.variable; } }
+    public SyntaxToken InKeyword { get { return this.inKeyword; } }
+    public ExpressionSyntax Expression { get { return this.expression; } }
+    public BlockSyntax Statement { get { return this.statement; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.forKeyword;
-            case 1: return this.openParenToken;
-            case 2: return this.declaration;
-            case 3: return this.initializers;
-            case 4: return this.firstSemicolonToken;
-            case 5: return this.condition;
-            case 6: return this.secondSemicolonToken;
-            case 7: return this.incrementors;
-            case 8: return this.closeParenToken;
-            case 9: return this.statement;
+            case 0: return this.awaitKeyword;
+            case 1: return this.forEachKeyword;
+            case 2: return this.variable;
+            case 3: return this.inKeyword;
+            case 4: return this.expression;
+            case 5: return this.statement;
             default: return null;
         }
     }
@@ -16298,269 +16267,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitForStatement(this);
     }
 
-    public ForStatementSyntax Update(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-        if (forKeyword != this.ForKeyword || openParenToken != this.OpenParenToken || declaration != this.Declaration || initializers != this.Initializers || firstSemicolonToken != this.FirstSemicolonToken || condition != this.Condition || secondSemicolonToken != this.SecondSemicolonToken || incrementors != this.Incrementors || closeParenToken != this.CloseParenToken || statement != this.Statement)
-        {
-            var newNode = SyntaxFactory.ForStatement(forKeyword, openParenToken, declaration, initializers, firstSemicolonToken, condition, secondSemicolonToken, incrementors, closeParenToken, statement);
-            var diags = this.GetDiagnostics();
-            if (diags != null && diags.Length > 0)
-               newNode = newNode.WithDiagnosticsGreen(diags);
-            var annotations = this.GetAnnotations();
-            if (annotations != null && annotations.Length > 0)
-               newNode = newNode.WithAnnotationsGreen(annotations);
-            return newNode;
-        }
-
-        return this;
-    }
-
-    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
-    {
-         return new ForStatementSyntax(this.Kind, this.forKeyword, this.openParenToken, this.declaration, this.initializers, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementors, this.closeParenToken, this.statement, diagnostics, GetAnnotations());
-    }
-
-    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
-    {
-         return new ForStatementSyntax(this.Kind, this.forKeyword, this.openParenToken, this.declaration, this.initializers, this.firstSemicolonToken, this.condition, this.secondSemicolonToken, this.incrementors, this.closeParenToken, this.statement, GetDiagnostics(), annotations);
-    }
-
-    internal ForStatementSyntax(ObjectReader reader)
-        : base(reader)
-    {
-      this.SlotCount = 10;
-      var forKeyword = (SyntaxToken)reader.ReadValue();
-      if (forKeyword != null)
-      {
-         AdjustFlagsAndWidth(forKeyword);
-         this.forKeyword = forKeyword;
-      }
-      var openParenToken = (SyntaxToken)reader.ReadValue();
-      if (openParenToken != null)
-      {
-         AdjustFlagsAndWidth(openParenToken);
-         this.openParenToken = openParenToken;
-      }
-      var declaration = (VariableDeclarationSyntax)reader.ReadValue();
-      if (declaration != null)
-      {
-         AdjustFlagsAndWidth(declaration);
-         this.declaration = declaration;
-      }
-      var initializers = (GreenNode)reader.ReadValue();
-      if (initializers != null)
-      {
-         AdjustFlagsAndWidth(initializers);
-         this.initializers = initializers;
-      }
-      var firstSemicolonToken = (SyntaxToken)reader.ReadValue();
-      if (firstSemicolonToken != null)
-      {
-         AdjustFlagsAndWidth(firstSemicolonToken);
-         this.firstSemicolonToken = firstSemicolonToken;
-      }
-      var condition = (ExpressionSyntax)reader.ReadValue();
-      if (condition != null)
-      {
-         AdjustFlagsAndWidth(condition);
-         this.condition = condition;
-      }
-      var secondSemicolonToken = (SyntaxToken)reader.ReadValue();
-      if (secondSemicolonToken != null)
-      {
-         AdjustFlagsAndWidth(secondSemicolonToken);
-         this.secondSemicolonToken = secondSemicolonToken;
-      }
-      var incrementors = (GreenNode)reader.ReadValue();
-      if (incrementors != null)
-      {
-         AdjustFlagsAndWidth(incrementors);
-         this.incrementors = incrementors;
-      }
-      var closeParenToken = (SyntaxToken)reader.ReadValue();
-      if (closeParenToken != null)
-      {
-         AdjustFlagsAndWidth(closeParenToken);
-         this.closeParenToken = closeParenToken;
-      }
-      var statement = (StatementSyntax)reader.ReadValue();
-      if (statement != null)
-      {
-         AdjustFlagsAndWidth(statement);
-         this.statement = statement;
-      }
-    }
-
-    internal override void WriteTo(ObjectWriter writer)
-    {
-      base.WriteTo(writer);
-      writer.WriteValue(this.forKeyword);
-      writer.WriteValue(this.openParenToken);
-      writer.WriteValue(this.declaration);
-      writer.WriteValue(this.initializers);
-      writer.WriteValue(this.firstSemicolonToken);
-      writer.WriteValue(this.condition);
-      writer.WriteValue(this.secondSemicolonToken);
-      writer.WriteValue(this.incrementors);
-      writer.WriteValue(this.closeParenToken);
-      writer.WriteValue(this.statement);
-    }
-
-    static ForStatementSyntax()
-    {
-       ObjectBinder.RegisterTypeReader(typeof(ForStatementSyntax), r => new ForStatementSyntax(r));
-    }
-  }
-
-  internal abstract partial class CommonForEachStatementSyntax : StatementSyntax
-  {
-    internal CommonForEachStatementSyntax(SyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-      : base(kind, diagnostics, annotations)
-    {
-    }
-    internal CommonForEachStatementSyntax(SyntaxKind kind)
-      : base(kind)
-    {
-    }
-
-    protected CommonForEachStatementSyntax(ObjectReader reader)
-       : base(reader)
-    {
-    }
-
-    public abstract SyntaxToken AwaitKeyword { get; }
-
-    public abstract SyntaxToken ForEachKeyword { get; }
-
-    public abstract SyntaxToken InKeyword { get; }
-
-    public abstract ExpressionSyntax Expression { get; }
-
-    public abstract BlockSyntax Statement { get; }
-  }
-
-  internal sealed partial class ForEachVariableStatementSyntax : CommonForEachStatementSyntax
-  {
-    internal readonly SyntaxToken awaitKeyword;
-    internal readonly SyntaxToken forEachKeyword;
-    internal readonly ExpressionSyntax variable;
-    internal readonly SyntaxToken inKeyword;
-    internal readonly ExpressionSyntax expression;
-    internal readonly BlockSyntax statement;
-
-    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-        : base(kind, diagnostics, annotations)
-    {
-        this.SlotCount = 6;
-        if (awaitKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(awaitKeyword);
-            this.awaitKeyword = awaitKeyword;
-        }
-        this.AdjustFlagsAndWidth(forEachKeyword);
-        this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(variable);
-        this.variable = variable;
-        this.AdjustFlagsAndWidth(inKeyword);
-        this.inKeyword = inKeyword;
-        this.AdjustFlagsAndWidth(expression);
-        this.expression = expression;
-        this.AdjustFlagsAndWidth(statement);
-        this.statement = statement;
-    }
-
-
-    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement, SyntaxFactoryContext context)
-        : base(kind)
-    {
-        this.SetFactoryContext(context);
-        this.SlotCount = 6;
-        if (awaitKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(awaitKeyword);
-            this.awaitKeyword = awaitKeyword;
-        }
-        this.AdjustFlagsAndWidth(forEachKeyword);
-        this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(variable);
-        this.variable = variable;
-        this.AdjustFlagsAndWidth(inKeyword);
-        this.inKeyword = inKeyword;
-        this.AdjustFlagsAndWidth(expression);
-        this.expression = expression;
-        this.AdjustFlagsAndWidth(statement);
-        this.statement = statement;
-    }
-
-
-    internal ForEachVariableStatementSyntax(SyntaxKind kind, SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
-        : base(kind)
-    {
-        this.SlotCount = 6;
-        if (awaitKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(awaitKeyword);
-            this.awaitKeyword = awaitKeyword;
-        }
-        this.AdjustFlagsAndWidth(forEachKeyword);
-        this.forEachKeyword = forEachKeyword;
-        this.AdjustFlagsAndWidth(variable);
-        this.variable = variable;
-        this.AdjustFlagsAndWidth(inKeyword);
-        this.inKeyword = inKeyword;
-        this.AdjustFlagsAndWidth(expression);
-        this.expression = expression;
-        this.AdjustFlagsAndWidth(statement);
-        this.statement = statement;
-    }
-
-    public override SyntaxToken AwaitKeyword { get { return this.awaitKeyword; } }
-    public override SyntaxToken ForEachKeyword { get { return this.forEachKeyword; } }
-    /// <summary>
-    /// The variable(s) of the loop. In correct code this is a tuple
-    /// literal, declaration expression with a tuple designator, or
-    /// a discard syntax in the form of a simple identifier. In broken
-    /// code it could be something else.
-    /// </summary>
-    public ExpressionSyntax Variable { get { return this.variable; } }
-    public override SyntaxToken InKeyword { get { return this.inKeyword; } }
-    public override ExpressionSyntax Expression { get { return this.expression; } }
-    public override BlockSyntax Statement { get { return this.statement; } }
-
-    internal override GreenNode GetSlot(int index)
-    {
-        switch (index)
-        {
-            case 0: return this.awaitKeyword;
-            case 1: return this.forEachKeyword;
-            case 2: return this.variable;
-            case 3: return this.inKeyword;
-            case 4: return this.expression;
-            case 5: return this.statement;
-            default: return null;
-        }
-    }
-
-    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
-    {
-      return new Stark.Syntax.ForEachVariableStatementSyntax(this, parent, position);
-    }
-
-    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
-    {
-        return visitor.VisitForEachVariableStatement(this);
-    }
-
-    public override void Accept(CSharpSyntaxVisitor visitor)
-    {
-        visitor.VisitForEachVariableStatement(this);
-    }
-
-    public ForEachVariableStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
+    public ForStatementSyntax Update(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
         if (awaitKeyword != this.AwaitKeyword || forEachKeyword != this.ForEachKeyword || variable != this.Variable || inKeyword != this.InKeyword || expression != this.Expression || statement != this.Statement)
         {
-            var newNode = SyntaxFactory.ForEachVariableStatement(awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
+            var newNode = SyntaxFactory.ForStatement(awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -16575,15 +16286,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new ForEachVariableStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.variable, this.inKeyword, this.expression, this.statement, diagnostics, GetAnnotations());
+         return new ForStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.variable, this.inKeyword, this.expression, this.statement, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new ForEachVariableStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.variable, this.inKeyword, this.expression, this.statement, GetDiagnostics(), annotations);
+         return new ForStatementSyntax(this.Kind, this.awaitKeyword, this.forEachKeyword, this.variable, this.inKeyword, this.expression, this.statement, GetDiagnostics(), annotations);
     }
 
-    internal ForEachVariableStatementSyntax(ObjectReader reader)
+    internal ForStatementSyntax(ObjectReader reader)
         : base(reader)
     {
       this.SlotCount = 6;
@@ -16636,9 +16347,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       writer.WriteValue(this.statement);
     }
 
-    static ForEachVariableStatementSyntax()
+    static ForStatementSyntax()
     {
-       ObjectBinder.RegisterTypeReader(typeof(ForEachVariableStatementSyntax), r => new ForEachVariableStatementSyntax(r));
+       ObjectBinder.RegisterTypeReader(typeof(ForStatementSyntax), r => new ForStatementSyntax(r));
     }
   }
 
@@ -36952,11 +36663,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
-    public virtual TResult VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
-    {
-      return this.DefaultVisit(node);
-    }
-
     public virtual TResult VisitUsingStatement(UsingStatementSyntax node)
     {
       return this.DefaultVisit(node);
@@ -38042,11 +37748,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
     public virtual void VisitForStatement(ForStatementSyntax node)
-    {
-      this.DefaultVisit(node);
-    }
-
-    public virtual void VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -39318,11 +39019,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public override CSharpSyntaxNode VisitVariableDeclaration(VariableDeclarationSyntax node)
     {
       var variableKeyword = (SyntaxToken)this.Visit(node.VariableKeyword);
+      var refKeyword = (SyntaxToken)this.Visit(node.RefKeyword);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
       var colonToken = (SyntaxToken)this.Visit(node.ColonToken);
       var type = (TypeSyntax)this.Visit(node.Type);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
-      return node.Update(variableKeyword, identifier, colonToken, type, initializer);
+      return node.Update(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
     }
 
     public override CSharpSyntaxNode VisitEqualsValueClause(EqualsValueClauseSyntax node)
@@ -39444,21 +39146,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
     public override CSharpSyntaxNode VisitForStatement(ForStatementSyntax node)
-    {
-      var forKeyword = (SyntaxToken)this.Visit(node.ForKeyword);
-      var openParenToken = (SyntaxToken)this.Visit(node.OpenParenToken);
-      var declaration = (VariableDeclarationSyntax)this.Visit(node.Declaration);
-      var initializers = this.VisitList(node.Initializers);
-      var firstSemicolonToken = (SyntaxToken)this.Visit(node.FirstSemicolonToken);
-      var condition = (ExpressionSyntax)this.Visit(node.Condition);
-      var secondSemicolonToken = (SyntaxToken)this.Visit(node.SecondSemicolonToken);
-      var incrementors = this.VisitList(node.Incrementors);
-      var closeParenToken = (SyntaxToken)this.Visit(node.CloseParenToken);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
-      return node.Update(forKeyword, openParenToken, declaration, initializers, firstSemicolonToken, condition, secondSemicolonToken, incrementors, closeParenToken, statement);
-    }
-
-    public override CSharpSyntaxNode VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
     {
       var awaitKeyword = (SyntaxToken)this.Visit(node.AwaitKeyword);
       var forEachKeyword = (SyntaxToken)this.Visit(node.ForEachKeyword);
@@ -43467,7 +43154,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, eosToken, this.context);
     }
 
-    public VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
 #if DEBUG
       if (variableKeyword == null)
@@ -43480,6 +43167,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           break;
         default:
           throw new ArgumentException(nameof(variableKeyword));
+      }
+      if (refKeyword != null)
+      {
+      switch (refKeyword.Kind)
+      {
+        case SyntaxKind.RefKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(refKeyword));
+      }
       }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
@@ -43503,7 +43201,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, identifier, colonToken, type, initializer, this.context);
+      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, refKeyword, identifier, colonToken, type, initializer, this.context);
     }
 
     public EqualsValueClauseSyntax EqualsValueClause(SyntaxToken equalsToken, ExpressionSyntax value)
@@ -44077,62 +43775,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new DoStatementSyntax(SyntaxKind.DoStatement, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken, this.context);
     }
 
-    public ForStatementSyntax ForStatement(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-#if DEBUG
-      if (forKeyword == null)
-        throw new ArgumentNullException(nameof(forKeyword));
-      switch (forKeyword.Kind)
-      {
-        case SyntaxKind.ForKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(forKeyword));
-      }
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
-      if (firstSemicolonToken == null)
-        throw new ArgumentNullException(nameof(firstSemicolonToken));
-      switch (firstSemicolonToken.Kind)
-      {
-        case SyntaxKind.SemicolonToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(firstSemicolonToken));
-      }
-      if (secondSemicolonToken == null)
-        throw new ArgumentNullException(nameof(secondSemicolonToken));
-      switch (secondSemicolonToken.Kind)
-      {
-        case SyntaxKind.SemicolonToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(secondSemicolonToken));
-      }
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (statement == null)
-        throw new ArgumentNullException(nameof(statement));
-#endif
-
-      return new ForStatementSyntax(SyntaxKind.ForStatement, forKeyword, openParenToken, declaration, initializers.Node, firstSemicolonToken, condition, secondSemicolonToken, incrementors.Node, closeParenToken, statement, this.context);
-    }
-
-    public ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
+    public ForStatementSyntax ForStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
 #if DEBUG
       if (awaitKeyword != null)
@@ -44150,7 +43793,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         throw new ArgumentNullException(nameof(forEachKeyword));
       switch (forEachKeyword.Kind)
       {
-        case SyntaxKind.ForEachKeyword:
+        case SyntaxKind.ForKeyword:
           break;
         default:
           throw new ArgumentException(nameof(forEachKeyword));
@@ -44172,7 +43815,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         throw new ArgumentNullException(nameof(statement));
 #endif
 
-      return new ForEachVariableStatementSyntax(SyntaxKind.ForEachVariableStatement, awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement, this.context);
+      return new ForStatementSyntax(SyntaxKind.ForStatement, awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement, this.context);
     }
 
     public UsingStatementSyntax UsingStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -50991,7 +50634,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, eosToken);
     }
 
-    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
 #if DEBUG
       if (variableKeyword == null)
@@ -51004,6 +50647,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           break;
         default:
           throw new ArgumentException(nameof(variableKeyword));
+      }
+      if (refKeyword != null)
+      {
+      switch (refKeyword.Kind)
+      {
+        case SyntaxKind.RefKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(refKeyword));
+      }
       }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
@@ -51027,7 +50681,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, identifier, colonToken, type, initializer);
+      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, refKeyword, identifier, colonToken, type, initializer);
     }
 
     public static EqualsValueClauseSyntax EqualsValueClause(SyntaxToken equalsToken, ExpressionSyntax value)
@@ -51601,62 +51255,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new DoStatementSyntax(SyntaxKind.DoStatement, doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken);
     }
 
-    public static ForStatementSyntax ForStatement(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-#if DEBUG
-      if (forKeyword == null)
-        throw new ArgumentNullException(nameof(forKeyword));
-      switch (forKeyword.Kind)
-      {
-        case SyntaxKind.ForKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(forKeyword));
-      }
-      if (openParenToken == null)
-        throw new ArgumentNullException(nameof(openParenToken));
-      switch (openParenToken.Kind)
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
-      if (firstSemicolonToken == null)
-        throw new ArgumentNullException(nameof(firstSemicolonToken));
-      switch (firstSemicolonToken.Kind)
-      {
-        case SyntaxKind.SemicolonToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(firstSemicolonToken));
-      }
-      if (secondSemicolonToken == null)
-        throw new ArgumentNullException(nameof(secondSemicolonToken));
-      switch (secondSemicolonToken.Kind)
-      {
-        case SyntaxKind.SemicolonToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(secondSemicolonToken));
-      }
-      if (closeParenToken == null)
-        throw new ArgumentNullException(nameof(closeParenToken));
-      switch (closeParenToken.Kind)
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (statement == null)
-        throw new ArgumentNullException(nameof(statement));
-#endif
-
-      return new ForStatementSyntax(SyntaxKind.ForStatement, forKeyword, openParenToken, declaration, initializers.Node, firstSemicolonToken, condition, secondSemicolonToken, incrementors.Node, closeParenToken, statement);
-    }
-
-    public static ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
+    public static ForStatementSyntax ForStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
 #if DEBUG
       if (awaitKeyword != null)
@@ -51674,7 +51273,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         throw new ArgumentNullException(nameof(forEachKeyword));
       switch (forEachKeyword.Kind)
       {
-        case SyntaxKind.ForEachKeyword:
+        case SyntaxKind.ForKeyword:
           break;
         default:
           throw new ArgumentException(nameof(forEachKeyword));
@@ -51696,7 +51295,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         throw new ArgumentNullException(nameof(statement));
 #endif
 
-      return new ForEachVariableStatementSyntax(SyntaxKind.ForEachVariableStatement, awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
+      return new ForStatementSyntax(SyntaxKind.ForStatement, awaitKeyword, forEachKeyword, variable, inKeyword, expression, statement);
     }
 
     public static UsingStatementSyntax UsingStatement(SyntaxToken awaitKeyword, SyntaxToken usingKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, ExpressionSyntax expression, SyntaxToken closeParenToken, StatementSyntax statement)
@@ -55635,7 +55234,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(WhileStatementSyntax),
            typeof(DoStatementSyntax),
            typeof(ForStatementSyntax),
-           typeof(ForEachVariableStatementSyntax),
            typeof(UsingStatementSyntax),
            typeof(InlineILStatementSyntax),
            typeof(FixedStatementSyntax),

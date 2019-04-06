@@ -207,14 +207,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </remarks>
         public override BoundStatement InstrumentForEachStatementCollectionVarDeclaration(BoundForEachStatement original, BoundStatement collectionVarDecl)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)original.Syntax;
+            var forEachSyntax = (ForStatementSyntax)original.Syntax;
             return new BoundSequencePoint(forEachSyntax.Expression,
                                           base.InstrumentForEachStatementCollectionVarDeclaration(original, collectionVarDecl));
         }
 
         public override BoundStatement InstrumentForEachStatementDeconstructionVariablesDeclaration(BoundForEachStatement original, BoundStatement iterationVarDecl)
         {
-            var forEachSyntax = (ForEachVariableStatementSyntax)original.Syntax;
+            var forEachSyntax = (ForStatementSyntax)original.Syntax;
             return new BoundSequencePointWithSpan(forEachSyntax, base.InstrumentForEachStatementDeconstructionVariablesDeclaration(original, iterationVarDecl), forEachSyntax.Variable.Span);
         }
 
@@ -228,33 +228,19 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </remarks>
         public override BoundStatement InstrumentForEachStatement(BoundForEachStatement original, BoundStatement rewritten)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)original.Syntax;
+            var forEachSyntax = (ForStatementSyntax)original.Syntax;
             BoundSequencePointWithSpan foreachKeywordSequencePoint = new BoundSequencePointWithSpan(forEachSyntax, null, forEachSyntax.ForEachKeyword.Span);
             return new BoundStatementList(forEachSyntax,
                                             ImmutableArray.Create<BoundStatement>(foreachKeywordSequencePoint,
                                                                                 base.InstrumentForEachStatement(original, rewritten)));
         }
 
-        public override BoundStatement InstrumentForStatementConditionalGotoStartOrBreak(BoundForStatement original, BoundStatement branchBack)
-        {
-            // hidden sequence point if there is no condition
-            return new BoundSequencePoint(original.Condition?.Syntax,
-                                          base.InstrumentForStatementConditionalGotoStartOrBreak(original, branchBack));
-        }
-
         public override BoundStatement InstrumentForEachStatementConditionalGotoStart(BoundForEachStatement original, BoundStatement branchBack)
         {
-            var syntax = (CommonForEachStatementSyntax)original.Syntax;
+            var syntax = (ForStatementSyntax)original.Syntax;
             return new BoundSequencePointWithSpan(syntax,
                                                   base.InstrumentForEachStatementConditionalGotoStart(original, branchBack),
                                                   syntax.InKeyword.Span);
-        }
-
-        public override BoundExpression InstrumentForStatementCondition(BoundForStatement original, BoundExpression rewrittenCondition, SyntheticBoundNodeFactory factory)
-        {
-            // EnC: We need to insert a hidden sequence point to handle function remapping in case 
-            // the containing method is edited while methods invoked in the condition are being executed.
-            return AddConditionSequencePoint(base.InstrumentForStatementCondition(original, rewrittenCondition, factory), original.Syntax, factory);
         }
 
         public override BoundStatement InstrumentIfStatement(BoundIfStatement original, BoundStatement rewritten)

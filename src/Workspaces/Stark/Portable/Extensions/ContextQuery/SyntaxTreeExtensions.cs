@@ -2192,9 +2192,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             // for (; |
             // for (; ; |
             if (token.IsKind(SyntaxKind.SemicolonToken) &&
-                token.Parent.IsKind(SyntaxKind.ForStatement))
+                token.Parent.IsKind(SyntaxKind.ForStatementOld))
             {
-                var forStatement = (ForStatementSyntax)token.Parent;
+                var forStatement = (ForStatementSyntax2)token.Parent;
                 if (token == forStatement.FirstSemicolonToken ||
                     token == forStatement.SecondSemicolonToken)
                 {
@@ -2204,9 +2204,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
 
             // for ( |
             if (token.IsKind(SyntaxKind.OpenParenToken) &&
-                token.Parent.IsKind(SyntaxKind.ForStatement))
+                token.Parent.IsKind(SyntaxKind.ForStatementOld))
             {
-                var forStatement = (ForStatementSyntax)token.Parent;
+                var forStatement = (ForStatementSyntax2)token.Parent;
                 if (token == forStatement.OpenParenToken)
                 {
                     return true;
@@ -2216,7 +2216,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             // for (; ; Goo(), | 
             // for ( Goo(), |
             if (token.IsKind(SyntaxKind.CommaToken) &&
-                token.Parent.IsKind(SyntaxKind.ForStatement))
+                token.Parent.IsKind(SyntaxKind.ForStatementOld))
             {
                 return true;
             }
@@ -2227,7 +2227,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             // join b in |
             if (token.IsKind(SyntaxKind.InKeyword))
             {
-                if (token.Parent.IsKind(SyntaxKind.ForEachVariableStatement,
+                if (token.Parent.IsKind(SyntaxKind.ForStatement,
                                         SyntaxKind.FromClause,
                                         SyntaxKind.JoinClause))
                 {

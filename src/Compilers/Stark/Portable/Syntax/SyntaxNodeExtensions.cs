@@ -98,11 +98,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return ((SwitchStatementSyntax)parent).Expression == expression;
 
                 case SyntaxKind.ForStatement:
-                    var forStmt = (ForStatementSyntax)parent;
-                    return forStmt.Condition == expression || forStmt.Incrementors.FirstOrDefault() == expression;
-
-                case SyntaxKind.ForEachVariableStatement:
-                    return ((CommonForEachStatementSyntax)parent).Expression == expression;
+                    return ((ForStatementSyntax)parent).Expression == expression;
 
                 default:
                     return false;

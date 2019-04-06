@@ -27,7 +27,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
         TypeSyntax,
         AttributeSyntax,
         ArgumentSyntax,
-        CommonForEachStatementSyntax,
+        ForStatementSyntax,
         ThrowStatementSyntax,
         Conversion>
     {
@@ -583,7 +583,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             return SyntaxFacts.IsInNamespaceOrTypeContext(node);
         }
 
-        protected override ExpressionSyntax GetForEachStatementExpression(CommonForEachStatementSyntax forEachStatement)
+        protected override ExpressionSyntax GetForEachStatementExpression(ForStatementSyntax forEachStatement)
         {
             return forEachStatement.Expression;
         }
@@ -593,7 +593,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             return throwStatement.Expression;
         }
 
-        protected override bool IsForEachTypeInferred(CommonForEachStatementSyntax forEachStatement, SemanticModel semanticModel)
+        protected override bool IsForEachTypeInferred(ForStatementSyntax forEachStatement, SemanticModel semanticModel)
         {
             return forEachStatement.IsTypeInferred(semanticModel);
         }
@@ -731,7 +731,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             return true;
         }
 
-        protected override bool ForEachConversionsAreCompatible(SemanticModel originalModel, CommonForEachStatementSyntax originalForEach, SemanticModel newModel, CommonForEachStatementSyntax newForEach)
+        protected override bool ForEachConversionsAreCompatible(SemanticModel originalModel, ForStatementSyntax originalForEach, SemanticModel newModel, ForStatementSyntax newForEach)
         {
             var originalInfo = originalModel.GetForEachStatementInfo(originalForEach);
             var newInfo = newModel.GetForEachStatementInfo(newForEach);
@@ -739,7 +739,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
                 && ConversionsAreCompatible(originalInfo.ElementConversion, newInfo.ElementConversion);
         }
 
-        protected override void GetForEachSymbols(SemanticModel model, CommonForEachStatementSyntax forEach, out IMethodSymbol getEnumeratorMethod, out ITypeSymbol elementType)
+        protected override void GetForEachSymbols(SemanticModel model, ForStatementSyntax forEach, out IMethodSymbol getEnumeratorMethod, out ITypeSymbol elementType)
         {
             var info = model.GetForEachStatementInfo(forEach);
             getEnumeratorMethod = info.GetEnumeratorMethod;

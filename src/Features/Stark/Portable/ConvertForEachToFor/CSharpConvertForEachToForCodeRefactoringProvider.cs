@@ -18,13 +18,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.ConvertForEachToFor
 {
     [ExportCodeRefactoringProvider(LanguageNames.Stark, Name = nameof(CSharpConvertForEachToForCodeRefactoringProvider)), Shared]
     internal sealed class CSharpConvertForEachToForCodeRefactoringProvider :
-        AbstractConvertForEachToForCodeRefactoringProvider<ForEachVariableStatementSyntax>
+        AbstractConvertForEachToForCodeRefactoringProvider<ForStatementSyntax>
     {
         protected override string Title => CSharpFeaturesResources.Convert_to_for;
 
-        protected override ForEachVariableStatementSyntax GetForEachStatement(TextSpan selection, SyntaxToken token)
+        protected override ForStatementSyntax GetForEachStatement(TextSpan selection, SyntaxToken token)
         {
-            var foreachStatement = token.Parent.FirstAncestorOrSelf<ForEachVariableStatementSyntax>();
+            var foreachStatement = token.Parent.FirstAncestorOrSelf<ForStatementSyntax>();
             // https://github.com/dotnet/roslyn/issues/30584: Add tests for this scenario
             if (foreachStatement == null || foreachStatement.AwaitKeyword != default)
             {
@@ -74,7 +74,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.ConvertForEachToFor
             return foreachInfo.ForEachStatement.Parent.IsKind(SyntaxKind.Block);
         }
 
-        protected override (SyntaxNode start, SyntaxNode end) GetForEachBody(ForEachVariableStatementSyntax foreachStatement)
+        protected override (SyntaxNode start, SyntaxNode end) GetForEachBody(ForStatementSyntax foreachStatement)
             => (foreachStatement.Statement, foreachStatement.Statement);
 
         protected override void ConvertToForStatement(

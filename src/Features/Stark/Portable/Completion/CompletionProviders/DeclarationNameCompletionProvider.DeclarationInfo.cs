@@ -328,7 +328,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.Providers
             {
                 result = IsFollowingTypeOrComma<VariableDeclarationSyntax>(token, semanticModel,
                     typeSyntaxGetter: v => v.Type,
-                    modifierGetter: v => v.Parent is UsingStatementSyntax || v.Parent is ForStatementSyntax
+                    modifierGetter: v => v.Parent is UsingStatementSyntax || v.Parent is ForStatementSyntax2
                         ? default(SyntaxTokenList)
                         : default(SyntaxTokenList?), // Return null to bail out.
                     possibleDeclarationComputer: d => ImmutableArray.Create(new SymbolKindOrTypeKind(SymbolKind.Local)),
@@ -341,9 +341,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.Providers
             {
                 // This is parsed as ForEachVariableStatementSyntax:
                 // foreach (int $$
-                result = IsLastTokenOfType<CommonForEachStatementSyntax>(token, semanticModel,
+                result = IsLastTokenOfType<ForStatementSyntax>(token, semanticModel,
                     typeSyntaxGetter: f =>
-                        f is ForEachVariableStatementSyntax forEachVariableStatement ? forEachVariableStatement.Variable :
+                        f is ForStatementSyntax forEachVariableStatement ? forEachVariableStatement.Variable :
                         null, // Return null to bail out.
                     modifierGetter: f => default,
                     possibleDeclarationComputer: d => ImmutableArray.Create(new SymbolKindOrTypeKind(SymbolKind.Local)),

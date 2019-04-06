@@ -771,7 +771,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
         }
 
-        public static ForEachStatementInfo GetForEachStatementInfo(this SemanticModel semanticModel, CommonForEachStatementSyntax forEachStatement)
+        public static ForEachStatementInfo GetForEachStatementInfo(this SemanticModel semanticModel, ForStatementSyntax forEachStatement)
         {
             var csmodel = semanticModel as CSharpSemanticModel;
             if (csmodel != null)
@@ -789,7 +789,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return semanticModel is CSharpSemanticModel csmodel ? csmodel.GetDeconstructionInfo(assignment) : default;
         }
 
-        public static DeconstructionInfo GetDeconstructionInfo(this SemanticModel semanticModel, ForEachVariableStatementSyntax @foreach)
+        public static DeconstructionInfo GetDeconstructionInfo(this SemanticModel semanticModel, ForStatementSyntax @foreach)
         {
             return semanticModel is CSharpSemanticModel csmodel ? csmodel.GetDeconstructionInfo(@foreach) : default;
         }

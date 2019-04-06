@@ -78,7 +78,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseDeconstruction
                         });
                 }
             }
-            else if (node is ForEachVariableStatementSyntax forEachStatement)
+            else if (node is ForStatementSyntax forEachStatement)
             {
                 if (CSharpUseDeconstructionDiagnosticAnalyzer.TryAnalyzeForEachStatement(
                         semanticModel, forEachStatement,
@@ -87,7 +87,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseDeconstruction
                 {
                     editor.ReplaceNode(
                         forEachStatement,
-                        (current, _) => CreateForEachVariableStatement(tupleType, (ForEachVariableStatementSyntax)current));
+                        (current, _) => CreateForEachVariableStatement(tupleType, (ForStatementSyntax)current));
                 }
             }
 
@@ -105,12 +105,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseDeconstruction
             return editor.GetChangedRoot();
         }
 
-        private ForEachVariableStatementSyntax CreateForEachVariableStatement(INamedTypeSymbol tupleType, ForEachVariableStatementSyntax forEachStatement)
+        private ForStatementSyntax CreateForEachVariableStatement(INamedTypeSymbol tupleType, ForStatementSyntax forEachStatement)
         {
             // Copy all the tokens/nodes from the existing foreach statement to the new foreach statement.
             // However, convert the existing declaration over to a "var (x, y)" declaration or (int x, int y)
             // tuple expression.
-            return SyntaxFactory.ForEachVariableStatement(
+            return SyntaxFactory.ForStatement(
                 forEachStatement.ForEachKeyword,
                 CreateTupleOrDeclarationExpression(tupleType, null),
                 forEachStatement.InKeyword,

@@ -176,8 +176,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Simplification
                 {
                     case SyntaxKind.IfStatement:
                     case SyntaxKind.ElseClause:
+                    case SyntaxKind.ForStatementOld:
                     case SyntaxKind.ForStatement:
-                    case SyntaxKind.ForEachVariableStatement:
                     case SyntaxKind.WhileStatement:
                     case SyntaxKind.DoStatement:
                     case SyntaxKind.UsingStatement:

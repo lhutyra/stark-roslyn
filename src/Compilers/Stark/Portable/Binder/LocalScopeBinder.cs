@@ -298,7 +298,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return SourceLocalSymbol.MakeLocal(
                 this.ContainingMemberOrLambda,
                 this,
-                true,
+                declaration.RefKeyword != null ? RefKind.Ref : RefKind.None,
                 declaration.Type,
                 declaration.Identifier,
                 kind,

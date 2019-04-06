@@ -205,8 +205,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                    node is DoStatementSyntax ||
                    node is ElseClauseSyntax ||
                    node is FixedStatementSyntax ||
-                   node is CommonForEachStatementSyntax ||
                    node is ForStatementSyntax ||
+                   node is ForStatementSyntax2 ||
                    node is IfStatementSyntax ||
                    node is LabeledStatementSyntax ||
                    node is LockStatementSyntax ||
@@ -221,8 +221,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case DoStatementSyntax n: return n.Statement;
                 case ElseClauseSyntax n: return n.Statement;
                 case FixedStatementSyntax n: return n.Statement;
-                case CommonForEachStatementSyntax n: return n.Statement;
                 case ForStatementSyntax n: return n.Statement;
+                case ForStatementSyntax2 n: return n.Statement;
                 case IfStatementSyntax n: return n.Statement;
                 case LabeledStatementSyntax n: return n.Statement;
                 case LockStatementSyntax n: return n.Statement;

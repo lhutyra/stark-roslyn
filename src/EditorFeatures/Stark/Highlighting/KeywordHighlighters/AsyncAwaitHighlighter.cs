@@ -91,7 +91,7 @@ namespace StarkPlatform.CodeAnalysis.Editor.CSharp.KeywordHighlighting.KeywordHi
                     }
                     break;
 
-                case CommonForEachStatementSyntax forEachStatement:
+                case ForStatementSyntax forEachStatement:
                     if (forEachStatement.AwaitKeyword.Kind() == SyntaxKind.AwaitKeyword)
                     {
                         spans.Add(forEachStatement.AwaitKeyword.Span);

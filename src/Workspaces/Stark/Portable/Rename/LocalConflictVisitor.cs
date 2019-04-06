@@ -61,7 +61,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Rename
             _tracker.RemoveIdentifiers(tokens);
         }
 
-        public override void VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
+        public override void VisitForEachVariableStatement(ForStatementSyntax node)
         {
             var id = ((IdentifierNameSyntax)node.Variable).Identifier;
             _tracker.AddIdentifier(id);
@@ -69,7 +69,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Rename
             _tracker.RemoveIdentifier(id);
         }
 
-        public override void VisitForStatement(ForStatementSyntax node)
+        public override void VisitForStatement(ForStatementSyntax2 node)
         {
             var tokens = new List<SyntaxToken>();
 

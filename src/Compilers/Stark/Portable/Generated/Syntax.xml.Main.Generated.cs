@@ -676,12 +676,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a ForEachVariableStatementSyntax node.</summary>
-    public virtual TResult VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
-    {
-      return this.DefaultVisit(node);
-    }
-
     /// <summary>Called when the visitor visits a UsingStatementSyntax node.</summary>
     public virtual TResult VisitUsingStatement(UsingStatementSyntax node)
     {
@@ -1983,12 +1977,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
     /// <summary>Called when the visitor visits a ForStatementSyntax node.</summary>
     public virtual void VisitForStatement(ForStatementSyntax node)
-    {
-      this.DefaultVisit(node);
-    }
-
-    /// <summary>Called when the visitor visits a ForEachVariableStatementSyntax node.</summary>
-    public virtual void VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -3367,11 +3355,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public override SyntaxNode VisitVariableDeclaration(VariableDeclarationSyntax node)
     {
       var variableKeyword = this.VisitToken(node.VariableKeyword);
+      var refKeyword = this.VisitToken(node.RefKeyword);
       var identifier = this.VisitToken(node.Identifier);
       var colonToken = this.VisitToken(node.ColonToken);
       var type = (TypeSyntax)this.Visit(node.Type);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
-      return node.Update(variableKeyword, identifier, colonToken, type, initializer);
+      return node.Update(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
     }
 
     public override SyntaxNode VisitEqualsValueClause(EqualsValueClauseSyntax node)
@@ -3493,21 +3482,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     public override SyntaxNode VisitForStatement(ForStatementSyntax node)
-    {
-      var forKeyword = this.VisitToken(node.ForKeyword);
-      var openParenToken = this.VisitToken(node.OpenParenToken);
-      var declaration = (VariableDeclarationSyntax)this.Visit(node.Declaration);
-      var initializers = this.VisitList(node.Initializers);
-      var firstSemicolonToken = this.VisitToken(node.FirstSemicolonToken);
-      var condition = (ExpressionSyntax)this.Visit(node.Condition);
-      var secondSemicolonToken = this.VisitToken(node.SecondSemicolonToken);
-      var incrementors = this.VisitList(node.Incrementors);
-      var closeParenToken = this.VisitToken(node.CloseParenToken);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
-      return node.Update(forKeyword, openParenToken, declaration, initializers, firstSemicolonToken, condition, secondSemicolonToken, incrementors, closeParenToken, statement);
-    }
-
-    public override SyntaxNode VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
     {
       var awaitKeyword = this.VisitToken(node.AwaitKeyword);
       var forEachKeyword = this.VisitToken(node.ForEachKeyword);
@@ -7255,7 +7229,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
-    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
       switch (variableKeyword.Kind())
       {
@@ -7265,6 +7239,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
           break;
         default:
           throw new ArgumentException(nameof(variableKeyword));
+      }
+      switch (refKeyword.Kind())
+      {
+        case SyntaxKind.RefKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(refKeyword));
       }
       switch (identifier.Kind())
       {
@@ -7281,26 +7263,26 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(colonToken));
       }
-      return (VariableDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.VariableDeclaration((Syntax.InternalSyntax.SyntaxToken)variableKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green, initializer == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EqualsValueClauseSyntax)initializer.Green).CreateRed();
+      return (VariableDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.VariableDeclaration((Syntax.InternalSyntax.SyntaxToken)variableKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)refKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green, initializer == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EqualsValueClauseSyntax)initializer.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-      return SyntaxFactory.VariableDeclaration(variableKeyword, identifier, default(SyntaxToken), type, initializer);
+      return SyntaxFactory.VariableDeclaration(variableKeyword, default(SyntaxToken), identifier, default(SyntaxToken), type, initializer);
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier)
     {
-      return SyntaxFactory.VariableDeclaration(variableKeyword, identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.VariableDeclaration(variableKeyword, default(SyntaxToken), identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, string identifier)
     {
-      return SyntaxFactory.VariableDeclaration(variableKeyword, SyntaxFactory.Identifier(identifier), default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.VariableDeclaration(variableKeyword, default(SyntaxToken), SyntaxFactory.Identifier(identifier), default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
     }
 
     /// <summary>Creates a new EqualsValueClauseSyntax instance.</summary>
@@ -7830,63 +7812,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new ForStatementSyntax instance.</summary>
-    public static ForStatementSyntax ForStatement(SyntaxToken forKeyword, SyntaxToken openParenToken, VariableDeclarationSyntax declaration, SeparatedSyntaxList<ExpressionSyntax> initializers, SyntaxToken firstSemicolonToken, ExpressionSyntax condition, SyntaxToken secondSemicolonToken, SeparatedSyntaxList<ExpressionSyntax> incrementors, SyntaxToken closeParenToken, StatementSyntax statement)
-    {
-      switch (forKeyword.Kind())
-      {
-        case SyntaxKind.ForKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(forKeyword));
-      }
-      switch (openParenToken.Kind())
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
-      switch (firstSemicolonToken.Kind())
-      {
-        case SyntaxKind.SemicolonToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(firstSemicolonToken));
-      }
-      switch (secondSemicolonToken.Kind())
-      {
-        case SyntaxKind.SemicolonToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(secondSemicolonToken));
-      }
-      switch (closeParenToken.Kind())
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
-      if (statement == null)
-        throw new ArgumentNullException(nameof(statement));
-      return (ForStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ForStatement((Syntax.InternalSyntax.SyntaxToken)forKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)openParenToken.Node, declaration == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.VariableDeclarationSyntax)declaration.Green, initializers.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax>(), (Syntax.InternalSyntax.SyntaxToken)firstSemicolonToken.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)secondSemicolonToken.Node, incrementors.Node.ToGreenSeparatedList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax>(), (Syntax.InternalSyntax.SyntaxToken)closeParenToken.Node, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.StatementSyntax)statement.Green).CreateRed();
-    }
-
-
-    /// <summary>Creates a new ForStatementSyntax instance.</summary>
-    public static ForStatementSyntax ForStatement(VariableDeclarationSyntax declaration, SeparatedSyntaxList<ExpressionSyntax> initializers, ExpressionSyntax condition, SeparatedSyntaxList<ExpressionSyntax> incrementors, StatementSyntax statement)
-    {
-      return SyntaxFactory.ForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), declaration, initializers, SyntaxFactory.Token(SyntaxKind.SemicolonToken), condition, SyntaxFactory.Token(SyntaxKind.SemicolonToken), incrementors, SyntaxFactory.Token(SyntaxKind.CloseParenToken), statement);
-    }
-
-    /// <summary>Creates a new ForStatementSyntax instance.</summary>
-    public static ForStatementSyntax ForStatement(StatementSyntax statement)
-    {
-      return SyntaxFactory.ForStatement(SyntaxFactory.Token(SyntaxKind.ForKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), default(VariableDeclarationSyntax), default(SeparatedSyntaxList<ExpressionSyntax>), SyntaxFactory.Token(SyntaxKind.SemicolonToken), default(ExpressionSyntax), SyntaxFactory.Token(SyntaxKind.SemicolonToken), default(SeparatedSyntaxList<ExpressionSyntax>), SyntaxFactory.Token(SyntaxKind.CloseParenToken), statement);
-    }
-
-    /// <summary>Creates a new ForEachVariableStatementSyntax instance.</summary>
-    public static ForEachVariableStatementSyntax ForEachVariableStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
+    public static ForStatementSyntax ForStatement(SyntaxToken awaitKeyword, SyntaxToken forEachKeyword, ExpressionSyntax variable, SyntaxToken inKeyword, ExpressionSyntax expression, BlockSyntax statement)
     {
       switch (awaitKeyword.Kind())
       {
@@ -7898,7 +7824,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
       }
       switch (forEachKeyword.Kind())
       {
-        case SyntaxKind.ForEachKeyword:
+        case SyntaxKind.ForKeyword:
           break;
         default:
           throw new ArgumentException(nameof(forEachKeyword));
@@ -7916,20 +7842,20 @@ namespace StarkPlatform.CodeAnalysis.Stark
         throw new ArgumentNullException(nameof(expression));
       if (statement == null)
         throw new ArgumentNullException(nameof(statement));
-      return (ForEachVariableStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ForEachVariableStatement((Syntax.InternalSyntax.SyntaxToken)awaitKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)forEachKeyword.Node, variable == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)variable.Green, (Syntax.InternalSyntax.SyntaxToken)inKeyword.Node, expression == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)expression.Green, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)statement.Green).CreateRed();
+      return (ForStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ForStatement((Syntax.InternalSyntax.SyntaxToken)awaitKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)forEachKeyword.Node, variable == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)variable.Green, (Syntax.InternalSyntax.SyntaxToken)inKeyword.Node, expression == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)expression.Green, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)statement.Green).CreateRed();
     }
 
 
-    /// <summary>Creates a new ForEachVariableStatementSyntax instance.</summary>
-    public static ForEachVariableStatementSyntax ForEachVariableStatement(ExpressionSyntax variable, ExpressionSyntax expression, BlockSyntax statement)
+    /// <summary>Creates a new ForStatementSyntax instance.</summary>
+    public static ForStatementSyntax ForStatement(ExpressionSyntax variable, ExpressionSyntax expression, BlockSyntax statement)
     {
-      return SyntaxFactory.ForEachVariableStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.ForEachKeyword), variable, SyntaxFactory.Token(SyntaxKind.InKeyword), expression, statement);
+      return SyntaxFactory.ForStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.ForKeyword), variable, SyntaxFactory.Token(SyntaxKind.InKeyword), expression, statement);
     }
 
-    /// <summary>Creates a new ForEachVariableStatementSyntax instance.</summary>
-    public static ForEachVariableStatementSyntax ForEachVariableStatement(ExpressionSyntax variable, ExpressionSyntax expression)
+    /// <summary>Creates a new ForStatementSyntax instance.</summary>
+    public static ForStatementSyntax ForStatement(ExpressionSyntax variable, ExpressionSyntax expression)
     {
-      return SyntaxFactory.ForEachVariableStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.ForEachKeyword), variable, SyntaxFactory.Token(SyntaxKind.InKeyword), expression, SyntaxFactory.Block());
+      return SyntaxFactory.ForStatement(default(SyntaxToken), SyntaxFactory.Token(SyntaxKind.ForKeyword), variable, SyntaxFactory.Token(SyntaxKind.InKeyword), expression, SyntaxFactory.Block());
     }
 
     /// <summary>Creates a new UsingStatementSyntax instance.</summary>

@@ -235,7 +235,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         }
 
         public bool IsDeconstructionForEachStatement(SyntaxNode node)
-            => node is ForEachVariableStatementSyntax;
+            => node is ForStatementSyntax;
 
         public bool IsDeconstructionAssignment(SyntaxNode node)
             => node is AssignmentExpressionSyntax assignment && assignment.IsDeconstruction();
@@ -248,7 +248,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case AssignmentExpressionSyntax assignment:
                     return assignment.Left.GetLocation();
 
-                case ForEachVariableStatementSyntax @foreach:
+                case ForStatementSyntax @foreach:
                     return @foreach.Variable.GetLocation();
 
                 default:

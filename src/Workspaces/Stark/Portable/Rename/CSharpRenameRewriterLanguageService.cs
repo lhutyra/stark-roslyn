@@ -984,7 +984,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Rename
                         switch (token.Kind())
                         {
                             case SyntaxKind.ForEachKeyword:
-                                return ImmutableArray.Create(((CommonForEachStatementSyntax)token.Parent).Expression.GetLocation());
+                                return ImmutableArray.Create(((ForStatementSyntax)token.Parent).Expression.GetLocation());
                             case SyntaxKind.AwaitKeyword:
                                 return ImmutableArray.Create(token.GetLocation());
                         }

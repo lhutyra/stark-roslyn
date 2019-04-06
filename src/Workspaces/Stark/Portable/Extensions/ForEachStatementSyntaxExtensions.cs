@@ -14,12 +14,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
 {
     internal static class ForEachStatementSyntaxExtensions
     {
-        public static bool IsTypeInferred(this CommonForEachStatementSyntax forEachStatement, SemanticModel semanticModel)
+        public static bool IsTypeInferred(this ForStatementSyntax forEachStatement, SemanticModel semanticModel)
         {
             switch (forEachStatement.Kind())
             {
-                case SyntaxKind.ForEachVariableStatement:
-                    return (((ForEachVariableStatementSyntax)forEachStatement).Variable as DeclarationExpressionSyntax)?.Type
+                case SyntaxKind.ForStatement:
+                    return (((ForStatementSyntax)forEachStatement).Variable as DeclarationExpressionSyntax)?.Type
                         .IsTypeInferred(semanticModel) == true;
                 default:
                     return false;

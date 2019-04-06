@@ -292,10 +292,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
                     return default(SyntaxToken); //The caller will have to check for this.
                 case SyntaxKind.FixedStatement:
                     return ((FixedStatementSyntax)statement).FixedKeyword;
-                case SyntaxKind.ForEachVariableStatement:
-                    return ((CommonForEachStatementSyntax)statement).ForEachKeyword.GetNextToken();
                 case SyntaxKind.ForStatement:
-                    return ((ForStatementSyntax)statement).OpenParenToken.GetNextToken();
+                    return ((ForStatementSyntax)statement).ForEachKeyword.GetNextToken();
                 case SyntaxKind.GotoDefaultStatement:
                 case SyntaxKind.GotoCaseStatement:
                 case SyntaxKind.GotoStatement:
@@ -354,8 +352,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
                     return ((ExpressionStatementSyntax)statement).EosToken;
                 case SyntaxKind.FixedStatement:
                     return GetFirstExcludedToken(((FixedStatementSyntax)statement).Statement);
-                case SyntaxKind.ForEachVariableStatement:
-                    return GetFirstExcludedToken(((CommonForEachStatementSyntax)statement).Statement);
                 case SyntaxKind.ForStatement:
                     return GetFirstExcludedToken(((ForStatementSyntax)statement).Statement);
                 case SyntaxKind.GotoDefaultStatement:

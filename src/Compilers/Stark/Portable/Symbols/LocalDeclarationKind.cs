@@ -46,7 +46,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         CatchVariable,
 
         /// <summary>
-        /// User defined local variable declared by <see cref="ForEachVariableStatementSyntax"/> or <see cref="ForEachVariableStatementSyntax"/>.
+        /// User defined local variable declared by <see cref="ForStatementSyntax"/> or <see cref="ForStatementSyntax"/>.
         /// </summary>
         ForEachIterationVariable,
 

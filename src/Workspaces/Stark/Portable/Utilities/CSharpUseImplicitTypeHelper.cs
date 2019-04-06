@@ -58,7 +58,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             return base.ShouldAnalyzeVariableDeclaration(variableDeclaration, semanticModel, cancellationToken);
         }
 
-        protected override bool ShouldAnalyzeForEachStatement(ForEachVariableStatementSyntax forEachStatement, SemanticModel semanticModel, CancellationToken cancellationToken)
+        protected override bool ShouldAnalyzeForEachStatement(ForStatementSyntax forEachStatement, SemanticModel semanticModel, CancellationToken cancellationToken)
         {
             return false;
         }
@@ -99,7 +99,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             }
 
             if (typeName.Parent.IsKind(SyntaxKind.VariableDeclaration) &&
-                typeName.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement, SyntaxKind.ForStatement, SyntaxKind.UsingStatement))
+                typeName.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement, SyntaxKind.ForStatementOld, SyntaxKind.UsingStatement))
             {
                 var variableDeclaration = (VariableDeclarationSyntax)typeName.Parent;
 

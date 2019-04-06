@@ -44,7 +44,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         private SourceLocalSymbol(
             Symbol containingSymbol,
             Binder scopeBinder,
-            bool allowRefKind,
+            RefKind refKind,
             TypeSyntax typeSyntax,
             SyntaxToken identifierToken,
             LocalDeclarationKind declarationKind)
@@ -56,7 +56,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             this._scopeBinder = scopeBinder;
             this._containingSymbol = containingSymbol;
             this._identifierToken = identifierToken;
-            this._typeSyntax = allowRefKind ? typeSyntax?.SkipRef(out this._refKind) : typeSyntax;
+            this._refKind = refKind;
+            this._typeSyntax = typeSyntax;
             this._declarationKind = declarationKind;
 
             // create this eagerly as it will always be needed for the EnsureSingleDefinition
@@ -147,7 +148,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             Debug.Assert(closestTypeSyntax.Kind() != SyntaxKind.RefKindType);
             return closestTypeSyntax.IsNullWithNoType()
                 ? new DeconstructionLocalSymbol(containingSymbol, scopeBinder, nodeBinder, closestTypeSyntax, identifierToken, kind, deconstruction)
-                : new SourceLocalSymbol(containingSymbol, scopeBinder, false, closestTypeSyntax, identifierToken, kind);
+                : new SourceLocalSymbol(containingSymbol, scopeBinder, RefKind.None, closestTypeSyntax, identifierToken, kind);
         }
 
         /// <summary>
@@ -170,13 +171,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 nodeToBind.Kind() == SyntaxKind.SwitchExpressionArm ||
                 nodeToBind.Kind() == SyntaxKind.ArgumentList && nodeToBind.Parent is ConstructorInitializerSyntax ||
                 nodeToBind.Kind() == SyntaxKind.VariableDeclaration &&
-                    new[] { SyntaxKind.LocalDeclarationStatement, SyntaxKind.ForStatement, SyntaxKind.UsingStatement, SyntaxKind.FixedStatement }.
+                    new[] { SyntaxKind.LocalDeclarationStatement, SyntaxKind.UsingStatement, SyntaxKind.FixedStatement }.
                         Contains(nodeToBind.Ancestors().OfType<StatementSyntax>().First().Kind()) ||
                 nodeToBind is ExpressionSyntax);
             Debug.Assert(!(nodeToBind.Kind() == SyntaxKind.SwitchExpressionArm) || nodeBinder is SwitchExpressionArmBinder);
             return typeSyntax.IsNullWithNoType() != false && kind != LocalDeclarationKind.DeclarationExpressionVariable
                 ? new LocalSymbolWithEnclosingContext(containingSymbol, scopeBinder, nodeBinder, typeSyntax, identifierToken, kind, nodeToBind, forbiddenZone)
-                : new SourceLocalSymbol(containingSymbol, scopeBinder, false, typeSyntax, identifierToken, kind);
+                : new SourceLocalSymbol(containingSymbol, scopeBinder, CodeAnalysis.RefKind.None, typeSyntax, identifierToken, kind);
         }
 
         /// <summary>
@@ -186,7 +187,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// <param name="scopeBinder">
         /// Binder that owns the scope for the local, the one that returns it in its <see cref="Binder.Locals"/> array.
         /// </param>
-        /// <param name="allowRefKind"></param>
+        /// <param name="refKind"></param>
         /// <param name="typeSyntax"></param>
         /// <param name="identifierToken"></param>
         /// <param name="declarationKind"></param>
@@ -198,7 +199,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public static SourceLocalSymbol MakeLocal(
             Symbol containingSymbol,
             Binder scopeBinder,
-            bool allowRefKind,
+            RefKind refKind,
             TypeSyntax typeSyntax,
             SyntaxToken identifierToken,
             LocalDeclarationKind declarationKind,
@@ -207,8 +208,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             Debug.Assert(declarationKind != LocalDeclarationKind.ForEachIterationVariable);
             return (initializer != null)
-                ? new LocalWithInitializer(containingSymbol, scopeBinder, typeSyntax, identifierToken, initializer, initializerBinderOpt ?? scopeBinder, declarationKind)
-                : new SourceLocalSymbol(containingSymbol, scopeBinder, allowRefKind, typeSyntax, identifierToken, declarationKind);
+                ? new LocalWithInitializer(containingSymbol, scopeBinder, refKind, typeSyntax, identifierToken, initializer, initializerBinderOpt ?? scopeBinder, declarationKind)
+                : new SourceLocalSymbol(containingSymbol, scopeBinder, refKind, typeSyntax, identifierToken, declarationKind);
         }
 
         internal override bool IsImportedFromMetadata
@@ -512,12 +513,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             public LocalWithInitializer(
                 Symbol containingSymbol,
                 Binder scopeBinder,
+                RefKind refKind,
                 TypeSyntax typeSyntax,
                 SyntaxToken identifierToken,
                 EqualsValueClauseSyntax initializer,
                 Binder initializerBinder,
                 LocalDeclarationKind declarationKind) :
-                    base(containingSymbol, scopeBinder, true, typeSyntax, identifierToken, declarationKind)
+                    base(containingSymbol, scopeBinder, refKind, typeSyntax, identifierToken, declarationKind)
             {
                 Debug.Assert(declarationKind != LocalDeclarationKind.ForEachIterationVariable);
                 Debug.Assert(initializer != null);
@@ -617,7 +619,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 SyntaxToken identifierToken,
                 ExpressionSyntax collection,
                 LocalDeclarationKind declarationKind) :
-                    base(containingSymbol, scopeBinder, allowRefKind: true, typeSyntax, identifierToken, declarationKind)
+                    base(containingSymbol, scopeBinder, RefKind.None, typeSyntax, identifierToken, declarationKind)
             {
                 Debug.Assert(declarationKind == LocalDeclarationKind.ForEachIterationVariable);
                 _collection = collection;
@@ -658,9 +660,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 SyntaxToken identifierToken,
                 LocalDeclarationKind declarationKind,
                 SyntaxNode deconstruction)
-            : base(containingSymbol, scopeBinder, false, typeSyntax, identifierToken, declarationKind)
+            : base(containingSymbol, scopeBinder, RefKind.None, typeSyntax, identifierToken, declarationKind)
             {
-                Debug.Assert(deconstruction.Kind() == SyntaxKind.SimpleAssignmentExpression || deconstruction.Kind() == SyntaxKind.ForEachVariableStatement);
+                Debug.Assert(deconstruction.Kind() == SyntaxKind.SimpleAssignmentExpression || deconstruction.Kind() == SyntaxKind.ForStatement);
 
                 _deconstruction = deconstruction;
                 _nodeBinder = nodeBinder;
@@ -679,8 +681,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         _nodeBinder.BindDeconstruction(assignment, assignment.Left, assignment.Right, diagnostics, ref declaration, ref expression);
                         break;
 
-                    case SyntaxKind.ForEachVariableStatement:
-                        Debug.Assert(this.ScopeBinder.GetBinder((ForEachVariableStatementSyntax)_deconstruction) == _nodeBinder);
+                    case SyntaxKind.ForStatement:
+                        Debug.Assert(this.ScopeBinder.GetBinder((ForStatementSyntax)_deconstruction) == _nodeBinder);
                         _nodeBinder.BindForEachDeconstruction(diagnostics, _nodeBinder);
                         break;
 
@@ -701,7 +703,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                         case SyntaxKind.SimpleAssignmentExpression:
                             return _deconstruction;
 
-                        case SyntaxKind.ForEachVariableStatement:
+                        case SyntaxKind.ForStatement:
                             // There is no forbidden zone for a foreach statement, because the
                             // variables are not in scope in the expression.
                             return null;
@@ -728,7 +730,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 LocalDeclarationKind declarationKind,
                 SyntaxNode nodeToBind,
                 SyntaxNode forbiddenZone)
-                : base(containingSymbol, scopeBinder, false, typeSyntax, identifierToken, declarationKind)
+                : base(containingSymbol, scopeBinder, RefKind.None, typeSyntax, identifierToken, declarationKind)
             {
                 Debug.Assert(
                     nodeToBind.Kind() == SyntaxKind.CasePatternSwitchLabel ||

@@ -6415,6 +6415,24 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid variable declaration. Expecting `var`, `let` or `const`.
+        /// </summary>
+        internal static string ERR_InvalidVarDeclaration {
+            get {
+                return ResourceManager.GetString("ERR_InvalidVarDeclaration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid variable declaration after ref. Expecting `var` or `let`.
+        /// </summary>
+        internal static string ERR_InvalidVarDeclarationAfterRef {
+            get {
+                return ResourceManager.GetString("ERR_InvalidVarDeclarationAfterRef", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The specified version string does not conform to the required format - major[.minor[.build[.revision]]].
         /// </summary>
         internal static string ERR_InvalidVersionFormat {

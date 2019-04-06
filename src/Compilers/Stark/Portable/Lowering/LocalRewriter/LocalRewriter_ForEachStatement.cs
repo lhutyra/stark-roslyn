@@ -100,7 +100,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </summary>
         private BoundStatement RewriteEnumeratorForEachStatement(BoundForEachStatement node)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)node.Syntax;
+            var forEachSyntax = (ForStatementSyntax)node.Syntax;
             bool isAsync = node.AwaitOpt != null;
 
             ForEachEnumeratorInfo enumeratorInfo = node.EnumeratorInfoOpt;
@@ -212,7 +212,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return result;
         }
 
-        private bool TryGetDisposeMethod(CommonForEachStatementSyntax forEachSyntax, ForEachEnumeratorInfo enumeratorInfo, out MethodSymbol disposeMethod)
+        private bool TryGetDisposeMethod(ForStatementSyntax forEachSyntax, ForEachEnumeratorInfo enumeratorInfo, out MethodSymbol disposeMethod)
         {
             if (enumeratorInfo.IsAsync)
             {
@@ -229,7 +229,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// - interface-based disposal (the enumerator type converts to IDisposable/IAsyncDisposable)
         /// - we need to do a runtime check for IDisposable
         /// </summary>
-        private BoundStatement WrapWithTryFinallyDispose(CommonForEachStatementSyntax forEachSyntax, ForEachEnumeratorInfo enumeratorInfo,
+        private BoundStatement WrapWithTryFinallyDispose(ForStatementSyntax forEachSyntax, ForEachEnumeratorInfo enumeratorInfo,
             TypeSymbol enumeratorType, BoundLocal boundEnumeratorVar, BoundStatement rewrittenBody)
         {
             Debug.Assert(enumeratorInfo.NeedsDisposal);
@@ -401,7 +401,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// Produce:
         /// await /* disposeCall */;
         /// </summary>
-        private BoundStatement WrapWithAwait(CommonForEachStatementSyntax forEachSyntax, BoundExpression disposeCall, AwaitableInfo disposeAwaitableInfoOpt)
+        private BoundStatement WrapWithAwait(ForStatementSyntax forEachSyntax, BoundExpression disposeCall, AwaitableInfo disposeAwaitableInfoOpt)
         {
             TypeSymbol awaitExpressionType = disposeAwaitableInfoOpt.GetResult?.ReturnType.TypeSymbol ?? _compilation.DynamicType;
             var awaitExpr = RewriteAwaitExpression(forEachSyntax, disposeCall, disposeAwaitableInfoOpt, awaitExpressionType, used: false);
@@ -495,7 +495,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </remarks>
         private BoundStatement RewriteForEachStatementAsFor(BoundForEachStatement node, MethodSymbol indexerGet, MethodSymbol lengthGet)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)node.Syntax;
+            var forEachSyntax = (ForStatementSyntax)node.Syntax;
 
             BoundExpression collectionExpression = GetUnconvertedCollectionExpression(node);
             NamedTypeSymbol collectionType = (NamedTypeSymbol)collectionExpression.Type;
@@ -607,7 +607,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                     ImmutableArray<LocalSymbol> iterationVariables,
                                     BoundExpression iterationVarValue)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)forEachBound.Syntax;
+            var forEachSyntax = (ForStatementSyntax)forEachBound.Syntax;
 
             BoundStatement iterationVarDecl;
             BoundForEachDeconstructStep deconstruction = forEachBound.DeconstructionOpt;
@@ -636,7 +636,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             ImmutableArray<LocalSymbol> iterationVariables,
             BoundStatement iteratorVariableInitialization,
             BoundStatement rewrittenBody,
-            CommonForEachStatementSyntax forEachSyntax)
+            ForStatementSyntax forEachSyntax)
         {
             // The scope of the iteration variable is the embedded statement syntax.
             // However consider the following foreach statement:
@@ -659,7 +659,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundStatement checkAndBreak,
             BoundStatement rewrittenBody,
             LabelSymbol continueLabel,
-            CommonForEachStatementSyntax forEachSyntax)
+            ForStatementSyntax forEachSyntax)
         {
             // The scope of the iteration variable is the embedded statement syntax.
             // However consider the following foreach statement:
@@ -698,7 +698,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </remarks>
         private BoundStatement RewriteSingleDimensionalArrayForEachStatement(BoundForEachStatement node)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)node.Syntax;
+            var forEachSyntax = (ForStatementSyntax)node.Syntax;
 
             BoundExpression collectionExpression = GetUnconvertedCollectionExpression(node);
             Debug.Assert(collectionExpression.Type.IsArray());
@@ -824,7 +824,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </remarks>
         private BoundStatement RewriteMultiDimensionalArrayForEachStatement(BoundForEachStatement node)
         {
-            var forEachSyntax = (CommonForEachStatementSyntax)node.Syntax;
+            var forEachSyntax = (ForStatementSyntax)node.Syntax;
 
             BoundExpression collectionExpression = GetUnconvertedCollectionExpression(node);
             Debug.Assert(collectionExpression.Type.IsArray());
@@ -1063,7 +1063,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             if (this.Instrument)
             {
-                CommonForEachStatementSyntax forEachSyntax = (CommonForEachStatementSyntax)original.Syntax;
+                ForStatementSyntax forEachSyntax = (ForStatementSyntax)original.Syntax;
                 iterationVarDecl = _instrumenter.InstrumentForEachStatementDeconstructionVariablesDeclaration(original, iterationVarDecl);
             }
         }

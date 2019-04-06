@@ -80,8 +80,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.InvertIf
                 case SyntaxKind.ParenthesizedLambdaExpression:
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.WhileStatement:
+                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachVariableStatement:
                     return false;
             }
 
@@ -125,8 +125,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.InvertIf
 
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.WhileStatement:
+                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachVariableStatement:
                     return (int)SyntaxKind.ContinueStatement;
             }
 

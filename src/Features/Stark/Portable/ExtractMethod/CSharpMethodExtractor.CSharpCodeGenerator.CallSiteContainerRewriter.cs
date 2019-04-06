@@ -188,17 +188,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.ExtractMethod
                                .WithStatement(ReplaceStatementIfNeeded(node.Statement));
                 }
 
-                public override SyntaxNode VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
-                {
-                    if (node != this.ContainerOfStatementsOrFieldToReplace)
-                    {
-                        return base.VisitForEachVariableStatement(node);
-                    }
-
-                    return node.WithExpression(VisitNode(node.Expression))
-                               .WithStatement(node.Statement);
-                }
-
                 public override SyntaxNode VisitForStatement(ForStatementSyntax node)
                 {
                     if (node != this.ContainerOfStatementsOrFieldToReplace)
@@ -206,11 +195,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.ExtractMethod
                         return base.VisitForStatement(node);
                     }
 
-                    return node.WithDeclaration(VisitNode(node.Declaration))
-                               .WithInitializers(VisitList(node.Initializers))
-                               .WithCondition(VisitNode(node.Condition))
-                               .WithIncrementors(VisitList(node.Incrementors))
-                               .WithStatement(ReplaceStatementIfNeeded(node.Statement));
+                    return node.WithExpression(VisitNode(node.Expression))
+                               .WithStatement(node.Statement);
                 }
 
                 public override SyntaxNode VisitDoStatement(DoStatementSyntax node)

@@ -39,7 +39,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeFixes.GenerateDeconstructMethod
             var token = root.FindToken(span.Start);
 
             var deconstruction = token.GetAncestors<SyntaxNode>()
-                .FirstOrDefault(n => n.IsKind(SyntaxKind.SimpleAssignmentExpression, SyntaxKind.ForEachVariableStatement));
+                .FirstOrDefault(n => n.IsKind(SyntaxKind.SimpleAssignmentExpression, SyntaxKind.ForStatement));
 
             if (deconstruction is null)
             {
@@ -54,7 +54,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeFixes.GenerateDeconstructMethod
             ExpressionSyntax target;
             switch (deconstruction)
             {
-                case ForEachVariableStatementSyntax @foreach:
+                case ForStatementSyntax @foreach:
                     info = model.GetDeconstructionInfo(@foreach);
                     type = model.GetForEachStatementInfo(@foreach).ElementType;
                     target = @foreach.Variable;

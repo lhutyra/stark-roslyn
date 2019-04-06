@@ -269,7 +269,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification.Classifiers
         {
             return
                 name.CheckParent<RefKindTypeSyntax>(v => v.Type == name) ||
-                name.CheckParent<ForEachVariableStatementSyntax>(f => true) ||
+                name.CheckParent<ForStatementSyntax>(f => true) ||
                 name.CheckParent<DeclarationPatternSyntax>(v => v.Type == name) ||
                 name.CheckParent<VariableDeclarationSyntax>(v => v.Type == name) ||
                 name.CheckParent<DeclarationExpressionSyntax>(f => f.Type == name);

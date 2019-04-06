@@ -7679,12 +7679,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         case SyntaxKind.ArrowExpressionClause:
                             resultIsUsed = (((ArrowExpressionClauseSyntax)parent).Expression != node) || ContainingMethodOrLambdaRequiresValue();
                             break;
-
-                        case SyntaxKind.ForStatement:
-                            // Incrementors and Initializers doesn't have to produce a value
-                            var loop = (ForStatementSyntax)parent;
-                            resultIsUsed = !loop.Incrementors.Contains(node) && !loop.Initializers.Contains(node);
-                            break;
                     }
                 }
 

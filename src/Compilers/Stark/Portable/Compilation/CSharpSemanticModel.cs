@@ -4441,7 +4441,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// Gets for each statement info.
         /// </summary>
         /// <param name="node">The node.</param>
-        public abstract ForEachStatementInfo GetForEachStatementInfo(CommonForEachStatementSyntax node);
+        public abstract ForEachStatementInfo GetForEachStatementInfo(ForStatementSyntax node);
 
         /// <summary>
         /// Gets deconstruction assignment info.
@@ -4453,7 +4453,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// Gets deconstruction foreach info.
         /// </summary>
         /// <param name="node">The node.</param>
-        public abstract DeconstructionInfo GetDeconstructionInfo(ForEachVariableStatementSyntax node);
+        public abstract DeconstructionInfo GetDeconstructionInfo(ForStatementSyntax node);
 
         /// <summary>
         /// Gets await expression info.

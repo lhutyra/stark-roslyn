@@ -395,47 +395,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public override void VisitForStatement(ForStatementSyntax node)
         {
             Debug.Assert((object)_containingMemberOrLambda == _enclosing.ContainingMemberOrLambda);
-            Binder binder = new ForLoopBinder(_enclosing, node);
-            AddToMap(node, binder);
-
-            VariableDeclarationSyntax declaration = node.Declaration;
-            if (declaration != null)
-            {
-                Visit(declaration, binder);
-            }
-            else
-            {
-                foreach (ExpressionSyntax initializer in node.Initializers)
-                {
-                    Visit(initializer, binder);
-                }
-            }
-
-            ExpressionSyntax condition = node.Condition;
-            if (condition != null)
-            {
-                binder = new ExpressionVariableBinder(condition, binder);
-                AddToMap(condition, binder);
-                Visit(condition, binder);
-            }
-
-            SeparatedSyntaxList<ExpressionSyntax> incrementors = node.Incrementors;
-            if (incrementors.Count > 0)
-            {
-                var incrementorsBinder = new ExpressionListVariableBinder(incrementors, binder);
-                AddToMap(incrementors.First(), incrementorsBinder);
-                foreach (ExpressionSyntax incrementor in incrementors)
-                {
-                    Visit(incrementor, incrementorsBinder);
-                }
-            }
-
-            VisitPossibleEmbeddedStatement(node.Statement, binder);
-        }
-
-        private void VisitCommonForEachStatement(CommonForEachStatementSyntax node)
-        {
-            Debug.Assert((object)_containingMemberOrLambda == _enclosing.ContainingMemberOrLambda);
             var patternBinder = new ExpressionVariableBinder(node.Expression, _enclosing);
 
             AddToMap(node.Expression, patternBinder);
@@ -445,11 +404,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             AddToMap(node, binder);
 
             VisitPossibleEmbeddedStatement(node.Statement, binder);
-        }
-
-        public override void VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
-        {
-            VisitCommonForEachStatement(node);
         }
 
         public override void VisitCheckedStatement(CheckedStatementSyntax node)

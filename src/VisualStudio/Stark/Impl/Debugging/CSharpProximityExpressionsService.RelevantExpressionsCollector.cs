@@ -67,7 +67,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.Debugging
                 AddExpressionTerms(node.Condition, _expressions);
             }
 
-            public override void VisitForStatement(ForStatementSyntax node)
+            public override void VisitForStatement(ForStatementSyntax2 node)
             {
                 if (node.Declaration != null)
                 {
@@ -79,7 +79,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.Debugging
                 node.Incrementors.Do(i => AddExpressionTerms(i, _expressions));
             }
 
-            public override void VisitForEachVariableStatement(ForEachVariableStatementSyntax node)
+            public override void VisitForEachVariableStatement(ForStatementSyntax node)
             {
                 AddVariableExpressions(node.Variable, _expressions);
                 AddExpressionTerms(node.Expression, _expressions);

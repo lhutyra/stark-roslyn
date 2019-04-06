@@ -300,11 +300,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
         private static int LineBreaksAfterSemicolon(SyntaxToken currentToken, SyntaxToken nextToken)
         {
-            if (currentToken.Parent.Kind() == SyntaxKind.ForStatement)
-            {
-                return 0;
-            }
-            else if (nextToken.Kind() == SyntaxKind.CloseBraceToken)
+            if (nextToken.Kind() == SyntaxKind.CloseBraceToken)
             {
                 return 1;
             }

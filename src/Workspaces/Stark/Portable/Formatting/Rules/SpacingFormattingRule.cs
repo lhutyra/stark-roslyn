@@ -128,8 +128,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             }
 
             // Semicolons in an empty for statement.  i.e.   for(;;)
-            if (previousParentKind == SyntaxKind.ForStatement
-                && this.IsEmptyForStatement((ForStatementSyntax)previousToken.Parent))
+            if (previousParentKind == SyntaxKind.ForStatementOld
+                && this.IsEmptyForStatement((ForStatementSyntax2)previousToken.Parent))
             {
                 if (currentKind == SyntaxKind.SemicolonToken
                     && (previousKind != SyntaxKind.SemicolonToken
@@ -365,7 +365,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             SuppressVariableDeclaration(list, node, optionSet);
         }
 
-        private bool IsEmptyForStatement(ForStatementSyntax forStatement) =>
+        private bool IsEmptyForStatement(ForStatementSyntax2 forStatement) =>
             forStatement.Initializers.Count == 0
             && forStatement.Declaration == null
             && forStatement.Condition == null
@@ -411,7 +411,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
         private bool IsControlFlowLikeKeywordStatementKind(SyntaxKind syntaxKind)
         {
             return (syntaxKind == SyntaxKind.IfStatement || syntaxKind == SyntaxKind.WhileStatement || syntaxKind == SyntaxKind.SwitchStatement ||
-                syntaxKind == SyntaxKind.ForStatement || syntaxKind == SyntaxKind.ForEachVariableStatement ||
+                syntaxKind == SyntaxKind.ForStatementOld || syntaxKind == SyntaxKind.ForStatement ||
                 syntaxKind == SyntaxKind.DoStatement ||
                 syntaxKind == SyntaxKind.CatchDeclaration || syntaxKind == SyntaxKind.UsingStatement || syntaxKind == SyntaxKind.LockStatement ||
                 syntaxKind == SyntaxKind.FixedStatement || syntaxKind == SyntaxKind.CatchFilterClause);

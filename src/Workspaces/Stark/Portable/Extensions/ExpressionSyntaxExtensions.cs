@@ -433,8 +433,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                         }
 
                         return false;
-                    case SyntaxKind.ForEachVariableStatement:
-                        if (((ForEachVariableStatementSyntax)parent).Variable == expr)
+                    case SyntaxKind.ForStatement:
+                        if (((ForStatementSyntax)parent).Variable == expr)
                         {
                             return true;
                         }
@@ -704,7 +704,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             }
 
             // Specific child checks.
-            if (expression.CheckParent<CommonForEachStatementSyntax>(f => f.Expression == expression) ||
+            if (expression.CheckParent<ForStatementSyntax>(f => f.Expression == expression) ||
                 expression.CheckParent<MemberAccessExpressionSyntax>(m => m.Expression == expression) ||
                 expression.CheckParent<CastExpressionSyntax>(c => c.Expression == expression))
             {
@@ -2545,7 +2545,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                     case SyntaxKind.AnonymousMethodExpression:
                     case SyntaxKind.SwitchStatement:
                     case SyntaxKind.ForEachKeyword:
-                    case SyntaxKind.ForStatement:
+                    case SyntaxKind.ForStatementOld:
                     case SyntaxKind.UsingStatement:
 
                     // SPEC VIOLATION: We also want to stop walking out if, say, we are in a field

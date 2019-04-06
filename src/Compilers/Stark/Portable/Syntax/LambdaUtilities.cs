@@ -387,7 +387,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.ArrowExpressionClause:  // expression-bodied member
                 case SyntaxKind.CatchClause:
                 case SyntaxKind.ForStatement:
-                case SyntaxKind.ForEachVariableStatement:
                 case SyntaxKind.UsingStatement:
 
                 // ctor parameter captured by a lambda in a ctor initializer
@@ -433,14 +432,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         {
                             case SyntaxKind.EqualsValueClause:
                                 return true;
-
-                            case SyntaxKind.ForStatement:
-                                SeparatedSyntaxList<ExpressionSyntax> incrementors = ((ForStatementSyntax)node.Parent).Incrementors;
-                                if (incrementors.FirstOrDefault() == node)
-                                {
-                                    return true;
-                                }
-                                break;
                         }
                     }
 

@@ -157,8 +157,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
 
                 case SyntaxKind.CloseParenToken:
                     var parent = token.Parent;
-                    return parent.IsKind(SyntaxKind.ForStatement) ||
-                           parent.IsKind(SyntaxKind.ForEachVariableStatement) ||
+                    return parent.IsKind(SyntaxKind.ForStatementOld) ||
+                           parent.IsKind(SyntaxKind.ForStatement) ||
                            parent.IsKind(SyntaxKind.WhileStatement) ||
                            parent.IsKind(SyntaxKind.IfStatement) ||
                            parent.IsKind(SyntaxKind.LockStatement) ||

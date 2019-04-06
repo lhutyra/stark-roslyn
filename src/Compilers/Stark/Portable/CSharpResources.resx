@@ -2144,6 +2144,12 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_InvalidInlineILArgument" xml:space="preserve">
     <value>The argument is invalid for the IL opcode `{0}`</value>
   </data>
+  <data name="ERR_InvalidVarDeclarationAfterRef" xml:space="preserve">
+    <value>Invalid variable declaration after ref. Expecting `var` or `let`</value>
+  </data>
+  <data name="ERR_InvalidVarDeclaration" xml:space="preserve">
+    <value>Invalid variable declaration. Expecting `var`, `let` or `const`</value>
+  </data>
   <data name="ERR_PartialMethodOnlyInPartialClass" xml:space="preserve">
     <value>A partial method must be declared within a partial class or partial struct</value>
   </data>

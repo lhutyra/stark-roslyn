@@ -294,8 +294,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     statementPart = (int)GetStatementPart((BlockSyntax)node, position);
                     break;
 
-                case SyntaxKind.ForEachVariableStatement:
-                    statementPart = (int)GetStatementPart((CommonForEachStatementSyntax)node, position);
+                case SyntaxKind.ForStatement:
+                    statementPart = (int)GetStatementPart((ForStatementSyntax)node, position);
                     break;
 
                 case SyntaxKind.VariableDeclaration:
@@ -341,14 +341,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
             }
         }
 
-        private static ForEachPart GetStatementPart(CommonForEachStatementSyntax node, int position)
+        private static ForEachPart GetStatementPart(ForStatementSyntax node, int position)
         {
             return position < node.InKeyword.SpanStart ? ForEachPart.VariableDeclaration :
                    position < node.Expression.SpanStart ? ForEachPart.In :
                    ForEachPart.Expression;
         }
 
-        private static TextSpan GetActiveSpan(ForEachVariableStatementSyntax node, ForEachPart part)
+        private static TextSpan GetActiveSpan(ForStatementSyntax node, ForEachPart part)
         {
             switch (part)
             {
@@ -595,8 +595,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     span = GetActiveSpan((BlockSyntax)node, (BlockPart)statementPart);
                     return true;
 
-                case SyntaxKind.ForEachVariableStatement:
-                    span = GetActiveSpan((ForEachVariableStatementSyntax)node, (ForEachPart)statementPart);
+                case SyntaxKind.ForStatement:
+                    span = GetActiveSpan((ForStatementSyntax)node, (ForEachPart)statementPart);
                     return true;
 
                 case SyntaxKind.DoStatement:
@@ -721,11 +721,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     // The call could only change if the base type of the containing class changed.
                     return true;
 
-                case SyntaxKind.ForEachVariableStatement:
+                case SyntaxKind.ForStatement:
                     Debug.Assert(statementPart != 0);
 
                     // only check the expression, edits in the body and the variable declaration are allowed:
-                    return AreEquivalentActiveStatements((CommonForEachStatementSyntax)oldStatement, (CommonForEachStatementSyntax)newStatement);
+                    return AreEquivalentActiveStatements((ForStatementSyntax)oldStatement, (ForStatementSyntax)newStatement);
 
                 case SyntaxKind.IfStatement:
                     // only check the condition, edits in the body are allowed:
@@ -797,7 +797,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 (SyntaxNode)newNode.Declaration ?? newNode.Expression);
         }
 
-        private static bool AreEquivalentActiveStatements(CommonForEachStatementSyntax oldNode, CommonForEachStatementSyntax newNode)
+        private static bool AreEquivalentActiveStatements(ForStatementSyntax oldNode, ForStatementSyntax newNode)
         {
             if (oldNode.Kind() != newNode.Kind() || !AreEquivalentIgnoringLambdaBodies(oldNode.Expression, newNode.Expression))
             {
@@ -806,12 +806,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
             switch (oldNode.Kind())
             {
-                case SyntaxKind.ForEachVariableStatement: return AreEquivalentIgnoringLambdaBodies(((ForEachVariableStatementSyntax)oldNode).Variable, ((ForEachVariableStatementSyntax)newNode).Variable);
+                case SyntaxKind.ForStatement: return AreEquivalentIgnoringLambdaBodies(((ForStatementSyntax)oldNode).Variable, ((ForStatementSyntax)newNode).Variable);
                 default: throw ExceptionUtilities.UnexpectedValue(oldNode.Kind());
             }
         }
 
-        private static bool AreSimilarActiveStatements(CommonForEachStatementSyntax oldNode, CommonForEachStatementSyntax newNode)
+        private static bool AreSimilarActiveStatements(ForStatementSyntax oldNode, ForStatementSyntax newNode)
         {
             List<SyntaxToken> oldTokens = null;
             List<SyntaxToken> newTokens = null;
@@ -1282,12 +1282,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.DoStatement:
                     return ((DoStatementSyntax)node).DoKeyword.Span;
 
-                case SyntaxKind.ForStatement:
-                    var forStatement = (ForStatementSyntax)node;
+                case SyntaxKind.ForStatementOld:
+                    var forStatement = (ForStatementSyntax2)node;
                     return TextSpan.FromBounds(forStatement.ForKeyword.SpanStart, forStatement.CloseParenToken.Span.End);
 
-                case SyntaxKind.ForEachVariableStatement:
-                    var commonForEachStatement = (CommonForEachStatementSyntax)node;
+                case SyntaxKind.ForStatement:
+                    var commonForEachStatement = (ForStatementSyntax)node;
                     return TextSpan.FromBounds(commonForEachStatement.ForEachKeyword.SpanStart, commonForEachStatement.Expression.Span.End);
 
                 case SyntaxKind.LabeledStatement:
@@ -1572,7 +1572,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.LockStatement:
                     return CSharpFeaturesResources.lock_statement;
 
-                case SyntaxKind.ForEachVariableStatement:
+                case SyntaxKind.ForStatement:
                     return CSharpFeaturesResources.foreach_statement;
 
                 case SyntaxKind.CheckedStatement:
@@ -2999,7 +2999,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
                 switch (node.Parent.Kind())
                 {
-                    case SyntaxKind.ForStatement:
+                    case SyntaxKind.ForStatementOld:
                     case SyntaxKind.IfStatement:
                     case SyntaxKind.WhileStatement:
                     case SyntaxKind.DoStatement:
@@ -3187,7 +3187,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                         DeclareSameIdentifier(using1.Declaration, using2.Declaration);
                 });
 
-            ReportUnmatchedStatements<CommonForEachStatementSyntax>(diagnostics, match, new[] { (int)SyntaxKind.ForEachVariableStatement }, oldActiveStatement, newActiveStatement,
+            ReportUnmatchedStatements<ForStatementSyntax>(diagnostics, match, new[] { (int)SyntaxKind.ForStatement }, oldActiveStatement, newActiveStatement,
                 areEquivalent: AreEquivalentActiveStatements,
                 areSimilar: AreSimilarActiveStatements);
         }

@@ -84,7 +84,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Structure
             var nextToken = lastToken.GetNextToken(includeSkipped: true);
             if (nextToken.Kind() != SyntaxKind.None && nextToken.Kind() == SyntaxKind.SemicolonToken)
             {
-                var forStatement = nextToken.GetAncestor<ForStatementSyntax>();
+                var forStatement = nextToken.GetAncestor<ForStatementSyntax2>();
                 if (forStatement != null && forStatement.FirstSemicolonToken == nextToken)
                 {
                     return default;

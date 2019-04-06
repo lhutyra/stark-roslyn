@@ -261,15 +261,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
             isLeaf = false;
 
-            // If the node is a for loop Initializer, Condition, or Incrementor expression we label it as "ForStatementPart".
-            // We need to capture it in the match since these expressions can be "active statements" and as such we need to map them.
-            //
-            // The parent is not available only when comparing nodes for value equality.
-            if (nodeOpt != null && nodeOpt.Parent.IsKind(SyntaxKind.ForStatement) && nodeOpt is ExpressionSyntax)
-            {
-                return Label.ForStatementPart;
-            }
-
             switch (kind)
             {
                 case SyntaxKind.ConstructorDeclaration:
@@ -327,9 +318,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     return Label.WhileStatement;
 
                 case SyntaxKind.ForStatement:
-                    return Label.ForStatement;
-
-                case SyntaxKind.ForEachVariableStatement:
                     return Label.ForEachStatement;
 
                 case SyntaxKind.UsingStatement:
@@ -455,7 +443,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.PointerType:
                 case SyntaxKind.NullableType:
                 case SyntaxKind.TupleType:
-                case SyntaxKind.RefType:
+                case SyntaxKind.RefKindType:
                 case SyntaxKind.OmittedTypeArgument:
                 case SyntaxKind.NameColon:
                 case SyntaxKind.StackAllocArrayCreationExpression:
@@ -537,7 +525,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.SwitchSection:
                     return Equal((SwitchSectionSyntax)left, (SwitchSectionSyntax)right);
 
-                case SyntaxKind.ForStatement:
+                case SyntaxKind.ForStatementOld:
                     // The only children of ForStatement are labeled nodes and punctuation.
                     return true;
 
@@ -577,16 +565,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     return true;
 
                 case SyntaxKind.ForStatement:
-                    var leftFor = (ForStatementSyntax)leftNode;
-                    var rightFor = (ForStatementSyntax)rightNode;
-                    distance = ComputeWeightedDistance(leftFor, rightFor);
-                    return true;
-
-                case SyntaxKind.ForEachVariableStatement:
                     {
 
-                        var leftForEach = (CommonForEachStatementSyntax)leftNode;
-                        var rightForEach = (CommonForEachStatementSyntax)rightNode;
+                        var leftForEach = (ForStatementSyntax)leftNode;
+                        var rightForEach = (ForStatementSyntax)rightNode;
                         distance = ComputeWeightedDistance(leftForEach, rightForEach);
                         return true;
                     }
@@ -794,7 +776,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
             switch (leftBlock.Parent.Kind())
             {
                 case SyntaxKind.IfStatement:
-                case SyntaxKind.ForEachVariableStatement:
                 case SyntaxKind.ForStatement:
                 case SyntaxKind.WhileStatement:
                 case SyntaxKind.DoStatement:
@@ -885,8 +866,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
         }
 
         private static double ComputeWeightedDistance(
-            CommonForEachStatementSyntax leftCommonForEach,
-            CommonForEachStatementSyntax rightCommonForEach)
+            ForStatementSyntax leftCommonForEach,
+            ForStatementSyntax rightCommonForEach)
         {
             double statementDistance = ComputeDistance(leftCommonForEach.Statement, rightCommonForEach.Statement);
             double expressionDistance = ComputeDistance(leftCommonForEach.Expression, rightCommonForEach.Expression);
@@ -900,23 +881,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
             double distance = localNamesDistance * 0.6 + expressionDistance * 0.2 + statementDistance * 0.2;
             return AdjustForLocalsInBlock(distance, leftCommonForEach.Statement, rightCommonForEach.Statement, localsWeight: 0.6);
-        }
-
-        private static double ComputeWeightedDistance(ForStatementSyntax left, ForStatementSyntax right)
-        {
-            double statementDistance = ComputeDistance(left.Statement, right.Statement);
-            double conditionDistance = ComputeDistance(left.Condition, right.Condition);
-
-            double incDistance = ComputeDistance(
-                GetDescendantTokensIgnoringSeparators(left.Incrementors), GetDescendantTokensIgnoringSeparators(right.Incrementors));
-
-            double distance = conditionDistance * 0.3 + incDistance * 0.3 + statementDistance * 0.4;
-            if (TryComputeLocalsDistance(left.Declaration, right.Declaration, out var localsDistance))
-            {
-                distance = distance * 0.4 + localsDistance * 0.6;
-            }
-
-            return distance;
         }
 
         private static double ComputeWeightedDistance(
@@ -1033,12 +997,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
             GetLocalNames(localDeclaration.Identifier, ref result);
         }
 
-        internal static void GetLocalNames(CommonForEachStatementSyntax commonForEach, ref List<SyntaxToken> result)
+        internal static void GetLocalNames(ForStatementSyntax commonForEach, ref List<SyntaxToken> result)
         {
             switch (commonForEach.Kind())
             {
-                case SyntaxKind.ForEachVariableStatement:
-                    var forEachVariable = (ForEachVariableStatementSyntax)commonForEach;
+                case SyntaxKind.ForStatement:
+                    var forEachVariable = (ForStatementSyntax)commonForEach;
                     GetLocalNames(forEachVariable.Variable, ref result);
                     return;
 
