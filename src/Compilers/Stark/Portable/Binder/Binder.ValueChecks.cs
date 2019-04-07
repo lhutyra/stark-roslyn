@@ -481,10 +481,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                     // Note: RValueOnly is checked at the beginning of this method. Since we are here we need more than readable.
                     //"this" is readonly in members of readonly structs, unless we are in a constructor.
-                    if ((!checkingReceiver && !thisref.Type.IsValueType) ||
-                            (RequiresAssignableVariable(valueKind) &&
-                             thisref.Type.IsReadOnly &&
-                             (this.ContainingMemberOrLambda as MethodSymbol)?.MethodKind != MethodKind.Constructor))
+                    if (!checkingReceiver && RequiresAssignableVariable(valueKind))
                     {
                         // CONSIDER: the Dev10 name has angle brackets (i.e. "<this>")
                         Error(diagnostics, GetThisLvalueError(valueKind), node, ThisParameterSymbol.SymbolName);
