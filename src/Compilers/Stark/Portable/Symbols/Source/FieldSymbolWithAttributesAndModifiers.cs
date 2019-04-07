@@ -42,8 +42,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public sealed override bool IsStatic
             => (Modifiers & DeclarationModifiers.Static) != 0;
 
-        public sealed override bool IsReadOnly
-            => (Modifiers & DeclarationModifiers.ReadOnly) != 0;
+        public sealed override bool IsLet
+            => (Modifiers & DeclarationModifiers.Let) != 0;
 
         public sealed override Accessibility DeclaredAccessibility
             => ModifierUtils.EffectiveAccessibility(Modifiers);

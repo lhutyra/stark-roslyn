@@ -147,7 +147,7 @@ namespace StarkPlatform.CodeAnalysis.UseAutoProperty
 
             // If the user made the field readonly, we only want to convert it to a property if we
             // can keep it readonly.
-            if (getterField.IsReadOnly && !SupportsReadOnlyProperties(semanticModel.Compilation))
+            if (getterField.IsLet && !SupportsReadOnlyProperties(semanticModel.Compilation))
             {
                 return;
             }
@@ -165,7 +165,7 @@ namespace StarkPlatform.CodeAnalysis.UseAutoProperty
             }
 
             // Mutable value type fields are mutable unless they are marked read-only
-            if (!getterField.IsReadOnly && getterField.Type.IsMutableValueType() != false)
+            if (!getterField.IsLet && getterField.Type.IsMutableValueType() != false)
             {
                 return;
             }

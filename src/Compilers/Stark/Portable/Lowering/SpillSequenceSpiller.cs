@@ -353,7 +353,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         if (fieldSymbol.IsStatic)
                         {
                             // no need to spill static fields if used as locations or if readonly
-                            if (refKind != RefKind.None || fieldSymbol.IsReadOnly)
+                            if (refKind != RefKind.None || fieldSymbol.IsLet)
                             {
                                 return field;
                             }

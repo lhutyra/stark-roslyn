@@ -119,11 +119,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        public override bool IsReadOnly
+        public override bool IsLet
         {
             get
             {
-                return _underlyingField.IsReadOnly;
+                return _underlyingField.IsLet;
             }
         }
 

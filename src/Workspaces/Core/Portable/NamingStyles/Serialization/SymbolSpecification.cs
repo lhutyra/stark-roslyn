@@ -404,7 +404,7 @@ namespace StarkPlatform.CodeAnalysis.Diagnostics.Analyzers.NamingStyles
 
                 if (Modifier.IsReadOnly)
                 {
-                    if (kind == SymbolKind.Field && ((IFieldSymbol)symbol).IsReadOnly)
+                    if (kind == SymbolKind.Field && ((IFieldSymbol)symbol).IsLet)
                     {
                         return true;
                     }

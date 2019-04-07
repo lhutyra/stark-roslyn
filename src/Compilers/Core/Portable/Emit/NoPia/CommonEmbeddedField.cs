@@ -89,7 +89,7 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
                 }
             }
 
-            bool Cci.IFieldDefinition.IsReadOnly
+            bool Cci.IFieldDefinition.IsLet
             {
                 get
                 {

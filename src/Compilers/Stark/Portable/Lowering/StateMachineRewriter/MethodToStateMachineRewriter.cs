@@ -535,7 +535,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         if (field.FieldSymbol.IsStatic)
                         {
                             // the address of a static field, and the value of a readonly static field, is stable
-                            if (refKind != RefKind.None || field.FieldSymbol.IsReadOnly) return expr;
+                            if (refKind != RefKind.None || field.FieldSymbol.IsLet) return expr;
                             goto default;
                         }
 

@@ -1058,7 +1058,7 @@ tryAgain:
                 case SyntaxKind.OverrideKeyword:
                     return DeclarationModifiers.Override;
                 case SyntaxKind.ReadOnlyKeyword:
-                    return DeclarationModifiers.ReadOnly;
+                    return DeclarationModifiers.Let;
                 case SyntaxKind.VolatileKeyword:
                     return DeclarationModifiers.Volatile;
                 case SyntaxKind.TransientKeyword:

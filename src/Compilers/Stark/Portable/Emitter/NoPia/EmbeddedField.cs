@@ -53,7 +53,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Emit.NoPia
         {
             get
             {
-                return UnderlyingField.IsReadOnly;
+                return UnderlyingField.IsLet;
             }
         }
 

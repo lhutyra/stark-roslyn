@@ -18,7 +18,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ProtectedInternal = 1 << 7, // the two keywords together are treated as one modifier
         Private = 1 << 8,
         PrivateProtected = 1 << 9, // the two keywords together are treated as one modifier
-        ReadOnly = 1 << 10,
+        Let = 1 << 10,
         Transient = 1 << 11,
         Const = 1 << 12,
         Volatile = 1 << 13,

@@ -69,7 +69,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.E
                 }
 
                 return fieldSymbol.IsConst
-                    || fieldSymbol.IsReadOnly;
+                    || fieldSymbol.IsLet;
             }
 
             set
@@ -111,7 +111,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.Implementation.CodeModel.E
                 {
                     return EnvDTE80.vsCMConstKind.vsCMConstKindConst;
                 }
-                else if (fieldSymbol.IsReadOnly)
+                else if (fieldSymbol.IsLet)
                 {
                     return EnvDTE80.vsCMConstKind.vsCMConstKindReadOnly;
                 }

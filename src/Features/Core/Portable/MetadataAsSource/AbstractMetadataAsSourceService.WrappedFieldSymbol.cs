@@ -31,7 +31,7 @@ namespace StarkPlatform.CodeAnalysis.MetadataAsSource
 
             public bool IsConst => _symbol.IsConst;
 
-            public bool IsReadOnly => _symbol.IsReadOnly;
+            public bool IsLet => _symbol.IsLet;
 
             public bool IsVolatile => _symbol.IsVolatile;
 

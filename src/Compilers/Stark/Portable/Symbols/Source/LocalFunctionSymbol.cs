@@ -345,7 +345,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         public override bool IsStatic => (_declarationModifiers & DeclarationModifiers.Static) != 0;
 
-        public override bool IsReadOnly => (_declarationModifiers & DeclarationModifiers.ReadOnly) != 0;
+        public override bool IsReadOnly => (_declarationModifiers & DeclarationModifiers.Let) != 0;
 
         public override bool IsVirtual => (_declarationModifiers & DeclarationModifiers.Virtual) != 0;
 

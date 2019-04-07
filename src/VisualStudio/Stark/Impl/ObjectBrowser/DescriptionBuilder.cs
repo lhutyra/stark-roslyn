@@ -282,7 +282,7 @@ namespace StarkPlatform.VisualStudio.LanguageServices.CSharp.ObjectBrowser
                 AddText("extern ");
             }
 
-            if (fieldSymbol != null && fieldSymbol.IsReadOnly)
+            if (fieldSymbol != null && fieldSymbol.IsLet)
             {
                 AddText("readonly ");
             }

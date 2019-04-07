@@ -327,7 +327,7 @@ namespace StarkPlatform.CodeAnalysis.Shared.Extensions
             switch (symbol)
             {
                 case IFieldSymbol fieldSymbol:
-                    return !fieldSymbol.IsReadOnly && !fieldSymbol.IsConst;
+                    return !fieldSymbol.IsLet && !fieldSymbol.IsConst;
                 case IPropertySymbol propertySymbol:
                     return !propertySymbol.IsReadOnly;
             }

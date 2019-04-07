@@ -366,7 +366,7 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
 
         public bool IsNotSerialized => false;
 
-        public bool IsReadOnly => true;
+        public bool IsLet => true;
 
         public bool IsRuntimeSpecial => false;
 

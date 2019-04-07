@@ -22,7 +22,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public SynthesizedBackingFieldSymbol(
             SourcePropertySymbol property,
             string name,
-            bool isReadOnly,
+            bool isLet,
             bool isStatic,
             bool hasInitializer)
         {
@@ -31,7 +31,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             _name = name;
 
             Modifiers = DeclarationModifiers.Private |
-                (isReadOnly ? DeclarationModifiers.ReadOnly : DeclarationModifiers.None) |
+                (isLet ? DeclarationModifiers.Let : DeclarationModifiers.None) |
                 (isStatic ? DeclarationModifiers.Static : DeclarationModifiers.None);
 
             _property = property;

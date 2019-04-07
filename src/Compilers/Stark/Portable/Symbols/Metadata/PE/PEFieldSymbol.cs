@@ -305,7 +305,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
             }
         }
 
-        public override bool IsReadOnly
+        public override bool IsLet
         {
             get
             {

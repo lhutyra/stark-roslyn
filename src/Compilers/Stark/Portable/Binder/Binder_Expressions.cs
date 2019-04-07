@@ -4266,7 +4266,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case BoundKind.FieldAccess:
                     {
                         var fieldSymbol = ((BoundFieldAccess)boundMember).FieldSymbol;
-                        if (isRhsNestedInitializer && fieldSymbol.IsReadOnly && fieldSymbol.Type.IsValueType)
+                        if (isRhsNestedInitializer && fieldSymbol.IsLet && fieldSymbol.Type.IsValueType)
                         {
                             if (!hasErrors)
                             {

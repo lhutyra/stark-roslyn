@@ -437,7 +437,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case SymbolKind.Field:
                         var fieldSymbol = (FieldSymbol)namedArgumentNameSymbol;
                         namedArgumentType = fieldSymbol.Type.TypeSymbol;
-                        invalidNamedArgument |= fieldSymbol.IsReadOnly;
+                        invalidNamedArgument |= fieldSymbol.IsLet;
                         invalidNamedArgument |= fieldSymbol.IsConst;
                         break;
 

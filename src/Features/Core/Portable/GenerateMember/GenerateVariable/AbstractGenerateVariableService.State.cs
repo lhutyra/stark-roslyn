@@ -343,7 +343,7 @@ namespace StarkPlatform.CodeAnalysis.GenerateMember.GenerateVariable
             }
 
             private bool FieldIsReadOnly(ISymbol symbol)
-                => symbol is IFieldSymbol field && field.IsReadOnly;
+                => symbol is IFieldSymbol field && field.IsLet;
 
             private int GetStatementIndex(ChildSyntaxList children, SyntaxNode statement)
             {

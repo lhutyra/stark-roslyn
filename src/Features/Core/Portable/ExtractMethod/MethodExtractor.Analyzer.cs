@@ -916,7 +916,7 @@ namespace StarkPlatform.CodeAnalysis.ExtractMethod
                 foreach (var pair in symbolMap.Where(p => p.Key.Kind == SymbolKind.Field))
                 {
                     var field = (IFieldSymbol)pair.Key;
-                    if (!field.IsReadOnly)
+                    if (!field.IsLet)
                     {
                         continue;
                     }

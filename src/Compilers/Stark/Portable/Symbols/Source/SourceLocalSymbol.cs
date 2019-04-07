@@ -431,6 +431,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     case LocalDeclarationKind.Constant:
                     case LocalDeclarationKind.FixedVariable:
                     case LocalDeclarationKind.UsingVariable:
+                    case LocalDeclarationKind.LetVariable:
                         Debug.Assert(node is VariableDeclarationSyntax);
                         break;
 

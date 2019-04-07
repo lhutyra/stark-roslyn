@@ -890,7 +890,7 @@ namespace StarkPlatform.CodeAnalysis.Shared.Utilities
 
             return receiverSymbol.IsKind(SymbolKind.Method) ||
                 receiverSymbol.IsIndexer() ||
-                (receiverSymbol.IsKind(SymbolKind.Field) && ((IFieldSymbol)receiverSymbol).IsReadOnly);
+                (receiverSymbol.IsKind(SymbolKind.Field) && ((IFieldSymbol)receiverSymbol).IsLet);
         }
 
         protected abstract ImmutableArray<TArgumentSyntax> GetArguments(TExpressionSyntax expression);

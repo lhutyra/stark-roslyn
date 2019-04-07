@@ -608,7 +608,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     AddSpace();
                 }
 
-                if (symbol.IsReadOnly)
+                if (symbol.IsLet)
                 {
                     AddKeyword(SyntaxKind.ReadOnlyKeyword);
                     AddSpace();

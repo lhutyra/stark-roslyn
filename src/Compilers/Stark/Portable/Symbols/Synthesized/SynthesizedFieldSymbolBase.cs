@@ -30,7 +30,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             _containingType = containingType;
             _name = name;
             _modifiers = (isPublic ? DeclarationModifiers.Public : DeclarationModifiers.Private) |
-                (isReadOnly ? DeclarationModifiers.ReadOnly : DeclarationModifiers.None) |
+                (isReadOnly ? DeclarationModifiers.Let : DeclarationModifiers.None) |
                 (isStatic ? DeclarationModifiers.Static : DeclarationModifiers.None);
         }
 
@@ -88,9 +88,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        public override bool IsReadOnly
+        public override bool IsLet
         {
-            get { return (_modifiers & DeclarationModifiers.ReadOnly) != 0; }
+            get { return (_modifiers & DeclarationModifiers.Let) != 0; }
         }
 
         public override bool IsVolatile

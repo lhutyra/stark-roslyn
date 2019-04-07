@@ -70,7 +70,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// <summary>
         /// Returns true if this field was declared as "readonly". 
         /// </summary>
-        public abstract bool IsReadOnly { get; }
+        public abstract bool IsLet { get; }
 
         /// <summary>
         /// Returns true if this field was declared as "volatile". 

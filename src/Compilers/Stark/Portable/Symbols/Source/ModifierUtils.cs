@@ -65,7 +65,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     modifierErrors = true;
                 }
 
-                if ((result & DeclarationModifiers.Static) != 0 && (result & (DeclarationModifiers.ReadOnly | DeclarationModifiers.Transient)) != 0)
+                if ((result & DeclarationModifiers.Static) != 0 && (result & (DeclarationModifiers.Let | DeclarationModifiers.Transient)) != 0)
                 {
                     diagnostics.Add(ErrorCode.ERR_InvalidThisModifierForStatic, errorLocation);
                     modifierErrors = true;
@@ -120,7 +120,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     return SyntaxFacts.GetText(SyntaxKind.PrivateKeyword);
                 case DeclarationModifiers.PrivateProtected:
                     return SyntaxFacts.GetText(SyntaxKind.PrivateKeyword) + " " + SyntaxFacts.GetText(SyntaxKind.ProtectedKeyword);
-                case DeclarationModifiers.ReadOnly:
+                case DeclarationModifiers.Let:
                     return SyntaxFacts.GetText(SyntaxKind.ReadOnlyKeyword);
                 case DeclarationModifiers.Const:
                     return SyntaxFacts.GetText(SyntaxKind.ConstKeyword);
@@ -172,7 +172,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 case SyntaxKind.ExternKeyword:
                     return DeclarationModifiers.Extern;
                 case SyntaxKind.ReadOnlyKeyword:
-                    return DeclarationModifiers.ReadOnly;
+                    return DeclarationModifiers.Let;
                 case SyntaxKind.TransientKeyword:
                     return DeclarationModifiers.Transient;
                 case SyntaxKind.PartialKeyword:

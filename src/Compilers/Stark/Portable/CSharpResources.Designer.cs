@@ -286,6 +286,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot take a the address of `{0}` as it is a non-assignable `let` local variable.
+        /// </summary>
+        internal static string ERR_AddressOfLetLocal {
+            get {
+                return ResourceManager.GetString("ERR_AddressOfLetLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agnostic assembly cannot have a processor specific module &apos;{0}&apos;..
         /// </summary>
         internal static string ERR_AgnosticToMachineModule {
@@ -655,7 +664,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A readonly field cannot be assigned to (except in a constructor or a variable initializer).
+        ///   Looks up a localized string similar to A `let` field cannot be assigned to (except in a constructor or a variable initializer).
         /// </summary>
         internal static string ERR_AssgReadonly {
             get {
@@ -727,11 +736,11 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot assign to `{0}` variable because it is readonly local variable.
+        ///   Looks up a localized string similar to Cannot assign to `{0}` as it is a non-assignable `let` local variable.
         /// </summary>
-        internal static string ERR_AssignReadOnlyLocal {
+        internal static string ERR_AssignLetLocal {
             get {
-                return ResourceManager.GetString("ERR_AssignReadOnlyLocal", resourceCulture);
+                return ResourceManager.GetString("ERR_AssignLetLocal", resourceCulture);
             }
         }
         
@@ -8989,6 +8998,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot take a ref/out of `{0}` as it is a non-assignable `let` local variable.
+        /// </summary>
+        internal static string ERR_RefLetLocal {
+            get {
+                return ResourceManager.GetString("ERR_RefLetLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The left-hand side of a ref assignment must be a ref local or parameter..
         /// </summary>
         internal static string ERR_RefLocalOrParamExpected {
@@ -9043,7 +9061,7 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A readonly field cannot be used as a ref or out value (except in a constructor).
+        ///   Looks up a localized string similar to A `let` field cannot be used as a ref or out value (except in a constructor).
         /// </summary>
         internal static string ERR_RefReadonly {
             get {

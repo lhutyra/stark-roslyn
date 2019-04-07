@@ -502,7 +502,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             get
             {
-                return (this.DeclarationModifiers & DeclarationModifiers.ReadOnly) != 0;
+                return (this.DeclarationModifiers & DeclarationModifiers.Let) != 0;
             }
         }
 

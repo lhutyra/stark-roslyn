@@ -179,12 +179,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        bool Cci.IFieldDefinition.IsReadOnly
+        bool Cci.IFieldDefinition.IsLet
         {
             get
             {
                 CheckDefinitionInvariant();
-                return this.IsReadOnly || (this.IsConst && !this.IsMetadataConstant);
+                return this.IsLet || (this.IsConst && !this.IsMetadataConstant);
             }
         }
 

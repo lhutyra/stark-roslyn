@@ -958,12 +958,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             Debug.Assert(!declTypeOpt.IsNull);
 
-            // Handle let variable, replace the type with a readonly type
-            if (isLet && declTypeOpt.IsValueType && !declTypeOpt.TypeSymbol.IsReadOnly)
-            {
-                declTypeOpt = ExtendedTypeSymbol.CreateExtendedTypeSymbol(declarator, declTypeOpt, TypeAccessModifiers.ReadOnly, diagnostics);
-            }
-
             if (kind == LocalDeclarationKind.FixedVariable)
             {
                 // NOTE: this is an error, but it won't prevent further binding.

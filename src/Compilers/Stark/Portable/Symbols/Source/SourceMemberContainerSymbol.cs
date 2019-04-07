@@ -273,7 +273,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     }
                     break;
                 case TypeKind.Struct:
-                    allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Ref | DeclarationModifiers.Abstract | DeclarationModifiers.ReadOnly | DeclarationModifiers.Unsafe;
+                    allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Ref | DeclarationModifiers.Abstract | DeclarationModifiers.Let | DeclarationModifiers.Unsafe;
                     break;
                 case TypeKind.Interface:
                     allowedModifiers |= DeclarationModifiers.Partial | DeclarationModifiers.Unsafe;
@@ -742,7 +742,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             get
             {
-                return (_flags.DeclarationModifiers & DeclarationModifiers.ReadOnly) != 0;
+                return (_flags.DeclarationModifiers & DeclarationModifiers.Let) != 0;
             }
         }
 
@@ -2993,7 +2993,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                             // If the field is a let, it is readonly
                             if (fieldSyntax.Declaration.VariableKeyword.Kind() == SyntaxKind.LetKeyword)
                             {
-                                modifiers |= DeclarationModifiers.ReadOnly;
+                                modifiers |= DeclarationModifiers.Let;
                             }
 
                             //if (fieldSyntax.Declaration.Kind() == SyntaxKind.ValKeyword || (fieldSyntax.Declaration.Type != null && fieldSyntax.Declaration.Type.IsUnmanaged)

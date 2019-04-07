@@ -146,7 +146,7 @@ namespace StarkPlatform.Cci
         /// <summary>
         /// This field can only be read. Initialization takes place in a constructor.
         /// </summary>
-        bool IsReadOnly { get; }
+        bool IsLet { get; }
 
         /// <summary>
         /// True if the field gets special treatment from the runtime.

@@ -32,7 +32,7 @@ namespace StarkPlatform.CodeAnalysis
         /// <summary>
         /// Returns true if this field was declared as "readonly". 
         /// </summary>
-        bool IsReadOnly { get; }
+        bool IsLet { get; }
 
         /// <summary>
         /// Returns true if this field was declared as "volatile". 

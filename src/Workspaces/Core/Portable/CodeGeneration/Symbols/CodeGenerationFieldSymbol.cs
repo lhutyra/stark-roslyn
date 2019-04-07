@@ -65,7 +65,7 @@ namespace StarkPlatform.CodeAnalysis.CodeGeneration
             }
         }
 
-        public bool IsReadOnly
+        public bool IsLet
         {
             get
             {

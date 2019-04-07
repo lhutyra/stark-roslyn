@@ -66,7 +66,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 }
             }
 
-            public override bool IsReadOnly
+            public override bool IsLet
             {
                 get { return true; }
             }

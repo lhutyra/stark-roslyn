@@ -103,7 +103,7 @@ namespace StarkPlatform.CodeAnalysis.MakeFieldReadonly
 
                 bool IsCandidateField(IFieldSymbol symbol) =>
                         symbol.DeclaredAccessibility == Accessibility.Private &&
-                        !symbol.IsReadOnly &&
+                        !symbol.IsLet &&
                         !symbol.IsConst &&
                         !symbol.IsImplicitlyDeclared &&
                         symbol.Locations.Length == 1 &&

@@ -162,7 +162,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     diagnostics.Add(ErrorCode.ERR_BadMemberFlag, errorLocation, SyntaxFacts.GetText(SyntaxKind.StaticKeyword));
                 }
 
-                if ((result & DeclarationModifiers.ReadOnly) != 0)
+                if ((result & DeclarationModifiers.Let) != 0)
                 {
                     // The modifier 'readonly' is not valid for this item
                     diagnostics.Add(ErrorCode.ERR_BadMemberFlag, errorLocation, SyntaxFacts.GetText(SyntaxKind.ReadOnlyKeyword));
@@ -180,7 +180,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     diagnostics.Add(ErrorCode.ERR_BadMemberFlag, errorLocation, SyntaxFacts.GetText(SyntaxKind.VolatileKeyword));
                 }
 
-                result &= ~(DeclarationModifiers.Static | DeclarationModifiers.ReadOnly | DeclarationModifiers.Const | DeclarationModifiers.Volatile);
+                result &= ~(DeclarationModifiers.Static | DeclarationModifiers.Let | DeclarationModifiers.Const | DeclarationModifiers.Volatile);
                 Debug.Assert((result & ~(DeclarationModifiers.AccessibilityMask | DeclarationModifiers.Fixed | DeclarationModifiers.Unsafe | DeclarationModifiers.New)) == 0);
             }
 
@@ -193,7 +193,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     diagnostics.Add(ErrorCode.ERR_StaticConstant, errorLocation, firstIdentifier.ValueText);
                 }
 
-                if ((result & DeclarationModifiers.ReadOnly) != 0)
+                if ((result & DeclarationModifiers.Let) != 0)
                 {
                     // The modifier 'readonly' is not valid for this item
                     diagnostics.Add(ErrorCode.ERR_BadMemberFlag, errorLocation, SyntaxFacts.GetText(SyntaxKind.ReadOnlyKeyword));
@@ -467,12 +467,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 else
                 {
                     type = binder.BindType(typeSyntax, diagnostics);
-                }
-
-                // Create a readonly type if required
-                if ((Modifiers & DeclarationModifiers.ReadOnly) != 0 && type.IsValueType && !type.TypeSymbol.IsReadOnly)
-                {
-                    type = ExtendedTypeSymbol.CreateExtendedTypeSymbol(declarator, type, TypeAccessModifiers.ReadOnly, diagnostics);
                 }
 
                 if (IsFixedSizeBuffer)

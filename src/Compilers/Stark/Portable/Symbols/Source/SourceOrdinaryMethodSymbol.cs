@@ -758,7 +758,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             var defaultAccess = isInterface ? DeclarationModifiers.Public : DeclarationModifiers.Private;
 
             // Check that the set of modifiers is allowed
-            var allowedModifiers = DeclarationModifiers.Partial | DeclarationModifiers.Unsafe | DeclarationModifiers.ReadOnly | DeclarationModifiers.Transient;
+            var allowedModifiers = DeclarationModifiers.Partial | DeclarationModifiers.Unsafe | DeclarationModifiers.Let | DeclarationModifiers.Transient;
 
             if (methodKind != MethodKind.ExplicitInterfaceImplementation)
             {

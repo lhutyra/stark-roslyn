@@ -177,9 +177,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 var hasGetSyntax = getSyntax != null;
                 _isAutoProperty = notRegularProperty && hasGetSyntax;
-                bool isReadOnly = hasGetSyntax && setSyntax == null;
+                bool isLet = hasGetSyntax && setSyntax == null;
 
-                if (_isAutoProperty && !isReadOnly && !IsStatic && ContainingType.IsReadOnly)
+                if (_isAutoProperty && !isLet && !IsStatic && ContainingType.IsReadOnly)
                 {
                     diagnostics.Add(ErrorCode.ERR_AutoPropsInRoStruct, location);
                 }
@@ -201,7 +201,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     string fieldName = GeneratedNames.MakeBackingFieldName(_sourceName);
                     _backingField = new SynthesizedBackingFieldSymbol(this,
                                                                           fieldName,
-                                                                          isReadOnly,
+                                                                          isLet,
                                                                           this.IsStatic,
                                                                           hasInitializer);
                 }
@@ -210,7 +210,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 {
                     Binder.CheckFeatureAvailability(
                         syntax,
-                        isReadOnly ? MessageID.IDS_FeatureReadonlyAutoImplementedProperties : MessageID.IDS_FeatureAutoImplementedProperties,
+                        isLet ? MessageID.IDS_FeatureReadonlyAutoImplementedProperties : MessageID.IDS_FeatureAutoImplementedProperties,
                         diagnostics,
                         location);
                 }

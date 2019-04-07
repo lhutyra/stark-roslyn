@@ -543,7 +543,7 @@ namespace StarkPlatform.CodeAnalysis.GenerateType
                     if (symbol is IFieldSymbol field)
                     {
                         return
-                            !field.IsReadOnly &&
+                            !field.IsLet &&
                             _service.IsConversionImplicit(_semanticDocument.SemanticModel.Compilation, parameterType, field.Type);
                     }
                     else if (symbol is IPropertySymbol property)

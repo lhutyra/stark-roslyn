@@ -55,7 +55,7 @@ namespace StarkPlatform.CodeAnalysis.Editing
                 isStatic: symbol.IsStatic,
                 isAbstract: symbol.IsAbstract,
                 ////isNew: (property != null && property.OverriddenProperty == null) || (method != null && method.OverriddenMethod == null),
-                isReadOnly: (field != null && field.IsReadOnly) || (property != null && property.IsReadOnly),
+                isReadOnly: (field != null && field.IsLet) || (property != null && property.IsReadOnly),
                 isVirtual: symbol.IsVirtual,
                 isOverride: symbol.IsOverride,
                 isSealed: symbol.IsSealed,

@@ -640,7 +640,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             // all parameters can be passed by ref/out or assigned to
             // except "in" parameters, which are readonly
             // Or when the type itself is readonly
-            if ((parameterSymbol.RefKind == RefKind.In || (checkingReceiver && parameter.Type.IsReadOnly)) && RequiresAssignableVariable(valueKind))
+            if ((parameterSymbol.RefKind == RefKind.None || parameterSymbol.RefKind == RefKind.In || (checkingReceiver && parameter.Type.IsReadOnly)) && RequiresAssignableVariable(valueKind))
             {
                 ReportReadOnlyError(parameterSymbol, node, valueKind, checkingReceiver, diagnostics);
                 return false;
@@ -700,7 +700,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 // S has a mutable field x, then c.f.x is not a variable because c.f is not
                 // writable.
 
-                if (fieldSymbol.IsReadOnly)
+                if (fieldSymbol.IsLet)
                 {
                     var canModifyReadonly = false;
 
@@ -1533,7 +1533,22 @@ moreArguments:
                 // TODO: Checking receiver
                 Debug.Assert(!checkingReceiver);
                 // TODO: handle ref, address, kind...etc.
-                Error(diagnostics, ErrorCode.ERR_AssignReadOnlyLocal, node, local);
+                switch (kind)
+                {
+                    case BindValueKind.ReadonlyRef:
+                        return;
+                    case BindValueKind.AddressOf:
+                    case BindValueKind.FixedReceiver:
+                        Error(diagnostics, ErrorCode.ERR_AddressOfLetLocal, node, local);
+                        break;
+                    case BindValueKind.RefOrOut:
+                    case BindValueKind.RefReturn:
+                        Error(diagnostics, ErrorCode.ERR_RefLetLocal, node, local);
+                        break;
+                    default:
+                        Error(diagnostics, ErrorCode.ERR_AssignLetLocal, node, local);
+                        break;
+                }
                 return;
             }
             else
@@ -3134,7 +3149,7 @@ moreArguments:
                 return false;
             }
 
-            if (!field.IsReadOnly)
+            if (!field.IsLet)
             {
                 // in a case if we have a writeable struct field with a receiver that only has a readable home we would need to pass it via a temp.
                 // it would be advantageous to make a temp for the field, not for the the outer struct, since the field is smaller and we can get to is by fetching references.

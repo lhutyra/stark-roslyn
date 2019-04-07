@@ -871,7 +871,7 @@ namespace StarkPlatform.CodeAnalysis.Shared.Extensions
             foreach (var member in type.GetMembers())
             {
                 if (member is IFieldSymbol fieldSymbol &&
-                    !(fieldSymbol.IsConst || fieldSymbol.IsReadOnly || fieldSymbol.IsStatic))
+                    !(fieldSymbol.IsConst || fieldSymbol.IsLet || fieldSymbol.IsStatic))
                 {
                     return true;
                 }

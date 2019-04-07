@@ -1691,7 +1691,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_OpenBraceExpected = 9002,
         ERR_CloseBraceExpected = 9003,
         ERR_AccessModifiersNotSupported = 9004,
-        ERR_AssignReadOnlyLocal = 9005,
+        ERR_AssignLetLocal = 9005,
         ERR_InvalidInterfaceInExtendList = 9006,
         ERR_NonStructBaseForStruct = 9007,
         ERR_NonClassBaseForClass = 9008,
@@ -1705,6 +1705,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_InvalidInlineILArgument = 9016,
         ERR_InvalidVarDeclarationAfterRef = 9017,
         ERR_InvalidVarDeclaration = 9018,
+        ERR_RefLetLocal = 9019,
+        ERR_AddressOfLetLocal = 9020,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

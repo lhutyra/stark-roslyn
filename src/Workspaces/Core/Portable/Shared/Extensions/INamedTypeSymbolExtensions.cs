@@ -384,7 +384,7 @@ namespace StarkPlatform.CodeAnalysis.Shared.Extensions
                 case SymbolKind.Field:
                     var fieldSymbol = (IFieldSymbol)symbol;
                     if (!fieldSymbol.IsConst &&
-                        !fieldSymbol.IsReadOnly &&
+                        !fieldSymbol.IsLet &&
                         !fieldSymbol.IsStatic)
                     {
                         return fieldSymbol;

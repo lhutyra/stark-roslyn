@@ -771,7 +771,7 @@ namespace StarkPlatform.Cci
                 result |= FieldAttributes.Static;
             }
 
-            if (fieldDef.IsReadOnly)
+            if (fieldDef.IsLet)
             {
                 result |= FieldAttributes.InitOnly;
             }

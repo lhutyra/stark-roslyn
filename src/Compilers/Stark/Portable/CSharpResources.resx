@@ -2933,13 +2933,13 @@ A catch() block after a catch (System.Exception e) block can catch non-CLS excep
     <value>Keyword, identifier, or string expected after verbatim specifier: @</value>
   </data>
   <data name="ERR_RefReadonly" xml:space="preserve">
-    <value>A readonly field cannot be used as a ref or out value (except in a constructor)</value>
+    <value>A `let` field cannot be used as a ref or out value (except in a constructor)</value>
   </data>
   <data name="ERR_RefReadonly2" xml:space="preserve">
     <value>Members of readonly field '{0}' cannot be used as a ref or out value (except in a constructor)</value>
   </data>
   <data name="ERR_AssgReadonly" xml:space="preserve">
-    <value>A readonly field cannot be assigned to (except in a constructor or a variable initializer)</value>
+    <value>A `let` field cannot be assigned to (except in a constructor or a variable initializer)</value>
   </data>
   <data name="ERR_AssgReadonly2" xml:space="preserve">
     <value>Members of readonly field '{0}' cannot be modified (except in a constructor or a variable initializer)</value>
@@ -2947,8 +2947,14 @@ A catch() block after a catch (System.Exception e) block can catch non-CLS excep
   <data name="ERR_RefReadonlyNotField" xml:space="preserve">
     <value>Cannot use {0} '{1}' as a ref or out value because it is a readonly variable</value>
   </data>
-  <data name="ERR_AssignReadOnlyLocal" xml:space="preserve">
-    <value>Cannot assign to `{0}` variable because it is readonly local variable</value>
+  <data name="ERR_AssignLetLocal" xml:space="preserve">
+    <value>Cannot assign to `{0}` as it is a non-assignable `let` local variable</value>
+  </data>
+  <data name="ERR_RefLetLocal" xml:space="preserve">
+    <value>Cannot take a ref/out of `{0}` as it is a non-assignable `let` local variable</value>
+  </data>
+  <data name="ERR_AddressOfLetLocal" xml:space="preserve">
+    <value>Cannot take a the address of `{0}` as it is a non-assignable `let` local variable</value>
   </data>
   <data name="ERR_RefReadonlyNotField2" xml:space="preserve">
     <value>Members of {0} '{1}' cannot be used as a ref or out value because it is a readonly variable</value>

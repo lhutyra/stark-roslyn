@@ -56,7 +56,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 diagnostics.Add(AccessCheck.GetProtectedMemberInSealedTypeError(containingType), ErrorLocation, this);
             }
-            else if (IsVolatile && IsReadOnly)
+            else if (IsVolatile && IsLet)
             {
                 diagnostics.Add(ErrorCode.ERR_VolatileAndReadonly, ErrorLocation, this);
             }
@@ -64,7 +64,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 diagnostics.Add(ErrorCode.ERR_InstanceMemberInStaticClass, ErrorLocation, this);
             }
-            else if (!IsStatic && !IsReadOnly && containingType.IsReadOnly)
+            else if (!IsStatic && !IsLet && containingType.IsReadOnly)
             {
                 diagnostics.Add(ErrorCode.ERR_FieldsInRoStruct, ErrorLocation);
             }

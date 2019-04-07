@@ -125,7 +125,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                     tokens.Add(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
                 }
 
-                if (field.IsReadOnly)
+                if (field.IsLet)
                 {
                     tokens.Add(SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword));
                 }

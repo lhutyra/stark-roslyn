@@ -236,7 +236,7 @@ namespace StarkPlatform.CodeAnalysis.EncapsulateField
             }
 
             var projectId = document.Project.Id;
-            if (field.IsReadOnly)
+            if (field.IsLet)
             {
                 // Inside the constructor we want to rename references the field to the final field name.
                 var constructorSyntaxes = GetConstructorNodes(field.ContainingType).ToSet();
@@ -305,14 +305,14 @@ namespace StarkPlatform.CodeAnalysis.EncapsulateField
             var propertySymbol = annotation.AddAnnotationToSymbol(CodeGenerationSymbolFactory.CreatePropertySymbol(containingType: containingSymbol,
                 attributes: ImmutableArray<AttributeData>.Empty,
                 accessibility: ComputeAccessibility(accessibility, field.Type),
-                modifiers: new DeclarationModifiers(isStatic: field.IsStatic, isReadOnly: field.IsReadOnly, isUnsafe: field.IsUnsafe()),
+                modifiers: new DeclarationModifiers(isStatic: field.IsStatic, isReadOnly: field.IsLet, isUnsafe: field.IsUnsafe()),
                 type: field.Type,
                 refKind: RefKind.None,
                 explicitInterfaceImplementations: default,
                 name: propertyName,
                 parameters: ImmutableArray<IParameterSymbol>.Empty,
                 getMethod: CreateGet(fieldName, field, factory),
-                setMethod: field.IsReadOnly || field.IsConst ? null : CreateSet(fieldName, field, factory)));
+                setMethod: field.IsLet || field.IsConst ? null : CreateSet(fieldName, field, factory)));
 
             return Simplifier.Annotation.AddAnnotationToSymbol(
                 Formatter.Annotation.AddAnnotationToSymbol(propertySymbol));
