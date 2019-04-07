@@ -266,7 +266,7 @@ namespace StarkPlatform.CodeAnalysis
         system_runtime_compiler_NullableAttribute,
         system_runtime_compiler_ReferenceAssemblyAttribute,
 
-        system_runtime_annotations_IsReadOnlyAttribute,
+        system_runtime_annotations_ReadOnlyAttribute,
         system_runtime_annotations_IsByRefLikeAttribute,
         system_runtime_annotations_InAttribute,
         system_ObsoleteAttribute,
@@ -563,7 +563,7 @@ namespace StarkPlatform.CodeAnalysis
             "system.runtime.compiler.NullableAttribute",
             "system.runtime.compiler.ReferenceAssemblyAttribute",
 
-            "system.runtime.annotations.IsReadOnlyAttribute",
+            "system.runtime.annotations.ReadOnlyAttribute",
             "system.runtime.annotations.IsByRefLikeAttribute",
             "system.runtime.annotations.InAttribute",
             "system.ObsoleteAttribute",

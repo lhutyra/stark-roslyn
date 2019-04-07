@@ -543,7 +543,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return CheckIfAttributeShouldBeEmbedded(
                 diagnosticsOpt,
                 locationOpt,
-                WellKnownType.system_runtime_annotations_IsReadOnlyAttribute,
+                WellKnownType.system_runtime_annotations_ReadOnlyAttribute,
                 WellKnownMember.System_Runtime_CompilerServices_IsReadOnlyAttribute__ctor);
         }
 
