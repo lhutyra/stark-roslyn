@@ -1568,6 +1568,30 @@ tryAgain:
             }
         }
 
+        private void ParseContractClauses(SyntaxListBuilder list)
+        {
+            while (IsContractKeyword(this.CurrentToken.ContextualKind))
+            {
+                list.Add(this.ParseContractClause());
+            }
+        }
+
+        private static bool IsContractKeyword(SyntaxKind kind)
+        {
+            return kind == SyntaxKind.RequiresKeyword || kind == SyntaxKind.EnsuresKeyword;
+        }
+
+        private ContractClauseSyntax ParseContractClause()
+        {
+            var contractKeyword = CurrentToken.Kind == SyntaxKind.RequiresKeyword ? 
+                this.EatContextualToken(SyntaxKind.RequiresKeyword) : 
+                this.EatContextualToken(SyntaxKind.EnsuresKeyword);
+
+            var condition = this.ParseExpressionCore();
+
+            return _syntaxFactory.ContractClause(contractKeyword, condition);
+        }
+
         private TypeParameterConstraintClauseSyntax ParseTypeParameterConstraintClause()
         {
             var where = this.EatContextualToken(SyntaxKind.WhereKeyword);
@@ -1682,7 +1706,7 @@ tryAgain:
 
                         case SyntaxKind.ConstKeyword:
                             var constKeyword = EatToken();
-                            var constType = ParseUnderlyingType(false);
+                            var constType = ParseUnderlyingType();
                             return _syntaxFactory.ConstConstraint(isKeyword, constKeyword, constType);
 
                         default:
@@ -2233,6 +2257,7 @@ tryAgain:
 
             var saveTerm = _termState;
             _termState |= TerminatorState.IsEndOfMethodSignature;
+            var contracts = default(SyntaxListBuilder<ContractClauseSyntax>);
             try
             {
                 var paramList = this.ParseParenthesizedParameterList();
@@ -2240,6 +2265,13 @@ tryAgain:
                 ConstructorInitializerSyntax initializer = this.CurrentToken.Kind == SyntaxKind.ColonToken
                     ? this.ParseConstructorInitializer()
                     : null;
+
+                // Parse any contract clauses
+                if (IsContractKeyword(this.CurrentToken.ContextualKind))
+                {
+                    contracts = _pool.Allocate<ContractClauseSyntax>();
+                    this.ParseContractClauses(contracts);
+                }
 
                 this.ParseBlockAndExpressionBodies(out BlockSyntax body, out ArrowExpressionClauseSyntax expressionBody, requestedExpressionBodyFeature: MessageID.IDS_FeatureExpressionBodiedDeOrConstructor);
 
@@ -2249,10 +2281,14 @@ tryAgain:
                     eosToken = EatEos(ref initializer);
                 }
 
-                return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToList(), constructor, paramList, initializer, body, expressionBody, eosToken);
+                return _syntaxFactory.ConstructorDeclaration(attributes, modifiers.ToList(), constructor, paramList, initializer, contracts, body, expressionBody, eosToken);
             }
             finally
             {
+                if (!contracts.IsNull)
+                {
+                    _pool.Free(contracts);
+                }
                 _termState = saveTerm;
             }
         }
@@ -2385,14 +2421,10 @@ tryAgain:
                 returnType = ParseType(); // ParseTypeOrVoid();
             }
             var constraints = default(SyntaxListBuilder<TypeParameterConstraintClauseSyntax>);
+            var contracts = default(SyntaxListBuilder<ContractClauseSyntax>);
             try
             {
-                if (this.CurrentToken.ContextualKind == SyntaxKind.WhereKeyword)
-                {
-                    constraints = _pool.Allocate<TypeParameterConstraintClauseSyntax>();
-                    this.ParseTypeParameterConstraintClauses(constraints);
-                }
-                else if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
+                if (this.CurrentToken.Kind == SyntaxKind.ColonToken)
                 {
                     // Use else if, rather than if, because if we see both a constructor initializer and a constraint clause, we're too lost to recover.
                     var colonToken = this.CurrentToken;
@@ -2405,6 +2437,18 @@ tryAgain:
                     // off track.  If this becomes a problem, an alternative approach would be to generalize
                     // EatTokenWithPrejudice in such a way that we can just skip everything until we recognize
                     // our context again (perhaps an open brace).
+                }
+                else if (this.CurrentToken.ContextualKind == SyntaxKind.WhereKeyword)
+                {
+                    constraints = _pool.Allocate<TypeParameterConstraintClauseSyntax>();
+                    this.ParseTypeParameterConstraintClauses(constraints);
+                }
+
+                // Parse any contract clauses
+                if (IsContractKeyword(this.CurrentToken.ContextualKind))
+                {
+                    contracts = _pool.Allocate<ContractClauseSyntax>();
+                    this.ParseContractClauses(contracts);
                 }
 
                 _termState = saveTerm;
@@ -2463,6 +2507,7 @@ tryAgain:
                     minusGreaterThanForReturnType,
                     returnType,
                     constraints,
+                    contracts,
                     blockBody,
                     expressionBody,
                     eosToken);
@@ -2472,6 +2517,10 @@ tryAgain:
                 if (!constraints.IsNull)
                 {
                     _pool.Free(constraints);
+                }
+                if (!contracts.IsNull)
+                {
+                    _pool.Free(contracts);
                 }
             }
         }
@@ -2516,36 +2565,55 @@ tryAgain:
 
             var paramList = this.ParseParenthesizedParameterList();
 
-            BlockSyntax blockBody;
-            ArrowExpressionClauseSyntax expressionBody;
-            this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
-
-            // If we don't have a block body, we need to recover a Eos
-            SyntaxToken eosToken = null;
-            if (blockBody == null)
+            var contracts = default(SyntaxListBuilder<ContractClauseSyntax>);
+            try
             {
-                if (expressionBody != null)
+                // Parse any contract clauses
+                if (IsContractKeyword(this.CurrentToken.ContextualKind))
                 {
-                    eosToken = EatEos(ref expressionBody);
+                    contracts = _pool.Allocate<ContractClauseSyntax>();
+                    this.ParseContractClauses(contracts);
                 }
-                else
-                { 
 
-                    Debug.Assert(paramList != null);
-                    eosToken = EatEos(ref paramList);
+                BlockSyntax blockBody;
+                ArrowExpressionClauseSyntax expressionBody;
+                this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
+
+                // If we don't have a block body, we need to recover a Eos
+                SyntaxToken eosToken = null;
+                if (blockBody == null)
+                {
+                    if (expressionBody != null)
+                    {
+                        eosToken = EatEos(ref expressionBody);
+                    }
+                    else
+                    {
+
+                        Debug.Assert(paramList != null);
+                        eosToken = EatEos(ref paramList);
+                    }
+                }
+
+                return _syntaxFactory.ConversionOperatorDeclaration(
+                    attributes,
+                    modifiers.ToList(),
+                    style,
+                    opKeyword,
+                    type,
+                    paramList,
+                    contracts,
+                    blockBody,
+                    expressionBody,
+                    eosToken);
+            }
+            finally
+            {
+                if (!contracts.IsNull)
+                {
+                    _pool.Free(contracts);
                 }
             }
-
-            return _syntaxFactory.ConversionOperatorDeclaration(
-                attributes,
-                modifiers.ToList(),
-                style,
-                opKeyword,
-                type,
-                paramList,
-                blockBody,
-                expressionBody,
-                eosToken);
         }
 
         private OperatorDeclarationSyntax ParseOperatorDeclaration(
@@ -2654,45 +2722,64 @@ tryAgain:
                 type = this.AddError(type, ErrorCode.ERR_BadOperatorSyntax, SyntaxFacts.GetText(SyntaxKind.PlusToken));
             }
 
-            BlockSyntax blockBody;
-            ArrowExpressionClauseSyntax expressionBody;
-            this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
-
-            // If we don't have a block body, we need to recover a Eos
-            SyntaxToken eosToken = null;
-            if (blockBody == null)
+            var contracts = default(SyntaxListBuilder<ContractClauseSyntax>);
+            try
             {
-                if (expressionBody != null)
+                // Parse any contract clauses
+                if (IsContractKeyword(this.CurrentToken.ContextualKind))
                 {
-                    eosToken = EatEos(ref expressionBody);
+                    contracts = _pool.Allocate<ContractClauseSyntax>();
+                    this.ParseContractClauses(contracts);
                 }
-                else
-                {
 
-                    Debug.Assert(paramList != null);
-                    eosToken = EatEos(ref paramList);
+                BlockSyntax blockBody;
+                ArrowExpressionClauseSyntax expressionBody;
+                this.ParseBlockAndExpressionBodies(out blockBody, out expressionBody);
+
+                // If we don't have a block body, we need to recover a Eos
+                SyntaxToken eosToken = null;
+                if (blockBody == null)
+                {
+                    if (expressionBody != null)
+                    {
+                        eosToken = EatEos(ref expressionBody);
+                    }
+                    else
+                    {
+
+                        Debug.Assert(paramList != null);
+                        eosToken = EatEos(ref paramList);
+                    }
+                }
+
+                // if the operator is invalid, then switch it to plus (which will work either way) so that
+                // we can finish building the tree
+                if (!(opKind == SyntaxKind.IsKeyword ||
+                      SyntaxFacts.IsOverloadableUnaryOperator(opKind) ||
+                      SyntaxFacts.IsOverloadableBinaryOperator(opKind)))
+                {
+                    opToken = ConvertToMissingWithTrailingTrivia(opToken, SyntaxKind.PlusToken);
+                }
+
+                return _syntaxFactory.OperatorDeclaration(
+                    attributes,
+                    modifiers.ToList(),
+                    type,
+                    opKeyword,
+                    opToken,
+                    paramList,
+                    contracts,
+                    blockBody,
+                    expressionBody,
+                    eosToken);
+            }
+            finally
+            {
+                if (!contracts.IsNull)
+                {
+                    _pool.Free(contracts);
                 }
             }
-
-            // if the operator is invalid, then switch it to plus (which will work either way) so that
-            // we can finish building the tree
-            if (!(opKind == SyntaxKind.IsKeyword ||
-                  SyntaxFacts.IsOverloadableUnaryOperator(opKind) ||
-                  SyntaxFacts.IsOverloadableBinaryOperator(opKind)))
-            {
-                opToken = ConvertToMissingWithTrailingTrivia(opToken, SyntaxKind.PlusToken);
-            }
-
-            return _syntaxFactory.OperatorDeclaration(
-                attributes,
-                modifiers.ToList(),
-                type,
-                opKeyword,
-                opToken,
-                paramList,
-                blockBody,
-                expressionBody,
-                eosToken);
         }
 
         private IndexerDeclarationSyntax ParseIndexerDeclaration(
@@ -2716,45 +2803,64 @@ tryAgain:
             var minusGreaterThanForReturnType = ExpectMinusGreaterThanForReturnType();
             var returnType = ParseType();
 
-            AccessorListSyntax accessorList = null;
-            ArrowExpressionClauseSyntax expressionBody = null;
-            SyntaxToken eosToken = null;
-            // Try to parse accessor list unless there is an expression
-            // body and no accessor list
-            if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken)
+            var contracts = default(SyntaxListBuilder<ContractClauseSyntax>);
+            try
             {
-                expressionBody = this.ParseArrowExpressionClause();
-                expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
-                eosToken = this.EatEos(ref expressionBody);
-            }
-            else
-            {
-                accessorList = this.ParseAccessorList(isEvent: false);
-            }
+                // Parse any contract clauses
+                if (IsContractKeyword(this.CurrentToken.ContextualKind))
+                {
+                    contracts = _pool.Allocate<ContractClauseSyntax>();
+                    this.ParseContractClauses(contracts);
+                }
 
-            // If the user has erroneously provided both an accessor list
-            // and an expression body, but no semicolon, we want to parse
-            // the expression body and report the error (which is done later)
-            if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken
-                && eosToken == null)
-            {
-                expressionBody = this.ParseArrowExpressionClause();
-                expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
-                eosToken = this.EatEos(ref expressionBody);
+                AccessorListSyntax accessorList = null;
+                ArrowExpressionClauseSyntax expressionBody = null;
+                SyntaxToken eosToken = null;
+                // Try to parse accessor list unless there is an expression
+                // body and no accessor list
+                if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken)
+                {
+                    expressionBody = this.ParseArrowExpressionClause();
+                    expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
+                    eosToken = this.EatEos(ref expressionBody);
+                }
+                else
+                {
+                    accessorList = this.ParseAccessorList(isEvent: false);
+                }
+
+                // If the user has erroneously provided both an accessor list
+                // and an expression body, but no semicolon, we want to parse
+                // the expression body and report the error (which is done later)
+                if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken
+                    && eosToken == null)
+                {
+                    expressionBody = this.ParseArrowExpressionClause();
+                    expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedIndexer);
+                    eosToken = this.EatEos(ref expressionBody);
+                }
+
+                return _syntaxFactory.IndexerDeclaration(
+                    attributes,
+                    modifiers.ToList(),
+                    funcKeyword,
+                    operatorKeyword,
+                    explicitInterfaceOpt,
+                    parameterList,
+                    minusGreaterThanForReturnType,
+                    returnType,
+                    contracts,
+                    accessorList,
+                    expressionBody,
+                    eosToken);
             }
-            
-            return _syntaxFactory.IndexerDeclaration(
-                attributes,
-                modifiers.ToList(),
-                funcKeyword,
-                operatorKeyword,
-                explicitInterfaceOpt,
-                parameterList,
-                minusGreaterThanForReturnType,
-                returnType,
-                accessorList,
-                expressionBody,
-                eosToken);
+            finally
+            {
+                if (!contracts.IsNull)
+                {
+                    _pool.Free(contracts);
+                }
+            }
         }
 
         private PropertyDeclarationSyntax ParsePropertyDeclaration(
@@ -2777,57 +2883,76 @@ tryAgain:
 
             var returnType = ParseType();
 
-            // We know we are parsing a property because we have seen either an
-            // open brace or an arrow token
-            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken ||
-                         this.CurrentToken.Kind == SyntaxKind.OpenBraceToken);
-
-            AccessorListSyntax accessorList = null;
-            if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
+            var contracts = default(SyntaxListBuilder<ContractClauseSyntax>);
+            try
             {
-                accessorList = this.ParseAccessorList(isEvent: false);
-            }
+                // Parse any contract clauses
+                if (IsContractKeyword(this.CurrentToken.ContextualKind))
+                {
+                    contracts = _pool.Allocate<ContractClauseSyntax>();
+                    this.ParseContractClauses(contracts);
+                }
 
-            ArrowExpressionClauseSyntax expressionBody = null;
-            EqualsValueClauseSyntax initializer = null;
+                AccessorListSyntax accessorList = null;
+                if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
+                {
+                    accessorList = this.ParseAccessorList(isEvent: false);
+                }
 
-            // Check for expression body
-            if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken)
-            {
-                expressionBody = this.ParseArrowExpressionClause();
-                expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedProperty);
-            }
-            // Check if we have an initializer
-            else if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
-            {
-                var equals = this.EatToken(SyntaxKind.EqualsToken);
-                var value = this.ParseVariableInitializer();
-                initializer = _syntaxFactory.EqualsValueClause(equals, value: value);
-                initializer = CheckFeatureAvailability(initializer, MessageID.IDS_FeatureAutoPropertyInitializer);
-            }
+                ArrowExpressionClauseSyntax expressionBody = null;
+                EqualsValueClauseSyntax initializer = null;
 
-            SyntaxToken eosToken = null;
-            if (expressionBody != null)
-            {
-                eosToken = EatEos(ref expressionBody);
-            }
-            else if (initializer != null)
-            {
-                eosToken = EatEos(ref initializer);
-            }
+                // Check for expression body
+                if (this.CurrentToken.Kind == SyntaxKind.EqualsGreaterThanToken)
+                {
+                    expressionBody = this.ParseArrowExpressionClause();
+                    expressionBody = CheckFeatureAvailability(expressionBody, MessageID.IDS_FeatureExpressionBodiedProperty);
+                }
+                // Check if we have an initializer
+                else if (this.CurrentToken.Kind == SyntaxKind.EqualsToken)
+                {
+                    var equals = this.EatToken(SyntaxKind.EqualsToken);
+                    var value = this.ParseVariableInitializer();
+                    initializer = _syntaxFactory.EqualsValueClause(equals, value: value);
+                    initializer = CheckFeatureAvailability(initializer, MessageID.IDS_FeatureAutoPropertyInitializer);
+                }
 
-            return _syntaxFactory.PropertyDeclaration(
-                attributes,
-                modifiers.ToList(),
-                funcKeyword,
-                explicitInterfaceOpt,
-                identifier,
-                minusGreaterThanForReturnType,
-                returnType,
-                accessorList,
-                expressionBody,
-                initializer,
-                eosToken);
+                // Force the parsing of an accessor list if we didn't find any before
+                if (accessorList == null && expressionBody == null && initializer == null)
+                {
+                    accessorList = this.ParseAccessorList(isEvent: false);
+                }
+                
+                SyntaxToken eosToken = null;
+                if (expressionBody != null)
+                {
+                    eosToken = EatEos(ref expressionBody);
+                }
+                else if (initializer != null)
+                {
+                    eosToken = EatEos(ref initializer);
+                }
+
+                return _syntaxFactory.PropertyDeclaration(
+                    attributes,
+                    modifiers.ToList(),
+                    funcKeyword,
+                    explicitInterfaceOpt,
+                    identifier,
+                    minusGreaterThanForReturnType,
+                    returnType,
+                    contracts,
+                    accessorList,
+                    expressionBody,
+                    initializer,
+                    eosToken);
+            } finally
+            {
+                if (!contracts.IsNull)
+                {
+                    _pool.Free(contracts);
+                }
+            }
         }
 
         private AccessorListSyntax ParseAccessorList(bool isEvent)
@@ -5332,23 +5457,7 @@ tryAgain:
             FirstElementOfPossibleTupleLiteral
         }
 
-        private TypeSyntax ParseType(
-            ParseTypeMode mode = ParseTypeMode.Normal,
-            bool expectSizes = false)
-        {
-            if (this.CurrentToken.Kind == SyntaxKind.RefKeyword || this.CurrentToken.Kind == SyntaxKind.InKeyword)
-            {
-                var refOrInKeyword = this.EatToken();
-                var type = ParseTypeCore(mode, expectSizes);
-                return _syntaxFactory.RefKindType(refOrInKeyword, type);
-            }
-
-            return ParseTypeCore(mode, expectSizes);
-        }
-
-        private TypeSyntax ParseTypeCore(
-            ParseTypeMode mode,
-            bool expectSizes)
+        private TypeSyntax ParseType(ParseTypeMode mode = ParseTypeMode.Normal)
         {
             NameOptions nameOptions;
             switch (mode)
@@ -5378,131 +5487,86 @@ tryAgain:
                     throw ExceptionUtilities.UnexpectedValue(mode);
             }
 
-            // Syntax in Stark for arrays: []type instead of type[]
-            SyntaxListBuilder<ArrayRankSpecifierSyntax> ranks = default;
-            var arrayTypeModifiers = _pool.Allocate<SyntaxToken>();
-            var simpleTypeModifiers = _pool.Allocate<SyntaxToken>();
 
-            void ParseReadonlyAndTransient(SyntaxListBuilder<SyntaxToken> modifiers)
-            {
-                while (IsExtendedTypeModifier(CurrentToken) || IsParameterModifier(CurrentToken.Kind))
-                {
-                    modifiers.Add(EatToken());
-                }
-            }
-
-            var tryArray = this.IsPossibleRankAndDimensionSpecifier();
-            if (tryArray)
-            {
-                ranks = _pool.Allocate<ArrayRankSpecifierSyntax>();
-            }
+            TypeSyntax type = null;
+            var typeModifiers = default(SyntaxListBuilder<SyntaxToken>);
             try
             {
-                if (tryArray)
+                switch (this.CurrentToken.Kind)
                 {
-                    // We need to parse readonly/transient on the array type
-                    ParseReadonlyAndTransient(arrayTypeModifiers);
-
-                    // Parse the array
-                    while (this.IsPossibleRankAndDimensionSpecifier())
-                    {
-                        bool unused;
-                        var rank = this.ParseArrayRankSpecifier(mode == ParseTypeMode.ArrayCreation, expectSizes, questionTokenModeOpt: mode, out unused);
-                        ranks.Add(rank);
-                        expectSizes = false;
-                    }
-                }
-
-                // Parse the pointers *
-                var pointers = _pool.Allocate<SyntaxToken>();
-                void ParsePointerTypeMods(SyntaxListBuilder<SyntaxToken> tokenPointers)
-                {
-                    // Check for pointer types
-                    while (this.CurrentToken.Kind == SyntaxKind.AsteriskToken)
-                    {
-                        tokenPointers.Add(this.EatToken());
-                    }
-                }
-
-                switch (mode)
-                {
-                    case ParseTypeMode.AfterIs:
-                    case ParseTypeMode.DefinitePattern:
-                    case ParseTypeMode.AfterTupleComma:
-                    case ParseTypeMode.FirstElementOfPossibleTupleLiteral:
-                        // these contexts do not permit a pointer type except as an element type of an array.
-                        if (PointerTypeModsFollowedByRankAndDimensionSpecifier())
-                        {
-                            ParsePointerTypeMods(pointers);
-                        }
-                        break;
-                    case ParseTypeMode.Normal:
-                    case ParseTypeMode.Parameter:
-                    case ParseTypeMode.AfterOut:
-                    case ParseTypeMode.ArrayCreation:
-                    case ParseTypeMode.AsExpression:
-                        ParsePointerTypeMods(pointers);
+                    case SyntaxKind.TransientKeyword:
+                    case SyntaxKind.ReadOnlyKeyword:
+                        typeModifiers = _pool.Allocate<SyntaxToken>();
+                        ParseTypeModifiers(typeModifiers);
                         break;
                 }
 
-                TypeSyntax type = null;
-                try
+                switch (this.CurrentToken.Kind)
                 {
-                    ParseReadonlyAndTransient(simpleTypeModifiers);
-                    type = this.ParseUnderlyingType(parentIsParameter: mode == ParseTypeMode.Parameter, options: nameOptions);
+                    case SyntaxKind.RefKeyword:
+                    case SyntaxKind.InKeyword:
+                        var refOrInKeyword = this.EatToken();
+                        type = ParseType(mode);
+                        type = _syntaxFactory.RefKindType(refOrInKeyword, type);
+                        break;
 
-                    // Apply readonly / transient
-                    type = ApplyReadonlyAndOrTransientToType(type, simpleTypeModifiers);
+                    case SyntaxKind.QuestionToken:
+                        var question = EatToken();
+                        type = ParseType(mode);
+                        type = _syntaxFactory.NullableType(question, type);
+                        break;
 
+                    case SyntaxKind.AsteriskToken:
+                        var ptrToken = this.EatToken();
+                        type = ParseType(mode);
+                        type = _syntaxFactory.PointerType(ptrToken, type);
+                        break;
 
-                    for (int i = 0; i < pointers.Count; i++)
-                    {
-                        type = _syntaxFactory.PointerType(pointers[i], type);
-                    }
+                    case SyntaxKind.OpenBracketToken:
+                        type = ParseArrayType();
+                        break;
+
+                    default:
+                        type = ParseUnderlyingType(nameOptions);
+                        break;
                 }
-                finally
-                {
-                    _pool.Free(pointers);
-                }
-
-                Debug.Assert(type != null);
-
-                if (this.CurrentToken.Kind == SyntaxKind.QuestionToken &&
-                    // we do not permit nullable types in a declaration pattern
-                    (mode != ParseTypeMode.AfterIs && mode != ParseTypeMode.DefinitePattern || !IsTrueIdentifier(this.PeekToken(1))))
-                {
-                    var question = EatNullableQualifierIfApplicable(mode);
-                    if (question != null)
-                    {
-                        type = _syntaxFactory.NullableType(type, question);
-                    }
-                }
-
-                if (tryArray)
-                {
-                    type = _syntaxFactory.ArrayType(ranks, type);
-                    type = ApplyReadonlyAndOrTransientToType(type, arrayTypeModifiers);
-                }
-
-                Debug.Assert(type != null);
-                return type;
-            }
-            finally
+            } finally
             {
-                if (!simpleTypeModifiers.IsNull) _pool.Free(simpleTypeModifiers);
-                if (!arrayTypeModifiers.IsNull) _pool.Free(arrayTypeModifiers);
-
-                if (tryArray)
+                if (!typeModifiers.IsNull)
                 {
-                    _pool.Free(ranks);
+                    type = _syntaxFactory.ExtendedType(typeModifiers, type);
+                    _pool.Free(typeModifiers);
                 }
+            }
+
+            return type;
+        }
+
+        private void ParseTypeModifiers(SyntaxListBuilder<SyntaxToken> modifiers)
+        {
+            while (IsExtendedTypeModifier(CurrentToken))
+            {
+                modifiers.Add(EatToken());
             }
         }
 
-        private TypeSyntax ApplyReadonlyAndOrTransientToType(TypeSyntax type, SyntaxListBuilder<SyntaxToken> modifiers)
+
+        private ArrayTypeSyntax ParseArrayType()
         {
-            if (modifiers.Count == 0) return type;
-            return _syntaxFactory.ExtendedType(modifiers, type);
+            var ranks = _pool.Allocate<ArrayRankSpecifierSyntax>();
+            try
+            {
+                while (CurrentToken.Kind == SyntaxKind.OpenBracketToken)
+                {
+                    var arrayRank = ParseArrayRankSpecifier();
+                    ranks.Add(arrayRank);
+                }
+                return _syntaxFactory.ArrayType(ranks.ToList(), ParseType());
+            }
+            finally
+            {
+                _pool.Free(ranks);
+            }
         }
 
         private static bool IsExtendedTypeModifier(SyntaxToken token)
@@ -5510,129 +5574,16 @@ tryAgain:
             return token.Kind == SyntaxKind.TransientKeyword || token.Kind == SyntaxKind.ReadOnlyKeyword;
         }
 
-        private SyntaxToken EatNullableQualifierIfApplicable(ParseTypeMode mode)
+        private ArrayRankSpecifierSyntax ParseArrayRankSpecifier()
         {
-            Debug.Assert(this.CurrentToken.Kind == SyntaxKind.QuestionToken);
-
-            // we do not permit nullable types in a declaration pattern
-            if (mode != ParseTypeMode.AfterIs && mode != ParseTypeMode.DefinitePattern || !IsTrueIdentifier(this.PeekToken(1)))
-            {
-                var resetPoint = this.GetResetPoint();
-                try
-                {
-                    var question = this.EatToken();
-
-                    var isOrAs = mode == ParseTypeMode.AsExpression || mode == ParseTypeMode.AfterIs;
-                    if (isOrAs && (IsTerm() || IsPredefinedType(this.CurrentToken.Kind) || SyntaxFacts.IsAnyUnaryExpression(this.CurrentToken.Kind)))
-                    {
-                        this.Reset(ref resetPoint);
-                        return null;
-                    }
-
-                    return CheckFeatureAvailability(question, MessageID.IDS_FeatureNullable);
-                }
-                finally
-                {
-                    this.Release(ref resetPoint);
-                }
-            }
-
-            return null;
-        }
-
-        private bool PointerTypeModsFollowedByRankAndDimensionSpecifier()
-        {
-            // Are pointer specifiers (if any) followed by an array specifier?
-            for (int i = 0; ; i++)
-            {
-                switch (this.PeekToken(i).Kind)
-                {
-                    case SyntaxKind.AsteriskToken:
-                        continue;
-                    case SyntaxKind.OpenBracketToken:
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        }
-
-        private bool IsPossibleRankAndDimensionSpecifier()
-        {
-            return this.CurrentToken.Kind == SyntaxKind.OpenBracketToken;
-        }
-
-        private ArrayRankSpecifierSyntax ParseArrayRankSpecifier(bool isArrayCreation, bool expectSizes, ParseTypeMode? questionTokenModeOpt, out bool sawNonOmittedSize)
-        {
-            sawNonOmittedSize = false;
-            bool sawOmittedSize = false;
             var open = this.EatToken(SyntaxKind.OpenBracketToken);
-            var list = _pool.AllocateSeparated<ExpressionSyntax>();
-            try
+            ExpressionSyntax size = null;
+            if (this.IsPossibleExpression())
             {
-                var omittedArraySizeExpressionInstance = _syntaxFactory.OmittedArraySizeExpression(SyntaxFactory.Token(SyntaxKind.OmittedArraySizeExpressionToken));
-                while (this.CurrentToken.Kind != SyntaxKind.CloseBracketToken)
-                {
-                    if (this.CurrentToken.Kind == SyntaxKind.CommaToken)
-                    {
-                        // NOTE: trivia will be attached to comma, not omitted array size
-                        sawOmittedSize = true;
-                        list.Add(omittedArraySizeExpressionInstance);
-                        list.AddSeparator(this.EatToken());
-                    }
-                    else if (this.IsPossibleExpression())
-                    {
-                        var size = this.ParseExpressionCore();
-                        sawNonOmittedSize = true;
-                        if (!expectSizes)
-                        {
-                            size = this.AddError(size, isArrayCreation ? ErrorCode.ERR_InvalidArray : ErrorCode.ERR_ArraySizeInDeclaration);
-                        }
-
-                        list.Add(size);
-
-                        if (this.CurrentToken.Kind != SyntaxKind.CloseBracketToken)
-                        {
-                            list.AddSeparator(this.EatToken(SyntaxKind.CommaToken));
-                        }
-                    }
-                    else if (this.SkipBadArrayRankSpecifierTokens(ref open, list, SyntaxKind.CommaToken) == PostSkipAction.Abort)
-                    {
-                        break;
-                    }
-                }
-
-                // Don't end on a comma.
-                // If the omitted size would be the only element, then skip it unless sizes were expected.
-                if (((list.Count & 1) == 0))
-                {
-                    sawOmittedSize = true;
-                    list.Add(omittedArraySizeExpressionInstance);
-                }
-
-                // Never mix omitted and non-omitted array sizes.  If there were non-omitted array sizes,
-                // then convert all of the omitted array sizes to missing identifiers.
-                if (sawOmittedSize && sawNonOmittedSize)
-                {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i].RawKind == (int)SyntaxKind.OmittedArraySizeExpression)
-                        {
-                            int width = list[i].Width;
-                            int offset = list[i].GetLeadingTriviaWidth();
-                            list[i] = this.AddError(this.CreateMissingIdentifierName(), offset, width, ErrorCode.ERR_ValueExpected);
-                        }
-                    }
-                }
-
-                // Eat the close brace and we're done.
-                var close = this.EatToken(SyntaxKind.CloseBracketToken);
-                return _syntaxFactory.ArrayRankSpecifier(open, list, close);
+                size = this.ParseExpressionCore();
             }
-            finally
-            {
-                _pool.Free(list);
-            }
+            var close = this.EatToken(SyntaxKind.CloseBracketToken);
+            return _syntaxFactory.ArrayRankSpecifier(open, size, close);
         }
 
         private TupleTypeSyntax ParseTupleType()
@@ -5694,25 +5645,16 @@ tryAgain:
             return _syntaxFactory.TupleElement(type, name);
         }
 
-        private PostSkipAction SkipBadArrayRankSpecifierTokens(ref SyntaxToken openBracket, SeparatedSyntaxListBuilder<ExpressionSyntax> list, SyntaxKind expected)
-        {
-            return this.SkipBadSeparatedListTokensWithExpectedKind(ref openBracket, list,
-                p => p.CurrentToken.Kind != SyntaxKind.CommaToken && !p.IsPossibleExpression(),
-                p => p.CurrentToken.Kind == SyntaxKind.CloseBracketToken || p.IsTerminator(),
-                expected);
-        }
-
-        private TypeSyntax ParseUnderlyingType(bool parentIsParameter, NameOptions options = NameOptions.None)
+        private TypeSyntax ParseUnderlyingType(NameOptions options = NameOptions.None)
         {
             if (IsPredefinedType(this.CurrentToken.Kind))
             {
                 // This is a predefined type
                 var token = this.EatToken();
-                if (token.Kind == SyntaxKind.VoidKeyword && this.CurrentToken.Kind != SyntaxKind.AsteriskToken)
+                if (token.Kind == SyntaxKind.VoidKeyword)
                 {
-                    token = this.AddError(token, parentIsParameter ? ErrorCode.ERR_NoVoidParameter : ErrorCode.ERR_NoVoidHere);
+                    token = this.AddError(token, ErrorCode.ERR_NoVoidHere);
                 }
-
                 return _syntaxFactory.PredefinedType(token);
             }
             else if (IsTrueIdentifier())
@@ -9140,7 +9082,7 @@ tryAgain:
         {
             SyntaxToken @new = this.EatToken(SyntaxKind.NewKeyword);
             bool isPossibleArrayCreation = this.IsPossibleArrayCreationExpression();
-            var type = this.ParseType(isPossibleArrayCreation ? ParseTypeMode.ArrayCreation : ParseTypeMode.Normal, expectSizes: isPossibleArrayCreation);
+            var type = this.ParseType(ParseTypeMode.Normal);
 
             if (type.Kind == SyntaxKind.ArrayType)
             {
@@ -9190,16 +9132,7 @@ tryAgain:
 
         private static int GetNumberOfNonOmittedArraySizes(ArrayRankSpecifierSyntax rankSpec)
         {
-            int count = rankSpec.Sizes.Count;
-            int result = 0;
-            for (int i = 0; i < count; i++)
-            {
-                if (rankSpec.Sizes[i].Kind != SyntaxKind.OmittedArraySizeExpression)
-                {
-                    result++;
-                }
-            }
-            return result;
+            return rankSpec.Sizes != null && rankSpec.Sizes.Kind != SyntaxKind.OmittedArraySizeExpression ? 1 : 0;
         }
 
         private bool IsPossibleArrayCreationExpression()
@@ -9578,24 +9511,25 @@ tryAgain:
 
         private ExpressionSyntax ParseRegularStackAllocExpression()
         {
-            var @stackalloc = this.EatToken(SyntaxKind.StackAllocKeyword);
-            var elementType = this.ParseType(expectSizes: true);
-            InitializerExpressionSyntax initializer = null;
-            if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
-            {
-                @stackalloc = CheckFeatureAvailability(@stackalloc, MessageID.IDS_FeatureStackAllocInitializer);
-                initializer = this.ParseArrayInitializer();
-            }
-            else if (elementType.Kind == SyntaxKind.ArrayType)
-            {
-                var rankSpec = ((ArrayTypeSyntax)elementType).RankSpecifiers[0];
-                if (GetNumberOfNonOmittedArraySizes(rankSpec) == 0)
-                {
-                    elementType = this.AddError(elementType, rankSpec, ErrorCode.ERR_MissingArraySize);
-                }
-            }
+            throw new NotImplementedException("stackalloc not implemented");
+            //var @stackalloc = this.EatToken(SyntaxKind.StackAllocKeyword);
+            //var elementType = this.ParseType(expectSizes: true);
+            //InitializerExpressionSyntax initializer = null;
+            //if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
+            //{
+            //    @stackalloc = CheckFeatureAvailability(@stackalloc, MessageID.IDS_FeatureStackAllocInitializer);
+            //    initializer = this.ParseArrayInitializer();
+            //}
+            //else if (elementType.Kind == SyntaxKind.ArrayType)
+            //{
+            //    var rankSpec = ((ArrayTypeSyntax)elementType).RankSpecifiers[0];
+            //    if (GetNumberOfNonOmittedArraySizes(rankSpec) == 0)
+            //    {
+            //        elementType = this.AddError(elementType, rankSpec, ErrorCode.ERR_MissingArraySize);
+            //    }
+            //}
 
-            return _syntaxFactory.StackAllocArrayCreationExpression(@stackalloc, elementType, initializer);
+            //return _syntaxFactory.StackAllocArrayCreationExpression(@stackalloc, elementType, initializer);
         }
 
         private AnonymousMethodExpressionSyntax ParseAnonymousMethodExpression()

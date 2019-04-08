@@ -8,7 +8,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         {
             get
             {
-                return this.Sizes.Count;
+                return 1;
             }
         }
     }

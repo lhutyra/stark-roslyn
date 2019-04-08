@@ -280,6 +280,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 parameterList,
                 minusGreaterThanOrEqualToken,
                 type,
+                default,
                 accessorList,
                 default(ArrowExpressionClauseSyntax),
                 default(SyntaxToken));
@@ -303,6 +304,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 operatorKeyword,
                 operatorToken,
                 parameterList,
+                default,
                 block,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);
@@ -320,6 +322,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             TypeParameterListSyntax typeParameterList,
             ParameterListSyntax parameterList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax block,
             SyntaxToken semicolonToken)
         {
@@ -334,6 +337,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 minusGreaterThanToken,
                 returnType,
                 constraintClauses,
+                contractClauses,
                 block,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);

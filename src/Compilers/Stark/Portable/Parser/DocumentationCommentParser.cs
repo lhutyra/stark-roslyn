@@ -1358,72 +1358,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         /// </summary>
         private TypeSyntax ParseCrefTypeSuffix(TypeSyntax type)
         {
-            if (CurrentToken.Kind == SyntaxKind.QuestionToken)
-            {
-                type = SyntaxFactory.NullableType(type, EatToken());
-            }
-
-            while (CurrentToken.Kind == SyntaxKind.AsteriskToken)
-            {
-                // TODO: This is wrong! with pointer type
-                type = SyntaxFactory.PointerType(EatToken(), type);
-            }
-
-            if (CurrentToken.Kind == SyntaxKind.OpenBracketToken)
-            {
-                var omittedArraySizeExpressionInstance = SyntaxFactory.OmittedArraySizeExpression(SyntaxFactory.Token(SyntaxKind.OmittedArraySizeExpressionToken));
-                var rankList = _pool.Allocate<ArrayRankSpecifierSyntax>();
-                try
-                {
-                    while (CurrentToken.Kind == SyntaxKind.OpenBracketToken)
-                    {
-                        SyntaxToken open = EatToken();
-                        var dimensionList = _pool.AllocateSeparated<ExpressionSyntax>();
-                        try
-                        {
-                            while (this.CurrentToken.Kind != SyntaxKind.CloseBracketToken)
-                            {
-                                if (this.CurrentToken.Kind == SyntaxKind.CommaToken)
-                                {
-                                    // NOTE: trivia will be attached to comma, not omitted array size
-                                    dimensionList.Add(omittedArraySizeExpressionInstance);
-                                    dimensionList.AddSeparator(this.EatToken());
-                                }
-                                else
-                                {
-                                    // CONSIDER: if we expect people to try to put expressions in between
-                                    // the commas, then it might be more reasonable to recover by skipping
-                                    // tokens until we hit a CloseBracketToken (or some other terminator).
-                                    break;
-                                }
-                            }
-
-                            // Don't end on a comma.
-                            // If the omitted size would be the only element, then skip it unless sizes were expected.
-                            if ((dimensionList.Count & 1) == 0)
-                            {
-                                dimensionList.Add(omittedArraySizeExpressionInstance);
-                            }
-
-                            // Eat the close brace and we're done.
-                            var close = this.EatToken(SyntaxKind.CloseBracketToken);
-
-                            rankList.Add(SyntaxFactory.ArrayRankSpecifier(open, dimensionList, close));
-                        }
-                        finally
-                        {
-                            _pool.Free(dimensionList);
-                        }
-                    }
-
-                    type = SyntaxFactory.ArrayType(rankList, type);
-                }
-                finally
-                {
-                    _pool.Free(rankList);
-                }
-            }
-            return type;
+            throw new NotImplementedException("cref parsing is not implemented");
         }
 
         /// <summary>

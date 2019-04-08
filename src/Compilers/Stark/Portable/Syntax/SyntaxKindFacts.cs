@@ -1234,6 +1234,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.WhenKeyword;
                 case "il":
                     return SyntaxKind.IlKeyword;
+                case "requires":
+                    return SyntaxKind.RequiresKeyword;
+                case "ensures":
+                    return SyntaxKind.EnsuresKeyword;
                 case "nameof":
                     return SyntaxKind.NameOfKeyword;
                 case "_":
@@ -1651,6 +1655,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "when";
                 case SyntaxKind.IlKeyword:
                     return "il";
+                case SyntaxKind.RequiresKeyword:
+                    return "requires";
+                case SyntaxKind.EnsuresKeyword:
+                    return "ensures";
                 case SyntaxKind.InterpolatedStringStartToken:
                     return "$\"";
                 case SyntaxKind.InterpolatedStringEndToken:

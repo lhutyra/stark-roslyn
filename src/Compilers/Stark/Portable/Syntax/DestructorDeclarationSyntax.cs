@@ -14,6 +14,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
             SyntaxToken tildeToken,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax body,
             SyntaxToken semicolonToken)
             => Update(
@@ -22,6 +23,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
                 tildeToken,
                 identifier,
                 parameterList,
+                contractClauses,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);
@@ -37,6 +39,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax body)
             => DestructorDeclaration(
                 attributeLists,
@@ -44,6 +47,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 SyntaxFactory.Token(SyntaxKind.TildeToken),
                 identifier,
                 parameterList,
+                contractClauses,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 default(SyntaxToken));
@@ -54,6 +58,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxToken tildeToken,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax body,
             SyntaxToken semicolonToken)
             => DestructorDeclaration(
@@ -62,6 +67,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 tildeToken,
                 identifier,
                 parameterList,
+                contractClauses,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);
@@ -71,6 +77,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             ArrowExpressionClauseSyntax expressionBody)
             => DestructorDeclaration(
                 attributeLists,
@@ -78,6 +85,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 SyntaxFactory.Token(SyntaxKind.TildeToken),
                 identifier,
                 parameterList,
+                contractClauses,
                 default(BlockSyntax),
                 expressionBody,
                 default(SyntaxToken));
@@ -88,6 +96,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxToken tildeToken,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             ArrowExpressionClauseSyntax expressionBody,
             SyntaxToken semicolonToken)
             => DestructorDeclaration(
@@ -96,6 +105,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 tildeToken,
                 identifier,
                 parameterList,
+                contractClauses,
                 default(BlockSyntax),
                 expressionBody,
                 semicolonToken);

@@ -14,6 +14,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
             SyntaxToken constructorKeyword,
             ParameterListSyntax parameterList,
             ConstructorInitializerSyntax initializer,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax body,
             SyntaxToken eosToken)
             => Update(
@@ -22,6 +23,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
                 constructorKeyword,
                 parameterList,
                 initializer,
+                contractClauses,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 eosToken);
@@ -32,12 +34,18 @@ namespace StarkPlatform.CodeAnalysis.Stark
 {
     public partial class SyntaxFactory
     {
+        public static ConstructorDeclarationSyntax ConstructorDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, ParameterListSyntax parameterList, ConstructorInitializerSyntax initializer, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+        {
+            return SyntaxFactory.ConstructorDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.ConstructorKeyword), parameterList, initializer, default, body, expressionBody, eosToken);
+        }
+
         public static ConstructorDeclarationSyntax ConstructorDeclaration(
             SyntaxList<AttributeSyntax> attributeLists,
             SyntaxTokenList modifiers,
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
             ConstructorInitializerSyntax initializer,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax body)
             => ConstructorDeclaration(
                 attributeLists,
@@ -45,6 +53,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 identifier,
                 parameterList,
                 initializer,
+                contractClauses,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 default(SyntaxToken));
@@ -55,6 +64,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
             ConstructorInitializerSyntax initializer,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             BlockSyntax body,
             SyntaxToken semicolonToken)
             => ConstructorDeclaration(
@@ -63,6 +73,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 identifier,
                 parameterList,
                 initializer,
+                contractClauses,
                 body,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);
@@ -73,6 +84,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
             ConstructorInitializerSyntax initializer,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             ArrowExpressionClauseSyntax expressionBody)
             => ConstructorDeclaration(
                 attributeLists,
@@ -80,6 +92,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 identifier,
                 parameterList,
                 initializer,
+                contractClauses,
                 default(BlockSyntax),
                 expressionBody,
                 default(SyntaxToken));
@@ -90,6 +103,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SyntaxToken identifier,
             ParameterListSyntax parameterList,
             ConstructorInitializerSyntax initializer,
+            SyntaxList<ContractClauseSyntax> contractClauses,
             ArrowExpressionClauseSyntax expressionBody,
             SyntaxToken semicolonToken)
             => ConstructorDeclaration(
@@ -98,6 +112,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 identifier,
                 parameterList,
                 initializer,
+                contractClauses,
                 default(BlockSyntax),
                 expressionBody,
                 semicolonToken);

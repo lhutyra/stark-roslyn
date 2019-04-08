@@ -2437,6 +2437,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 identifier,
                 minusGreaterThanToken,
                 type,
+                default,
                 accessorList,
                 default(ArrowExpressionClauseSyntax),
                 default(EqualsValueClauseSyntax),
@@ -2460,6 +2461,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 operatorKeyword: operatorKeyword,
                 type: type,
                 parameterList: parameterList,
+                contractClauses: default,
                 body: body,
                 expressionBody: default(ArrowExpressionClauseSyntax),
                 eosToken: semicolonToken);
@@ -2482,6 +2484,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 operatorKeyword: operatorKeyword,
                 operatorToken: operatorToken,
                 parameterList: parameterList,
+                contractClauses: default,
                 body: body,
                 expressionBody: default(ArrowExpressionClauseSyntax),
                 eosToken: semicolonToken);

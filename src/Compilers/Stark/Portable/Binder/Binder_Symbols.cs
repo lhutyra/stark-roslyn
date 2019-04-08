@@ -549,7 +549,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 var rankSpecifier = node.RankSpecifiers[i];
                 var dimension = rankSpecifier.Sizes;
-                if (!permitDimensions && dimension.Count != 0 && dimension[0].Kind() != SyntaxKind.OmittedArraySizeExpression)
+                if (!permitDimensions && dimension != null && dimension.Kind() != SyntaxKind.OmittedArraySizeExpression)
                 {
                     // https://github.com/dotnet/roslyn/issues/32464
                     // Should capture invalid dimensions for use in `SemanticModel` and `IOperation`.

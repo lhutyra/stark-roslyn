@@ -209,7 +209,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
         AsyncKeyword = 8435,
         AwaitKeyword = 8436,
         IlKeyword = 8437,
-        WhenKeyword = 8438,   // Must be last of contextual keyword
+        RequiresKeyword = 8438,
+        EnsuresKeyword = 8439,
+        WhenKeyword = 8440,   // Must be last of contextual keyword
 
         /// when adding a contextual keyword following functions must be adapted:
         /// <see cref="SyntaxFacts.GetContextualKeywordKinds"/>
@@ -550,6 +552,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ExtendsTypeConstraint = 8879,
         ImplementsTypeConstraint = 8880,
         ConstConstraint = 8881,
+        ContractClause = 8882,
 
         BaseConstructorInitializer = 8889,
         ThisConstructorInitializer = 8890,

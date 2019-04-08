@@ -203,7 +203,7 @@
     <Field Name="OpenBracketToken" Type="SyntaxToken">
       <Kind Name="OpenBracketToken"/>
     </Field>
-    <Field Name="Sizes" Type="SeparatedSyntaxList&lt;ExpressionSyntax&gt;"/>
+    <Field Name="Sizes" Type="ExpressionSyntax" Optional="true"/>
     <Field Name="CloseBracketToken" Type="SyntaxToken">
       <Kind Name="CloseBracketToken"/>
     </Field>
@@ -249,15 +249,15 @@
   </Node>
   <Node Name="NullableTypeSyntax" Base="TypeSyntax">
     <Kind Name="NullableType"/>
+    <Field Name="QuestionToken" Type="SyntaxToken">
+        <Kind Name="QuestionToken"/>
+        <PropertyComment>
+            <summary>SyntaxToken representing the question mark.</summary>
+        </PropertyComment>
+    </Field>
     <Field Name="ElementType" Type="TypeSyntax">
       <PropertyComment>
         <summary>TypeSyntax node representing the type of the element.</summary>
-      </PropertyComment>
-    </Field>
-    <Field Name="QuestionToken" Type="SyntaxToken">
-      <Kind Name="QuestionToken"/>
-      <PropertyComment>
-        <summary>SyntaxToken representing the question mark.</summary>
       </PropertyComment>
     </Field>
     <TypeComment>
@@ -3206,6 +3206,25 @@
     </Field>
   </Node>
 
+  <Node Name="ContractClauseSyntax" Base="CSharpSyntaxNode">
+      <TypeComment>
+          <summary>Contract - requires or ensures - clause.</summary>
+      </TypeComment>
+      <Kind Name="ContractClause"/>
+      <Field Name="ContractKeyword" Type="SyntaxToken">
+          <PropertyComment>
+              <summary>Gets the requires or ensures contract keyword.</summary>
+          </PropertyComment>
+          <Kind Name="RequiresKeyword"/>
+          <Kind Name="EnsuresKeyword"/>
+      </Field>
+      <Field Name="Condition" Type="ExpressionSyntax">
+          <PropertyComment>
+              <summary>Gets the condition expression used by this contract.</summary>
+          </PropertyComment>
+      </Field>
+  </Node>
+
   <Node Name="TypeParameterConstraintClauseSyntax" Base="CSharpSyntaxNode">
     <TypeComment>
       <summary>Type parameter constraint clause.</summary>
@@ -3421,6 +3440,11 @@
         <summary>Gets the parameter list.</summary>
       </PropertyComment>
     </Field>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Optional="true">
+        <PropertyComment>
+            <summary>Gets the contract clause list.</summary>
+        </PropertyComment>
+    </Field>
     <Field Name="Body" Type="BlockSyntax" Optional="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true">
@@ -3469,6 +3493,7 @@
         <summary>Gets the constraint clause list.</summary>
       </PropertyComment>
     </Field>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true" Optional="true"/>
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" Override="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -3527,6 +3552,7 @@
       <Kind Name="IsKeyword"/>
     </Field>
     <Field Name="ParameterList" Type="ParameterListSyntax" Override="true"/>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true" Optional="true"/>
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" Override="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -3561,6 +3587,7 @@
       </PropertyComment>
     </Field>
     <Field Name="ParameterList" Type="ParameterListSyntax" Override="true"/>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true" Optional="true"/>
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" Override="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -3586,6 +3613,7 @@
     </Field>
     <Field Name="ParameterList" Type="ParameterListSyntax" Override="true"/>
     <Field Name="Initializer" Type="ConstructorInitializerSyntax" Optional="true"/>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true" Optional="true"/>
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" Override="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -3637,6 +3665,7 @@
       <Kind Name="IdentifierToken"/>
     </Field>
     <Field Name="ParameterList" Type="ParameterListSyntax" Override="true"/>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true" Optional="true"/>
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" Override="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">
@@ -3671,6 +3700,11 @@
         <summary>Gets the optional explicit interface specifier.</summary>
       </PropertyComment>
     </Field>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Optional="true">
+        <PropertyComment>
+            <summary>Gets the contract clause list.</summary>
+        </PropertyComment>
+    </Field>
     <Field Name="AccessorList" Type="AccessorListSyntax" Optional="true" />
   </AbstractNode>
   <Node Name="PropertyDeclarationSyntax" Base="BasePropertyDeclarationSyntax">
@@ -3697,6 +3731,7 @@
         <Kind Name="MinusGreaterThanToken"/>
     </Field>
     <Field Name="Type" Type="TypeSyntax" Override="true"/>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true"  Optional="true"/>
     <Field Name="AccessorList" Type="AccessorListSyntax" Override="true" Optional="true" />
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" />
     <Field Name="Initializer" Type="EqualsValueClauseSyntax" Optional="true"/>
@@ -3730,6 +3765,7 @@
       </PropertyComment>
       <Kind Name="IdentifierToken"/>
     </Field>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true"  Optional="true"/>
     <Field Name="AccessorList" Type="AccessorListSyntax" Override="true"/>
   </Node>
   <Node Name="IndexerDeclarationSyntax" Base="BasePropertyDeclarationSyntax">
@@ -3761,6 +3797,7 @@
         <Kind Name="MinusGreaterThanToken"/>
     </Field>
     <Field Name="Type" Type="TypeSyntax" Override="true"/>
+    <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true"  Optional="true"/>
     <Field Name="AccessorList" Type="AccessorListSyntax" Override="true" Optional="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true">

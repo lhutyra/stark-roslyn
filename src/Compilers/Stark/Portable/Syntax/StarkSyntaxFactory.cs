@@ -92,7 +92,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public static IndexerDeclarationSyntax IndexerDeclaration(SyntaxList<AttributeSyntax> attributeLists, SyntaxTokenList modifiers, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, BracketedParameterListSyntax parameterList, TypeSyntax type, AccessorListSyntax accessorList, ArrowExpressionClauseSyntax expressionBody = null)
         {
             return SyntaxFactory.IndexerDeclaration(attributeLists, modifiers, SyntaxFactory.Token(SyntaxKind.FuncKeyword), SyntaxFactory.Token(SyntaxKind.OperatorKeyword), explicitInterfaceSpecifier, parameterList,
-                SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), type, accessorList, expressionBody, expressionBody != null ? SyntaxFactory.EndOfLineToken() : default);
+                SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken), type, default, accessorList, expressionBody, expressionBody != null ? SyntaxFactory.EndOfLineToken() : default);
         }
 
         public static PropertyDeclarationSyntax PropertyDeclaration(
@@ -114,6 +114,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 identifier,
                 SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken),
                 type,
+                default,
                 accessorList,
                 expressionBody,
                 initializer,

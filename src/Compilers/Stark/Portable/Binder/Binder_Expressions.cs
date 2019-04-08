@@ -2849,8 +2849,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             ArrayBuilder<BoundExpression> sizes = ArrayBuilder<BoundExpression>.GetInstance();
             ArrayRankSpecifierSyntax firstRankSpecifier = node.Type.RankSpecifiers[0];
-            foreach (var arg in firstRankSpecifier.Sizes)
             {
+                var arg = firstRankSpecifier.Sizes;
                 // These make the parse tree nicer, but they shouldn't actually appear in the bound tree.
                 if (arg.Kind() != SyntaxKind.OmittedArraySizeExpression)
                 {
@@ -2866,7 +2866,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                     sizes.Add(size);
                 }
-                else if (node.Initializer is null && arg == firstRankSpecifier.Sizes[0])
+                else if (node.Initializer is null)
                 {
                     Error(diagnostics, ErrorCode.ERR_MissingArraySize, firstRankSpecifier);
                 }
@@ -2876,13 +2876,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
             for (int additionalRankIndex = 1; additionalRankIndex < node.Type.RankSpecifiers.Count; additionalRankIndex++)
             {
                 var rank = node.Type.RankSpecifiers[additionalRankIndex];
-                var dimension = rank.Sizes;
-                foreach (var arg in dimension)
                 {
+                    var arg = rank.Sizes;
                     if (arg.Kind() != SyntaxKind.OmittedArraySizeExpression)
                     {
                         var size = BindValue(arg, diagnostics, BindValueKind.RValue);
-                        Error(diagnostics, ErrorCode.ERR_InvalidArray, dimension[0]);
+                        Error(diagnostics, ErrorCode.ERR_InvalidArray, arg);
                         // Capture the invalid sizes for `SemanticModel` and `IOperation`
                         sizes.Add(size);
                     }
@@ -3303,8 +3302,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             SyntaxList<ArrayRankSpecifierSyntax> rankSpecifiers = arrayTypeSyntax.RankSpecifiers;
 
-            if (rankSpecifiers.Count != 1 ||
-                rankSpecifiers[0].Sizes.Count != 1)
+            if (rankSpecifiers.Count != 1)
             {
                 // NOTE: Dev10 reported several parse errors here.
                 Error(diagnostics, ErrorCode.ERR_BadStackAllocExpr, typeSyntax);
@@ -3313,8 +3311,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 var discardedDiagnostics = DiagnosticBag.GetInstance();
                 foreach (ArrayRankSpecifierSyntax rankSpecifier in rankSpecifiers)
                 {
-                    foreach (ExpressionSyntax size in rankSpecifier.Sizes)
                     {
+                        ExpressionSyntax size = rankSpecifier.Sizes;
                         if (size.Kind() != SyntaxKind.OmittedArraySizeExpression)
                         {
                             builder.Add(BindExpression(size, discardedDiagnostics));
@@ -3332,7 +3330,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     new PointerTypeSymbol(elementType));
             }
 
-            ExpressionSyntax countSyntax = rankSpecifiers[0].Sizes[0];
+            ExpressionSyntax countSyntax = rankSpecifiers[0].Sizes;
             BoundExpression count = null;
             if (countSyntax.Kind() != SyntaxKind.OmittedArraySizeExpression)
             {
