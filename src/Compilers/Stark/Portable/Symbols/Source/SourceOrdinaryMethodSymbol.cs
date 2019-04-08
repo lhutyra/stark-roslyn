@@ -349,7 +349,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 }
                 else if (_refKind == RefKind.RefReadOnly)
                 {
-                    var modifierType = withTypeParamsBinder.GetWellKnownType(WellKnownType.system_runtime_annotations_InAttribute, diagnostics, syntax.ReturnType);
+                    var modifierType = withTypeParamsBinder.GetWellKnownType(WellKnownType.system_runtime_InAttribute, diagnostics, syntax.ReturnType);
 
                     _lazyRefCustomModifiers = ImmutableArray.Create(CSharpCustomModifier.CreateRequired(modifierType));
                 }

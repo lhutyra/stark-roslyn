@@ -1693,14 +1693,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 return false;
             }
 
-            var interopServicesNamespace = typeSymbol.ContainingNamespace;
-            if (interopServicesNamespace?.Name != "InteropServices")
-            {
-                return false;
-            }
-
-            var runtimeNamespace = interopServicesNamespace.ContainingNamespace;
-            if (runtimeNamespace?.Name != "Runtime")
+            var runtimeNamespace = typeSymbol.ContainingNamespace;
+            if (runtimeNamespace?.Name != "runtime")
             {
                 return false;
             }

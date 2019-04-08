@@ -56,7 +56,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 // rather than Interlocked.CompareExchange.
                 if (_event.IsWindowsRuntimeEvent)
                 {
-                    TypeSymbol eventTokenType = compilation.GetWellKnownType(WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken);
+                    TypeSymbol eventTokenType = compilation.GetWellKnownType(WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken);
                     Binder.ReportUseSiteDiagnostics(eventTokenType, diagnostics, this.Location);
 
                     if (this.MethodKind == MethodKind.EventAdd)

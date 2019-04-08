@@ -543,7 +543,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return CheckIfAttributeShouldBeEmbedded(
                 diagnosticsOpt,
                 locationOpt,
-                WellKnownType.system_runtime_annotations_ReadOnlyAttribute,
+                WellKnownType.system_runtime_ReadOnlyAttribute,
                 WellKnownMember.System_Runtime_CompilerServices_IsReadOnlyAttribute__ctor);
         }
 
@@ -552,7 +552,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return CheckIfAttributeShouldBeEmbedded(
                 diagnosticsOpt,
                 locationOpt,
-                WellKnownType.system_runtime_annotations_IsByRefLikeAttribute,
+                WellKnownType.system_runtime_ByRefLikeAttribute,
                 WellKnownMember.System_Runtime_CompilerServices_IsByRefLikeAttribute__ctor);
         }
 
@@ -561,7 +561,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return CheckIfAttributeShouldBeEmbedded(
                 diagnosticsOpt,
                 locationOpt,
-                WellKnownType.system_runtime_annotations_IsUnmanagedAttribute,
+                WellKnownType.system_runtime_UnmanagedAttribute,
                 WellKnownMember.System_Runtime_CompilerServices_IsUnmanagedAttribute__ctor);
         }
 

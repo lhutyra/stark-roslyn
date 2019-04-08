@@ -224,7 +224,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                                 }
 
                                 // This should produce diagnostics if the types are missing
-                                GetWellKnownType(WellKnownType.system_runtime_interop_UnmanagedType, diagnostics, typeSyntax);
+                                GetWellKnownType(WellKnownType.system_runtime_UnmanagedType, diagnostics, typeSyntax);
 
                                 constraints |= TypeParameterConstraintKind.Unmanaged;
                                 continue;

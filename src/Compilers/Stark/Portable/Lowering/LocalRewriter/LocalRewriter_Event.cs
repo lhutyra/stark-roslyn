@@ -79,8 +79,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 boundTemp = _factory.StoreToTemp(rewrittenReceiverOpt, out tempAssignment);
             }
 
-            NamedTypeSymbol tokenType = _factory.WellKnownType(WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken);
-            NamedTypeSymbol marshalType = _factory.WellKnownType(WellKnownType.system_runtime_interop_WindowsRuntime_WindowsRuntimeMarshal);
+            NamedTypeSymbol tokenType = _factory.WellKnownType(WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken);
+            NamedTypeSymbol marshalType = _factory.WellKnownType(WellKnownType.system_runtime_WindowsRuntime_WindowsRuntimeMarshal);
 
             NamedTypeSymbol actionType = _factory.WellKnownType(WellKnownType.system_Action_T).Construct(tokenType);
 

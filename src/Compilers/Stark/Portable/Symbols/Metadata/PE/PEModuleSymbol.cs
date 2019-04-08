@@ -494,7 +494,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
                 {
                     Interlocked.CompareExchange(ref _lazyEventRegistrationTokenSymbol,
                                                 GetTypeSymbolForWellKnownType(
-                                                    WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken
+                                                    WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken
                                                     ),
                                                 null);
                     Debug.Assert((object)_lazyEventRegistrationTokenSymbol != null);
@@ -512,7 +512,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
                 {
                     Interlocked.CompareExchange(ref _lazyEventRegistrationTokenTableSymbol,
                                                 GetTypeSymbolForWellKnownType(
-                                                    WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T
+                                                    WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T
                                                     ),
                                                 null);
                     Debug.Assert((object)_lazyEventRegistrationTokenTableSymbol != null);

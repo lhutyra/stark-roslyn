@@ -613,7 +613,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_UnknownWrapper__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_UnknownWrapper,                                          // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_UnknownWrapper,                                          // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -621,7 +621,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_DispatchWrapper__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_DispatchWrapper,                                         // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_DispatchWrapper,                                         // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -629,15 +629,15 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ClassInterfaceAttribute__ctorClassInterfaceType
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_ClassInterfaceAttribute,                                 // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ClassInterfaceAttribute,                                 // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_ClassInterfaceType,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_ClassInterfaceType,
 
                 // System_Runtime_InteropServices_CoClassAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_CoClassAttribute,                                        // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_CoClassAttribute,                                        // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -645,7 +645,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ComAwareEventInfo__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_ComAwareEventInfo,                                       // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ComAwareEventInfo,                                       // DeclaringTypeId
                 0,                                                                                                          // Arity
                     2,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -654,7 +654,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ComAwareEventInfo__AddEventHandler
                 (byte)(MemberFlags.Method | MemberFlags.Virtual),                                                           // Flags
-                (byte)WellKnownType.system_runtime_interop_ComAwareEventInfo,                                       // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ComAwareEventInfo,                                       // DeclaringTypeId
                 0,                                                                                                          // Arity
                     2,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -663,7 +663,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ComAwareEventInfo__RemoveEventHandler
                 (byte)(MemberFlags.Method | MemberFlags.Virtual),                                                           // Flags
-                (byte)WellKnownType.system_runtime_interop_ComAwareEventInfo,                                       // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ComAwareEventInfo,                                       // DeclaringTypeId
                 0,                                                                                                          // Arity
                     2,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -672,7 +672,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ComEventInterfaceAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_ComEventInterfaceAttribute,                              // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ComEventInterfaceAttribute,                              // DeclaringTypeId
                 0,                                                                                                          // Arity
                     2,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -681,7 +681,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ComSourceInterfacesAttribute__ctorString
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_ComSourceInterfacesAttribute,                            // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ComSourceInterfacesAttribute,                            // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -689,7 +689,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_ComVisibleAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_ComVisibleAttribute,                                     // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_ComVisibleAttribute,                                     // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -697,7 +697,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_DispIdAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_DispIdAttribute,                                         // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_DispIdAttribute,                                         // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -705,7 +705,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_GuidAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_GuidAttribute,                                           // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_GuidAttribute,                                           // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -713,15 +713,15 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_InterfaceTypeAttribute__ctorComInterfaceType
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_InterfaceTypeAttribute,                                  // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_InterfaceTypeAttribute,                                  // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_ComInterfaceType,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_ComInterfaceType,
 
                 // System_Runtime_InteropServices_InterfaceTypeAttribute__ctorInt16
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_InterfaceTypeAttribute,                                  // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_InterfaceTypeAttribute,                                  // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -729,7 +729,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_Marshal__GetTypeFromCLSID
                 (byte)(MemberFlags.Method | MemberFlags.Static),                                                            // Flags
-                (byte)WellKnownType.system_runtime_interop_Marshal,                                                 // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_Marshal,                                                 // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_Type, // Return Type
@@ -737,14 +737,14 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_TypeIdentifierAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_TypeIdentifierAttribute,                                 // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_TypeIdentifierAttribute,                                 // DeclaringTypeId
                 0,                                                                                                          // Arity
                     0,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
 
                 // System_Runtime_InteropServices_TypeIdentifierAttribute__ctorStringString
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_TypeIdentifierAttribute,                                 // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_TypeIdentifierAttribute,                                 // DeclaringTypeId
                 0,                                                                                                          // Arity
                     2,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -753,7 +753,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_BestFitMappingAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_BestFitMappingAttribute,                                 // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_BestFitMappingAttribute,                                 // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -761,7 +761,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_DefaultParameterValueAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_DefaultParameterValueAttribute,                          // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_DefaultParameterValueAttribute,                          // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -769,7 +769,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_LCIDConversionAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_LCIDConversionAttribute,                                 // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_LCIDConversionAttribute,                                 // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -777,52 +777,52 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_InteropServices_UnmanagedFunctionPointerAttribute__ctor
                 (byte)MemberFlags.Constructor,                                                                              // Flags
-                (byte)WellKnownType.system_runtime_interop_UnmanagedFunctionPointerAttribute,                       // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_UnmanagedFunctionPointerAttribute,                       // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_CallingConvention,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_CallingConvention,
 
                 // System_Runtime_InteropServices_WindowsRuntime_EventRegistrationTokenTable_T__AddEventHandler
                 (byte)MemberFlags.Method,                                                                                   // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken,
                     (byte)SignatureTypeCode.GenericTypeParameter, 0,
 
                 // System_Runtime_InteropServices_WindowsRuntime_EventRegistrationTokenTable_T__GetOrCreateEventRegistrationTokenTable
                 (byte)(MemberFlags.Method | MemberFlags.Static),                                                            // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.GenericTypeInstance, // Return Type
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T,
                     1,
                     (byte)SignatureTypeCode.GenericTypeParameter, 0,
                     (byte)SignatureTypeCode.ByReference, (byte)SignatureTypeCode.GenericTypeInstance,
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T,
                     1,
                     (byte)SignatureTypeCode.GenericTypeParameter, 0,
 
                 // System_Runtime_InteropServices_WindowsRuntime_EventRegistrationTokenTable_T__InvocationList
                 (byte)MemberFlags.Property,                                                                                 // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
                 0,                                                                                                          // Arity
                     0,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.GenericTypeParameter, 0,
 
                 // System_Runtime_InteropServices_WindowsRuntime_EventRegistrationTokenTable_T__RemoveEventHandler
                 (byte)MemberFlags.Method,                                                                                   // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationTokenTable_T,            // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken,
 
                 // System_Runtime_InteropServices_WindowsRuntime_WindowsRuntimeMarshal__AddEventHandler_T
                 (byte)(MemberFlags.Method | MemberFlags.Static),                                                            // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_WindowsRuntimeMarshal,                    // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_WindowsRuntimeMarshal,                    // DeclaringTypeId
                 1,                                                                                                          // Arity
                     3,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -830,34 +830,34 @@ namespace StarkPlatform.CodeAnalysis
                     (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_Func_T2,
                     2,
                     (byte)SignatureTypeCode.GenericMethodParameter, 0,
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken,
                     (byte)SignatureTypeCode.GenericTypeInstance,
                     (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_Action_T,
                     1,
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken,
                     (byte)SignatureTypeCode.GenericMethodParameter, 0,
 
                 // System_Runtime_InteropServices_WindowsRuntime_WindowsRuntimeMarshal__RemoveAllEventHandlers
                 (byte)(MemberFlags.Method | MemberFlags.Static),                                                            // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_WindowsRuntimeMarshal,                    // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_WindowsRuntimeMarshal,                    // DeclaringTypeId
                 0,                                                                                                          // Arity
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
                     (byte)SignatureTypeCode.GenericTypeInstance,
                     (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_Action_T,
                     1,
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken,
 
                 // System_Runtime_InteropServices_WindowsRuntime_WindowsRuntimeMarshal__RemoveEventHandler_T
                 (byte)(MemberFlags.Method | MemberFlags.Static),                                                            // Flags
-                (byte)WellKnownType.system_runtime_interop_WindowsRuntime_WindowsRuntimeMarshal,                    // DeclaringTypeId
+                (byte)WellKnownType.system_runtime_WindowsRuntime_WindowsRuntimeMarshal,                    // DeclaringTypeId
                 1,                                                                                                          // Arity
                     2,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void,
                     (byte)SignatureTypeCode.GenericTypeInstance,
                     (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_Action_T,
                     1,
-                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_interop_WindowsRuntime_EventRegistrationToken,
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.system_runtime_WindowsRuntime_EventRegistrationToken,
                     (byte)SignatureTypeCode.GenericMethodParameter, 0,
 
                 // System_Runtime_CompilerServices_DateTimeConstantAttribute__ctor
@@ -2936,14 +2936,14 @@ namespace StarkPlatform.CodeAnalysis
 
                  // System_Runtime_CompilerServices_IsReadOnlyAttribute__ctor
                  (byte)(MemberFlags.Constructor),                                                                                                               // Flags
-                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_annotations_ReadOnlyAttribute - WellKnownType.ExtSentinel),        // DeclaringTypeId
+                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_ReadOnlyAttribute - WellKnownType.ExtSentinel),        // DeclaringTypeId
                  0,                                                                                                                                             // Arity
                      0,                                                                                                                                         // Method Signature
                      (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
 
                  // System_Runtime_CompilerServices_IsByRefLikeAttribute__ctor
                  (byte)(MemberFlags.Constructor),                                                                                                               // Flags
-                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_annotations_IsByRefLikeAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
+                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_ByRefLikeAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
                  0,                                                                                                                                             // Arity
                      0,                                                                                                                                         // Method Signature
                      (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
@@ -3007,7 +3007,7 @@ namespace StarkPlatform.CodeAnalysis
 
                 // System_Runtime_CompilerServices_IsUnmanagedAttribute__ctor
                  (byte)(MemberFlags.Constructor),                                                                                                               // Flags
-                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_annotations_IsUnmanagedAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
+                 (byte)WellKnownType.ExtSentinel, (byte)(WellKnownType.system_runtime_UnmanagedAttribute - WellKnownType.ExtSentinel),       // DeclaringTypeId
                  0,                                                                                                                                             // Arity
                      0,                                                                                                                                         // Method Signature
                      (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void, // Return Type
