@@ -30,7 +30,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\src\Ergon.Core\Ergon.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\src\compiler\Ergon.Core\Ergon.Core.csproj" />
     <ProjectReference Include="..\..\..\Compilers\Core\Portable\StarkPlatform.CodeAnalysis.csproj" />
     <ProjectReference Include="..\Portable\StarkPlatform.CodeAnalysis.Workspaces.csproj" />
   </ItemGroup>

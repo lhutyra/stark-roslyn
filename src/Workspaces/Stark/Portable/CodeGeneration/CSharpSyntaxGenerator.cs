@@ -115,6 +115,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 AsModifierList(accessibility, modifiers, SyntaxKind.FieldDeclaration),
                 SyntaxFactory.VariableDeclaration(
                             SyntaxFactory.Token(SyntaxKind.VarKeyword),
+                            default,
                             name.ToIdentifierToken(),
                             SyntaxFactory.Token(SyntaxKind.ColonToken),
                             (TypeSyntax)type,
@@ -125,24 +126,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
         {
             return SyntaxFactory.Parameter(
                 default,
-                GetParameterModifiers(refKind),
                 name.ToIdentifierToken(),
-                (TypeSyntax)type,
+                GetParameterType(refKind, (TypeSyntax)type),
                 initializer != null ? SyntaxFactory.EqualsValueClause((ExpressionSyntax)initializer) : null);
         }
 
-        internal static SyntaxTokenList GetParameterModifiers(RefKind refKind)
+        internal static TypeSyntax GetParameterType(RefKind refKind, TypeSyntax type)
         {
             switch (refKind)
             {
                 case RefKind.None:
-                    return new SyntaxTokenList();
+                    return type;
                 case RefKind.Out:
-                    return SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.OutKeyword));
+                    return SyntaxFactory.RefKindType(SyntaxFactory.Token(SyntaxKind.OutKeyword), type);
                 case RefKind.Ref:
-                    return SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.RefKeyword));
+                    return SyntaxFactory.RefKindType(SyntaxFactory.Token(SyntaxKind.RefKeyword), type);
                 case RefKind.In:
-                    return SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.InKeyword));
+                    return SyntaxFactory.RefKindType(SyntaxFactory.Token(SyntaxKind.InKeyword), type);
                 default:
                     throw ExceptionUtilities.UnexpectedValue(refKind);
             }
@@ -463,7 +463,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 default,
                 AsModifierList(accessibility, modifiers, SyntaxKind.EventFieldDeclaration),
                 SyntaxFactory.Token(SyntaxKind.EventKeyword),
-                SyntaxFactory.VariableDeclaration(SyntaxFactory.Token(SyntaxKind.VarKeyword), SyntaxFactory.Identifier(name), SyntaxFactory.Token(SyntaxKind.ColonToken), (TypeSyntax)type, default),
+                SyntaxFactory.VariableDeclaration(SyntaxFactory.Token(SyntaxKind.VarKeyword), default, SyntaxFactory.Identifier(name), SyntaxFactory.Token(SyntaxKind.ColonToken), (TypeSyntax)type, default),
                 SyntaxFactory.EndOfLineToken()
                 );
         }
@@ -843,9 +843,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             return (EnumMemberDeclarationSyntax)node;
         }
 
-        private SeparatedSyntaxList<EnumMemberDeclarationSyntax> AsEnumMembers(IEnumerable<SyntaxNode> members)
+        private SyntaxList<EnumMemberDeclarationSyntax> AsEnumMembers(IEnumerable<SyntaxNode> members)
         {
-            return members != null ? SyntaxFactory.SeparatedList(members.Select(this.AsEnumMember)) : default;
+            return members != null ? SyntaxFactory.List(members.Select(this.AsEnumMember)) : default;
         }
 
         public override SyntaxNode DelegateDeclaration(
@@ -1606,8 +1606,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                     return ((EventFieldDeclarationSyntax)declaration).Modifiers;
                 case SyntaxKind.EventDeclaration:
                     return ((EventDeclarationSyntax)declaration).Modifiers;
-                case SyntaxKind.Parameter:
-                    return ((ParameterSyntax)declaration).Modifiers;
                 case SyntaxKind.LocalDeclarationStatement:
                     //return ((LocalDeclarationStatementSyntax)declaration).Modifiers;
                     return default;
@@ -1965,7 +1963,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             SyntaxList<TypeParameterConstraintClauseSyntax> clauses, string typeParameterName, SpecialTypeConstraintKind kinds, IEnumerable<SyntaxNode> types)
         {
             var constraints = types != null
-                ? SyntaxFactory.SeparatedList<TypeParameterConstraintSyntax>(types.Select(t => SyntaxFactory.TypeConstraint((TypeSyntax)t)))
+                ? SyntaxFactory.SeparatedList<TypeParameterConstraintSyntax>(types.Select(t => SyntaxFactory.ExtendsOrImplementsTypeConstraint(default, (TypeSyntax)t)))
                 : SyntaxFactory.SeparatedList<TypeParameterConstraintSyntax>();
 
             if ((kinds & SpecialTypeConstraintKind.Constructor) != 0)
@@ -3903,7 +3901,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
         private static bool IsSimpleLambdaParameter(SyntaxNode node)
         {
             var p = node as ParameterSyntax;
-            return p != null && p.Type == null && p.Default == null && p.Modifiers.Count == 0;
+            return p != null && p.Type == null && p.Default == null;
         }
 
         public override SyntaxNode VoidReturningLambdaExpression(IEnumerable<SyntaxNode> lambdaParameters, SyntaxNode expression)

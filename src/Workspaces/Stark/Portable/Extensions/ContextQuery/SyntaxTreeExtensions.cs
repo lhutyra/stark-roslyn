@@ -524,7 +524,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
                 // readonly ref $$
                 if (container.IsKind(SyntaxKind.IncompleteMember))
                 {
-                    return ((IncompleteMemberSyntax)container).Type.IsKind(SyntaxKind.RefType);
+                    return ((IncompleteMemberSyntax)container).Type.IsKind(SyntaxKind.RefKindType);
                 }
 
                 if (container.IsKind(SyntaxKind.CompilationUnit) ||
@@ -1453,7 +1453,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             // ref |
             // ref readonly |
             if (token.IsKind(SyntaxKind.RefKeyword, SyntaxKind.ReadOnlyKeyword) &&
-                token.Parent.IsKind(SyntaxKind.RefType) &&
+                token.Parent.IsKind(SyntaxKind.RefKindType) &&
                 token.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 token.Parent.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement))
             {
@@ -1477,7 +1477,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
                 // await using ( |
                 var previous = token.GetPreviousToken(includeSkipped: true);
                 if (previous.IsKind(SyntaxKind.ForKeyword) ||
-                    previous.IsKind(SyntaxKind.ForEachKeyword) ||
                     previous.IsKind(SyntaxKind.UsingKeyword))
                 {
                     return true;
@@ -2187,38 +2186,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
 
                     return true;
                 }
-            }
-
-            // for (; |
-            // for (; ; |
-            if (token.IsKind(SyntaxKind.SemicolonToken) &&
-                token.Parent.IsKind(SyntaxKind.ForStatementOld))
-            {
-                var forStatement = (ForStatementSyntax2)token.Parent;
-                if (token == forStatement.FirstSemicolonToken ||
-                    token == forStatement.SecondSemicolonToken)
-                {
-                    return true;
-                }
-            }
-
-            // for ( |
-            if (token.IsKind(SyntaxKind.OpenParenToken) &&
-                token.Parent.IsKind(SyntaxKind.ForStatementOld))
-            {
-                var forStatement = (ForStatementSyntax2)token.Parent;
-                if (token == forStatement.OpenParenToken)
-                {
-                    return true;
-                }
-            }
-
-            // for (; ; Goo(), | 
-            // for ( Goo(), |
-            if (token.IsKind(SyntaxKind.CommaToken) &&
-                token.Parent.IsKind(SyntaxKind.ForStatementOld))
-            {
-                return true;
             }
 
             // foreach (var v in |

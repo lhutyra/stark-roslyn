@@ -147,12 +147,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                 return CreateAdjustNewLinesOperation(1, AdjustNewLinesOption.PreserveLines);
             }
 
-            // for (int i = 10; i < 10; i++) case
-            if (previousToken.IsSemicolonInForStatement())
-            {
-                return nextOperation.Invoke();
-            }
-
             // ; case in the switch case statement and else condition
             if (previousToken.Kind() == SyntaxKind.SemicolonToken &&
                 (currentToken.Kind() == SyntaxKind.CaseKeyword || currentToken.Kind() == SyntaxKind.DefaultKeyword || currentToken.Kind() == SyntaxKind.ElseKeyword))

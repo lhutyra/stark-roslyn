@@ -141,22 +141,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
                 return ValueTuple.Create(GetAppropriatePreviousToken(parent.GetFirstToken(), canTokenBeFirstInABlock: true), parent.GetLastToken());
             }
 
-            if (parent is StatementSyntax && !endToken.IsSemicolonInForStatement())
-            {
-                var container = GetTopContainingNode(parent);
-                if (container == null)
-                {
-                    return ValueTuple.Create(GetAppropriatePreviousToken(parent.GetFirstToken()), parent.GetLastToken());
-                }
-
-                if (IsSpecialContainingNode(container))
-                {
-                    return ValueTuple.Create(GetAppropriatePreviousToken(container.GetFirstToken()), container.GetLastToken());
-                }
-
-                return ValueTuple.Create(GetAppropriatePreviousToken(parent.GetFirstToken(), canTokenBeFirstInABlock: true), parent.GetLastToken());
-            }
-
             // don't do anything
             return null;
         }
@@ -348,7 +332,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
                 node.Kind() == SyntaxKind.IfStatement ||
                 node.Kind() == SyntaxKind.ElseClause ||
                 node.Kind() == SyntaxKind.WhileStatement ||
-                node.Kind() == SyntaxKind.ForStatementOld ||
                 node.Kind() == SyntaxKind.ForStatement ||
                 node.Kind() == SyntaxKind.UsingStatement ||
                 node.Kind() == SyntaxKind.DoStatement ||

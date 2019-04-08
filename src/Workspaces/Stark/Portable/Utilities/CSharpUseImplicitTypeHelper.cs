@@ -99,7 +99,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             }
 
             if (typeName.Parent.IsKind(SyntaxKind.VariableDeclaration) &&
-                typeName.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement, SyntaxKind.ForStatementOld, SyntaxKind.UsingStatement))
+                typeName.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement, SyntaxKind.UsingStatement))
             {
                 var variableDeclaration = (VariableDeclarationSyntax)typeName.Parent;
 

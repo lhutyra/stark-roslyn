@@ -2544,8 +2544,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                     case SyntaxKind.SimpleLambdaExpression:
                     case SyntaxKind.AnonymousMethodExpression:
                     case SyntaxKind.SwitchStatement:
-                    case SyntaxKind.ForEachKeyword:
-                    case SyntaxKind.ForStatementOld:
+                    case SyntaxKind.ForKeyword:
                     case SyntaxKind.UsingStatement:
 
                     // SPEC VIOLATION: We also want to stop walking out if, say, we are in a field

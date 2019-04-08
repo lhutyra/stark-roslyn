@@ -33,7 +33,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.ExtractMethod
                 block.Parent is DoStatementSyntax ||
                 block.Parent is ElseClauseSyntax ||
                 block.Parent is ForStatementSyntax ||
-                block.Parent is ForStatementSyntax2 ||
                 block.Parent is IfStatementSyntax ||
                 block.Parent is LockStatementSyntax ||
                 block.Parent is UsingStatementSyntax ||
@@ -67,7 +66,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.ExtractMethod
                 statement is ExpressionStatementSyntax ||
                 statement is FixedStatementSyntax ||
                 statement is ForStatementSyntax ||
-                statement is ForStatementSyntax2 ||
                 statement is IfStatementSyntax ||
                 statement is LocalDeclarationStatementSyntax ||
                 statement is LockStatementSyntax ||

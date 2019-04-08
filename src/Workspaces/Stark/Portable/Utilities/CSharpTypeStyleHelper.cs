@@ -105,7 +105,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
             // must have an initializer.
             var isSupportedParentKind = variableDeclaration.IsParentKind(
                 SyntaxKind.LocalDeclarationStatement,
-                SyntaxKind.ForStatementOld,
                 SyntaxKind.UsingStatement);
 
             return isSupportedParentKind && variableDeclaration.Initializer != null && variableDeclaration.Initializer.IsKind(SyntaxKind.EqualsValueClause);

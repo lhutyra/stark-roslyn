@@ -169,7 +169,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification.Classifiers
                 }
             }
 
-            if (name.IsUnmanaged && name.Parent.IsKind(SyntaxKind.TypeConstraint))
+            if (name.IsUnmanaged && name.Parent.IsKind(SyntaxKind.ImplementsTypeConstraint))
             {
                 var alias = semanticModel.GetAliasInfo(name, cancellationToken);
                 if (alias == null || alias.Name != "unmanaged")

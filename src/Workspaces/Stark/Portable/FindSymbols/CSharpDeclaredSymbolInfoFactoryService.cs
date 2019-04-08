@@ -362,12 +362,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
                     builder.Append(", ");
                 }
 
-                foreach (var modifier in parameter.Modifiers)
-                {
-                    builder.Append(modifier.Text);
-                    builder.Append(' ');
-                }
-
                 if (parameter.Type != null)
                 {
                     AppendTokens(parameter.Type, builder);
@@ -455,7 +449,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.FindSymbols
             => name.Identifier.ValueText;
 
         private bool IsExtensionMethod(MethodDeclarationSyntax method)
-            => method.ParameterList.Parameters.Count > 0 &&
-               method.ParameterList.Parameters[0].Modifiers.Any(SyntaxKind.ThisKeyword);
+            => false; // TODO
     }
 }

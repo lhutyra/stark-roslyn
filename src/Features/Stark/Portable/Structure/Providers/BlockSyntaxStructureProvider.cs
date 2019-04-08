@@ -121,7 +121,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Structure
         {
             switch (parent.Kind())
             {
-                case SyntaxKind.ForStatementOld: return BlockTypes.Loop;
                 case SyntaxKind.ForStatement: return BlockTypes.Loop;
                 case SyntaxKind.WhileStatement: return BlockTypes.Loop;
                 case SyntaxKind.DoStatement: return BlockTypes.Loop;

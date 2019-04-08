@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -44,23 +45,29 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             }
             else if (typeParameter.HasUnmanagedTypeConstraint)
             {
-                constraints.Add(SyntaxFactory.TypeConstraint(SyntaxFactory.IdentifierName("unmanaged")));
+                throw new NotImplementedException("constraints.Add(SyntaxFactory.TypeConstraint(SyntaxFactory.IdentifierName(unmanaged)));");
+                //constraints.Add(SyntaxFactory.TypeConstraint(SyntaxFactory.IdentifierName("unmanaged")));
             }
             else if (typeParameter.HasValueTypeConstraint)
             {
                 constraints.Add(SyntaxFactory.ClassOrStructConstraint(SyntaxKind.StructConstraint));
             }
 
-            var constraintTypes =
-                typeParameter.ConstraintTypes.Where(t => t.TypeKind == TypeKind.Class).Concat(
-                typeParameter.ConstraintTypes.Where(t => t.TypeKind == TypeKind.Interface).Concat(
-                typeParameter.ConstraintTypes.Where(t => t.TypeKind != TypeKind.Class && t.TypeKind != TypeKind.Interface)));
+            var extendsTypes = typeParameter.ConstraintTypes.Where(t => t.TypeKind == TypeKind.Class);
+            var implementsTypes = typeParameter.ConstraintTypes.Where(t => t.TypeKind == TypeKind.Interface);
 
-            foreach (var type in constraintTypes)
+            foreach (var type in extendsTypes)
             {
                 if (type.SpecialType != SpecialType.System_Object)
                 {
-                    constraints.Add(SyntaxFactory.TypeConstraint(type.GenerateTypeSyntax()));
+                    constraints.Add(SyntaxFactory.ExtendsOrImplementsTypeConstraint(SyntaxKind.ExtendsTypeConstraint, type.GenerateTypeSyntax()));
+                }
+            }
+            foreach (var type in implementsTypes)
+            {
+                if (type.SpecialType != SpecialType.System_Object)
+                {
+                    constraints.Add(SyntaxFactory.ExtendsOrImplementsTypeConstraint(SyntaxKind.ImplementsTypeConstraint, type.GenerateTypeSyntax()));
                 }
             }
 

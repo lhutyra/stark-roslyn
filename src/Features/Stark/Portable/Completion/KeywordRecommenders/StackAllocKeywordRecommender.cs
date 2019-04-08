@@ -56,7 +56,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
                     {
                         node = node.Parent;
 
-                        return node.IsKind(SyntaxKind.LocalDeclarationStatement, SyntaxKind.ForStatementOld);
+                        return node.IsKind(SyntaxKind.LocalDeclarationStatement);
                     }
                 }
             }

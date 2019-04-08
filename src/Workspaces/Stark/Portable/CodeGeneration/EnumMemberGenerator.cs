@@ -18,8 +18,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
     {
         internal static EnumDeclarationSyntax AddEnumMemberTo(EnumDeclarationSyntax destination, IFieldSymbol enumMember, CodeGenerationOptions options)
         {
-            var members = new List<SyntaxNodeOrToken>();
-            members.AddRange(destination.Members.GetWithSeparators());
+            var members = new List<EnumMemberDeclarationSyntax>();
+            members.AddRange(destination.Members);
 
             var member = GenerateEnumMemberDeclaration(enumMember, destination, options);
 
@@ -27,22 +27,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             {
                 members.Add(member);
             }
-            else if (members.LastOrDefault().Kind() == SyntaxKind.CommaToken)
-            {
-                members.Add(member);
-                members.Add(SyntaxFactory.Token(SyntaxKind.CommaToken));
-            }
             else
             {
                 var lastMember = members.Last();
-                var trailingTrivia = lastMember.GetTrailingTrivia();
                 members[members.Count - 1] = lastMember.WithTrailingTrivia();
-                members.Add(SyntaxFactory.Token(SyntaxKind.CommaToken).WithTrailingTrivia(trailingTrivia));
                 members.Add(member);
             }
 
-            return destination.EnsureOpenAndCloseBraceTokens()
-                .WithMembers(SyntaxFactory.SeparatedList<EnumMemberDeclarationSyntax>(members));
+            return destination.EnsureOpenAndCloseBraceTokens().WithMembers(SyntaxFactory.List(members));
         }
 
         public static EnumMemberDeclarationSyntax GenerateEnumMemberDeclaration(

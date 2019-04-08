@@ -74,7 +74,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification
                 case SyntaxKind.ElseKeyword:
                 case SyntaxKind.WhileKeyword:
                 case SyntaxKind.ForKeyword:
-                case SyntaxKind.ForEachKeyword:
                 case SyntaxKind.DoKeyword:
                 case SyntaxKind.SwitchKeyword:
                 case SyntaxKind.CaseKeyword:
@@ -112,7 +111,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification
                 case SyntaxKind.ThrowStatement:
                 case SyntaxKind.WhileStatement:
                 case SyntaxKind.DoStatement:
-                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
                 // Checked Statements
                 case SyntaxKind.IfStatement:
@@ -330,7 +328,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification
 
         private static bool IsExtensionMethod(MethodDeclarationSyntax methodDeclaration)
         {
-            return methodDeclaration.ParameterList.Parameters.FirstOrDefault()?.Modifiers.Any(SyntaxKind.ThisKeyword) == true;
+            return false;
+            //return methodDeclaration.ParameterList.Parameters.FirstOrDefault()?.Modifiers.Any(SyntaxKind.ThisKeyword) == true;
         }
 
         private static string GetClassificationForTypeDeclarationIdentifier(SyntaxToken identifier)

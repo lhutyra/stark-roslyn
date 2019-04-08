@@ -28,7 +28,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.ForStatement:
                 case SyntaxKind.UsingStatement:
-                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.TryStatement:
                 case SyntaxKind.CatchClause:
                 case SyntaxKind.FinallyClause:
@@ -374,16 +373,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                 {
                     return null;
                 }
-            }
-
-            // Wrapping - Leave statements on same line (false): 
-            // Insert a newline between the previous statement and this one.
-            // ; *
-            if (previousToken.Kind() == SyntaxKind.SemicolonToken
-                && (previousToken.Parent is StatementSyntax && !previousToken.Parent.IsKind(SyntaxKind.ForStatementOld))
-                && !optionSet.GetOption(CSharpFormattingOptions.WrappingKeepStatementsOnSingleLine))
-            {
-                return CreateAdjustNewLinesOperation(1, AdjustNewLinesOption.PreserveLines);
             }
 
             return operation;

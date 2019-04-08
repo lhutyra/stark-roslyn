@@ -328,7 +328,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.Providers
             {
                 result = IsFollowingTypeOrComma<VariableDeclarationSyntax>(token, semanticModel,
                     typeSyntaxGetter: v => v.Type,
-                    modifierGetter: v => v.Parent is UsingStatementSyntax || v.Parent is ForStatementSyntax2
+                    modifierGetter: v => v.Parent is UsingStatementSyntax 
                         ? default(SyntaxTokenList)
                         : default(SyntaxTokenList?), // Return null to bail out.
                     possibleDeclarationComputer: d => ImmutableArray.Create(new SymbolKindOrTypeKind(SymbolKind.Local)),

@@ -491,7 +491,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             }
 
             // Type constraint must be at least as accessible as the declaring member (class, interface, delegate, method)
-            if (type.IsParentKind(SyntaxKind.TypeConstraint))
+            if (type.IsParentKind(SyntaxKind.ExtendsTypeConstraint) || type.IsParentKind(SyntaxKind.ImplementsTypeConstraint))
             {
                 return AllContainingTypesArePublicOrProtected(semanticModel, type, cancellationToken)
                     ? Accessibility.Public

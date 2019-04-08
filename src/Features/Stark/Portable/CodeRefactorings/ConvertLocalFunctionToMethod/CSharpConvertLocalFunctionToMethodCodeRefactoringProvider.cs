@@ -258,9 +258,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeRefactorings.ConvertLocalFunction
 
         private static ParameterSyntax GenerateParameter(IParameterSymbol p, string name)
         {
-            return SyntaxFactory.Parameter(name.ToIdentifierToken())
-                .WithModifiers(CSharpSyntaxGenerator.GetParameterModifiers(p.RefKind))
-                .WithType(p.Type.GenerateTypeSyntax());
+            return SyntaxFactory.Parameter(default, name.ToIdentifierToken(),  p.RefKind != RefKind.None ? SyntaxFactory.RefKindType(p.RefKind == RefKind.Ref ? SyntaxFactory.Token(SyntaxKind.RefKeyword) : default, p.Type.GenerateTypeSyntax()) : p.Type.GenerateTypeSyntax(), default);
         }
 
         private static MethodDeclarationSyntax WithBodyFrom(

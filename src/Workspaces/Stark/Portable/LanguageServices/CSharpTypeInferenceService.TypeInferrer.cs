@@ -157,7 +157,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case EqualsValueClauseSyntax equalsValue: return InferTypeInEqualsValueClause(equalsValue);
                     case ExpressionStatementSyntax expressionStatement: return InferTypeInExpressionStatement(expressionStatement);
                     case ForStatementSyntax forEachStatement: return InferTypeInForEachStatement(forEachStatement, expression);
-                    case ForStatementSyntax2 forStatement: return InferTypeInForStatement(forStatement, expression);
                     case IfStatementSyntax ifStatement: return InferTypeInIfStatement(ifStatement);
                     case InitializerExpressionSyntax initializerExpression: return InferTypeInInitializerExpression(initializerExpression, expression);
                     case IsPatternExpressionSyntax isPatternExpression: return InferTypeInIsPatternExpression(isPatternExpression, node);
@@ -221,7 +220,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case EqualsValueClauseSyntax equalsValue: return InferTypeInEqualsValueClause(equalsValue, token);
                     case ExpressionStatementSyntax expressionStatement: return InferTypeInExpressionStatement(expressionStatement, token);
                     case ForStatementSyntax forEachStatement: return InferTypeInForEachStatement(forEachStatement, previousToken: token);
-                    case ForStatementSyntax2 forStatement: return InferTypeInForStatement(forStatement, previousToken: token);
                     case IfStatementSyntax ifStatement: return InferTypeInIfStatement(ifStatement, token);
                     case ImplicitArrayCreationExpressionSyntax implicitArray: return InferTypeInImplicitArrayCreation(implicitArray, token);
                     case InitializerExpressionSyntax initializerExpression: return InferTypeInInitializerExpression(initializerExpression, previousToken: token);
@@ -1212,22 +1210,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return variableTypes.Select(v => new TypeInferenceInfo(type.Construct(v.InferredType)));
             }
 
-            private IEnumerable<TypeInferenceInfo> InferTypeInForStatement(ForStatementSyntax2 forStatement, ExpressionSyntax expressionOpt = null, SyntaxToken? previousToken = null)
-            {
-                // If we have a position, it has to be after "for(...;"
-                if (previousToken.HasValue && previousToken.Value != forStatement.FirstSemicolonToken)
-                {
-                    return SpecializedCollections.EmptyEnumerable<TypeInferenceInfo>();
-                }
-
-                if (expressionOpt != null && forStatement.Condition != expressionOpt)
-                {
-                    return SpecializedCollections.EmptyEnumerable<TypeInferenceInfo>();
-                }
-
-                return CreateResult(SpecialType.System_Boolean);
-            }
-
             private IEnumerable<TypeInferenceInfo> InferTypeInIfStatement(IfStatementSyntax ifStatement, SyntaxToken? previousToken = null)
             {
                 // If we have a position, we have to be after the "if"
@@ -2070,12 +2052,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         {
                             // using (var v = Goo())
                             return CreateResult(SpecialType.System_IDisposable);
-                        }
-
-                        if (variableDeclaration.IsParentKind(SyntaxKind.ForStatementOld))
-                        {
-                            // for (var v = Goo(); ..
-                            return CreateResult(this.Compilation.GetSpecialType(SpecialType.System_Int32));
                         }
 
                         // Return the types here if they actually bound to a type called 'var'.

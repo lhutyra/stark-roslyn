@@ -289,7 +289,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.InlineDeclaration
                 {
                     case SyntaxKind.WhileStatement:
                     case SyntaxKind.DoStatement:
-                    case SyntaxKind.ForStatementOld:
                     case SyntaxKind.UsingStatement:
                     case SyntaxKind.FixedStatement:
                     case SyntaxKind.TryStatement:

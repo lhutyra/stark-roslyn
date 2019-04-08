@@ -29,7 +29,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Diagnostics.AddBraces
             => context.RegisterSyntaxNodeAction(AnalyzeNode,
                 SyntaxKind.IfStatement,
                 SyntaxKind.ElseClause,
-                SyntaxKind.ForStatementOld,
                 SyntaxKind.ForStatement,
                 SyntaxKind.WhileStatement,
                 SyntaxKind.DoStatement,

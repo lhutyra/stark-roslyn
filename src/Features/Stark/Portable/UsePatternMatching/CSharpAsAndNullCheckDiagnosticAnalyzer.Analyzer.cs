@@ -141,17 +141,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.UsePatternMatching
 
                             return CheckExpression(conditionalExpression);
 
-                        case SyntaxKind.ForStatementOld:
-                            var forStatement = (ForStatementSyntax2)current;
-                            if (!forStatement.Condition.Span.Contains(_comparison.Span))
-                            {
-                                // In a for-statement, only the condition expression
-                                // can make this definitely assigned in the loop body.
-                                return false;
-                            }
-
-                            return CheckLoop(forStatement, forStatement.Statement, defAssignedWhenTrue);
-
                         case SyntaxKind.WhileStatement:
                             var whileStatement = (WhileStatementSyntax)current;
                             return CheckLoop(whileStatement, whileStatement.Statement, defAssignedWhenTrue);

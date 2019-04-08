@@ -61,28 +61,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Rename
             _tracker.RemoveIdentifiers(tokens);
         }
 
-        public override void VisitForEachVariableStatement(ForStatementSyntax node)
+        public override void VisitForStatement(ForStatementSyntax node)
         {
             var id = ((IdentifierNameSyntax)node.Variable).Identifier;
             _tracker.AddIdentifier(id);
             Visit(node.Statement);
             _tracker.RemoveIdentifier(id);
         }
-
-        public override void VisitForStatement(ForStatementSyntax2 node)
-        {
-            var tokens = new List<SyntaxToken>();
-
-            if (node.Declaration != null)
-            {
-                tokens.Add(node.Declaration.Identifier);
-            }
-
-            _tracker.AddIdentifiers(tokens);
-            Visit(node.Statement);
-            _tracker.RemoveIdentifiers(tokens);
-        }
-
         public override void VisitUsingStatement(UsingStatementSyntax node)
         {
             var tokens = new List<SyntaxToken>();

@@ -108,7 +108,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.GenerateType
             }
 
             if (expression is TypeSyntax &&
-                expression.IsParentKind(SyntaxKind.TypeConstraint) &&
+                (expression.IsParentKind(SyntaxKind.ExtendsTypeConstraint) || expression.IsParentKind(SyntaxKind.ImplementsTypeConstraint)) &&
                 expression.Parent.IsParentKind(SyntaxKind.TypeParameterConstraintClause))
             {
                 var typeConstraint = (TypeConstraintSyntax)expression.Parent;

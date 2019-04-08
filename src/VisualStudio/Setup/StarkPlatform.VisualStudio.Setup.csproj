@@ -85,26 +85,6 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup;SatelliteDllsProjectOutputGroup</IncludeOutputGroupsInVSIX>
       <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Def\StarkPlatform.VisualStudio.LanguageServices.csproj">
-      <Name>ServicesVisualStudio</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup;PkgDefProjectOutputGroup;VsdConfigOutputGroup;SatelliteDllsProjectOutputGroup</IncludeOutputGroupsInVSIX>
-      <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\Impl\StarkPlatform.VisualStudio.LanguageServices.Implementation.csproj">
-      <Name>ServicesVisualStudioImpl</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup;SatelliteDllsProjectOutputGroup</IncludeOutputGroupsInVSIX>
-      <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\SolutionExplorerShim\StarkPlatform.VisualStudio.LanguageServices.SolutionExplorer.csproj">
-      <Name>SolutionExplorerShim</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup;SatelliteDllsProjectOutputGroup</IncludeOutputGroupsInVSIX>
-      <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
-    </ProjectReference>
-    <ProjectReference Include="..\Stark\Impl\StarkPlatform.VisualStudio.LanguageServices.Stark.csproj">
-      <Name>StarkVisualStudio</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup;PkgDefProjectOutputGroup;ContentFilesProjectOutputGroup;SatelliteDllsProjectOutputGroup</IncludeOutputGroupsInVSIX>
-      <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
-    </ProjectReference>
     <ProjectReference Include="..\Setup.Dependencies\StarkPlatform.VisualStudio.Setup.Dependencies.csproj">
       <Name>VisualStudioSetup.Dependencies</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

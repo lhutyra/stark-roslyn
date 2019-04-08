@@ -107,7 +107,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             // For Spacing b/n control flow keyword and paren. Parent check not needed.
             if (currentKind == SyntaxKind.OpenParenToken &&
                 (previousKind == SyntaxKind.IfKeyword || previousKind == SyntaxKind.WhileKeyword || previousKind == SyntaxKind.SwitchKeyword ||
-                previousKind == SyntaxKind.ForKeyword || previousKind == SyntaxKind.ForEachKeyword || previousKind == SyntaxKind.CatchKeyword ||
+                previousKind == SyntaxKind.ForKeyword || previousKind == SyntaxKind.CatchKeyword ||
                 previousKind == SyntaxKind.UsingKeyword || previousKind == SyntaxKind.WhenKeyword || previousKind == SyntaxKind.LockKeyword))
             {
                 return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceAfterControlFlowStatementKeyword);
@@ -125,20 +125,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
                 (currentParentKind == SyntaxKind.CastExpression && currentKind == SyntaxKind.CloseParenToken))
             {
                 return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceWithinCastParentheses);
-            }
-
-            // Semicolons in an empty for statement.  i.e.   for(;;)
-            if (previousParentKind == SyntaxKind.ForStatementOld
-                && this.IsEmptyForStatement((ForStatementSyntax2)previousToken.Parent))
-            {
-                if (currentKind == SyntaxKind.SemicolonToken
-                    && (previousKind != SyntaxKind.SemicolonToken
-                        || optionSet.GetOption<bool>(CSharpFormattingOptions.SpaceBeforeSemicolonsInForStatement)))
-                {
-                    return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceBeforeSemicolonsInForStatement);
-                }
-
-                return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceAfterSemicolonsInForStatement);
             }
 
             // For spacing between the parenthesis and the expression inside the control flow expression
@@ -225,18 +211,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             if (currentToken.IsDotInMemberAccessOrQualifiedName())
             {
                 return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceBeforeDot);
-            }
-
-            // For spacing delimiters - after semicolon
-            if (previousToken.IsSemicolonInForStatement() && currentKind != SyntaxKind.CloseParenToken)
-            {
-                return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceAfterSemicolonsInForStatement);
-            }
-
-            // For spacing delimiters - before semicolon
-            if (currentToken.IsSemicolonInForStatement())
-            {
-                return AdjustSpacesOperationZeroOrOne(optionSet, CSharpFormattingOptions.SpaceBeforeSemicolonsInForStatement);
             }
 
             // For spacing around the binary operators
@@ -365,12 +339,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             SuppressVariableDeclaration(list, node, optionSet);
         }
 
-        private bool IsEmptyForStatement(ForStatementSyntax2 forStatement) =>
-            forStatement.Initializers.Count == 0
-            && forStatement.Declaration == null
-            && forStatement.Condition == null
-            && forStatement.Incrementors.Count == 0;
-
         private void SuppressVariableDeclaration(List<SuppressOperation> list, SyntaxNode node, OptionSet optionSet)
         {
             if (node.IsKind(SyntaxKind.FieldDeclaration) || node.IsKind(SyntaxKind.EventDeclaration) ||
@@ -411,7 +379,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
         private bool IsControlFlowLikeKeywordStatementKind(SyntaxKind syntaxKind)
         {
             return (syntaxKind == SyntaxKind.IfStatement || syntaxKind == SyntaxKind.WhileStatement || syntaxKind == SyntaxKind.SwitchStatement ||
-                syntaxKind == SyntaxKind.ForStatementOld || syntaxKind == SyntaxKind.ForStatement ||
+                syntaxKind == SyntaxKind.ForStatement ||
                 syntaxKind == SyntaxKind.DoStatement ||
                 syntaxKind == SyntaxKind.CatchDeclaration || syntaxKind == SyntaxKind.UsingStatement || syntaxKind == SyntaxKind.LockStatement ||
                 syntaxKind == SyntaxKind.FixedStatement || syntaxKind == SyntaxKind.CatchFilterClause);

@@ -525,10 +525,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.SwitchSection:
                     return Equal((SwitchSectionSyntax)left, (SwitchSectionSyntax)right);
 
-                case SyntaxKind.ForStatementOld:
-                    // The only children of ForStatement are labeled nodes and punctuation.
-                    return true;
-
                 default:
                     // When comparing the value of a node with its partner we are deciding whether to add an Update edit for the pair.
                     // If the actual change is under a descendant labeled node we don't want to attribute it to the node being compared,

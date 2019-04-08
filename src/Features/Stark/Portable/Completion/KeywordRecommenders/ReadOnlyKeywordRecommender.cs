@@ -41,7 +41,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
 
         private static bool IsRefReadOnlyContext(CSharpSyntaxContext context)
             => context.TargetToken.IsKind(SyntaxKind.RefKeyword) &&
-               context.TargetToken.Parent.IsKind(SyntaxKind.RefType);
+               context.TargetToken.Parent.IsKind(SyntaxKind.RefKindType);
 
         private static bool IsValidContextForType(CSharpSyntaxContext context, CancellationToken cancellationToken)
         {

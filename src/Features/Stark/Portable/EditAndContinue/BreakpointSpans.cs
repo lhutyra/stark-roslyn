@@ -411,42 +411,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                             LastNotMissing(doStatement.CloseParenToken, doStatement.EosToken));
                     }
 
-                case SyntaxKind.ForStatementOld:
-                    // Note: if the user was in the body of the for, then we would have hit its nested
-                    // statement on the way up.  If they were in the condition or the incrementors, then
-                    // we would have those on the way up as well (in TryCreateBreakpointSpanForExpression or
-                    // CreateBreakpointSpanForVariableDeclaration). So the user must be on the 'for'
-                    // itself. in that case, set the bp on the variable declaration or initializers
-                    var forStatement = (ForStatementSyntax2)statement;
-                    if (forStatement.Declaration != null)
-                    {
-                        // for (int i = 0; ...
-                        var firstVariable = forStatement.Declaration;
-                        return CreateSpan(default, forStatement.Declaration.Type, firstVariable);
-                    }
-                    else if (forStatement.Initializers.Count > 0)
-                    {
-                        // for (i = 0; ...
-                        return CreateSpan(forStatement.Initializers[0]);
-                    }
-                    else if (forStatement.Condition != null)
-                    {
-                        // for (; i > 0; ...)
-                        return CreateSpan(forStatement.Condition);
-                    }
-                    else if (forStatement.Incrementors.Count > 0)
-                    {
-                        // for (;;...)
-                        return CreateSpan(forStatement.Incrementors[0]);
-                    }
-                    else
-                    {
-                        // for (;;)
-                        //
-                        // In this case, just set the bp on the contained statement.
-                        return TryCreateSpanForStatement(forStatement.Statement, position);
-                    }
-
                 case SyntaxKind.ForStatement:
                     // Note: if the user was in the body of the foreach, then we would have hit its
                     // nested statement on the way up.  If they were in the expression then we would
@@ -674,13 +638,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.ArrowExpressionClause:
                     Debug.Assert(((ArrowExpressionClauseSyntax)parent).Expression == expression);
                     return true;
-
-                case SyntaxKind.ForStatementOld:
-                    var forStatement = (ForStatementSyntax2)parent;
-                    return
-                        forStatement.Initializers.Contains(expression) ||
-                        forStatement.Condition == expression ||
-                        forStatement.Incrementors.Contains(expression);
 
                 case SyntaxKind.ForStatement:
                     var forEachStatement = (ForStatementSyntax)parent;

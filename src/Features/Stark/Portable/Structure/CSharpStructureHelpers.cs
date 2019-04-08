@@ -80,19 +80,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Structure
             }
 
             // If the next token is a semicolon, and we aren't in the initializer of a for-loop, use that token as the end.
-
-            var nextToken = lastToken.GetNextToken(includeSkipped: true);
-            if (nextToken.Kind() != SyntaxKind.None && nextToken.Kind() == SyntaxKind.SemicolonToken)
-            {
-                var forStatement = nextToken.GetAncestor<ForStatementSyntax2>();
-                if (forStatement != null && forStatement.FirstSemicolonToken == nextToken)
-                {
-                    return default;
-                }
-
-                lastToken = nextToken;
-            }
-
             return lastToken;
         }
 

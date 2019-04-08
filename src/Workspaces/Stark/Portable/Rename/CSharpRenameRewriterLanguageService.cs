@@ -983,7 +983,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Rename
 
                         switch (token.Kind())
                         {
-                            case SyntaxKind.ForEachKeyword:
+                            case SyntaxKind.ForKeyword:
                                 return ImmutableArray.Create(((ForStatementSyntax)token.Parent).Expression.GetLocation());
                             case SyntaxKind.AwaitKeyword:
                                 return ImmutableArray.Create(token.GetLocation());
@@ -1236,7 +1236,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Rename
                 {
                     nodeToSpeculate = ((QualifiedCrefSyntax)node).Container;
                 }
-                else if (node.IsKind(SyntaxKind.TypeConstraint))
+                else if (node.IsKind(SyntaxKind.ExtendsTypeConstraint) || node.IsKind(SyntaxKind.ImplementsTypeConstraint))
                 {
                     nodeToSpeculate = ((TypeConstraintSyntax)node).Type;
                 }

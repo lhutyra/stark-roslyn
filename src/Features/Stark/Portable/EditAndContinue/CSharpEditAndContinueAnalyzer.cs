@@ -1213,7 +1213,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     // We ignore anonymous methods and lambdas, 
                     // we only care about parameters of member declarations.
                     var parameter = (ParameterSyntax)node;
-                    return GetDiagnosticSpan(parameter.Modifiers, parameter.Type, parameter);
+                    return GetDiagnosticSpan(default, parameter.Type, parameter);
 
                 case SyntaxKind.Attribute:
                     var attributeList = (AttributeSyntax)node;
@@ -1281,10 +1281,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
                 case SyntaxKind.DoStatement:
                     return ((DoStatementSyntax)node).DoKeyword.Span;
-
-                case SyntaxKind.ForStatementOld:
-                    var forStatement = (ForStatementSyntax2)node;
-                    return TextSpan.FromBounds(forStatement.ForKeyword.SpanStart, forStatement.CloseParenToken.Span.End);
 
                 case SyntaxKind.ForStatement:
                     var commonForEachStatement = (ForStatementSyntax)node;
@@ -1374,7 +1370,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.TupleType:
                 case SyntaxKind.TupleExpression:
                 case SyntaxKind.DeclarationExpression:
-                case SyntaxKind.RefType:
+                case SyntaxKind.RefKindType:
                 case SyntaxKind.RefExpression:
                 case SyntaxKind.DeclarationPattern:
                 case SyntaxKind.SimpleAssignmentExpression:
@@ -1648,7 +1644,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.DeclarationExpression:
                     return CSharpFeaturesResources.out_var;
 
-                case SyntaxKind.RefType:
+                case SyntaxKind.RefKindType:
                 case SyntaxKind.RefExpression:
                     return CSharpFeaturesResources.ref_local_or_expression;
 
@@ -1973,9 +1969,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
             {
                 foreach (var parameter in list.Parameters)
                 {
-                    foreach (var modifier in parameter.Modifiers)
+                    if (parameter.Type is RefKindTypeSyntax refKindType)
                     {
-                        if (modifier.IsKind(SyntaxKind.InKeyword))
+                        if (refKindType.RefKindKeyword.Kind() == SyntaxKind.InKeyword)
                         {
                             ReportError(RudeEditKind.ReadOnlyReferences, parameter, parameter);
                             return;
@@ -2668,12 +2664,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     return;
                 }
 
-                if (!SyntaxFactory.AreEquivalent(oldNode.Modifiers, newNode.Modifiers))
-                {
-                    ReportError(RudeEditKind.ModifiersUpdate);
-                    return;
-                }
-
                 if (!SyntaxFactory.AreEquivalent(oldNode.Type, newNode.Type))
                 {
                     ReportError(RudeEditKind.TypeUpdate);
@@ -2999,7 +2989,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
                 switch (node.Parent.Kind())
                 {
-                    case SyntaxKind.ForStatementOld:
                     case SyntaxKind.IfStatement:
                     case SyntaxKind.WhileStatement:
                     case SyntaxKind.DoStatement:

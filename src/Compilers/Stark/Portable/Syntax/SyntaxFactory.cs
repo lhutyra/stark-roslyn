@@ -2495,7 +2495,18 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 staticKeyword: default(SyntaxToken),
                 alias: alias,
                 name: name,
-                eosToken: Token(SyntaxKind.SemicolonToken));
+                eosToken: Token(SyntaxKind.EndOfLineTrivia));
+        }
+
+        /// <summary>Creates a new ImportDirectiveSyntax instance.</summary>
+        public static ImportDirectiveSyntax ImportDirective(NameSyntax name, SyntaxToken eolToken)
+        {
+            return ImportDirective(
+                importKeyword: Token(SyntaxKind.ImportKeyword),
+                staticKeyword: default(SyntaxToken),
+                alias: default,
+                name: name,
+                eosToken: eolToken);
         }
 
         /// <summary>Creates a new ClassOrStructConstraintSyntax instance.</summary>
@@ -2524,6 +2535,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public static PragmaWarningDirectiveTriviaSyntax PragmaWarningDirectiveTrivia(SyntaxToken hashToken, SyntaxToken pragmaKeyword, SyntaxToken warningKeyword, SyntaxToken disableOrRestoreKeyword, SyntaxToken nullableKeyword, SyntaxToken endOfDirectiveToken, bool isActive)
         {
             return PragmaWarningDirectiveTrivia(hashToken, pragmaKeyword, warningKeyword, disableOrRestoreKeyword, nullableKeyword, errorCodes: default, endOfDirectiveToken, isActive);
+        }
+
+        public static RefExpressionSyntax RefExpression(ExpressionSyntax expression)
+        {
+            return SyntaxFactory.RefExpression(Token(SyntaxKind.RefKeyword), expression);
         }
     }
 }

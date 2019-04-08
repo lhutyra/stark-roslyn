@@ -142,8 +142,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
                 //
                 case SyntaxKind.OpenParenToken:
                     var previous = token.GetPreviousToken(includeSkipped: true);
-                    return previous.IsKind(SyntaxKind.ForKeyword)
-                        || previous.IsKind(SyntaxKind.ForEachKeyword);
+                    return previous.IsKind(SyntaxKind.ForKeyword);
 
                 // {
                 //     ref var x = ref

@@ -123,7 +123,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.WhileStatement:
                 case SyntaxKind.SwitchStatement:
-                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
                     return true;
             }
@@ -137,7 +136,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
             {
                 case SyntaxKind.DoStatement:
                 case SyntaxKind.WhileStatement:
-                case SyntaxKind.ForStatementOld:
                 case SyntaxKind.ForStatement:
                     return true;
             }
@@ -550,7 +548,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case ArgumentListSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case WhileStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case DoStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
-                case ForStatementSyntax2 n: return (n.OpenParenToken, n.CloseParenToken);
                 case UsingStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case FixedStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case LockStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);

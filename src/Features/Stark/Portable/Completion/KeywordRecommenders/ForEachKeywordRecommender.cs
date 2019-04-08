@@ -8,7 +8,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
     internal class ForEachKeywordRecommender : AbstractSyntacticSingleKeywordRecommender
     {
         public ForEachKeywordRecommender()
-            : base(SyntaxKind.ForEachKeyword)
+            : base(SyntaxKind.ForKeyword)
         {
         }
 
