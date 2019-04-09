@@ -229,6 +229,8 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
             }
         }
 
+        internal ushort CurrentStack => (ushort)_emitState.CurStack;
+
         internal ushort MaxStack => (ushort)_emitState.MaxStack;
 
         /// <summary>

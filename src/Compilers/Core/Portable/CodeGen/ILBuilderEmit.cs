@@ -17,6 +17,11 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
             _emitState.AdjustStack(stackAdjustment);
         }
 
+        internal void ResetStack(int stack)
+        {
+            _emitState.ResetStack(stack);
+        }
+
         internal bool IsStackEmpty
         {
             get { return _emitState.CurStack == 0; }

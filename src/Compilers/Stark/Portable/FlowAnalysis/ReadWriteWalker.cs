@@ -255,36 +255,5 @@ namespace StarkPlatform.CodeAnalysis.Stark
             Assign(node, value: null);
             return base.VisitQueryClause(node);
         }
-
-        public override BoundNode VisitInlineILStatement(BoundInlineILStatement node)
-        {
-            switch (node.Instruction.OpCode)
-            {
-                case ILOpCode.Stloc:
-                    var boundLocal = node.Argument as BoundLocal;
-                    if (boundLocal != null)
-                    {
-                        int slot = GetOrCreateSlot(boundLocal.LocalSymbol);
-                        SetSlotAssigned(slot);
-                    }
-                    break;
-                case ILOpCode.Stloc_0:
-                    SetSlotAssigned(0);
-                    break;
-                case ILOpCode.Stloc_1:
-                    SetSlotAssigned(1);
-                    break;
-                case ILOpCode.Stloc_2:
-                    SetSlotAssigned(2);
-                    break;
-                case ILOpCode.Stloc_3:
-                    SetSlotAssigned(3);
-                    break;
-            }
-
-            var result = base.VisitInlineILStatement(node);
-            return result;
-        }
-
     }
 }

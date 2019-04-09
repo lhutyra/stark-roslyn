@@ -2141,6 +2141,9 @@ If such a class is used as a base class and if the deriving class defines a dest
   <data name="ERR_InlineILNoArgumentExpected" xml:space="preserve">
     <value>The IL opcode `{0}` is not expecting an argument</value>
   </data>
+  <data name="ERR_InlineILStackNotEmpty" xml:space="preserve">
+    <value>Invalid IL stack on the exit of an unsafe IL block. The IL stack must be empty</value>
+  </data>  
   <data name="ERR_InvalidInlineILArgument" xml:space="preserve">
     <value>The argument is invalid for the IL opcode `{0}`</value>
   </data>

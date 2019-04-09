@@ -467,7 +467,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     if (initializer.Kind == BoundKind.Block)
                     {
                         var block = (BoundBlock)initializer;
-                        statements.Add(block.Update(block.Locals, block.LocalFunctions,
+                        statements.Add(block.Update(block.Locals, block.LocalFunctions, false,
                                                     ImmutableArray.Create(RewriteExpressionStatement((BoundExpressionStatement)block.Statements.Single(),
                                                                                                      suppressInstrumentation: true))));
                     }

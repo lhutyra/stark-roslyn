@@ -5848,6 +5848,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid IL stack on the exit of an unsafe IL block. The IL stack must be empty.
+        /// </summary>
+        internal static string ERR_InlineILStackNotEmpty {
+            get {
+                return ResourceManager.GetString("ERR_InlineILStackNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos;: cannot declare instance members in a module.
         /// </summary>
         internal static string ERR_InstanceMemberInStaticClass {

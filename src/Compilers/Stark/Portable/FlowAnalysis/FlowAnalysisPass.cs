@@ -93,7 +93,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 builder.AddRange(statements, n - 1);
                 builder.Add(AppendImplicitReturn((BoundBlock)statements[n - 1], method));
 
-                return body.Update(body.Locals, ImmutableArray<LocalFunctionSymbol>.Empty, builder.ToImmutableAndFree());
+                return body.Update(body.Locals, ImmutableArray<LocalFunctionSymbol>.Empty, body.IsUnsafeIL, builder.ToImmutableAndFree());
             }
             else
             {
@@ -120,7 +120,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 ? (BoundStatement)BoundYieldBreakStatement.Synthesized(syntax)
                 : BoundReturnStatement.Synthesized(syntax, RefKind.None, null);
 
-            return body.Update(body.Locals, body.LocalFunctions, body.Statements.Add(ret));
+            return body.Update(body.Locals, body.LocalFunctions, body.IsUnsafeIL, body.Statements.Add(ret));
         }
 
         private static bool Analyze(

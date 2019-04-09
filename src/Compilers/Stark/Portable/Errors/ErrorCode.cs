@@ -1707,6 +1707,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_InvalidVarDeclaration = 9018,
         ERR_RefLetLocal = 9019,
         ERR_AddressOfLetLocal = 9020,
+        ERR_InlineILStackNotEmpty = 9021,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

@@ -2089,9 +2089,9 @@ foundParent:;
                 return (BoundStatement)boundNode;
             }
 
-            internal override BoundBlock BindEmbeddedBlock(BlockSyntax node, DiagnosticBag diagnostics)
+            internal override BoundBlock BindEmbeddedBlock(BlockSyntax node, DiagnosticBag diagnostics, bool isUnsafeIL = false)
             {
-                BoundBlock block = (BoundBlock)TryGetBoundNodeFromMap(node) ?? base.BindEmbeddedBlock(node, diagnostics);
+                BoundBlock block = (BoundBlock)TryGetBoundNodeFromMap(node) ?? base.BindEmbeddedBlock(node, diagnostics, isUnsafeIL);
                 Debug.Assert(!block.WasCompilerGenerated);
                 return block;
             }

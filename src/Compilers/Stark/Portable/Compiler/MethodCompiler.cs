@@ -971,7 +971,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             }
 
                             // In order to get correct diagnostics, we need to analyze initializers and the body together.
-                            body = body.Update(body.Locals, body.LocalFunctions, body.Statements.Insert(0, analyzedInitializers));
+                            body = body.Update(body.Locals, body.LocalFunctions, false, body.Statements.Insert(0, analyzedInitializers));
                             includeInitializersInBody = false;
                             analyzedInitializers = null;
                         }

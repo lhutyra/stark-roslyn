@@ -72,7 +72,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             if (rewritten.Kind == BoundKind.Block)
             {
                 var block = (BoundBlock)rewritten;
-                return block.Update(block.Locals, block.LocalFunctions, ImmutableArray.Create(InstrumentFieldOrPropertyInitializer(block.Statements.Single(), syntax)));
+                return block.Update(block.Locals, block.LocalFunctions, block.IsUnsafeIL, ImmutableArray.Create(InstrumentFieldOrPropertyInitializer(block.Statements.Single(), syntax)));
             }
 
             return InstrumentFieldOrPropertyInitializer(rewritten, syntax);

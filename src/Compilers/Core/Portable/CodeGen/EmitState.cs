@@ -73,6 +73,10 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
                 CurStack += count;
                 MaxStack = Math.Max(MaxStack, CurStack);
             }
+            internal void ResetStack(int stack)
+            {
+                CurStack = stack;
+            }
         }
     }
 }

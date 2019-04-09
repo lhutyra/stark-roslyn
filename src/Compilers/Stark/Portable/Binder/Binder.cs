@@ -728,7 +728,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return statement;
             }
 
-            return new BoundBlock(statement.Syntax, locals, localFunctions,
+            return new BoundBlock(statement.Syntax, locals, localFunctions, false,
                                   ImmutableArray.Create(statement))
             { WasCompilerGenerated = true };
         }

@@ -2105,6 +2105,46 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return null;
         }
 
+        public override BoundNode VisitInlineILStatement(BoundInlineILStatement node)
+        {
+            switch (node.Instruction.OpCode)
+            {
+                case ILOpCode.Ldloc:
+                {
+                    var boundLocal = (BoundLocal)node.Argument;
+                    VisitLocal(boundLocal);
+                    _usedVariables.Add(boundLocal.LocalSymbol);
+                    break;
+                }
+                case ILOpCode.Stloc:
+                {
+                    var boundLocal = (BoundLocal)node.Argument;
+                    if (boundLocal != null)
+                    {
+                        _writtenVariables.Add(boundLocal.LocalSymbol);
+                        int slot = GetOrCreateSlot(boundLocal.LocalSymbol);
+                        SetSlotAssigned(slot);
+                    }
+                    break;
+                }
+                case ILOpCode.Stloc_0:
+                    SetSlotAssigned(0);
+                    break;
+                case ILOpCode.Stloc_1:
+                    SetSlotAssigned(1);
+                    break;
+                case ILOpCode.Stloc_2:
+                    SetSlotAssigned(2);
+                    break;
+                case ILOpCode.Stloc_3:
+                    SetSlotAssigned(3);
+                    break;
+            }
+
+            var result = base.VisitInlineILStatement(node);
+            return result;
+        }
+
         protected override void VisitAssignmentOfNullCoalescingAssignment(
             BoundNullCoalescingAssignmentOperator node,
             BoundPropertyAccess propertyAccessOpt)

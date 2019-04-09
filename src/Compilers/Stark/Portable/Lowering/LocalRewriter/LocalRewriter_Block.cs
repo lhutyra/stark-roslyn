@@ -19,7 +19,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             if (!this.Instrument || (node != _rootStatement && (node.WasCompilerGenerated || node.Syntax.Kind() != SyntaxKind.Block)))
             {
-                return node.Update(node.Locals, node.LocalFunctions, builder.ToImmutableAndFree());
+                return node.Update(node.Locals, node.LocalFunctions, node.IsUnsafeIL, builder.ToImmutableAndFree());
             }
 
             LocalSymbol synthesizedLocal;
@@ -35,7 +35,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 builder.Add(epilogue);
             }
 
-            return new BoundBlock(node.Syntax, synthesizedLocal == null ? node.Locals : node.Locals.Add(synthesizedLocal), node.LocalFunctions, builder.ToImmutableAndFree(), node.HasErrors);
+            return new BoundBlock(node.Syntax, synthesizedLocal == null ? node.Locals : node.Locals.Add(synthesizedLocal), node.LocalFunctions, node.IsUnsafeIL, builder.ToImmutableAndFree(), node.HasErrors);
         }
 
 

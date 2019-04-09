@@ -137,7 +137,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             var newLocals = RewriteLocals(node.Locals);
             var newLocalFunctions = node.LocalFunctions;
             var newStatements = VisitList(node.Statements);
-            return node.Update(newLocals, newLocalFunctions, newStatements);
+            return node.Update(newLocals, newLocalFunctions, node.IsUnsafeIL, newStatements);
         }
 
         public override abstract BoundNode VisitScope(BoundScope node);

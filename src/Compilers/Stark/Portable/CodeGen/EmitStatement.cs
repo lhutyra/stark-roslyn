@@ -18,6 +18,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
 {
     internal partial class CodeGenerator
     {
+        private bool _isInILBlock;
+
         private void EmitStatement(BoundStatement statement)
         {
             switch (statement.Kind)
@@ -94,7 +96,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
 #if DEBUG
             if (_stackLocals == null || _stackLocals.Count == 0)
             {
-                if (statement.Kind != BoundKind.InlineILStatement)
+                if (!_isInILBlock)
                 {
                     _builder.AssertStackEmpty();
                 }
@@ -629,7 +631,40 @@ oneMoreTime:
                 }
             }
 
-            EmitStatements(block.Statements);
+            var stackLevelBefore = _builder.CurrentStack;
+
+            var saveILBlock = _isInILBlock;
+            _isInILBlock = block.IsUnsafeIL;
+            try
+            {
+                EmitStatements(block.Statements);
+            }
+            finally
+            {
+                _isInILBlock = saveILBlock;
+            }
+
+            // If the block was aan unsafe il block, it should contain only
+            // InlineILStatementSyntax statements
+            if (block.IsUnsafeIL && block.Statements.Length > 0)
+            {
+                var stackLevelAfter = _builder.CurrentStack;
+                if (stackLevelBefore != stackLevelAfter)
+                {
+                    InlineILStatementSyntax inlineIL = null;
+                    for (int i = block.Statements.Length - 1; i >= 0; i--)
+                    {
+                        inlineIL = block.Statements[i].Syntax as InlineILStatementSyntax;
+                        if (inlineIL != null)
+                        {
+                            break;
+                        }
+                    }
+                    // Restore the stack to a certain level to avoid errors
+                    _builder.ResetStack(stackLevelBefore);
+                    _diagnostics.Add(ErrorCode.ERR_InlineILStackNotEmpty, inlineIL != null ? inlineIL.GetLocation() : Location.None);
+                }
+            }
 
             if (_indirectReturnState == IndirectReturnState.Needed &&
                 IsLastBlockInMethod(block))

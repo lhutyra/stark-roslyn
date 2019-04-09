@@ -87,11 +87,16 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case OpCodeArg.ElementType:
                 case OpCodeArg.TypeToken:
                 case OpCodeArg.Class:
-                    bound = ilBinder.BindExpression(node.Argument, diagnostics) as BoundTypeExpression;
+                    var expression = ilBinder.BindExpression(node.Argument, diagnostics);
+                    bound = expression as BoundTypeExpression;
                     if (bound == null)
                     {
-                        Error(diagnostics, ErrorCode.ERR_TypeExpected, node.Argument);
-                        return new BoundBadStatement(node, ImmutableArray<BoundNode>.Empty, true);
+                        bound = expression as BoundConstTypeParameterExpression;
+                        if (bound == null)
+                        {
+                            Error(diagnostics, ErrorCode.ERR_TypeExpected, node.Argument);
+                            return new BoundBadStatement(node, ImmutableArray<BoundNode>.Empty, true);
+                        }
                     }
                     break;
 

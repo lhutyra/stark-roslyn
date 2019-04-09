@@ -160,7 +160,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 Error(diagnostics, ErrorCode.ERR_IllegalInnerUnsafe, node.UnsafeKeyword);
             }
 
-            return BindEmbeddedBlock(node.Block, diagnostics);
+            return BindEmbeddedBlock(node.Block, diagnostics, node.IlKeyword.Kind() != SyntaxKind.None);
         }
 
         private BoundStatement BindFixedStatement(FixedStatementSyntax node, DiagnosticBag diagnostics)
@@ -1537,20 +1537,20 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// </summary>
         internal virtual uint LocalScopeDepth => Next.LocalScopeDepth;
 
-        internal virtual BoundBlock BindEmbeddedBlock(BlockSyntax node, DiagnosticBag diagnostics)
+        internal virtual BoundBlock BindEmbeddedBlock(BlockSyntax node, DiagnosticBag diagnostics, bool isUnsafeIL = false)
         {
-            return BindBlock(node, diagnostics);
+            return BindBlock(node, diagnostics, isUnsafeIL);
         }
 
-        private BoundBlock BindBlock(BlockSyntax node, DiagnosticBag diagnostics)
+        private BoundBlock BindBlock(BlockSyntax node, DiagnosticBag diagnostics, bool isUnsafeIL = false)
         {
             var binder = GetBinder(node);
             Debug.Assert(binder != null);
 
-            return binder.BindBlockParts(node, diagnostics);
+            return binder.BindBlockParts(node, diagnostics, isUnsafeIL);
         }
 
-        private BoundBlock BindBlockParts(BlockSyntax node, DiagnosticBag diagnostics)
+        private BoundBlock BindBlockParts(BlockSyntax node, DiagnosticBag diagnostics, bool isUnsafeIL)
         {
             var syntaxStatements = node.Statements;
             int nStatements = syntaxStatements.Count;
@@ -1588,8 +1588,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             return new BoundBlock(
                 node,
-                locals,
+                locals,                
                 GetDeclaredLocalFunctionsForScope(node),
+                isUnsafeIL,
                 boundStatements.ToImmutableAndFree());
         }
 
