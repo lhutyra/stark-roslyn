@@ -29,6 +29,7 @@ namespace StarkPlatform.CodeAnalysis
         String,
         Decimal,
         DateTime,
+        ConstTypeParameter,
     }
 
     internal abstract partial class ConstantValue : IEquatable<ConstantValue>
@@ -67,6 +68,8 @@ namespace StarkPlatform.CodeAnalysis
 
         public virtual double DoubleValue { get { throw new InvalidOperationException(); } }
         public virtual float SingleValue { get { throw new InvalidOperationException(); } }
+
+        public virtual ITypeParameterSymbol TypeParameter { get { throw new InvalidOperationException(); } }
 
         // returns true if value is in its default (zero-inited) form.
         public virtual bool IsDefaultValue { get { return false; } }
@@ -305,6 +308,15 @@ namespace StarkPlatform.CodeAnalysis
             return new ConstantValueDouble(value);
         }
 
+        public static ConstantValue Create(ITypeParameterSymbol typeParameterSymbol)
+        {
+            if (typeParameterSymbol == null)
+            {
+                throw new ArgumentNullException(nameof(typeParameterSymbol));
+            }
+            return new ConstantValueTypeParameter(typeParameterSymbol);
+        }
+
         public static ConstantValue Create(decimal value)
         {
             // The significant bits should be preserved even for Zero or One.
@@ -492,6 +504,7 @@ namespace StarkPlatform.CodeAnalysis
                     case ConstantValueTypeDiscriminator.Decimal: return Boxes.Box(DecimalValue);
                     case ConstantValueTypeDiscriminator.DateTime: return DateTimeValue;
                     case ConstantValueTypeDiscriminator.String: return StringValue;
+                    case ConstantValueTypeDiscriminator.ConstTypeParameter: return TypeParameter;
                     default: throw ExceptionUtilities.UnexpectedValue(this.Discriminator);
                 }
             }
@@ -697,6 +710,11 @@ namespace StarkPlatform.CodeAnalysis
             {
                 return ReferenceEquals(this, Null);
             }
+        }
+
+        public bool IsConstTypeParameter
+        {
+            get { return this.Discriminator == ConstantValueTypeDiscriminator.ConstTypeParameter; }
         }
 
         public bool IsNothing

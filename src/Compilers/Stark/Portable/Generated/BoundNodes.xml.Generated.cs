@@ -33,6 +33,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         BadExpression,
         BadStatement,
         ExtractedFinallyBlock,
+        ConstTypeParameterExpression,
         TypeExpression,
         TypeOrValueExpression,
         NamespaceExpression,
@@ -775,6 +776,59 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return result;
             }
             return this;
+        }
+    }
+
+    internal sealed partial class BoundConstTypeParameterExpression : BoundExpression
+    {
+        public BoundConstTypeParameterExpression(SyntaxNode syntax, TypeParameterSymbol parameter, ConstantValue constantValueOpt, TypeSymbol type, bool hasErrors)
+            : base(BoundKind.ConstTypeParameterExpression, syntax, type, hasErrors)
+        {
+
+            Debug.Assert((object)parameter != null, "Field 'parameter' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+            Debug.Assert((object)constantValueOpt != null, "Field 'constantValueOpt' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+
+            this.Parameter = parameter;
+            this.ConstantValueOpt = constantValueOpt;
+        }
+
+        public BoundConstTypeParameterExpression(SyntaxNode syntax, TypeParameterSymbol parameter, ConstantValue constantValueOpt, TypeSymbol type)
+            : base(BoundKind.ConstTypeParameterExpression, syntax, type)
+        {
+
+            Debug.Assert((object)parameter != null, "Field 'parameter' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+            Debug.Assert((object)constantValueOpt != null, "Field 'constantValueOpt' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+
+            this.Parameter = parameter;
+            this.ConstantValueOpt = constantValueOpt;
+        }
+
+
+        public TypeParameterSymbol Parameter { get; }
+
+        public ConstantValue ConstantValueOpt { get; }
+
+        public override BoundNode Accept(BoundTreeVisitor visitor)
+        {
+            return visitor.VisitConstTypeParameterExpression(this);
+        }
+
+        public BoundConstTypeParameterExpression Update(TypeParameterSymbol parameter, ConstantValue constantValueOpt, TypeSymbol type)
+        {
+            if (!TypeSymbol.Equals(parameter, this.Parameter, TypeCompareKind.ConsiderEverything) || constantValueOpt != this.ConstantValueOpt || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
+            {
+                var result = new BoundConstTypeParameterExpression(this.Syntax, parameter, constantValueOpt, type, this.HasErrors);
+                result.CopyAttributes(this);
+                return result;
+            }
+            return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundConstTypeParameterExpression(this.Syntax, this.Parameter, this.ConstantValueOpt, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
         }
     }
 
@@ -2841,7 +2895,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
     internal sealed partial class BoundBlock : BoundStatementList
     {
-        public BoundBlock(SyntaxNode syntax, ImmutableArray<LocalSymbol> locals, ImmutableArray<LocalFunctionSymbol> localFunctions, ImmutableArray<BoundStatement> statements, bool hasErrors = false)
+        public BoundBlock(SyntaxNode syntax, ImmutableArray<LocalSymbol> locals, ImmutableArray<LocalFunctionSymbol> localFunctions, bool isUnsafeIL, ImmutableArray<BoundStatement> statements, bool hasErrors = false)
             : base(BoundKind.Block, syntax, statements, hasErrors || statements.HasErrors())
         {
 
@@ -2851,6 +2905,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             this.Locals = locals;
             this.LocalFunctions = localFunctions;
+            this.IsUnsafeIL = isUnsafeIL;
         }
 
 
@@ -2858,16 +2913,18 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         public ImmutableArray<LocalFunctionSymbol> LocalFunctions { get; }
 
+        public bool IsUnsafeIL { get; }
+
         public override BoundNode Accept(BoundTreeVisitor visitor)
         {
             return visitor.VisitBlock(this);
         }
 
-        public BoundBlock Update(ImmutableArray<LocalSymbol> locals, ImmutableArray<LocalFunctionSymbol> localFunctions, ImmutableArray<BoundStatement> statements)
+        public BoundBlock Update(ImmutableArray<LocalSymbol> locals, ImmutableArray<LocalFunctionSymbol> localFunctions, bool isUnsafeIL, ImmutableArray<BoundStatement> statements)
         {
-            if (locals != this.Locals || localFunctions != this.LocalFunctions || statements != this.Statements)
+            if (locals != this.Locals || localFunctions != this.LocalFunctions || isUnsafeIL != this.IsUnsafeIL || statements != this.Statements)
             {
-                var result = new BoundBlock(this.Syntax, locals, localFunctions, statements, this.HasErrors);
+                var result = new BoundBlock(this.Syntax, locals, localFunctions, isUnsafeIL, statements, this.HasErrors);
                 result.CopyAttributes(this);
                 return result;
             }
@@ -8274,6 +8331,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return VisitBadStatement(node as BoundBadStatement, arg);
                 case BoundKind.ExtractedFinallyBlock: 
                     return VisitExtractedFinallyBlock(node as BoundExtractedFinallyBlock, arg);
+                case BoundKind.ConstTypeParameterExpression: 
+                    return VisitConstTypeParameterExpression(node as BoundConstTypeParameterExpression, arg);
                 case BoundKind.TypeExpression: 
                     return VisitTypeExpression(node as BoundTypeExpression, arg);
                 case BoundKind.TypeOrValueExpression: 
@@ -8667,6 +8726,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node, arg);
         }
         public virtual R VisitExtractedFinallyBlock(BoundExtractedFinallyBlock node, A arg)
+        {
+            return this.DefaultVisit(node, arg);
+        }
+        public virtual R VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node, A arg)
         {
             return this.DefaultVisit(node, arg);
         }
@@ -9395,6 +9458,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node);
         }
         public virtual BoundNode VisitExtractedFinallyBlock(BoundExtractedFinallyBlock node)
+        {
+            return this.DefaultVisit(node);
+        }
+        public virtual BoundNode VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node)
         {
             return this.DefaultVisit(node);
         }
@@ -10132,6 +10199,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public override BoundNode VisitExtractedFinallyBlock(BoundExtractedFinallyBlock node)
         {
             this.Visit(node.FinallyBlock);
+            return null;
+        }
+        public override BoundNode VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node)
+        {
             return null;
         }
         public override BoundNode VisitTypeExpression(BoundTypeExpression node)
@@ -11088,6 +11159,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundBlock finallyBlock = (BoundBlock)this.Visit(node.FinallyBlock);
             return node.Update(finallyBlock);
         }
+        public override BoundNode VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node)
+        {
+            TypeSymbol parameter = this.VisitType(node.Parameter);
+            TypeSymbol type = this.VisitType(node.Type);
+            return node.Update(node.Parameter, node.ConstantValueOpt, type);
+        }
         public override BoundNode VisitTypeExpression(BoundTypeExpression node)
         {
             BoundTypeExpression boundContainingTypeOpt = (BoundTypeExpression)this.Visit(node.BoundContainingTypeOpt);
@@ -11359,7 +11436,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         public override BoundNode VisitBlock(BoundBlock node)
         {
             ImmutableArray<BoundStatement> statements = (ImmutableArray<BoundStatement>)this.VisitList(node.Statements);
-            return node.Update(node.Locals, node.LocalFunctions, statements);
+            return node.Update(node.Locals, node.LocalFunctions, node.IsUnsafeIL, statements);
         }
         public override BoundNode VisitScope(BoundScope node)
         {
@@ -11455,6 +11532,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundExpression condition = (BoundExpression)this.Visit(node.Condition);
             BoundStatement body = (BoundStatement)this.Visit(node.Body);
             return node.Update(node.Locals, condition, body, node.BreakLabel, node.ContinueLabel);
+        }
+        public override BoundNode VisitForStatement(BoundForStatement node)
+        {
+            BoundStatement initializer = (BoundStatement)this.Visit(node.Initializer);
+            BoundExpression condition = (BoundExpression)this.Visit(node.Condition);
+            BoundStatement increment = (BoundStatement)this.Visit(node.Increment);
+            BoundStatement body = (BoundStatement)this.Visit(node.Body);
+            return node.Update(node.OuterLocals, initializer, node.InnerLocals, condition, increment, body, node.BreakLabel, node.ContinueLabel);
         }
         public override BoundNode VisitForEachStatement(BoundForEachStatement node)
         {
@@ -12224,6 +12309,17 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
             );
         }
+        public override TreeDumperNode VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node, object arg)
+        {
+            return new TreeDumperNode("constTypeParameterExpression", null, new TreeDumperNode[]
+            {
+                new TreeDumperNode("parameter", node.Parameter, null),
+                new TreeDumperNode("constantValueOpt", node.ConstantValueOpt, null),
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
+            }
+            );
+        }
         public override TreeDumperNode VisitTypeExpression(BoundTypeExpression node, object arg)
         {
             return new TreeDumperNode("typeExpression", null, new TreeDumperNode[]
@@ -12735,6 +12831,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("locals", node.Locals, null),
                 new TreeDumperNode("localFunctions", node.LocalFunctions, null),
+                new TreeDumperNode("isUnsafeIL", node.IsUnsafeIL, null),
                 new TreeDumperNode("statements", null, from x in node.Statements select Visit(x, null))
             }
             );

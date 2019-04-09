@@ -313,6 +313,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
                     EmitThrowExpression((BoundThrowExpression)expression, used);
                     break;
 
+                case BoundKind.ConstTypeParameterExpression:
+                    if (used)
+                    {
+                        EmitConstTypeParameterExpression((BoundConstTypeParameterExpression)expression);
+                    }
+                    break;
+
                 default:
                     // Code gen should not be invoked if there are errors.
                     Debug.Assert(expression.Kind != BoundKind.BadExpression);
@@ -689,6 +696,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
             {
                 EmitLoadIndirect(thisType, thisRef.Syntax);
             }
+        }
+
+        private void EmitConstTypeParameterExpression(BoundConstTypeParameterExpression constTypeParameterExpression)
+        {
+            _builder.EmitOpCode(ILOpCode.Ldtarg);
+            EmitSymbolToken(constTypeParameterExpression.Type, constTypeParameterExpression.Syntax);
         }
 
         private void EmitPseudoVariableValue(BoundPseudoVariable expression, bool used)
@@ -2918,6 +2931,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
                 if (((object)type != null) && (type.TypeKind == TypeKind.TypeParameter) && constantValue.IsNull)
                 {
                     EmitInitObj(type, used, syntaxNode);
+                }
+                else if (constantValue.IsConstTypeParameter)
+                {
+                    _builder.EmitOpCode(ILOpCode.Ldtarg);
+                    EmitSymbolToken((TypeSymbol)constantValue.TypeParameter, syntaxNode);
                 }
                 else
                 {

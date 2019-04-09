@@ -198,6 +198,7 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
                 case ILOpCode.Ldloc_1:
                 case ILOpCode.Ldloc_2:
                 case ILOpCode.Ldloc_3:
+                case ILOpCode.Ldtarg:
                     return 0;
                 case ILOpCode.Stloc_0:
                 case ILOpCode.Stloc_1:
@@ -482,6 +483,7 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
                 case ILOpCode.Ldloc_1:
                 case ILOpCode.Ldloc_2:
                 case ILOpCode.Ldloc_3:
+                case ILOpCode.Ldtarg:
                     return 1;
                 case ILOpCode.Stloc_0:
                 case ILOpCode.Stloc_1:

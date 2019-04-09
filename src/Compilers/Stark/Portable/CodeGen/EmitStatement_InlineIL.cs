@@ -68,7 +68,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
                 case OpCodeArg.ElementType:
                 case OpCodeArg.TypeToken:
                 case OpCodeArg.Class:
-                    EmitSymbolToken(((BoundTypeExpression)ilEmit.Argument).Type, ilEmit.Syntax);
+                    if (ilEmit.Argument is BoundTypeExpression boundType)
+                    {
+                        EmitSymbolToken(boundType.Type, ilEmit.Syntax);
+                    }
+                    else if (ilEmit.Argument is BoundLiteral boundLiteral)
+                    {
+                        Debug.Assert(boundLiteral.ConstantValue.TypeParameter != null);
+                        EmitSymbolToken((TypeSymbol)boundLiteral.ConstantValue.TypeParameter, ilEmit.Syntax);
+                    }
+                    else
+                    {
+                        EmitSymbolToken(((BoundConstTypeParameterExpression)ilEmit.Argument).Parameter, ilEmit.Syntax);
+                    }
                     break;
                 case OpCodeArg.LocalVar:
                     if (opcode == ILOpCode.Ldloc && ilEmit.Argument is BoundLocal)

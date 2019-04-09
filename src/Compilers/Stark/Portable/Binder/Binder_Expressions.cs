@@ -1622,10 +1622,20 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                 case SymbolKind.NamedType:
                 case SymbolKind.ErrorType:
-                case SymbolKind.TypeParameter:
                     // If I identifies a type, then the result is that type constructed with the
                     // given type arguments. UNDONE: Construct the child type if it is generic!
                     return new BoundTypeExpression(node, null, (TypeSymbol)symbol, hasErrors: isError);
+
+                case SymbolKind.TypeParameter:
+                    var typeParameter = (TypeParameterSymbol)symbol;
+                    if (typeParameter.HasConstTypeConstraint)
+                    {
+                        return new BoundConstTypeParameterExpression(node, typeParameter, ConstantValue.Create(typeParameter), typeParameter.ConstraintTypesNoUseSiteDiagnostics[0].TypeSymbol);
+                    }
+                    else
+                    {
+                        return new BoundTypeExpression(node, null, (TypeSymbol)symbol, hasErrors: isError);
+                    }
 
                 case SymbolKind.Property:
                     {

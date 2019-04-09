@@ -161,6 +161,11 @@
     <Field Name="FinallyBlock" Type="BoundBlock"/>
   </Node>
 
+  <Node Name="BoundConstTypeParameterExpression" Base="BoundExpression">
+      <Field Name="Parameter" Type="TypeParameterSymbol" Null="disallow"/>
+      <Field Name="ConstantValueOpt" Type="ConstantValue" Null="disallow"/>
+  </Node>
+
   <Node Name="BoundTypeExpression" Base="BoundExpression">
     <!-- Non-null type is required for this node kind -->
     <Field Name="Type" Type="TypeSymbol" Override="true" Null="disallow"/>

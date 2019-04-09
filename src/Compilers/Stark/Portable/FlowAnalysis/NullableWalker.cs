@@ -1203,6 +1203,13 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return null;
         }
 
+        public override BoundNode VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node)
+        {
+            var result = base.VisitConstTypeParameterExpression(node);
+            SetResult(node);
+            return result;
+        }
+
         public override BoundNode VisitLocalDeclaration(BoundLocalDeclaration node)
         {
             var local = node.LocalSymbol;
@@ -2119,6 +2126,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         }
                         return NullableAnnotation.Unknown;
                     }
+                case BoundKind.ConstTypeParameterExpression:
+                    return NullableAnnotation.NotNullable;
                 case BoundKind.ExpressionWithNullability:
                     return ((BoundExpressionWithNullability)expr).NullableAnnotation;
                 case BoundKind.MethodGroup:

@@ -2887,6 +2887,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return null;
         }
 
+        public override BoundNode VisitConstTypeParameterExpression(BoundConstTypeParameterExpression node) => null;
+
         /// <summary>
         /// This visitor represents just the assignment part of the null coalescing assignment
         /// operator.

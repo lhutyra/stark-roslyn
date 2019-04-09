@@ -854,5 +854,48 @@ namespace StarkPlatform.CodeAnalysis
                 return base.Equals(other) && _value.Equals(other.DoubleValue);
             }
         }
+
+        private sealed class ConstantValueTypeParameter : ConstantValue
+        {
+            private readonly ITypeParameterSymbol _paramSymbol;
+
+            public ConstantValueTypeParameter(ITypeParameterSymbol paramSymbol)
+            {
+                _paramSymbol = paramSymbol;
+            }
+
+
+            public override ConstantValueTypeDiscriminator Discriminator
+            {
+                get
+                {
+                    return ConstantValueTypeDiscriminator.ConstTypeParameter;
+                }
+            }
+
+            internal override SpecialType SpecialType
+            {
+                get { return SpecialType.None; }
+            }
+
+
+            public override ITypeParameterSymbol TypeParameter => _paramSymbol;
+            
+            // all instances of this class are singletons
+            public override bool Equals(ConstantValue other)
+            {
+                return base.Equals(other) && _paramSymbol.Equals(other.TypeParameter);
+            }
+
+            public override int GetHashCode()
+            {
+                return Hash.Combine(base.GetHashCode(), _paramSymbol.GetHashCode());
+            }
+
+            internal override string GetValueToDisplay()
+            {
+                return _paramSymbol.ToDisplayString();
+            }
+        }
     }
 }

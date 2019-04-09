@@ -739,7 +739,7 @@ namespace BoundTreeGenerator
 
         private IEnumerable<Field> AllTypeFields(TreeType node)
         {
-            return AllFields(node).Where(field => field.Type == "TypeSymbol");
+            return AllFields(node).Where(field => field.Type == "TypeSymbol" || field.Type == "TypeParameterSymbol");
         }
 
         private NullHandling FieldNullHandling(TreeType node, string fieldName)
@@ -1007,7 +1007,7 @@ namespace BoundTreeGenerator
 
             string wasUpdatedCheck(Field field)
             {
-                var format = field.Type.EndsWith("TypeSymbol") ? "!TypeSymbol.Equals({0}, this.{1}, TypeCompareKind.ConsiderEverything)" : "{0} != this.{1}";
+                var format = field.Type.EndsWith("TypeSymbol") || field.Type.EndsWith("TypeParameterSymbol") ? "!TypeSymbol.Equals({0}, this.{1}, TypeCompareKind.ConsiderEverything)" : "{0} != this.{1}";
                 return string.Format(format, ToCamelCase(field.Name), field.Name);
             }
         }

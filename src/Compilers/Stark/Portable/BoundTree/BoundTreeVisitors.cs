@@ -118,6 +118,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return VisitLambda(node as BoundLambda, arg);
                 case BoundKind.NameOfOperator:
                     return VisitNameOfOperator(node as BoundNameOfOperator, arg);
+                case BoundKind.ConstTypeParameterExpression:
+                    return VisitConstTypeParameterExpression(node as BoundConstTypeParameterExpression, arg);
             }
 
             return VisitInternal(node, arg);
