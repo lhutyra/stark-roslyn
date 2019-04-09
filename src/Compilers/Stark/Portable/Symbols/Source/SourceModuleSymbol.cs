@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Threading;
 using StarkPlatform.CodeAnalysis.Stark.Emit;

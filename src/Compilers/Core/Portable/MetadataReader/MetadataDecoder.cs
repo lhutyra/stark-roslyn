@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Runtime.InteropServices;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;

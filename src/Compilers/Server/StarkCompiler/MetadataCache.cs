@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 using StarkPlatform.CodeAnalysis.InternalUtilities;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;

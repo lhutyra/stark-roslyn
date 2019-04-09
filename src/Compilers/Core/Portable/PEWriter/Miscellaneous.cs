@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Stark;
 using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
 namespace StarkPlatform.Cci

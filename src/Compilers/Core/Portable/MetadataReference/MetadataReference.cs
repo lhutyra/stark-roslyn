@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 using StarkPlatform.CodeAnalysis.InternalUtilities;
 using Roslyn.Utilities;
 

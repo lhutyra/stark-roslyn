@@ -11,7 +11,7 @@ using BYTE = System.Byte;
 using DWORD = System.UInt32;
 using WCHAR = System.Char;
 using WORD = System.UInt16;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 using Roslyn.Utilities;
 
 namespace StarkPlatform.CodeAnalysis

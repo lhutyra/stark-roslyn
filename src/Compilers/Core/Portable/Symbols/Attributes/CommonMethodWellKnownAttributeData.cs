@@ -2,6 +2,7 @@
 
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Stark;
 using System.Runtime.CompilerServices;
 using StarkPlatform.CodeAnalysis.Text;
 using Cci = StarkPlatform.Cci;

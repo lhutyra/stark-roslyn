@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using Roslyn.Utilities;
 using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 

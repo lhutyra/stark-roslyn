@@ -7,6 +7,7 @@ using StarkPlatform.CodeAnalysis.Emit;
 using System.Reflection;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Reflection.Stark;
 using System.Security.Cryptography;
 
 namespace StarkPlatform.CodeAnalysis

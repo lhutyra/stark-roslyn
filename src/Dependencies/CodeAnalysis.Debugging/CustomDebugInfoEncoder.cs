@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
+using System.Reflection.Stark.Metadata;
+using System.Reflection.Stark.Metadata.Ecma335;
 
 namespace StarkPlatform.CodeAnalysis.Debugging
 {

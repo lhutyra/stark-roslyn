@@ -5,7 +5,7 @@ using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 
 namespace StarkPlatform.CodeAnalysis.Emit.NoPia
 {

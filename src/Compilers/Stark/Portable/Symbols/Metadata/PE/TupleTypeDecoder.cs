@@ -5,7 +5,7 @@ using Roslyn.Utilities;
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 
 namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
 {

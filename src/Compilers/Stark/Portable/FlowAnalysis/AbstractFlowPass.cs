@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Text;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using StarkPlatform.CodeAnalysis.Stark.Syntax;

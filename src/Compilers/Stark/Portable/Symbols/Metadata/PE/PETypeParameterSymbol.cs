@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Threading;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;

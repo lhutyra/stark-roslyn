@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 

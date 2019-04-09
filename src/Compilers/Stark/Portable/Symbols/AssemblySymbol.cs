@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 using StarkPlatform.CodeAnalysis.Collections;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using Roslyn.Utilities;

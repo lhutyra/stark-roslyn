@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Immutable;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
+using System.Reflection.Stark.Metadata;
+using System.Reflection.Stark.Metadata.Ecma335;
 
 namespace StarkPlatform.CodeAnalysis.FindSymbols
 {

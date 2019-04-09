@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Reflection;
+using System.Reflection.Stark;
 using StarkPlatform.CodeAnalysis.CodeGen;
 using StarkPlatform.CodeAnalysis.Collections;
 using StarkPlatform.CodeAnalysis.Stark.Syntax;

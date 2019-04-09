@@ -2,7 +2,7 @@
 
 using System.Diagnostics;
 using StarkPlatform.CodeAnalysis.Text;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Collections.Immutable;
 
 namespace StarkPlatform.CodeAnalysis

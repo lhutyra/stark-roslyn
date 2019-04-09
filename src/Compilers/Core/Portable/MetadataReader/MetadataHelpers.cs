@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Text;
 using StarkPlatform.CodeAnalysis.Collections;
 using StarkPlatform.CodeAnalysis.PooledObjects;

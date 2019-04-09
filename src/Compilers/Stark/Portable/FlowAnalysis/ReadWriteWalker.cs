@@ -5,7 +5,7 @@ using StarkPlatform.CodeAnalysis.Stark.Syntax;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 
 namespace StarkPlatform.CodeAnalysis.Stark
 {

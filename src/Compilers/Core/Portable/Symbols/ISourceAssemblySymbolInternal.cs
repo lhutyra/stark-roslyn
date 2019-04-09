@@ -2,6 +2,7 @@
 
 using System;
 using System.Reflection;
+using System.Reflection.Stark;
 
 namespace StarkPlatform.CodeAnalysis
 {

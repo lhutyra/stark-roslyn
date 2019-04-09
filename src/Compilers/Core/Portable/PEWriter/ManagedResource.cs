@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using StarkPlatform.CodeAnalysis;
 using Roslyn.Utilities;
 

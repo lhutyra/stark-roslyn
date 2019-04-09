@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Roslyn.Utilities;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 
 namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 {

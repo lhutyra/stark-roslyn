@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Threading;
 
 namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE

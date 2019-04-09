@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Runtime.InteropServices;
 using System.Threading;
 using StarkPlatform.CodeAnalysis.Stark.Emit;

@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using StarkPlatform.CodeAnalysis.Stark.Emit;
 using Roslyn.Utilities;
 using System.Diagnostics;

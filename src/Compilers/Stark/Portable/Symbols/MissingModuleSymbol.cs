@@ -9,7 +9,7 @@ using StarkPlatform.CodeAnalysis.Stark.Syntax;
 using StarkPlatform.CodeAnalysis.Text;
 using Roslyn.Utilities;
 using System.Diagnostics;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 
 namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 {

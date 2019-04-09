@@ -3,7 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.PortableExecutable;
 using StarkPlatform.CodeAnalysis.Interop;
 using Roslyn.Utilities;
 

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Runtime.InteropServices;
 using StarkPlatform.CodeAnalysis;
 using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;

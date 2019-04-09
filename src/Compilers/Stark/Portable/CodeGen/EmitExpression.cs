@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using StarkPlatform.CodeAnalysis.CodeGen;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using Roslyn.Utilities;

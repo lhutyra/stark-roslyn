@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Stark;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using StarkPlatform.CodeAnalysis.Emit;
 using StarkPlatform.CodeAnalysis.PooledObjects;

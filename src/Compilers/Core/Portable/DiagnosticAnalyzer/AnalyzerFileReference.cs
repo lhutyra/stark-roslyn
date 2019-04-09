@@ -7,8 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.Metadata;
+using System.Reflection.Stark.PortableExecutable;
 using System.Threading;
 using Roslyn.Utilities;
 

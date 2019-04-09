@@ -7,6 +7,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Stark;
 using System.Security.Cryptography;
 using System.Threading;
 using StarkPlatform.CodeAnalysis.Stark.Emit;
@@ -966,7 +967,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             if (_modules.Length > 1 && !_compilation.Options.OutputKind.IsNetModule())
             {
                 var assemblyMachine = this.Machine;
-                bool isPlatformAgnostic = (assemblyMachine == System.Reflection.PortableExecutable.Machine.I386 && !this.Bit32Required);
+                bool isPlatformAgnostic = (assemblyMachine == System.Reflection.Stark.PortableExecutable.Machine.I386 && !this.Bit32Required);
                 var knownModuleNames = new HashSet<String>(StringComparer.OrdinalIgnoreCase);
 
                 for (int i = 1; i < _modules.Length; i++)
@@ -981,7 +982,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                     {
                         var moduleMachine = m.Machine;
 
-                        if (moduleMachine == System.Reflection.PortableExecutable.Machine.I386 && !m.Bit32Required)
+                        if (moduleMachine == System.Reflection.Stark.PortableExecutable.Machine.I386 && !m.Bit32Required)
                         {
                             // Other module is agnostic, this is always safe
                             ;

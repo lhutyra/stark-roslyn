@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Security.Cryptography;
 using StarkPlatform.Cci;
 using Roslyn.Utilities;

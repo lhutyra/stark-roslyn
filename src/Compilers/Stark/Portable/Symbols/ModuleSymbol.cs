@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark;
+using System.Reflection.Stark.PortableExecutable;
 using System.Runtime.InteropServices;
 using Roslyn.Utilities;
 

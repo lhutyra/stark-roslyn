@@ -3,10 +3,11 @@
 using System;
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark.Metadata;
+using System.Reflection.Stark.PortableExecutable;
 using Roslyn.Utilities;
 using System.IO;
+using System.Reflection.Stark;
 
 namespace StarkPlatform.CodeAnalysis
 {

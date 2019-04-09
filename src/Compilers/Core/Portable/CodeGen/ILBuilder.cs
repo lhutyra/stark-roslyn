@@ -4,7 +4,7 @@ using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using StarkPlatform.CodeAnalysis.Debugging;
 using StarkPlatform.CodeAnalysis.PooledObjects;
 using StarkPlatform.CodeAnalysis.Text;

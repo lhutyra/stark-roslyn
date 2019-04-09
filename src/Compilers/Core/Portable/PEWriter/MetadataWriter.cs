@@ -9,9 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using System.Reflection.PortableExecutable;
+using System.Reflection.Stark;
+using System.Reflection.Stark.Metadata;
+using System.Reflection.Stark.Metadata.Ecma335;
+using System.Reflection.Stark.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -3895,7 +3896,7 @@ namespace StarkPlatform.Cci
                     // "void" is handled specifically for "void*" with custom modifiers.
                     // If SignatureTypeEncoder supports such cases directly, this can
                     // be removed. See https://github.com/dotnet/corefx/issues/14571.
-                    encoder.Builder.WriteByte((byte)System.Reflection.Metadata.PrimitiveTypeCode.Void);
+                    encoder.Builder.WriteByte((byte)System.Reflection.Stark.Metadata.PrimitiveTypeCode.Void);
                     break;
 
                 default:

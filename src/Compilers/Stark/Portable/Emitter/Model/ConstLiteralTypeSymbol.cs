@@ -1,4 +1,4 @@
-﻿using System.Reflection.Metadata;
+﻿using System.Reflection.Stark.Metadata;
 using StarkPlatform.Cci;
 using StarkPlatform.CodeAnalysis.Emit;
 using StarkPlatform.CodeAnalysis.Stark.Emit;

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Security.Cryptography;
 using StarkPlatform.CodeAnalysis;
 using StarkPlatform.CodeAnalysis.Emit;

@@ -4,6 +4,7 @@ using System;
 using System.Reflection;
 using StarkPlatform.CodeAnalysis.Text;
 using System.Collections.Generic;
+using System.Reflection.Stark;
 
 namespace StarkPlatform.CodeAnalysis
 {

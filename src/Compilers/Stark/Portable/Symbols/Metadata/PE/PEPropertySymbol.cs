@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
+using System.Reflection.Stark.Metadata;
 using System.Threading;
 using StarkPlatform.CodeAnalysis.Stark.DocumentationComments;
 using StarkPlatform.CodeAnalysis.Stark.Emit;

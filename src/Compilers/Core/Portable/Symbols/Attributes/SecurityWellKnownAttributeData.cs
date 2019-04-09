@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
+using System.Reflection.Stark;
 using System.Threading;
 using StarkPlatform.CodeAnalysis.CodeGen;
 using Roslyn.Utilities;
