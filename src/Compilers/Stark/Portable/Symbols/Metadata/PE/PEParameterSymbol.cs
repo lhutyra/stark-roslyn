@@ -640,6 +640,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
             }
         }
 
+        private ThreeState _lazyIsCallerArgumentExpressionSet;
+
+        internal override bool IsCallerArgumentExpression
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        internal override string CallerArgumentExpressionParameterName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         internal override FlowAnalysisAnnotations FlowAnalysisAnnotations
         {
             get

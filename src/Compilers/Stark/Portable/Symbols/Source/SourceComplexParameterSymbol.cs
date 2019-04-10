@@ -119,6 +119,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         private bool HasCallerMemberNameAttribute
             => GetEarlyDecodedWellKnownAttributeData()?.HasCallerMemberNameAttribute == true;
 
+        private bool HasCallerArgumentExpressionAttribute
+            => GetEarlyDecodedWellKnownAttributeData()?.CallerArgumentExpressionAttribute != null;
+
         internal override bool IsCallerLineNumber => HasCallerLineNumberAttribute;
 
         internal override bool IsCallerFilePath => !HasCallerLineNumberAttribute && HasCallerFilePathAttribute;
@@ -126,6 +129,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         internal override bool IsCallerMemberName => !HasCallerLineNumberAttribute
                                                   && !HasCallerFilePathAttribute
                                                   && HasCallerMemberNameAttribute;
+
+        internal override bool IsCallerArgumentExpression => HasCallerArgumentExpressionAttribute;
+
+        internal override string CallerArgumentExpressionParameterName => GetEarlyDecodedWellKnownAttributeData()?.CallerArgumentExpressionAttribute;
 
         internal override FlowAnalysisAnnotations FlowAnalysisAnnotations
         {
@@ -506,6 +513,41 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 else if (CSharpAttributeData.IsTargetEarlyAttribute(arguments.AttributeType, arguments.AttributeSyntax, AttributeDescription.CallerMemberNameAttribute))
                 {
                     arguments.GetOrCreateData<ParameterEarlyWellKnownAttributeData>().HasCallerMemberNameAttribute = true;
+                }
+                else if (CSharpAttributeData.IsTargetEarlyAttribute(arguments.AttributeType, arguments.AttributeSyntax, AttributeDescription.CallerArgumentExpressionAttribute))
+                {
+                    bool hasAnyDiagnostics;
+                    var attribute = arguments.Binder.GetAttribute(arguments.AttributeSyntax, arguments.AttributeType, out hasAnyDiagnostics);
+                    if (attribute.HasErrors || hasAnyDiagnostics)
+                    {
+                        return null;
+                    }
+
+                    var parameterName = attribute.GetConstructorArgument<string>(0, SpecialType.System_String);
+                    var methodSymbol = (MethodSymbol)ContainingSymbol;
+
+                    // Find back the parameter matching with CallerArgumentExpressionParameterName
+                    ParameterSymbol paramFound = null;
+                    foreach (var param in methodSymbol.Parameters)
+                    {
+                        if (param.Name == parameterName)
+                        {
+                            paramFound = param;
+                            break;
+                        }
+                    }
+
+                    if (paramFound == null)
+                    {
+                        var diagnostics = DiagnosticBag.GetInstance();
+                        diagnostics.Add(ErrorCode.ERR_InvalidParameterNameForCallerArgumentExpression, arguments.AttributeSyntax.ArgumentList.Arguments[0].Location, parameterName ?? "null");
+                        AddDeclarationDiagnostics(diagnostics);
+                        diagnostics.Free();
+                    }
+                    else
+                    {
+                        arguments.GetOrCreateData<ParameterEarlyWellKnownAttributeData>().CallerArgumentExpressionAttribute = parameterName;
+                    }
                 }
             }
 

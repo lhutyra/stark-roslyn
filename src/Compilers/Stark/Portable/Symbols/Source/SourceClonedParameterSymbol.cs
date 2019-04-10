@@ -151,6 +151,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _originalParam.IsCallerMemberName; }
         }
 
+        internal override bool IsCallerArgumentExpression
+        {
+            get { return _originalParam.IsCallerArgumentExpression; }
+        }
+
+        internal override string CallerArgumentExpressionParameterName
+        {
+            get { return _originalParam.CallerArgumentExpressionParameterName; }
+        }
+
         internal override FlowAnalysisAnnotations FlowAnalysisAnnotations
         {
             get { return FlowAnalysisAnnotations.None; }

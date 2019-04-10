@@ -153,6 +153,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _underlyingParameter.IsCallerMemberName; }
         }
 
+        internal override bool IsCallerArgumentExpression
+        {
+            get { return _underlyingParameter.IsCallerArgumentExpression; }
+        }
+
+        internal override string CallerArgumentExpressionParameterName
+        {
+            get { return _underlyingParameter.CallerArgumentExpressionParameterName; }
+        }
+
         internal override FlowAnalysisAnnotations FlowAnalysisAnnotations
         {
             // https://github.com/dotnet/roslyn/issues/30073: Consider moving to leaf types

@@ -114,6 +114,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return false; }
         }
 
+        internal override bool IsCallerArgumentExpression => false;
+
+        internal override string CallerArgumentExpressionParameterName => null;
+
         internal override FlowAnalysisAnnotations FlowAnalysisAnnotations
         {
             get { return FlowAnalysisAnnotations.None; }

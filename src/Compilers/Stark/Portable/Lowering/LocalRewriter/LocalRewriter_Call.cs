@@ -1167,6 +1167,24 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
         }
 
+        private static SeparatedSyntaxList<ArgumentSyntax> GetCallerArguments(SyntaxNode syntax)
+        {
+            switch (syntax.Kind())
+            {
+                case SyntaxKind.InvocationExpression:
+                    return ((InvocationExpressionSyntax)syntax).ArgumentList.Arguments;
+                case SyntaxKind.ObjectCreationExpression:
+                    return ((ObjectCreationExpressionSyntax)syntax).ArgumentList.Arguments;
+                case SyntaxKind.BaseConstructorInitializer:
+                case SyntaxKind.ThisConstructorInitializer:
+                    return ((ConstructorInitializerSyntax)syntax).ArgumentList.Arguments;
+                case SyntaxKind.ElementAccessExpression:
+                    return ((ElementAccessExpressionSyntax)syntax).ArgumentList.Arguments;
+                default:
+                    return default;
+            }
+        }
+
         private static SourceLocation GetCallerLocation(SyntaxNode syntax, ThreeState enableCallerInfo)
         {
             switch (enableCallerInfo)
@@ -1375,6 +1393,41 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                 BoundExpression memberNameLiteral = MakeLiteral(syntax, ConstantValue.Create(memberName), compilation.GetSpecialType(SpecialType.System_String), localRewriter);
                 defaultValue = MakeConversionNode(memberNameLiteral, parameterType, @checked: false);
+            }
+            else if (parameter.IsCallerArgumentExpression)
+            {
+                var arguments = GetCallerArguments(syntax);
+                var methodSymbol = parameter.ContainingSymbol as MethodSymbol;
+
+                defaultValue = null;
+                if (arguments.Count > 0 && methodSymbol != null)
+                {
+                    ParameterSymbol parameterFound = null; 
+                    foreach (var parameterSymbol in methodSymbol.Parameters)
+                    {
+                        if (parameterSymbol.Name == parameter.CallerArgumentExpressionParameterName)
+                        {
+                            parameterFound = parameterSymbol;
+                            break;
+                        }
+                    }
+
+                    if (parameterFound != null)
+                    {
+                        string expressionName = arguments[parameterFound.Ordinal].Expression.ToFullString();
+                        BoundExpression memberNameLiteral = MakeLiteral(syntax, ConstantValue.Create(expressionName), compilation.GetSpecialType(SpecialType.System_String), localRewriter);
+                        defaultValue = MakeConversionNode(memberNameLiteral, parameterType, @checked: false);
+                    }
+                    else
+                    {
+                        Binder.ErrorInvalidCallerArgumentName(parameter, diagnostics);
+                    }
+                }
+
+                if (defaultValue == null)
+                {
+                    defaultValue = MakeLiteral(syntax, defaultConstantValue, parameterType, localRewriter);
+                }
             }
             else if (defaultConstantValue == ConstantValue.NotAvailable)
             {

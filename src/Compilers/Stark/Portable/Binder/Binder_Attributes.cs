@@ -606,7 +606,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         // For the former case, argsConsumedCount must be incremented to note that we have
                         // consumed a named argument. For the latter case, argsConsumedCount stays same.
                         int matchingArgumentIndex;
-                        reorderedArgument = GetMatchingNamedOrOptionalConstructorArgument(out matchingArgumentIndex, constructorArgsArray,
+                        reorderedArgument = GetMatchingNamedOrOptionalConstructorArgument(out matchingArgumentIndex, attributeConstructor, constructorArgsArray,
                             constructorArgumentNamesOpt, parameter, firstNamedArgIndex, argumentsCount, ref argsConsumedCount, syntax, diagnostics);
 
                         sourceIndices = sourceIndices ?? CreateSourceIndicesArray(i, parameterCount);
@@ -615,7 +615,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 }
                 else
                 {
-                    reorderedArgument = GetDefaultValueArgument(parameter, syntax, diagnostics);
+                    reorderedArgument = GetDefaultValueArgument(attributeConstructor, parameter, syntax, diagnostics);
                     sourceIndices = sourceIndices ?? CreateSourceIndicesArray(i, parameterCount);
                 }
 
@@ -664,6 +664,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         private TypedConstant GetMatchingNamedOrOptionalConstructorArgument(
             out int matchingArgumentIndex,
+            MethodSymbol attributeConstructor,
             ImmutableArray<TypedConstant> constructorArgsArray,
             ImmutableArray<string> constructorArgumentNamesOpt,
             ParameterSymbol parameter,
@@ -688,7 +689,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             else
             {
                 matchingArgumentIndex = -1;
-                return GetDefaultValueArgument(parameter, syntax, diagnostics);
+                return GetDefaultValueArgument(attributeConstructor, parameter, syntax, diagnostics);
             }
         }
 
@@ -719,7 +720,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return argIndex;
         }
 
-        private TypedConstant GetDefaultValueArgument(ParameterSymbol parameter, AttributeSyntax syntax, DiagnosticBag diagnostics)
+        private TypedConstant GetDefaultValueArgument(MethodSymbol attributeConstructor, ParameterSymbol parameter, AttributeSyntax syntax, DiagnosticBag diagnostics)
         {
             var parameterType = parameter.Type.TypeSymbol;
             ConstantValue defaultConstantValue = parameter.IsOptional ? parameter.ExplicitDefaultConstantValue : ConstantValue.NotAvailable;
@@ -762,6 +763,33 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 parameterType = Compilation.GetSpecialType(SpecialType.System_String);
                 kind = TypedConstantKind.Primitive;
                 defaultValue = ((ContextualAttributeBinder)this).AttributedMember.GetMemberCallerName();
+            }
+            else if (!IsEarlyAttributeBinder && parameter.IsCallerArgumentExpression)
+            {
+                parameterType = Compilation.GetSpecialType(SpecialType.System_String);
+                kind = TypedConstantKind.Primitive;
+
+                // Find back the parameter matching with CallerArgumentExpressionParameterName
+                ParameterSymbol paramFound = null;
+                foreach (var param in attributeConstructor.Parameters)
+                {
+                    if (param.Name == parameter.CallerArgumentExpressionParameterName)
+                    {
+                        paramFound = param;
+                        break;
+                    }
+                }
+
+                if (paramFound != null)
+                {
+                    // We output a plain string of the whole argument
+                    defaultValue = syntax.ArgumentList.Arguments[paramFound.Ordinal].ToFullString();
+                }
+                else
+                {
+                    // Otherwise we will provide an error
+                    ErrorInvalidCallerArgumentName(parameter, diagnostics);
+                }
             }
             else if (defaultConstantValue == ConstantValue.NotAvailable)
             {
@@ -818,6 +846,26 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 return new TypedConstant(parameterType, kind, defaultValue);
             }
+        }
+
+        internal static void ErrorInvalidCallerArgumentName(ParameterSymbol parameter, DiagnosticBag diagnostics)
+        {
+            var attributesOnParameter = parameter.GetAttributes();
+            CSharpAttributeData attrData = null;
+            foreach (var attr in attributesOnParameter)
+            {
+                if (attr.IsTargetAttribute(attr.AttributeClass, AttributeDescription.CallerArgumentExpressionAttribute))
+                {
+                    attrData = attr;
+                    break;
+                }
+            }
+
+            Debug.Assert(attrData != null);
+            var originalAttributeSyntax = (AttributeSyntax) attrData.ApplicationSyntaxReference.GetSyntax();
+            var argSyntax = attrData.GetAttributeArgumentSyntax(0, originalAttributeSyntax);
+            // TODO: we should maybe provide a better error message in case CallerArgumentExpressionParameterName is null
+            diagnostics.Add(ErrorCode.ERR_InvalidParameterNameForCallerArgumentExpression, argSyntax.Location, parameter.CallerArgumentExpressionParameterName ?? "null");
         }
 
         private static TypedConstant GetParamArrayArgument(ParameterSymbol parameter, ImmutableArray<TypedConstant> constructorArgsArray,

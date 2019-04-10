@@ -378,6 +378,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         internal abstract bool IsCallerMemberName { get; }
 
+        internal abstract bool IsCallerArgumentExpression { get; }
+
+        internal abstract string CallerArgumentExpressionParameterName { get; }
+
         internal abstract FlowAnalysisAnnotations FlowAnalysisAnnotations { get; }
 
         /// <summary>

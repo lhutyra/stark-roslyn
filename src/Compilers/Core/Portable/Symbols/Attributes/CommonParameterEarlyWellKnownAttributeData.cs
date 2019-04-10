@@ -76,6 +76,22 @@ namespace StarkPlatform.CodeAnalysis
                 SetDataStored();
             }
         }
+
+        private string _callerArgumentExpressionAttribute;
+        public string CallerArgumentExpressionAttribute
+        {
+            get
+            {
+                VerifySealed(expected: true);
+                return _callerArgumentExpressionAttribute;
+            }
+            set
+            {
+                VerifySealed(expected: false);
+                _callerArgumentExpressionAttribute = value;
+                SetDataStored();
+            }
+        }
         #endregion
     }
 }

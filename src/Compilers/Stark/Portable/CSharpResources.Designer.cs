@@ -6316,6 +6316,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid parameter name `{0}` not found from current method signature.
+        /// </summary>
+        internal static string ERR_InvalidParameterNameForCallerArgumentExpression {
+            get {
+                return ResourceManager.GetString("ERR_InvalidParameterNameForCallerArgumentExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The pathmap option was incorrectly formatted..
         /// </summary>
         internal static string ERR_InvalidPathMap {

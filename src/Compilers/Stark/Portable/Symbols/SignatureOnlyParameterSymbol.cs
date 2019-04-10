@@ -71,6 +71,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         internal override bool IsCallerMemberName { get { throw ExceptionUtilities.Unreachable; } }
 
+        internal override bool IsCallerArgumentExpression { get { throw ExceptionUtilities.Unreachable; } }
+
+        internal override string CallerArgumentExpressionParameterName { get { throw ExceptionUtilities.Unreachable; } }
+
         internal override FlowAnalysisAnnotations FlowAnalysisAnnotations { get { throw ExceptionUtilities.Unreachable; } }
 
         public override Symbol ContainingSymbol { get { throw ExceptionUtilities.Unreachable; } }
