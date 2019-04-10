@@ -704,6 +704,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return resultBinder;
             }
 
+            public override Binder VisitModuleDeclaration(ModuleDeclarationSyntax node)
+            {
+                return VisitTypeDeclarationCore(node);
+            }
+
             public override Binder VisitClassDeclaration(ClassDeclarationSyntax node)
             {
                 return VisitTypeDeclarationCore(node);
