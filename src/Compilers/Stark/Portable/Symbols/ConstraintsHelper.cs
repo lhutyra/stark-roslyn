@@ -1075,7 +1075,8 @@ hasRelatedInterfaces:
             if (typeArgument.TypeKind == TypeKind.ConstLiteral)
             {
                 var constType = (ConstLiteralTypeSymbol)typeArgument.TypeSymbol;
-                return constType.UnderlyingType.TypeSymbol.Equals(constraintType.TypeSymbol, TypeCompareKind.AllIgnoreOptions);
+                var conversion = conversions.ClassifyConversionFromType((TypeSymbol)constType.ElementType, constraintType.TypeSymbol, ref useSiteDiagnostics);
+                return conversion.IsValid && conversion.IsImplicit;
             }
 
             if (typeArgument.TypeKind == TypeKind.TypeParameter)

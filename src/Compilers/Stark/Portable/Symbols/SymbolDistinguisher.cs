@@ -66,6 +66,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     break; // Can sensibly append location, after unwrapping.
                 case SymbolKind.DynamicType:
                     break; // Can't sensibly append location, but it should never be ambiguous.
+                case SymbolKind.ConstLiteralType:
+                    break;
                 case SymbolKind.Namespace:
                 case SymbolKind.Alias:
                 case SymbolKind.Assembly:

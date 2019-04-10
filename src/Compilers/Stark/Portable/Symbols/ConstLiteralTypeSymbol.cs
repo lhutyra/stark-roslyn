@@ -29,8 +29,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 return _elementType.TypeSymbol.Equals(t2Extended.UnderlyingType.TypeSymbol, comparison) && Value.Equals(t2Extended.Value);
             }
-
-            return false;
+            return _elementType.TypeSymbol.Equals(t2, comparison);
         }
 
         internal override ObsoleteAttributeData ObsoleteAttributeData => null;
@@ -104,9 +103,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return ImmutableArray<NamedTypeSymbol>.Empty;
         }
 
-        public override bool IsReferenceType => false;
+        public override bool IsReferenceType => _elementType.IsReferenceType;
 
-        public override bool IsValueType => false;
+        public override bool IsValueType => _elementType.IsValueType;
 
         public override TypeKind TypeKind => TypeKind.ConstLiteral;
 
