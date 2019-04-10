@@ -263,13 +263,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
             AttributeLocation symbolPart = AttributeLocation.None,
             bool earlyDecodingOnly = false,
             Binder binderOpt = null,
-            Func<AttributeSyntax, bool> attributeMatchesOpt = null)
+            Func<AttributeSyntax, bool> attributeMatchesOpt = null,
+            Func<Binder, Binder> contextualBinder = null
+            )
         {
             var diagnostics = DiagnosticBag.GetInstance();
             var compilation = this.DeclaringCompilation;
 
             ImmutableArray<Binder> binders;
-            ImmutableArray<AttributeSyntax> attributesToBind = this.GetAttributesToBind(attributesSyntaxLists, symbolPart, diagnostics, compilation, attributeMatchesOpt, binderOpt, out binders);
+            ImmutableArray<AttributeSyntax> attributesToBind = this.GetAttributesToBind(attributesSyntaxLists, symbolPart, diagnostics, compilation, attributeMatchesOpt, binderOpt, out binders, contextualBinder);
             Debug.Assert(!attributesToBind.IsDefault);
 
             ImmutableArray<CSharpAttributeData> boundAttributes;
@@ -389,7 +391,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             CSharpCompilation compilation,
             Func<AttributeSyntax, bool> attributeMatchesOpt,
             Binder rootBinderOpt,
-            out ImmutableArray<Binder> binders)
+            out ImmutableArray<Binder> binders,
+            Func<Binder, Binder> contextualBinder = null)
         {
             var attributeTarget = (IAttributeTargetSymbol)this;
 
@@ -429,6 +432,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                         var syntaxTree = attributeDeclarationSyntaxList.Node.SyntaxTree;
                         var binder = rootBinderOpt ?? compilation.GetBinderFactory(syntaxTree).GetBinder(attributeDeclarationSyntaxList.Node);
+
+                        // We are wrapping the binder with a contextual binder
+                        if (contextualBinder != null)
+                        {
+                            binder = contextualBinder(binder);
+                        }
 
                         binder = new ContextualAttributeBinder(binder, this);
                         Debug.Assert(!binder.InAttributeArgument, "Possible cycle in attribute binding");

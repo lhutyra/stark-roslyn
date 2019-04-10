@@ -437,7 +437,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 else
                 {
                     var attributeSyntax = this.GetAttributeDeclarations();
-                    bagCreatedOnThisThread = LoadAndValidateAttributes(attributeSyntax, ref _lazyCustomAttributesBag, binderOpt: ParameterBinderOpt);
+
+                    // In the case of a method, we want to make parameters accessible to nameof
+                    Func<Binder, Binder> contextualBinder = null;
+                    if (ContainingSymbol is MethodSymbol methodSymbol)
+                    {
+                        contextualBinder = binder => new WithParametersBinder(methodSymbol.Parameters, binder);
+                    }
+
+                    bagCreatedOnThisThread = LoadAndValidateAttributes(attributeSyntax, ref _lazyCustomAttributesBag, binderOpt: ParameterBinderOpt, contextualBinder: contextualBinder);
                 }
 
                 if (bagCreatedOnThisThread)
