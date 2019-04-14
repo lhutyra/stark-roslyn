@@ -145,7 +145,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             Debug.Assert(closestTypeSyntax != null);
             Debug.Assert(nodeBinder != null);
 
-            Debug.Assert(closestTypeSyntax.Kind() != SyntaxKind.RefKindType);
             return closestTypeSyntax.IsNullWithNoType()
                 ? new DeconstructionLocalSymbol(containingSymbol, scopeBinder, nodeBinder, closestTypeSyntax, identifierToken, kind, deconstruction)
                 : new SourceLocalSymbol(containingSymbol, scopeBinder, RefKind.None, closestTypeSyntax, identifierToken, kind);
@@ -207,6 +206,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             Binder initializerBinderOpt = null)
         {
             Debug.Assert(declarationKind != LocalDeclarationKind.ForEachIterationVariable);
+
+            if (refKind == RefKind.None && initializer?.Value is RefExpressionSyntax refExpression)
+            {
+                refKind = refExpression.RefKeyword.Kind() == SyntaxKind.RefKeyword ? RefKind.Ref : RefKind.None;
+                if (refKind == RefKind.Ref && declarationKind == LocalDeclarationKind.LetVariable)
+                {
+                    refKind = RefKind.RefReadOnly;
+                }
+            }
+
             return (initializer != null)
                 ? new LocalWithInitializer(containingSymbol, scopeBinder, refKind, typeSyntax, identifierToken, initializer, initializerBinderOpt ?? scopeBinder, declarationKind)
                 : new SourceLocalSymbol(containingSymbol, scopeBinder, refKind, typeSyntax, identifierToken, declarationKind);
@@ -338,7 +347,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
             else
             {
-                declType = typeBinder.BindTypeOrVarKeyword(_typeSyntax.SkipRef(out _), diagnostics, out isVar);
+                declType = typeBinder.BindTypeOrVarKeyword(_typeSyntax, diagnostics, out isVar);
             }
 
             if (isVar)

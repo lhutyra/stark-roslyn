@@ -44,8 +44,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             var compilation = delegateType.DeclaringCompilation;
             Binder binder = delegateType.GetBinder(syntax.ParameterList);
-            RefKind refKind;
-            TypeSyntax returnTypeSyntax = syntax.ReturnType.SkipRef(out refKind);
+            RefKind refKind = syntax.ReturnType.GetRefKind();
+            TypeSyntax returnTypeSyntax = syntax.ReturnType;
             var returnType = binder.BindType(returnTypeSyntax, diagnostics);
 
             // reuse types to avoid reporting duplicate errors if missing:

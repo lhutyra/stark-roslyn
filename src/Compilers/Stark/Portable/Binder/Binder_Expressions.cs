@@ -268,9 +268,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return null;
             }
 
+            RefKind valueRefKind;
             BindValueKind valueKind;
             ExpressionSyntax value;
-            IsInitializerRefKindValid(initializerOpt, initializerOpt, refKind, diagnostics, out valueKind, out value);
+            GetInitializerValueAndRefKind(initializerOpt, diagnostics, out valueRefKind, out valueKind, out value);
+            CheckInitializerRefKindValid(initializerOpt, initializerOpt, valueRefKind, refKind, diagnostics);
             BoundExpression initializer = BindPossibleArrayInitializer(value, varType, valueKind, diagnostics);
             initializer = GenerateConversionForAssignment(varType, initializer, diagnostics);
             return initializer;
@@ -602,7 +604,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.ThrowExpression:
                     return BindThrowExpression((ThrowExpressionSyntax)node, diagnostics);
 
-                case SyntaxKind.RefKindType:
+                case SyntaxKind.RefType:
                     return BindRefType(node, diagnostics);
 
                 case SyntaxKind.RefExpression:

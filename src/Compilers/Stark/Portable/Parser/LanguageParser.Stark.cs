@@ -3811,17 +3811,6 @@ tryAgain:
                 variableKeywordToken = EatToken();
             }
 
-            SyntaxToken @ref = null;
-            if (isLocal && CurrentToken.Kind == SyntaxKind.RefKeyword)
-            {
-                @ref = EatToken();
-                // TODO: add an error if ref is not compatible with const for example
-                //if (@ref != null)
-                //{
-                //    variableKeywordToken = AddError(variableKeywordToken, ErrorCode.ERR_InvalidVarDeclarationAfterRef);
-                //}
-            }
-
             var name = this.ParseIdentifierToken();
 
             var isConst = variableKeywordToken.Kind == SyntaxKind.ConstKeyword;
@@ -3865,7 +3854,7 @@ tryAgain:
                 initializer = _syntaxFactory.EqualsValueClause(equals, init);
             }
 
-            return _syntaxFactory.VariableDeclaration(variableKeywordToken, @ref, name, colonToken, typeSyntax, initializer);
+            return _syntaxFactory.VariableDeclaration(variableKeywordToken, name, colonToken, typeSyntax, initializer);
         }
 
         private bool IsEndOfFieldDeclaration()
@@ -5489,9 +5478,33 @@ tryAgain:
 
 
             TypeSyntax type = null;
+            SyntaxToken letKeyword = null;
+            SyntaxToken refKeyword = null;
             var typeModifiers = default(SyntaxListBuilder<SyntaxToken>);
             try
             {
+                if (CurrentToken.Kind == SyntaxKind.LetKeyword)
+                {
+                    letKeyword = EatToken();
+                }
+
+                switch (this.CurrentToken.Kind)
+                {
+                    case SyntaxKind.RefKeyword:
+                    case SyntaxKind.InKeyword:
+                    case SyntaxKind.OutKeyword:
+                        refKeyword = EatToken();
+                        break;
+                    default:
+                        // If we have a let keyword, we expect a ref keyword
+                        if (letKeyword != null)
+                        {
+                            refKeyword = EatToken(SyntaxKind.RefKeyword);
+                        }
+                        break;
+                }
+
+                // Parse any modifiers
                 switch (this.CurrentToken.Kind)
                 {
                     case SyntaxKind.TransientKeyword:
@@ -5503,13 +5516,6 @@ tryAgain:
 
                 switch (this.CurrentToken.Kind)
                 {
-                    case SyntaxKind.RefKeyword:
-                    case SyntaxKind.InKeyword:
-                        var refOrInKeyword = this.EatToken();
-                        type = ParseType(mode);
-                        type = _syntaxFactory.RefKindType(refOrInKeyword, type);
-                        break;
-
                     case SyntaxKind.QuestionToken:
                         var question = EatToken();
                         type = ParseType(mode);
@@ -5534,8 +5540,19 @@ tryAgain:
             {
                 if (!typeModifiers.IsNull)
                 {
-                    type = _syntaxFactory.ExtendedType(typeModifiers, type);
+                    if (refKeyword != null)
+                    {
+                        type = _syntaxFactory.RefType(letKeyword, refKeyword, typeModifiers, type);
+                    }
+                    else
+                    {
+                        type = _syntaxFactory.SimpleExtendedType(typeModifiers, type);
+                    }
                     _pool.Free(typeModifiers);
+                }
+                else if (refKeyword != null)
+                {
+                    type = _syntaxFactory.RefType(letKeyword, refKeyword, typeModifiers, type);
                 }
             }
 
@@ -5571,7 +5588,14 @@ tryAgain:
 
         private static bool IsExtendedTypeModifier(SyntaxToken token)
         {
-            return token.Kind == SyntaxKind.TransientKeyword || token.Kind == SyntaxKind.ReadOnlyKeyword;
+            switch (token.Kind)
+            {
+                case SyntaxKind.TransientKeyword:
+                case SyntaxKind.ReadOnlyKeyword:
+                case SyntaxKind.UnsafeKeyword:
+                    return true;
+            }
+            return false;
         }
 
         private ArrayRankSpecifierSyntax ParseArrayRankSpecifier()

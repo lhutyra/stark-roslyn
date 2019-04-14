@@ -70,6 +70,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
 
         private static bool IsAfterRefTypeContext(CSharpSyntaxContext context)
             => context.TargetToken.IsKind(SyntaxKind.RefKeyword, SyntaxKind.ReadOnlyKeyword) &&
-               context.TargetToken.Parent.IsKind(SyntaxKind.RefKindType);
+               context.TargetToken.Parent.IsKind(SyntaxKind.RefType);
     }
 }

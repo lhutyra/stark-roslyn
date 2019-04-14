@@ -218,5 +218,7 @@ namespace StarkPlatform.CodeAnalysis.Emit
 
             string Cci.INamedEntity.Name => s_identity.Name;
         }
+
+        public TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
     }
 }

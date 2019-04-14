@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using StarkPlatform.CodeAnalysis.CodeGeneration;
 using StarkPlatform.CodeAnalysis.Stark.Extensions;
@@ -36,27 +37,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
         internal static DestructorDeclarationSyntax GenerateDestructorDeclaration(
             IMethodSymbol destructor, CodeGenerationDestination destination, CodeGenerationOptions options)
         {
-            options = options ?? CodeGenerationOptions.Default;
+            throw new NotSupportedException("Not supported in stark");
+            //options = options ?? CodeGenerationOptions.Default;
 
-            var reusableSyntax = GetReuseableSyntaxNodeForSymbol<DestructorDeclarationSyntax>(destructor, options);
-            if (reusableSyntax != null)
-            {
-                return reusableSyntax;
-            }
+            //var reusableSyntax = GetReuseableSyntaxNodeForSymbol<DestructorDeclarationSyntax>(destructor, options);
+            //if (reusableSyntax != null)
+            //{
+            //    return reusableSyntax;
+            //}
 
-            bool hasNoBody = !options.GenerateMethodBodies;
+            //bool hasNoBody = !options.GenerateMethodBodies;
 
-            var declaration = SyntaxFactory.DestructorDeclaration(
-                attributeLists: AttributeGenerator.GenerateAttributeLists(destructor.GetAttributes(), options),
-                modifiers: default,
-                tildeToken: SyntaxFactory.Token(SyntaxKind.TildeToken),
-                identifier: CodeGenerationDestructorInfo.GetTypeName(destructor).ToIdentifierToken(),
-                parameterList: SyntaxFactory.ParameterList(),
-                body: hasNoBody ? null : GenerateBlock(destructor),
-                semicolonToken: hasNoBody ? SyntaxFactory.Token(SyntaxKind.SemicolonToken) : default);
+            //var declaration = SyntaxFactory.DestructorDeclaration(
+            //    attributeLists: AttributeGenerator.GenerateAttributeLists(destructor.GetAttributes(), options),
+            //    modifiers: default,
+            //    tildeToken: SyntaxFactory.Token(SyntaxKind.TildeToken),
+            //    identifier: CodeGenerationDestructorInfo.GetTypeName(destructor).ToIdentifierToken(),
+            //    parameterList: SyntaxFactory.ParameterList(),
+            //    body: hasNoBody ? null : GenerateBlock(destructor),
+            //    eosToken: hasNoBody ? SyntaxFactory.Token(SyntaxKind.SemicolonToken) : default);
 
-            return AddFormatterAndCodeGeneratorAnnotationsTo(
-                ConditionallyAddDocumentationCommentTo(declaration, destructor, options));
+            //return AddFormatterAndCodeGeneratorAnnotationsTo(
+            //    ConditionallyAddDocumentationCommentTo(declaration, destructor, options));
         }
 
         private static BlockSyntax GenerateBlock(

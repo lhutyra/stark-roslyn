@@ -486,6 +486,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
         }
 
+        public virtual TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
+
         /// <summary>
         /// Gets the kind of this type.
         /// </summary>
@@ -687,7 +689,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// <summary>
         /// Returns true if the type is a readonly
         /// </summary>
-        internal abstract bool IsReadOnly { get; }
+        public virtual bool IsReadOnly => AccessModifiers.IsReadOnly();
+
+        /// <summary>
+        /// Returns true if the type is a ref
+        /// </summary>
+        public virtual bool IsRef => AccessModifiers.IsRef();
 
         #region ITypeSymbol Members
 

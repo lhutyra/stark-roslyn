@@ -669,6 +669,8 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
             {
                 return ((ISymbol)UnderlyingNamedType).ToDisplayString(SymbolDisplayFormat.ILVisualizationFormat);
             }
+
+            public TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
         }
     }
 }

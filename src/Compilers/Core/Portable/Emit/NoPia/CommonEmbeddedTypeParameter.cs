@@ -217,6 +217,8 @@ namespace StarkPlatform.CodeAnalysis.Emit.NoPia
             {
                 get { return ContainingMethod; }
             }
+
+            public TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
         }
     }
 }

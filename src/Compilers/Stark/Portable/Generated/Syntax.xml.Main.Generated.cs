@@ -70,12 +70,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a ExtendedTypeSyntax node.</summary>
-    public virtual TResult VisitExtendedType(ExtendedTypeSyntax node)
-    {
-      return this.DefaultVisit(node);
-    }
-
     /// <summary>Called when the visitor visits a PointerTypeSyntax node.</summary>
     public virtual TResult VisitPointerType(PointerTypeSyntax node)
     {
@@ -106,8 +100,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a RefKindTypeSyntax node.</summary>
-    public virtual TResult VisitRefKindType(RefKindTypeSyntax node)
+    /// <summary>Called when the visitor visits a SimpleExtendedTypeSyntax node.</summary>
+    public virtual TResult VisitSimpleExtendedType(SimpleExtendedTypeSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
+    /// <summary>Called when the visitor visits a RefTypeSyntax node.</summary>
+    public virtual TResult VisitRefType(RefTypeSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -1381,12 +1381,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a ExtendedTypeSyntax node.</summary>
-    public virtual void VisitExtendedType(ExtendedTypeSyntax node)
-    {
-      this.DefaultVisit(node);
-    }
-
     /// <summary>Called when the visitor visits a PointerTypeSyntax node.</summary>
     public virtual void VisitPointerType(PointerTypeSyntax node)
     {
@@ -1417,8 +1411,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
       this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a RefKindTypeSyntax node.</summary>
-    public virtual void VisitRefKindType(RefKindTypeSyntax node)
+    /// <summary>Called when the visitor visits a SimpleExtendedTypeSyntax node.</summary>
+    public virtual void VisitSimpleExtendedType(SimpleExtendedTypeSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    /// <summary>Called when the visitor visits a RefTypeSyntax node.</summary>
+    public virtual void VisitRefType(RefTypeSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -2702,13 +2702,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return node.Update(openBracketToken, sizes, closeBracketToken);
     }
 
-    public override SyntaxNode VisitExtendedType(ExtendedTypeSyntax node)
-    {
-      var modifiers = this.VisitList(node.Modifiers);
-      var elementType = (TypeSyntax)this.Visit(node.ElementType);
-      return node.Update(modifiers, elementType);
-    }
-
     public override SyntaxNode VisitPointerType(PointerTypeSyntax node)
     {
       var asteriskToken = this.VisitToken(node.AsteriskToken);
@@ -2744,11 +2737,20 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return node.Update(omittedTypeArgumentToken);
     }
 
-    public override SyntaxNode VisitRefKindType(RefKindTypeSyntax node)
+    public override SyntaxNode VisitSimpleExtendedType(SimpleExtendedTypeSyntax node)
     {
+      var modifiers = this.VisitList(node.Modifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(modifiers, elementType);
+    }
+
+    public override SyntaxNode VisitRefType(RefTypeSyntax node)
+    {
+      var letKeyword = this.VisitToken(node.LetKeyword);
       var refKindKeyword = this.VisitToken(node.RefKindKeyword);
-      var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(refKindKeyword, type);
+      var modifiers = this.VisitList(node.Modifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(letKeyword, refKindKeyword, modifiers, elementType);
     }
 
     public override SyntaxNode VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
@@ -3367,12 +3369,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public override SyntaxNode VisitVariableDeclaration(VariableDeclarationSyntax node)
     {
       var variableKeyword = this.VisitToken(node.VariableKeyword);
-      var refKeyword = this.VisitToken(node.RefKeyword);
       var identifier = this.VisitToken(node.Identifier);
       var colonToken = this.VisitToken(node.ColonToken);
       var type = (TypeSyntax)this.Visit(node.Type);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
-      return node.Update(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
+      return node.Update(variableKeyword, identifier, colonToken, type, initializer);
     }
 
     public override SyntaxNode VisitEqualsValueClause(EqualsValueClauseSyntax node)
@@ -4725,21 +4726,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return SyntaxFactory.ArrayRankSpecifier(SyntaxFactory.Token(SyntaxKind.OpenBracketToken), sizes, SyntaxFactory.Token(SyntaxKind.CloseBracketToken));
     }
 
-    /// <summary>Creates a new ExtendedTypeSyntax instance.</summary>
-    public static ExtendedTypeSyntax ExtendedType(SyntaxTokenList modifiers, TypeSyntax elementType)
-    {
-      if (elementType == null)
-        throw new ArgumentNullException(nameof(elementType));
-      return (ExtendedTypeSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ExtendedType(modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), elementType == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)elementType.Green).CreateRed();
-    }
-
-
-    /// <summary>Creates a new ExtendedTypeSyntax instance.</summary>
-    public static ExtendedTypeSyntax ExtendedType(TypeSyntax elementType)
-    {
-      return SyntaxFactory.ExtendedType(default(SyntaxTokenList), elementType);
-    }
-
     /// <summary>Creates a new PointerTypeSyntax instance.</summary>
     public static PointerTypeSyntax PointerType(SyntaxToken asteriskToken, TypeSyntax elementType)
     {
@@ -4854,22 +4840,58 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return SyntaxFactory.OmittedTypeArgument(SyntaxFactory.Token(SyntaxKind.OmittedTypeArgumentToken));
     }
 
-    /// <summary>Creates a new RefKindTypeSyntax instance.</summary>
-    public static RefKindTypeSyntax RefKindType(SyntaxToken refKindKeyword, TypeSyntax type)
+    /// <summary>Creates a new SimpleExtendedTypeSyntax instance.</summary>
+    public static SimpleExtendedTypeSyntax SimpleExtendedType(SyntaxTokenList modifiers, TypeSyntax elementType)
     {
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
+      return (SimpleExtendedTypeSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.SimpleExtendedType(modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), elementType == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)elementType.Green).CreateRed();
+    }
+
+
+    /// <summary>Creates a new SimpleExtendedTypeSyntax instance.</summary>
+    public static SimpleExtendedTypeSyntax SimpleExtendedType(TypeSyntax elementType)
+    {
+      return SyntaxFactory.SimpleExtendedType(default(SyntaxTokenList), elementType);
+    }
+
+    /// <summary>Creates a new RefTypeSyntax instance.</summary>
+    public static RefTypeSyntax RefType(SyntaxToken letKeyword, SyntaxToken refKindKeyword, SyntaxTokenList modifiers, TypeSyntax elementType)
+    {
+      switch (letKeyword.Kind())
+      {
+        case SyntaxKind.LetKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(letKeyword));
+      }
       switch (refKindKeyword.Kind())
       {
         case SyntaxKind.RefKeyword:
         case SyntaxKind.InKeyword:
+        case SyntaxKind.OutKeyword:
           break;
         default:
           throw new ArgumentException(nameof(refKindKeyword));
       }
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
-      return (RefKindTypeSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.RefKindType((Syntax.InternalSyntax.SyntaxToken)refKindKeyword.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green).CreateRed();
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
+      return (RefTypeSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.RefType((Syntax.InternalSyntax.SyntaxToken)letKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)refKindKeyword.Node, modifiers.Node.ToGreenList<StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxToken>(), elementType == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)elementType.Green).CreateRed();
     }
 
+
+    /// <summary>Creates a new RefTypeSyntax instance.</summary>
+    public static RefTypeSyntax RefType(SyntaxToken refKindKeyword, SyntaxTokenList modifiers, TypeSyntax elementType)
+    {
+      return SyntaxFactory.RefType(default(SyntaxToken), refKindKeyword, modifiers, elementType);
+    }
+
+    /// <summary>Creates a new RefTypeSyntax instance.</summary>
+    public static RefTypeSyntax RefType(SyntaxToken refKindKeyword, TypeSyntax elementType)
+    {
+      return SyntaxFactory.RefType(default(SyntaxToken), refKindKeyword, default(SyntaxTokenList), elementType);
+    }
 
     /// <summary>Creates a new ParenthesizedExpressionSyntax instance.</summary>
     public static ParenthesizedExpressionSyntax ParenthesizedExpression(SyntaxToken openParenToken, ExpressionSyntax expression, SyntaxToken closeParenToken)
@@ -7256,7 +7278,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
-    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
       switch (variableKeyword.Kind())
       {
@@ -7266,14 +7288,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
           break;
         default:
           throw new ArgumentException(nameof(variableKeyword));
-      }
-      switch (refKeyword.Kind())
-      {
-        case SyntaxKind.RefKeyword:
-        case SyntaxKind.None:
-          break;
-        default:
-          throw new ArgumentException(nameof(refKeyword));
       }
       switch (identifier.Kind())
       {
@@ -7290,26 +7304,26 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(colonToken));
       }
-      return (VariableDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.VariableDeclaration((Syntax.InternalSyntax.SyntaxToken)variableKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)refKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green, initializer == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EqualsValueClauseSyntax)initializer.Green).CreateRed();
+      return (VariableDeclarationSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.VariableDeclaration((Syntax.InternalSyntax.SyntaxToken)variableKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)identifier.Node, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, type == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.TypeSyntax)type.Green, initializer == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.EqualsValueClauseSyntax)initializer.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-      return SyntaxFactory.VariableDeclaration(variableKeyword, default(SyntaxToken), identifier, default(SyntaxToken), type, initializer);
+      return SyntaxFactory.VariableDeclaration(variableKeyword, identifier, default(SyntaxToken), type, initializer);
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier)
     {
-      return SyntaxFactory.VariableDeclaration(variableKeyword, default(SyntaxToken), identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.VariableDeclaration(variableKeyword, identifier, default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
     }
 
     /// <summary>Creates a new VariableDeclarationSyntax instance.</summary>
     public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, string identifier)
     {
-      return SyntaxFactory.VariableDeclaration(variableKeyword, default(SyntaxToken), SyntaxFactory.Identifier(identifier), default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
+      return SyntaxFactory.VariableDeclaration(variableKeyword, SyntaxFactory.Identifier(identifier), default(SyntaxToken), default(TypeSyntax), default(EqualsValueClauseSyntax));
     }
 
     /// <summary>Creates a new EqualsValueClauseSyntax instance.</summary>

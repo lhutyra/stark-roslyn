@@ -7,6 +7,15 @@ using System.Diagnostics;
 
 namespace StarkPlatform.CodeAnalysis
 {
+    public interface ITypeWithAccessModifiers
+    {
+        /// <summary>
+        /// stark: Access modifiers are similar to custom modifiers (but we are using a different name here to identify the difference)
+        /// but as TypeSymbol don't have attached custom modifiers we need to attach stark modifiers here (readonly, isolated, immutable...etc.)
+        /// </summary>
+        TypeAccessModifiers AccessModifiers { get; }
+    }
+
     /// <summary>
     /// Represents a type.
     /// </summary>
@@ -14,7 +23,7 @@ namespace StarkPlatform.CodeAnalysis
     /// This interface is reserved for implementation by its associated APIs. We reserve the right to
     /// change it in the future.
     /// </remarks>
-    public interface ITypeSymbol : INamespaceOrTypeSymbol
+    public interface ITypeSymbol : INamespaceOrTypeSymbol, ITypeWithAccessModifiers
     {
         /// <summary>
         /// An enumerated value that identifies whether this type is an array, pointer, enum, and so on.
@@ -111,6 +120,13 @@ namespace StarkPlatform.CodeAnalysis
         /// has no concept of unmanaged types.
         /// </summary>
         bool IsUnmanagedType { get; }
+
+        /// <summary>
+        /// True if the type is (deep) readonly
+        /// </summary>
+        bool IsReadOnly { get; }
+
+        bool IsRef { get; }
     }
 
     // Intentionally not extension methods. We don't want them ever be called for symbol classes

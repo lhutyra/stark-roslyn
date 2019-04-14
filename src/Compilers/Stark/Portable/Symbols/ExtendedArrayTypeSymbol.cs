@@ -32,8 +32,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         public override bool IsRefLikeType => (_accessModifiers & TypeAccessModifiers.Transient) != 0;
 
-        internal override bool IsReadOnly => (_accessModifiers & TypeAccessModifiers.ReadOnly) != 0;
-
         internal override bool HasDefaultSizesAndLowerBounds => _underlyingArray.HasDefaultSizesAndLowerBounds;
 
         public TypeAccessModifiers AccessModifiers => _accessModifiers;

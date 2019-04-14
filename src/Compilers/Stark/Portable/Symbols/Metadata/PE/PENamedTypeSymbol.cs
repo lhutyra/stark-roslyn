@@ -2063,7 +2063,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
             }
         }
 
-        internal override bool IsReadOnly
+        public override bool IsReadOnly
         {
             get
             {

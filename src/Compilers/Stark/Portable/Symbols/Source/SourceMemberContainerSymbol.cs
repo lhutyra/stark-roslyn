@@ -738,14 +738,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        internal override bool IsReadOnly
-        {
-            get
-            {
-                return (_flags.DeclarationModifiers & DeclarationModifiers.Let) != 0;
-            }
-        }
-
         public override bool IsSealed
         {
             get

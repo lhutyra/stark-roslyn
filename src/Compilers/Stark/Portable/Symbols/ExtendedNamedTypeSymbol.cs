@@ -24,6 +24,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return UnderlyingNamedType;
         }
 
+        public override TypeAccessModifiers AccessModifiers => _accessModifiers;
+
         public override Symbol ContainingSymbol => _underlyingType.ContainingSymbol;
 
         internal override NamedTypeSymbol BaseTypeNoUseSiteDiagnostics => _underlyingType.BaseTypeNoUseSiteDiagnostics;
@@ -39,7 +41,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         public override bool IsRefLikeType => IsTransient;
 
-        internal override bool IsReadOnly => (_accessModifiers & TypeAccessModifiers.ReadOnly) != 0 || _underlyingType.IsReadOnly;
+        public override bool IsReadOnly => (_accessModifiers & TypeAccessModifiers.ReadOnly) != 0 || base.IsReadOnly;
 
         internal override bool Equals(TypeSymbol t2, TypeCompareKind comparison)
         {
@@ -134,12 +136,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 return TypeSymbolWithAnnotations.Create(new ExtendedNamedTypeSymbol(baseSymbol, accessModifiers));
             }
-            else if (baseSymbol.Kind == SymbolKind.ArrayType)
+
+            if (baseSymbol.Kind == SymbolKind.ArrayType)
             {
                 return TypeSymbolWithAnnotations.Create(new ExtendedArrayTypeSymbol(baseSymbol, (ArrayTypeSymbol)baseSymbol.TypeSymbol, accessModifiers));
             }
-            Binder.Error(diagnostics, ErrorCode.ERR_ArrayElementCantBeRefAny, syntax, baseSymbol.TypeSymbol, accessModifiers);
-            return baseSymbol;
+
+            if (baseSymbol.Kind == SymbolKind.TypeParameter)
+            {
+                return TypeSymbolWithAnnotations.Create(new ExtendedTypeParameterSymbol((TypeParameterSymbol)baseSymbol.TypeSymbol, accessModifiers));
+            }
+            throw new NotSupportedException($"The syntax `{syntax}` is not supported");
         }
     }
 }

@@ -55,7 +55,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.TypeStyle
 
             TypeSyntax typeSyntax = null;
             ParenthesizedVariableDesignationSyntax parensDesignation = null;
-            if (declarationContext is RefKindTypeSyntax refType)
+            if (declarationContext is RefTypeSyntax refType)
             {
                 declarationContext = declarationContext.Parent;
             }

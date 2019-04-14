@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c)  Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information. -->
 
 <Tree Root="SyntaxNode">
@@ -208,25 +208,6 @@
       <Kind Name="CloseBracketToken"/>
     </Field>
   </Node>
-  <Node Name="ExtendedTypeSyntax" Base="TypeSyntax">
-      <Kind Name="ExtendedType"/>
-      <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;">
-          <PropertyComment>
-              <summary>Gets the modifier list.</summary>
-          </PropertyComment>
-      </Field>
-      <Field Name="ElementType" Type="TypeSyntax">
-          <PropertyComment>
-              <summary>The ElementType for which the modifiers are applied (e.g readonly, transient...).</summary>
-          </PropertyComment>
-      </Field>
-      <TypeComment>
-          <summary>Class which represents the syntax node for a readonly/transient type.</summary>
-      </TypeComment>
-      <FactoryComment>
-          <summary>Creates a ExtendedTypeSyntax node.</summary>
-      </FactoryComment>
-  </Node>
   <Node Name="PointerTypeSyntax" Base="TypeSyntax">
     <Kind Name="PointerType"/>
     <Field Name="AsteriskToken" Type="SyntaxToken">
@@ -321,16 +302,45 @@
       <summary>Creates an OmittedTypeArgumentSyntax node.</summary>
     </FactoryComment>
   </Node>
-  <Node Name="RefKindTypeSyntax" Base="TypeSyntax">
+  <AbstractNode Name="ExtendedTypeSyntax" Base="TypeSyntax">
+      <Kind Name="ExtendedType"/>
+      <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Optional="true">
+          <PropertyComment>
+              <summary>Gets the modifier list.</summary>
+          </PropertyComment>
+      </Field>
+      <Field Name="ElementType" Type="TypeSyntax">
+          <PropertyComment>
+              <summary>The ElementType for which the modifiers are applied (e.g readonly, transient...).</summary>
+          </PropertyComment>
+      </Field>
+      <TypeComment>
+          <summary>Class which represents the syntax node for a readonly/transient type.</summary>
+      </TypeComment>
+  </AbstractNode>
+  <Node Name="SimpleExtendedTypeSyntax" Base="ExtendedTypeSyntax">
+      <TypeComment>
+          <summary>Class which represents the syntax node for a readonly/transient type.</summary>
+      </TypeComment>
+      <Kind Name="ExtendedType"/>
+    <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Optional="true" Override="true"/>
+    <Field Name="ElementType" Type="TypeSyntax" Override="true"/>
+  </Node>
+  <Node Name="RefTypeSyntax" Base="ExtendedTypeSyntax">
     <TypeComment>
       <summary>The ref modifier of a method's return value or a local.</summary>
     </TypeComment>
-    <Kind Name="RefKindType"/>
+    <Kind Name="RefType"/>
+    <Field Name="LetKeyword" Type="SyntaxToken" Optional="true">
+        <Kind Name="LetKeyword"/>
+    </Field>
     <Field Name="RefKindKeyword" Type="SyntaxToken">
       <Kind Name="RefKeyword"/>
       <Kind Name="InKeyword"/>
+      <Kind Name="OutKeyword"/>
     </Field>
-    <Field Name="Type" Type="TypeSyntax"/>
+    <Field Name="Modifiers" Type="SyntaxList&lt;SyntaxToken&gt;" Optional="true" Override="true"/>
+    <Field Name="ElementType" Type="TypeSyntax" Override="true"/>
   </Node>
   <!-- Expressions -->
   <AbstractNode Name="ExpressionSyntax" Base="CSharpSyntaxNode">
@@ -1974,12 +1984,6 @@
         <Kind Name="VarKeyword"/>
         <Kind Name="LetKeyword"/>
         <Kind Name="ConstKeyword"/>
-    </Field>
-    <Field Name="RefKeyword" Type="SyntaxToken" Optional="true">
-        <PropertyComment>
-            <summary>Gets the ref keyword.</summary>
-        </PropertyComment>
-        <Kind Name="RefKeyword"/>
     </Field>
     <Field Name="Identifier" Type="SyntaxToken">
         <PropertyComment>

@@ -115,7 +115,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 AsModifierList(accessibility, modifiers, SyntaxKind.FieldDeclaration),
                 SyntaxFactory.VariableDeclaration(
                             SyntaxFactory.Token(SyntaxKind.VarKeyword),
-                            default,
                             name.ToIdentifierToken(),
                             SyntaxFactory.Token(SyntaxKind.ColonToken),
                             (TypeSyntax)type,
@@ -138,11 +137,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 case RefKind.None:
                     return type;
                 case RefKind.Out:
-                    return SyntaxFactory.RefKindType(SyntaxFactory.Token(SyntaxKind.OutKeyword), type);
+                    return SyntaxFactory.RefType(SyntaxFactory.Token(SyntaxKind.OutKeyword), type);
                 case RefKind.Ref:
-                    return SyntaxFactory.RefKindType(SyntaxFactory.Token(SyntaxKind.RefKeyword), type);
+                    return SyntaxFactory.RefType(SyntaxFactory.Token(SyntaxKind.RefKeyword), type);
                 case RefKind.In:
-                    return SyntaxFactory.RefKindType(SyntaxFactory.Token(SyntaxKind.InKeyword), type);
+                    return SyntaxFactory.RefType(SyntaxFactory.Token(SyntaxKind.InKeyword), type);
                 default:
                     throw ExceptionUtilities.UnexpectedValue(refKind);
             }
@@ -178,17 +177,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             return SyntaxFactory.MethodDeclaration(
                 attributeLists: default,
                 modifiers: AsModifierList(accessibility, modifiers, SyntaxKind.MethodDeclaration),
-                SyntaxFactory.Token(SyntaxKind.FuncKeyword),
                 explicitInterfaceSpecifier: default,
                 identifier: name.ToIdentifierToken(),
                 typeParameterList: AsTypeParameterList(typeParameters),
                 parameterList: AsParameterList(parameters),
-                returnToken: returnType != null ? SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken) : default,
                 returnType: returnType != null ? (TypeSyntax)returnType : SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 constraintClauses: default,
+                contractClauses: default,
                 body: hasBody ? CreateBlock(statements) : null,
                 expressionBody: null,
-                default);
+                eosToken: default);
         }
 
         public override SyntaxNode OperatorDeclaration(OperatorKind kind, IEnumerable<SyntaxNode> parameters = null, SyntaxNode returnType = null, Accessibility accessibility = Accessibility.NotApplicable, DeclarationModifiers modifiers = default, IEnumerable<SyntaxNode> statements = null)
@@ -274,6 +272,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 (name ?? "ctor").ToIdentifierToken(),
                 AsParameterList(parameters),
                 baseConstructorArguments != null ? SyntaxFactory.ConstructorInitializer(SyntaxKind.BaseConstructorInitializer, SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(baseConstructorArguments.Select(AsArgument)))) : null,
+                default,
                 CreateBlock(statements));
         }
 
@@ -427,6 +426,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 AsBracketedParameterList(parameters),
                 SyntaxFactory.Token(SyntaxKind.MinusGreaterThanToken),
                 (TypeSyntax)type,
+                default,
                 SyntaxFactory.AccessorList(SyntaxFactory.List(accessors)), 
                 default,
                 SyntaxFactory.Token(SyntaxKind.EndOfLineTrivia));
@@ -463,7 +463,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 default,
                 AsModifierList(accessibility, modifiers, SyntaxKind.EventFieldDeclaration),
                 SyntaxFactory.Token(SyntaxKind.EventKeyword),
-                SyntaxFactory.VariableDeclaration(SyntaxFactory.Token(SyntaxKind.VarKeyword), default, SyntaxFactory.Identifier(name), SyntaxFactory.Token(SyntaxKind.ColonToken), (TypeSyntax)type, default),
+                SyntaxFactory.VariableDeclaration(SyntaxFactory.Token(SyntaxKind.VarKeyword), SyntaxFactory.Identifier(name), SyntaxFactory.Token(SyntaxKind.ColonToken), (TypeSyntax)type, default),
                 SyntaxFactory.EndOfLineToken()
                 );
         }
@@ -505,6 +505,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 (TypeSyntax)type,
                 default,
                 name.ToIdentifierToken(),
+                default,
                 SyntaxFactory.AccessorList(SyntaxFactory.List(accessors)));
         }
 
@@ -3364,7 +3365,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
 
         public override SyntaxNode ArrayCreationExpression(SyntaxNode elementType, SyntaxNode size)
         {
-            var arrayType = SyntaxFactory.ArrayType(SyntaxFactory.SingletonList(SyntaxFactory.ArrayRankSpecifier(SyntaxFactory.SingletonSeparatedList((ExpressionSyntax)size))), (TypeSyntax)elementType);
+            var arrayType = SyntaxFactory.ArrayType(SyntaxFactory.SingletonList(SyntaxFactory.ArrayRankSpecifier((ExpressionSyntax)size)), (TypeSyntax)elementType);
             return SyntaxFactory.ArrayCreationExpression(arrayType);
         }
 

@@ -25,6 +25,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Organizing.Organizers
                 typeParameterList: syntax.TypeParameterList,
                 parameterList: syntax.ParameterList,
                 constraintClauses: syntax.ConstraintClauses,
+                contractClauses: syntax.ContractClauses,
                 body: syntax.Body,
                 expressionBody: syntax.ExpressionBody,
                 eosToken: syntax.EosToken);

@@ -44,26 +44,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                 CheckParameterModifiers(parameterSyntax, diagnostics);
 
-                RefKind refKind = RefKind.None;
+                RefKind refKind = parameterSyntax.Type.GetRefKind();
                 SyntaxToken refnessKeyword = default;
-                if (parameterSyntax.Type is RefKindTypeSyntax refKindTypeSyntax)
-                {
-                    refnessKeyword = refKindTypeSyntax.RefKindKeyword;
-                    switch (refKindTypeSyntax.RefKindKeyword.Kind())
-                    {
-                        case SyntaxKind.RefKeyword:
-                            refKind = RefKind.Ref;
-                            break;
-                        case SyntaxKind.InKeyword:
-                            refKind = RefKind.In;
-                            break;
-                        case SyntaxKind.OutKeyword:
-                            refKind = RefKind.In;
-                            break;
-                        default:
-                            throw ExceptionUtilities.UnexpectedValue(refKindTypeSyntax.RefKindKeyword.Kind());
-                    }
-                }
 
                 GetModifiers(extendedParameterType?.Modifiers, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
                 if (thisKeyword.Kind() != SyntaxKind.None && !allowThis)
@@ -400,26 +382,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             var extendedTypeSyntax = parameterSyntax.Type as ExtendedTypeSyntax;
 
-            RefKind refKind = RefKind.None;
+            RefKind refKind = parameterSyntax.Type.GetRefKind();
             SyntaxToken refnessKeyword = default;
-            if (parameterSyntax.Type is RefKindTypeSyntax refKindTypeSyntax)
-            {
-                refnessKeyword = refKindTypeSyntax.RefKindKeyword;
-                switch (refKindTypeSyntax.RefKindKeyword.Kind())
-                {
-                    case SyntaxKind.RefKeyword:
-                        refKind = RefKind.Ref;
-                        break;
-                    case SyntaxKind.InKeyword:
-                        refKind = RefKind.In;
-                        break;
-                    case SyntaxKind.OutKeyword:
-                        refKind = RefKind.In;
-                        break;
-                    default:
-                        throw ExceptionUtilities.UnexpectedValue(refKindTypeSyntax.RefKindKeyword.Kind());
-                }
-            }
 
             GetModifiers(extendedTypeSyntax?.Modifiers, out SyntaxToken paramsKeyword, out SyntaxToken thisKeyword);
 

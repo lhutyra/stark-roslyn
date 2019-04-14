@@ -443,7 +443,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.PointerType:
                 case SyntaxKind.NullableType:
                 case SyntaxKind.TupleType:
-                case SyntaxKind.RefKindType:
+                case SyntaxKind.RefType:
                 case SyntaxKind.OmittedTypeArgument:
                 case SyntaxKind.NameColon:
                 case SyntaxKind.StackAllocArrayCreationExpression:

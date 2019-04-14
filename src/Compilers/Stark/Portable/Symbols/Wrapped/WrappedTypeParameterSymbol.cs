@@ -28,6 +28,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             _underlyingTypeParameter = underlyingTypeParameter;
         }
 
+        public override TypeAccessModifiers AccessModifiers => _underlyingTypeParameter.AccessModifiers;
+
         public TypeParameterSymbol UnderlyingTypeParameter
         {
             get

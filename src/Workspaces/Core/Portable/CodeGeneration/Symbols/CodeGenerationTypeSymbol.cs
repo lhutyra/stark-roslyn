@@ -58,5 +58,8 @@ namespace StarkPlatform.CodeAnalysis.CodeGeneration
         bool ITypeSymbol.IsRefLikeType => throw new System.NotImplementedException();
 
         bool ITypeSymbol.IsUnmanagedType => throw new System.NotImplementedException();
+        public bool IsReadOnly => false;
+        public bool IsRef => false;
+        public TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
     }
 }

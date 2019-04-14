@@ -75,23 +75,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 ReportAttributesDisallowed(param.AttributeLists, _declarationDiagnostics);
             }
 
-            if (syntax.ReturnType.Kind() == SyntaxKind.RefKindType)
-            {
-                var returnType = (RefKindTypeSyntax)syntax.ReturnType;
-                if (returnType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)returnType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword))
-                {
-                    _refKind = RefKind.RefReadOnly;
-                }
-                else
-                {
-                    _refKind = RefKind.Ref;
-                }
-            }
-            else
-            {
-                _refKind = RefKind.None;
-            }
-
+            _refKind = syntax.ReturnType.GetRefKind();
             _binder = binder;
         }
 
@@ -215,7 +199,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
             var diagnostics = DiagnosticBag.GetInstance();
             TypeSyntax returnTypeSyntax = _syntax.ReturnType;
-            TypeSymbolWithAnnotations returnType = _binder.BindType(returnTypeSyntax.SkipRef(), diagnostics);
+            TypeSymbolWithAnnotations returnType = _binder.BindType(returnTypeSyntax, diagnostics);
 
             if (this.IsAsync)
             {

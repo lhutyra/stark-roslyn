@@ -584,7 +584,7 @@ namespace StarkPlatform.Cci
     /// <summary>
     /// A reference to a type.
     /// </summary>
-    internal interface ITypeReference : IReference
+    internal interface ITypeReference : IReference, ITypeWithAccessModifiers
     {
         /// <summary>
         /// True if the type is an enumeration (it extends System.Enum and is sealed). Corresponds to C# enum.

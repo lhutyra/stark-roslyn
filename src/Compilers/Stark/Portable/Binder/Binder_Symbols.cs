@@ -447,25 +447,19 @@ namespace StarkPlatform.CodeAnalysis.Stark
                         return TypeSymbolWithAnnotations.Create(IsNullableEnabled(tupleTypeSyntax.CloseParenToken), BindTupleType(tupleTypeSyntax, diagnostics));
                     }
 
-                case SyntaxKind.RefKindType:
-                    {
-                        // ref needs to be handled by the caller
-                        var refTypeSyntax = (RefKindTypeSyntax)syntax;
-                        var refToken = refTypeSyntax.RefKindKeyword;
-                        return BindNamespaceOrTypeOrAliasSymbol(refTypeSyntax.Type, diagnostics, basesBeingResolved, suppressUseSiteDiagnostics);
-                    }
-
                 case SyntaxKind.ConstLiteralType:
                     var constListeralTypeSyntax = (ConstLiteralTypeSyntax)syntax;
                     var literal = BindLiteralConstant(constListeralTypeSyntax.Value, diagnostics);
                     var constType = literal.Type;
                     return TypeSymbolWithAnnotations.Create(new ConstLiteralTypeSymbol(TypeSymbolWithAnnotations.Create(constType), literal.ConstantValue.Value));
 
+                case SyntaxKind.RefType:
                 case SyntaxKind.ExtendedType:
                 {
                     // extended type syntax
                     var extendedTypeSyntax = (ExtendedTypeSyntax)syntax;
-                    TypeAccessModifiers accessModifiers = 0;
+                    TypeAccessModifiers accessModifiers = syntax.Kind() == SyntaxKind.RefType ? TypeAccessModifiers.Ref : 0;
+
                     foreach (var token in extendedTypeSyntax.Modifiers)
                     {
                         switch (token.Kind())
@@ -476,15 +470,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             case SyntaxKind.TransientKeyword:
                                 accessModifiers |= TypeAccessModifiers.Transient;
                                 break;
-                            case SyntaxKind.InKeyword:
-                            case SyntaxKind.RefKeyword:
-                            case SyntaxKind.OutKeyword:
                             case SyntaxKind.ThisKeyword:
                             case SyntaxKind.ParamsKeyword:
                                 // these modifiers are handled at parameter level and not at the type level
                                 break;
                             default:
-                                throw new InvalidOperationException($"The type modifiers `{token}` is not supported");
+                                throw ExceptionUtilities.UnexpectedValue($"The type modifiers `{token}` is not supported");
 
                         }
                     }

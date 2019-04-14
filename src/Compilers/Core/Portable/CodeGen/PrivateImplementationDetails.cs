@@ -569,5 +569,6 @@ namespace StarkPlatform.CodeAnalysis.CodeGen
         }
 
         public virtual bool IsValueType => false;
+        public TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
     }
 }

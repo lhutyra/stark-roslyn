@@ -164,8 +164,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         public sealed override bool IsRefLikeType => false;
 
-        internal sealed override bool IsReadOnly => false;
-
         internal override ImmutableArray<NamedTypeSymbol> InterfacesNoUseSiteDiagnostics(ConsList<TypeSymbol> basesBeingResolved) => ImmutableArray<NamedTypeSymbol>.Empty;
 
         internal override ImmutableArray<NamedTypeSymbol> GetInterfacesToEmit() => CalculateInterfacesToEmit();

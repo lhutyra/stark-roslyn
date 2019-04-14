@@ -8,8 +8,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
     {
         public ITypeSymbol ElementType => _underlyingType;
 
-        TypeAccessModifiers IExtendedTypeSymbol.AccessModifiers => _accessModifiers;
-
         public ITypeReference GetElementType(EmitContext context)
         {
             var type = ((PEModuleBuilder)context.Module).Translate(this._elementType.TypeSymbol, syntaxNodeOpt: (CSharpSyntaxNode)context.SyntaxNodeOpt, diagnostics: context.Diagnostics);
@@ -25,7 +23,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         }
 
         public bool IsTransient => (_accessModifiers & TypeAccessModifiers.Transient) != 0 || _underlyingType.IsRefLikeType;
-
 
         TypeAccessModifiers IExtendedTypeReference.AccessModifiers => _accessModifiers;
 

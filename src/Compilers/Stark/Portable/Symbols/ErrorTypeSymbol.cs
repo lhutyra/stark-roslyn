@@ -111,14 +111,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        internal sealed override bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         /// <summary>
         /// Collection of names of members declared within this type.
         /// </summary>

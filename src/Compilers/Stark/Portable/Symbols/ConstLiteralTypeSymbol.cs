@@ -137,7 +137,5 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         }
 
         public override bool IsRefLikeType => false;
-
-        internal override bool IsReadOnly => false;
     }
 }

@@ -230,14 +230,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
-        internal override bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         internal sealed override ObsoleteAttributeData ObsoleteAttributeData
         {
             get { return null; }

@@ -69,7 +69,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeRefactorings.InlineTemporary
                 return;
             }
 
-            if (variableDeclaration.Type.Kind() == SyntaxKind.RefKindType)
+            if (variableDeclaration.Type.Kind() == SyntaxKind.RefType)
             {
                 // TODO: inlining ref returns:
                 // https://github.com/dotnet/roslyn/issues/17132

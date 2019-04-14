@@ -178,11 +178,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 get { return false; }
             }
 
-            internal sealed override bool IsReadOnly
-            {
-                get { return false; }
-            }
-
             public override bool IsSealed
             {
                 get { return true; }

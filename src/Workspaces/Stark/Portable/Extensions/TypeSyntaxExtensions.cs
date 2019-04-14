@@ -124,6 +124,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
         }
 
         public static TypeSyntax StripRefIfNeeded(this TypeSyntax type)
-            => type is RefKindTypeSyntax refType ? refType.Type : type;
+            => type is RefTypeSyntax refType ? refType.ElementType : type;
     }
 }

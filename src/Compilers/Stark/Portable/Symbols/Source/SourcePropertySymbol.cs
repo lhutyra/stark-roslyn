@@ -501,9 +501,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 }
 
                 var syntax = (BasePropertyDeclarationSyntax)_syntaxRef.GetSyntax();
-                RefKind refKind;
-                var typeSyntax = syntax.Type.SkipRef(out refKind);
-                return typeSyntax.Kind() == SyntaxKind.PointerType;
+                return syntax.Type.Kind() == SyntaxKind.PointerType;
             }
         }
 
@@ -1450,8 +1448,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
         private TypeSymbolWithAnnotations ComputeType(Binder binder, BasePropertyDeclarationSyntax syntax, DiagnosticBag diagnostics)
         {
-            RefKind refKind;
-            var typeSyntax = syntax.Type.SkipRef(out refKind);
+            var typeSyntax = syntax.Type;
+            RefKind refKind = typeSyntax.GetRefKind();
             var type = binder.BindType(typeSyntax, diagnostics);
             HashSet<DiagnosticInfo> useSiteDiagnostics = null;
 

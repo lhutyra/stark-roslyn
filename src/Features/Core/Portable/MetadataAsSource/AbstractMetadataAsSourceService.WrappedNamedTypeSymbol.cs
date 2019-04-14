@@ -148,6 +148,12 @@ namespace StarkPlatform.CodeAnalysis.MetadataAsSource
             public bool IsRefLikeType => throw new NotImplementedException();
 
             public bool IsUnmanagedType => throw new NotImplementedException();
+
+            public bool IsReadOnly => _symbol.IsReadOnly;
+
+            public bool IsRef => _symbol.IsRef;
+
+            public TypeAccessModifiers AccessModifiers => _symbol.AccessModifiers;
         }
     }
 }

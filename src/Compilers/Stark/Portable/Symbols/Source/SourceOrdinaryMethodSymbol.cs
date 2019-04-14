@@ -183,8 +183,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 diagnostics: diagnostics);
 
             _lazyIsVararg = (arglistToken.Kind() == SyntaxKind.ArgListKeyword);
-            RefKind refKind;
-            var returnTypeSyntax = syntax.ReturnType.SkipRef(out refKind);
+            var returnTypeSyntax = syntax.ReturnType;
+            RefKind refKind = returnTypeSyntax.GetRefKind();
             _lazyReturnType = signatureBinder.BindType(returnTypeSyntax, diagnostics);
 
             // span-like types are returnable in general

@@ -19,6 +19,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Organizing.Organizers
                 syntax.TildeToken,
                 syntax.Identifier,
                 syntax.ParameterList,
+                syntax.ContractClauses,
                 syntax.Body,
                 syntax.EosToken);
         }

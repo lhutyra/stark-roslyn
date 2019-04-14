@@ -632,7 +632,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         private BoundStatement BindDeclarationStatementParts(LocalDeclarationStatementSyntax node, DiagnosticBag diagnostics)
         {
-            var typeSyntax = node.Declaration.Type.SkipRef(out _);
+            var typeSyntax = node.Declaration.Type;
             bool isConst = node.IsConst;
 
             bool isTypeUnbound;
@@ -704,7 +704,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             // or it might not; if it is not then we do not want to report an error. If it is, then
             // we want to treat the declaration as an explicitly typed declaration.
 
-            TypeSymbolWithAnnotations declType = BindTypeOrVarKeyword(typeSyntax.SkipRef(out _), diagnostics, out isTypeBound, out alias);
+            TypeSymbolWithAnnotations declType = BindTypeOrVarKeyword(typeSyntax, diagnostics, out isTypeBound, out alias);
             Debug.Assert(!declType.IsNull || isTypeBound);
 
             if (isTypeBound)
@@ -749,9 +749,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
         internal BoundExpression BindInferredVariableInitializer(DiagnosticBag diagnostics, RefKind refKind, EqualsValueClauseSyntax initializer,
             CSharpSyntaxNode errorSyntax)
         {
+            RefKind valueRefKind;
             BindValueKind valueKind;
             ExpressionSyntax value;
-            IsInitializerRefKindValid(initializer, initializer, refKind, diagnostics, out valueKind, out value); // The return value isn't important here; we just want the diagnostics and the BindValueKind
+            GetInitializerValueAndRefKind(initializer, diagnostics, out valueRefKind, out valueKind, out value);
+            CheckInitializerRefKindValid(initializer, initializer, valueRefKind, refKind, diagnostics); // The return value isn't important here; we just want the diagnostics and the BindValueKind
             return BindInferredVariableInitializer(diagnostics, value, valueKind, refKind, errorSyntax);
         }
 
@@ -795,20 +797,40 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return expression;
         }
 
-        private static bool IsInitializerRefKindValid(
+
+        private static void GetInitializerValueAndRefKind(
             EqualsValueClauseSyntax initializer,
-            CSharpSyntaxNode node,
-            RefKind variableRefKind,
             DiagnosticBag diagnostics,
+            out RefKind valueRefKind,
             out BindValueKind valueKind,
             out ExpressionSyntax value)
         {
-            RefKind expressionRefKind = RefKind.None;
-            value = initializer?.Value.CheckAndUnwrapRefExpression(diagnostics, out expressionRefKind);
+            valueRefKind = RefKind.None;
+            value = initializer?.Value.CheckAndUnwrapRefExpression(diagnostics, out valueRefKind);
+            switch (valueRefKind)
+            {
+                case RefKind.None:
+                    valueKind = BindValueKind.RValue;
+                    break;
+                // TODO: Add LetRef
+                case RefKind.Ref:
+                    valueKind = BindValueKind.RefOrOut;
+                    break;
+                default:
+                    throw ExceptionUtilities.UnexpectedValue(valueRefKind);
+            }
+        }
+
+        private static bool CheckInitializerRefKindValid(
+            EqualsValueClauseSyntax initializer,
+            CSharpSyntaxNode node,
+            RefKind initializerRefKind,
+            RefKind variableRefKind,
+            DiagnosticBag diagnostics)
+        {
             if (variableRefKind == RefKind.None)
             {
-                valueKind = BindValueKind.RValue;
-                if (expressionRefKind == RefKind.Ref)
+                if (initializerRefKind == RefKind.Ref)
                 {
                     Error(diagnostics, ErrorCode.ERR_InitializeByValueVariableWithReference, node);
                     return false;
@@ -816,16 +838,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
             else
             {
-                valueKind = variableRefKind == RefKind.RefReadOnly
-                    ? BindValueKind.ReadonlyRef
-                    : BindValueKind.RefOrOut;
-
                 if (initializer == null)
                 {
                     Error(diagnostics, ErrorCode.ERR_ByReferenceVariableMustBeInitialized, node);
                     return false;
                 }
-                else if (expressionRefKind != RefKind.Ref)
+                else if (initializerRefKind != RefKind.Ref)
                 {
                     Error(diagnostics, ErrorCode.ERR_InitializeByReferenceVariableWithValue, node);
                     return false;
@@ -846,30 +864,6 @@ namespace StarkPlatform.CodeAnalysis.Stark
             CSharpSyntaxNode associatedSyntaxNode = null)
         {
             Debug.Assert(declarator != null);
-
-            return BindVariableDeclaration(LocateDeclaredVariableSymbol(declarator, typeSyntax, kind),
-                                           kind,
-                                           isTypeUnbound,
-                                           declarator,
-                                           typeSyntax,
-                                           declTypeOpt,
-                                           aliasOpt,
-                                           diagnostics,
-                                           associatedSyntaxNode);
-        }
-
-        protected BoundLocalDeclaration BindVariableDeclaration(
-            SourceLocalSymbol localSymbol,
-            LocalDeclarationKind kind,
-            bool isTypeUnbound,
-            VariableDeclarationSyntax declarator,
-            TypeSyntax typeSyntax,
-            TypeSymbolWithAnnotations declTypeOpt,
-            AliasSymbol aliasOpt,
-            DiagnosticBag diagnostics,
-            CSharpSyntaxNode associatedSyntaxNode = null)
-        {
-            Debug.Assert(declarator != null);
             Debug.Assert(!declTypeOpt.IsNull || (typeSyntax == null && isTypeUnbound));
 
             var localDiagnostics = DiagnosticBag.GetInstance();
@@ -878,33 +872,30 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             bool isLet = declarator.VariableKeyword.Kind() == SyntaxKind.LetKeyword;
 
+            SourceLocalSymbol localSymbol;
 
-            // Check for variable declaration errors.
-            // Use the binder that owns the scope for the local because this (the current) binder
-            // might own nested scope.
-            bool hasErrors = localSymbol.ScopeBinder.ValidateDeclarationNameConflictsInScope(localSymbol, diagnostics);
+            bool hasErrors = false;
 
             var containingMethod = this.ContainingMemberOrLambda as MethodSymbol;
-            if (containingMethod != null && containingMethod.IsAsync && localSymbol.RefKind != RefKind.None)
-            {
-                Error(diagnostics, ErrorCode.ERR_BadAsyncLocalType, declarator);
-            }
-
             EqualsValueClauseSyntax equalsClauseSyntax = declarator.Initializer;
 
+            RefKind valueRefKind;
             BindValueKind valueKind;
             ExpressionSyntax value;
-            if (!IsInitializerRefKindValid(equalsClauseSyntax, declarator, localSymbol.RefKind, diagnostics, out valueKind, out value))
-            {
-                hasErrors = true;
-            }
+            GetInitializerValueAndRefKind(equalsClauseSyntax, diagnostics, out valueRefKind, out valueKind, out value);
 
             BoundExpression initializerOpt;
             if (isTypeUnbound)
             {
                 aliasOpt = null;
 
-                initializerOpt = BindInferredVariableInitializer(diagnostics, value, valueKind, localSymbol.RefKind, declarator);
+                if (isLet && valueRefKind == RefKind.Ref)
+                {
+                    valueKind = BindValueKind.RefReturn;
+                    valueRefKind = RefKind.RefReadOnly;
+                }
+
+                initializerOpt = BindInferredVariableInitializer(diagnostics, value, valueKind, valueRefKind, declarator);
 
                 // If we got a good result then swap the inferred type for the "var" 
                 TypeSymbol initializerType = initializerOpt?.Type;
@@ -933,9 +924,26 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     declTypeOpt = TypeSymbolWithAnnotations.Create(CreateErrorType("var"));
                     hasErrors = true;
                 }
+
+                localSymbol = LocateDeclaredVariableSymbol(declarator, typeSyntax, kind, valueRefKind);
+
+                // Check for variable declaration errors.
+                // Use the binder that owns the scope for the local because this (the current) binder
+                // might own nested scope.
+                if (localSymbol.ScopeBinder.ValidateDeclarationNameConflictsInScope(localSymbol, diagnostics))
+                {
+                    hasErrors = true;
+                }
             }
             else
             {
+                localSymbol = LocateDeclaredVariableSymbol(declarator, typeSyntax, kind);
+
+                // Check for variable declaration errors.
+                // Use the binder that owns the scope for the local because this (the current) binder
+                // might own nested scope.
+                hasErrors = localSymbol.ScopeBinder.ValidateDeclarationNameConflictsInScope(localSymbol, diagnostics);
+
                 if (ReferenceEquals(equalsClauseSyntax, null))
                 {
                     initializerOpt = null;
@@ -954,6 +962,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
                             isRefAssignment: localSymbol.RefKind != RefKind.None);
                     }
                 }
+            }
+            
+            if (!CheckInitializerRefKindValid(equalsClauseSyntax, declarator, valueRefKind, localSymbol.RefKind, diagnostics))
+            {
+                hasErrors = true;
             }
 
             Debug.Assert(!declTypeOpt.IsNull);
@@ -1036,7 +1049,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return new BoundLocalDeclaration(associatedSyntaxNode, localSymbol, boundDeclType, initializerOpt, hasErrors);
         }
 
-        private SourceLocalSymbol LocateDeclaredVariableSymbol(VariableDeclarationSyntax declarator, TypeSyntax typeSyntax, LocalDeclarationKind outerKind)
+        private SourceLocalSymbol LocateDeclaredVariableSymbol(VariableDeclarationSyntax declarator, TypeSyntax typeSyntax, LocalDeclarationKind outerKind, RefKind refKindOverride = RefKind.None)
         {
             LocalDeclarationKind kind = outerKind == LocalDeclarationKind.UsingVariable ? LocalDeclarationKind.UsingVariable : LocalDeclarationKind.RegularVariable;
             SourceLocalSymbol localSymbol = this.LookupLocal(declarator.Identifier);
@@ -1048,7 +1061,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 localSymbol = SourceLocalSymbol.MakeLocal(
                     ContainingMemberOrLambda,
                     this,
-                    RefKind.None,
+                    refKindOverride != RefKind.None ? refKindOverride : typeSyntax.GetRefKind(),
                     typeSyntax,
                     declarator.Identifier,
                     kind,
@@ -2267,7 +2280,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
             // Fixed and using variables are not allowed to be ref-like, but regular variables are
             if (localKind == LocalDeclarationKind.RegularVariable || localKind == LocalDeclarationKind.LetVariable)
             {
-                typeSyntax = typeSyntax.SkipRef(out _);
+                var refKind = typeSyntax.GetRefKind();
+                // check for ref and output errors if required
             }
 
             AliasSymbol alias;

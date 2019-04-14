@@ -287,12 +287,30 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         public override void VisitExtendedType(IExtendedTypeSymbol symbol)
         {
+            if ((symbol.AccessModifiers & TypeAccessModifiers.Ref) != 0)
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "ref"));
+                AddSpace();
+            }
+
             if ((symbol.AccessModifiers & TypeAccessModifiers.ReadOnly) != 0)
             {
                 builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "readonly"));
                 AddSpace();
             }
 
+            if ((symbol.AccessModifiers & TypeAccessModifiers.Immutable) != 0)
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "immutable"));
+                AddSpace();
+            }
+
+            if ((symbol.AccessModifiers & TypeAccessModifiers.Isolated) != 0)
+            {
+                builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "isolated"));
+                AddSpace();
+            }
+            
             if ((symbol.AccessModifiers & TypeAccessModifiers.Transient) != 0)
             {
                 builder.Add(CreatePart(SymbolDisplayPartKind.Keyword, symbol, "transient"));

@@ -20,6 +20,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Organizing.Organizers
                 syntax.Type,
                 syntax.ExplicitInterfaceSpecifier,
                 syntax.Identifier,
+                syntax.ContractClauses,
                 syntax.AccessorList);
         }
     }

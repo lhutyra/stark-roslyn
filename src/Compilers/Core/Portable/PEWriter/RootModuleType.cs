@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection.Stark.Metadata;
 using Roslyn.Utilities;
+using StarkPlatform.CodeAnalysis;
 using EmitContext = StarkPlatform.CodeAnalysis.Emit.EmitContext;
 
 namespace StarkPlatform.Cci
@@ -279,5 +280,7 @@ namespace StarkPlatform.Cci
         {
             return this;
         }
+
+        public TypeAccessModifiers AccessModifiers => TypeAccessModifiers.None;
     }
 }

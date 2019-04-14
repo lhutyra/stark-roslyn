@@ -148,5 +148,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Emit
         {
             return null;
         }
+
+        public TypeAccessModifiers AccessModifiers => UnderlyingNamedType.AccessModifiers;
     }
 }

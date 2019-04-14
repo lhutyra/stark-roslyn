@@ -65,6 +65,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 type: @event.Type.GenerateTypeSyntax(),
                 explicitInterfaceSpecifier: explicitInterfaceSpecifier,
                 identifier: @event.Name.ToIdentifierToken(),
+                default,
                 accessorList: GenerateAccessorList(@event, destination, options)));
         }
 

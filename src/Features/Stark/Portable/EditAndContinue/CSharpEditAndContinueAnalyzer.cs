@@ -1370,7 +1370,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.TupleType:
                 case SyntaxKind.TupleExpression:
                 case SyntaxKind.DeclarationExpression:
-                case SyntaxKind.RefKindType:
+                case SyntaxKind.RefType:
                 case SyntaxKind.RefExpression:
                 case SyntaxKind.DeclarationPattern:
                 case SyntaxKind.SimpleAssignmentExpression:
@@ -1644,7 +1644,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                 case SyntaxKind.DeclarationExpression:
                     return CSharpFeaturesResources.out_var;
 
-                case SyntaxKind.RefKindType:
+                case SyntaxKind.RefType:
                 case SyntaxKind.RefExpression:
                     return CSharpFeaturesResources.ref_local_or_expression;
 
@@ -1969,7 +1969,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
             {
                 foreach (var parameter in list.Parameters)
                 {
-                    if (parameter.Type is RefKindTypeSyntax refKindType)
+                    if (parameter.Type is RefTypeSyntax refKindType)
                     {
                         if (refKindType.RefKindKeyword.Kind() == SyntaxKind.InKeyword)
                         {
@@ -1982,7 +1982,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
             private void ClassifyPossibleReadOnlyRefAttributesForType(SyntaxNode owner, TypeSyntax type)
             {
-                if (type is RefKindTypeSyntax refType && refType.RefKindKeyword != default && refType.Type is ExtendedTypeSyntax extendedType && extendedType.Modifiers.Contains(token => token.Kind() == SyntaxKind.ReadOnlyKeyword))
+                if (type is RefTypeSyntax refType && refType.RefKindKeyword != default && refType.ElementType is ExtendedTypeSyntax extendedType && extendedType.Modifiers.Contains(token => token.Kind() == SyntaxKind.ReadOnlyKeyword))
                 {
                     ReportError(RudeEditKind.ReadOnlyReferences, owner, owner);
                 }

@@ -549,15 +549,29 @@ namespace StarkPlatform.CodeAnalysis.Stark
             var sourceSymbol = source is IExtendedTypeSymbol sourceExtended ? (TypeSymbol)sourceExtended.ElementType : source;
             var destSymbol = destination is IExtendedTypeSymbol destExtended ? (TypeSymbol)destExtended.ElementType : destination;
 
-            if (source is IExtendedTypeSymbol sourceExtended2)
+            // Exclude ref from modifier checks
+            var sourceAccessModifiers = source.AccessModifiers & ~TypeAccessModifiers.Ref;
+            var destAccessModifiers = destination.AccessModifiers & ~TypeAccessModifiers.Ref;
+
+            // From src (rows) to dest (columns)
+            //             None, ReadOnly, Immutable, Isolated, Transient
+            //None,          y      y          n          n         n 
+            //ReadOnly       n      y          n          n         n 
+            //Immutable      n      y          y          n         n 
+            //Isolated       y      y          y          y         n
+            //Transient      n      n          n          n         y
+
+            // transient to transient only
+            if (
+                ((sourceAccessModifiers & TypeAccessModifiers.Transient) != (destAccessModifiers & TypeAccessModifiers.Transient)) ||
+               ((sourceAccessModifiers & TypeAccessModifiers.Immutable) != 0 && ((destAccessModifiers == TypeAccessModifiers.None) || (destAccessModifiers & TypeAccessModifiers.Isolated) != 0)) ||
+                ((sourceAccessModifiers & TypeAccessModifiers.ReadOnly) != 0 && (destAccessModifiers & TypeAccessModifiers.ReadOnly) != 0) ||
+                ((sourceAccessModifiers == TypeAccessModifiers.None) && ((destAccessModifiers & TypeAccessModifiers.Immutable) != 0 || (destAccessModifiers & TypeAccessModifiers.Isolated) != 0))
+                )
             {
-                Debug.Assert(sourceExtended2.AccessModifiers == 0, "TODO access modifiers for extended types are not implemented");
+                return Conversion.NoConversion;
             }
-            if (destination is IExtendedTypeSymbol destExtended2)
-            {
-                Debug.Assert(destExtended2.AccessModifiers == 0, "TODO access modifiers for extended types are not implemented");
-            }
-            
+
             return ClassifyStandardImplicitConversion(sourceSymbol, destSymbol, ref useSiteDiagnostics);
         }
 

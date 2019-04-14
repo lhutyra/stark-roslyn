@@ -222,39 +222,39 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         internal static RefKind GetRefKind(this TypeSyntax syntax)
         {
-            syntax.SkipRef(out var refKind);
+            var refKind = RefKind.None;
+            if (syntax != null && syntax.Kind() == SyntaxKind.RefType)
+            {
+                var refType = (RefTypeSyntax)syntax;
+                switch (refType.RefKindKeyword.Kind())
+                {
+                    case SyntaxKind.RefKeyword:
+                        refKind = RefKind.Ref;
+                        break;
+                    case SyntaxKind.InKeyword:
+                        refKind = RefKind.In;
+                        break;
+                    case SyntaxKind.OutKeyword:
+                        refKind = RefKind.Out;
+                        break;
+                    default:
+                        throw ExceptionUtilities.UnexpectedValue(refType.RefKindKeyword);
+                }
+
+                if (refType.LetKeyword.Kind() == SyntaxKind.LetKeyword)
+                {
+                    if (refKind == RefKind.Ref)
+                    {
+                        refKind = RefKind.RefReadOnly; // LetRef
+                    }
+                    else
+                    {
+                        // error
+                    }
+                }
+            }
+
             return refKind;
-        }
-
-        internal static TypeSyntax SkipRef(this TypeSyntax syntax)
-        {
-            if (syntax != null && syntax.Kind() == SyntaxKind.RefKindType)
-            {
-                syntax = ((RefKindTypeSyntax)syntax).Type;
-            }
-
-            return syntax;
-        }
-
-        internal static TypeSyntax SkipRef(this TypeSyntax syntax, out RefKind refKind)
-        {
-            refKind = RefKind.None;
-            if (syntax != null && syntax.Kind() == SyntaxKind.RefKindType)
-            {
-                var refType = (RefKindTypeSyntax)syntax;
-
-                if (refType.Type.Kind() == SyntaxKind.ExtendedType && ((ExtendedTypeSyntax)refType.Type).Modifiers.Any(SyntaxKind.ReadOnlyKeyword))
-                {
-                    refKind = RefKind.RefReadOnly;
-                }
-                else
-                {
-                    refKind = refType.RefKindKeyword.Kind() == SyntaxKind.RefKeyword ? RefKind.Ref : RefKind.In;
-                }
-                syntax = refType.Type;
-            }
-
-            return syntax;
         }
 
         internal static ExpressionSyntax CheckAndUnwrapRefExpression(

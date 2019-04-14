@@ -98,7 +98,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
                 case SyntaxKind.OmittedTypeArgument:
                 case SyntaxKind.RefExpression:
-                case SyntaxKind.RefKindType:
+                case SyntaxKind.RefType:
                     // These are just placeholders and are not separately meaningful.
                     return false;
 

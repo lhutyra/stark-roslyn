@@ -65,7 +65,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 .WithPrependedLeadingTrivia(SyntaxFactory.ElasticMarker)
                 .WithAdditionalAnnotations(Simplifier.Annotation);
             var refKeyword = SyntaxFactory.Token(SyntaxKind.RefKeyword);
-            return SyntaxFactory.RefKindType(refKeyword, underlyingType);
+            return SyntaxFactory.RefType(refKeyword, underlyingType);
         }
 
         public static TypeSyntax GenerateRefReadOnlyTypeSyntax(
@@ -76,7 +76,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 .WithAdditionalAnnotations(Simplifier.Annotation);
             var refKeyword = SyntaxFactory.Token(SyntaxKind.RefKeyword);
             var readOnlyKeyword = SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword);
-            return SyntaxFactory.RefKindType(refKeyword, SyntaxFactory.ExtendedType(SyntaxTokenList.Create(readOnlyKeyword), underlyingType));
+            return SyntaxFactory.RefType(refKeyword, SyntaxFactory.SimpleExtendedType(SyntaxTokenList.Create(readOnlyKeyword), underlyingType));
         }
 
         public static bool ContainingTypesOrSelfHasUnsafeKeyword(this ITypeSymbol containingType)

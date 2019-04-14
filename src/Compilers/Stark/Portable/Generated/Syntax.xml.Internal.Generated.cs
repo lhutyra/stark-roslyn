@@ -1249,142 +1249,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
-  /// <summary>Class which represents the syntax node for a readonly/transient type.</summary>
-  internal sealed partial class ExtendedTypeSyntax : TypeSyntax
-  {
-    internal readonly GreenNode modifiers;
-    internal readonly TypeSyntax elementType;
-
-    internal ExtendedTypeSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax elementType, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
-        : base(kind, diagnostics, annotations)
-    {
-        this.SlotCount = 2;
-        if (modifiers != null)
-        {
-            this.AdjustFlagsAndWidth(modifiers);
-            this.modifiers = modifiers;
-        }
-        this.AdjustFlagsAndWidth(elementType);
-        this.elementType = elementType;
-    }
-
-
-    internal ExtendedTypeSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax elementType, SyntaxFactoryContext context)
-        : base(kind)
-    {
-        this.SetFactoryContext(context);
-        this.SlotCount = 2;
-        if (modifiers != null)
-        {
-            this.AdjustFlagsAndWidth(modifiers);
-            this.modifiers = modifiers;
-        }
-        this.AdjustFlagsAndWidth(elementType);
-        this.elementType = elementType;
-    }
-
-
-    internal ExtendedTypeSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax elementType)
-        : base(kind)
-    {
-        this.SlotCount = 2;
-        if (modifiers != null)
-        {
-            this.AdjustFlagsAndWidth(modifiers);
-            this.modifiers = modifiers;
-        }
-        this.AdjustFlagsAndWidth(elementType);
-        this.elementType = elementType;
-    }
-
-    /// <summary>Gets the modifier list.</summary>
-    public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
-    /// <summary>The ElementType for which the modifiers are applied (e.g readonly, transient...).</summary>
-    public TypeSyntax ElementType { get { return this.elementType; } }
-
-    internal override GreenNode GetSlot(int index)
-    {
-        switch (index)
-        {
-            case 0: return this.modifiers;
-            case 1: return this.elementType;
-            default: return null;
-        }
-    }
-
-    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
-    {
-      return new Stark.Syntax.ExtendedTypeSyntax(this, parent, position);
-    }
-
-    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
-    {
-        return visitor.VisitExtendedType(this);
-    }
-
-    public override void Accept(CSharpSyntaxVisitor visitor)
-    {
-        visitor.VisitExtendedType(this);
-    }
-
-    public ExtendedTypeSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
-    {
-        if (modifiers != this.Modifiers || elementType != this.ElementType)
-        {
-            var newNode = SyntaxFactory.ExtendedType(modifiers, elementType);
-            var diags = this.GetDiagnostics();
-            if (diags != null && diags.Length > 0)
-               newNode = newNode.WithDiagnosticsGreen(diags);
-            var annotations = this.GetAnnotations();
-            if (annotations != null && annotations.Length > 0)
-               newNode = newNode.WithAnnotationsGreen(annotations);
-            return newNode;
-        }
-
-        return this;
-    }
-
-    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
-    {
-         return new ExtendedTypeSyntax(this.Kind, this.modifiers, this.elementType, diagnostics, GetAnnotations());
-    }
-
-    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
-    {
-         return new ExtendedTypeSyntax(this.Kind, this.modifiers, this.elementType, GetDiagnostics(), annotations);
-    }
-
-    internal ExtendedTypeSyntax(ObjectReader reader)
-        : base(reader)
-    {
-      this.SlotCount = 2;
-      var modifiers = (GreenNode)reader.ReadValue();
-      if (modifiers != null)
-      {
-         AdjustFlagsAndWidth(modifiers);
-         this.modifiers = modifiers;
-      }
-      var elementType = (TypeSyntax)reader.ReadValue();
-      if (elementType != null)
-      {
-         AdjustFlagsAndWidth(elementType);
-         this.elementType = elementType;
-      }
-    }
-
-    internal override void WriteTo(ObjectWriter writer)
-    {
-      base.WriteTo(writer);
-      writer.WriteValue(this.modifiers);
-      writer.WriteValue(this.elementType);
-    }
-
-    static ExtendedTypeSyntax()
-    {
-       ObjectBinder.RegisterTypeReader(typeof(ExtendedTypeSyntax), r => new ExtendedTypeSyntax(r));
-    }
-  }
-
   /// <summary>Class which represents the syntax node for pointer type.</summary>
   internal sealed partial class PointerTypeSyntax : TypeSyntax
   {
@@ -2037,78 +1901,111 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
-  /// <summary>The ref modifier of a method's return value or a local.</summary>
-  internal sealed partial class RefKindTypeSyntax : TypeSyntax
+  /// <summary>Class which represents the syntax node for a readonly/transient type.</summary>
+  internal abstract partial class ExtendedTypeSyntax : TypeSyntax
   {
-    internal readonly SyntaxToken refKindKeyword;
-    internal readonly TypeSyntax type;
+    internal ExtendedTypeSyntax(SyntaxKind kind, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+      : base(kind, diagnostics, annotations)
+    {
+    }
+    internal ExtendedTypeSyntax(SyntaxKind kind)
+      : base(kind)
+    {
+    }
 
-    internal RefKindTypeSyntax(SyntaxKind kind, SyntaxToken refKindKeyword, TypeSyntax type, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    protected ExtendedTypeSyntax(ObjectReader reader)
+       : base(reader)
+    {
+    }
+
+    /// <summary>Gets the modifier list.</summary>
+    public abstract StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get; }
+
+    /// <summary>The ElementType for which the modifiers are applied (e.g readonly, transient...).</summary>
+    public abstract TypeSyntax ElementType { get; }
+  }
+
+  /// <summary>Class which represents the syntax node for a readonly/transient type.</summary>
+  internal sealed partial class SimpleExtendedTypeSyntax : ExtendedTypeSyntax
+  {
+    internal readonly GreenNode modifiers;
+    internal readonly TypeSyntax elementType;
+
+    internal SimpleExtendedTypeSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax elementType, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(refKindKeyword);
-        this.refKindKeyword = refKindKeyword;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
     }
 
 
-    internal RefKindTypeSyntax(SyntaxKind kind, SyntaxToken refKindKeyword, TypeSyntax type, SyntaxFactoryContext context)
+    internal SimpleExtendedTypeSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax elementType, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(refKindKeyword);
-        this.refKindKeyword = refKindKeyword;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
     }
 
 
-    internal RefKindTypeSyntax(SyntaxKind kind, SyntaxToken refKindKeyword, TypeSyntax type)
+    internal SimpleExtendedTypeSyntax(SyntaxKind kind, GreenNode modifiers, TypeSyntax elementType)
         : base(kind)
     {
         this.SlotCount = 2;
-        this.AdjustFlagsAndWidth(refKindKeyword);
-        this.refKindKeyword = refKindKeyword;
-        this.AdjustFlagsAndWidth(type);
-        this.type = type;
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
     }
 
-    public SyntaxToken RefKindKeyword { get { return this.refKindKeyword; } }
-    public TypeSyntax Type { get { return this.type; } }
+    public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
+    public override TypeSyntax ElementType { get { return this.elementType; } }
 
     internal override GreenNode GetSlot(int index)
     {
         switch (index)
         {
-            case 0: return this.refKindKeyword;
-            case 1: return this.type;
+            case 0: return this.modifiers;
+            case 1: return this.elementType;
             default: return null;
         }
     }
 
     internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
     {
-      return new Stark.Syntax.RefKindTypeSyntax(this, parent, position);
+      return new Stark.Syntax.SimpleExtendedTypeSyntax(this, parent, position);
     }
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitRefKindType(this);
+        return visitor.VisitSimpleExtendedType(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitRefKindType(this);
+        visitor.VisitSimpleExtendedType(this);
     }
 
-    public RefKindTypeSyntax Update(SyntaxToken refKindKeyword, TypeSyntax type)
+    public SimpleExtendedTypeSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
     {
-        if (refKindKeyword != this.RefKindKeyword || type != this.Type)
+        if (modifiers != this.Modifiers || elementType != this.ElementType)
         {
-            var newNode = SyntaxFactory.RefKindType(refKindKeyword, type);
+            var newNode = SyntaxFactory.SimpleExtendedType(modifiers, elementType);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -2123,42 +2020,217 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new RefKindTypeSyntax(this.Kind, this.refKindKeyword, this.type, diagnostics, GetAnnotations());
+         return new SimpleExtendedTypeSyntax(this.Kind, this.modifiers, this.elementType, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new RefKindTypeSyntax(this.Kind, this.refKindKeyword, this.type, GetDiagnostics(), annotations);
+         return new SimpleExtendedTypeSyntax(this.Kind, this.modifiers, this.elementType, GetDiagnostics(), annotations);
     }
 
-    internal RefKindTypeSyntax(ObjectReader reader)
+    internal SimpleExtendedTypeSyntax(ObjectReader reader)
         : base(reader)
     {
       this.SlotCount = 2;
-      var refKindKeyword = (SyntaxToken)reader.ReadValue();
-      if (refKindKeyword != null)
+      var modifiers = (GreenNode)reader.ReadValue();
+      if (modifiers != null)
       {
-         AdjustFlagsAndWidth(refKindKeyword);
-         this.refKindKeyword = refKindKeyword;
+         AdjustFlagsAndWidth(modifiers);
+         this.modifiers = modifiers;
       }
-      var type = (TypeSyntax)reader.ReadValue();
-      if (type != null)
+      var elementType = (TypeSyntax)reader.ReadValue();
+      if (elementType != null)
       {
-         AdjustFlagsAndWidth(type);
-         this.type = type;
+         AdjustFlagsAndWidth(elementType);
+         this.elementType = elementType;
       }
     }
 
     internal override void WriteTo(ObjectWriter writer)
     {
       base.WriteTo(writer);
-      writer.WriteValue(this.refKindKeyword);
-      writer.WriteValue(this.type);
+      writer.WriteValue(this.modifiers);
+      writer.WriteValue(this.elementType);
     }
 
-    static RefKindTypeSyntax()
+    static SimpleExtendedTypeSyntax()
     {
-       ObjectBinder.RegisterTypeReader(typeof(RefKindTypeSyntax), r => new RefKindTypeSyntax(r));
+       ObjectBinder.RegisterTypeReader(typeof(SimpleExtendedTypeSyntax), r => new SimpleExtendedTypeSyntax(r));
+    }
+  }
+
+  /// <summary>The ref modifier of a method's return value or a local.</summary>
+  internal sealed partial class RefTypeSyntax : ExtendedTypeSyntax
+  {
+    internal readonly SyntaxToken letKeyword;
+    internal readonly SyntaxToken refKindKeyword;
+    internal readonly GreenNode modifiers;
+    internal readonly TypeSyntax elementType;
+
+    internal RefTypeSyntax(SyntaxKind kind, SyntaxToken letKeyword, SyntaxToken refKindKeyword, GreenNode modifiers, TypeSyntax elementType, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 4;
+        if (letKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(letKeyword);
+            this.letKeyword = letKeyword;
+        }
+        this.AdjustFlagsAndWidth(refKindKeyword);
+        this.refKindKeyword = refKindKeyword;
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
+    }
+
+
+    internal RefTypeSyntax(SyntaxKind kind, SyntaxToken letKeyword, SyntaxToken refKindKeyword, GreenNode modifiers, TypeSyntax elementType, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 4;
+        if (letKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(letKeyword);
+            this.letKeyword = letKeyword;
+        }
+        this.AdjustFlagsAndWidth(refKindKeyword);
+        this.refKindKeyword = refKindKeyword;
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
+    }
+
+
+    internal RefTypeSyntax(SyntaxKind kind, SyntaxToken letKeyword, SyntaxToken refKindKeyword, GreenNode modifiers, TypeSyntax elementType)
+        : base(kind)
+    {
+        this.SlotCount = 4;
+        if (letKeyword != null)
+        {
+            this.AdjustFlagsAndWidth(letKeyword);
+            this.letKeyword = letKeyword;
+        }
+        this.AdjustFlagsAndWidth(refKindKeyword);
+        this.refKindKeyword = refKindKeyword;
+        if (modifiers != null)
+        {
+            this.AdjustFlagsAndWidth(modifiers);
+            this.modifiers = modifiers;
+        }
+        this.AdjustFlagsAndWidth(elementType);
+        this.elementType = elementType;
+    }
+
+    public SyntaxToken LetKeyword { get { return this.letKeyword; } }
+    public SyntaxToken RefKindKeyword { get { return this.refKindKeyword; } }
+    public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> Modifiers { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken>(this.modifiers); } }
+    public override TypeSyntax ElementType { get { return this.elementType; } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.letKeyword;
+            case 1: return this.refKindKeyword;
+            case 2: return this.modifiers;
+            case 3: return this.elementType;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.RefTypeSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitRefType(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitRefType(this);
+    }
+
+    public RefTypeSyntax Update(SyntaxToken letKeyword, SyntaxToken refKindKeyword, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
+    {
+        if (letKeyword != this.LetKeyword || refKindKeyword != this.RefKindKeyword || modifiers != this.Modifiers || elementType != this.ElementType)
+        {
+            var newNode = SyntaxFactory.RefType(letKeyword, refKindKeyword, modifiers, elementType);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new RefTypeSyntax(this.Kind, this.letKeyword, this.refKindKeyword, this.modifiers, this.elementType, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new RefTypeSyntax(this.Kind, this.letKeyword, this.refKindKeyword, this.modifiers, this.elementType, GetDiagnostics(), annotations);
+    }
+
+    internal RefTypeSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 4;
+      var letKeyword = (SyntaxToken)reader.ReadValue();
+      if (letKeyword != null)
+      {
+         AdjustFlagsAndWidth(letKeyword);
+         this.letKeyword = letKeyword;
+      }
+      var refKindKeyword = (SyntaxToken)reader.ReadValue();
+      if (refKindKeyword != null)
+      {
+         AdjustFlagsAndWidth(refKindKeyword);
+         this.refKindKeyword = refKindKeyword;
+      }
+      var modifiers = (GreenNode)reader.ReadValue();
+      if (modifiers != null)
+      {
+         AdjustFlagsAndWidth(modifiers);
+         this.modifiers = modifiers;
+      }
+      var elementType = (TypeSyntax)reader.ReadValue();
+      if (elementType != null)
+      {
+         AdjustFlagsAndWidth(elementType);
+         this.elementType = elementType;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.letKeyword);
+      writer.WriteValue(this.refKindKeyword);
+      writer.WriteValue(this.modifiers);
+      writer.WriteValue(this.elementType);
+    }
+
+    static RefTypeSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(RefTypeSyntax), r => new RefTypeSyntax(r));
     }
   }
 
@@ -13687,23 +13759,17 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
   internal sealed partial class VariableDeclarationSyntax : CSharpSyntaxNode
   {
     internal readonly SyntaxToken variableKeyword;
-    internal readonly SyntaxToken refKeyword;
     internal readonly SyntaxToken identifier;
     internal readonly SyntaxToken colonToken;
     internal readonly TypeSyntax type;
     internal readonly EqualsValueClauseSyntax initializer;
 
-    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 6;
+        this.SlotCount = 5;
         this.AdjustFlagsAndWidth(variableKeyword);
         this.variableKeyword = variableKeyword;
-        if (refKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(refKeyword);
-            this.refKeyword = refKeyword;
-        }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
         if (colonToken != null)
@@ -13724,18 +13790,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, SyntaxFactoryContext context)
+    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 6;
+        this.SlotCount = 5;
         this.AdjustFlagsAndWidth(variableKeyword);
         this.variableKeyword = variableKeyword;
-        if (refKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(refKeyword);
-            this.refKeyword = refKeyword;
-        }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
         if (colonToken != null)
@@ -13756,17 +13817,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
         : base(kind)
     {
-        this.SlotCount = 6;
+        this.SlotCount = 5;
         this.AdjustFlagsAndWidth(variableKeyword);
         this.variableKeyword = variableKeyword;
-        if (refKeyword != null)
-        {
-            this.AdjustFlagsAndWidth(refKeyword);
-            this.refKeyword = refKeyword;
-        }
         this.AdjustFlagsAndWidth(identifier);
         this.identifier = identifier;
         if (colonToken != null)
@@ -13788,8 +13844,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     /// <summary>Gets the variable keyword.</summary>
     public SyntaxToken VariableKeyword { get { return this.variableKeyword; } }
-    /// <summary>Gets the ref keyword.</summary>
-    public SyntaxToken RefKeyword { get { return this.refKeyword; } }
     /// <summary>Gets the identifier.</summary>
     public SyntaxToken Identifier { get { return this.identifier; } }
     /// <summary>Gets the colon token.</summary>
@@ -13802,11 +13856,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         switch (index)
         {
             case 0: return this.variableKeyword;
-            case 1: return this.refKeyword;
-            case 2: return this.identifier;
-            case 3: return this.colonToken;
-            case 4: return this.type;
-            case 5: return this.initializer;
+            case 1: return this.identifier;
+            case 2: return this.colonToken;
+            case 3: return this.type;
+            case 4: return this.initializer;
             default: return null;
         }
     }
@@ -13826,11 +13879,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitVariableDeclaration(this);
     }
 
-    public VariableDeclarationSyntax Update(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public VariableDeclarationSyntax Update(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
-        if (variableKeyword != this.VariableKeyword || refKeyword != this.RefKeyword || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || initializer != this.Initializer)
+        if (variableKeyword != this.VariableKeyword || identifier != this.Identifier || colonToken != this.ColonToken || type != this.Type || initializer != this.Initializer)
         {
-            var newNode = SyntaxFactory.VariableDeclaration(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
+            var newNode = SyntaxFactory.VariableDeclaration(variableKeyword, identifier, colonToken, type, initializer);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -13845,29 +13898,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.refKeyword, this.identifier, this.colonToken, this.type, this.initializer, diagnostics, GetAnnotations());
+         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.identifier, this.colonToken, this.type, this.initializer, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.refKeyword, this.identifier, this.colonToken, this.type, this.initializer, GetDiagnostics(), annotations);
+         return new VariableDeclarationSyntax(this.Kind, this.variableKeyword, this.identifier, this.colonToken, this.type, this.initializer, GetDiagnostics(), annotations);
     }
 
     internal VariableDeclarationSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 6;
+      this.SlotCount = 5;
       var variableKeyword = (SyntaxToken)reader.ReadValue();
       if (variableKeyword != null)
       {
          AdjustFlagsAndWidth(variableKeyword);
          this.variableKeyword = variableKeyword;
-      }
-      var refKeyword = (SyntaxToken)reader.ReadValue();
-      if (refKeyword != null)
-      {
-         AdjustFlagsAndWidth(refKeyword);
-         this.refKeyword = refKeyword;
       }
       var identifier = (SyntaxToken)reader.ReadValue();
       if (identifier != null)
@@ -13899,7 +13946,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     {
       base.WriteTo(writer);
       writer.WriteValue(this.variableKeyword);
-      writer.WriteValue(this.refKeyword);
       writer.WriteValue(this.identifier);
       writer.WriteValue(this.colonToken);
       writer.WriteValue(this.type);
@@ -36491,11 +36537,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
-    public virtual TResult VisitExtendedType(ExtendedTypeSyntax node)
-    {
-      return this.DefaultVisit(node);
-    }
-
     public virtual TResult VisitPointerType(PointerTypeSyntax node)
     {
       return this.DefaultVisit(node);
@@ -36521,7 +36562,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
-    public virtual TResult VisitRefKindType(RefKindTypeSyntax node)
+    public virtual TResult VisitSimpleExtendedType(SimpleExtendedTypeSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
+    public virtual TResult VisitRefType(RefTypeSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -37585,11 +37631,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       this.DefaultVisit(node);
     }
 
-    public virtual void VisitExtendedType(ExtendedTypeSyntax node)
-    {
-      this.DefaultVisit(node);
-    }
-
     public virtual void VisitPointerType(PointerTypeSyntax node)
     {
       this.DefaultVisit(node);
@@ -37615,7 +37656,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       this.DefaultVisit(node);
     }
 
-    public virtual void VisitRefKindType(RefKindTypeSyntax node)
+    public virtual void VisitSimpleExtendedType(SimpleExtendedTypeSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    public virtual void VisitRefType(RefTypeSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -38697,13 +38743,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return node.Update(openBracketToken, sizes, closeBracketToken);
     }
 
-    public override CSharpSyntaxNode VisitExtendedType(ExtendedTypeSyntax node)
-    {
-      var modifiers = this.VisitList(node.Modifiers);
-      var elementType = (TypeSyntax)this.Visit(node.ElementType);
-      return node.Update(modifiers, elementType);
-    }
-
     public override CSharpSyntaxNode VisitPointerType(PointerTypeSyntax node)
     {
       var asteriskToken = (SyntaxToken)this.Visit(node.AsteriskToken);
@@ -38739,11 +38778,20 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return node.Update(omittedTypeArgumentToken);
     }
 
-    public override CSharpSyntaxNode VisitRefKindType(RefKindTypeSyntax node)
+    public override CSharpSyntaxNode VisitSimpleExtendedType(SimpleExtendedTypeSyntax node)
     {
+      var modifiers = this.VisitList(node.Modifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(modifiers, elementType);
+    }
+
+    public override CSharpSyntaxNode VisitRefType(RefTypeSyntax node)
+    {
+      var letKeyword = (SyntaxToken)this.Visit(node.LetKeyword);
       var refKindKeyword = (SyntaxToken)this.Visit(node.RefKindKeyword);
-      var type = (TypeSyntax)this.Visit(node.Type);
-      return node.Update(refKindKeyword, type);
+      var modifiers = this.VisitList(node.Modifiers);
+      var elementType = (TypeSyntax)this.Visit(node.ElementType);
+      return node.Update(letKeyword, refKindKeyword, modifiers, elementType);
     }
 
     public override CSharpSyntaxNode VisitParenthesizedExpression(ParenthesizedExpressionSyntax node)
@@ -39362,12 +39410,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     public override CSharpSyntaxNode VisitVariableDeclaration(VariableDeclarationSyntax node)
     {
       var variableKeyword = (SyntaxToken)this.Visit(node.VariableKeyword);
-      var refKeyword = (SyntaxToken)this.Visit(node.RefKeyword);
       var identifier = (SyntaxToken)this.Visit(node.Identifier);
       var colonToken = (SyntaxToken)this.Visit(node.ColonToken);
       var type = (TypeSyntax)this.Visit(node.Type);
       var initializer = (EqualsValueClauseSyntax)this.Visit(node.Initializer);
-      return node.Update(variableKeyword, refKeyword, identifier, colonToken, type, initializer);
+      return node.Update(variableKeyword, identifier, colonToken, type, initializer);
     }
 
     public override CSharpSyntaxNode VisitEqualsValueClause(EqualsValueClauseSyntax node)
@@ -40796,26 +40843,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public ExtendedTypeSyntax ExtendedType(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
-    {
-#if DEBUG
-      if (elementType == null)
-        throw new ArgumentNullException(nameof(elementType));
-#endif
-
-      int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ExtendedType, modifiers.Node, elementType, this.context, out hash);
-      if (cached != null) return (ExtendedTypeSyntax)cached;
-
-      var result = new ExtendedTypeSyntax(SyntaxKind.ExtendedType, modifiers.Node, elementType, this.context);
-      if (hash >= 0)
-      {
-          SyntaxNodeCache.AddNode(result, hash);
-      }
-
-      return result;
-    }
-
     public PointerTypeSyntax PointerType(SyntaxToken asteriskToken, TypeSyntax elementType)
     {
 #if DEBUG
@@ -40968,34 +40995,56 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public RefKindTypeSyntax RefKindType(SyntaxToken refKindKeyword, TypeSyntax type)
+    public SimpleExtendedTypeSyntax SimpleExtendedType(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
     {
 #if DEBUG
-      if (refKindKeyword == null)
-        throw new ArgumentNullException(nameof(refKindKeyword));
-      switch (refKindKeyword.Kind)
-      {
-        case SyntaxKind.RefKeyword:
-        case SyntaxKind.InKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(refKindKeyword));
-      }
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
 #endif
 
       int hash;
-      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.RefKindType, refKindKeyword, type, this.context, out hash);
-      if (cached != null) return (RefKindTypeSyntax)cached;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ExtendedType, modifiers.Node, elementType, this.context, out hash);
+      if (cached != null) return (SimpleExtendedTypeSyntax)cached;
 
-      var result = new RefKindTypeSyntax(SyntaxKind.RefKindType, refKindKeyword, type, this.context);
+      var result = new SimpleExtendedTypeSyntax(SyntaxKind.ExtendedType, modifiers.Node, elementType, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
       }
 
       return result;
+    }
+
+    public RefTypeSyntax RefType(SyntaxToken letKeyword, SyntaxToken refKindKeyword, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
+    {
+#if DEBUG
+      if (letKeyword != null)
+      {
+      switch (letKeyword.Kind)
+      {
+        case SyntaxKind.LetKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(letKeyword));
+      }
+      }
+      if (refKindKeyword == null)
+        throw new ArgumentNullException(nameof(refKindKeyword));
+      switch (refKindKeyword.Kind)
+      {
+        case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
+        case SyntaxKind.OutKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(refKindKeyword));
+      }
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
+#endif
+
+      return new RefTypeSyntax(SyntaxKind.RefType, letKeyword, refKindKeyword, modifiers.Node, elementType, this.context);
     }
 
     public ParenthesizedExpressionSyntax ParenthesizedExpression(SyntaxToken openParenToken, ExpressionSyntax expression, SyntaxToken closeParenToken)
@@ -43512,7 +43561,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, eosToken, this.context);
     }
 
-    public VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
 #if DEBUG
       if (variableKeyword == null)
@@ -43525,17 +43574,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           break;
         default:
           throw new ArgumentException(nameof(variableKeyword));
-      }
-      if (refKeyword != null)
-      {
-      switch (refKeyword.Kind)
-      {
-        case SyntaxKind.RefKeyword:
-        case SyntaxKind.None:
-          break;
-        default:
-          throw new ArgumentException(nameof(refKeyword));
-      }
       }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
@@ -43559,7 +43597,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, refKeyword, identifier, colonToken, type, initializer, this.context);
+      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, identifier, colonToken, type, initializer, this.context);
     }
 
     public EqualsValueClauseSyntax EqualsValueClause(SyntaxToken equalsToken, ExpressionSyntax value)
@@ -48306,26 +48344,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static ExtendedTypeSyntax ExtendedType(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
-    {
-#if DEBUG
-      if (elementType == null)
-        throw new ArgumentNullException(nameof(elementType));
-#endif
-
-      int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ExtendedType, modifiers.Node, elementType, out hash);
-      if (cached != null) return (ExtendedTypeSyntax)cached;
-
-      var result = new ExtendedTypeSyntax(SyntaxKind.ExtendedType, modifiers.Node, elementType);
-      if (hash >= 0)
-      {
-          SyntaxNodeCache.AddNode(result, hash);
-      }
-
-      return result;
-    }
-
     public static PointerTypeSyntax PointerType(SyntaxToken asteriskToken, TypeSyntax elementType)
     {
 #if DEBUG
@@ -48478,34 +48496,56 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static RefKindTypeSyntax RefKindType(SyntaxToken refKindKeyword, TypeSyntax type)
+    public static SimpleExtendedTypeSyntax SimpleExtendedType(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
     {
 #if DEBUG
-      if (refKindKeyword == null)
-        throw new ArgumentNullException(nameof(refKindKeyword));
-      switch (refKindKeyword.Kind)
-      {
-        case SyntaxKind.RefKeyword:
-        case SyntaxKind.InKeyword:
-          break;
-        default:
-          throw new ArgumentException(nameof(refKindKeyword));
-      }
-      if (type == null)
-        throw new ArgumentNullException(nameof(type));
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
 #endif
 
       int hash;
-      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.RefKindType, refKindKeyword, type, out hash);
-      if (cached != null) return (RefKindTypeSyntax)cached;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ExtendedType, modifiers.Node, elementType, out hash);
+      if (cached != null) return (SimpleExtendedTypeSyntax)cached;
 
-      var result = new RefKindTypeSyntax(SyntaxKind.RefKindType, refKindKeyword, type);
+      var result = new SimpleExtendedTypeSyntax(SyntaxKind.ExtendedType, modifiers.Node, elementType);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
       }
 
       return result;
+    }
+
+    public static RefTypeSyntax RefType(SyntaxToken letKeyword, SyntaxToken refKindKeyword, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax elementType)
+    {
+#if DEBUG
+      if (letKeyword != null)
+      {
+      switch (letKeyword.Kind)
+      {
+        case SyntaxKind.LetKeyword:
+        case SyntaxKind.None:
+          break;
+        default:
+          throw new ArgumentException(nameof(letKeyword));
+      }
+      }
+      if (refKindKeyword == null)
+        throw new ArgumentNullException(nameof(refKindKeyword));
+      switch (refKindKeyword.Kind)
+      {
+        case SyntaxKind.RefKeyword:
+        case SyntaxKind.InKeyword:
+        case SyntaxKind.OutKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(refKindKeyword));
+      }
+      if (elementType == null)
+        throw new ArgumentNullException(nameof(elementType));
+#endif
+
+      return new RefTypeSyntax(SyntaxKind.RefType, letKeyword, refKindKeyword, modifiers.Node, elementType);
     }
 
     public static ParenthesizedExpressionSyntax ParenthesizedExpression(SyntaxToken openParenToken, ExpressionSyntax expression, SyntaxToken closeParenToken)
@@ -51022,7 +51062,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return new LocalDeclarationStatementSyntax(SyntaxKind.LocalDeclarationStatement, awaitKeyword, usingKeyword, declaration, eosToken);
     }
 
-    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken refKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
+    public static VariableDeclarationSyntax VariableDeclaration(SyntaxToken variableKeyword, SyntaxToken identifier, SyntaxToken colonToken, TypeSyntax type, EqualsValueClauseSyntax initializer)
     {
 #if DEBUG
       if (variableKeyword == null)
@@ -51035,17 +51075,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
           break;
         default:
           throw new ArgumentException(nameof(variableKeyword));
-      }
-      if (refKeyword != null)
-      {
-      switch (refKeyword.Kind)
-      {
-        case SyntaxKind.RefKeyword:
-        case SyntaxKind.None:
-          break;
-        default:
-          throw new ArgumentException(nameof(refKeyword));
-      }
       }
       if (identifier == null)
         throw new ArgumentNullException(nameof(identifier));
@@ -51069,7 +51098,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, refKeyword, identifier, colonToken, type, initializer);
+      return new VariableDeclarationSyntax(SyntaxKind.VariableDeclaration, variableKeyword, identifier, colonToken, type, initializer);
     }
 
     public static EqualsValueClauseSyntax EqualsValueClause(SyntaxToken equalsToken, ExpressionSyntax value)
@@ -55551,13 +55580,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(PredefinedTypeSyntax),
            typeof(ArrayTypeSyntax),
            typeof(ArrayRankSpecifierSyntax),
-           typeof(ExtendedTypeSyntax),
            typeof(PointerTypeSyntax),
            typeof(NullableTypeSyntax),
            typeof(TupleTypeSyntax),
            typeof(TupleElementSyntax),
            typeof(OmittedTypeArgumentSyntax),
-           typeof(RefKindTypeSyntax),
+           typeof(SimpleExtendedTypeSyntax),
+           typeof(RefTypeSyntax),
            typeof(ParenthesizedExpressionSyntax),
            typeof(TupleExpressionSyntax),
            typeof(PrefixUnaryExpressionSyntax),

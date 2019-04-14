@@ -101,6 +101,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 typeParameterList: GenerateTypeParameterList(method, options),
                 parameterList: ParameterGenerator.GenerateParameterList(method.Parameters, explicitInterfaceSpecifier != null, options),
                 constraintClauses: GenerateConstraintClauses(method),
+                contractClauses: default,
                 body: hasNoBody ? null : StatementGenerator.GenerateBlock(method),
                 expressionBody: default,
                 eosToken: hasNoBody  ? SyntaxFactory.EndOfLineToken() : default);

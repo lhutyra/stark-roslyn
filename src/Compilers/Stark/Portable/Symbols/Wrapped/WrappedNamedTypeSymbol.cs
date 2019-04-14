@@ -29,6 +29,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             _underlyingType = underlyingType;
         }
 
+        public override TypeAccessModifiers AccessModifiers => _underlyingType.AccessModifiers;
+
         public NamedTypeSymbol UnderlyingNamedType
         {
             get
@@ -212,7 +214,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _underlyingType.IsRefLikeType; }
         }
 
-        internal override bool IsReadOnly
+        public override bool IsReadOnly
         {
             get { return _underlyingType.IsReadOnly; }
         }

@@ -56,11 +56,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             var declaration = SyntaxFactory.ConstructorDeclaration(
                 attributeLists: AttributeGenerator.GenerateAttributeLists(constructor.GetAttributes(), options),
                 modifiers: GenerateModifiers(constructor, options),
-                identifier: CodeGenerationConstructorInfo.GetTypeName(constructor).ToIdentifierToken(),
                 parameterList: ParameterGenerator.GenerateParameterList(constructor.Parameters, isExplicit: false, options: options),
                 initializer: GenerateConstructorInitializer(constructor),
                 body: hasNoBody ? null : GenerateBlock(constructor),
-                semicolonToken: hasNoBody ? SyntaxFactory.Token(SyntaxKind.SemicolonToken) : default);
+                expressionBody: null,
+                eosToken: hasNoBody ? SyntaxFactory.Token(SyntaxKind.SemicolonToken) : default);
 
             declaration = UseExpressionBodyIfDesired(workspace, declaration, parseOptions);
 

@@ -73,8 +73,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 var arrayType = symbol;
                 while (arrayType != null)
                 {
-                    ranks.Add(SyntaxFactory.ArrayRankSpecifier(
-                        SyntaxFactory.SeparatedList(Enumerable.Repeat<ExpressionSyntax>(SyntaxFactory.OmittedArraySizeExpression(), arrayType.Rank))));
+                    ranks.Add(SyntaxFactory.ArrayRankSpecifier(SyntaxFactory.OmittedArraySizeExpression()));
 
                     arrayType = arrayType.ElementType as IArrayTypeSymbol;
                 }

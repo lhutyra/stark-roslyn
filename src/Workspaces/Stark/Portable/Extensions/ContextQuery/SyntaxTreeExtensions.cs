@@ -524,7 +524,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
                 // readonly ref $$
                 if (container.IsKind(SyntaxKind.IncompleteMember))
                 {
-                    return ((IncompleteMemberSyntax)container).Type.IsKind(SyntaxKind.RefKindType);
+                    return ((IncompleteMemberSyntax)container).Type.IsKind(SyntaxKind.RefType);
                 }
 
                 if (container.IsKind(SyntaxKind.CompilationUnit) ||
@@ -1453,7 +1453,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             // ref |
             // ref readonly |
             if (token.IsKind(SyntaxKind.RefKeyword, SyntaxKind.ReadOnlyKeyword) &&
-                token.Parent.IsKind(SyntaxKind.RefKindType) &&
+                token.Parent.IsKind(SyntaxKind.RefType) &&
                 token.Parent.IsParentKind(SyntaxKind.VariableDeclaration) &&
                 token.Parent.Parent.IsParentKind(SyntaxKind.LocalDeclarationStatement))
             {
