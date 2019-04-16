@@ -6591,18 +6591,15 @@ tryAgain:
         {
             Debug.Assert(this.CurrentToken.Kind == SyntaxKind.DoKeyword);
             var @do = this.EatToken(SyntaxKind.DoKeyword);
-            var statement = this.ParseEmbeddedStatement();
+            var statement = this.ParseBlock();
             var @while = this.EatToken(SyntaxKind.WhileKeyword);
-            var openParen = this.EatToken(SyntaxKind.OpenParenToken);
 
             var saveTerm = _termState;
             _termState |= TerminatorState.IsEndOfDoWhileExpression;
             var expression = this.ParseExpressionCore();
             _termState = saveTerm;
-
-            var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-            var eos = this.EatEos(ref closeParen);
-            return _syntaxFactory.DoStatement(@do, statement, @while, openParen, expression, closeParen, eos);
+            var eos = this.EatEos(ref expression);
+            return _syntaxFactory.DoStatement(@do, statement, @while, expression, eos);
         }
 
         private bool IsEndOfDoWhileExpression()
@@ -7180,11 +7177,9 @@ tryAgain:
         {
             Debug.Assert(this.CurrentToken.Kind == SyntaxKind.WhileKeyword);
             var @while = this.EatToken(SyntaxKind.WhileKeyword);
-            var openParen = this.EatToken(SyntaxKind.OpenParenToken);
             var condition = this.ParseExpressionCore();
-            var closeParen = this.EatToken(SyntaxKind.CloseParenToken);
-            var statement = this.ParseEmbeddedStatement();
-            return _syntaxFactory.WhileStatement(@while, openParen, condition, closeParen, statement);
+            var statement = this.ParseBlock();
+            return _syntaxFactory.WhileStatement(@while, condition, statement);
         }
 
         private LabeledStatementSyntax ParseLabeledStatement()

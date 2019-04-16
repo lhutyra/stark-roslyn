@@ -1277,7 +1277,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
 
                 case SyntaxKind.WhileStatement:
                     var whileStatement = (WhileStatementSyntax)node;
-                    return TextSpan.FromBounds(whileStatement.WhileKeyword.SpanStart, whileStatement.CloseParenToken.Span.End);
+                    return TextSpan.FromBounds(whileStatement.WhileKeyword.SpanStart, whileStatement.Condition.GetLastToken().Span.End);
 
                 case SyntaxKind.DoStatement:
                     return ((DoStatementSyntax)node).DoKeyword.Span;

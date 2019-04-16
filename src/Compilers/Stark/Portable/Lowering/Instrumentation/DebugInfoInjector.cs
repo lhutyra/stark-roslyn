@@ -187,7 +187,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             WhileStatementSyntax whileSyntax = (WhileStatementSyntax)original.Syntax;
             TextSpan conditionSequencePointSpan = TextSpan.FromBounds(
                 whileSyntax.WhileKeyword.SpanStart,
-                whileSyntax.CloseParenToken.Span.End);
+                whileSyntax.Condition.Span.End);
 
             return new BoundSequencePointWithSpan(whileSyntax, base.InstrumentWhileStatementConditionalGotoStartOrBreak(original, ifConditionGotoStart), conditionSequencePointSpan);
         }

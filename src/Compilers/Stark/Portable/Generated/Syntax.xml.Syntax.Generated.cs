@@ -9831,7 +9831,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
   public sealed partial class WhileStatementSyntax : StatementSyntax
   {
     private ExpressionSyntax condition;
-    private StatementSyntax statement;
+    private BlockSyntax statement;
 
     internal WhileStatementSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
@@ -9843,29 +9843,19 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
       get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.WhileStatementSyntax)this.Green).whileKeyword, this.Position, 0); }
     }
 
-    public SyntaxToken OpenParenToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.WhileStatementSyntax)this.Green).openParenToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
-    }
-
     public ExpressionSyntax Condition 
     {
         get
         {
-            return this.GetRed(ref this.condition, 2);
+            return this.GetRed(ref this.condition, 1);
         }
     }
 
-    public SyntaxToken CloseParenToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.WhileStatementSyntax)this.Green).closeParenToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
-    }
-
-    public StatementSyntax Statement 
+    public BlockSyntax Statement 
     {
         get
         {
-            return this.GetRed(ref this.statement, 4);
+            return this.GetRed(ref this.statement, 2);
         }
     }
 
@@ -9873,8 +9863,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 2: return this.GetRed(ref this.condition, 2);
-            case 4: return this.GetRed(ref this.statement, 4);
+            case 1: return this.GetRed(ref this.condition, 1);
+            case 2: return this.GetRed(ref this.statement, 2);
             default: return null;
         }
     }
@@ -9882,8 +9872,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 2: return this.condition;
-            case 4: return this.statement;
+            case 1: return this.condition;
+            case 2: return this.statement;
             default: return null;
         }
     }
@@ -9898,11 +9888,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitWhileStatement(this);
     }
 
-    public WhileStatementSyntax Update(SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, StatementSyntax statement)
+    public WhileStatementSyntax Update(SyntaxToken whileKeyword, ExpressionSyntax condition, BlockSyntax statement)
     {
-        if (whileKeyword != this.WhileKeyword || openParenToken != this.OpenParenToken || condition != this.Condition || closeParenToken != this.CloseParenToken || statement != this.Statement)
+        if (whileKeyword != this.WhileKeyword || condition != this.Condition || statement != this.Statement)
         {
-            var newNode = SyntaxFactory.WhileStatement(whileKeyword, openParenToken, condition, closeParenToken, statement);
+            var newNode = SyntaxFactory.WhileStatement(whileKeyword, condition, statement);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -9914,33 +9904,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public WhileStatementSyntax WithWhileKeyword(SyntaxToken whileKeyword)
     {
-        return this.Update(whileKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, this.Statement);
-    }
-
-    public WhileStatementSyntax WithOpenParenToken(SyntaxToken openParenToken)
-    {
-        return this.Update(this.WhileKeyword, openParenToken, this.Condition, this.CloseParenToken, this.Statement);
+        return this.Update(whileKeyword, this.Condition, this.Statement);
     }
 
     public WhileStatementSyntax WithCondition(ExpressionSyntax condition)
     {
-        return this.Update(this.WhileKeyword, this.OpenParenToken, condition, this.CloseParenToken, this.Statement);
+        return this.Update(this.WhileKeyword, condition, this.Statement);
     }
 
-    public WhileStatementSyntax WithCloseParenToken(SyntaxToken closeParenToken)
+    public WhileStatementSyntax WithStatement(BlockSyntax statement)
     {
-        return this.Update(this.WhileKeyword, this.OpenParenToken, this.Condition, closeParenToken, this.Statement);
+        return this.Update(this.WhileKeyword, this.Condition, statement);
     }
 
-    public WhileStatementSyntax WithStatement(StatementSyntax statement)
+    public WhileStatementSyntax AddStatementStatements(params StatementSyntax[] items)
     {
-        return this.Update(this.WhileKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, statement);
+        return this.WithStatement(this.Statement.WithStatements(this.Statement.Statements.AddRange(items)));
     }
   }
 
   public sealed partial class DoStatementSyntax : StatementSyntax
   {
-    private StatementSyntax statement;
+    private BlockSyntax statement;
     private ExpressionSyntax condition;
 
     internal DoStatementSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
@@ -9953,7 +9938,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
       get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).doKeyword, this.Position, 0); }
     }
 
-    public StatementSyntax Statement 
+    public BlockSyntax Statement 
     {
         get
         {
@@ -9966,22 +9951,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
       get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).whileKeyword, this.GetChildPosition(2), this.GetChildIndex(2)); }
     }
 
-    public SyntaxToken OpenParenToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).openParenToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
-    }
-
     public ExpressionSyntax Condition 
     {
         get
         {
-            return this.GetRed(ref this.condition, 4);
+            return this.GetRed(ref this.condition, 3);
         }
-    }
-
-    public SyntaxToken CloseParenToken 
-    {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).closeParenToken, this.GetChildPosition(5), this.GetChildIndex(5)); }
     }
 
     public SyntaxToken EosToken 
@@ -9990,7 +9965,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         {
             var slot = ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.DoStatementSyntax)this.Green).eosToken;
             if (slot != null)
-                return new SyntaxToken(this, slot, this.GetChildPosition(6), this.GetChildIndex(6));
+                return new SyntaxToken(this, slot, this.GetChildPosition(4), this.GetChildIndex(4));
 
             return default(SyntaxToken);
         }
@@ -10001,7 +9976,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         switch (index)
         {
             case 1: return this.GetRed(ref this.statement, 1);
-            case 4: return this.GetRed(ref this.condition, 4);
+            case 3: return this.GetRed(ref this.condition, 3);
             default: return null;
         }
     }
@@ -10010,7 +9985,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         switch (index)
         {
             case 1: return this.statement;
-            case 4: return this.condition;
+            case 3: return this.condition;
             default: return null;
         }
     }
@@ -10025,11 +10000,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitDoStatement(this);
     }
 
-    public DoStatementSyntax Update(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken)
+    public DoStatementSyntax Update(SyntaxToken doKeyword, BlockSyntax statement, SyntaxToken whileKeyword, ExpressionSyntax condition, SyntaxToken eosToken)
     {
-        if (doKeyword != this.DoKeyword || statement != this.Statement || whileKeyword != this.WhileKeyword || openParenToken != this.OpenParenToken || condition != this.Condition || closeParenToken != this.CloseParenToken || eosToken != this.EosToken)
+        if (doKeyword != this.DoKeyword || statement != this.Statement || whileKeyword != this.WhileKeyword || condition != this.Condition || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.DoStatement(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken);
+            var newNode = SyntaxFactory.DoStatement(doKeyword, statement, whileKeyword, condition, eosToken);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -10041,37 +10016,32 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public DoStatementSyntax WithDoKeyword(SyntaxToken doKeyword)
     {
-        return this.Update(doKeyword, this.Statement, this.WhileKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, this.EosToken);
+        return this.Update(doKeyword, this.Statement, this.WhileKeyword, this.Condition, this.EosToken);
     }
 
-    public DoStatementSyntax WithStatement(StatementSyntax statement)
+    public DoStatementSyntax WithStatement(BlockSyntax statement)
     {
-        return this.Update(this.DoKeyword, statement, this.WhileKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, this.EosToken);
+        return this.Update(this.DoKeyword, statement, this.WhileKeyword, this.Condition, this.EosToken);
     }
 
     public DoStatementSyntax WithWhileKeyword(SyntaxToken whileKeyword)
     {
-        return this.Update(this.DoKeyword, this.Statement, whileKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, this.EosToken);
-    }
-
-    public DoStatementSyntax WithOpenParenToken(SyntaxToken openParenToken)
-    {
-        return this.Update(this.DoKeyword, this.Statement, this.WhileKeyword, openParenToken, this.Condition, this.CloseParenToken, this.EosToken);
+        return this.Update(this.DoKeyword, this.Statement, whileKeyword, this.Condition, this.EosToken);
     }
 
     public DoStatementSyntax WithCondition(ExpressionSyntax condition)
     {
-        return this.Update(this.DoKeyword, this.Statement, this.WhileKeyword, this.OpenParenToken, condition, this.CloseParenToken, this.EosToken);
-    }
-
-    public DoStatementSyntax WithCloseParenToken(SyntaxToken closeParenToken)
-    {
-        return this.Update(this.DoKeyword, this.Statement, this.WhileKeyword, this.OpenParenToken, this.Condition, closeParenToken, this.EosToken);
+        return this.Update(this.DoKeyword, this.Statement, this.WhileKeyword, condition, this.EosToken);
     }
 
     public DoStatementSyntax WithEosToken(SyntaxToken eosToken)
     {
-        return this.Update(this.DoKeyword, this.Statement, this.WhileKeyword, this.OpenParenToken, this.Condition, this.CloseParenToken, eosToken);
+        return this.Update(this.DoKeyword, this.Statement, this.WhileKeyword, this.Condition, eosToken);
+    }
+
+    public DoStatementSyntax AddStatementStatements(params StatementSyntax[] items)
+    {
+        return this.WithStatement(this.Statement.WithStatements(this.Statement.Statements.AddRange(items)));
     }
   }
 

@@ -3476,23 +3476,19 @@ namespace StarkPlatform.CodeAnalysis.Stark
     public override SyntaxNode VisitWhileStatement(WhileStatementSyntax node)
     {
       var whileKeyword = this.VisitToken(node.WhileKeyword);
-      var openParenToken = this.VisitToken(node.OpenParenToken);
       var condition = (ExpressionSyntax)this.Visit(node.Condition);
-      var closeParenToken = this.VisitToken(node.CloseParenToken);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
-      return node.Update(whileKeyword, openParenToken, condition, closeParenToken, statement);
+      var statement = (BlockSyntax)this.Visit(node.Statement);
+      return node.Update(whileKeyword, condition, statement);
     }
 
     public override SyntaxNode VisitDoStatement(DoStatementSyntax node)
     {
       var doKeyword = this.VisitToken(node.DoKeyword);
-      var statement = (StatementSyntax)this.Visit(node.Statement);
+      var statement = (BlockSyntax)this.Visit(node.Statement);
       var whileKeyword = this.VisitToken(node.WhileKeyword);
-      var openParenToken = this.VisitToken(node.OpenParenToken);
       var condition = (ExpressionSyntax)this.Visit(node.Condition);
-      var closeParenToken = this.VisitToken(node.CloseParenToken);
       var eosToken = this.VisitToken(node.EosToken);
-      return node.Update(doKeyword, statement, whileKeyword, openParenToken, condition, closeParenToken, eosToken);
+      return node.Update(doKeyword, statement, whileKeyword, condition, eosToken);
     }
 
     public override SyntaxNode VisitForStatement(ForStatementSyntax node)
@@ -7764,7 +7760,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new WhileStatementSyntax instance.</summary>
-    public static WhileStatementSyntax WhileStatement(SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, StatementSyntax statement)
+    public static WhileStatementSyntax WhileStatement(SyntaxToken whileKeyword, ExpressionSyntax condition, BlockSyntax statement)
     {
       switch (whileKeyword.Kind())
       {
@@ -7773,36 +7769,28 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(whileKeyword));
       }
-      switch (openParenToken.Kind())
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
       if (condition == null)
         throw new ArgumentNullException(nameof(condition));
-      switch (closeParenToken.Kind())
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
       if (statement == null)
         throw new ArgumentNullException(nameof(statement));
-      return (WhileStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.WhileStatement((Syntax.InternalSyntax.SyntaxToken)whileKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)openParenToken.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)closeParenToken.Node, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.StatementSyntax)statement.Green).CreateRed();
+      return (WhileStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.WhileStatement((Syntax.InternalSyntax.SyntaxToken)whileKeyword.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)statement.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new WhileStatementSyntax instance.</summary>
-    public static WhileStatementSyntax WhileStatement(ExpressionSyntax condition, StatementSyntax statement)
+    public static WhileStatementSyntax WhileStatement(ExpressionSyntax condition, BlockSyntax statement)
     {
-      return SyntaxFactory.WhileStatement(SyntaxFactory.Token(SyntaxKind.WhileKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), statement);
+      return SyntaxFactory.WhileStatement(SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, statement);
+    }
+
+    /// <summary>Creates a new WhileStatementSyntax instance.</summary>
+    public static WhileStatementSyntax WhileStatement(ExpressionSyntax condition)
+    {
+      return SyntaxFactory.WhileStatement(SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, SyntaxFactory.Block());
     }
 
     /// <summary>Creates a new DoStatementSyntax instance.</summary>
-    public static DoStatementSyntax DoStatement(SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken whileKeyword, SyntaxToken openParenToken, ExpressionSyntax condition, SyntaxToken closeParenToken, SyntaxToken eosToken)
+    public static DoStatementSyntax DoStatement(SyntaxToken doKeyword, BlockSyntax statement, SyntaxToken whileKeyword, ExpressionSyntax condition, SyntaxToken eosToken)
     {
       switch (doKeyword.Kind())
       {
@@ -7820,22 +7808,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(whileKeyword));
       }
-      switch (openParenToken.Kind())
-      {
-        case SyntaxKind.OpenParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(openParenToken));
-      }
       if (condition == null)
         throw new ArgumentNullException(nameof(condition));
-      switch (closeParenToken.Kind())
-      {
-        case SyntaxKind.CloseParenToken:
-          break;
-        default:
-          throw new ArgumentException(nameof(closeParenToken));
-      }
       switch (eosToken.Kind())
       {
         case SyntaxKind.SemicolonToken:
@@ -7845,20 +7819,20 @@ namespace StarkPlatform.CodeAnalysis.Stark
         default:
           throw new ArgumentException(nameof(eosToken));
       }
-      return (DoStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.DoStatement((Syntax.InternalSyntax.SyntaxToken)doKeyword.Node, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.StatementSyntax)statement.Green, (Syntax.InternalSyntax.SyntaxToken)whileKeyword.Node, (Syntax.InternalSyntax.SyntaxToken)openParenToken.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)closeParenToken.Node, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
+      return (DoStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.DoStatement((Syntax.InternalSyntax.SyntaxToken)doKeyword.Node, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)statement.Green, (Syntax.InternalSyntax.SyntaxToken)whileKeyword.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)eosToken.Node).CreateRed();
     }
 
 
     /// <summary>Creates a new DoStatementSyntax instance.</summary>
-    public static DoStatementSyntax DoStatement(StatementSyntax statement, ExpressionSyntax condition, SyntaxToken eosToken)
+    public static DoStatementSyntax DoStatement(BlockSyntax statement, ExpressionSyntax condition, SyntaxToken eosToken)
     {
-      return SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), statement, SyntaxFactory.Token(SyntaxKind.WhileKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), eosToken);
+      return SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), statement, SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, eosToken);
     }
 
     /// <summary>Creates a new DoStatementSyntax instance.</summary>
-    public static DoStatementSyntax DoStatement(StatementSyntax statement, ExpressionSyntax condition)
+    public static DoStatementSyntax DoStatement(ExpressionSyntax condition)
     {
-      return SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), statement, SyntaxFactory.Token(SyntaxKind.WhileKeyword), SyntaxFactory.Token(SyntaxKind.OpenParenToken), condition, SyntaxFactory.Token(SyntaxKind.CloseParenToken), default(SyntaxToken));
+      return SyntaxFactory.DoStatement(SyntaxFactory.Token(SyntaxKind.DoKeyword), SyntaxFactory.Block(), SyntaxFactory.Token(SyntaxKind.WhileKeyword), condition, default(SyntaxToken));
     }
 
     /// <summary>Creates a new ForStatementSyntax instance.</summary>

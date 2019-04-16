@@ -1126,8 +1126,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             private IEnumerable<TypeInferenceInfo> InferTypeInDoStatement(DoStatementSyntax doStatement, SyntaxToken? previousToken = null)
             {
-                // If we have a position, we need to be after "do { } while("
-                if (previousToken.HasValue && previousToken.Value != doStatement.OpenParenToken)
+                // If we have a position, we need to be after "do { } while"
+                if (previousToken.HasValue && previousToken.Value != doStatement.WhileKeyword)
                 {
                     return SpecializedCollections.EmptyEnumerable<TypeInferenceInfo>();
                 }
@@ -2195,7 +2195,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             private IEnumerable<TypeInferenceInfo> InferTypeInWhileStatement(WhileStatementSyntax whileStatement, SyntaxToken? previousToken = null)
             {
                 // If we're position based, then we have to be after the "while("
-                if (previousToken.HasValue && previousToken.Value != whileStatement.OpenParenToken)
+                if (previousToken.HasValue && previousToken.Value != whileStatement.WhileKeyword)
                 {
                     return SpecializedCollections.EmptyEnumerable<TypeInferenceInfo>();
                 }

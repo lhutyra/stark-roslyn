@@ -546,8 +546,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case TypeOfExpressionSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case SizeOfExpressionSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case ArgumentListSyntax n: return (n.OpenParenToken, n.CloseParenToken);
-                case WhileStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
-                case DoStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case UsingStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case FixedStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);
                 case LockStatementSyntax n: return (n.OpenParenToken, n.CloseParenToken);

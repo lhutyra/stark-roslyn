@@ -206,7 +206,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.ExtractMethod
                         return base.VisitDoStatement(node);
                     }
 
-                    return node.WithStatement(ReplaceStatementIfNeeded(node.Statement))
+                    return node.WithStatement(node.Statement)
                                .WithCondition(VisitNode(node.Condition));
                 }
 
@@ -218,7 +218,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.ExtractMethod
                     }
 
                     return node.WithCondition(VisitNode(node.Condition))
-                               .WithStatement(ReplaceStatementIfNeeded(node.Statement));
+                               .WithStatement(node.Statement);
                 }
 
                 private TNode VisitNode<TNode>(TNode node) where TNode : SyntaxNode

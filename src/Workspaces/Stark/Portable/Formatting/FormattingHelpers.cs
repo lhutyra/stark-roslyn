@@ -286,10 +286,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
             {
                 case SwitchStatementSyntax switchStatement:
                     return switchStatement.CloseParenToken.Equals(token);
-                case WhileStatementSyntax whileStatement:
-                    return whileStatement.CloseParenToken.Equals(token);
-                case DoStatementSyntax doStatement:
-                    return doStatement.CloseParenToken.Equals(token);
                 case LockStatementSyntax lockStatement:
                     return lockStatement.CloseParenToken.Equals(token);
                 case UsingStatementSyntax usingStatement:

@@ -394,7 +394,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     // part.  Rather than putting a bp on the entire statement, just put it on the
                     // top portion.
                     var whileStatement = (WhileStatementSyntax)statement;
-                    return CreateSpan(whileStatement, whileStatement.CloseParenToken);
+                    return CreateSpan(whileStatement, whileStatement.Condition.GetLastToken());
 
                 case SyntaxKind.DoStatement:
                     // Note: if the user was in the body of the while, then we would have hit its nested
@@ -408,7 +408,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.EditAndContinue
                     else
                     {
                         return CreateSpan(doStatement.WhileKeyword,
-                            LastNotMissing(doStatement.CloseParenToken, doStatement.EosToken));
+                            LastNotMissing(doStatement.Condition.GetLastToken(), doStatement.EosToken));
                     }
 
                 case SyntaxKind.ForStatement:
