@@ -3633,7 +3633,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// This means that b?0:myshort will have type int rather than producing an error (because 0->short,
         /// myshort->int).
         /// </remarks>
-        private BoundExpression BindConditionalOperator(ConditionalExpressionSyntax node, DiagnosticBag diagnostics)
+        private BoundExpression BindConditionalOperator(IfExpressionSyntax node, DiagnosticBag diagnostics)
         {
             var whenTrue = node.WhenTrue.CheckAndUnwrapRefExpression(diagnostics, out var whenTrueRefKind);
             var whenFalse = node.WhenFalse.CheckAndUnwrapRefExpression(diagnostics, out var whenFalseRefKind);

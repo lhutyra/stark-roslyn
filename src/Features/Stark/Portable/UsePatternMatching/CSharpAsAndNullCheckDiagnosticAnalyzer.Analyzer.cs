@@ -128,8 +128,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.UsePatternMatching
                             defAssignedWhenTrue = !defAssignedWhenTrue;
                             continue;
 
-                        case SyntaxKind.ConditionalExpression:
-                            var conditionalExpression = (ConditionalExpressionSyntax)current;
+                        case SyntaxKind.IfExpression:
+                            var conditionalExpression = (IfExpressionSyntax)current;
                             if (LocalFlowsIn(defAssignedWhenTrue
                                     ? conditionalExpression.WhenFalse
                                     : conditionalExpression.WhenTrue))

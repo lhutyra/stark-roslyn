@@ -153,7 +153,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeFixes.Async
 
         private static SyntaxNode ConvertToAwaitExpression(ExpressionSyntax expression)
         {
-            if ((expression is BinaryExpressionSyntax || expression is ConditionalExpressionSyntax) && expression.HasTrailingTrivia)
+            if ((expression is BinaryExpressionSyntax || expression is IfExpressionSyntax) && expression.HasTrailingTrivia)
             {
                 var expWithTrailing = expression.WithoutLeadingTrivia();
                 var span = expWithTrailing.GetLocation().GetLineSpan().Span;

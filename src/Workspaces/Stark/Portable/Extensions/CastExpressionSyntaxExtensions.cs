@@ -61,8 +61,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 }
             }
 
-            if (parentNode.IsKind(SyntaxKind.ConditionalExpression) &&
-                ((ConditionalExpressionSyntax)parentNode).Condition == expression)
+            if (parentNode.IsKind(SyntaxKind.IfExpression) &&
+                ((IfExpressionSyntax)parentNode).Condition == expression)
             {
                 return semanticModel.Compilation.GetSpecialType(SpecialType.System_Boolean);
             }

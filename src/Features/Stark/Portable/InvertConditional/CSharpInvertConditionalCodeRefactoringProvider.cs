@@ -10,13 +10,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.InvertConditional
     [ExtensionOrder(Before = PredefinedCodeRefactoringProviderNames.IntroduceVariable)]
     [ExportCodeRefactoringProvider(LanguageNames.Stark, Name = PredefinedCodeRefactoringProviderNames.InvertConditional), Shared]
     internal class CSharpInvertConditionalCodeRefactoringProvider
-        : AbstractInvertConditionalCodeRefactoringProvider<ConditionalExpressionSyntax>
+        : AbstractInvertConditionalCodeRefactoringProvider<IfExpressionSyntax>
     {
         // Show the feature in the condition of the conditional up through the ? token.
         // Don't offer if the conditional is missing the colon and the conditional is
         // too incomplete.
-        protected override bool ShouldOffer(ConditionalExpressionSyntax conditional, int position)
-            => position <= conditional.QuestionToken.Span.End &&
-               !conditional.ColonToken.IsMissing;
+        protected override bool ShouldOffer(IfExpressionSyntax conditional, int position)
+            => position <= conditional.ThenKeyword.Span.End &&
+               !conditional.ElseKeyword.IsMissing;
     }
 }

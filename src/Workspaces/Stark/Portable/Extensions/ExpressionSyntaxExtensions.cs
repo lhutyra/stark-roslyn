@@ -652,7 +652,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
                 case SyntaxKind.SimpleLambdaExpression:
                 case SyntaxKind.ParenthesizedExpression:
                 case SyntaxKind.ArrayRankSpecifier:
-                case SyntaxKind.ConditionalExpression:
+                case SyntaxKind.IfExpression:
                 case SyntaxKind.IfStatement:
                 case SyntaxKind.CatchFilterClause:
                 case SyntaxKind.WhileStatement:
@@ -2760,7 +2760,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
 
                     return OperatorPrecedence.NullCoalescing;
 
-                case SyntaxKind.ConditionalExpression:
+                case SyntaxKind.IfExpression:
                     // From C# spec, 7.3.1:
                     // Conditional: ?:
 

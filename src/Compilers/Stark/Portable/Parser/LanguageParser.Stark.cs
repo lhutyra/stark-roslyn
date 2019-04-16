@@ -6779,13 +6779,15 @@ tryAgain:
             var @if = this.EatToken(SyntaxKind.IfKeyword);
             var condition = this.ParseExpressionCore();
 
+            var then = this.EatToken(SyntaxKind.ThenKeyword);
+
             var saveTerm = _termState;
             _termState |= TerminatorState.IsEndOfIfBlock;
             var statement = this.ParseBlock();
             _termState = saveTerm;
             var elseClause = this.ParseElseClauseOpt();
 
-            return _syntaxFactory.IfStatement(@if, condition, statement, elseClause);
+            return _syntaxFactory.IfStatement(@if, condition, then, statement, elseClause);
         }
 
         private ElseClauseSyntax ParseElseClauseOpt()
@@ -7497,7 +7499,6 @@ tryAgain:
                 case SyntaxKind.FinallyKeyword:
                 case SyntaxKind.ForKeyword:
                 case SyntaxKind.GotoKeyword:
-                case SyntaxKind.IfKeyword:
                 case SyntaxKind.ElseKeyword:
                 case SyntaxKind.LockKeyword:
                 case SyntaxKind.ReturnKeyword:
@@ -7633,7 +7634,7 @@ tryAgain:
                     return Precedence.AddressOf;
                 case SyntaxKind.RangeExpression:
                     return Precedence.Range;
-                case SyntaxKind.ConditionalExpression:
+                case SyntaxKind.IfExpression:
                 case SyntaxKind.SwitchExpression:
                     return Precedence.Expression;
                 default:
@@ -7935,38 +7936,6 @@ tryAgain:
                 }
             }
 
-            // From the language spec:
-            //
-            // conditional-expression:
-            //  null-coalescing-expression
-            //  null-coalescing-expression   ?   expression   :   expression
-            //
-            // Only take the ternary if we're at a precedence less than the null coalescing
-            // expression.
-
-            if (tk == SyntaxKind.QuestionToken && precedence < Precedence.Coalescing)
-            {
-                var questionToken = this.EatToken();
-                var colonLeft = this.ParsePossibleRefExpression();
-                if (this.CurrentToken.Kind == SyntaxKind.EndOfFileToken && this.lexer.InterpolationFollowedByColon)
-                {
-                    // We have an interpolated string with an interpolation that contains a conditional expression.
-                    // Unfortunately, the precedence demands that the colon is considered to signal the start of the
-                    // format string. Without this code, the compiler would complain about a missing colon, and point
-                    // to the colon that is present, which would be confusing. We aim to give a better error message.
-                    var colon = SyntaxFactory.MissingToken(SyntaxKind.ColonToken);
-                    var colonRight = _syntaxFactory.IdentifierName(SyntaxFactory.MissingToken(SyntaxKind.IdentifierToken));
-                    leftOperand = _syntaxFactory.ConditionalExpression(leftOperand, questionToken, colonLeft, colon, colonRight);
-                    leftOperand = this.AddError(leftOperand, ErrorCode.ERR_ConditionalInInterpolation);
-                }
-                else
-                {
-                    var colon = this.EatToken(SyntaxKind.ColonToken);
-                    var colonRight = this.ParsePossibleRefExpression();
-                    leftOperand = _syntaxFactory.ConditionalExpression(leftOperand, questionToken, colonLeft, colon, colonRight);
-                }
-            }
-
             // From the proposed language spec:
             //
             // switch-expression:
@@ -7979,7 +7948,7 @@ tryAgain:
             //
             // Only take the switch if we're at a precedence less than the null coalescing expression.
 
-            else if (tk == SyntaxKind.SwitchKeyword && precedence < Precedence.Coalescing && this.PeekToken(1).Kind == SyntaxKind.OpenBraceToken)
+            if (tk == SyntaxKind.SwitchKeyword && precedence < Precedence.Coalescing && this.PeekToken(1).Kind == SyntaxKind.OpenBraceToken)
             {
                 leftOperand = ParseSwitchExpression(leftOperand);
             }
@@ -8043,6 +8012,9 @@ tryAgain:
                     break;
                 case SyntaxKind.RefTypeKeyword:
                     expr = this.ParseRefTypeExpression();
+                    break;
+                case SyntaxKind.IfKeyword:
+                    expr = this.ParseIfExpression();
                     break;
                 case SyntaxKind.CheckedKeyword:
                 case SyntaxKind.UncheckedKeyword:
@@ -8154,6 +8126,22 @@ tryAgain:
             }
 
             return this.ParsePostFixExpression(expr);
+        }
+
+        private ExpressionSyntax ParseIfExpression()
+        {
+            var @if = this.EatToken(SyntaxKind.IfKeyword);
+            var condition = this.ParseExpressionCore();
+
+            var then = this.EatToken(SyntaxKind.ThenKeyword);
+
+            var trueExpr = this.ParseExpressionCore();
+
+            var @else = this.EatToken(SyntaxKind.ElseKeyword);
+
+            var falseExpr = this.ParseExpressionCore();
+
+            return _syntaxFactory.IfExpression(@if, condition, then, trueExpr, @else, falseExpr);
         }
 
         /// <summary>

@@ -340,10 +340,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Utilities
 
                 return false;
             }
-            else if (currentOriginalNode.Kind() == SyntaxKind.ConditionalExpression)
+            else if (currentOriginalNode.Kind() == SyntaxKind.IfExpression)
             {
-                var originalExpression = (ConditionalExpressionSyntax)currentOriginalNode;
-                var newExpression = (ConditionalExpressionSyntax)currentReplacedNode;
+                var originalExpression = (IfExpressionSyntax)currentOriginalNode;
+                var newExpression = (IfExpressionSyntax)currentReplacedNode;
 
                 if (originalExpression.Condition != previousOriginalNode)
                 {

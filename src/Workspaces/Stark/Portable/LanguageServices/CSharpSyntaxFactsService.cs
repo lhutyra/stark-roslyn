@@ -1639,7 +1639,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         public void GetPartsOfConditionalExpression(SyntaxNode node, out SyntaxNode condition, out SyntaxNode whenTrue, out SyntaxNode whenFalse)
         {
-            var conditionalExpression = (ConditionalExpressionSyntax)node;
+            var conditionalExpression = (IfExpressionSyntax)node;
             condition = conditionalExpression.Condition;
             whenTrue = conditionalExpression.WhenTrue;
             whenFalse = conditionalExpression.WhenFalse;

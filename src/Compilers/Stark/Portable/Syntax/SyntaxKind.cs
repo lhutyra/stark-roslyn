@@ -106,7 +106,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ElseKeyword = 8326,
         WhileKeyword = 8327,
         ForKeyword = 8328,
-        //ForEachKeyword = 8329,
+        ThenKeyword = 8329,
         DoKeyword = 8330,
         SwitchKeyword = 8331,
         CaseKeyword = 8332,
@@ -340,7 +340,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         // expressions
         ParenthesizedExpression = 8632,
-        ConditionalExpression = 8633,
+        IfExpression = 8633,
         InvocationExpression = 8634,
         ElementAccessExpression = 8635,
         ArgumentList = 8636,

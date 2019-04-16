@@ -12,7 +12,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseConditionalExpression
 {
     [ExportCodeFixProvider(LanguageNames.Stark), Shared]
     internal partial class CSharpUseConditionalExpressionForReturnCodeRefactoringProvider
-        : AbstractUseConditionalExpressionForReturnCodeFixProvider<StatementSyntax, IfStatementSyntax, ExpressionSyntax, ConditionalExpressionSyntax>
+        : AbstractUseConditionalExpressionForReturnCodeFixProvider<StatementSyntax, IfStatementSyntax, ExpressionSyntax, IfExpressionSyntax>
     {
         protected override bool IsRef(IReturnOperation returnOperation)
             => returnOperation.Syntax is ReturnStatementSyntax statement &&

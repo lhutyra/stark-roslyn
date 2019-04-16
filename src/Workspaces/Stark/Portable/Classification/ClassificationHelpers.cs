@@ -375,7 +375,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Classification
                         // punctuation; otherwise, it's from a conditional operator.
                         if (token.Parent != null)
                         {
-                            if (token.Parent.Kind() != SyntaxKind.ConditionalExpression)
+                            if (token.Parent.Kind() != SyntaxKind.IfExpression)
                             {
                                 return ClassificationTypeNames.Punctuation;
                             }

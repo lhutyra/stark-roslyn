@@ -255,7 +255,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions
 
             // (condition ? ref a : ref b ) = SomeValue, parenthesis can't be removed for when conditional expression appears at left
             // This syntax is only allowed since C# 7.2
-            if (expression.IsKind(SyntaxKind.ConditionalExpression) &&
+            if (expression.IsKind(SyntaxKind.IfExpression) &&
                 node.IsLeftSideOfAnyAssignExpression())
             {
                 return false;

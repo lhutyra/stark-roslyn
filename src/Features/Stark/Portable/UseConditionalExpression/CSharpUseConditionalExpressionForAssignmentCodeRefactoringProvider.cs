@@ -14,7 +14,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseConditionalExpression
     [ExportCodeFixProvider(LanguageNames.Stark), Shared]
     internal partial class CSharpUseConditionalExpressionForAssignmentCodeRefactoringProvider
         : AbstractUseConditionalExpressionForAssignmentCodeFixProvider<
-            StatementSyntax, IfStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclarationSyntax, ExpressionSyntax, ConditionalExpressionSyntax>
+            StatementSyntax, IfStatementSyntax, LocalDeclarationStatementSyntax, VariableDeclarationSyntax, ExpressionSyntax, IfExpressionSyntax>
     {
         protected override IFormattingRule GetMultiLineFormattingRule()
             => MultiLineConditionalExpressionFormattingRule.Instance;

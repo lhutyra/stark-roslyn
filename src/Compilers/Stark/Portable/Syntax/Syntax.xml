@@ -717,29 +717,41 @@
         <summary>Creates an AssignmentExpressionSyntax node.</summary>
       </FactoryComment>
   </Node>
-  <Node Name="ConditionalExpressionSyntax" Base="ExpressionSyntax">
-    <Kind Name="ConditionalExpression"/>
+  <Node Name="IfExpressionSyntax" Base="ExpressionSyntax">
+    <Kind Name="IfExpression"/>
+    <Field Name="IfKeyword" Type="SyntaxToken">
+        <Kind Name="IfKeyword"/>
+        <PropertyComment>
+            <summary>
+                Gets a SyntaxToken that represents the if keyword.
+            </summary>
+        </PropertyComment>
+    </Field>
     <Field Name="Condition" Type="ExpressionSyntax">
       <PropertyComment>
         <summary>ExpressionSyntax node representing the condition of the conditional expression.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="QuestionToken" Type="SyntaxToken">
-      <Kind Name="QuestionToken"/>
-      <PropertyComment>
-        <summary>SyntaxToken representing the question mark.</summary>
-      </PropertyComment>
+    <Field Name="ThenKeyword" Type="SyntaxToken">
+        <Kind Name="ThenKeyword"/>
+        <PropertyComment>
+            <summary>
+                Gets a SyntaxToken that represents the then keyword.
+            </summary>
+        </PropertyComment>
     </Field>
     <Field Name="WhenTrue" Type="ExpressionSyntax">
       <PropertyComment>
         <summary>ExpressionSyntax node representing the expression to be executed when the condition is true.</summary>
       </PropertyComment>
     </Field>
-    <Field Name="ColonToken" Type="SyntaxToken">
-      <Kind Name="ColonToken"/>
-      <PropertyComment>
-        <summary>SyntaxToken representing the colon.</summary>
-      </PropertyComment>
+    <Field Name="ElseKeyword" Type="SyntaxToken">
+        <Kind Name="ElseKeyword"/>
+        <PropertyComment>
+            <summary>
+                Gets a SyntaxToken that represents the else keyword.
+            </summary>
+        </PropertyComment>
     </Field>
     <Field Name="WhenFalse" Type="ExpressionSyntax">
       <PropertyComment>
@@ -750,7 +762,7 @@
       <summary>Class which represents the syntax node for conditional expression.</summary>
     </TypeComment>
     <FactoryComment>
-      <summary>Creates a ConditionalExpressionSyntax node.</summary>
+      <summary>Creates a IfExpressionSyntax node.</summary>
     </FactoryComment>
   </Node>
   <AbstractNode Name="InstanceExpressionSyntax" Base="ExpressionSyntax">
@@ -2340,6 +2352,14 @@
           Gets an ExpressionSyntax that represents the condition of the if statement.
         </summary>
       </PropertyComment>
+    </Field>
+    <Field Name="ThenKeyword" Type="SyntaxToken">
+        <Kind Name="ThenKeyword"/>
+        <PropertyComment>
+            <summary>
+                Gets a SyntaxToken that represents the then keyword.
+            </summary>
+        </PropertyComment>
     </Field>
     <Field Name="Statement" Type="BlockSyntax">
       <PropertyComment>

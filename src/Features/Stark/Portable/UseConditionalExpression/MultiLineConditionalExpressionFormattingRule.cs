@@ -55,7 +55,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseConditionalExpression
             List<IndentBlockOperation> list, SyntaxNode node, OptionSet optionSet, NextAction<IndentBlockOperation> nextOperation)
         {
             if (node.HasAnnotation(SpecializedFormattingAnnotation) &&
-                node is ConditionalExpressionSyntax conditional)
+                node is IfExpressionSyntax conditional)
             {
                 var statement = conditional.FirstAncestorOrSelf<StatementSyntax>();
                 if (statement != null)
@@ -64,10 +64,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseConditionalExpression
 
                     // we want to indent the ? and : in one level from the containing statement.
                     list.Add(FormattingOperations.CreateRelativeIndentBlockOperation(
-                        baseToken, conditional.QuestionToken, conditional.WhenTrue.GetLastToken(),
+                        baseToken, conditional.ThenKeyword, conditional.WhenTrue.GetLastToken(),
                         indentationDelta: 1, IndentBlockOption.RelativeToFirstTokenOnBaseTokenLine));
                     list.Add(FormattingOperations.CreateRelativeIndentBlockOperation(
-                        baseToken, conditional.ColonToken, conditional.WhenFalse.GetLastToken(),
+                        baseToken, conditional.ElseKeyword, conditional.WhenFalse.GetLastToken(),
                         indentationDelta: 1, IndentBlockOption.RelativeToFirstTokenOnBaseTokenLine));
                     return;
                 }

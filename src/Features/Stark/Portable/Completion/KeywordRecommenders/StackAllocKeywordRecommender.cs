@@ -31,7 +31,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
             }
 
             // Inside a conditional expression: value ? stackalloc : stackalloc
-            while (node.IsKind(SyntaxKind.ConditionalExpression) &&
+            while (node.IsKind(SyntaxKind.IfExpression) &&
                 (context.TargetToken.IsKind(SyntaxKind.QuestionToken, SyntaxKind.ColonToken) || context.TargetToken.IsAfterPossibleCast()))
             {
                 node = node.Parent;

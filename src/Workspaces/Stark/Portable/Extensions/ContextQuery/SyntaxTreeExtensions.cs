@@ -900,12 +900,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
             // Might be an incomplete conditional expression or an incomplete declaration of a method returning a nullable type.
             // Bind T to see if it is a type. If it is we don't show signature help.
             if (name.IsParentKind(SyntaxKind.LessThanExpression) &&
-                name.Parent.IsParentKind(SyntaxKind.ConditionalExpression) &&
+                name.Parent.IsParentKind(SyntaxKind.IfExpression) &&
                 name.Parent.Parent.IsParentKind(SyntaxKind.ExpressionStatement) &&
                 name.Parent.Parent.Parent.IsParentKind(SyntaxKind.GlobalStatement))
             {
                 var conditionOrType = semanticModelOpt.GetSymbolInfo(
-                    ((ConditionalExpressionSyntax)name.Parent.Parent).Condition, cancellationToken);
+                    ((IfExpressionSyntax)name.Parent.Parent).Condition, cancellationToken);
                 if (conditionOrType.GetBestOrAllSymbols().FirstOrDefault() != null &&
                     conditionOrType.GetBestOrAllSymbols().FirstOrDefault().Kind == SymbolKind.NamedType)
                 {
@@ -2055,10 +2055,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
 
             // goo ? |
             if (token.IsKind(SyntaxKind.QuestionToken) &&
-                token.Parent.IsKind(SyntaxKind.ConditionalExpression))
+                token.Parent.IsKind(SyntaxKind.IfExpression))
             {
                 // If the condition is simply a TypeSyntax that binds to a type, treat this as a nullable type.
-                var conditionalExpression = (ConditionalExpressionSyntax)token.Parent;
+                var conditionalExpression = (IfExpressionSyntax)token.Parent;
                 var type = conditionalExpression.Condition as TypeSyntax;
 
                 return type == null
@@ -2067,7 +2067,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Extensions.ContextQuery
 
             // goo ? bar : |
             if (token.IsKind(SyntaxKind.ColonToken) &&
-                token.Parent.IsKind(SyntaxKind.ConditionalExpression))
+                token.Parent.IsKind(SyntaxKind.IfExpression))
             {
                 return true;
             }

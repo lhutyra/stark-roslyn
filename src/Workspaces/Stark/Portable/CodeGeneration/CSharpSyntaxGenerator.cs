@@ -3602,9 +3602,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
             return SyntaxFactory.PrefixUnaryExpression(SyntaxKind.LogicalNotExpression, Parenthesize(expression));
         }
 
-        public override SyntaxNode ConditionalExpression(SyntaxNode condition, SyntaxNode whenTrue, SyntaxNode whenFalse)
+        public override SyntaxNode IfExpression(SyntaxNode condition, SyntaxNode whenTrue, SyntaxNode whenFalse)
         {
-            return SyntaxFactory.ConditionalExpression(Parenthesize(condition), Parenthesize(whenTrue), Parenthesize(whenFalse));
+            return SyntaxFactory.IfExpression(Parenthesize(condition), Parenthesize(whenTrue), Parenthesize(whenFalse));
         }
 
         public override SyntaxNode CoalesceExpression(SyntaxNode left, SyntaxNode right)

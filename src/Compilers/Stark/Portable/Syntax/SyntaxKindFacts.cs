@@ -857,6 +857,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.FalseKeyword;
                 case "if":
                     return SyntaxKind.IfKeyword;
+                case "then":
+                    return SyntaxKind.ThenKeyword;
                 case "else":
                     return SyntaxKind.ElseKeyword;
                 case "while":
@@ -1429,6 +1431,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "false";
                 case SyntaxKind.IfKeyword:
                     return "if";
+                case SyntaxKind.ThenKeyword:
+                    return "then";
                 case SyntaxKind.ElseKeyword:
                     return "else";
                 case SyntaxKind.WhileKeyword:

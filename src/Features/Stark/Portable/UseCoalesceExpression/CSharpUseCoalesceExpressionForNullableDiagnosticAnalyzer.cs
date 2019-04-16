@@ -12,7 +12,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseCoalesceExpression
         AbstractUseCoalesceExpressionForNullableDiagnosticAnalyzer<
             SyntaxKind,
             ExpressionSyntax,
-            ConditionalExpressionSyntax,
+            IfExpressionSyntax,
             BinaryExpressionSyntax,
             MemberAccessExpressionSyntax,
             PrefixUnaryExpressionSyntax>
@@ -21,6 +21,6 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseCoalesceExpression
             => CSharpSyntaxFactsService.Instance;
 
         protected override SyntaxKind GetSyntaxKindToAnalyze()
-            => SyntaxKind.ConditionalExpression;
+            => SyntaxKind.IfExpression;
     }
 }

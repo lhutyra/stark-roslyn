@@ -140,7 +140,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 node = node.Parent;
             }
 
-            while (node.Parent.IsKind(SyntaxKind.ConditionalExpression))
+            while (node.Parent.IsKind(SyntaxKind.IfExpression))
             {
                 node = node.Parent;
             }

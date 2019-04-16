@@ -2504,15 +2504,23 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
   }
 
   /// <summary>Class which represents the syntax node for conditional expression.</summary>
-  public sealed partial class ConditionalExpressionSyntax : ExpressionSyntax
+  public sealed partial class IfExpressionSyntax : ExpressionSyntax
   {
     private ExpressionSyntax condition;
     private ExpressionSyntax whenTrue;
     private ExpressionSyntax whenFalse;
 
-    internal ConditionalExpressionSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
+    internal IfExpressionSyntax(StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.CSharpSyntaxNode green, SyntaxNode parent, int position)
         : base(green, parent, position)
     {
+    }
+
+    /// <summary>
+    /// Gets a SyntaxToken that represents the if keyword.
+    /// </summary>
+    public SyntaxToken IfKeyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.IfExpressionSyntax)this.Green).ifKeyword, this.Position, 0); }
     }
 
     /// <summary>ExpressionSyntax node representing the condition of the conditional expression.</summary>
@@ -2520,14 +2528,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRedAtZero(ref this.condition);
+            return this.GetRed(ref this.condition, 1);
         }
     }
 
-    /// <summary>SyntaxToken representing the question mark.</summary>
-    public SyntaxToken QuestionToken 
+    /// <summary>
+    /// Gets a SyntaxToken that represents the then keyword.
+    /// </summary>
+    public SyntaxToken ThenKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ConditionalExpressionSyntax)this.Green).questionToken, this.GetChildPosition(1), this.GetChildIndex(1)); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.IfExpressionSyntax)this.Green).thenKeyword, this.GetChildPosition(2), this.GetChildIndex(2)); }
     }
 
     /// <summary>ExpressionSyntax node representing the expression to be executed when the condition is true.</summary>
@@ -2535,14 +2545,16 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.whenTrue, 2);
+            return this.GetRed(ref this.whenTrue, 3);
         }
     }
 
-    /// <summary>SyntaxToken representing the colon.</summary>
-    public SyntaxToken ColonToken 
+    /// <summary>
+    /// Gets a SyntaxToken that represents the else keyword.
+    /// </summary>
+    public SyntaxToken ElseKeyword 
     {
-      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ConditionalExpressionSyntax)this.Green).colonToken, this.GetChildPosition(3), this.GetChildIndex(3)); }
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.IfExpressionSyntax)this.Green).elseKeyword, this.GetChildPosition(4), this.GetChildIndex(4)); }
     }
 
     /// <summary>ExpressionSyntax node representing the expression to be executed when the condition is false.</summary>
@@ -2550,7 +2562,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.whenFalse, 4);
+            return this.GetRed(ref this.whenFalse, 5);
         }
     }
 
@@ -2558,9 +2570,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 0: return this.GetRedAtZero(ref this.condition);
-            case 2: return this.GetRed(ref this.whenTrue, 2);
-            case 4: return this.GetRed(ref this.whenFalse, 4);
+            case 1: return this.GetRed(ref this.condition, 1);
+            case 3: return this.GetRed(ref this.whenTrue, 3);
+            case 5: return this.GetRed(ref this.whenFalse, 5);
             default: return null;
         }
     }
@@ -2568,28 +2580,28 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         switch (index)
         {
-            case 0: return this.condition;
-            case 2: return this.whenTrue;
-            case 4: return this.whenFalse;
+            case 1: return this.condition;
+            case 3: return this.whenTrue;
+            case 5: return this.whenFalse;
             default: return null;
         }
     }
 
     public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
     {
-        return visitor.VisitConditionalExpression(this);
+        return visitor.VisitIfExpression(this);
     }
 
     public override void Accept(CSharpSyntaxVisitor visitor)
     {
-        visitor.VisitConditionalExpression(this);
+        visitor.VisitIfExpression(this);
     }
 
-    public ConditionalExpressionSyntax Update(ExpressionSyntax condition, SyntaxToken questionToken, ExpressionSyntax whenTrue, SyntaxToken colonToken, ExpressionSyntax whenFalse)
+    public IfExpressionSyntax Update(SyntaxToken ifKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, ExpressionSyntax whenTrue, SyntaxToken elseKeyword, ExpressionSyntax whenFalse)
     {
-        if (condition != this.Condition || questionToken != this.QuestionToken || whenTrue != this.WhenTrue || colonToken != this.ColonToken || whenFalse != this.WhenFalse)
+        if (ifKeyword != this.IfKeyword || condition != this.Condition || thenKeyword != this.ThenKeyword || whenTrue != this.WhenTrue || elseKeyword != this.ElseKeyword || whenFalse != this.WhenFalse)
         {
-            var newNode = SyntaxFactory.ConditionalExpression(condition, questionToken, whenTrue, colonToken, whenFalse);
+            var newNode = SyntaxFactory.IfExpression(ifKeyword, condition, thenKeyword, whenTrue, elseKeyword, whenFalse);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -2599,29 +2611,34 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         return this;
     }
 
-    public ConditionalExpressionSyntax WithCondition(ExpressionSyntax condition)
+    public IfExpressionSyntax WithIfKeyword(SyntaxToken ifKeyword)
     {
-        return this.Update(condition, this.QuestionToken, this.WhenTrue, this.ColonToken, this.WhenFalse);
+        return this.Update(ifKeyword, this.Condition, this.ThenKeyword, this.WhenTrue, this.ElseKeyword, this.WhenFalse);
     }
 
-    public ConditionalExpressionSyntax WithQuestionToken(SyntaxToken questionToken)
+    public IfExpressionSyntax WithCondition(ExpressionSyntax condition)
     {
-        return this.Update(this.Condition, questionToken, this.WhenTrue, this.ColonToken, this.WhenFalse);
+        return this.Update(this.IfKeyword, condition, this.ThenKeyword, this.WhenTrue, this.ElseKeyword, this.WhenFalse);
     }
 
-    public ConditionalExpressionSyntax WithWhenTrue(ExpressionSyntax whenTrue)
+    public IfExpressionSyntax WithThenKeyword(SyntaxToken thenKeyword)
     {
-        return this.Update(this.Condition, this.QuestionToken, whenTrue, this.ColonToken, this.WhenFalse);
+        return this.Update(this.IfKeyword, this.Condition, thenKeyword, this.WhenTrue, this.ElseKeyword, this.WhenFalse);
     }
 
-    public ConditionalExpressionSyntax WithColonToken(SyntaxToken colonToken)
+    public IfExpressionSyntax WithWhenTrue(ExpressionSyntax whenTrue)
     {
-        return this.Update(this.Condition, this.QuestionToken, this.WhenTrue, colonToken, this.WhenFalse);
+        return this.Update(this.IfKeyword, this.Condition, this.ThenKeyword, whenTrue, this.ElseKeyword, this.WhenFalse);
     }
 
-    public ConditionalExpressionSyntax WithWhenFalse(ExpressionSyntax whenFalse)
+    public IfExpressionSyntax WithElseKeyword(SyntaxToken elseKeyword)
     {
-        return this.Update(this.Condition, this.QuestionToken, this.WhenTrue, this.ColonToken, whenFalse);
+        return this.Update(this.IfKeyword, this.Condition, this.ThenKeyword, this.WhenTrue, elseKeyword, this.WhenFalse);
+    }
+
+    public IfExpressionSyntax WithWhenFalse(ExpressionSyntax whenFalse)
+    {
+        return this.Update(this.IfKeyword, this.Condition, this.ThenKeyword, this.WhenTrue, this.ElseKeyword, whenFalse);
     }
   }
 
@@ -10879,13 +10896,21 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     }
 
     /// <summary>
+    /// Gets a SyntaxToken that represents the then keyword.
+    /// </summary>
+    public SyntaxToken ThenKeyword 
+    {
+      get { return new SyntaxToken(this, ((StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.IfStatementSyntax)this.Green).thenKeyword, this.GetChildPosition(2), this.GetChildIndex(2)); }
+    }
+
+    /// <summary>
     /// Gets a StatementSyntax the represents the statement to be executed when the condition is true.
     /// </summary>
     public BlockSyntax Statement 
     {
         get
         {
-            return this.GetRed(ref this.statement, 2);
+            return this.GetRed(ref this.statement, 3);
         }
     }
 
@@ -10896,7 +10921,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
     {
         get
         {
-            return this.GetRed(ref this.@else, 3);
+            return this.GetRed(ref this.@else, 4);
         }
     }
 
@@ -10905,8 +10930,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         switch (index)
         {
             case 1: return this.GetRed(ref this.condition, 1);
-            case 2: return this.GetRed(ref this.statement, 2);
-            case 3: return this.GetRed(ref this.@else, 3);
+            case 3: return this.GetRed(ref this.statement, 3);
+            case 4: return this.GetRed(ref this.@else, 4);
             default: return null;
         }
     }
@@ -10915,8 +10940,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         switch (index)
         {
             case 1: return this.condition;
-            case 2: return this.statement;
-            case 3: return this.@else;
+            case 3: return this.statement;
+            case 4: return this.@else;
             default: return null;
         }
     }
@@ -10931,11 +10956,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
         visitor.VisitIfStatement(this);
     }
 
-    public IfStatementSyntax Update(SyntaxToken ifKeyword, ExpressionSyntax condition, BlockSyntax statement, ElseClauseSyntax @else)
+    public IfStatementSyntax Update(SyntaxToken ifKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, BlockSyntax statement, ElseClauseSyntax @else)
     {
-        if (ifKeyword != this.IfKeyword || condition != this.Condition || statement != this.Statement || @else != this.Else)
+        if (ifKeyword != this.IfKeyword || condition != this.Condition || thenKeyword != this.ThenKeyword || statement != this.Statement || @else != this.Else)
         {
-            var newNode = SyntaxFactory.IfStatement(ifKeyword, condition, statement, @else);
+            var newNode = SyntaxFactory.IfStatement(ifKeyword, condition, thenKeyword, statement, @else);
             var annotations = this.GetAnnotations();
             if (annotations != null && annotations.Length > 0)
                return newNode.WithAnnotations(annotations);
@@ -10947,22 +10972,27 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
 
     public IfStatementSyntax WithIfKeyword(SyntaxToken ifKeyword)
     {
-        return this.Update(ifKeyword, this.Condition, this.Statement, this.Else);
+        return this.Update(ifKeyword, this.Condition, this.ThenKeyword, this.Statement, this.Else);
     }
 
     public IfStatementSyntax WithCondition(ExpressionSyntax condition)
     {
-        return this.Update(this.IfKeyword, condition, this.Statement, this.Else);
+        return this.Update(this.IfKeyword, condition, this.ThenKeyword, this.Statement, this.Else);
+    }
+
+    public IfStatementSyntax WithThenKeyword(SyntaxToken thenKeyword)
+    {
+        return this.Update(this.IfKeyword, this.Condition, thenKeyword, this.Statement, this.Else);
     }
 
     public IfStatementSyntax WithStatement(BlockSyntax statement)
     {
-        return this.Update(this.IfKeyword, this.Condition, statement, this.Else);
+        return this.Update(this.IfKeyword, this.Condition, this.ThenKeyword, statement, this.Else);
     }
 
     public IfStatementSyntax WithElse(ElseClauseSyntax @else)
     {
-        return this.Update(this.IfKeyword, this.Condition, this.Statement, @else);
+        return this.Update(this.IfKeyword, this.Condition, this.ThenKeyword, this.Statement, @else);
     }
 
     public IfStatementSyntax AddStatementStatements(params StatementSyntax[] items)

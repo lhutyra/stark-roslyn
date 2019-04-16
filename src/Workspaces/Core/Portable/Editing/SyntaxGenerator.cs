@@ -1946,7 +1946,7 @@ namespace StarkPlatform.CodeAnalysis.Editing
         /// <summary>
         /// Creates an expression that denotes a conditional evaluation operation.
         /// </summary>
-        public abstract SyntaxNode ConditionalExpression(SyntaxNode condition, SyntaxNode whenTrue, SyntaxNode whenFalse);
+        public abstract SyntaxNode IfExpression(SyntaxNode condition, SyntaxNode whenTrue, SyntaxNode whenFalse);
 
         internal abstract SyntaxNode ConditionalAccessExpression(SyntaxNode expression, SyntaxNode whenNotNull);
         internal abstract SyntaxNode MemberBindingExpression(SyntaxNode name);

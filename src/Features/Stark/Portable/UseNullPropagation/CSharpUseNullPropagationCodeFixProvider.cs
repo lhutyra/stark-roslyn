@@ -11,7 +11,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseNullPropagation
     internal class CSharpUseNullPropagationCodeFixProvider : AbstractUseNullPropagationCodeFixProvider<
             SyntaxKind,
             ExpressionSyntax,
-            ConditionalExpressionSyntax,
+            IfExpressionSyntax,
             BinaryExpressionSyntax,
             InvocationExpressionSyntax,
             MemberAccessExpressionSyntax,

@@ -100,7 +100,7 @@ namespace StarkPlatform.CodeAnalysis.UseConditionalExpression
                 }
             }
 
-            var conditionalExpression = (TConditionalExpressionSyntax)generator.ConditionalExpression(
+            var conditionalExpression = (TConditionalExpressionSyntax)generator.IfExpression(
                 condition.WithoutTrivia(),
                 MakeRef(generator, isRef, CastValueIfNecessary(generator, trueValue)),
                 MakeRef(generator, isRef, CastValueIfNecessary(generator, falseValue)));

@@ -157,7 +157,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
                 //     var x = true ? ref y :
                 case SyntaxKind.QuestionToken:
                 case SyntaxKind.ColonToken:
-                    return token.Parent?.Kind() == SyntaxKind.ConditionalExpression;
+                    return token.Parent?.Kind() == SyntaxKind.IfExpression;
             }
 
             return false;

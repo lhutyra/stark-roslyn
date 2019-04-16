@@ -367,7 +367,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
             }
 
             if (token.IsKind(SyntaxKind.QuestionToken)
-                && (token.Parent.IsKind(SyntaxKind.ConditionalExpression) || token.Parent is TypeSyntax))
+                && (token.Parent.IsKind(SyntaxKind.IfExpression) || token.Parent is TypeSyntax))
             {
                 return true;
             }
@@ -398,7 +398,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax
             }
 
             if ((next.IsKind(SyntaxKind.QuestionToken) || next.IsKind(SyntaxKind.ColonToken))
-                && (next.Parent.IsKind(SyntaxKind.ConditionalExpression)))
+                && (next.Parent.IsKind(SyntaxKind.IfExpression)))
             {
                 return true;
             }

@@ -48,7 +48,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.RemoveUnnecessaryParentheses
             ExpressionSyntax parentExpression;
             switch (parenthesizedExpression.Parent)
             {
-                case ConditionalExpressionSyntax _:
+                case IfExpressionSyntax _:
                     // If our parent is a conditional, then only remove parens if the inner
                     // expression is a primary. i.e. it's ok to remove any of the following:
                     //

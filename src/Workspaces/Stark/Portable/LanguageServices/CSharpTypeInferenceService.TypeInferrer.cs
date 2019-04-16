@@ -151,7 +151,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case CatchFilterClauseSyntax catchFilterClause: return InferTypeInCatchFilterClause(catchFilterClause);
                     case CheckedExpressionSyntax checkedExpression: return InferTypes(checkedExpression);
                     case ConditionalAccessExpressionSyntax conditionalAccessExpression: return InferTypeInConditionalAccessExpression(conditionalAccessExpression);
-                    case ConditionalExpressionSyntax conditionalExpression: return InferTypeInConditionalExpression(conditionalExpression, expression);
+                    case IfExpressionSyntax conditionalExpression: return InferTypeInConditionalExpression(conditionalExpression, expression);
                     case ConstantPatternSyntax constantPattern: return InferTypeInConstantPattern(constantPattern);
                     case DoStatementSyntax doStatement: return InferTypeInDoStatement(doStatement);
                     case EqualsValueClauseSyntax equalsValue: return InferTypeInEqualsValueClause(equalsValue);
@@ -214,7 +214,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     case CatchDeclarationSyntax catchDeclaration: return InferTypeInCatchDeclaration(catchDeclaration, token);
                     case CatchFilterClauseSyntax catchFilterClause: return InferTypeInCatchFilterClause(catchFilterClause, token);
                     case CheckedExpressionSyntax checkedExpression: return InferTypes(checkedExpression);
-                    case ConditionalExpressionSyntax conditionalExpression: return InferTypeInConditionalExpression(conditionalExpression, previousToken: token);
+                    case IfExpressionSyntax conditionalExpression: return InferTypeInConditionalExpression(conditionalExpression, previousToken: token);
                     case DefaultExpressionSyntax defaultExpression: return InferTypeInDefaultExpression(defaultExpression);
                     case DoStatementSyntax doStatement: return InferTypeInDoStatement(doStatement, token);
                     case EqualsValueClauseSyntax equalsValue: return InferTypeInEqualsValueClause(equalsValue, token);
@@ -1089,7 +1089,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 return InferTypes(expression);
             }
 
-            private IEnumerable<TypeInferenceInfo> InferTypeInConditionalExpression(ConditionalExpressionSyntax conditional, ExpressionSyntax expressionOpt = null, SyntaxToken? previousToken = null)
+            private IEnumerable<TypeInferenceInfo> InferTypeInConditionalExpression(IfExpressionSyntax conditional, ExpressionSyntax expressionOpt = null, SyntaxToken? previousToken = null)
             {
                 if (expressionOpt != null && conditional.Condition == expressionOpt)
                 {
@@ -1102,11 +1102,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 // a ? b : Goo()
                 var inTrueClause =
                     (conditional.WhenTrue == expressionOpt) ||
-                    (previousToken == conditional.QuestionToken);
+                    (previousToken == conditional.ThenKeyword);
 
                 var inFalseClause =
                     (conditional.WhenFalse == expressionOpt) ||
-                    (previousToken == conditional.ColonToken);
+                    (previousToken == conditional.ElseKeyword);
 
                 var otherTypes = inTrueClause
                                      ? GetTypes(conditional.WhenFalse)

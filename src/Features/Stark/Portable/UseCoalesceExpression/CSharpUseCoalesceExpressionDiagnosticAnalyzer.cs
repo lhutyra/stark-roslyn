@@ -12,14 +12,14 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseCoalesceExpression
         AbstractUseCoalesceExpressionDiagnosticAnalyzer<
             SyntaxKind,
             ExpressionSyntax,
-            ConditionalExpressionSyntax,
+            IfExpressionSyntax,
             BinaryExpressionSyntax>
     {
         protected override ISyntaxFactsService GetSyntaxFactsService()
             => CSharpSyntaxFactsService.Instance;
 
         protected override SyntaxKind GetSyntaxKindToAnalyze()
-            => SyntaxKind.ConditionalExpression;
+            => SyntaxKind.IfExpression;
 
         protected override bool IsEquals(BinaryExpressionSyntax condition)
             => condition.Kind() == SyntaxKind.EqualsExpression;

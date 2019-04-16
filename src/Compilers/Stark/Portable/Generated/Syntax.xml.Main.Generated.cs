@@ -190,8 +190,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a ConditionalExpressionSyntax node.</summary>
-    public virtual TResult VisitConditionalExpression(ConditionalExpressionSyntax node)
+    /// <summary>Called when the visitor visits a IfExpressionSyntax node.</summary>
+    public virtual TResult VisitIfExpression(IfExpressionSyntax node)
     {
       return this.DefaultVisit(node);
     }
@@ -1501,8 +1501,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
       this.DefaultVisit(node);
     }
 
-    /// <summary>Called when the visitor visits a ConditionalExpressionSyntax node.</summary>
-    public virtual void VisitConditionalExpression(ConditionalExpressionSyntax node)
+    /// <summary>Called when the visitor visits a IfExpressionSyntax node.</summary>
+    public virtual void VisitIfExpression(IfExpressionSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -2849,14 +2849,15 @@ namespace StarkPlatform.CodeAnalysis.Stark
       return node.Update(left, operatorToken, right);
     }
 
-    public override SyntaxNode VisitConditionalExpression(ConditionalExpressionSyntax node)
+    public override SyntaxNode VisitIfExpression(IfExpressionSyntax node)
     {
+      var ifKeyword = this.VisitToken(node.IfKeyword);
       var condition = (ExpressionSyntax)this.Visit(node.Condition);
-      var questionToken = this.VisitToken(node.QuestionToken);
+      var thenKeyword = this.VisitToken(node.ThenKeyword);
       var whenTrue = (ExpressionSyntax)this.Visit(node.WhenTrue);
-      var colonToken = this.VisitToken(node.ColonToken);
+      var elseKeyword = this.VisitToken(node.ElseKeyword);
       var whenFalse = (ExpressionSyntax)this.Visit(node.WhenFalse);
-      return node.Update(condition, questionToken, whenTrue, colonToken, whenFalse);
+      return node.Update(ifKeyword, condition, thenKeyword, whenTrue, elseKeyword, whenFalse);
     }
 
     public override SyntaxNode VisitThisExpression(ThisExpressionSyntax node)
@@ -3564,9 +3565,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
     {
       var ifKeyword = this.VisitToken(node.IfKeyword);
       var condition = (ExpressionSyntax)this.Visit(node.Condition);
+      var thenKeyword = this.VisitToken(node.ThenKeyword);
       var statement = (BlockSyntax)this.Visit(node.Statement);
       var @else = (ElseClauseSyntax)this.Visit(node.Else);
-      return node.Update(ifKeyword, condition, statement, @else);
+      return node.Update(ifKeyword, condition, thenKeyword, statement, @else);
     }
 
     public override SyntaxNode VisitElseClause(ElseClauseSyntax node)
@@ -5447,37 +5449,44 @@ namespace StarkPlatform.CodeAnalysis.Stark
       }
     }
 
-    /// <summary>Creates a new ConditionalExpressionSyntax instance.</summary>
-    public static ConditionalExpressionSyntax ConditionalExpression(ExpressionSyntax condition, SyntaxToken questionToken, ExpressionSyntax whenTrue, SyntaxToken colonToken, ExpressionSyntax whenFalse)
+    /// <summary>Creates a new IfExpressionSyntax instance.</summary>
+    public static IfExpressionSyntax IfExpression(SyntaxToken ifKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, ExpressionSyntax whenTrue, SyntaxToken elseKeyword, ExpressionSyntax whenFalse)
     {
-      if (condition == null)
-        throw new ArgumentNullException(nameof(condition));
-      switch (questionToken.Kind())
+      switch (ifKeyword.Kind())
       {
-        case SyntaxKind.QuestionToken:
+        case SyntaxKind.IfKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(questionToken));
+          throw new ArgumentException(nameof(ifKeyword));
+      }
+      if (condition == null)
+        throw new ArgumentNullException(nameof(condition));
+      switch (thenKeyword.Kind())
+      {
+        case SyntaxKind.ThenKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(thenKeyword));
       }
       if (whenTrue == null)
         throw new ArgumentNullException(nameof(whenTrue));
-      switch (colonToken.Kind())
+      switch (elseKeyword.Kind())
       {
-        case SyntaxKind.ColonToken:
+        case SyntaxKind.ElseKeyword:
           break;
         default:
-          throw new ArgumentException(nameof(colonToken));
+          throw new ArgumentException(nameof(elseKeyword));
       }
       if (whenFalse == null)
         throw new ArgumentNullException(nameof(whenFalse));
-      return (ConditionalExpressionSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.ConditionalExpression(condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)questionToken.Node, whenTrue == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)whenTrue.Green, (Syntax.InternalSyntax.SyntaxToken)colonToken.Node, whenFalse == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)whenFalse.Green).CreateRed();
+      return (IfExpressionSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.IfExpression((Syntax.InternalSyntax.SyntaxToken)ifKeyword.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)thenKeyword.Node, whenTrue == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)whenTrue.Green, (Syntax.InternalSyntax.SyntaxToken)elseKeyword.Node, whenFalse == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)whenFalse.Green).CreateRed();
     }
 
 
-    /// <summary>Creates a new ConditionalExpressionSyntax instance.</summary>
-    public static ConditionalExpressionSyntax ConditionalExpression(ExpressionSyntax condition, ExpressionSyntax whenTrue, ExpressionSyntax whenFalse)
+    /// <summary>Creates a new IfExpressionSyntax instance.</summary>
+    public static IfExpressionSyntax IfExpression(ExpressionSyntax condition, ExpressionSyntax whenTrue, ExpressionSyntax whenFalse)
     {
-      return SyntaxFactory.ConditionalExpression(condition, SyntaxFactory.Token(SyntaxKind.QuestionToken), whenTrue, SyntaxFactory.Token(SyntaxKind.ColonToken), whenFalse);
+      return SyntaxFactory.IfExpression(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), whenTrue, SyntaxFactory.Token(SyntaxKind.ElseKeyword), whenFalse);
     }
 
     /// <summary>Creates a new ThisExpressionSyntax instance.</summary>
@@ -8122,7 +8131,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
     }
 
     /// <summary>Creates a new IfStatementSyntax instance.</summary>
-    public static IfStatementSyntax IfStatement(SyntaxToken ifKeyword, ExpressionSyntax condition, BlockSyntax statement, ElseClauseSyntax @else)
+    public static IfStatementSyntax IfStatement(SyntaxToken ifKeyword, ExpressionSyntax condition, SyntaxToken thenKeyword, BlockSyntax statement, ElseClauseSyntax @else)
     {
       switch (ifKeyword.Kind())
       {
@@ -8133,22 +8142,29 @@ namespace StarkPlatform.CodeAnalysis.Stark
       }
       if (condition == null)
         throw new ArgumentNullException(nameof(condition));
+      switch (thenKeyword.Kind())
+      {
+        case SyntaxKind.ThenKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(thenKeyword));
+      }
       if (statement == null)
         throw new ArgumentNullException(nameof(statement));
-      return (IfStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.IfStatement((Syntax.InternalSyntax.SyntaxToken)ifKeyword.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)statement.Green, @else == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ElseClauseSyntax)@else.Green).CreateRed();
+      return (IfStatementSyntax)StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.SyntaxFactory.IfStatement((Syntax.InternalSyntax.SyntaxToken)ifKeyword.Node, condition == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ExpressionSyntax)condition.Green, (Syntax.InternalSyntax.SyntaxToken)thenKeyword.Node, statement == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.BlockSyntax)statement.Green, @else == null ? null : (StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax.ElseClauseSyntax)@else.Green).CreateRed();
     }
 
 
     /// <summary>Creates a new IfStatementSyntax instance.</summary>
     public static IfStatementSyntax IfStatement(ExpressionSyntax condition, BlockSyntax statement, ElseClauseSyntax @else)
     {
-      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, statement, @else);
+      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), statement, @else);
     }
 
     /// <summary>Creates a new IfStatementSyntax instance.</summary>
     public static IfStatementSyntax IfStatement(ExpressionSyntax condition)
     {
-      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Block(), default(ElseClauseSyntax));
+      return SyntaxFactory.IfStatement(SyntaxFactory.Token(SyntaxKind.IfKeyword), condition, SyntaxFactory.Token(SyntaxKind.ThenKeyword), SyntaxFactory.Block(), default(ElseClauseSyntax));
     }
 
     /// <summary>Creates a new ElseClauseSyntax instance.</summary>

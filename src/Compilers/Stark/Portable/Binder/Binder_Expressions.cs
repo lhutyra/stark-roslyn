@@ -495,8 +495,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.PreDecrementExpression:
                     return BindIncrementOperator(node, ((PrefixUnaryExpressionSyntax)node).Operand, ((PrefixUnaryExpressionSyntax)node).OperatorToken, diagnostics);
 
-                case SyntaxKind.ConditionalExpression:
-                    return BindConditionalOperator((ConditionalExpressionSyntax)node, diagnostics);
+                case SyntaxKind.IfExpression:
+                    return BindConditionalOperator((IfExpressionSyntax)node, diagnostics);
 
                 case SyntaxKind.SwitchExpression:
                     return BindSwitchExpression((SwitchExpressionSyntax)node, diagnostics);
@@ -674,9 +674,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
             switch (parent.Kind())
             {
-                case SyntaxKind.ConditionalExpression: // ?:
+                case SyntaxKind.IfExpression: // ?:
                     {
-                        var conditionalParent = (ConditionalExpressionSyntax)parent;
+                        var conditionalParent = (IfExpressionSyntax)parent;
                         return node == conditionalParent.WhenTrue || node == conditionalParent.WhenFalse;
                     }
                 case SyntaxKind.CoalesceExpression: // ??

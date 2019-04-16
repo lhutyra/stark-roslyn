@@ -144,7 +144,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.GreaterThanOrEqualExpression:
                 case SyntaxKind.LessThanOrEqualExpression:
                 case SyntaxKind.InvocationExpression: //  To support nameof(); anything else will be a compile-time error
-                case SyntaxKind.ConditionalExpression: //  The ?: conditional operator.
+                case SyntaxKind.IfExpression: //  The ?: conditional operator.
                     return true;
 
                 default:

@@ -30,7 +30,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeFixes.ConditionalExpressionInStri
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
             var token = root.FindToken(diagnosticSpan.Start);
-            var conditionalExpression = token.GetAncestor<ConditionalExpressionSyntax>();
+            var conditionalExpression = token.GetAncestor<IfExpressionSyntax>();
             if (conditionalExpression != null)
             {
                 var documentChangeAction = new MyCodeAction(

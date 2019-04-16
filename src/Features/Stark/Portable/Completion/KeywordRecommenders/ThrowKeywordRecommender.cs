@@ -36,7 +36,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Completion.KeywordRecommenders
             if (context.TargetToken.Kind() == SyntaxKind.QuestionToken ||
                 context.TargetToken.Kind() == SyntaxKind.ColonToken)
             {
-                return context.TargetToken.Parent.Kind() == SyntaxKind.ConditionalExpression;
+                return context.TargetToken.Parent.Kind() == SyntaxKind.IfExpression;
             }
 
             return false;

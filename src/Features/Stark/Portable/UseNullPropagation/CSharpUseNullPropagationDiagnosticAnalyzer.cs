@@ -13,7 +13,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseNullPropagation
         AbstractUseNullPropagationDiagnosticAnalyzer<
             SyntaxKind,
             ExpressionSyntax,
-            ConditionalExpressionSyntax,
+            IfExpressionSyntax,
             BinaryExpressionSyntax,
             InvocationExpressionSyntax,
             MemberAccessExpressionSyntax,
@@ -30,7 +30,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.UseNullPropagation
             => CSharpSemanticFactsService.Instance;
 
         protected override SyntaxKind GetSyntaxKindToAnalyze()
-            => SyntaxKind.ConditionalExpression;
+            => SyntaxKind.IfExpression;
 
         protected override bool IsEquals(BinaryExpressionSyntax condition)
             => condition.Kind() == SyntaxKind.EqualsExpression;
