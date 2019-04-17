@@ -47,10 +47,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
             ParameterListSyntax parameterList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses,
             SyntaxList<ContractClauseSyntax> contractClauses,
+            ThrowsListSyntax throwsList,
             BlockSyntax body,
             SyntaxToken semicolonToken)
         {
-            return SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, minusGreaterThanToken, returnType, constraintClauses, contractClauses, body, null, semicolonToken);
+            return SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, minusGreaterThanToken, returnType, constraintClauses, contractClauses, throwsList, body, null, semicolonToken);
         }
     }
 }

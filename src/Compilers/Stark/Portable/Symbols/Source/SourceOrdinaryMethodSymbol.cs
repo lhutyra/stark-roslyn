@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
@@ -35,6 +36,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// Initialized in two steps. Hold a copy if accessing during initialization.
         /// </summary>
         private ImmutableArray<TypeParameterConstraintClause> _lazyTypeParameterConstraints;
+
+        /// <summary>
+        /// A collection of type symbols for the throws list
+        /// </summary>
+        private ImmutableArray<TypeSymbol> _lazyThrowsList;
 
         /// <summary>
         /// If this symbol represents a partial method definition or implementation part, its other part (if any).
@@ -531,6 +537,75 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return _lazyTypeParameterConstraints;
         }
 
+        public override ImmutableArray<TypeSymbol> ThrowsList
+        {
+            get
+            {
+                var throws = _lazyThrowsList;
+                if (throws.IsDefault)
+                {
+                    ImmutableArray<TypeSymbol> immutableThrows;
+                    var diagnostics = DiagnosticBag.GetInstance();
+
+                    var syntax = GetSyntax();
+                    if (syntax.ThrowsList == null)
+                    {
+                        immutableThrows = ImmutableArray<TypeSymbol>.Empty;
+                    }
+                    else
+                    {
+                        var withTypeParametersBinder =
+                            this.DeclaringCompilation
+                                .GetBinderFactory(syntax.SyntaxTree)
+                                .GetBinder(syntax.ThrowsList, syntax, this);
+
+
+                        var throwCount = syntax.ThrowsList.Types.Count;
+
+                        // An array of constraint clauses, one for each type parameter, indexed by ordinal.
+                        var results = ArrayBuilder<TypeSymbol>.GetInstance(throwCount, fillWithValue: default);
+                        
+                        if (throwCount == 0)
+                        {
+                            results.Add(withTypeParametersBinder.Compilation.GetWellKnownType(WellKnownType.system_Exception));
+                        }
+                        else
+                        {
+                            for (int i = 0; i < throwCount; i++)
+                            {
+                                var throwBaseType = syntax.ThrowsList.Types[i];
+
+                                var typeSymbolWithAnnotations = withTypeParametersBinder.BindTypeOrVarKeyword(throwBaseType, diagnostics, out var isTypeUnbound);
+                                var typeSymbol = typeSymbolWithAnnotations.TypeSymbol;
+                                results[i] = typeSymbol;
+
+                                // If the expression is a lambda, anonymous method, or method group then it will
+                                // have no compile-time type; give the same error as if the type was wrong.
+                                HashSet<DiagnosticInfo> useSiteDiagnostics = null;
+
+                                if (!typeSymbol.IsErrorType() && !withTypeParametersBinder.Compilation.IsExceptionType(typeSymbol.EffectiveType(ref useSiteDiagnostics), ref useSiteDiagnostics))
+                                {
+                                    diagnostics.Add(ErrorCode.ERR_BadExceptionType, syntax.Location);
+                                    diagnostics.Add(syntax, useSiteDiagnostics);
+                                }
+                            }
+                        }
+
+                        immutableThrows = results.ToImmutableAndFree();
+                    }
+
+                    if (ImmutableInterlocked.InterlockedInitialize(ref _lazyThrowsList, immutableThrows))
+                    {
+                        this.AddDeclarationDiagnostics(diagnostics);
+                    }
+
+                    diagnostics.Free();
+                    //throws = _lazyThrowsList;
+                }
+                return _lazyThrowsList;
+            }
+        }
+
         public override bool IsVararg
         {
             get
@@ -873,6 +948,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             return result.ToImmutableAndFree();
         }
 
+      
         private void CheckModifiers(bool hasBody, Location location, DiagnosticBag diagnostics)
         {
             const DeclarationModifiers partialMethodInvalidModifierMask = (DeclarationModifiers.AccessibilityMask & ~DeclarationModifiers.Private) |
@@ -1040,6 +1116,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 parameter.Type.CheckAllConstraints(DeclaringCompilation, conversions, parameter.Locations[0], diagnostics);
             }
 
+            foreach (var throwType in this.ThrowsList)
+            {
+                throwType.CheckAllConstraints(DeclaringCompilation, conversions, GetSyntax().ThrowsList.Location, diagnostics);
+            }
+
             var implementingPart = this.SourcePartialImplementation;
             if ((object)implementingPart != null)
             {
@@ -1057,6 +1138,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             {
                 this.DeclaringCompilation.EnsureNullableAttributeExists(diagnostics, location, modifyCompilation: true);
             }
+
+            // Check throws list with method base
+            Binder.VerifyMethodThrowsWithBase(this, OverriddenMethod, diagnostics);
 
             ParameterHelpers.EnsureNullableAttributeExists(Parameters, diagnostics, modifyCompilation: true);
         }

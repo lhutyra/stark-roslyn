@@ -127,6 +127,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
                 get { return ImmutableArray<CustomModifier>.Empty; }
             }
 
+            public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
+
             public override Symbol AssociatedSymbol
             {
                 get { return null; }

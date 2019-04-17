@@ -1238,6 +1238,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return SyntaxKind.IlKeyword;
                 case "requires":
                     return SyntaxKind.RequiresKeyword;
+                case "throws":
+                    return SyntaxKind.ThrowsKeyword;
                 case "ensures":
                     return SyntaxKind.EnsuresKeyword;
                 case "nameof":
@@ -1661,6 +1663,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return "il";
                 case SyntaxKind.RequiresKeyword:
                     return "requires";
+                case SyntaxKind.ThrowsKeyword:
+                    return "throws";
                 case SyntaxKind.EnsuresKeyword:
                     return "ensures";
                 case SyntaxKind.InterpolatedStringStartToken:

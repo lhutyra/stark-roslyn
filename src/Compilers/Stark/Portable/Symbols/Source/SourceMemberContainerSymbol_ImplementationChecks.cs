@@ -254,6 +254,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
 
                             if (wasImplementingMemberFound && interfaceMemberKind == SymbolKind.Method)
                             {
+                                // Check throws
+                                Binder.VerifyMethodThrowsWithBase((MethodSymbol)implementingMember, (MethodSymbol)interfaceMember, diagnostics);
+
                                 // Don't report use site errors on properties - we'll report them on each of their accessors.
 
                                 // Don't report use site errors for implementations in other types unless 

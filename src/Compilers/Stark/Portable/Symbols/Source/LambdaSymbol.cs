@@ -213,6 +213,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return ImmutableArray<TypeParameterSymbol>.Empty; }
         }
 
+        public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
+
         public override int Arity
         {
             get { return 0; }

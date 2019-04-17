@@ -123,6 +123,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return ImmutableArray<TypeSymbolWithAnnotations>.Empty; }
         }
 
+        public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
+
         public override Symbol AssociatedSymbol
         {
             get { return null; }

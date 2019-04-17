@@ -385,6 +385,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case PreIncrementExpression:
                 case PreDecrementExpression:
                 case AwaitExpression:
+                case TryExpression:
                     return true;
 
                 case ConditionalAccessExpression:

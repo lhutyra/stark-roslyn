@@ -323,6 +323,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             ParameterListSyntax parameterList,
             SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses,
             SyntaxList<ContractClauseSyntax> contractClauses,
+            ThrowsListSyntax throwsList,
             BlockSyntax block,
             SyntaxToken semicolonToken)
         {
@@ -338,6 +339,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 returnType,
                 constraintClauses,
                 contractClauses,
+                throwsList,
                 block,
                 default(ArrowExpressionClauseSyntax),
                 semicolonToken);

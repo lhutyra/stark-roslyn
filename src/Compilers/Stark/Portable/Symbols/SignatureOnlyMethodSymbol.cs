@@ -58,6 +58,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public override int Arity { get { return _typeParameters.Length; } }
 
         public override ImmutableArray<TypeParameterSymbol> TypeParameters { get { return _typeParameters; } }
+        public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
 
         public override bool ReturnsVoid { get { return _returnType.SpecialType == SpecialType.System_Void; } }
 

@@ -1709,6 +1709,14 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ERR_AddressOfLetLocal = 9020,
         ERR_InlineILStackNotEmpty = 9021,
         ERR_InvalidParameterNameForCallerArgumentExpression = 9022,
+        ERR_ThrowsExpected = 9023,
+        ERR_TryNotSupportedByThisExpression = 9024,
+        ERR_ExceptionThrownButNotDeclared = 9025,
+        ERR_CatchBlockNotUsed = 9026,
+        ERR_ExpectingThrows = 9027,
+        ERR_MissingTry = 9028,
+        ERR_MissingThrowsOnBaseMethod = 9029,
+        ERR_ThrowsNotDeclaredByBaseMethod = 9030,
         #endregion
         // Note: you will need to re-generate compiler code after adding warnings (eng\generate-compiler-code.cmd)
     }

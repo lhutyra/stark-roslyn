@@ -642,6 +642,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols.Metadata.PE
             }
         }
 
+        public override ImmutableArray<TypeSymbol> ThrowsList => throw new NotImplementedException("TODO: implement ThrowsList for PEMethodSymbol");
+
         private ImmutableArray<TypeParameterSymbol> EnsureTypeParametersAreLoaded(ref DiagnosticInfo diagnosticInfo)
         {
             var typeParams = _lazyTypeParameters;

@@ -2803,6 +2803,133 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
+  /// <summary>Class which represents the syntax node for an "try" expression.</summary>
+  internal sealed partial class TryExpressionSyntax : ExpressionSyntax
+  {
+    internal readonly SyntaxToken tryKeyword;
+    internal readonly ExpressionSyntax expression;
+
+    internal TryExpressionSyntax(SyntaxKind kind, SyntaxToken tryKeyword, ExpressionSyntax expression, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(tryKeyword);
+        this.tryKeyword = tryKeyword;
+        this.AdjustFlagsAndWidth(expression);
+        this.expression = expression;
+    }
+
+
+    internal TryExpressionSyntax(SyntaxKind kind, SyntaxToken tryKeyword, ExpressionSyntax expression, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(tryKeyword);
+        this.tryKeyword = tryKeyword;
+        this.AdjustFlagsAndWidth(expression);
+        this.expression = expression;
+    }
+
+
+    internal TryExpressionSyntax(SyntaxKind kind, SyntaxToken tryKeyword, ExpressionSyntax expression)
+        : base(kind)
+    {
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(tryKeyword);
+        this.tryKeyword = tryKeyword;
+        this.AdjustFlagsAndWidth(expression);
+        this.expression = expression;
+    }
+
+    /// <summary>SyntaxToken representing the kind "try" keyword.</summary>
+    public SyntaxToken TryKeyword { get { return this.tryKeyword; } }
+    /// <summary>ExpressionSyntax representing the operand of the "try" operator.</summary>
+    public ExpressionSyntax Expression { get { return this.expression; } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.tryKeyword;
+            case 1: return this.expression;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.TryExpressionSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitTryExpression(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitTryExpression(this);
+    }
+
+    public TryExpressionSyntax Update(SyntaxToken tryKeyword, ExpressionSyntax expression)
+    {
+        if (tryKeyword != this.TryKeyword || expression != this.Expression)
+        {
+            var newNode = SyntaxFactory.TryExpression(tryKeyword, expression);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new TryExpressionSyntax(this.Kind, this.tryKeyword, this.expression, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new TryExpressionSyntax(this.Kind, this.tryKeyword, this.expression, GetDiagnostics(), annotations);
+    }
+
+    internal TryExpressionSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 2;
+      var tryKeyword = (SyntaxToken)reader.ReadValue();
+      if (tryKeyword != null)
+      {
+         AdjustFlagsAndWidth(tryKeyword);
+         this.tryKeyword = tryKeyword;
+      }
+      var expression = (ExpressionSyntax)reader.ReadValue();
+      if (expression != null)
+      {
+         AdjustFlagsAndWidth(expression);
+         this.expression = expression;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.tryKeyword);
+      writer.WriteValue(this.expression);
+    }
+
+    static TryExpressionSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(TryExpressionSyntax), r => new TryExpressionSyntax(r));
+    }
+  }
+
   /// <summary>Class which represents the syntax node for postfix unary expression.</summary>
   internal sealed partial class PostfixUnaryExpressionSyntax : ExpressionSyntax
   {
@@ -24155,6 +24282,142 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
   }
 
+  /// <summary>Extends list syntax.</summary>
+  internal sealed partial class ThrowsListSyntax : CSharpSyntaxNode
+  {
+    internal readonly SyntaxToken throwsKeyword;
+    internal readonly GreenNode types;
+
+    internal ThrowsListSyntax(SyntaxKind kind, SyntaxToken throwsKeyword, GreenNode types, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+        : base(kind, diagnostics, annotations)
+    {
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(throwsKeyword);
+        this.throwsKeyword = throwsKeyword;
+        if (types != null)
+        {
+            this.AdjustFlagsAndWidth(types);
+            this.types = types;
+        }
+    }
+
+
+    internal ThrowsListSyntax(SyntaxKind kind, SyntaxToken throwsKeyword, GreenNode types, SyntaxFactoryContext context)
+        : base(kind)
+    {
+        this.SetFactoryContext(context);
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(throwsKeyword);
+        this.throwsKeyword = throwsKeyword;
+        if (types != null)
+        {
+            this.AdjustFlagsAndWidth(types);
+            this.types = types;
+        }
+    }
+
+
+    internal ThrowsListSyntax(SyntaxKind kind, SyntaxToken throwsKeyword, GreenNode types)
+        : base(kind)
+    {
+        this.SlotCount = 2;
+        this.AdjustFlagsAndWidth(throwsKeyword);
+        this.throwsKeyword = throwsKeyword;
+        if (types != null)
+        {
+            this.AdjustFlagsAndWidth(types);
+            this.types = types;
+        }
+    }
+
+    /// <summary>Gets the extends keyword.</summary>
+    public SyntaxToken ThrowsKeyword { get { return this.throwsKeyword; } }
+    /// <summary>Gets the base type references.</summary>
+    public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> Types { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax>(new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<CSharpSyntaxNode>(this.types)); } }
+
+    internal override GreenNode GetSlot(int index)
+    {
+        switch (index)
+        {
+            case 0: return this.throwsKeyword;
+            case 1: return this.types;
+            default: return null;
+        }
+    }
+
+    internal override SyntaxNode CreateRed(SyntaxNode parent, int position)
+    {
+      return new Stark.Syntax.ThrowsListSyntax(this, parent, position);
+    }
+
+    public override TResult Accept<TResult>(CSharpSyntaxVisitor<TResult> visitor)
+    {
+        return visitor.VisitThrowsList(this);
+    }
+
+    public override void Accept(CSharpSyntaxVisitor visitor)
+    {
+        visitor.VisitThrowsList(this);
+    }
+
+    public ThrowsListSyntax Update(SyntaxToken throwsKeyword, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> types)
+    {
+        if (throwsKeyword != this.ThrowsKeyword || types != this.Types)
+        {
+            var newNode = SyntaxFactory.ThrowsList(throwsKeyword, types);
+            var diags = this.GetDiagnostics();
+            if (diags != null && diags.Length > 0)
+               newNode = newNode.WithDiagnosticsGreen(diags);
+            var annotations = this.GetAnnotations();
+            if (annotations != null && annotations.Length > 0)
+               newNode = newNode.WithAnnotationsGreen(annotations);
+            return newNode;
+        }
+
+        return this;
+    }
+
+    internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
+    {
+         return new ThrowsListSyntax(this.Kind, this.throwsKeyword, this.types, diagnostics, GetAnnotations());
+    }
+
+    internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
+    {
+         return new ThrowsListSyntax(this.Kind, this.throwsKeyword, this.types, GetDiagnostics(), annotations);
+    }
+
+    internal ThrowsListSyntax(ObjectReader reader)
+        : base(reader)
+    {
+      this.SlotCount = 2;
+      var throwsKeyword = (SyntaxToken)reader.ReadValue();
+      if (throwsKeyword != null)
+      {
+         AdjustFlagsAndWidth(throwsKeyword);
+         this.throwsKeyword = throwsKeyword;
+      }
+      var types = (GreenNode)reader.ReadValue();
+      if (types != null)
+      {
+         AdjustFlagsAndWidth(types);
+         this.types = types;
+      }
+    }
+
+    internal override void WriteTo(ObjectWriter writer)
+    {
+      base.WriteTo(writer);
+      writer.WriteValue(this.throwsKeyword);
+      writer.WriteValue(this.types);
+    }
+
+    static ThrowsListSyntax()
+    {
+       ObjectBinder.RegisterTypeReader(typeof(ThrowsListSyntax), r => new ThrowsListSyntax(r));
+    }
+  }
+
   /// <summary>Provides the base class from which the classes that represent base type syntax nodes are derived. This is an abstract class.</summary>
   internal abstract partial class BaseTypeSyntax : CSharpSyntaxNode
   {
@@ -25774,14 +26037,15 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     internal readonly TypeSyntax returnType;
     internal readonly GreenNode constraintClauses;
     internal readonly GreenNode contractClauses;
+    internal readonly ThrowsListSyntax throwsList;
     internal readonly BlockSyntax body;
     internal readonly ArrowExpressionClauseSyntax expressionBody;
     internal readonly SyntaxToken eosToken;
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, GreenNode contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, GreenNode contractClauses, ThrowsListSyntax throwsList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, DiagnosticInfo[] diagnostics, SyntaxAnnotation[] annotations)
         : base(kind, diagnostics, annotations)
     {
-        this.SlotCount = 14;
+        this.SlotCount = 15;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -25828,6 +26092,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             this.AdjustFlagsAndWidth(contractClauses);
             this.contractClauses = contractClauses;
         }
+        if (throwsList != null)
+        {
+            this.AdjustFlagsAndWidth(throwsList);
+            this.throwsList = throwsList;
+        }
         if (body != null)
         {
             this.AdjustFlagsAndWidth(body);
@@ -25846,11 +26115,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, GreenNode contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, GreenNode contractClauses, ThrowsListSyntax throwsList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken, SyntaxFactoryContext context)
         : base(kind)
     {
         this.SetFactoryContext(context);
-        this.SlotCount = 14;
+        this.SlotCount = 15;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -25896,6 +26165,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         {
             this.AdjustFlagsAndWidth(contractClauses);
             this.contractClauses = contractClauses;
+        }
+        if (throwsList != null)
+        {
+            this.AdjustFlagsAndWidth(throwsList);
+            this.throwsList = throwsList;
         }
         if (body != null)
         {
@@ -25915,10 +26189,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
 
-    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, GreenNode contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    internal MethodDeclarationSyntax(SyntaxKind kind, GreenNode attributeLists, GreenNode modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, GreenNode constraintClauses, GreenNode contractClauses, ThrowsListSyntax throwsList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
         : base(kind)
     {
-        this.SlotCount = 14;
+        this.SlotCount = 15;
         if (attributeLists != null)
         {
             this.AdjustFlagsAndWidth(attributeLists);
@@ -25964,6 +26238,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         {
             this.AdjustFlagsAndWidth(contractClauses);
             this.contractClauses = contractClauses;
+        }
+        if (throwsList != null)
+        {
+            this.AdjustFlagsAndWidth(throwsList);
+            this.throwsList = throwsList;
         }
         if (body != null)
         {
@@ -25998,6 +26277,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     /// <summary>Gets the constraint clause list.</summary>
     public StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> ConstraintClauses { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax>(this.constraintClauses); } }
     public override StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> ContractClauses { get { return new StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax>(this.contractClauses); } }
+    /// <summary>Gets the throws list.</summary>
+    public ThrowsListSyntax ThrowsList { get { return this.throwsList; } }
     public override BlockSyntax Body { get { return this.body; } }
     public override ArrowExpressionClauseSyntax ExpressionBody { get { return this.expressionBody; } }
     /// <summary>Gets the optional semicolon token.</summary>
@@ -26018,9 +26299,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
             case 8: return this.returnType;
             case 9: return this.constraintClauses;
             case 10: return this.contractClauses;
-            case 11: return this.body;
-            case 12: return this.expressionBody;
-            case 13: return this.eosToken;
+            case 11: return this.throwsList;
+            case 12: return this.body;
+            case 13: return this.expressionBody;
+            case 14: return this.eosToken;
             default: return null;
         }
     }
@@ -26040,11 +26322,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
         visitor.VisitMethodDeclaration(this);
     }
 
-    public MethodDeclarationSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public MethodDeclarationSyntax Update(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, ThrowsListSyntax throwsList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
-        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || returnToken != this.ReturnToken || returnType != this.ReturnType || constraintClauses != this.ConstraintClauses || contractClauses != this.ContractClauses || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
+        if (attributeLists != this.AttributeLists || modifiers != this.Modifiers || funcKeyword != this.FuncKeyword || explicitInterfaceSpecifier != this.ExplicitInterfaceSpecifier || identifier != this.Identifier || typeParameterList != this.TypeParameterList || parameterList != this.ParameterList || returnToken != this.ReturnToken || returnType != this.ReturnType || constraintClauses != this.ConstraintClauses || contractClauses != this.ContractClauses || throwsList != this.ThrowsList || body != this.Body || expressionBody != this.ExpressionBody || eosToken != this.EosToken)
         {
-            var newNode = SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, contractClauses, body, expressionBody, eosToken);
+            var newNode = SyntaxFactory.MethodDeclaration(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, contractClauses, throwsList, body, expressionBody, eosToken);
             var diags = this.GetDiagnostics();
             if (diags != null && diags.Length > 0)
                newNode = newNode.WithDiagnosticsGreen(diags);
@@ -26059,18 +26341,18 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
 
     internal override GreenNode SetDiagnostics(DiagnosticInfo[] diagnostics)
     {
-         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.contractClauses, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
+         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.contractClauses, this.throwsList, this.body, this.expressionBody, this.eosToken, diagnostics, GetAnnotations());
     }
 
     internal override GreenNode SetAnnotations(SyntaxAnnotation[] annotations)
     {
-         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.contractClauses, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
+         return new MethodDeclarationSyntax(this.Kind, this.attributeLists, this.modifiers, this.funcKeyword, this.explicitInterfaceSpecifier, this.identifier, this.typeParameterList, this.parameterList, this.returnToken, this.returnType, this.constraintClauses, this.contractClauses, this.throwsList, this.body, this.expressionBody, this.eosToken, GetDiagnostics(), annotations);
     }
 
     internal MethodDeclarationSyntax(ObjectReader reader)
         : base(reader)
     {
-      this.SlotCount = 14;
+      this.SlotCount = 15;
       var attributeLists = (GreenNode)reader.ReadValue();
       if (attributeLists != null)
       {
@@ -26137,6 +26419,12 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
          AdjustFlagsAndWidth(contractClauses);
          this.contractClauses = contractClauses;
       }
+      var throwsList = (ThrowsListSyntax)reader.ReadValue();
+      if (throwsList != null)
+      {
+         AdjustFlagsAndWidth(throwsList);
+         this.throwsList = throwsList;
+      }
       var body = (BlockSyntax)reader.ReadValue();
       if (body != null)
       {
@@ -26171,6 +26459,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       writer.WriteValue(this.returnType);
       writer.WriteValue(this.constraintClauses);
       writer.WriteValue(this.contractClauses);
+      writer.WriteValue(this.throwsList);
       writer.WriteValue(this.body);
       writer.WriteValue(this.expressionBody);
       writer.WriteValue(this.eosToken);
@@ -36570,6 +36859,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
+    public virtual TResult VisitTryExpression(TryExpressionSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     public virtual TResult VisitPostfixUnaryExpression(PostfixUnaryExpressionSyntax node)
     {
       return this.DefaultVisit(node);
@@ -37220,6 +37514,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return this.DefaultVisit(node);
     }
 
+    public virtual TResult VisitThrowsList(ThrowsListSyntax node)
+    {
+      return this.DefaultVisit(node);
+    }
+
     public virtual TResult VisitSimpleBaseType(SimpleBaseTypeSyntax node)
     {
       return this.DefaultVisit(node);
@@ -37660,6 +37959,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
     }
 
     public virtual void VisitAwaitExpression(AwaitExpressionSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
+    public virtual void VisitTryExpression(TryExpressionSyntax node)
     {
       this.DefaultVisit(node);
     }
@@ -38314,6 +38618,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       this.DefaultVisit(node);
     }
 
+    public virtual void VisitThrowsList(ThrowsListSyntax node)
+    {
+      this.DefaultVisit(node);
+    }
+
     public virtual void VisitSimpleBaseType(SimpleBaseTypeSyntax node)
     {
       this.DefaultVisit(node);
@@ -38800,6 +39109,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       var awaitKeyword = (SyntaxToken)this.Visit(node.AwaitKeyword);
       var expression = (ExpressionSyntax)this.Visit(node.Expression);
       return node.Update(awaitKeyword, expression);
+    }
+
+    public override CSharpSyntaxNode VisitTryExpression(TryExpressionSyntax node)
+    {
+      var tryKeyword = (SyntaxToken)this.Visit(node.TryKeyword);
+      var expression = (ExpressionSyntax)this.Visit(node.Expression);
+      return node.Update(tryKeyword, expression);
     }
 
     public override CSharpSyntaxNode VisitPostfixUnaryExpression(PostfixUnaryExpressionSyntax node)
@@ -39913,6 +40229,13 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return node.Update(implementsKeyword, types);
     }
 
+    public override CSharpSyntaxNode VisitThrowsList(ThrowsListSyntax node)
+    {
+      var throwsKeyword = (SyntaxToken)this.Visit(node.ThrowsKeyword);
+      var types = this.VisitList(node.Types);
+      return node.Update(throwsKeyword, types);
+    }
+
     public override CSharpSyntaxNode VisitSimpleBaseType(SimpleBaseTypeSyntax node)
     {
       var type = (TypeSyntax)this.Visit(node.Type);
@@ -40005,10 +40328,11 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       var returnType = (TypeSyntax)this.Visit(node.ReturnType);
       var constraintClauses = this.VisitList(node.ConstraintClauses);
       var contractClauses = this.VisitList(node.ContractClauses);
+      var throwsList = (ThrowsListSyntax)this.Visit(node.ThrowsList);
       var body = (BlockSyntax)this.Visit(node.Body);
       var expressionBody = (ArrowExpressionClauseSyntax)this.Visit(node.ExpressionBody);
       var eosToken = (SyntaxToken)this.Visit(node.EosToken);
-      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, contractClauses, body, expressionBody, eosToken);
+      return node.Update(attributeLists, modifiers, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses, contractClauses, throwsList, body, expressionBody, eosToken);
     }
 
     public override CSharpSyntaxNode VisitOperatorDeclaration(OperatorDeclarationSyntax node)
@@ -41170,6 +41494,35 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       if (cached != null) return (AwaitExpressionSyntax)cached;
 
       var result = new AwaitExpressionSyntax(SyntaxKind.AwaitExpression, awaitKeyword, expression, this.context);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
+    public TryExpressionSyntax TryExpression(SyntaxToken tryKeyword, ExpressionSyntax expression)
+    {
+#if DEBUG
+      if (tryKeyword == null)
+        throw new ArgumentNullException(nameof(tryKeyword));
+      switch (tryKeyword.Kind)
+      {
+        case SyntaxKind.TryKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(tryKeyword));
+      }
+      if (expression == null)
+        throw new ArgumentNullException(nameof(expression));
+#endif
+
+      int hash;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.TryExpression, tryKeyword, expression, this.context, out hash);
+      if (cached != null) return (TryExpressionSyntax)cached;
+
+      var result = new TryExpressionSyntax(SyntaxKind.TryExpression, tryKeyword, expression, this.context);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -45568,6 +45921,33 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
+    public ThrowsListSyntax ThrowsList(SyntaxToken throwsKeyword, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> types)
+    {
+#if DEBUG
+      if (throwsKeyword == null)
+        throw new ArgumentNullException(nameof(throwsKeyword));
+      switch (throwsKeyword.Kind)
+      {
+        case SyntaxKind.ThrowsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(throwsKeyword));
+      }
+#endif
+
+      int hash;
+      var cached = CSharpSyntaxNodeCache.TryGetNode((int)SyntaxKind.ThrowsList, throwsKeyword, types.Node, this.context, out hash);
+      if (cached != null) return (ThrowsListSyntax)cached;
+
+      var result = new ThrowsListSyntax(SyntaxKind.ThrowsList, throwsKeyword, types.Node, this.context);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
     public SimpleBaseTypeSyntax SimpleBaseType(TypeSyntax type)
     {
 #if DEBUG
@@ -45905,7 +46285,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public MethodDeclarationSyntax MethodDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public MethodDeclarationSyntax MethodDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, ThrowsListSyntax throwsList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (funcKeyword == null)
@@ -45953,7 +46333,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, contractClauses.Node, body, expressionBody, eosToken, this.context);
+      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, contractClauses.Node, throwsList, body, expressionBody, eosToken, this.context);
     }
 
     public OperatorDeclarationSyntax OperatorDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
@@ -48663,6 +49043,35 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       if (cached != null) return (AwaitExpressionSyntax)cached;
 
       var result = new AwaitExpressionSyntax(SyntaxKind.AwaitExpression, awaitKeyword, expression);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
+    public static TryExpressionSyntax TryExpression(SyntaxToken tryKeyword, ExpressionSyntax expression)
+    {
+#if DEBUG
+      if (tryKeyword == null)
+        throw new ArgumentNullException(nameof(tryKeyword));
+      switch (tryKeyword.Kind)
+      {
+        case SyntaxKind.TryKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(tryKeyword));
+      }
+      if (expression == null)
+        throw new ArgumentNullException(nameof(expression));
+#endif
+
+      int hash;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.TryExpression, tryKeyword, expression, out hash);
+      if (cached != null) return (TryExpressionSyntax)cached;
+
+      var result = new TryExpressionSyntax(SyntaxKind.TryExpression, tryKeyword, expression);
       if (hash >= 0)
       {
           SyntaxNodeCache.AddNode(result, hash);
@@ -53061,6 +53470,33 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
+    public static ThrowsListSyntax ThrowsList(SyntaxToken throwsKeyword, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SeparatedSyntaxList<TypeSyntax> types)
+    {
+#if DEBUG
+      if (throwsKeyword == null)
+        throw new ArgumentNullException(nameof(throwsKeyword));
+      switch (throwsKeyword.Kind)
+      {
+        case SyntaxKind.ThrowsKeyword:
+          break;
+        default:
+          throw new ArgumentException(nameof(throwsKeyword));
+      }
+#endif
+
+      int hash;
+      var cached = SyntaxNodeCache.TryGetNode((int)SyntaxKind.ThrowsList, throwsKeyword, types.Node, out hash);
+      if (cached != null) return (ThrowsListSyntax)cached;
+
+      var result = new ThrowsListSyntax(SyntaxKind.ThrowsList, throwsKeyword, types.Node);
+      if (hash >= 0)
+      {
+          SyntaxNodeCache.AddNode(result, hash);
+      }
+
+      return result;
+    }
+
     public static SimpleBaseTypeSyntax SimpleBaseType(TypeSyntax type)
     {
 #if DEBUG
@@ -53398,7 +53834,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       return result;
     }
 
-    public static MethodDeclarationSyntax MethodDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
+    public static MethodDeclarationSyntax MethodDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, SyntaxToken funcKeyword, ExplicitInterfaceSpecifierSyntax explicitInterfaceSpecifier, SyntaxToken identifier, TypeParameterListSyntax typeParameterList, ParameterListSyntax parameterList, SyntaxToken returnToken, TypeSyntax returnType, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<TypeParameterConstraintClauseSyntax> constraintClauses, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, ThrowsListSyntax throwsList, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
     {
 #if DEBUG
       if (funcKeyword == null)
@@ -53446,7 +53882,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
       }
 #endif
 
-      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, contractClauses.Node, body, expressionBody, eosToken);
+      return new MethodDeclarationSyntax(SyntaxKind.MethodDeclaration, attributeLists.Node, modifiers.Node, funcKeyword, explicitInterfaceSpecifier, identifier, typeParameterList, parameterList, returnToken, returnType, constraintClauses.Node, contractClauses.Node, throwsList, body, expressionBody, eosToken);
     }
 
     public static OperatorDeclarationSyntax OperatorDeclaration(StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<AttributeSyntax> attributeLists, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<SyntaxToken> modifiers, TypeSyntax returnType, SyntaxToken operatorKeyword, SyntaxToken operatorToken, ParameterListSyntax parameterList, StarkPlatform.CodeAnalysis.Syntax.InternalSyntax.SyntaxList<ContractClauseSyntax> contractClauses, BlockSyntax body, ArrowExpressionClauseSyntax expressionBody, SyntaxToken eosToken)
@@ -55551,6 +55987,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(TupleExpressionSyntax),
            typeof(PrefixUnaryExpressionSyntax),
            typeof(AwaitExpressionSyntax),
+           typeof(TryExpressionSyntax),
            typeof(PostfixUnaryExpressionSyntax),
            typeof(MemberAccessExpressionSyntax),
            typeof(ConditionalAccessExpressionSyntax),
@@ -55681,6 +56118,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Syntax.InternalSyntax
            typeof(EnumMemberDeclarationSyntax),
            typeof(ExtendListSyntax),
            typeof(ImplementListSyntax),
+           typeof(ThrowsListSyntax),
            typeof(SimpleBaseTypeSyntax),
            typeof(ContractClauseSyntax),
            typeof(TypeParameterConstraintClauseSyntax),

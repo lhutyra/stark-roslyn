@@ -320,6 +320,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGen
                     }
                     break;
 
+                case BoundKind.TryExpression:
+                    EmitExpression(((BoundTryExpression)expression).Expression, used);
+                    break;
+
                 default:
                     // Code gen should not be invoked if there are errors.
                     Debug.Assert(expression.Kind != BoundKind.BadExpression);

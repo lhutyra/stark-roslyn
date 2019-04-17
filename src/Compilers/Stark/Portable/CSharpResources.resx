@@ -2146,7 +2146,31 @@ If such a class is used as a base class and if the deriving class defines a dest
   </data>
   <data name="ERR_InvalidParameterNameForCallerArgumentExpression" xml:space="preserve">
     <value>Invalid parameter name `{0}` not found from current method signature</value>
-  </data>  
+  </data>
+  <data name="ERR_ThrowsExpected" xml:space="preserve">
+    <value>Invalid usage of try on a target method that doesn't throws exceptions.</value>
+  </data>
+  <data name="ERR_TryNotSupportedByThisExpression" xml:space="preserve">
+    <value>The target of the try expression is not supported. Only plain methods are supported by try expressions.</value>
+  </data>
+  <data name="ERR_ExceptionThrownButNotDeclared" xml:space="preserve">
+    <value>The exception `{0}` is thrown but not declared by the current method.</value>
+  </data>
+  <data name="ERR_CatchBlockNotUsed" xml:space="preserve">
+    <value>The catch block with the exception `{0}` is not being used.</value>
+  </data>
+  <data name="ERR_ExpectingThrows" xml:space="preserve">
+    <value>Expecting exception throws in the method body if the method declares throws</value>
+  </data>
+  <data name="ERR_MissingTry" xml:space="preserve">
+    <value>The method can throw exceptions and must be guarded by a try expression</value>
+  </data>
+  <data name="ERR_MissingThrowsOnBaseMethod" xml:space="preserve">
+    <value>The inherited method cannot throw exceptions while the base method doesn't have any throws</value>
+  </data>
+  <data name="ERR_ThrowsNotDeclaredByBaseMethod" xml:space="preserve">
+    <value>The inherited method is throwing a new exception `{0}` that is not declared by the base method</value>
+  </data>
   <data name="ERR_InvalidInlineILArgument" xml:space="preserve">
     <value>The argument is invalid for the IL opcode `{0}`</value>
   </data>

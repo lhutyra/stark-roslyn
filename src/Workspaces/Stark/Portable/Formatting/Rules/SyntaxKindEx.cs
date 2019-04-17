@@ -10,7 +10,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Formatting
     {
         public const SyntaxKind DotDotToken = (SyntaxKind)8222;
         public const SyntaxKind RangeExpression = (SyntaxKind)8658;
-        public const SyntaxKind IndexExpression = (SyntaxKind)8741;
+        public const SyntaxKind IndexExpression = (SyntaxKind)8742;
         public const SyntaxKind RecursivePattern = (SyntaxKind)9020;
         public const SyntaxKind PropertyPatternClause = (SyntaxKind)9021;
         public const SyntaxKind PositionalPatternClause = (SyntaxKind)9023;

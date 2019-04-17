@@ -902,7 +902,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
             SetUnreachable();
             return node;
         }
-
+        
         public override BoundNode VisitPassByCopy(BoundPassByCopy node)
         {
             VisitRvalue(node.Expression);
@@ -2106,6 +2106,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
         {
             VisitRvalue(node.Expression);
             PendingBranches.Add(new PendingBranch(node, this.State, null));
+            return null;
+        }
+
+        public override BoundNode VisitTryExpression(BoundTryExpression node)
+        {
+            VisitRvalue(node.Expression);
             return null;
         }
 

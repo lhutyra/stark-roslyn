@@ -258,6 +258,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         public override ImmutableArray<TypeParameterSymbol> TypeParameters
             => _typeParameters.Cast<SourceMethodTypeParameterSymbol, TypeParameterSymbol>();
 
+        public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
+
         public override bool IsExtensionMethod
         {
             get

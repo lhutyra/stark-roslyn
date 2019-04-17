@@ -521,6 +521,10 @@
     <Field Name="AwaitableInfo" Type="AwaitableInfo" Null="disallow"/>
   </Node>
 
+  <Node Name="BoundTryExpression" Base="BoundExpression">
+      <Field Name="Expression" Type="BoundExpression"/>
+  </Node>
+
   <AbstractNode Name="BoundTypeOf" Base="BoundExpression">
     <!-- Non-null type is required for this node kind -->
     <Field Name="Type" Type="TypeSymbol" Override="true" Null="disallow"/>

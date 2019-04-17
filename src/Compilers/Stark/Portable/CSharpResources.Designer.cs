@@ -2887,6 +2887,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The catch block with the exception `{0}` is not being used..
+        /// </summary>
+        internal static string ERR_CatchBlockNotUsed {
+            get {
+                return ResourceManager.GetString("ERR_CatchBlockNotUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The operation overflows at compile time in checked mode.
         /// </summary>
         internal static string ERR_CheckedOverflow {
@@ -4291,6 +4300,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The exception `{0}` is thrown but not declared by the current method..
+        /// </summary>
+        internal static string ERR_ExceptionThrownButNotDeclared {
+            get {
+                return ResourceManager.GetString("ERR_ExceptionThrownButNotDeclared", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected contextual keyword &apos;by&apos;.
         /// </summary>
         internal static string ERR_ExpectedContextualKeywordBy {
@@ -4359,6 +4377,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_ExpectedVerbatimLiteral {
             get {
                 return ResourceManager.GetString("ERR_ExpectedVerbatimLiteral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expecting exception throws in the method body if the method declares throws.
+        /// </summary>
+        internal static string ERR_ExpectingThrows {
+            get {
+                return ResourceManager.GetString("ERR_ExpectingThrows", resourceCulture);
             }
         }
         
@@ -7014,6 +7041,24 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_MissingStructOffset {
             get {
                 return ResourceManager.GetString("ERR_MissingStructOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The inherited method cannot throw exceptions while the base method doesn&apos;t have any throws.
+        /// </summary>
+        internal static string ERR_MissingThrowsOnBaseMethod {
+            get {
+                return ResourceManager.GetString("ERR_MissingThrowsOnBaseMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The method can throw exceptions and must be guarded by a try expression.
+        /// </summary>
+        internal static string ERR_MissingTry {
+            get {
+                return ResourceManager.GetString("ERR_MissingTry", resourceCulture);
             }
         }
         
@@ -10069,6 +10114,24 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid usage of try on a target method that doesn&apos;t throws exceptions..
+        /// </summary>
+        internal static string ERR_ThrowsExpected {
+            get {
+                return ResourceManager.GetString("ERR_ThrowsExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The inherited method is throwing a new exception `{0}` that is not declared by the base method.
+        /// </summary>
+        internal static string ERR_ThrowsNotDeclaredByBaseMethod {
+            get {
+                return ResourceManager.GetString("ERR_ThrowsNotDeclaredByBaseMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Catch clauses cannot follow the general catch clause of a try statement.
         /// </summary>
         internal static string ERR_TooManyCatches {
@@ -10119,6 +10182,15 @@ namespace StarkPlatform.CodeAnalysis.Stark {
         internal static string ERR_TripleDotNotAllowed {
             get {
                 return ResourceManager.GetString("ERR_TripleDotNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The target of the try expression is not supported. Only plain methods are supported by try expressions..
+        /// </summary>
+        internal static string ERR_TryNotSupportedByThisExpression {
+            get {
+                return ResourceManager.GetString("ERR_TryNotSupportedByThisExpression", resourceCulture);
             }
         }
         

@@ -1173,6 +1173,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 }
             }
 
+            if (method.HasThrows && node.Parent.Kind() != SyntaxKind.TryExpression)
+            {
+                Error(diagnostics, ErrorCode.ERR_MissingTry, node.Location);
+                gotError = true;
+            }
+
             return new BoundCall(node, receiver, method, args, argNames, argRefKinds, isDelegateCall: isDelegateCall,
                         expanded: expanded, invokedAsExtensionMethod: invokedAsExtensionMethod,
                         argsToParamsOpt: argsToParams, resultKind: LookupResultKind.Viable, binderOpt: this, type: returnType, hasErrors: gotError);

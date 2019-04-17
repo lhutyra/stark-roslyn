@@ -456,6 +456,26 @@
       <summary>Creates an AwaitExpressionSyntax node.</summary>
     </FactoryComment>
   </Node>
+  <Node Name="TryExpressionSyntax" Base="ExpressionSyntax">
+      <Kind Name="TryExpression"/>
+      <Field Name="TryKeyword" Type="SyntaxToken">
+          <Kind Name="TryKeyword"/>
+          <PropertyComment>
+              <summary>SyntaxToken representing the kind "try" keyword.</summary>
+          </PropertyComment>
+      </Field>
+      <Field Name="Expression" Type="ExpressionSyntax">
+          <PropertyComment>
+              <summary>ExpressionSyntax representing the operand of the "try" operator.</summary>
+          </PropertyComment>
+      </Field>
+      <TypeComment>
+          <summary>Class which represents the syntax node for an "try" expression.</summary>
+      </TypeComment>
+      <FactoryComment>
+          <summary>Creates an TryExpressionSyntax node.</summary>
+      </FactoryComment>
+  </Node>
   <Node Name="PostfixUnaryExpressionSyntax" Base="ExpressionSyntax">
     <Kind Name="PostIncrementExpression"/>
     <Kind Name="PostDecrementExpression"/>
@@ -3204,6 +3224,23 @@
       </PropertyComment>
     </Field>
   </Node>
+  <Node Name="ThrowsListSyntax" Base="CSharpSyntaxNode">
+      <TypeComment>
+          <summary>Extends list syntax.</summary>
+      </TypeComment>
+      <Kind Name="ThrowsList"/>
+      <Field Name="ThrowsKeyword" Type="SyntaxToken">
+          <PropertyComment>
+              <summary>Gets the extends keyword.</summary>
+          </PropertyComment>
+          <Kind Name="ThrowsKeyword"/>
+      </Field>
+      <Field Name="Types" Type="SeparatedSyntaxList&lt;TypeSyntax&gt;">
+          <PropertyComment>
+              <summary>Gets the base type references.</summary>
+          </PropertyComment>
+      </Field>
+  </Node>
   <AbstractNode Name="BaseTypeSyntax" Base="CSharpSyntaxNode">
     <TypeComment>
       <summary>Provides the base class from which the classes that represent base type syntax nodes are derived. This is an abstract class.</summary>
@@ -3506,6 +3543,11 @@
       </PropertyComment>
     </Field>
     <Field Name="ContractClauses" Type="SyntaxList&lt;ContractClauseSyntax&gt;" Override="true" Optional="true"/>
+    <Field Name="ThrowsList" Type="ThrowsListSyntax" Optional="true">
+        <PropertyComment>
+            <summary>Gets the throws list.</summary>
+        </PropertyComment>
+    </Field>
     <Field Name="Body" Type="BlockSyntax" Optional="true" Override="true"/>
     <Field Name="ExpressionBody" Type="ArrowExpressionClauseSyntax" Optional="true" Override="true"/>
     <Field Name="EosToken" Type="SyntaxToken" Optional="true" Override="true">

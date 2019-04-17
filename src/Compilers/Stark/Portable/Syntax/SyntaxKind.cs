@@ -211,7 +211,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         IlKeyword = 8437,
         RequiresKeyword = 8438,
         EnsuresKeyword = 8439,
-        WhenKeyword = 8440,   // Must be last of contextual keyword
+        ThrowsKeyword = 8440,
+        WhenKeyword = 8441,   // Must be last of contextual keyword
 
         /// when adding a contextual keyword following functions must be adapted:
         /// <see cref="SyntaxFacts.GetContextualKeywordKinds"/>
@@ -423,7 +424,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
         PostIncrementExpression = 8738,
         PostDecrementExpression = 8739,
         AwaitExpression = 8740,
-        IndexExpression = 8741,
+        TryExpression = 8741,
+        IndexExpression = 8742,
 
         // primary expression
         ThisExpression = 8746,
@@ -533,6 +535,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         DelegateDeclaration = 8859,
         ModuleDeclaration = 8860,
 
+        ThrowsList = 8862,
         ExtendList = 8863,
         ImplementList = 8864,
         SimpleBaseType = 8865,

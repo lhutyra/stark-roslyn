@@ -59,6 +59,7 @@ namespace StarkPlatform.CodeAnalysis.Stark
         ArrayAccess,
         ArrayLength,
         AwaitExpression,
+        TryExpression,
         TypeOfOperator,
         MethodDefIndex,
         MaximumMethodDefIndex,
@@ -2007,6 +2008,44 @@ namespace StarkPlatform.CodeAnalysis.Stark
         protected override BoundExpression ShallowClone()
         {
             var result = new BoundAwaitExpression(this.Syntax, this.Expression, this.AwaitableInfo, this.Type, this.HasErrors);
+            result.CopyAttributes(this);
+            return result;
+        }
+    }
+
+    internal sealed partial class BoundTryExpression : BoundExpression
+    {
+        public BoundTryExpression(SyntaxNode syntax, BoundExpression expression, TypeSymbol type, bool hasErrors = false)
+            : base(BoundKind.TryExpression, syntax, type, hasErrors || expression.HasErrors())
+        {
+
+            Debug.Assert((object)expression != null, "Field 'expression' cannot be null (use Null=\"allow\" in BoundNodes.xml to remove this check)");
+
+            this.Expression = expression;
+        }
+
+
+        public BoundExpression Expression { get; }
+
+        public override BoundNode Accept(BoundTreeVisitor visitor)
+        {
+            return visitor.VisitTryExpression(this);
+        }
+
+        public BoundTryExpression Update(BoundExpression expression, TypeSymbol type)
+        {
+            if (expression != this.Expression || !TypeSymbol.Equals(type, this.Type, TypeCompareKind.ConsiderEverything))
+            {
+                var result = new BoundTryExpression(this.Syntax, expression, type, this.HasErrors);
+                result.CopyAttributes(this);
+                return result;
+            }
+            return this;
+        }
+
+        protected override BoundExpression ShallowClone()
+        {
+            var result = new BoundTryExpression(this.Syntax, this.Expression, this.Type, this.HasErrors);
             result.CopyAttributes(this);
             return result;
         }
@@ -8383,6 +8422,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
                     return VisitArrayLength(node as BoundArrayLength, arg);
                 case BoundKind.AwaitExpression: 
                     return VisitAwaitExpression(node as BoundAwaitExpression, arg);
+                case BoundKind.TryExpression: 
+                    return VisitTryExpression(node as BoundTryExpression, arg);
                 case BoundKind.TypeOfOperator: 
                     return VisitTypeOfOperator(node as BoundTypeOfOperator, arg);
                 case BoundKind.MethodDefIndex: 
@@ -8830,6 +8871,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node, arg);
         }
         public virtual R VisitAwaitExpression(BoundAwaitExpression node, A arg)
+        {
+            return this.DefaultVisit(node, arg);
+        }
+        public virtual R VisitTryExpression(BoundTryExpression node, A arg)
         {
             return this.DefaultVisit(node, arg);
         }
@@ -9562,6 +9607,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return this.DefaultVisit(node);
         }
         public virtual BoundNode VisitAwaitExpression(BoundAwaitExpression node)
+        {
+            return this.DefaultVisit(node);
+        }
+        public virtual BoundNode VisitTryExpression(BoundTryExpression node)
         {
             return this.DefaultVisit(node);
         }
@@ -10337,6 +10386,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return null;
         }
         public override BoundNode VisitAwaitExpression(BoundAwaitExpression node)
+        {
+            this.Visit(node.Expression);
+            return null;
+        }
+        public override BoundNode VisitTryExpression(BoundTryExpression node)
         {
             this.Visit(node.Expression);
             return null;
@@ -11327,6 +11381,12 @@ namespace StarkPlatform.CodeAnalysis.Stark
             BoundExpression expression = (BoundExpression)this.Visit(node.Expression);
             TypeSymbol type = this.VisitType(node.Type);
             return node.Update(expression, node.AwaitableInfo, type);
+        }
+        public override BoundNode VisitTryExpression(BoundTryExpression node)
+        {
+            BoundExpression expression = (BoundExpression)this.Visit(node.Expression);
+            TypeSymbol type = this.VisitType(node.Type);
+            return node.Update(expression, type);
         }
         public override BoundNode VisitTypeOfOperator(BoundTypeOfOperator node)
         {
@@ -12619,6 +12679,16 @@ namespace StarkPlatform.CodeAnalysis.Stark
             {
                 new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("awaitableInfo", node.AwaitableInfo, null),
+                new TreeDumperNode("type", node.Type, null),
+                new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
+            }
+            );
+        }
+        public override TreeDumperNode VisitTryExpression(BoundTryExpression node, object arg)
+        {
+            return new TreeDumperNode("tryExpression", null, new TreeDumperNode[]
+            {
+                new TreeDumperNode("expression", null, new TreeDumperNode[] { Visit(node.Expression, null) }),
                 new TreeDumperNode("type", node.Type, null),
                 new TreeDumperNode("isSuppressed", node.IsSuppressed, null)
             }

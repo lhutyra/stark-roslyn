@@ -58,5 +58,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         {
             throw ExceptionUtilities.Unreachable;
         }
+
+        public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
     }
 }

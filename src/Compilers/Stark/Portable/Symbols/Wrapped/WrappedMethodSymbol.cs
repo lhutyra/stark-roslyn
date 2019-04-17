@@ -305,6 +305,9 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             }
         }
 
+        public override ImmutableArray<TypeSymbol> ThrowsList => UnderlyingMethod.ThrowsList;
+
+
         internal override bool GenerateDebugInfo
         {
             get

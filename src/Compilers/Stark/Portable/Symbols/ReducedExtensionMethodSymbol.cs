@@ -143,6 +143,8 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
             get { return _typeParameters; }
         }
 
+        public override ImmutableArray<TypeSymbol> ThrowsList => ImmutableArray<TypeSymbol>.Empty;
+
         public override ImmutableArray<TypeSymbolWithAnnotations> TypeArguments
         {
             get { return _typeArguments; }

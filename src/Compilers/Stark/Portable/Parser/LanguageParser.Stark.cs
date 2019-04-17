@@ -1544,7 +1544,46 @@ tryAgain:
             }
         }
 
-        private PostSkipAction SkipBadBaseListTokens(ref SyntaxToken colon, SeparatedSyntaxListBuilder<BaseTypeSyntax> list, SyntaxKind expected)
+
+        private ThrowsListSyntax ParseThrowsList()
+        {
+            var throws = this.EatContextualToken(SyntaxKind.ThrowsKeyword);
+            var list = _pool.AllocateSeparated<TypeSyntax>();
+            try
+            {
+                // first type
+                TypeSyntax firstType = this.ParseType();
+                list.Add(firstType);
+
+                // any additional types
+                while (true)
+                {
+                    if (this.CurrentToken.Kind == SyntaxKind.OpenBraceToken)
+                    {
+                        break;
+                    }
+                    else if (this.CurrentToken.Kind == SyntaxKind.CommaToken || this.IsPossibleType())
+                    {
+                        list.AddSeparator(this.EatToken(SyntaxKind.CommaToken));
+                        list.Add(this.ParseType());
+                        continue;
+                    }
+                    else if (this.SkipBadBaseListTokens(ref throws, list, SyntaxKind.CommaToken) == PostSkipAction.Abort)
+                    {
+                        break;
+                    }
+                }
+
+                return _syntaxFactory.ThrowsList(throws, list);
+            }
+            finally
+            {
+                _pool.Free(list);
+            }
+        }
+
+        private PostSkipAction SkipBadBaseListTokens<TNode>(ref SyntaxToken colon, SeparatedSyntaxListBuilder<TNode> list, SyntaxKind expected)
+            where TNode : CSharpSyntaxNode
         {
             return this.SkipBadSeparatedListTokensWithExpectedKind(ref colon, list,
                 p => p.CurrentToken.Kind != SyntaxKind.CommaToken && !p.IsPossibleAttribute(),
@@ -2451,6 +2490,12 @@ tryAgain:
                     this.ParseContractClauses(contracts);
                 }
 
+                ThrowsListSyntax throwsList = default;
+                if (this.CurrentToken.ContextualKind == SyntaxKind.ThrowsKeyword)
+                {
+                    throwsList = ParseThrowsList();
+                }
+
                 _termState = saveTerm;
 
                 BlockSyntax blockBody;
@@ -2508,6 +2553,7 @@ tryAgain:
                     returnType,
                     constraints,
                     contracts,
+                    throwsList,
                     blockBody,
                     expressionBody,
                     eosToken);
@@ -6407,8 +6453,15 @@ tryAgain:
             return _syntaxFactory.ContinueStatement(continueKeyword, eos);
         }
 
-        private TryStatementSyntax ParseTryStatement()
+        private StatementSyntax ParseTryStatement()
         {
+            if (CurrentToken.Kind == SyntaxKind.TryKeyword && PeekToken(1).Kind != SyntaxKind.OpenBraceToken)
+            {
+                var expression = ParseExpressionCore();
+                var eosToken = EatEos(ref expression);
+                return _syntaxFactory.ExpressionStatement(expression, eosToken);
+            }
+
             var isInTry = _isInTry;
             _isInTry = true;
 
@@ -7498,7 +7551,6 @@ tryAgain:
                 case SyntaxKind.LockKeyword:
                 case SyntaxKind.ReturnKeyword:
                 case SyntaxKind.SwitchKeyword:
-                case SyntaxKind.TryKeyword:
                 case SyntaxKind.UsingKeyword:
                 case SyntaxKind.WhileKeyword:
                     return true;
@@ -7619,6 +7671,7 @@ tryAgain:
                 case SyntaxKind.RefValueExpression:
                 case SyntaxKind.RefTypeExpression:
                 case SyntaxKind.AwaitExpression:
+                case SyntaxKind.TryExpression:
                 case SyntaxKind.IndexExpression:
                     return Precedence.Unary;
                 case SyntaxKind.CastExpression:
@@ -7771,6 +7824,14 @@ tryAgain:
                 awaitToken = CheckFeatureAvailability(awaitToken, MessageID.IDS_FeatureAsync);
                 var operand = this.ParseSubExpression(newPrecedence);
                 leftOperand = _syntaxFactory.AwaitExpression(awaitToken, operand);
+            }
+            else if (tk == SyntaxKind.TryKeyword)
+            {
+                opKind = SyntaxKind.TryExpression;
+                newPrecedence = GetPrecedence(opKind);
+                var tryToken = this.EatToken();
+                var operand = this.ParseSubExpression(newPrecedence);
+                leftOperand = _syntaxFactory.TryExpression(tryToken, operand);
             }
             else if (this.IsQueryExpression(mayBeVariableDeclaration: false, mayBeMemberDeclaration: false))
             {

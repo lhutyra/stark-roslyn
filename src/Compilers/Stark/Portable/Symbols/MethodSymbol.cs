@@ -209,6 +209,10 @@ namespace StarkPlatform.CodeAnalysis.Stark.Symbols
         /// </summary>
         public abstract ImmutableArray<TypeParameterSymbol> TypeParameters { get; }
 
+        public bool HasThrows => ThrowsList.Length > 0;
+        
+        public abstract ImmutableArray<TypeSymbol> ThrowsList { get; }
+
         internal ImmutableArray<TypeSymbolWithAnnotations> GetTypeParametersAsTypeArguments()
         {
             return TypeMap.TypeParametersAsTypeSymbolsWithAnnotations(TypeParameters);

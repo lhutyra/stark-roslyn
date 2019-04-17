@@ -573,6 +573,9 @@ namespace StarkPlatform.CodeAnalysis.Stark
                 case SyntaxKind.RefValueExpression:
                     return BindRefValue((RefValueExpressionSyntax)node, diagnostics);
 
+                case SyntaxKind.TryExpression:
+                    return BindTry((TryExpressionSyntax)node, diagnostics);
+
                 case SyntaxKind.AwaitExpression:
                     return BindAwait((AwaitExpressionSyntax)node, diagnostics);
 

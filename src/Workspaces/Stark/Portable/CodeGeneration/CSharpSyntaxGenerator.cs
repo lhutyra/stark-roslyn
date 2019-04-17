@@ -184,6 +184,7 @@ namespace StarkPlatform.CodeAnalysis.Stark.CodeGeneration
                 returnType: returnType != null ? (TypeSyntax)returnType : SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 constraintClauses: default,
                 contractClauses: default,
+                throwsList: default,
                 body: hasBody ? CreateBlock(statements) : null,
                 expressionBody: null,
                 eosToken: default);

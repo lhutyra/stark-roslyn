@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using StarkPlatform.CodeAnalysis.Collections;
 using StarkPlatform.CodeAnalysis.Stark.Symbols;
 using StarkPlatform.CodeAnalysis.PooledObjects;
+using StarkPlatform.CodeAnalysis.Stark.Syntax;
 
 namespace StarkPlatform.CodeAnalysis.Stark
 {
@@ -13,6 +16,8 @@ namespace StarkPlatform.CodeAnalysis.Stark
     {
         private readonly PooledDictionary<LabelSymbol, BoundBlock> _labelsDefined = PooledDictionary<LabelSymbol, BoundBlock>.GetInstance();
         private readonly PooledHashSet<LabelSymbol> _labelsUsed = PooledHashSet<LabelSymbol>.GetInstance();
+        private readonly ArrayBuilder<BoundBlockWithExceptions> _blockWithExceptions = ArrayBuilder<BoundBlockWithExceptions>.GetInstance();
+
         protected bool _convertInsufficientExecutionStackExceptionToCancelledByStackGuardException = false; // By default, just let the original exception to bubble up.
 
         private readonly ArrayBuilder<(LocalSymbol symbol, BoundBlock block)> _usingDeclarations = ArrayBuilder<(LocalSymbol, BoundBlock)>.GetInstance();
@@ -20,6 +25,11 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         protected override void Free()
         {
+            foreach (var blockWithException in _blockWithExceptions)
+            {
+                blockWithException.ThrowLocations.Free();
+            }
+            _blockWithExceptions.Free();
             _labelsDefined.Free();
             _labelsUsed.Free();
             _usingDeclarations.Free();
@@ -101,18 +111,22 @@ namespace StarkPlatform.CodeAnalysis.Stark
             return result;
         }
 
-        public override BoundNode Visit(BoundNode node)
-        {
-            // there is no need to scan the contents of an expression, as expressions
-            // do not contribute to reachability analysis (except for constants, which
-            // are handled by the caller).
-            if (!(node is BoundExpression))
-            {
-                return base.Visit(node);
-            }
+        //public override BoundNode Visit(BoundNode node)
+        //{
+        //    // there is no need to scan the contents of an expression, as expressions
+        //    // do not contribute to reachability analysis (except for constants, which
+        //    // are handled by the caller).
+        //    if (!(node is BoundExpression))
+        //    {
+        //        return base.Visit(node);
+        //    }
+        //    else if (node is BoundTryExpression boundTry)
+        //    {
+        //        return VisitTryExpression(boundTry);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         protected override ImmutableArray<PendingBranch> Scan(ref bool badRegion)
         {
@@ -172,8 +186,10 @@ namespace StarkPlatform.CodeAnalysis.Stark
         /// <returns></returns>
         protected bool Analyze(ref bool badRegion, DiagnosticBag diagnostics)
         {
+            PushTryBlock((BoundBlock)methodMainNode);
             ImmutableArray<PendingBranch> returns = Analyze(ref badRegion);
 
+            PopRootTryBlockAndVerify();
             if (diagnostics != null)
             {
                 diagnostics.AddRange(this.Diagnostics);
@@ -235,6 +251,13 @@ namespace StarkPlatform.CodeAnalysis.Stark
             }
         }
 
+        public override BoundNode VisitTryExpression(BoundTryExpression node)
+        {
+            var call = (BoundCall)node.Expression;
+            RecordThrows(call.Syntax, call.Method.ThrowsList);
+            return base.VisitTryExpression(node);
+        }
+
         private void CheckReachable(BoundStatement statement)
         {
             if (!this.State.Alive &&
@@ -250,15 +273,22 @@ namespace StarkPlatform.CodeAnalysis.Stark
 
         protected override void VisitTryBlock(BoundStatement tryBlock, BoundTryStatement node, ref LocalState tryState)
         {
-            if (node.CatchBlocks.IsEmpty)
+            PushTryBlock(node);
+            try
             {
-                base.VisitTryBlock(tryBlock, node, ref tryState);
-                return;
-            }
+                if (node.CatchBlocks.IsEmpty)
+                {
+                    base.VisitTryBlock(tryBlock, node, ref tryState);
+                    return;
+                }
 
-            var oldPending = SavePending(); // we do not support branches into a try block
-            base.VisitTryBlock(tryBlock, node, ref tryState);
-            RestorePending(oldPending);
+                var oldPending = SavePending(); // we do not support branches into a try block
+                base.VisitTryBlock(tryBlock, node, ref tryState);
+                RestorePending(oldPending);
+            } finally
+            {
+                PopTryBlock();
+            }
         }
 
         protected override void VisitCatchBlock(BoundCatchBlock catchBlock, ref LocalState finallyState)
@@ -376,6 +406,246 @@ namespace StarkPlatform.CodeAnalysis.Stark
             _usingDeclarations.Clip(initialUsingCount);
             _currentBlock = parentBlock;
             return result;
+        }
+
+        private void PushTryBlock(BoundStatement bound)
+        {
+            var block = new BoundBlockWithExceptions(bound);
+            _blockWithExceptions.Add(block);
+        }
+
+        private BoundBlockWithExceptions CurrentBlockWithExceptions => _blockWithExceptions[_blockWithExceptions.Count - 1];
+
+        private void PopTryBlock()
+        {
+            var lastBlock = CurrentBlockWithExceptions;
+            _blockWithExceptions.RemoveLast();
+            if (_blockWithExceptions.Count > 0)
+            {
+                CurrentBlockWithExceptions.MergeThrowLocations(lastBlock);
+            }
+
+            // If we are going out of the BoundTryStatement
+            // Log an error for any catch block that will never be reached
+            if (lastBlock.Block is BoundTryStatement boundTry)
+            {
+                foreach (var catchBlock in boundTry.CatchBlocks)
+                {
+                    if (!lastBlock.CatchBlockUsed.Contains(catchBlock))
+                    {
+                        Diagnostics.Add(ErrorCode.ERR_CatchBlockNotUsed, catchBlock.Syntax.Location, catchBlock.ExceptionTypeOpt?.ToDisplayString() ?? "(none)");
+                    }
+                }
+            }
+
+            lastBlock.Free();
+        }
+
+        public override BoundNode VisitThrowExpression(BoundThrowExpression node)
+        {
+            RecordThrow(node.Syntax, node.Expression.Type);
+            return base.VisitThrowExpression(node);
+        }
+
+        public override BoundNode VisitThrowStatement(BoundThrowStatement node)
+        {
+            if (node.ExpressionOpt != null)
+            {
+                RecordThrow(node.Syntax, node.ExpressionOpt.Type);
+            }
+            return base.VisitThrowStatement(node);
+        }
+
+        private void RecordThrow(SyntaxNode syntax, TypeSymbol throwType)
+        {
+            var throwList = ArrayBuilder<TypeSymbol>.GetInstance();
+            try
+            {
+                throwList.Add(throwType);
+                RecordThrows(syntax, throwList);
+            }
+            finally
+            {
+                throwList.Free();
+            }
+        }
+
+        private void RecordThrows<TThrows>(SyntaxNode syntax, TThrows throwsList) where TThrows : IEnumerable<TypeSymbol>
+        {
+            var currentBlockWithExceptions = CurrentBlockWithExceptions;
+
+            var finalThrowsList = ArrayBuilder<TypeSymbol>.GetInstance();
+            try
+            {
+                if (currentBlockWithExceptions.Block is BoundTryStatement boundTry)
+                {
+                    foreach (var throwType in throwsList)
+                    {
+                        bool isCatched = false;
+                        foreach (var catchBlock in boundTry.CatchBlocks)
+                        {
+                            if (IsCatching(catchBlock, throwType))
+                            {
+                                currentBlockWithExceptions.CatchBlockUsed.Add(catchBlock);
+                                isCatched = true;
+                                break;
+                            }
+
+                            // We record block being used
+                            if (IsCatchingPossible(catchBlock, throwType))
+                            {
+                                currentBlockWithExceptions.CatchBlockUsed.Add(catchBlock);
+                            }
+                        }
+
+                        if (!isCatched)
+                        {
+                            finalThrowsList.Add(throwType);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var throwType in throwsList)
+                    {
+                        finalThrowsList.Add(throwType);
+                    }
+                }
+
+                foreach (var throwType in finalThrowsList)
+                {
+                    currentBlockWithExceptions.AddThrow(throwType, syntax);
+                }
+            }
+            finally
+            {
+                finalThrowsList.Free();
+            }
+        }
+        
+        private void PopRootTryBlockAndVerify()
+        {
+            var topBlock = CurrentBlockWithExceptions;
+
+            HashSet<DiagnosticInfo> diagnosticInfos = null;
+            if (_symbol is SourceMethodSymbol methodSymbol)
+            {
+                if (topBlock.ThrowLocations.Count > 0)
+                {
+                    foreach (var throwTypePair in topBlock.ThrowLocations)
+                    {
+                        var throwType = throwTypePair.Key;
+                        bool isDeclared = false;
+                        foreach (var declaredType in methodSymbol.ThrowsList)
+                        {
+                            if (throwType.IsEqualToOrDerivedFrom(declaredType, TypeCompareKind.ConsiderEverything, ref diagnosticInfos))
+                            {
+                                isDeclared = true;
+                                break;
+                            }
+                        }
+
+                        if (!isDeclared)
+                        {
+                            foreach (var throwSyntax in throwTypePair.Value)
+                            {
+                                // TODO: Add locations
+                                Diagnostics.Add(ErrorCode.ERR_ExceptionThrownButNotDeclared, throwSyntax.Location, throwType.ToDisplayString());
+                            }
+                        }
+                    }
+                }
+                else if (methodSymbol.GetNonNullSyntaxNode() is MethodDeclarationSyntax methodDecl && methodSymbol.HasThrows)
+                {
+                    Diagnostics.Add(ErrorCode.ERR_ExpectingThrows, methodDecl.ThrowsList.ThrowsKeyword.GetLocation());
+                }
+            }
+
+            // Pop top level block
+            PopTryBlock();
+        }
+
+        private static bool IsCatching(BoundCatchBlock catchBlock, TypeSymbol exception)
+        {
+            // If it is catching all exceptions
+            if ((object)catchBlock.ExceptionTypeOpt == null)
+            {
+                return true;
+            }
+
+            HashSet<DiagnosticInfo> useSiteDiagnostics = null;
+
+            if (exception.IsEqualToOrDerivedFrom(catchBlock.ExceptionTypeOpt, TypeCompareKind.ConsiderEverything, ref useSiteDiagnostics))
+            {
+                return catchBlock.ExceptionFilterOpt == null;
+            }
+
+            return false;
+        }
+
+        private static bool IsCatchingPossible(BoundCatchBlock catchBlock, TypeSymbol exception)
+        {
+            // Because IsCatching is called before
+            Debug.Assert((object)catchBlock.ExceptionTypeOpt != null);
+
+            HashSet<DiagnosticInfo> useSiteDiagnostics = null;
+            return catchBlock.ExceptionTypeOpt.IsEqualToOrDerivedFrom(exception, TypeCompareKind.ConsiderEverything, ref useSiteDiagnostics);
+        }
+
+        struct BoundBlockWithExceptions
+        {
+            public BoundBlockWithExceptions(BoundStatement block) : this()
+            {
+                Block = block;
+                ThrowLocations = PooledDictionary<TypeSymbol, PooledHashSet<SyntaxNode>>.GetInstance();
+                CatchBlockUsed = PooledHashSet<BoundCatchBlock>.GetInstance();
+            }
+
+            public readonly BoundStatement Block;
+
+            public readonly PooledDictionary<TypeSymbol, PooledHashSet<SyntaxNode>> ThrowLocations;
+
+            public readonly PooledHashSet<BoundCatchBlock> CatchBlockUsed;
+
+            public void AddThrow(TypeSymbol type, SyntaxNode syntax)
+            {
+                PooledHashSet<SyntaxNode> nodes;
+                if (!ThrowLocations.TryGetValue(type, out nodes))
+                {
+                    nodes = PooledHashSet<SyntaxNode>.GetInstance();
+                    ThrowLocations.Add(type, nodes);
+                }
+                nodes.Add(syntax);
+            }
+
+            public void MergeThrowLocations(BoundBlockWithExceptions block)
+            {
+                foreach (var item in block.ThrowLocations)
+                {
+                    var throwType = item.Key;
+                    PooledHashSet<SyntaxNode> nodes;
+                    if (!ThrowLocations.TryGetValue(throwType, out nodes))
+                    {
+                        nodes = PooledHashSet<SyntaxNode>.GetInstance();
+                        ThrowLocations.Add(throwType, nodes);
+                    }
+
+                    foreach (var syntax in item.Value)
+                    {
+                        nodes.Add(syntax);
+                    }
+                }
+            }
+
+            public void Free()
+            {
+                foreach (var item in ThrowLocations)
+                {
+                    item.Value.Free();
+                }
+                ThrowLocations.Free();
+                CatchBlockUsed.Free();
+            }
         }
     }
 }
